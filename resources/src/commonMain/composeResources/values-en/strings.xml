@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         CONSTANTS (Non-translatable)
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="app_name" translatable="false">Yalla</string>
+
+    <!-- Language Names -->
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_russian" translatable="false">Русский</string>
+    <string name="language_uzbek_cyrillic" translatable="false">Ўзбек</string>
+    <string name="language_uzbek_latin" translatable="false">O'zbek</string>
+
+    <!-- Social Media -->
+    <string name="social_instagram" translatable="false">Instagram</string>
+    <string name="social_telegram" translatable="false">Telegram</string>
+
+    <!-- Phone -->
+    <string name="auth_phone_country_code" translatable="false">+998</string>
+    <string name="auth_phone_placeholder" translatable="false">(_ _) _ _ _  _ _  _ _</string>
+
+    <!-- Payment Card Formats -->
+    <string name="payment_card_humo_format" translatable="false">Humo ----{0}</string>
+    <string name="payment_card_uzcard_format" translatable="false">Uzcard ----{0}</string>
+    <string name="payment_date_default" translatable="false">01/24</string>
+
+    <!-- Format Templates -->
+    <string name="format_distance_km" translatable="false">{0} km</string>
+    <string name="format_percent" translatable="false">{0} %</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         COMMON - Shared UI Elements
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Action Buttons -->
+    <string name="common_action_activate">Activate</string>
+    <string name="common_action_all">All</string>
+    <string name="common_action_allow">Allow</string>
+    <string name="common_action_cancel">Cancel</string>
+    <string name="common_action_confirm">Confirm</string>
+    <string name="common_action_delete">Delete</string>
+    <string name="common_action_edit">Edit</string>
+    <string name="common_action_next">Next</string>
+    <string name="common_action_save">Save</string>
+    <string name="common_action_select">Select</string>
+    <string name="common_action_send">Send</string>
+    <string name="common_action_skip">Skip</string>
+    <string name="common_action_use">Use</string>
+
+    <!-- Status -->
+    <string name="common_status_loading">Loading</string>
+    <string name="common_status_ready">Ready</string>
+    <string name="common_status_searching">Searching</string>
+
+    <!-- Labels -->
+    <string name="common_label_details">Details</string>
+    <string name="common_label_status">Status</string>
+
+    <!-- Format -->
+    <string name="format_currency_sum">{0} sum</string>
+    <string name="format_currency_range">from {0} to {1}</string>
+    <string name="format_time_min">{0} min</string>
+    <string name="format_time_min_short">min</string>
+    <string name="format_percent_up_to">Up to {0}%</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         AUTH - Authentication & Login
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Welcome Screen -->
+    <string name="auth_welcome_title">Welcome!</string>
+    <string name="auth_welcome_description">Enter your phone number to continue.</string>
+    <string name="auth_welcome_sms_hint">A verification code will be sent to your number via SMS</string>
+
+    <!-- OTP Verification -->
+    <string name="auth_otp_title">Security Code</string>
+    <string name="auth_otp_description">Enter the 5-digit code sent to +998{0}</string>
+    <string name="auth_otp_verify">Verify</string>
+    <string name="auth_otp_resend">Resend code</string>
+    <string name="auth_otp_resend_countdown">Resend code in {0}</string>
+
+    <!-- Auth Required -->
+    <string name="auth_required_title">Sign in required to continue</string>
+    <string name="auth_required_description">This will only take a few minutes</string>
+    <string name="auth_required_action">Sign In</string>
+
+    <!-- Auth Messages -->
+    <string name="auth_send_code_error">Failed to send verification code</string>
+    <string name="auth_validate_code_error">Invalid verification code</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         REGISTER - User Registration
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="register_title">Let\'s get acquainted</string>
+    <string name="register_subtitle">How should we address you?</string>
+    <string name="register_action">Register</string>
+
+    <!-- Input Fields -->
+    <string name="register_input_name">Enter your first name</string>
+    <string name="register_input_surname">Enter your last name</string>
+    <string name="register_input_birthdate">Date of birth</string>
+
+    <!-- Gender -->
+    <string name="register_gender_male">Male</string>
+    <string name="register_gender_female">Female</string>
+
+    <!-- Register Messages -->
+    <string name="register_error">Registration failed</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PROFILE - User Profile Management
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="profile_edit_title">Edit Profile</string>
+
+    <!-- Photo Actions -->
+    <string name="profile_photo_change">Change photo</string>
+    <string name="profile_photo_take">Take photo</string>
+    <string name="profile_photo_gallery">Choose from gallery</string>
+    <string name="profile_photo_delete">Delete photo</string>
+
+    <!-- Delete Account -->
+    <string name="profile_delete_title">Delete Account</string>
+    <string name="profile_delete_confirm">Are you sure you want to delete your account?</string>
+    <string name="profile_delete_warning">Once deleted, all your data will be permanently lost and cannot be recovered</string>
+    <string name="profile_delete_action">Yes, delete account</string>
+
+    <!-- Logout -->
+    <string name="profile_logout_title">Log Out</string>
+    <string name="profile_logout_confirm">Are you sure you want to log out?</string>
+    <string name="profile_logout_description">You can log back in anytime after signing out</string>
+    <string name="profile_logout_action">Yes, log out</string>
+
+    <!-- Profile Messages -->
+    <string name="profile_update_success">Profile updated successfully</string>
+    <string name="profile_update_error">Failed to update profile</string>
+    <string name="profile_avatar_update_success">Profile photo updated successfully</string>
+    <string name="profile_avatar_update_error">Failed to update profile photo</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         INTRO - Onboarding & Permissions
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Language Selection -->
+    <string name="intro_language_title">Select\napp language</string>
+
+    <!-- Location Permission -->
+    <string name="intro_location_title">Location</string>
+    <string name="intro_location_description">Share your location for accurate ride requests</string>
+
+    <!-- GPS & Location Access -->
+    <string name="location_gps_title">Enable\nGPS</string>
+    <string name="location_gps_subtitle">Your time - our speed</string>
+    <string name="location_permission_title">Enable location</string>
+    <string name="location_permission_description">Provide your location for accurate requests</string>
+    <string name="location_permission_action">Allow</string>
+
+    <!-- Notification Permission -->
+    <string name="intro_notification_title">Notifications</string>
+    <string name="intro_notification_description">Allow notifications to stay updated on your rides</string>
+
+    <!-- Onboarding Slides -->
+    <string name="intro_onboarding_1_title">Fast and Convenient</string>
+    <string name="intro_onboarding_1_description">Order a ride — Yalla finds the nearest driver in seconds.</string>
+
+    <string name="intro_onboarding_2_title">Trusted Drivers</string>
+    <string name="intro_onboarding_2_description">Every Yalla driver is verified and highly rated.</string>
+
+    <string name="intro_onboarding_3_title">Transparent Pricing</string>
+    <string name="intro_onboarding_3_description">Know the cost before your trip — no hidden fees or surprises.</string>
+
+    <string name="intro_onboarding_4_title">Easy Payment</string>
+    <string name="intro_onboarding_4_description">Pay your way — by card or cash. It\'s simple with Yalla.</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         SETTINGS - App Settings
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">App Language</string>
+    <string name="settings_theme">App Theme</string>
+
+    <!-- Theme Options -->
+    <string name="settings_theme_light">Light Mode</string>
+    <string name="settings_theme_dark">Dark Mode</string>
+    <string name="settings_theme_system">System Default</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PLACES - Saved Addresses
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="places_title">My Addresses</string>
+    <string name="places_add_hint">Add an address for quick ordering</string>
+
+    <!-- Place Types -->
+    <string name="places_type_home">Home</string>
+    <string name="places_type_work">Work</string>
+    <string name="places_type_office">Office</string>
+    <string name="places_type_other">Other</string>
+    <string name="places_type_favorite">Favorite</string>
+
+    <!-- Address Form -->
+    <string name="places_form_new">New Address</string>
+    <string name="places_form_edit">Edit Address</string>
+    <string name="places_form_address_hint">Enter address</string>
+    <string name="places_form_name">Address name</string>
+    <string name="places_form_building">Building number</string>
+    <string name="places_form_entrance">Entrance</string>
+    <string name="places_form_comment">Comment</string>
+
+    <!-- Delete Address -->
+    <string name="places_delete_title">Delete Address</string>
+    <string name="places_delete_confirm">Are you sure you want to delete this address?</string>
+    <string name="places_delete_warning">This action cannot be undone</string>
+    <string name="places_delete_action">Yes, delete address</string>
+
+    <!-- Place Messages -->
+    <string name="places_create_success">Address created successfully</string>
+    <string name="places_create_error">Failed to create address</string>
+    <string name="places_update_success">Address updated successfully</string>
+    <string name="places_update_error">Failed to update address</string>
+    <string name="places_delete_success">Address deleted successfully</string>
+    <string name="places_delete_error">Failed to delete address</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PAYMENT - Payment Methods
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="payment_title">Payment Method</string>
+    <string name="payment_section_cards">Cards and Bonus</string>
+    <string name="payment_section_other">Other Methods</string>
+
+    <!-- Payment Types -->
+    <string name="payment_type_cash">Cash</string>
+    <string name="payment_type_card">Card {0}</string>
+    <string name="payment_type_card_dot">• {0}</string>
+
+    <!-- Card Management -->
+    <string name="payment_card_list">Cards</string>
+    <string name="payment_card_new">New Card</string>
+    <string name="payment_card_add">Add Card</string>
+    <string name="payment_card_number">Card number</string>
+    <string name="payment_card_delete">Delete Card</string>
+    <string name="payment_card_delete_confirm">Are you sure you want to delete this card?</string>
+    <string name="payment_card_delete_warning">Card **** {0} will be permanently removed</string>
+
+    <!-- Card Messages -->
+    <string name="payment_card_add_success">Card added successfully</string>
+    <string name="payment_card_add_error">Invalid card details, please try again</string>
+    <string name="payment_card_delete_success">Card deleted successfully</string>
+    <string name="payment_card_delete_error">Failed to delete card</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         BONUS - Bonuses & Promocodes
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="bonus_title">Bonuses and Discounts</string>
+    <string name="bonus_section_title">Bonuses</string>
+    <string name="bonus_rate">1 coin = 1 sum</string>
+    <string name="bonus_balance">You have {0} points</string>
+    <string name="bonus_pay">Pay with bonus</string>
+    <string name="bonus_pay_for_next_trip">Ride in Economy and Comfort — pay for your next trips with bonuses.</string>
+    <string name="bonus_amount">Bonus amount</string>
+    <string name="cashback">Cashback</string>
+
+    <!-- Promocode -->
+    <string name="bonus_promocode_title">Promo Code</string>
+    <string name="bonus_promocode_enter">Enter promo code</string>
+    <string name="bonus_promocode_placeholder">Enter code</string>
+    <string name="bonus_promocode_hint">Discount will be applied automatically on your next ride</string>
+    <string name="bonus_promocode_success">Promo code applied successfully</string>
+    <string name="bonus_promocode_error">This promo code doesn\'t exist</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         ORDER - Taxi Order Flow
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Location Input -->
+    <string name="order_destination_hint">Where are you going?</string>
+    <string name="order_destination_short">Where to?</string>
+    <string name="order_location_not_found">We couldn\'t find this address,\nplease try entering it correctly</string>
+    <string name="order_location_set_mark">Set location</string>
+    <string name="order_location_not_supported">{0} is not supported by our taxi service</string>
+
+    <!-- Stops -->
+    <string name="order_stops_title">Stops</string>
+    <string name="order_stops_add">Add a stop</string>
+
+    <!-- Driver Comment -->
+    <string name="order_comment_title">Note for driver</string>
+    <string name="order_comment_placeholder">Enter your note</string>
+
+    <!-- Order Action -->
+    <string name="order_action_submit">Order</string>
+    <string name="order_pickup_time">Pickup in {0} min</string>
+    <string name="order_services_unavailable">Selected services are not available for this tariff</string>
+
+    <!-- Order Status -->
+    <string name="order_status_searching">Searching</string>
+    <string name="order_status_coming">On the way to you</string>
+    <string name="order_status_by_instruction">By instruction</string>
+    <string name="order_list_title">Your Orders</string>
+
+    <!-- Search Car -->
+    <string name="order_search_cars_nearby">{0} cars near you</string>
+    <string name="order_search_selecting">Selecting suitable ones</string>
+    <string name="order_search_time_estimate">This may take up to {0} minutes</string>
+    <string name="order_action_order_more">Order another</string>
+    <string name="order_trip_info">Trip information</string>
+    <string name="order_action_cancel">Cancel order</string>
+
+    <!-- Order Bottom Sheet -->
+    <string name="order_free_waiting">Free waiting</string>
+    <string name="order_paid_waiting">Paid waiting</string>
+    <string name="order_eta_format">~ {0} min</string>
+    <string name="order_arriving_in">Arrives in</string>
+    <string name="order_contact_driver">Contact driver</string>
+    <string name="order_until_trip_end">Until trip ends</string>
+    <string name="order_pay_by_card">Pay by card</string>
+    <string name="order_pay_by_cash">Pay by cash</string>
+    <string name="order_details_contact">Contact</string>
+    <string name="order_details_safety">Safety</string>
+    <string name="order_details_share">Share</string>
+    <string name="order_details_pickup_eta">Pickup in ~{0}</string>
+    <string name="order_details_about_trip">About the trip</string>
+    <string name="order_details_need_help">Need help?</string>
+    <string name="order_details_arrival">Arrival</string>
+
+    <!-- Cancel Order -->
+    <string name="order_cancel_confirm_title">Do you really want to cancel the trip?</string>
+    <string name="order_cancel_confirm_description">After canceling the search or trip, you will need to find another driver</string>
+    <string name="order_cancel_countdown">{0} seconds</string>
+    <string name="order_cancel_trip_title">Cancel trip?</string>
+    <string name="order_cancel_action_yes">Yes, cancel</string>
+    <string name="order_cancel_reason_title">Cancel Reason</string>
+    <string name="order_cancel_reason_description">Why did you cancel the trip?</string>
+
+    <!-- Order Messages -->
+    <string name="order_create_success">Order created successfully</string>
+    <string name="order_create_error">Failed to create order</string>
+    <string name="order_cancel_success">Order canceled successfully</string>
+    <string name="order_cancel_error">Failed to cancel order</string>
+    <string name="order_cancel_reason_success">Cancel reason sent</string>
+    <string name="order_cancel_reason_error">Failed to send cancel reason</string>
+    <string name="order_rate_success">Trip rated successfully</string>
+    <string name="order_rate_error">Failed to rate trip</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         SAFETY - Driver Safety
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="safety_title">Safety</string>
+    <string name="safety_description_one">All drivers in our company are qualified and have extensive driving experience.</string>
+    <string name="safety_description_two">We thoroughly check every driver against all safety criteria</string>
+    <string name="safety_action_understood">Got it</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         HISTORY - Trip History
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="history_title">My Trips</string>
+    <string name="history_menu_title">Trip History</string>
+    <string name="history_delete">Delete Trip</string>
+    <string name="history_empty">No trips yet</string>
+    <string name="history_date_time">Trip date and time</string>
+
+    <!-- Trip Status -->
+    <string name="history_status_completed">Completed</string>
+    <string name="history_status_canceled">Canceled</string>
+    <string name="history_delete_success">Trip deleted successfully</string>
+    <string name="history_delete_error">Failed to delete trip</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         DRIVER - Driver Information
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="driver_status_coming">Arriving</string>
+    <string name="driver_status_on_way">On the way</string>
+    <string name="driver_arrival_time">{0} min</string>
+    <string name="driver_travel_time">Travel time: {0} min</string>
+    <string name="driver_become">Become a Driver</string>
+
+    <!-- Vehicle -->
+    <string name="driver_car">Vehicle</string>
+    <string name="driver_tariff">Tariff</string>
+
+    <!-- Become Driver Form -->
+    <string name="driver_become_description">Leave a request and we will contact you shortly</string>
+    <string name="driver_become_name_hint">Your name</string>
+    <string name="driver_become_submit">Submit request</string>
+    <string name="driver_become_success">Your request has been sent successfully. We will contact you soon.</string>
+    <string name="driver_become_error">Something went wrong. Please try again</string>
+    <string name="driver_become_select_region">Select region</string>
+    <string name="driver_become_region_title">Select region</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         SERVICE - Service Types (Flavors)
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="service_taxi">Taxi</string>
+    <string name="service_delivery">Delivery</string>
+    <string name="service_intercity">Intercity</string>
+    <string name="service_mail">Mail</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         CONTACT - Support & Contact
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="contact_support_title">Support Service</string>
+    <string name="contact_support_menu">Support</string>
+    <string name="contact_action_call">Call</string>
+    <string name="contact_action_telegram">Telegram</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         INFO - About App
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="info_about_title">About App</string>
+    <string name="info_privacy_policy">Privacy Policy</string>
+    <string name="info_license">License Agreement</string>
+    <string name="info_social_media">Follow us on social media</string>
+    <string name="info_rate_app">Rate the App</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         NOTIFICATION - Notifications
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="notification_title">Notifications</string>
+    <string name="notification_empty">No notifications yet</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         RATING - Trip Rating & Feedback
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="rating_how_was_trip">How was your trip?</string>
+    <string name="rating_what_did_you_like">What did you especially like?</string>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         CONNECTION - No Internet
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="no_internet_title">No internet connection</string>
+    <string name="no_internet_description">Check your internet connection and try again later</string>
+    <string name="no_internet_action">Refresh</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         FORCE UPDATE - App Update Required
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="force_update_title">Update Required</string>
+    <string name="force_update_description">A new version is available. Please update to continue using the app.</string>
+    <string name="force_update_action">Update</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         ERROR - Error Messages
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Network Errors -->
+    <string name="error_no_internet">No internet connection. Please check your network settings.</string>
+    <string name="error_connection_timeout">Connection timed out. Please try again.</string>
+    <string name="error_network_unexpected">An unexpected network error occurred.</string>
+
+    <!-- Server Errors -->
+    <string name="error_server_busy">Our servers are busy. Please try again shortly.</string>
+    <string name="error_unexpected_redirect">Unexpected redirect. Please contact support.</string>
+
+    <!-- Auth Errors -->
+    <string name="error_session_expired">Your session has expired. Please sign in again.</string>
+
+    <!-- Data Errors -->
+    <string name="error_data_format">Data format error. Please update your app.</string>
+
+    <!-- Generic Errors -->
+    <string name="error_client_request">Something went wrong on our end. Please try again later.</string>
+    <string name="error_application">An application error occurred. Please contact support.</string>
+    <string name="error_unknown">An unknown error occurred. Please try again.</string>
+    <string name="error_unexpected">An unexpected error occurred. Please try again later.</string>
+
+</resources>

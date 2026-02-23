@@ -1,0 +1,4 @@
+language = Objective-C
+headers = CoreMedia/CoreMedia.h
+compilerOpts = -framework CoreMedia
+linkerOpts = -framework CoreMedia

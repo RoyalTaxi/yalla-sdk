@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         CONSTANTS (Non-translatable)
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="app_name" translatable="false">Yalla</string>
+
+    <!-- Language Names -->
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_russian" translatable="false">Русский</string>
+    <string name="language_uzbek_cyrillic" translatable="false">Ўзбек</string>
+    <string name="language_uzbek_latin" translatable="false">O'zbek</string>
+
+    <!-- Social Media -->
+    <string name="social_instagram" translatable="false">Instagram</string>
+    <string name="social_telegram" translatable="false">Telegram</string>
+
+    <!-- Phone -->
+    <string name="auth_phone_country_code" translatable="false">+998</string>
+    <string name="auth_phone_placeholder" translatable="false">(_ _) _ _ _  _ _  _ _</string>
+
+    <!-- Payment Card Formats -->
+    <string name="payment_card_humo_format" translatable="false">Humo ----{0}</string>
+    <string name="payment_card_uzcard_format" translatable="false">Uzcard ----{0}</string>
+    <string name="payment_date_default" translatable="false">01/24</string>
+
+    <!-- Format Templates -->
+    <string name="format_distance_km" translatable="false">{0} km</string>
+    <string name="format_percent" translatable="false">{0} %</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         COMMON - Shared UI Elements
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Action Buttons -->
+    <string name="common_action_activate">Faollashtirish</string>
+    <string name="common_action_all">Barchasi</string>
+    <string name="common_action_allow">Ruxsat berish</string>
+    <string name="common_action_cancel">Bekor qilish</string>
+    <string name="common_action_confirm">Tasdiqlash</string>
+    <string name="common_action_delete">O'chirish</string>
+    <string name="common_action_edit">Tahrirlash</string>
+    <string name="common_action_next">Keyingi</string>
+    <string name="common_action_save">Saqlash</string>
+    <string name="common_action_select">Tanlash</string>
+    <string name="common_action_send">Yuborish</string>
+    <string name="common_action_skip">O'tkazib yuborish</string>
+    <string name="common_action_use">Foydalanish</string>
+
+    <!-- Status -->
+    <string name="common_status_loading">Yuklanmoqda</string>
+    <string name="common_status_ready">Tayyor</string>
+    <string name="common_status_searching">Qidirilmoqda</string>
+
+    <!-- Labels -->
+    <string name="common_label_details">Tafsilotlar</string>
+    <string name="common_label_status">Holat</string>
+
+    <!-- Format -->
+    <string name="format_currency_sum">{0} so'm</string>
+    <string name="format_currency_range">{0} dan {1} gacha</string>
+    <string name="format_time_min">{0} min</string>
+    <string name="format_time_min_short">daq</string>
+    <string name="format_percent_up_to">{0}% gacha</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         AUTH - Authentication & Login
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Welcome Screen -->
+    <string name="auth_welcome_title">Xush kelibsiz!</string>
+    <string name="auth_welcome_description">Davom etish uchun telefon raqamingizni kiriting.</string>
+    <string name="auth_welcome_sms_hint">Tasdiqlash kodi bilan SMS sizning raqamingizga yuboriladi</string>
+
+    <!-- OTP Verification -->
+    <string name="auth_otp_title">Xavfsizlik kodi</string>
+    <string name="auth_otp_description">+998{0} raqamiga yuborilgan 5 xonali kodni kiriting</string>
+    <string name="auth_otp_verify">Tasdiqlash</string>
+    <string name="auth_otp_resend">Kodni qayta yuborish</string>
+    <string name="auth_otp_resend_countdown">{0} dan so'ng kodni qayta yuborish</string>
+
+    <!-- Auth Required -->
+    <string name="auth_required_title">Davom etish uchun avtorizatsiya qilishingiz kerak</string>
+    <string name="auth_required_description">Bu atigi bir necha daqiqa oladi</string>
+    <string name="auth_required_action">Avtorizatsiya qilish</string>
+
+    <!-- Auth Messages -->
+    <string name="auth_send_code_error">Tasdiqlash kodini yuborib bo'lmadi</string>
+    <string name="auth_validate_code_error">Tasdiqlash kodi noto'g'ri</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         REGISTER - User Registration
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="register_title">Keling tanishamiz</string>
+    <string name="register_subtitle">Sizga qanday murojaat qilishim mumkin?</string>
+    <string name="register_action">Ro'yxatdan o'tish</string>
+
+    <!-- Input Fields -->
+    <string name="register_input_name">Ismingizni kiriting</string>
+    <string name="register_input_surname">Familiyangizni kiriting</string>
+    <string name="register_input_birthdate">Tug'ilgan sana</string>
+
+    <!-- Gender -->
+    <string name="register_gender_male">Erkak</string>
+    <string name="register_gender_female">Ayol</string>
+
+    <!-- Register Messages -->
+    <string name="register_error">Ro'yxatdan o'tish muvaffaqiyatsiz yakunlandi</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PROFILE - User Profile Management
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="profile_edit_title">Profilni tahrirlash</string>
+
+    <!-- Photo Actions -->
+    <string name="profile_photo_change">Rasmni o'zgartirish</string>
+    <string name="profile_photo_take">Rasm olish</string>
+    <string name="profile_photo_gallery">Galereyadan tanlash</string>
+    <string name="profile_photo_delete">Rasmni o'chirish</string>
+
+    <!-- Delete Account -->
+    <string name="profile_delete_title">Hisobni o'chirish</string>
+    <string name="profile_delete_confirm">Hisobingizni o'chirishga ishonchingiz komilmi?</string>
+    <string name="profile_delete_warning">Hisob o'chirilgandan so'ng barcha ma'lumotlar butunlay yo'qoladi va qayta tiklanmaydi</string>
+    <string name="profile_delete_action">Ha, hisobni o'chirish</string>
+
+    <!-- Logout -->
+    <string name="profile_logout_title">Hisobdan chiqish</string>
+    <string name="profile_logout_confirm">Hisobdan chiqishni rostdan xohlaysizmi?</string>
+    <string name="profile_logout_description">Chiqganingizdan so'ng qaytadan hisobingizga kirishingiz mumkin</string>
+    <string name="profile_logout_action">Ha, hisobdan chiqish</string>
+
+    <!-- Profile Messages -->
+    <string name="profile_update_success">Profil muvaffaqiyatli yangilandi</string>
+    <string name="profile_update_error">Profilni yangilab bo'lmadi</string>
+    <string name="profile_avatar_update_success">Profil rasmi muvaffaqiyatli yangilandi</string>
+    <string name="profile_avatar_update_error">Profil rasmini yangilab bo'lmadi</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         INTRO - Onboarding & Permissions
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Language Selection -->
+    <string name="intro_language_title">Ilova\ntilini tanlang</string>
+
+    <!-- Location Permission -->
+    <string name="intro_location_title">Joylashuv</string>
+    <string name="intro_location_description">Aniq taksi chaqirish uchun joylashuvingizni taqdim eting</string>
+
+    <!-- GPS & Location Access -->
+    <string name="location_gps_title">GPS-ni\nyoqing</string>
+    <string name="location_gps_subtitle">Sizning vaqtingiz - bizning tezligimiz</string>
+    <string name="location_permission_title">Joylashuvni yoqing</string>
+    <string name="location_permission_description">Aniq chaqiruv uchun joylashuvingizni taqdim eting</string>
+    <string name="location_permission_action">Ruxsat berish</string>
+
+    <!-- Notification Permission -->
+    <string name="intro_notification_title">Bildirishnomalar</string>
+    <string name="intro_notification_description">Bildirishnoma yuborish uchun ruxsat bering</string>
+
+    <!-- Onboarding Slides -->
+    <string name="intro_onboarding_1_title">Tez va qulay</string>
+    <string name="intro_onboarding_1_description">Sayohatni buyurtma qiling — bir necha soniyada Yalla eng yaqin haydovchini topadi.</string>
+
+    <string name="intro_onboarding_2_title">Ishonchli haydovchilar</string>
+    <string name="intro_onboarding_2_description">Yalladagi har bir haydovchi tekshiruvdan o'tgan va yuqori reytingga ega.</string>
+
+    <string name="intro_onboarding_3_title">Shaffof narx</string>
+    <string name="intro_onboarding_3_description">Sayohat boshlanishidan oldin narxni bilib oling — yashirin to'lovlar va kutilmagan xarajatlar yo'q.</string>
+
+    <string name="intro_onboarding_4_title">Qulay to'lov</string>
+    <string name="intro_onboarding_4_description">O'zingizga qulay usulda to'lang — karta yoki naqd pul bilan. Yalla bilan hammasi oson.</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         SETTINGS - App Settings
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="settings_title">Sozlamalar</string>
+    <string name="settings_language">Ilova tili</string>
+    <string name="settings_theme">Ilova mavzusi</string>
+
+    <!-- Theme Options -->
+    <string name="settings_theme_light">Yorug' mavzu</string>
+    <string name="settings_theme_dark">Tungi mavzu</string>
+    <string name="settings_theme_system">Tizimli</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PLACES - Saved Addresses
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="places_title">Manzillarim</string>
+    <string name="places_add_hint">Tez buyurtma qilish uchun manzil qo'shing</string>
+
+    <!-- Place Types -->
+    <string name="places_type_home">Uy</string>
+    <string name="places_type_work">Ish</string>
+    <string name="places_type_office">Ofis</string>
+    <string name="places_type_other">Boshqa</string>
+    <string name="places_type_favorite">Sevimli</string>
+
+    <!-- Address Form -->
+    <string name="places_form_new">Yangi manzil</string>
+    <string name="places_form_edit">Manzilni o'zgartirish</string>
+    <string name="places_form_address_hint">Manzilni kiriting</string>
+    <string name="places_form_name">Manzil nomi</string>
+    <string name="places_form_building">Uy raqami</string>
+    <string name="places_form_entrance">Kirish</string>
+    <string name="places_form_comment">Izoh</string>
+
+    <!-- Delete Address -->
+    <string name="places_delete_title">Manzilni o'chirish</string>
+    <string name="places_delete_confirm">Siz haqiqatdan ham ushbu manzilni o'chirmoqchimisiz?</string>
+    <string name="places_delete_warning">Ushbu manzilni o'chirgandan so'ng ma'lumotlarni tiklab bo'lmaydi</string>
+    <string name="places_delete_action">Ha, manzilni o'chirish</string>
+
+    <!-- Place Messages -->
+    <string name="places_create_success">Manzil muvaffaqiyatli yaratildi</string>
+    <string name="places_create_error">Manzilni yaratib bo'lmadi</string>
+    <string name="places_update_success">Manzil muvaffaqiyatli yangilandi</string>
+    <string name="places_update_error">Manzilni yangilab bo'lmadi</string>
+    <string name="places_delete_success">Manzil muvaffaqiyatli o'chirildi</string>
+    <string name="places_delete_error">Manzilni o'chirib bo'lmadi</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         PAYMENT - Payment Methods
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="payment_title">To'lov usuli</string>
+    <string name="payment_section_cards">Karta va bonus</string>
+    <string name="payment_section_other">Boshqa usullar</string>
+
+    <!-- Payment Types -->
+    <string name="payment_type_cash">Naqd pul</string>
+    <string name="payment_type_card">Karta {0}</string>
+    <string name="payment_type_card_dot">• {0}</string>
+
+    <!-- Card Management -->
+    <string name="payment_card_list">Kartalar</string>
+    <string name="payment_card_new">Yangi karta</string>
+    <string name="payment_card_add">Karta qo'shish</string>
+    <string name="payment_card_number">Karta raqami</string>
+    <string name="payment_card_delete">Kartani o'chirish</string>
+    <string name="payment_card_delete_confirm">Kartangizni o'chirmoqchimisiz?</string>
+    <string name="payment_card_delete_warning">**** {0} kartasi o'chirilib bo'lgach, barcha ma'lumotlarni tiklab bo'lmaydi</string>
+
+    <!-- Card Messages -->
+    <string name="payment_card_add_success">Karta muvaffaqiyatli qo'shildi</string>
+    <string name="payment_card_add_error">Noto'g'ri ma'lumot, qayta urinib ko'ring</string>
+    <string name="payment_card_delete_success">Karta muvaffaqiyatli o'chirildi</string>
+    <string name="payment_card_delete_error">Kartani o'chirish muvaffaqiyatsiz yakunlandi</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         BONUS - Bonuses & Promocodes
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="bonus_title">Bonuslar va chegirmalar</string>
+    <string name="bonus_section_title">Bonuslar</string>
+    <string name="bonus_rate">1 tanga = 1 so'm</string>
+    <string name="bonus_balance">Sizda {0} ball bor</string>
+    <string name="bonus_pay">Bonus orqali to'lash</string>
+    <string name="bonus_pay_for_next_trip">Ekonom va Komfortda sayohat qiling - keyingi sayohatlar uchun bonuslar bilan to'lang.</string>
+    <string name="bonus_amount">Bonus miqdori</string>
+    <string name="cashback">Keshbek</string>
+
+    <!-- Promocode -->
+    <string name="bonus_promocode_title">Promokod</string>
+    <string name="bonus_promocode_enter">Promokodni kiriting</string>
+    <string name="bonus_promocode_placeholder">Kodni kiriting</string>
+    <string name="bonus_promocode_hint">Chegirma keyingi safaringizda avtomatik ravishda qo'llaniladi</string>
+    <string name="bonus_promocode_success">Promokod muvaffaqiyatli qo'llandi</string>
+    <string name="bonus_promocode_error">Bunday promokod mavjud emas</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         ORDER - Taxi Order Flow
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Location Input -->
+    <string name="order_destination_hint">Qayerga borasiz?</string>
+    <string name="order_destination_short">Qayerga boramiz?</string>
+    <string name="order_location_not_found">Biz bunday manzilni topolmadik,\niltimos, to'g'ri kiriting</string>
+    <string name="order_location_set_mark">Belgi qo'yish</string>
+    <string name="order_location_not_supported">{0} taksi xizmati tomonidan qo'llab-quvvatlanmaydi</string>
+
+    <!-- Stops -->
+    <string name="order_stops_title">Bekatlar</string>
+    <string name="order_stops_add">Bekat qo'shish</string>
+
+    <!-- Driver Comment -->
+    <string name="order_comment_title">Haydovchiga izoh</string>
+    <string name="order_comment_placeholder">Izoh kiriting</string>
+
+    <!-- Order Action -->
+    <string name="order_action_submit">Buyurtma berish</string>
+    <string name="order_pickup_time">Kelish {0} daq</string>
+    <string name="order_services_unavailable">Tanlangan xizmatlar ushbu tarif uchun mavjud emas</string>
+
+    <!-- Order Status -->
+    <string name="order_status_searching">Qidirilmoqda</string>
+    <string name="order_status_coming">Siz tomonga kelmoqda</string>
+    <string name="order_status_by_instruction">Yo'nalish bo'ylab</string>
+    <string name="order_list_title">Sizning buyurtmalaringiz</string>
+
+    <!-- Search Car -->
+    <string name="order_search_cars_nearby">Sizga yaqin {0} ta mashina</string>
+    <string name="order_search_selecting">Mos keladiganlarni tanlaymiz</string>
+    <string name="order_search_time_estimate">Bu {0} daqiqagacha vaqt olishi mumkin</string>
+    <string name="order_action_order_more">Yana buyurtma berish</string>
+    <string name="order_trip_info">Safar haqida ma'lumot</string>
+    <string name="order_action_cancel">Buyurtmani bekor qilish</string>
+
+    <!-- Order Bottom Sheet -->
+    <string name="order_free_waiting">Bepul kutish</string>
+    <string name="order_paid_waiting">Pullik kutish</string>
+    <string name="order_eta_format">~ {0} min</string>
+    <string name="order_arriving_in">Kelish vaqti</string>
+    <string name="order_contact_driver">Haydovchi bilan aloqa</string>
+    <string name="order_until_trip_end">Safar oxirigacha</string>
+    <string name="order_pay_by_card">Karta orqali to'lash</string>
+    <string name="order_pay_by_cash">Naqd pul bilan to'lash</string>
+    <string name="order_details_contact">Bog'lanish</string>
+    <string name="order_details_safety">Xavfsizlik</string>
+    <string name="order_details_share">Ulashish</string>
+    <string name="order_details_pickup_eta">Yetib kelish ~{0}</string>
+    <string name="order_details_about_trip">Safar haqida</string>
+    <string name="order_details_need_help">Yordam kerakmi?</string>
+    <string name="order_details_arrival">Yetib kelish</string>
+
+    <!-- Cancel Order -->
+    <string name="order_cancel_confirm_title">Safarni bekor qilmoqchimisiz?</string>
+    <string name="order_cancel_confirm_description">Qidiruvni yoki safarni bekor qilgandan keyin boshqa haydovchini qidirishga to'g'ri keladi</string>
+    <string name="order_cancel_countdown">{0} soniya</string>
+    <string name="order_cancel_trip_title">Safarni bekor qilish?</string>
+    <string name="order_cancel_action_yes">Ha, bekor qilish</string>
+    <string name="order_cancel_reason_title">Bekor qilish sababi</string>
+    <string name="order_cancel_reason_description">Safarni nima sababdan bekor qildingiz?</string>
+
+    <!-- Order Messages -->
+    <string name="order_create_success">Buyurtma muvaffaqiyatli yaratildi</string>
+    <string name="order_create_error">Buyurtmani yaratib bo'lmadi</string>
+    <string name="order_cancel_success">Buyurtma muvaffaqiyatli bekor qilindi</string>
+    <string name="order_cancel_error">Buyurtmani bekor qilib bo'lmadi</string>
+    <string name="order_cancel_reason_success">Bekor qilish sababi yuborildi</string>
+    <string name="order_cancel_reason_error">Bekor qilish sababini yuborib bo'lmadi</string>
+    <string name="order_rate_success">Safar muvaffaqiyatli baholandi</string>
+    <string name="order_rate_error">Safarni baholab bo'lmadi</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         SAFETY - Driver Safety
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="safety_title">Xavfsizlik</string>
+    <string name="safety_description_one">Kompaniyamizning barcha haydovchilari malakali va katta haydash tajribasiga ega.</string>
+    <string name="safety_description_two">Biz sinchkovlik bilan har bir haydovchini xavfsizlikning barcha mezonlari bo\'yicha tekshiramiz</string>
+    <string name="safety_action_understood">Tushunarli</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         HISTORY - Trip History
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="history_title">Mening sayohatlarim</string>
+    <string name="history_menu_title">Safar tarixi</string>
+    <string name="history_delete">Safarni o'chirish</string>
+    <string name="history_empty">Hozircha safarlar yo'q</string>
+    <string name="history_date_time">Sayohat sanasi va vaqti</string>
+
+    <!-- Trip Status -->
+    <string name="history_status_completed">Sayohat tugallandi</string>
+    <string name="history_status_canceled">Bekor qilindi</string>
+    <string name="history_delete_success">Safar muvaffaqiyatli o'chirildi</string>
+    <string name="history_delete_error">Safarni o'chirib bo'lmadi</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         DRIVER - Driver Information
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="driver_status_coming">Kelmoqda</string>
+    <string name="driver_status_on_way">Yo'lda</string>
+    <string name="driver_arrival_time">{0} min</string>
+    <string name="driver_travel_time">Yo'l vaqti: {0} min</string>
+    <string name="driver_become">Haydovchi bo'lish</string>
+
+    <!-- Vehicle -->
+    <string name="driver_car">Avto</string>
+    <string name="driver_tariff">Tarif</string>
+
+    <!-- Become Driver Form -->
+    <string name="driver_become_description">Ariza qoldiring va biz siz bilan tez orada bog\'lanamiz</string>
+    <string name="driver_become_name_hint">Ismingiz</string>
+    <string name="driver_become_submit">Ariza yuborish</string>
+    <string name="driver_become_success">Arizangiz muvaffaqiyatli yuborildi. Biz siz bilan tez orada bog\'lanamiz.</string>
+    <string name="driver_become_error">Nimadir xato ketdi. Qaytadan urinib ko\'ring</string>
+    <string name="driver_become_select_region">Hududni tanlang</string>
+    <string name="driver_become_region_title">Hududni tanlang</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         SERVICE - Service Types (Flavors)
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="service_taxi">Taksi</string>
+    <string name="service_delivery">Yetkazib berish</string>
+    <string name="service_intercity">Shaharlararo</string>
+    <string name="service_mail">Pochta</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         CONTACT - Support & Contact
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="contact_support_title">Qo'llab-quvvatlash xizmati</string>
+    <string name="contact_support_menu">Yordam xizmati</string>
+    <string name="contact_action_call">Qo'ng'iroq qilish</string>
+    <string name="contact_action_telegram">Telegram</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         INFO - About App
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="info_about_title">Ilova haqida</string>
+    <string name="info_privacy_policy">Maxfiylik siyosati</string>
+    <string name="info_license">Litsenziya shartnomasi</string>
+    <string name="info_social_media">Biz ijtimoiy tarmoqlarda</string>
+    <string name="info_rate_app">Ilovani baholash</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         NOTIFICATION - Notifications
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="notification_title">Bildirishnomalar</string>
+    <string name="notification_empty">Hozirda bildirishnomalar yo'q</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         RATING - Trip Rating & Feedback
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="rating_how_was_trip">Safar qanday o'tdi?</string>
+    <string name="rating_what_did_you_like">Sizga nima ayniqsa yoqdi?</string>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         CONNECTION - No Internet
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="no_internet_title">Internetga ulanish yo'q</string>
+    <string name="no_internet_description">Internetga ulanishni tekshiring, keyinroq qayta urinib ko'ring</string>
+    <string name="no_internet_action">Yangilash</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         FORCE UPDATE - App Update Required
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="force_update_title">Yangilanish kerak</string>
+    <string name="force_update_description">Ilovaning yangi versiyasi mavjud. Davom etish uchun yangilang.</string>
+    <string name="force_update_action">Yangilash</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         ERROR - Error Messages
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <!-- Network Errors -->
+    <string name="error_no_internet">Internetga ulanish yo'q. Iltimos, tarmoq sozlamalaringizni tekshiring.</string>
+    <string name="error_connection_timeout">Ulanish vaqti tugadi. Iltimos, qayta urinib ko'ring.</string>
+    <string name="error_network_unexpected">Kutilmagan tarmoq xatosi yuz berdi.</string>
+
+    <!-- Server Errors -->
+    <string name="error_server_busy">Serverlarimiz band. Iltimos, bir ozdan keyin qayta urinib ko'ring.</string>
+    <string name="error_unexpected_redirect">Kutilmagan yo'naltirish. Iltimos, qo'llab-quvvatlash xizmati bilan bog'laning.</string>
+
+    <!-- Auth Errors -->
+    <string name="error_session_expired">Sessiya muddati tugadi. Iltimos, qayta kiring.</string>
+
+    <!-- Data Errors -->
+    <string name="error_data_format">Ma'lumotlar formati xatosi. Iltimos, ilovangizni yangilang.</string>
+
+    <!-- Generic Errors -->
+    <string name="error_client_request">Bizning tarafimizda qandaydir xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.</string>
+    <string name="error_application">Ilova xatosi yuz berdi. Iltimos, qo'llab-quvvatlash xizmati bilan bog'laning.</string>
+    <string name="error_unknown">Noma'lum xatolik yuz berdi. Iltimos, qayta urinib ko'ring.</string>
+    <string name="error_unexpected">Kutilmagan xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.</string>
+
+</resources>
