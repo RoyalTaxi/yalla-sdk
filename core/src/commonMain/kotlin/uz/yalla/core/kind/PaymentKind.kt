@@ -11,10 +11,10 @@ sealed class PaymentKind(
     ) : PaymentKind("card")
 
     companion object {
-        fun from(id: String?): PaymentKind =
+        fun from(id: String?, cardId: String? = null, maskedNumber: String? = null): PaymentKind =
             when (id?.lowercase()) {
                 "cash" -> Cash
-                // Card must be constructed directly with Card(cardId, maskedNumber)
+                "card" -> Card(cardId = cardId.orEmpty(), maskedNumber = maskedNumber.orEmpty())
                 else -> Cash
             }
     }

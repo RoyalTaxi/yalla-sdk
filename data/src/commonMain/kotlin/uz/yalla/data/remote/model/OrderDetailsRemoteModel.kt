@@ -18,6 +18,8 @@ data class OrderDetailsRemoteModel(
     val comment: String? = null,
     @SerialName("payment_type")
     val paymentType: String? = null,
+    @SerialName("card_id")
+    val cardId: String? = null,
     val number: Long? = null,
     val options: List<Option>? = null,
     val intercity: Intercity? = null,
