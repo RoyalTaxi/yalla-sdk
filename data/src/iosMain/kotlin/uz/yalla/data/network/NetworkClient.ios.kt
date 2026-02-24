@@ -117,9 +117,12 @@ private fun handleUnauthorized(
     appPrefs: AppPreferences,
     staticPrefs: StaticPreferences
 ) {
+    val token = accessTokenCache.value
+    if (token.isEmpty()) return
+    if (!accessTokenCache.compareAndSet(token, "")) return
+
     appPrefs.performLogout()
     staticPrefs.performLogout()
-    accessTokenCache.value = ""
     localeCache.value = staticPrefs.localeType.code
     UnauthorizedSessionEvents.publish()
 }

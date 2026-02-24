@@ -23,7 +23,7 @@ kotlin {
         }
 
         androidMain.dependencies {
-            implementation(project.dependencies.platform(libs.firebase.bom))
+            api(project.dependencies.platform(libs.firebase.bom))
             implementation(libs.androidx.core.ktx)
         }
     }
