@@ -320,6 +320,7 @@
     <string name="order_search_time_estimate">This may take up to {0} minutes</string>
     <string name="order_action_order_more">Order another</string>
     <string name="order_trip_info">Trip information</string>
+    <string name="order_trip_details">Trip details</string>
     <string name="order_action_cancel">Cancel order</string>
 
     <!-- Order Bottom Sheet -->

@@ -320,6 +320,7 @@
     <string name="order_search_time_estimate">Это может занять до {0} минут</string>
     <string name="order_action_order_more">Заказать ещё</string>
     <string name="order_trip_info">Информация о поездке</string>
+    <string name="order_trip_details">Детали поездки</string>
     <string name="order_action_cancel">Отменить заказ</string>
 
     <!-- Order Bottom Sheet -->

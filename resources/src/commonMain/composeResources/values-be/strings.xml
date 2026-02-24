@@ -320,6 +320,7 @@
     <string name="order_search_time_estimate">Бу {0} дақиқагача вақт олиши мумкин</string>
     <string name="order_action_order_more">Яна буюртма бериш</string>
     <string name="order_trip_info">Сафар ҳақида маълумот</string>
+    <string name="order_trip_details">Сафар тафсилотлари</string>
     <string name="order_action_cancel">Буюртмани бекор қилиш</string>
 
     <!-- Order Bottom Sheet -->
