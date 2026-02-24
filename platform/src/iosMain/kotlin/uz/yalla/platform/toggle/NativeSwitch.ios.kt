@@ -43,11 +43,12 @@ actual fun NativeSwitch(
             }
             uiSwitch.enabled = enabled
         },
-        properties = UIKitInteropProperties(
-            interactionMode = UIKitInteropInteractionMode.NonCooperative,
-            isNativeAccessibilityEnabled = false,
-            placedAsOverlay = true,
-        ),
+        properties =
+            UIKitInteropProperties(
+                interactionMode = UIKitInteropInteractionMode.NonCooperative,
+                isNativeAccessibilityEnabled = false,
+                placedAsOverlay = true,
+            ),
     )
 }
 

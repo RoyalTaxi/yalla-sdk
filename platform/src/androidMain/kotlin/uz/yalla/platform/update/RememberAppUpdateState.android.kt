@@ -8,7 +8,10 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.UpdateAvailability
 
 @Composable
-actual fun rememberAppUpdateState(appId: String, countryCode: String): AppUpdateState {
+actual fun rememberAppUpdateState(
+    appId: String,
+    countryCode: String
+): AppUpdateState {
     val context = LocalContext.current
     val state = remember { AppUpdateState() }
 
@@ -21,8 +24,7 @@ actual fun rememberAppUpdateState(appId: String, countryCode: String): AppUpdate
                     state.storeUrl = "market://details?id=$appId"
                 }
                 state.isChecking = false
-            }
-            .addOnFailureListener {
+            }.addOnFailureListener {
                 state.isChecking = false
             }
     }

@@ -15,14 +15,19 @@ kotlin {
             api(libs.kotlinx.coroutines.core)
             api(libs.koin.core)
 
-            implementation(libs.multiplatform.settings)
-            implementation(libs.multiplatform.settings.no.arg)
-            implementation(libs.multiplatform.settings.coroutines)
-            implementation(libs.datastore.preferences)
+            api(libs.multiplatform.settings)
+            api(libs.multiplatform.settings.no.arg)
+            api(libs.multiplatform.settings.coroutines)
+            api(libs.datastore.preferences)
         }
 
         androidMain.dependencies {
+            implementation(libs.ktor.client.android)
             implementation(libs.koin.android)
+        }
+
+        iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
 }

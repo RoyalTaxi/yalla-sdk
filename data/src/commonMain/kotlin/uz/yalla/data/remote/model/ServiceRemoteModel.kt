@@ -15,7 +15,6 @@ data class ServiceRemoteModel(
         const val COST_TYPE_COST = "cost"
         const val COST_TYPE_PERCENT = "percent"
 
-        fun isPercentType(type: String?): Boolean =
-            type?.equals(COST_TYPE_PERCENT, ignoreCase = true) ?: false
+        fun isPercentType(type: String?): Boolean = type?.equals(COST_TYPE_PERCENT, ignoreCase = true) ?: false
     }
 }

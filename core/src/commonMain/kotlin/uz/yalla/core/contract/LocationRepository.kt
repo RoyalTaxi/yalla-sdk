@@ -12,7 +12,10 @@ import uz.yalla.core.model.location.SecondaryAddressItemModel
 interface LocationRepository {
     suspend fun getPolygon(): Either<List<PolygonRemoteItem>, DataError.Network>
 
-    suspend fun getAddress(lat: Double, lng: Double): Either<PlaceNameModel, DataError.Network>
+    suspend fun getAddress(
+        lat: Double,
+        lng: Double
+    ): Either<PlaceNameModel, DataError.Network>
 
     suspend fun searchForAddress(
         lat: Double,
