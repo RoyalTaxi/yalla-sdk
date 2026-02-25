@@ -194,6 +194,11 @@
     <string name="settings_theme_dark">Tungi mavzu</string>
     <string name="settings_theme_system">Tizimli</string>
 
+    <!-- Map Options -->
+    <string name="settings_map">Ilova xaritasi</string>
+    <string name="settings_map_google">Google xarita</string>
+    <string name="settings_map_libre">MapLibre xarita</string>
+
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
          PLACES - Saved Addresses

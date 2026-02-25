@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
@@ -46,8 +47,13 @@ actual fun NativeSheet(
             )
         }
 
+    val hasPresented = remember { mutableStateOf(false) }
+
     DisposableEffect(isVisible) {
-        if (!isVisible) return@DisposableEffect onDispose {}
+        if (!isVisible) {
+            hasPresented.value = false
+            return@DisposableEffect onDispose {}
+        }
 
         val parent = findKeyWindowRootController() ?: return@DisposableEffect onDispose {}
 
@@ -59,19 +65,20 @@ actual fun NativeSheet(
             parent = parent,
             themeProvider = themeProvider,
             backgroundColor = backgroundColor,
-            onPresented = { currentOnFullyExpanded?.invoke() },
+            onPresented = {
+                hasPresented.value = true
+                currentOnFullyExpanded?.invoke()
+            },
             content = { currentContent() }
         )
 
         onDispose { presenter.dismiss(animated = true) }
     }
 
-    // React to property changes while the sheet is visible.
-    // isVisible is intentionally NOT a key — DisposableEffect handles present/dismiss.
-    // Including isVisible would cause redundant updateBackground calls during the
-    // presentation animation, contributing to visual flickering.
+    // Reacts to property changes while the sheet is visible.
+    // Skips the initial run — present() already sets background and dismiss behavior.
     LaunchedEffect(backgroundColor, dismissEnabled, onDismissAttempt) {
-        if (isVisible) {
+        if (isVisible && hasPresented.value) {
             presenter.updateDismissBehavior(
                 dismissEnabled = dismissEnabled,
                 onDismissAttempt = onDismissAttempt

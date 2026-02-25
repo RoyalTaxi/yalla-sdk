@@ -194,6 +194,11 @@
     <string name="settings_theme_dark">Тунги мавзу</string>
     <string name="settings_theme_system">Тизимли</string>
 
+    <!-- Map Options -->
+    <string name="settings_map">Илова харитаси</string>
+    <string name="settings_map_google">Google харита</string>
+    <string name="settings_map_libre">MapLibre харита</string>
+
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
          PLACES - Saved Addresses

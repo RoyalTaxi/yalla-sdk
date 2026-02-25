@@ -15,6 +15,6 @@ import androidx.compose.ui.graphics.painter.Painter
 data class SelectableItemModel<T>(
     val item: T,
     val title: String,
-    val icon: Painter,
-    val iconColor: Color
+    val icon: Painter? = null,
+    val iconColor: Color = Color.Unspecified
 )

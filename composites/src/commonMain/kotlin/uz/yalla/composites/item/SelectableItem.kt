@@ -169,13 +169,15 @@ fun <T> SelectableItem(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(dimens.contentPadding)
         ) {
-            Icon(
-                painter = state.item.icon,
-                contentDescription = null,
-                tint = state.item.iconColor
-            )
+            if (state.item.icon != null) {
+                Icon(
+                    painter = state.item.icon!!,
+                    contentDescription = null,
+                    tint = state.item.iconColor
+                )
 
-            Spacer(modifier = Modifier.width(dimens.iconSpacing))
+                Spacer(modifier = Modifier.width(dimens.iconSpacing))
+            }
 
             Text(
                 text = state.item.title,

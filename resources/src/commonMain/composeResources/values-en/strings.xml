@@ -194,6 +194,11 @@
     <string name="settings_theme_dark">Dark Mode</string>
     <string name="settings_theme_system">System Default</string>
 
+    <!-- Map Options -->
+    <string name="settings_map">App Map</string>
+    <string name="settings_map_google">Google Maps</string>
+    <string name="settings_map_libre">MapLibre Maps</string>
+
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
          PLACES - Saved Addresses

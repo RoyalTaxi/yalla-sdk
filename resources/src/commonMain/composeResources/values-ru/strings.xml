@@ -194,6 +194,11 @@
     <string name="settings_theme_dark">Тёмная тема</string>
     <string name="settings_theme_system">Системная</string>
 
+    <!-- Map Options -->
+    <string name="settings_map">Карта приложения</string>
+    <string name="settings_map_google">Google карта</string>
+    <string name="settings_map_libre">MapLibre карта</string>
+
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
          PLACES - Saved Addresses
