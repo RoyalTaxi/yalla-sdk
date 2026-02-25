@@ -157,7 +157,7 @@
     <string name="intro_location_description">Аниқ такси чақириш учун жойлашувингизни тақдим этинг</string>
 
     <!-- GPS & Location Access -->
-    <string name="location_gps_title">GPS-ни\нёқинг</string>
+    <string name="location_gps_title">GPS-ни\nёқинг</string>
     <string name="location_gps_subtitle">Сизнинг вақтингиз - бизнинг тезлигимиз</string>
     <string name="location_permission_title">Жойлашувни ёқинг</string>
     <string name="location_permission_description">Аниқ чақирув учун жойлашувингизни тақдим этинг</string>
