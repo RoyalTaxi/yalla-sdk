@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.github.dellisd.spatialk.geojson.Position
@@ -31,7 +31,6 @@ import uz.yalla.maps.provider.common.rememberMapInitState
 import uz.yalla.maps.provider.libre.component.LocationIndicator
 import uz.yalla.maps.provider.libre.component.LocationsLayer
 import uz.yalla.maps.provider.libre.component.RouteLayer
-import uz.yalla.maps.util.isValid
 import uz.yalla.maps.util.toGeoPoint
 import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
 
@@ -58,60 +57,49 @@ class LibreExtendedMap : ExtendedMap {
         val dependencies: MapDependencies = koinInject()
         val scope = rememberCoroutineScope()
 
-        val themeType by dependencies.themeType.collectAsStateWithLifecycle(ThemeKind.System)
+        val themeType by dependencies.interfacePreferences.themeType.collectAsStateWithLifecycle(ThemeKind.System)
         val theme = rememberMapTheme(themeType)
 
         val currentLocation by dependencies.locationProvider.currentLocation.collectAsStateWithLifecycle(null)
-        val lastLocation by (
-            dependencies.lastLocationProvider?.lastLocation
-                ?: kotlinx.coroutines.flow.flowOf(null)
-        ).collectAsStateWithLifecycle(null)
 
         val userLocation =
             remember(currentLocation) {
                 currentLocation?.takeIf { it != GeoPoint.Zero }
             }
         val hasLocationPermission = userLocation != null
-        val hasCachedLocation = remember(lastLocation) { lastLocation?.isValid() == true }
-        val fallbackTarget =
-            remember(lastLocation) {
-                lastLocation?.takeIf { it.isValid() }
-                    ?: MapConstants.BOBUR_SQUARE.toGeoPoint()
-            }
+        val fallback = initialPoint ?: MapConstants.BOBUR_SQUARE.toGeoPoint()
 
         val initState = rememberMapInitState()
         val initialTarget =
-            remember(initialPoint, userLocation, fallbackTarget, useInternalCameraInitialization) {
+            remember(initialPoint, userLocation, fallback, useInternalCameraInitialization) {
                 when {
                     initialPoint != null -> initialPoint
                     !useInternalCameraInitialization -> MapConstants.BOBUR_SQUARE.toGeoPoint()
                     userLocation != null -> userLocation
-                    else -> fallbackTarget
+                    else -> fallback
                 }
             }
         val cameraState = rememberInitialCameraState(initialTarget)
 
-        val pendingTarget by remember(
+        val pendingTarget = remember(
             initState.isMapReady,
             initState.hasMovedToLocation,
             initState.hasMovedToUserLocation,
             initialPoint,
             userLocation,
-            fallbackTarget,
+            fallback,
             useInternalCameraInitialization
         ) {
-            derivedStateOf {
-                if (!useInternalCameraInitialization) return@derivedStateOf null
+            if (!useInternalCameraInitialization) return@remember null
 
-                when {
-                    !initState.isMapReady -> null
-                    initialPoint != null && !initState.hasMovedToLocation -> initialPoint
-                    initialPoint != null -> null
-                    initState.hasMovedToUserLocation -> null
-                    userLocation != null -> userLocation
-                    !initState.hasMovedToLocation -> fallbackTarget
-                    else -> null
-                }
+            when {
+                !initState.isMapReady -> null
+                initialPoint != null && !initState.hasMovedToLocation -> initialPoint
+                initialPoint != null -> null
+                initState.hasMovedToUserLocation -> null
+                userLocation != null -> userLocation
+                !initState.hasMovedToLocation -> fallback
+                else -> null
             }
         }
 
@@ -123,9 +111,8 @@ class LibreExtendedMap : ExtendedMap {
             CameraInitializationEffect(
                 pendingTarget = pendingTarget,
                 userLocation = userLocation,
-                hasCachedLocation = hasCachedLocation,
+                hasCachedLocation = initialPoint != null,
                 controller = libreController,
-                lastLocationProvider = dependencies.lastLocationProvider,
                 onInitialized = { isUserLocation ->
                     initState.onMovedToLocation(isUserLocation)
                     initState.onInitialized()
@@ -211,13 +198,23 @@ private fun MapContent(
     onMapReady: () -> Unit,
     content: @Composable MapScope.() -> Unit
 ) {
-    val mapScope =
-        remember(cameraState) {
-            MapScopeImpl(
-                cameraState = CameraPositionState(), // Libre uses different camera state
-                isGoogleMaps = false
-            )
-        }
+    val adaptedCameraState = remember { CameraPositionState() }
+    LaunchedEffect(cameraState) {
+        snapshotFlow { cameraState.position }
+            .collect { pos ->
+                adaptedCameraState.rawPosition = uz.yalla.maps.model.CameraPosition(
+                    target = uz.yalla.maps.model.LatLng(pos.target.latitude, pos.target.longitude),
+                    zoom = pos.zoom.toFloat()
+                )
+            }
+    }
+
+    val mapScope = remember(adaptedCameraState) {
+        MapScopeImpl(
+            cameraState = adaptedCameraState,
+            isGoogleMaps = false
+        )
+    }
 
     Box(modifier = modifier) {
         BaseMapContent(

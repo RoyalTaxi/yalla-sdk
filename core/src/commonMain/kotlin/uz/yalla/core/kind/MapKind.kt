@@ -4,9 +4,7 @@ import kotlinx.serialization.Serializable
 
 /** Map provider options. */
 @Serializable
-enum class MapKind(
-    val id: String
-) {
+enum class MapKind(val id: String) {
     Google("google"),
     Libre("libre");
 

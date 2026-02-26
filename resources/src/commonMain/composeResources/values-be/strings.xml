@@ -143,6 +143,7 @@
     <string name="profile_update_error">Профилни янгилаб бўлмади</string>
     <string name="profile_avatar_update_success">Профил расми муваффақиятли янгиланди</string>
     <string name="profile_avatar_update_error">Профил расмини янгилаб бўлмади</string>
+    <string name="profile_form_incomplete">Барча майдонларни тўлдиринг</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════

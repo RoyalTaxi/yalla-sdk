@@ -22,26 +22,32 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import uz.yalla.core.contract.AppPreferences
-import uz.yalla.core.contract.StaticPreferences
+import uz.yalla.core.contract.preferences.InterfacePreferences
+import uz.yalla.core.contract.preferences.PositionPreferences
+import uz.yalla.core.contract.preferences.SessionPreferences
 import uz.yalla.core.session.UnauthorizedSessionEvents
 
 private val localeCache = MutableStateFlow("")
 private val accessTokenCache = MutableStateFlow("")
+private val guestModeCache = MutableStateFlow(false)
 
 private val cacheScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 
 actual fun provideNetworkClient(
     config: NetworkConfig,
-    appPrefs: AppPreferences,
-    staticPrefs: StaticPreferences,
+    sessionPrefs: SessionPreferences,
+    interfacePrefs: InterfacePreferences,
+    positionPrefs: PositionPreferences,
     inspektifySetup: (HttpClientConfig<*>.() -> Unit)?,
 ): HttpClient {
     cacheScope.launch {
-        appPrefs.localeType.collectLatest { localeCache.value = it.code }
+        interfacePrefs.localeType.collectLatest { localeCache.value = it.code }
     }
     cacheScope.launch {
-        appPrefs.accessToken.collectLatest { accessTokenCache.value = it }
+        sessionPrefs.accessToken.collectLatest { accessTokenCache.value = it }
+    }
+    cacheScope.launch {
+        sessionPrefs.isGuestMode.collectLatest { guestModeCache.value = it }
     }
 
     return HttpClient(Android) {
@@ -54,10 +60,7 @@ actual fun provideNetworkClient(
         install(HttpCallValidator) {
             validateResponse { response ->
                 if (response.status == HttpStatusCode.Unauthorized) {
-                    handleUnauthorized(
-                        appPrefs = appPrefs,
-                        staticPrefs = staticPrefs
-                    )
+                    handleUnauthorized(sessionPrefs)
                 }
             }
             handleResponseExceptionWithRequest { cause, _ ->
@@ -65,10 +68,7 @@ actual fun provideNetworkClient(
                     cause is ClientRequestException &&
                     cause.response.status == HttpStatusCode.Unauthorized
                 ) {
-                    handleUnauthorized(
-                        appPrefs = appPrefs,
-                        staticPrefs = staticPrefs
-                    )
+                    handleUnauthorized(sessionPrefs)
                 }
             }
         }
@@ -79,7 +79,7 @@ actual fun provideNetworkClient(
             socketTimeoutMillis = 15_000
         }
 
-        install(createGuestModeGuardPlugin(staticPrefs))
+        install(createGuestModeGuardPlugin(guestModeCache))
 
         defaultRequest {
             url(config.baseUrl)
@@ -104,31 +104,27 @@ actual fun provideNetworkClient(
             )
         }
 
-        install(createDynamicHeadersPlugin(appPrefs))
+        install(createDynamicHeadersPlugin(positionPrefs))
     }
 }
 
-private fun createDynamicHeadersPlugin(preferences: AppPreferences) =
+private fun createDynamicHeadersPlugin(positionPrefs: PositionPreferences) =
     createClientPlugin("DynamicHeaders") {
         onRequest { request, _ ->
-            val location = preferences.lastAccessedLocation.first()
+            val location = positionPrefs.lastMapPosition.first()
 
             request.headers.apply {
-                set("x-position", "${location.first} ${location.second}")
+                set("x-position", "${location.lat} ${location.lng}")
             }
         }
     }
 
-private fun handleUnauthorized(
-    appPrefs: AppPreferences,
-    staticPrefs: StaticPreferences
-) {
+private fun handleUnauthorized(sessionPrefs: SessionPreferences) {
     val token = accessTokenCache.value
     if (token.isEmpty()) return
     if (!accessTokenCache.compareAndSet(token, "")) return
 
-    appPrefs.performLogout()
-    staticPrefs.performLogout()
-    localeCache.value = staticPrefs.localeType.code
+    sessionPrefs.performLogout()
+    localeCache.value = ""
     UnauthorizedSessionEvents.publish()
 }

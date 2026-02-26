@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
-import uz.yalla.core.contract.MapPreferences
+import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.kind.MapKind
 import uz.yalla.maps.api.MapController
@@ -25,12 +25,16 @@ import uz.yalla.maps.util.hasSameValues
 import kotlin.time.Duration.Companion.seconds
 
 class SwitchingMapController(
-    mapPreferences: MapPreferences,
-    val googleController: GoogleMapController = GoogleMapController(),
-    val libreController: LibreMapController = LibreMapController()
+    interfacePreferences: InterfacePreferences,
 ) : MapController {
+    private val _googleController = lazy { GoogleMapController() }
+    private val _libreController = lazy { LibreMapController() }
+    val googleController by _googleController
+    val libreController by _libreController
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-    private var activeController: MapController = googleController
+    private var activeController: MapController? = null
+    private val currentController: MapController get() = activeController ?: googleController
     private var collectorJob: Job? = null
     private var handoffJob: Job? = null
     private var suppressStateSync: Boolean = false
@@ -47,7 +51,7 @@ class SwitchingMapController(
 
     init {
         scope.launch {
-            mapPreferences.mapKind.collectLatest { type ->
+            interfacePreferences.mapKind.collectLatest { type ->
                 val nextController =
                     when (type) {
                         MapKind.Google -> googleController
@@ -65,7 +69,7 @@ class SwitchingMapController(
         point: GeoPoint,
         zoom: Float
     ) {
-        activeController.moveTo(point, zoom)
+        currentController.moveTo(point, zoom)
     }
 
     override suspend fun animateTo(
@@ -73,7 +77,7 @@ class SwitchingMapController(
         zoom: Float,
         durationMs: Int
     ) {
-        activeController.animateTo(point, zoom, durationMs)
+        currentController.animateTo(point, zoom, durationMs)
     }
 
     override suspend fun animateToWithBearing(
@@ -82,7 +86,7 @@ class SwitchingMapController(
         zoom: Float,
         durationMs: Int
     ) {
-        activeController.animateToWithBearing(point, bearing, zoom, durationMs)
+        currentController.animateToWithBearing(point, bearing, zoom, durationMs)
     }
 
     override suspend fun fitBounds(
@@ -90,50 +94,48 @@ class SwitchingMapController(
         padding: PaddingValues,
         animate: Boolean
     ) {
-        activeController.fitBounds(points, padding, animate)
+        currentController.fitBounds(points, padding, animate)
     }
 
-    override suspend fun zoomIn() = activeController.zoomIn()
+    override suspend fun zoomIn() = currentController.zoomIn()
 
-    override suspend fun zoomOut() = activeController.zoomOut()
+    override suspend fun zoomOut() = currentController.zoomOut()
 
-    override suspend fun setZoom(zoom: Float) = activeController.setZoom(zoom)
+    override suspend fun setZoom(zoom: Float) = currentController.setZoom(zoom)
 
     override fun setDesiredPadding(padding: PaddingValues) {
         desiredPadding = padding
-        googleController.setDesiredPadding(padding)
-        libreController.setDesiredPadding(padding)
+        currentController.setDesiredPadding(padding)
     }
 
     override suspend fun updatePadding(padding: PaddingValues) {
         desiredPadding = padding
-        googleController.setDesiredPadding(padding)
-        libreController.setDesiredPadding(padding)
-        activeController.updatePadding(padding)
+        currentController.setDesiredPadding(padding)
+        currentController.updatePadding(padding)
     }
 
-    override fun updateMarkerState(state: MarkerState) = activeController.updateMarkerState(state)
+    override fun updateMarkerState(state: MarkerState) = currentController.updateMarkerState(state)
 
-    override fun setMarkerPosition(point: GeoPoint) = activeController.setMarkerPosition(point)
+    override fun setMarkerPosition(point: GeoPoint) = currentController.setMarkerPosition(point)
 
-    override fun clearMarker() = activeController.clearMarker()
+    override fun clearMarker() = currentController.clearMarker()
 
-    override fun onMapReady() = activeController.onMapReady()
+    override fun onMapReady() = currentController.onMapReady()
 
-    fun close() {
+    override fun close() {
         collectorJob?.cancel()
         handoffJob?.cancel()
         scope.cancel()
-        googleController.reset()
-        libreController.reset()
+        if (_googleController.isInitialized()) googleController.reset()
+        if (_libreController.isInitialized()) libreController.reset()
     }
 
     override fun reset() {
         collectorJob?.cancel()
         handoffJob?.cancel()
         suppressStateSync = false
-        googleController.reset()
-        libreController.reset()
+        if (_googleController.isInitialized()) googleController.reset()
+        if (_libreController.isInitialized()) libreController.reset()
         _isReady.value = false
         _markerState.value = MarkerState.INITIAL
         _cameraPosition.value = CameraPosition.DEFAULT
@@ -143,16 +145,16 @@ class SwitchingMapController(
         collectorJob?.cancel()
         collectorJob =
             scope.launch {
-                launch { activeController.cameraPosition.collectLatest(::updateCameraFromController) }
-                launch { activeController.markerState.collectLatest(::updateMarkerFromController) }
-                launch { activeController.isReady.collectLatest { _isReady.value = it } }
+                launch { currentController.cameraPosition.collectLatest(::updateCameraFromController) }
+                launch { currentController.markerState.collectLatest(::updateMarkerFromController) }
+                launch { currentController.isReady.collectLatest { _isReady.value = it } }
             }
     }
 
     private fun syncFromActive() {
-        updateCameraFromController(activeController.cameraPosition.value)
-        updateMarkerFromController(activeController.markerState.value)
-        _isReady.value = activeController.isReady.value
+        updateCameraFromController(currentController.cameraPosition.value)
+        updateMarkerFromController(currentController.markerState.value)
+        _isReady.value = currentController.isReady.value
     }
 
     private fun seedNextController(nextController: MapController) {

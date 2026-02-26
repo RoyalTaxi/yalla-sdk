@@ -1,14 +1,11 @@
 package uz.yalla.maps.di
 
 import kotlinx.coroutines.flow.Flow
-import uz.yalla.core.contract.LastLocationProvider
-import uz.yalla.core.contract.LocationProvider
-import uz.yalla.core.contract.MapPreferences
+import uz.yalla.core.contract.location.LocationProvider
+import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.kind.ThemeKind
 
 interface MapDependencies {
-    val mapPreferences: MapPreferences
-    val themeType: Flow<ThemeKind>
+    val interfacePreferences: InterfacePreferences
     val locationProvider: LocationProvider
-    val lastLocationProvider: LastLocationProvider?
 }

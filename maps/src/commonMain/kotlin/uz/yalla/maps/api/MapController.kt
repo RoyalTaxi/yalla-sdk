@@ -61,6 +61,8 @@ interface MapController {
 
     fun reset()
 
+    fun close() {}
+
     companion object {
         const val ANIMATION_DURATION = 1000
     }

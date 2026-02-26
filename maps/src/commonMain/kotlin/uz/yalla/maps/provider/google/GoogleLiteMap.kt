@@ -23,7 +23,6 @@ import uz.yalla.maps.di.MapDependencies
 import uz.yalla.maps.model.CameraPosition
 import uz.yalla.maps.provider.common.LocationTrackingEffect
 import uz.yalla.maps.provider.google.component.LocationIndicator
-import uz.yalla.maps.util.isValid
 import uz.yalla.maps.util.toGeoPoint
 
 class GoogleLiteMap : LiteMap {
@@ -43,23 +42,14 @@ class GoogleLiteMap : LiteMap {
         val scope = rememberCoroutineScope()
         val density = LocalDensity.current
 
-        val themeType by dependencies.themeType.collectAsStateWithLifecycle(ThemeKind.System)
+        val themeType by dependencies.interfacePreferences.themeType.collectAsStateWithLifecycle(ThemeKind.System)
         val currentLocation by dependencies.locationProvider.currentLocation.collectAsStateWithLifecycle(null)
-        val lastLocation by (
-            dependencies.lastLocationProvider?.lastLocation
-                ?: kotlinx.coroutines.flow.flowOf(null)
-        ).collectAsStateWithLifecycle(null)
-
-        val fallbackTarget =
-            remember(lastLocation) {
-                lastLocation?.takeIf { it.isValid() }
-                    ?: MapConstants.BOBUR_SQUARE.toGeoPoint()
-            }
+        val fallback = initialPoint ?: MapConstants.BOBUR_SQUARE.toGeoPoint()
 
         val initialTarget =
-            remember(initialPoint, currentLocation, fallbackTarget) {
+            remember(initialPoint, currentLocation, fallback) {
                 val userTarget = currentLocation?.takeIf { it != GeoPoint.Zero }
-                initialPoint ?: userTarget ?: fallbackTarget
+                initialPoint ?: userTarget ?: fallback
             }
 
         val cameraState =
@@ -73,7 +63,6 @@ class GoogleLiteMap : LiteMap {
 
         var isMapReady by remember { mutableStateOf(false) }
         var hasMovedToUserLocation by remember { mutableStateOf(false) }
-        var hasMovedToFallback by remember { mutableStateOf(false) }
 
         val locationFix = currentLocation?.takeIf { it != GeoPoint.Zero }
         val permissionGranted = locationFix != null
@@ -98,15 +87,6 @@ class GoogleLiteMap : LiteMap {
                 hasMovedToUserLocation = true
                 googleController.moveTo(target, MapConstants.DEFAULT_ZOOM.toFloat())
             }
-        }
-
-        LaunchedEffect(isMapReady, lastLocation, initialPoint) {
-            if (!isMapReady || initialPoint != null || hasMovedToFallback || locationFix != null) {
-                return@LaunchedEffect
-            }
-
-            hasMovedToFallback = true
-            googleController.moveTo(fallbackTarget, MapConstants.DEFAULT_ZOOM.toFloat())
         }
 
         CameraTrackingEffect(cameraState, googleController, onMarkerChanged)

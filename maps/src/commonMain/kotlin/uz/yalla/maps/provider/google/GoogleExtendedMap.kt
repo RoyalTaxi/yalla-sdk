@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,7 +33,6 @@ import uz.yalla.maps.provider.common.rememberMapInitState
 import uz.yalla.maps.provider.google.component.LocationIndicator
 import uz.yalla.maps.provider.google.component.LocationsLayer
 import uz.yalla.maps.provider.google.component.RouteLayer
-import uz.yalla.maps.util.isValid
 import uz.yalla.maps.util.toGeoPoint
 
 class GoogleExtendedMap : ExtendedMap {
@@ -61,58 +59,47 @@ class GoogleExtendedMap : ExtendedMap {
         val scope = rememberCoroutineScope()
         val density = LocalDensity.current
 
-        val themeType by dependencies.themeType.collectAsStateWithLifecycle(ThemeKind.System)
+        val themeType by dependencies.interfacePreferences.themeType.collectAsStateWithLifecycle(ThemeKind.System)
         val currentLocation by dependencies.locationProvider.currentLocation.collectAsStateWithLifecycle(null)
-        val lastLocation by (
-            dependencies.lastLocationProvider?.lastLocation
-                ?: kotlinx.coroutines.flow.flowOf(null)
-        ).collectAsStateWithLifecycle(null)
 
         val userLocation =
             remember(currentLocation) {
                 currentLocation?.takeIf { it != GeoPoint.Zero }
             }
         val hasLocationPermission = userLocation != null
-        val hasCachedLocation = remember(lastLocation) { lastLocation?.isValid() == true }
-        val fallbackTarget =
-            remember(lastLocation) {
-                lastLocation?.takeIf { it.isValid() }
-                    ?: MapConstants.BOBUR_SQUARE.toGeoPoint()
-            }
+        val fallback = initialPoint ?: MapConstants.BOBUR_SQUARE.toGeoPoint()
 
         val initState = rememberMapInitState()
         val initialTarget =
-            remember(initialPoint, userLocation, fallbackTarget, useInternalCameraInitialization) {
+            remember(initialPoint, userLocation, fallback, useInternalCameraInitialization) {
                 when {
                     initialPoint != null -> initialPoint
                     !useInternalCameraInitialization -> MapConstants.BOBUR_SQUARE.toGeoPoint()
                     userLocation != null -> userLocation
-                    else -> fallbackTarget
+                    else -> fallback
                 }
             }
         val cameraState = rememberInitialCameraState(initialTarget)
 
-        val pendingTarget by remember(
+        val pendingTarget = remember(
             initState.isMapReady,
             initState.hasMovedToLocation,
             initState.hasMovedToUserLocation,
             initialPoint,
             userLocation,
-            fallbackTarget,
+            fallback,
             useInternalCameraInitialization
         ) {
-            derivedStateOf {
-                if (!useInternalCameraInitialization) return@derivedStateOf null
+            if (!useInternalCameraInitialization) return@remember null
 
-                when {
-                    !initState.isMapReady -> null
-                    initialPoint != null && !initState.hasMovedToLocation -> initialPoint
-                    initialPoint != null -> null
-                    initState.hasMovedToUserLocation -> null
-                    userLocation != null -> userLocation
-                    !initState.hasMovedToLocation -> fallbackTarget
-                    else -> null
-                }
+            when {
+                !initState.isMapReady -> null
+                initialPoint != null && !initState.hasMovedToLocation -> initialPoint
+                initialPoint != null -> null
+                initState.hasMovedToUserLocation -> null
+                userLocation != null -> userLocation
+                !initState.hasMovedToLocation -> fallback
+                else -> null
             }
         }
 
@@ -124,9 +111,8 @@ class GoogleExtendedMap : ExtendedMap {
             CameraInitializationEffect(
                 pendingTarget = pendingTarget,
                 userLocation = userLocation,
-                hasCachedLocation = hasCachedLocation,
+                hasCachedLocation = initialPoint != null,
                 controller = googleController,
-                lastLocationProvider = dependencies.lastLocationProvider,
                 onInitialized = { isUserLocation ->
                     initState.onMovedToLocation(isUserLocation)
                     initState.onInitialized()

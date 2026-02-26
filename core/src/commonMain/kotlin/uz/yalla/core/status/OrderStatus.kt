@@ -1,8 +1,6 @@
 package uz.yalla.core.status
 
-sealed class OrderStatus(
-    val id: String
-) {
+sealed class OrderStatus(val id: String) {
     data object New : OrderStatus("new")
 
     data object Sending : OrderStatus("sending")
@@ -21,9 +19,7 @@ sealed class OrderStatus(
 
     data object Canceled : OrderStatus("canceled")
 
-    data class Unknown(
-        val originalId: String,
-    ) : OrderStatus("unknown")
+    data class Unknown(val originalId: String,) : OrderStatus("unknown")
 
     companion object {
         fun from(id: String?): OrderStatus =

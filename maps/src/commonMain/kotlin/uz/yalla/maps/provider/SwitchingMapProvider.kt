@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import uz.yalla.core.contract.MapPreferences
+import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.kind.MapKind
 import uz.yalla.maps.api.ExtendedMap
@@ -18,28 +18,32 @@ import uz.yalla.maps.api.LiteMap
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.MapProvider
 import uz.yalla.maps.api.MapScope
+import uz.yalla.maps.api.StaticMap
 import uz.yalla.maps.api.model.MapCapabilities
 import uz.yalla.maps.api.model.MapStyle
 import uz.yalla.maps.api.model.MarkerState
 import uz.yalla.maps.provider.google.GoogleExtendedMap
 import uz.yalla.maps.provider.google.GoogleLiteMap
 import uz.yalla.maps.provider.google.GoogleMapProvider
+import uz.yalla.maps.provider.google.GoogleStaticMap
 import uz.yalla.maps.provider.libre.LibreExtendedMap
 import uz.yalla.maps.provider.libre.LibreLiteMap
 import uz.yalla.maps.provider.libre.LibreMapProvider
+import uz.yalla.maps.provider.libre.LibreStaticMap
 
 class SwitchingMapProvider(
-    private val mapPreferences: MapPreferences
+    private val interfacePreferences: InterfacePreferences
 ) : MapProvider {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-    private val googleProvider = GoogleMapProvider()
-    private val libreProvider = LibreMapProvider()
-    private var currentProvider: MapProvider = googleProvider
+    private val googleProvider by lazy { GoogleMapProvider() }
+    private val libreProvider by lazy { LibreMapProvider() }
+    private var _currentProvider: MapProvider? = null
+    private val currentProvider: MapProvider get() = _currentProvider ?: googleProvider
 
     init {
         scope.launch {
-            mapPreferences.mapKind.collectLatest { type ->
-                currentProvider =
+            interfacePreferences.mapKind.collectLatest { type ->
+                _currentProvider =
                     when (type) {
                         MapKind.Google -> googleProvider
                         MapKind.Libre -> libreProvider
@@ -55,18 +59,20 @@ class SwitchingMapProvider(
     override val style: MapStyle
         get() = currentProvider.style
 
-    override fun createLiteMap(): LiteMap = SwitchingLiteMap(mapPreferences)
+    override fun createLiteMap(): LiteMap = SwitchingLiteMap(interfacePreferences)
 
-    override fun createExtendedMap(): ExtendedMap = SwitchingExtendedMap(mapPreferences)
+    override fun createExtendedMap(): ExtendedMap = SwitchingExtendedMap(interfacePreferences)
 
-    override fun createController(): MapController = SwitchingMapController(mapPreferences)
+    override fun createStaticMap(): StaticMap = SwitchingStaticMap(interfacePreferences)
+
+    override fun createController(): MapController = SwitchingMapController(interfacePreferences)
 }
 
 private class SwitchingLiteMap(
-    private val mapPreferences: MapPreferences
+    private val interfacePreferences: InterfacePreferences
 ) : LiteMap {
-    private val google = GoogleLiteMap()
-    private val libre = LibreLiteMap()
+    private val google by lazy { GoogleLiteMap() }
+    private val libre by lazy { LibreLiteMap() }
 
     @Composable
     override fun Content(
@@ -78,7 +84,7 @@ private class SwitchingLiteMap(
         onMarkerChanged: ((MarkerState) -> Unit)?,
         onMapReady: (() -> Unit)?
     ) {
-        val mapType by mapPreferences.mapKind.collectAsStateWithLifecycle(MapKind.Google)
+        val mapType by interfacePreferences.mapKind.collectAsStateWithLifecycle(MapKind.Google)
         key(mapType) {
             when (mapType) {
                 MapKind.Google ->
@@ -107,10 +113,10 @@ private class SwitchingLiteMap(
 }
 
 private class SwitchingExtendedMap(
-    private val mapPreferences: MapPreferences
+    private val interfacePreferences: InterfacePreferences
 ) : ExtendedMap {
-    private val google = GoogleExtendedMap()
-    private val libre = LibreExtendedMap()
+    private val google by lazy { GoogleExtendedMap() }
+    private val libre by lazy { LibreExtendedMap() }
 
     @Composable
     override fun Content(
@@ -129,7 +135,7 @@ private class SwitchingExtendedMap(
         onMapReady: (() -> Unit)?,
         content: @Composable MapScope.() -> Unit
     ) {
-        val mapType by mapPreferences.mapKind.collectAsStateWithLifecycle(MapKind.Google)
+        val mapType by interfacePreferences.mapKind.collectAsStateWithLifecycle(MapKind.Google)
         key(mapType) {
             when (mapType) {
                 MapKind.Google ->
@@ -166,6 +172,45 @@ private class SwitchingExtendedMap(
                         onMapReady = onMapReady,
                         content = content
                     )
+            }
+        }
+    }
+}
+
+private class SwitchingStaticMap(
+    private val interfacePreferences: InterfacePreferences
+) : StaticMap {
+    private val google by lazy { GoogleStaticMap() }
+    private val libre by lazy { LibreStaticMap() }
+
+    @Composable
+    override fun Content(
+        modifier: Modifier,
+        route: List<GeoPoint>?,
+        locations: List<GeoPoint>?,
+        startLabel: String?,
+        endLabel: String?,
+        onMapReady: (() -> Unit)?
+    ) {
+        val mapType by interfacePreferences.mapKind.collectAsStateWithLifecycle(MapKind.Google)
+        key(mapType) {
+            when (mapType) {
+                MapKind.Google -> google.Content(
+                    modifier = modifier,
+                    route = route,
+                    locations = locations,
+                    startLabel = startLabel,
+                    endLabel = endLabel,
+                    onMapReady = onMapReady
+                )
+                MapKind.Libre -> libre.Content(
+                    modifier = modifier,
+                    route = route,
+                    locations = locations,
+                    startLabel = startLabel,
+                    endLabel = endLabel,
+                    onMapReady = onMapReady
+                )
             }
         }
     }

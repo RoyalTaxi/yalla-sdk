@@ -41,7 +41,7 @@ coil = "3.3.0"
 compottie = "2.0.2"
 cupertino = "2.3.1"
 constraintlayout = "0.6.1"
-datetime-wheel-picker = "1.0.0"
+datetime-wheel-picker = "1.1.0"
 accompanist = "0.34.0"
 play-app-update = "2.1.0"
 

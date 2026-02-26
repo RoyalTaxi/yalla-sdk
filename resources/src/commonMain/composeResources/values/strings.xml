@@ -143,6 +143,7 @@
     <string name="profile_update_error">Profilni yangilab bo'lmadi</string>
     <string name="profile_avatar_update_success">Profil rasmi muvaffaqiyatli yangilandi</string>
     <string name="profile_avatar_update_error">Profil rasmini yangilab bo'lmadi</string>
+    <string name="profile_form_incomplete">Barcha maydonlarni to\'ldiring</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════

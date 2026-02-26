@@ -2,8 +2,7 @@ package uz.yalla.maps.provider.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import uz.yalla.core.contract.LastLocationProvider
-import uz.yalla.core.contract.LocationProvider
+import uz.yalla.core.contract.location.LocationProvider
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.model.MarkerState
@@ -27,7 +26,6 @@ internal fun CameraInitializationEffect(
     userLocation: GeoPoint?,
     hasCachedLocation: Boolean,
     controller: MapController,
-    lastLocationProvider: LastLocationProvider?,
     onInitialized: (isUserLocation: Boolean) -> Unit,
     onMarkerChanged: ((MarkerState) -> Unit)?,
     onMapReady: (() -> Unit)?
@@ -39,10 +37,6 @@ internal fun CameraInitializationEffect(
         notifyMarkerChanged(controller, pendingTarget, onMarkerChanged)
 
         val isUserLocation = userLocation != null && userLocation == pendingTarget
-        if (isUserLocation) {
-            lastLocationProvider?.setLastLocation(pendingTarget)
-        }
-
         val isValidInitialPosition = isUserLocation || (userLocation == null && hasCachedLocation)
         if (isValidInitialPosition) {
             onMapReady?.invoke()

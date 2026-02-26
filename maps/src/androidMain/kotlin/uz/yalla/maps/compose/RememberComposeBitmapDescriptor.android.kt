@@ -25,7 +25,7 @@ actual fun rememberComposeBitmapDescriptor(
     val compositionContext = rememberCompositionContext()
     val currentContent by rememberUpdatedState(content)
 
-    return remember(parent, compositionContext, currentContent, *keys) {
+    return remember(parent, compositionContext, *keys) {
         renderComposableToBitmapDescriptor(parent, compositionContext, currentContent)
     }
 }

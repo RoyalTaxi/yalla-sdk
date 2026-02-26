@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.yalla.core.contract.LocationProvider
+import uz.yalla.core.contract.location.LocationProvider
 import uz.yalla.core.geo.GeoPoint
 
 /**

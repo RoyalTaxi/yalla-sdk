@@ -2,7 +2,7 @@ package uz.yalla.foundation.location
 
 import kotlinx.coroutines.flow.Flow
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.contract.LocationProvider as LocationProviderContract
+import uz.yalla.core.contract.location.LocationProvider as LocationProviderContract
 
 class LocationProviderAdapter(
     private val locationManager: LocationManager

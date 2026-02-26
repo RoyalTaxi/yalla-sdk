@@ -1,12 +1,29 @@
 package uz.yalla.composites.snackbar
 
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
+
+/**
+ * One-shot event for snackbar display.
+ *
+ * @see SnackbarController
+ */
+sealed interface SnackbarEvent {
+    /** Show a snackbar with the given data. */
+    data class Show(val data: SnackbarData) : SnackbarEvent
+
+    /** Dismiss the current snackbar. */
+    data object Dismiss : SnackbarEvent
+}
 
 /**
  * Global controller for snackbar events.
  *
- * Use to show/dismiss snackbars from anywhere in the app.
+ * Uses a [Channel] internally so events are:
+ * - never replayed on lifecycle restart (no stale messages)
+ * - never deduplicated (identical messages both show)
+ * - consumed exactly once
  *
  * ## Usage
  *
@@ -25,10 +42,10 @@ import kotlinx.coroutines.flow.asStateFlow
  * @see AppSnackbarHost
  */
 object SnackbarController {
-    private val _data = MutableStateFlow<SnackbarData?>(null)
+    private val channel = Channel<SnackbarEvent>(Channel.BUFFERED)
 
-    /** Current snackbar data, null if dismissed. */
-    val data = _data.asStateFlow()
+    /** Stream of one-shot snackbar events. Collect with [ObserveAsEvents]. */
+    val events: Flow<SnackbarEvent> = channel.receiveAsFlow()
 
     /**
      * Shows a snackbar with the given data.
@@ -36,14 +53,14 @@ object SnackbarController {
      * @param data Snackbar content and style.
      */
     fun show(data: SnackbarData) {
-        _data.value = data
+        channel.trySend(SnackbarEvent.Show(data))
     }
 
     /**
      * Dismisses the current snackbar.
      */
     fun dismiss() {
-        _data.value = null
+        channel.trySend(SnackbarEvent.Dismiss)
     }
 
     /**
@@ -52,6 +69,10 @@ object SnackbarController {
      * @param event Snackbar data, null to dismiss.
      */
     fun sendData(event: SnackbarData?) {
-        _data.value = event
+        if (event != null) {
+            channel.trySend(SnackbarEvent.Show(event))
+        } else {
+            channel.trySend(SnackbarEvent.Dismiss)
+        }
     }
 }

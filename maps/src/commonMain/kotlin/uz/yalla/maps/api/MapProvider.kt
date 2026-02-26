@@ -13,5 +13,7 @@ interface MapProvider {
 
     fun createExtendedMap(): ExtendedMap
 
+    fun createStaticMap(): StaticMap
+
     fun createController(): MapController
 }

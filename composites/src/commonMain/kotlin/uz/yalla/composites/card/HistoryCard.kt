@@ -25,16 +25,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.stringResource
 import uz.yalla.design.theme.System
+import uz.yalla.resources.Res
+import uz.yalla.resources.history_status_canceled
+import uz.yalla.resources.history_status_completed
 
 /**
  * Status for [HistoryCard].
  */
-enum class HistoryCardStatus(
-    val label: String
-) {
-    Completed("Completed"),
-    Canceled("Canceled"),
+enum class HistoryCardStatus {
+    Completed,
+    Canceled,
 }
 
 /**
@@ -204,7 +206,10 @@ fun HistoryCard(
                     Spacer(Modifier.width(dimens.spacingSmall))
 
                     Text(
-                        text = state.status.label,
+                        text = when (state.status) {
+                            HistoryCardStatus.Completed -> stringResource(Res.string.history_status_completed)
+                            HistoryCardStatus.Canceled -> stringResource(Res.string.history_status_canceled)
+                        },
                         color =
                             when (state.status) {
                                 HistoryCardStatus.Completed -> colors.statusCompleted

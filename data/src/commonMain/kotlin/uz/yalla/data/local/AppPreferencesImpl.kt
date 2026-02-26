@@ -12,8 +12,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.yalla.core.contract.AppPreferences
-import uz.yalla.core.contract.StaticPreferences
+import uz.yalla.core.contract.preferences.SessionPreferences
+import uz.yalla.core.contract.preferences.ConfigPreferences
+import uz.yalla.core.contract.preferences.PositionPreferences
+import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.contract.preferences.InterfacePreferences
+import uz.yalla.core.contract.preferences.UserPreferences
 import uz.yalla.core.kind.LocaleKind
 import uz.yalla.core.kind.MapKind
 import uz.yalla.core.kind.PaymentKind
@@ -22,9 +26,12 @@ import uz.yalla.core.util.or0
 import uz.yalla.core.util.orFalse
 
 class AppPreferencesImpl(
-    private val dataStore: DataStore<Preferences>,
-    private val staticPreferences: StaticPreferences
-) : AppPreferences {
+    private val dataStore: DataStore<Preferences>
+) : SessionPreferences,
+    UserPreferences,
+    ConfigPreferences,
+    InterfacePreferences,
+    PositionPreferences {
     private val scope = CoroutineScope(Dispatchers.Default)
 
     private object Keys {
@@ -44,28 +51,26 @@ class AppPreferencesImpl(
         val INFO_TELEGRAM = stringPreferencesKey("infoTelegram")
         val PRIVACY_POLICY_RU = stringPreferencesKey("privacyPolicyRu")
         val PRIVACY_POLICY_UZ = stringPreferencesKey("privacyPolicyUz")
-        val REFERRAL_LINK = stringPreferencesKey("referralLink")
-        val BECOME_DRIVE = stringPreferencesKey("becomeDrive")
-        val INVITE_FRIENDS = stringPreferencesKey("inviteFriends")
-        val LAST_ACCESSED_LOCATION = stringPreferencesKey("lastAccessedLocation")
-        val LAST_KNOWN_LOCATION = stringPreferencesKey("lastKnownLocation")
+        val LAST_ACCESSED_LOCATION = stringPreferencesKey("lastMapPosition")
+        val LAST_KNOWN_LOCATION = stringPreferencesKey("lastGpsPosition")
         val MAX_BONUS = longPreferencesKey("maxBonus")
         val MIN_BONUS = longPreferencesKey("minBonus")
         val BALANCE = longPreferencesKey("balance")
         val IS_BONUS_ENABLED = booleanPreferencesKey("isBonusEnabled")
         val IS_CARD_ENABLED = booleanPreferencesKey("isCardEnabled")
         val ORDER_CANCEL_TIME = intPreferencesKey("orderCancelTime")
-        val IS_VERIFICATION_REQUIRED = booleanPreferencesKey("isVerificationRequired")
         val THEME_TYPE = stringPreferencesKey("themeType")
+        val IS_GUEST_MODE = booleanPreferencesKey("isGuestModeEnable")
+        val IS_DEVICE_REGISTERED = booleanPreferencesKey("isDeviceRegistered")
+        val SKIP_ONBOARDING = booleanPreferencesKey("skipOnboarding")
     }
 
     override val localeType: Flow<LocaleKind> =
         dataStore.data.map { prefs ->
-            prefs[Keys.LOCALE_TYPE]?.let { LocaleKind.from(it) } ?: staticPreferences.localeType
+            LocaleKind.from(prefs[Keys.LOCALE_TYPE])
         }
 
     override fun setLocaleType(value: LocaleKind) {
-        staticPreferences.localeType = value
         scope.launch {
             dataStore.edit { prefs ->
                 prefs[Keys.LOCALE_TYPE] = value.code
@@ -138,13 +143,13 @@ class AppPreferencesImpl(
         }
     }
 
-    override val mapType: Flow<MapKind> =
+    override val mapKind: Flow<MapKind> =
         dataStore.data.map { prefs ->
             val id = prefs[Keys.MAP_TYPE] ?: MapKind.Google.id
             MapKind.from(id)
         }
 
-    override fun setMapType(value: MapKind) {
+    override fun setMapKind(value: MapKind) {
         scope.launch {
             dataStore.edit { prefs ->
                 prefs[Keys.MAP_TYPE] = value.id
@@ -257,76 +262,31 @@ class AppPreferencesImpl(
         }
     }
 
-    override val referralLink: Flow<String> =
+    override val lastMapPosition: Flow<GeoPoint> =
         dataStore.data.map { prefs ->
-            prefs[Keys.REFERRAL_LINK].orEmpty()
+            parseGeoPoint(prefs[Keys.LAST_ACCESSED_LOCATION])
         }
 
-    override fun setReferralLink(value: String) {
+    override fun setLastMapPosition(value: GeoPoint) {
         scope.launch {
             dataStore.edit { prefs ->
-                prefs[Keys.REFERRAL_LINK] = value
+                prefs[Keys.LAST_ACCESSED_LOCATION] = "${value.lat},${value.lng}"
             }
         }
     }
 
-    override val becomeDrive: Flow<String> =
+    override val lastGpsPosition: Flow<GeoPoint> =
         dataStore.data.map { prefs ->
-            prefs[Keys.BECOME_DRIVE].orEmpty()
-        }
-
-    override fun setBecomeDrive(value: String) {
-        scope.launch {
-            dataStore.edit { prefs ->
-                prefs[Keys.BECOME_DRIVE] = value
-            }
-        }
-    }
-
-    override val inviteFriends: Flow<String> =
-        dataStore.data.map { prefs ->
-            prefs[Keys.INVITE_FRIENDS].orEmpty()
-        }
-
-    override fun setInviteFriends(value: String) {
-        scope.launch {
-            dataStore.edit { prefs ->
-                prefs[Keys.INVITE_FRIENDS] = value
-            }
-        }
-    }
-
-    override val lastAccessedLocation: Flow<Pair<Double, Double>> =
-        dataStore.data.map { prefs ->
-            parseLocation(prefs[Keys.LAST_ACCESSED_LOCATION])
-        }
-
-    override fun setLastAccessedLocation(
-        lat: Double,
-        lng: Double
-    ) {
-        scope.launch {
-            dataStore.edit { prefs ->
-                prefs[Keys.LAST_ACCESSED_LOCATION] = "$lat,$lng"
-            }
-        }
-    }
-
-    override val lastKnownLocation: Flow<Pair<Double, Double>> =
-        dataStore.data.map { prefs ->
-            parseLocation(
+            parseGeoPoint(
                 raw = prefs[Keys.LAST_KNOWN_LOCATION],
                 fallbackRaw = prefs[Keys.LAST_ACCESSED_LOCATION]
             )
         }
 
-    override fun setLastKnownLocation(
-        lat: Double,
-        lng: Double
-    ) {
+    override fun setLastGpsPosition(value: GeoPoint) {
         scope.launch {
             dataStore.edit { prefs ->
-                prefs[Keys.LAST_KNOWN_LOCATION] = "$lat,$lng"
+                prefs[Keys.LAST_KNOWN_LOCATION] = "${value.lat},${value.lng}"
             }
         }
     }
@@ -409,19 +369,6 @@ class AppPreferencesImpl(
         }
     }
 
-    override val isVerificationRequired: Flow<Boolean> =
-        dataStore.data.map { prefs ->
-            prefs[Keys.IS_VERIFICATION_REQUIRED].orFalse()
-        }
-
-    override fun setIsVerificationRequired(value: Boolean) {
-        scope.launch {
-            dataStore.edit { prefs ->
-                prefs[Keys.IS_VERIFICATION_REQUIRED] = value
-            }
-        }
-    }
-
     override val themeType: Flow<ThemeKind> =
         dataStore.data.map { prefs ->
             ThemeKind.from(prefs[Keys.THEME_TYPE])
@@ -435,6 +382,45 @@ class AppPreferencesImpl(
         }
     }
 
+    override val isGuestMode: Flow<Boolean> =
+        dataStore.data.map { prefs ->
+            prefs[Keys.IS_GUEST_MODE].orFalse()
+        }
+
+    override fun setGuestMode(value: Boolean) {
+        scope.launch {
+            dataStore.edit { prefs ->
+                prefs[Keys.IS_GUEST_MODE] = value
+            }
+        }
+    }
+
+    override val isDeviceRegistered: Flow<Boolean> =
+        dataStore.data.map { prefs ->
+            prefs[Keys.IS_DEVICE_REGISTERED].orFalse()
+        }
+
+    override fun setDeviceRegistered(value: Boolean) {
+        scope.launch {
+            dataStore.edit { prefs ->
+                prefs[Keys.IS_DEVICE_REGISTERED] = value
+            }
+        }
+    }
+
+    override val skipOnboarding: Flow<Boolean> =
+        dataStore.data.map { prefs ->
+            prefs[Keys.SKIP_ONBOARDING].orFalse()
+        }
+
+    override fun setSkipOnboarding(value: Boolean) {
+        scope.launch {
+            dataStore.edit { prefs ->
+                prefs[Keys.SKIP_ONBOARDING] = value
+            }
+        }
+    }
+
     override fun performLogout() {
         scope.launch {
             dataStore.edit { prefs ->
@@ -444,13 +430,13 @@ class AppPreferencesImpl(
     }
 }
 
-private fun parseLocation(
+private fun parseGeoPoint(
     raw: String?,
     fallbackRaw: String? = null
-): Pair<Double, Double> {
+): GeoPoint {
     val source = raw?.takeIf { it.isNotBlank() } ?: fallbackRaw.orEmpty()
     val parts = source.split(",", limit = 2)
     val lat = parts.getOrNull(0)?.toDoubleOrNull() ?: 0.0
     val lng = parts.getOrNull(1)?.toDoubleOrNull() ?: 0.0
-    return lat to lng
+    return GeoPoint(lat, lng)
 }

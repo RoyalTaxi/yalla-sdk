@@ -1,8 +1,6 @@
 package uz.yalla.core.model
 
-sealed class GivenAwardPaymentType(
-    val typeName: String
-) {
+sealed class GivenAwardPaymentType(val typeName: String) {
     data object BALANCE : GivenAwardPaymentType("balance")
 
     data object PAYNET : GivenAwardPaymentType("paynet")

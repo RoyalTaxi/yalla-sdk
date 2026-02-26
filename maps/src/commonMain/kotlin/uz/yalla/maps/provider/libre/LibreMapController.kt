@@ -132,18 +132,16 @@ class LibreMapController : MapController {
         val clampedZoom = zoom.toDouble().clampZoom()
         setProgrammaticTarget(target, clampedZoom)
 
-        coroutineScope?.launch {
-            camera.animateTo(
-                duration = 1.milliseconds,
-                finalPosition =
-                    LibreCameraPosition(
-                        target = target,
-                        zoom = clampedZoom,
-                        padding = targetPadding
-                    )
-            )
-            updateFromCamera(camera.position)
-        }
+        camera.animateTo(
+            duration = 1.milliseconds,
+            finalPosition =
+                LibreCameraPosition(
+                    target = target,
+                    zoom = clampedZoom,
+                    padding = targetPadding
+                )
+        )
+        updateFromCamera(camera.position)
     }
 
     override suspend fun animateTo(

@@ -11,8 +11,7 @@ import kotlinx.coroutines.delay
 import kotlinx.io.IOException
 import kotlinx.serialization.SerializationException
 import uz.yalla.core.error.DataError
-import uz.yalla.core.error.Either
-import uz.yalla.core.error.GuestModeRequestBlocked
+import uz.yalla.core.result.Either
 import kotlin.random.Random
 
 suspend inline fun <reified T> safeApiCall(
@@ -22,8 +21,6 @@ suspend inline fun <reified T> safeApiCall(
     try {
         val response = retryIO(isIdempotent = isIdempotent) { call() }
         when (response.status.value) {
-            401 -> Either.Error(DataError.Network.Unauthorized)
-            302 -> Either.Error(DataError.Network.InsufficientBalance)
             in 200..299 -> {
                 if (T::class == Unit::class) {
                     Either.Success(Unit as T)
@@ -31,27 +28,27 @@ suspend inline fun <reified T> safeApiCall(
                     Either.Success(response.body())
                 }
             }
-            in 300..399 -> Either.Error(DataError.Network.ClientError)
-            in 400..499 -> Either.Error(DataError.Network.ClientError)
-            in 500..599 -> Either.Error(DataError.Network.ServerError)
-            else -> Either.Error(DataError.Network.Unknown())
+            in 300..399 -> Either.Failure(DataError.Network.Client)
+            in 400..499 -> Either.Failure(DataError.Network.Client)
+            in 500..599 -> Either.Failure(DataError.Network.Server)
+            else -> Either.Failure(DataError.Network.Unknown)
         }
     } catch (e: ServerResponseException) {
-        Either.Error(DataError.Network.ServerError)
+        Either.Failure(DataError.Network.Server)
     } catch (e: ClientRequestException) {
-        Either.Error(DataError.Network.ClientError)
+        Either.Failure(DataError.Network.Client)
     } catch (e: RedirectResponseException) {
-        Either.Error(DataError.Network.ClientError)
+        Either.Failure(DataError.Network.Client)
     } catch (e: IOException) {
-        Either.Error(DataError.Network.NoInternet)
+        Either.Failure(DataError.Network.Connection)
     } catch (e: SocketTimeoutException) {
-        Either.Error(DataError.Network.Timeout)
+        Either.Failure(DataError.Network.Timeout)
     } catch (e: SerializationException) {
-        Either.Error(DataError.Network.SerializationError)
+        Either.Failure(DataError.Network.Serialization)
     } catch (e: ResponseException) {
-        Either.Error(DataError.Network.Unknown())
-    } catch (e: GuestModeRequestBlocked) {
-        Either.Error(DataError.Network.ClientError)
+        Either.Failure(DataError.Network.Unknown)
+    } catch (e: GuestBlockedException) {
+        Either.Failure(DataError.Network.Guest)
     }
 
 suspend fun <T> retryIO(

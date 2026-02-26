@@ -4,9 +4,7 @@ import kotlinx.serialization.Serializable
 
 /** App theme options. */
 @Serializable
-enum class ThemeKind(
-    val id: String
-) {
+enum class ThemeKind(val id: String) {
     Light("light"),
     Dark("dark"),
     System("system");

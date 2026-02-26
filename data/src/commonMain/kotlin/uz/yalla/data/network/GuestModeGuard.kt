@@ -2,8 +2,9 @@ package uz.yalla.data.network
 
 import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.http.encodedPath
-import uz.yalla.core.contract.StaticPreferences
-import uz.yalla.core.error.GuestModeRequestBlocked
+import kotlinx.coroutines.flow.MutableStateFlow
+
+internal class GuestBlockedException : RuntimeException()
 
 private val guestAllowedSegments =
     setOf(
@@ -15,15 +16,15 @@ private val guestAllowedSegments =
         "lists"
     )
 
-fun createGuestModeGuardPlugin(staticPrefs: StaticPreferences) =
+fun createGuestModeGuardPlugin(isGuestMode: MutableStateFlow<Boolean>) =
     createClientPlugin("GuestModeGuard") {
         onRequest { request, _ ->
-            if (!staticPrefs.isGuestModeEnable) return@onRequest
+            if (!isGuestMode.value) return@onRequest
 
             val path = request.url.encodedPath.trimEnd('/')
             val lastSegment = path.substringAfterLast('/')
             if (lastSegment !in guestAllowedSegments) {
-                throw GuestModeRequestBlocked()
+                throw GuestBlockedException()
             }
         }
     }

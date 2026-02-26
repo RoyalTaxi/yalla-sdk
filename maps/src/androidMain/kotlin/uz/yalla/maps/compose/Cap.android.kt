@@ -8,11 +8,15 @@ import uz.yalla.maps.model.JointType
 import com.google.android.gms.maps.model.Cap as GoogleCap
 import com.google.android.gms.maps.model.JointType as GoogleJointType
 
+private val buttCap = ButtCap()
+private val roundCap = RoundCap()
+private val squareCap = SquareCap()
+
 internal fun Cap.toGoogleCap(): GoogleCap =
     when (this) {
-        Cap.Butt -> ButtCap()
-        Cap.Round -> RoundCap()
-        Cap.Square -> SquareCap()
+        Cap.Butt -> buttCap
+        Cap.Round -> roundCap
+        Cap.Square -> squareCap
     }
 
 internal fun JointType.toGoogleJointType(): Int =

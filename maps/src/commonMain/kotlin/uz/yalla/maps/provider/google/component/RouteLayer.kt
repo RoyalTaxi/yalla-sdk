@@ -1,6 +1,7 @@
 package uz.yalla.maps.provider.google.component
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalDensity
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.maps.compose.Polyline
@@ -16,8 +17,9 @@ fun RouteLayer(route: List<GeoPoint>) {
 
     val widthPx = with(LocalDensity.current) { MapDimens.RouteWidth.toPx() }
 
+    val points = remember(route) { route.map { it.toLatLng() } }
     Polyline(
-        points = route.map { it.toLatLng() },
+        points = points,
         color = MapColors.Primary,
         width = widthPx,
         jointType = JointType.Round,

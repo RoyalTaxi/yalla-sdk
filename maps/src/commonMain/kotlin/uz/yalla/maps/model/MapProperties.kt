@@ -1,5 +1,8 @@
 package uz.yalla.maps.model
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class MapProperties(
     val isBuildingEnabled: Boolean = false,
     val isIndoorEnabled: Boolean = false,

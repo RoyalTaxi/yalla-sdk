@@ -4,5 +4,5 @@ import org.maplibre.compose.map.RenderOptions
 
 actual fun getPlatformRenderOptions(): RenderOptions =
     RenderOptions(
-        renderMode = RenderOptions.RenderMode.TextureView
+        renderMode = RenderOptions.RenderMode.SurfaceView
     )

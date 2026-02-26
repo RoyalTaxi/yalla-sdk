@@ -1,5 +1,7 @@
 package uz.yalla.maps.model
 
+import androidx.compose.runtime.Stable
+
 /**
  * Data class for UI-related settings on the map.
  *
@@ -18,6 +20,7 @@ package uz.yalla.maps.model
  * @property zoomControlsEnabled Whether the zoom controls are enabled (Android only).
  * @property zoomGesturesEnabled Whether zoom gestures (pinch to zoom) are enabled.
  */
+@Stable
 class MapUiSettings(
     val compassEnabled: Boolean = true,
     val indoorLevelPickerEnabled: Boolean = true,

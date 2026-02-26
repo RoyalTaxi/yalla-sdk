@@ -16,8 +16,8 @@ kotlin {
             // Compose
             api(compose.runtime)
             api(compose.foundation)
-            api(compose.material3)
-            api(compose.components.resources)
+            implementation(compose.material3)
+            implementation(compose.components.resources)
 
             // Core dependencies
             api(projects.core)

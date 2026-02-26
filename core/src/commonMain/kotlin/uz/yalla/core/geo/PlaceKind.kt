@@ -6,9 +6,7 @@ import kotlinx.serialization.Serializable
  * Type of a saved place (home, work, or other).
  */
 @Serializable
-enum class PlaceKind(
-    val id: String,
-) {
+enum class PlaceKind(val id: String,) {
     Home("home"),
     Work("work"),
     Other("other"),

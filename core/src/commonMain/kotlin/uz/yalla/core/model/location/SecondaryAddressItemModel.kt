@@ -12,7 +12,5 @@ data class SecondaryAddressItemModel(
     val type: PlaceKind,
     val parent: Parent
 ) {
-    data class Parent(
-        val name: String?
-    )
+    data class Parent(val name: String?)
 }
