@@ -424,7 +424,36 @@ class AppPreferencesImpl(
     override fun performLogout() {
         scope.launch {
             dataStore.edit { prefs ->
-                prefs.clear()
+                // Clear session data
+                prefs.remove(Keys.ACCESS_TOKEN)
+                prefs.remove(Keys.FIREBASE_TOKEN)
+                prefs.remove(Keys.IS_GUEST_MODE)
+                prefs.remove(Keys.IS_DEVICE_REGISTERED)
+
+                // Clear user data
+                prefs.remove(Keys.FIRST_NAME)
+                prefs.remove(Keys.LAST_NAME)
+                prefs.remove(Keys.NUMBER)
+                prefs.remove(Keys.PAYMENT_TYPE)
+                prefs.remove(Keys.CARD_ID)
+                prefs.remove(Keys.CARD_NUMBER)
+
+                // Clear config data
+                prefs.remove(Keys.SUPPORT_NUMBER)
+                prefs.remove(Keys.SUPPORT_TELEGRAM)
+                prefs.remove(Keys.INFO_INSTAGRAM)
+                prefs.remove(Keys.INFO_TELEGRAM)
+                prefs.remove(Keys.PRIVACY_POLICY_RU)
+                prefs.remove(Keys.PRIVACY_POLICY_UZ)
+                prefs.remove(Keys.MAX_BONUS)
+                prefs.remove(Keys.MIN_BONUS)
+                prefs.remove(Keys.BALANCE)
+                prefs.remove(Keys.IS_BONUS_ENABLED)
+                prefs.remove(Keys.IS_CARD_ENABLED)
+                prefs.remove(Keys.ORDER_CANCEL_TIME)
+
+                // Preserve: LOCALE_TYPE, THEME_TYPE, MAP_TYPE, SKIP_ONBOARDING,
+                //           LAST_ACCESSED_LOCATION, LAST_KNOWN_LOCATION
             }
         }
     }

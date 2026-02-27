@@ -222,13 +222,15 @@ private fun MapContent(
         ) {
             RouteLayer(route)
 
-            LocationsLayer(
-                arrival = null,
-                duration = null,
-                locations = locations,
-                startLabel = if (showMarkerLabels) startMarkerLabel else null,
-                endLabel = if (showMarkerLabels) endMarkerLabel else null
-            )
+            if (locations.size >= 2) {
+                LocationsLayer(
+                    arrival = null,
+                    duration = null,
+                    locations = locations,
+                    startLabel = if (showMarkerLabels) startMarkerLabel else null,
+                    endLabel = if (showMarkerLabels) endMarkerLabel else null
+                )
+            }
 
             if (showLocationIndicator) {
                 LocationIndicator(userLocation)

@@ -86,7 +86,7 @@ class GoogleStaticMap : StaticMap {
                 RouteLayer(route)
             }
 
-            if (locations != null && locations.size >= 2) {
+            if (!locations.isNullOrEmpty()) {
                 LocationsLayer(
                     arrival = null,
                     duration = null,

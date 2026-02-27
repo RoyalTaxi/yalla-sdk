@@ -37,7 +37,7 @@ fun LocationsLayer(
     startLabel: String? = null,
     endLabel: String? = null
 ) {
-    if (locations.size < 2) return
+    if (locations.isEmpty()) return
 
     locations.forEachIndexed { index, location ->
         val type =
