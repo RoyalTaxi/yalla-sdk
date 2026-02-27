@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 import uz.yalla.primitives.button.SupportButtonDefaults.colors
 import uz.yalla.primitives.button.SupportButtonDefaults.dimens
 import uz.yalla.primitives.button.SupportButtonDefaults.style
@@ -228,20 +229,22 @@ object SupportButtonDefaults {
 @Preview
 @Composable
 private fun SupportButtonPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp),
-    ) {
-        SupportButton(
-            state =
-                SupportButtonState(
-                    text = "Помощь",
-                    icon = painterResource(Res.drawable.ic_headset),
-                ),
-            onClick = {},
-            modifier = Modifier.width(362.dp),
-        )
+    YallaTheme {
+        Box(
+            modifier =
+                Modifier
+                    .background(Color.White)
+                    .padding(16.dp),
+        ) {
+            SupportButton(
+                state =
+                    SupportButtonState(
+                        text = "Помощь",
+                        icon = painterResource(Res.drawable.ic_headset),
+                    ),
+                onClick = {},
+                modifier = Modifier.width(362.dp),
+            )
+        }
     }
 }

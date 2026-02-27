@@ -352,6 +352,7 @@
     <string name="order_cancel_countdown">{0} сония</string>
     <string name="order_cancel_trip_title">Сафарни бекор қилиш?</string>
     <string name="order_cancel_action_yes">Ҳа, бекор қилиш</string>
+    <string name="order_cancel_before_search">Сафар ҳайдовчини қидириш бошланишидан олдин бекор қилинди</string>
     <string name="order_cancel_reason_title">Бекор қилиш сабаби</string>
     <string name="order_cancel_reason_description">Сафарни нима сабабдан бекор қилдингиз?</string>
 
@@ -403,6 +404,11 @@
     <string name="driver_travel_time">Йўл вақти: {0} мин</string>
     <string name="driver_become">Ҳайдовчи бўлиш</string>
 
+    <!-- Labels -->
+    <string name="driver_label_rating">Рейтинг:</string>
+    <string name="driver_label_trips">Сафарлар:</string>
+    <string name="driver_label_title">Ҳайдовчи</string>
+
     <!-- Vehicle -->
     <string name="driver_car">Авто</string>
     <string name="driver_tariff">Тариф</string>
@@ -433,6 +439,7 @@
 
     <string name="contact_support_title">Қўллаб-қувватлаш хизмати</string>
     <string name="contact_support_menu">Ёрдам хизмати</string>
+    <string name="contact_help">Ёрдам</string>
     <string name="contact_action_call">Қўнғироқ қилиш</string>
     <string name="contact_action_telegram">Telegram</string>
 

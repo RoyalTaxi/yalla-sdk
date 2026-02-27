@@ -352,6 +352,7 @@
     <string name="order_cancel_countdown">{0} секунд</string>
     <string name="order_cancel_trip_title">Отменить поездку?</string>
     <string name="order_cancel_action_yes">Да, отменить</string>
+    <string name="order_cancel_before_search">Поездка была отменена до начала поиска водителя</string>
     <string name="order_cancel_reason_title">Причина отмены</string>
     <string name="order_cancel_reason_description">По какой причине вы отменили поездку</string>
 
@@ -403,6 +404,11 @@
     <string name="driver_travel_time">Время в пути: {0} мин</string>
     <string name="driver_become">Стать водителем</string>
 
+    <!-- Labels -->
+    <string name="driver_label_rating">Рейтинг:</string>
+    <string name="driver_label_trips">Поездки:</string>
+    <string name="driver_label_title">Водитель</string>
+
     <!-- Vehicle -->
     <string name="driver_car">Автомобиль</string>
     <string name="driver_tariff">Тариф</string>
@@ -433,6 +439,7 @@
 
     <string name="contact_support_title">Служба поддержки</string>
     <string name="contact_support_menu">Поддержка</string>
+    <string name="contact_help">Помощь</string>
     <string name="contact_action_call">Позвонить</string>
     <string name="contact_action_telegram">Telegram</string>
 

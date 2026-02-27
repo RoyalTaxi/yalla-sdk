@@ -113,8 +113,16 @@ class GoogleMapController : MapController {
     ) {
         val camera = cameraState ?: return
         cancelActiveAnimation()
-        setProgrammaticTarget(point.toLatLng(), zoom.clampZoom())
-        animateCamera(camera, point.toLatLng(), zoom.clampZoom(), durationMs = 1)
+        val target = point.toLatLng()
+        val clampedZoom = zoom.clampZoom()
+        setProgrammaticTarget(target, clampedZoom)
+        camera.position = ComposeCameraPosition(
+            target = target,
+            zoom = clampedZoom,
+            bearing = camera.position.bearing,
+            tilt = camera.position.tilt
+        )
+        updateFromCamera(camera.position)
     }
 
     override suspend fun animateTo(

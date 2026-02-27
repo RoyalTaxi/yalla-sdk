@@ -352,6 +352,7 @@
     <string name="order_cancel_countdown">{0} soniya</string>
     <string name="order_cancel_trip_title">Safarni bekor qilish?</string>
     <string name="order_cancel_action_yes">Ha, bekor qilish</string>
+    <string name="order_cancel_before_search">Safar haydovchini qidirish boshlanishidan oldin bekor qilindi</string>
     <string name="order_cancel_reason_title">Bekor qilish sababi</string>
     <string name="order_cancel_reason_description">Safarni nima sababdan bekor qildingiz?</string>
 
@@ -403,6 +404,11 @@
     <string name="driver_travel_time">Yo'l vaqti: {0} min</string>
     <string name="driver_become">Haydovchi bo'lish</string>
 
+    <!-- Labels -->
+    <string name="driver_label_rating">Reyting:</string>
+    <string name="driver_label_trips">Safarlar:</string>
+    <string name="driver_label_title">Haydovchi</string>
+
     <!-- Vehicle -->
     <string name="driver_car">Avto</string>
     <string name="driver_tariff">Tarif</string>
@@ -433,6 +439,7 @@
 
     <string name="contact_support_title">Qo'llab-quvvatlash xizmati</string>
     <string name="contact_support_menu">Yordam xizmati</string>
+    <string name="contact_help">Yordam</string>
     <string name="contact_action_call">Qo'ng'iroq qilish</string>
     <string name="contact_action_telegram">Telegram</string>
 

@@ -352,6 +352,7 @@
     <string name="order_cancel_countdown">{0} seconds</string>
     <string name="order_cancel_trip_title">Cancel trip?</string>
     <string name="order_cancel_action_yes">Yes, cancel</string>
+    <string name="order_cancel_before_search">The trip was canceled before driver search started</string>
     <string name="order_cancel_reason_title">Cancel Reason</string>
     <string name="order_cancel_reason_description">Why did you cancel the trip?</string>
 
@@ -403,6 +404,11 @@
     <string name="driver_travel_time">Travel time: {0} min</string>
     <string name="driver_become">Become a Driver</string>
 
+    <!-- Labels -->
+    <string name="driver_label_rating">Rating:</string>
+    <string name="driver_label_trips">Trips:</string>
+    <string name="driver_label_title">Driver</string>
+
     <!-- Vehicle -->
     <string name="driver_car">Vehicle</string>
     <string name="driver_tariff">Tariff</string>
@@ -433,6 +439,7 @@
 
     <string name="contact_support_title">Support Service</string>
     <string name="contact_support_menu">Support</string>
+    <string name="contact_help">Help</string>
     <string name="contact_action_call">Call</string>
     <string name="contact_action_telegram">Telegram</string>
 
