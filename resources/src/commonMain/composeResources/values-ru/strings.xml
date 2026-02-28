@@ -324,6 +324,7 @@
     <string name="order_search_cars_nearby">Рядом с вами {0} машин</string>
     <string name="order_search_selecting">Выбираем подходящие</string>
     <string name="order_search_time_estimate">Это может занять до {0} минут</string>
+    <string name="order_search_time_estimate_unknown">Это может занять несколько минут</string>
     <string name="order_action_order_more">Заказать ещё</string>
     <string name="order_trip_info">Информация о поездке</string>
     <string name="order_trip_details">Детали поездки</string>

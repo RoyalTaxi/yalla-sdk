@@ -324,6 +324,7 @@
     <string name="order_search_cars_nearby">{0} cars near you</string>
     <string name="order_search_selecting">Selecting suitable ones</string>
     <string name="order_search_time_estimate">This may take up to {0} minutes</string>
+    <string name="order_search_time_estimate_unknown">This may take a few minutes</string>
     <string name="order_action_order_more">Order another</string>
     <string name="order_trip_info">Trip information</string>
     <string name="order_trip_details">Trip details</string>

@@ -6,6 +6,7 @@ sealed class DataError {
         data object Timeout : Network()
         data object Server : Network()
         data object Client : Network()
+        data class ClientWithMessage(val code: Int, val message: String) : Network()
         data object Serialization : Network()
         data object Guest : Network()
         data object Unknown : Network()

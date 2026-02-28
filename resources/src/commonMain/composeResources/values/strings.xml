@@ -324,6 +324,7 @@
     <string name="order_search_cars_nearby">Sizga yaqin {0} ta mashina</string>
     <string name="order_search_selecting">Mos keladiganlarni tanlaymiz</string>
     <string name="order_search_time_estimate">Bu {0} daqiqagacha vaqt olishi mumkin</string>
+    <string name="order_search_time_estimate_unknown">Bu bir necha daqiqa vaqt olishi mumkin</string>
     <string name="order_action_order_more">Yana buyurtma berish</string>
     <string name="order_trip_info">Safar haqida ma'lumot</string>
     <string name="order_trip_details">Safar tafsilotlari</string>

@@ -12,6 +12,7 @@ import kotlinx.io.IOException
 import kotlinx.serialization.SerializationException
 import uz.yalla.core.error.DataError
 import uz.yalla.core.result.Either
+import uz.yalla.data.remote.ApiErrorBody
 import kotlin.random.Random
 
 suspend inline fun <reified T> safeApiCall(
@@ -29,14 +30,44 @@ suspend inline fun <reified T> safeApiCall(
                 }
             }
             in 300..399 -> Either.Failure(DataError.Network.Client)
-            in 400..499 -> Either.Failure(DataError.Network.Client)
+            in 400..499 -> {
+                val message = try {
+                    response.body<ApiErrorBody>().message
+                } catch (_: Exception) {
+                    null
+                }
+                if (!message.isNullOrBlank()) {
+                    Either.Failure(
+                        DataError.Network.ClientWithMessage(
+                            code = response.status.value,
+                            message = message
+                        )
+                    )
+                } else {
+                    Either.Failure(DataError.Network.Client)
+                }
+            }
             in 500..599 -> Either.Failure(DataError.Network.Server)
             else -> Either.Failure(DataError.Network.Unknown)
         }
     } catch (e: ServerResponseException) {
         Either.Failure(DataError.Network.Server)
     } catch (e: ClientRequestException) {
-        Either.Failure(DataError.Network.Client)
+        val message = try {
+            e.response.body<ApiErrorBody>().message
+        } catch (_: Exception) {
+            null
+        }
+        if (!message.isNullOrBlank()) {
+            Either.Failure(
+                DataError.Network.ClientWithMessage(
+                    code = e.response.status.value,
+                    message = message
+                )
+            )
+        } else {
+            Either.Failure(DataError.Network.Client)
+        }
     } catch (e: RedirectResponseException) {
         Either.Failure(DataError.Network.Client)
     } catch (e: IOException) {
