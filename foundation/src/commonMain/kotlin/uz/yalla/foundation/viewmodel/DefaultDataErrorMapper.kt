@@ -16,6 +16,7 @@ class DefaultDataErrorMapper : DataErrorMapper {
             DataError.Network.Connection -> Res.string.error_no_internet
             DataError.Network.Timeout -> Res.string.error_connection_timeout
             DataError.Network.Client -> Res.string.error_client_request
+            is DataError.Network.ClientWithMessage -> Res.string.error_client_request
             DataError.Network.Server -> Res.string.error_server_busy
             DataError.Network.Serialization -> Res.string.error_data_format
             DataError.Network.Guest -> Res.string.error_client_request
