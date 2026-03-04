@@ -9,5 +9,16 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             api(libs.kotlinx.datetime)
         }
+
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.turbine)
+        }
+    }
+}
+
+dokka {
+    dokkaSourceSets.configureEach {
+        includes.from("MODULE.md")
     }
 }
