@@ -5,6 +5,12 @@ import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Instant
 
+/**
+ * Formats an epoch timestamp to a localized date string (dd.MM.yyyy).
+ *
+ * Handles both seconds and milliseconds epoch formats automatically.
+ * Returns empty string if null or non-positive.
+ */
 fun Long?.toLocalFormattedDate(): String {
     val localDateTime = this.toLocalDateTimeOrNull() ?: return ""
     val day = localDateTime.day.toString().padStart(2, '0')
@@ -15,6 +21,12 @@ fun Long?.toLocalFormattedDate(): String {
     return "$day.$month.${localDateTime.year}"
 }
 
+/**
+ * Formats an epoch timestamp to a localized time string (HH:mm).
+ *
+ * Handles both seconds and milliseconds epoch formats automatically.
+ * Returns empty string if null or non-positive.
+ */
 fun Long?.toLocalFormattedTime(): String {
     val localDateTime = this.toLocalDateTimeOrNull() ?: return ""
     val hour = localDateTime.hour.toString().padStart(2, '0')

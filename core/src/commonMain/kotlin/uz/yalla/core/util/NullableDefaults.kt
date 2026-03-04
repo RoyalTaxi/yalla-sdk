@@ -26,11 +26,6 @@ fun Double?.or0() = this ?: 0.0
 fun Boolean?.orFalse() = this ?: false
 
 /**
- * Returns this value or true if null.
- */
-fun Boolean?.orTrue() = this ?: true
-
-/**
  * Formats a Long as a money amount with space thousand separators.
  *
  * ## Example
