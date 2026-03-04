@@ -13,7 +13,7 @@ import org.maplibre.compose.map.MapOptions
 import org.maplibre.compose.map.MaplibreMap
 import org.maplibre.compose.style.BaseStyle
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.model.MarkerState
 import uz.yalla.maps.config.MapConstants

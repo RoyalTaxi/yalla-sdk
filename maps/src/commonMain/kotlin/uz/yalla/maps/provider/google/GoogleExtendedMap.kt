@@ -16,7 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.CoroutineScope
 import org.koin.compose.koinInject
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.api.ExtendedMap
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.MapScope

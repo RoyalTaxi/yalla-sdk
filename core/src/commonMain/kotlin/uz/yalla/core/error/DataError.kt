@@ -44,7 +44,10 @@ sealed class DataError {
          * @property code HTTP status code
          * @property message Error message from backend, suitable for UI display
          */
-        data class ClientWithMessage(val code: Int, val message: String) : Network()
+        data class ClientWithMessage(
+            val code: Int,
+            val message: String
+        ) : Network()
 
         /** Response body could not be deserialized. */
         data object Serialization : Network()

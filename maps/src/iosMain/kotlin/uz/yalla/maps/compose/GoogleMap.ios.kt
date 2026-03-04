@@ -27,7 +27,7 @@ import platform.CoreLocation.CLLocationCoordinate2DMake
 import platform.UIKit.UIEdgeInsetsMake
 import platform.UIKit.UIUserInterfaceStyle
 import platform.darwin.NSObject
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.model.MapProperties
 import uz.yalla.maps.model.MapType
 import uz.yalla.maps.model.MapUiSettings

@@ -1,8 +1,8 @@
 package uz.yalla.data.mapper
 
-import uz.yalla.core.model.Client
+import uz.yalla.core.profile.Client
 import uz.yalla.data.remote.model.ClientRemoteModel
-import uz.yalla.data.util.or0
+import uz.yalla.core.util.or0
 
 object ClientMapper {
     val clientMapper: Mapper<ClientRemoteModel?, Client> =

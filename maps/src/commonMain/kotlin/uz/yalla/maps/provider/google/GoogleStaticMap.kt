@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import org.koin.compose.koinInject
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.api.StaticMap
 import uz.yalla.maps.compose.rememberCameraPositionState
 import uz.yalla.maps.config.MapConstants

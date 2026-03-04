@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import org.maplibre.compose.camera.rememberCameraState
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.api.LiteMap
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.model.MarkerState

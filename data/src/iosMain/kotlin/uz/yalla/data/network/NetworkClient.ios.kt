@@ -10,6 +10,7 @@ import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.header
+import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +31,7 @@ private val accessTokenCache = MutableStateFlow("")
 private val guestModeCache = MutableStateFlow(false)
 
 private val cacheScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+private const val BEARER_PREFIX = "Bearer "
 
 actual fun provideNetworkClient(
     config: NetworkConfig,
@@ -54,12 +56,14 @@ actual fun provideNetworkClient(
         install(HttpCallValidator) {
             validateResponse { response ->
                 if (response.status == HttpStatusCode.Unauthorized) {
-                    handleUnauthorized(sessionPrefs)
+                    val requestToken = response.call.request.headers[HttpHeaders.Authorization].extractBearerToken()
+                    handleUnauthorized(sessionPrefs, requestToken)
                 }
             }
-            handleResponseExceptionWithRequest { cause, _ ->
+            handleResponseExceptionWithRequest { cause, request ->
                 if (cause is ClientRequestException && cause.response.status == HttpStatusCode.Unauthorized) {
-                    handleUnauthorized(sessionPrefs)
+                    val requestToken = request.headers[HttpHeaders.Authorization].extractBearerToken()
+                    handleUnauthorized(sessionPrefs, requestToken)
                 }
             }
         }
@@ -110,12 +114,24 @@ private fun createDynamicHeadersPlugin(positionPrefs: PositionPreferences) =
         }
     }
 
-private fun handleUnauthorized(sessionPrefs: SessionPreferences) {
-    val token = accessTokenCache.value
-    if (token.isEmpty()) return
-    if (!accessTokenCache.compareAndSet(token, "")) return
+private fun handleUnauthorized(
+    sessionPrefs: SessionPreferences,
+    requestToken: String?
+) {
+    val currentToken = accessTokenCache.value
+    if (currentToken.isEmpty()) return
+    if (requestToken.isNullOrEmpty()) return
+    if (requestToken != currentToken) return
+    if (!accessTokenCache.compareAndSet(currentToken, "")) return
 
     sessionPrefs.performLogout()
     localeCache.value = ""
     UnauthorizedSessionEvents.publish()
+}
+
+private fun String?.extractBearerToken(): String? {
+    val value = this?.trim().orEmpty()
+    if (!value.startsWith(BEARER_PREFIX, ignoreCase = true)) return null
+    if (value.length <= BEARER_PREFIX.length) return null
+    return value.substring(BEARER_PREFIX.length).trim().ifEmpty { null }
 }

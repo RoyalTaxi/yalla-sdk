@@ -18,10 +18,10 @@ import uz.yalla.core.contract.preferences.PositionPreferences
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.contract.preferences.UserPreferences
-import uz.yalla.core.kind.LocaleKind
-import uz.yalla.core.kind.MapKind
-import uz.yalla.core.kind.PaymentKind
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.LocaleKind
+import uz.yalla.core.settings.MapKind
+import uz.yalla.core.payment.PaymentKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.core.util.or0
 import uz.yalla.core.util.orFalse
 

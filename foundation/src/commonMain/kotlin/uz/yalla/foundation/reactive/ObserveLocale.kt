@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import uz.yalla.core.kind.LocaleKind
+import uz.yalla.core.settings.LocaleKind
 import uz.yalla.foundation.locale.getCurrentLanguage
 
 /**

@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.jetbrains.compose.resources.painterResource
-import uz.yalla.core.kind.LocaleKind
+import uz.yalla.core.settings.LocaleKind
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
 import uz.yalla.resources.ic_flag_rectangle

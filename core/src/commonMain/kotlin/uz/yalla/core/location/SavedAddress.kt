@@ -1,7 +1,5 @@
 package uz.yalla.core.location
 
-import uz.yalla.core.location.PlaceKind
-
 /**
  * User's saved/favorite address with navigation metrics.
  *

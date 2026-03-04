@@ -3,7 +3,7 @@ package uz.yalla.foundation.model
 import androidx.compose.runtime.Composable
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import uz.yalla.core.kind.MapKind
+import uz.yalla.core.settings.MapKind
 import uz.yalla.resources.Res
 import uz.yalla.resources.settings_map_google
 import uz.yalla.resources.settings_map_libre

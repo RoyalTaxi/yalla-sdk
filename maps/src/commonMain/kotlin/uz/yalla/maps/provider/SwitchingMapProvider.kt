@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.kind.MapKind
+import uz.yalla.core.settings.MapKind
 import uz.yalla.maps.api.ExtendedMap
 import uz.yalla.maps.api.LiteMap
 import uz.yalla.maps.api.MapController

@@ -1,6 +1,6 @@
 package uz.yalla.maps.api
 
-import uz.yalla.core.kind.MapKind
+import uz.yalla.core.settings.MapKind
 import uz.yalla.maps.api.model.MapCapabilities
 import uz.yalla.maps.api.model.MapStyle
 

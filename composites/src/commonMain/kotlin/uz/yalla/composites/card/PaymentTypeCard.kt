@@ -26,7 +26,7 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.composites.util.getDrawableResource
 import uz.yalla.composites.util.getStringResource
-import uz.yalla.core.kind.PaymentKind
+import uz.yalla.core.payment.PaymentKind
 import uz.yalla.core.util.formatArgs
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res

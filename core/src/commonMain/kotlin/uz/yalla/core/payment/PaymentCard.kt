@@ -1,7 +1,5 @@
 package uz.yalla.core.payment
 
-import uz.yalla.core.payment.PaymentKind
-
 /**
  * A saved payment card from the user's wallet.
  *

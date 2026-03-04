@@ -1,7 +1,7 @@
 package uz.yalla.primitives.util
 
 import org.jetbrains.compose.resources.StringResource
-import uz.yalla.core.kind.GenderKind
+import uz.yalla.core.profile.GenderKind
 import uz.yalla.resources.Res
 import uz.yalla.resources.register_gender_female
 import uz.yalla.resources.register_gender_male

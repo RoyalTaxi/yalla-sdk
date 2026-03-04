@@ -39,7 +39,8 @@ data class GeoPoint(
             sin(dLat / 2) * sin(dLat / 2) +
                 cos(lat.toRadians()) * cos(other.lat.toRadians()) *
                 sin(dLng / 2) * sin(dLng / 2)
-        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+        val clampedA = a.coerceIn(0.0, 1.0)
+        val c = 2 * atan2(sqrt(clampedA), sqrt(1 - clampedA))
         return EARTH_RADIUS_METERS * c
     }
 }

@@ -13,7 +13,7 @@ import io.github.dellisd.spatialk.geojson.Position
 import org.koin.compose.koinInject
 import org.maplibre.compose.camera.rememberCameraState
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.api.StaticMap
 import uz.yalla.maps.config.MapConstants
 import uz.yalla.maps.di.MapDependencies

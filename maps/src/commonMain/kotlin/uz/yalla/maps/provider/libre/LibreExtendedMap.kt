@@ -16,7 +16,7 @@ import org.koin.compose.koinInject
 import org.maplibre.compose.camera.CameraState
 import org.maplibre.compose.camera.rememberCameraState
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.api.ExtendedMap
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.MapScope

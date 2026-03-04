@@ -1,6 +1,6 @@
 package uz.yalla.maps.provider.google
 
-import uz.yalla.core.kind.MapKind
+import uz.yalla.core.settings.MapKind
 import uz.yalla.maps.api.ExtendedMap
 import uz.yalla.maps.api.LiteMap
 import uz.yalla.maps.api.MapController

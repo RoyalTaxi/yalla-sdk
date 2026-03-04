@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.IntSize
 import kotlinx.coroutines.flow.collectLatest
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.model.MarkerState
 import uz.yalla.maps.compose.CameraMoveStartedReason

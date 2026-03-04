@@ -3,7 +3,7 @@ package uz.yalla.foundation.locale
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
-import uz.yalla.core.kind.LocaleKind
+import uz.yalla.core.settings.LocaleKind
 
 /**
  * Current app language state.

@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import uz.yalla.core.kind.GenderKind
+import uz.yalla.core.profile.GenderKind
 import uz.yalla.design.theme.System
 import uz.yalla.primitives.util.resource
 import uz.yalla.resources.Res

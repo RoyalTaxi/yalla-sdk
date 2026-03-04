@@ -2,7 +2,7 @@ package uz.yalla.composites.util
 
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
-import uz.yalla.core.kind.PaymentKind
+import uz.yalla.core.payment.PaymentKind
 import uz.yalla.resources.Res
 import uz.yalla.resources.ic_cash
 import uz.yalla.resources.ic_humo

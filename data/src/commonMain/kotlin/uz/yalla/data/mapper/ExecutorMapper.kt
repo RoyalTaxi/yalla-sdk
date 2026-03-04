@@ -1,8 +1,8 @@
 package uz.yalla.data.mapper
 
-import uz.yalla.core.model.Executor
+import uz.yalla.core.order.Executor
 import uz.yalla.data.remote.model.ExecutorRemoteModel
-import uz.yalla.data.util.or0
+import uz.yalla.core.util.or0
 
 object ExecutorMapper {
     val mapper: Mapper<ExecutorRemoteModel?, Executor> = { remote ->

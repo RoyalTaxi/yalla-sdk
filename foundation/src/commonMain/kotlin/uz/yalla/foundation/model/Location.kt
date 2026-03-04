@@ -1,7 +1,7 @@
 package uz.yalla.foundation.model
 
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.geo.PlaceKind
+import uz.yalla.core.location.PlaceKind
 
 /**
  * A location with optional name and coordinates.

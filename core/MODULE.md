@@ -2,27 +2,52 @@
 
 Core types, error hierarchy, and contracts for the yalla-sdk.
 
-This module provides the foundational building blocks used across all other SDK modules:
+This module provides the foundational building blocks used across all other SDK modules.
 
-## Packages
+# Package uz.yalla.core.error
 
-| Package | Description |
-|---------|-------------|
-| `uz.yalla.core.error` | Sealed error hierarchy (`DataError`) for typed error handling |
-| `uz.yalla.core.result` | `Either<D, E>` result type for functional error handling |
-| `uz.yalla.core.order` | Order domain models and status state machine |
-| `uz.yalla.core.location` | Address, route, and geographic point types |
-| `uz.yalla.core.geo` | `GeoPoint` with Haversine distance calculation |
-| `uz.yalla.core.payment` | Payment types (`Cash`, `Card`) and card models |
-| `uz.yalla.core.profile` | User profile models |
-| `uz.yalla.core.settings` | App settings enums (locale, theme, map provider) |
-| `uz.yalla.core.session` | Session event bus for unauthorized state handling |
-| `uz.yalla.core.contract.preferences` | Reactive preference contracts (Flow-based) |
-| `uz.yalla.core.contract.location` | Location tracking contract |
-| `uz.yalla.core.util` | Formatting, normalization, and extension utilities |
+Sealed error hierarchy (`DataError`) for typed error handling.
 
-## Dependencies
+# Package uz.yalla.core.result
 
-- `kotlinx-coroutines-core` — Flow-based reactive contracts
-- `kotlinx-serialization-json` — Serializable types
-- `kotlinx-datetime` — Date/time formatting
+`Either<D, E>` result type for functional error handling.
+
+# Package uz.yalla.core.order
+
+Order domain models and status state machine.
+
+# Package uz.yalla.core.location
+
+Address, route, and geographic point types.
+
+# Package uz.yalla.core.geo
+
+`GeoPoint` with Haversine distance calculation.
+
+# Package uz.yalla.core.payment
+
+Payment types (`Cash`, `Card`) and card models.
+
+# Package uz.yalla.core.profile
+
+User profile models.
+
+# Package uz.yalla.core.settings
+
+App settings enums (locale, theme, map provider).
+
+# Package uz.yalla.core.session
+
+Session event bus for unauthorized state handling.
+
+# Package uz.yalla.core.contract.preferences
+
+Reactive preference contracts (Flow-based).
+
+# Package uz.yalla.core.contract.location
+
+Location tracking contract.
+
+# Package uz.yalla.core.util
+
+Formatting, normalization, and extension utilities.

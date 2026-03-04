@@ -3,7 +3,7 @@ package uz.yalla.maps.compose
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import uz.yalla.core.kind.ThemeKind
+import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.model.MapProperties
 import uz.yalla.maps.model.MapType
 import uz.yalla.maps.model.MapUiSettings

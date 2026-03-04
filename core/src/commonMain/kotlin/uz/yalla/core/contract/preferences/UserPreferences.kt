@@ -13,11 +13,18 @@ import uz.yalla.core.payment.PaymentKind
  */
 interface UserPreferences {
     val firstName: Flow<String>
+
     fun setFirstName(value: String)
+
     val lastName: Flow<String>
+
     fun setLastName(value: String)
+
     val number: Flow<String>
+
     fun setNumber(value: String)
+
     val paymentType: Flow<PaymentKind>
+
     fun setPaymentType(value: PaymentKind)
 }
