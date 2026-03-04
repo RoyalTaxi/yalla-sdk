@@ -2,6 +2,15 @@ package uz.yalla.core.contract.preferences
 
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Contract for app configuration storage.
+ *
+ * Stores server-provided configuration values (support contacts,
+ * payment limits, policy URLs). All properties are reactive [Flow]s.
+ * Implemented in the data module.
+ *
+ * @since 0.0.1
+ */
 interface ConfigPreferences {
     val supportNumber: Flow<String>
     fun setSupportNumber(value: String)
