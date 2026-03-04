@@ -13,6 +13,7 @@ repositories {
 dependencies {
     compileOnly(libs.gradle)
     compileOnly(libs.kotlin.gradle.plugin)
+    compileOnly("org.jetbrains.dokka:dokka-gradle-plugin:${libs.versions.dokka.get()}")
 }
 
 gradlePlugin {

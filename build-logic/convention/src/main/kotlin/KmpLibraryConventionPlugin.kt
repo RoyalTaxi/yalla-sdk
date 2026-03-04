@@ -16,6 +16,7 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.multiplatform")
                 apply("org.jetbrains.kotlin.plugin.serialization")
                 apply("maven-publish")
+                apply("org.jetbrains.dokka")
             }
 
             group = "uz.yalla.sdk"
