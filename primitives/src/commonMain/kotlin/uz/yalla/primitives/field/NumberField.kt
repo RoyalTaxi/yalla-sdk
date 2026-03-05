@@ -125,7 +125,7 @@ private object DigitsOnlyTransformation : InputTransformation {
             replace(0, length, filtered)
         }
         if (length > 9) {
-            delete(9, length)
+            replace(9, length, "")
         }
     }
 }
