@@ -120,8 +120,12 @@ fun NumberField(
 
 private object DigitsOnlyTransformation : InputTransformation {
     override fun TextFieldBuffer.transformInput() {
-        if (length > 9 || !asCharSequence().all { it.isDigit() }) {
-            revertAllChanges()
+        if (!asCharSequence().all { it.isDigit() }) {
+            val filtered = asCharSequence().filter { it.isDigit() }.toString()
+            replace(0, length, filtered)
+        }
+        if (length > 9) {
+            delete(9, length)
         }
     }
 }
