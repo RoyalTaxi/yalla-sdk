@@ -14,7 +14,7 @@ import uz.yalla.core.util.orFalse
  * [DataStore]-backed implementation of [SessionPreferences].
  *
  * Manages authentication tokens, guest mode, and device registration state.
- * [performLogout] removes session and user data while preserving
+ * [clearSession] removes session and user data while preserving
  * interface settings (locale, theme, map provider, onboarding).
  *
  * @param dataStore shared preferences store
@@ -53,7 +53,7 @@ internal class SessionPreferencesImpl(
         scope.launch { dataStore.edit { it[PreferenceKeys.IS_DEVICE_REGISTERED] = value } }
     }
 
-    override fun performLogout() {
+    override fun clearSession() {
         scope.launch {
             dataStore.edit { prefs ->
                 prefs.remove(PreferenceKeys.ACCESS_TOKEN)

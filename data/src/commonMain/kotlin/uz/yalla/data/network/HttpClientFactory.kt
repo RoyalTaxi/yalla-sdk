@@ -153,7 +153,7 @@ private fun handleUnauthorized(
     if (requestToken != currentToken) return
     if (!accessTokenCache.compareAndSet(currentToken, "")) return
 
-    sessionPrefs.performLogout()
+    sessionPrefs.clearSession()
     UnauthorizedSessionEvents.publish()
 }
 
