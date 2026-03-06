@@ -15,9 +15,6 @@ kotlin {
             api(libs.kotlinx.coroutines.core)
             api(libs.koin.core)
 
-            api(libs.multiplatform.settings)
-            api(libs.multiplatform.settings.no.arg)
-            api(libs.multiplatform.settings.coroutines)
             api(libs.datastore.preferences)
         }
 
