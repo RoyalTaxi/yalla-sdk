@@ -37,11 +37,12 @@ fun createGuestModeGuardPlugin(
     }
 }
 
-private val DEFAULT_GUEST_ALLOWED_SEGMENTS = setOf(
-    "client",
-    "valid",
-    "register",
-    "location-name",
-    "cost",
-    "lists",
-)
+private val DEFAULT_GUEST_ALLOWED_SEGMENTS =
+    setOf(
+        "client",
+        "valid",
+        "register",
+        "location-name",
+        "cost",
+        "lists",
+    )

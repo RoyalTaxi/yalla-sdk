@@ -49,11 +49,12 @@ suspend inline fun <reified T> safeApiCall(
             }
             in 300..399 -> Either.Failure(DataError.Network.Client)
             in 400..499 -> {
-                val message = try {
-                    response.body<ApiErrorResponse>().message
-                } catch (_: Exception) {
-                    null
-                }
+                val message =
+                    try {
+                        response.body<ApiErrorResponse>().message
+                    } catch (_: Exception) {
+                        null
+                    }
                 if (!message.isNullOrBlank()) {
                     Either.Failure(
                         DataError.Network.ClientWithMessage(
@@ -71,11 +72,12 @@ suspend inline fun <reified T> safeApiCall(
     } catch (_: ServerResponseException) {
         Either.Failure(DataError.Network.Server)
     } catch (e: ClientRequestException) {
-        val message = try {
-            e.response.body<ApiErrorResponse>().message
-        } catch (_: Exception) {
-            null
-        }
+        val message =
+            try {
+                e.response.body<ApiErrorResponse>().message
+            } catch (_: Exception) {
+                null
+            }
         if (!message.isNullOrBlank()) {
             Either.Failure(
                 DataError.Network.ClientWithMessage(

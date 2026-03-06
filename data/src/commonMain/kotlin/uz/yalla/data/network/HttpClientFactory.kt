@@ -80,9 +80,10 @@ fun createHttpClient(
         install(HttpCallValidator) {
             validateResponse { response ->
                 if (response.status == HttpStatusCode.Unauthorized) {
-                    val requestToken = response.call.request
-                        .headers[HttpHeaders.Authorization]
-                        .extractBearerToken()
+                    val requestToken =
+                        response.call.request
+                            .headers[HttpHeaders.Authorization]
+                            .extractBearerToken()
                     handleUnauthorized(sessionPrefs, accessTokenCache, requestToken)
                 }
             }
@@ -91,8 +92,9 @@ fun createHttpClient(
                     cause is ClientRequestException &&
                     cause.response.status == HttpStatusCode.Unauthorized
                 ) {
-                    val requestToken = request.headers[HttpHeaders.Authorization]
-                        .extractBearerToken()
+                    val requestToken =
+                        request.headers[HttpHeaders.Authorization]
+                            .extractBearerToken()
                     handleUnauthorized(sessionPrefs, accessTokenCache, requestToken)
                 }
             }

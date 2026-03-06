@@ -27,7 +27,6 @@ internal class InterfacePreferencesImpl(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope,
 ) : InterfacePreferences {
-
     override val localeType: Flow<LocaleKind> =
         dataStore.data.map { LocaleKind.from(it[PreferenceKeys.LOCALE_TYPE]) }
 

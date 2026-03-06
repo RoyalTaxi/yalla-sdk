@@ -25,7 +25,6 @@ internal class PositionPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope,
 ) : PositionPreferences {
-
     override val lastMapPosition: Flow<GeoPoint> =
         dataStore.data.map { parseGeoPoint(it[PreferenceKeys.LAST_MAP_POSITION]) }
 

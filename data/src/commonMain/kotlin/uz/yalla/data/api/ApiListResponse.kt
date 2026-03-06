@@ -12,6 +12,4 @@ import kotlinx.serialization.Serializable
  * @since 0.0.1
  */
 @Serializable
-data class ApiListResponse<T>(
-    val list: List<T>? = null,
-)
+data class ApiListResponse<T>(val list: List<T>? = null)

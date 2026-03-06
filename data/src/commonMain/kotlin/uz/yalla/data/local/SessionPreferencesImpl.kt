@@ -25,7 +25,6 @@ internal class SessionPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope,
 ) : SessionPreferences {
-
     override val accessToken: Flow<String> =
         dataStore.data.map { it[PreferenceKeys.ACCESS_TOKEN].orEmpty() }
 

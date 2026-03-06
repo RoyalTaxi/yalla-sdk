@@ -23,7 +23,6 @@ internal class UserPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope,
 ) : UserPreferences {
-
     override val firstName: Flow<String> =
         dataStore.data.map { it[PreferenceKeys.FIRST_NAME].orEmpty() }
 
