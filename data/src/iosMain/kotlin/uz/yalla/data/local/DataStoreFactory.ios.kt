@@ -3,17 +3,13 @@ package uz.yalla.data.local
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
-import com.russhwolf.settings.NSUserDefaultsSettings
-import com.russhwolf.settings.Settings
 import kotlinx.cinterop.ExperimentalForeignApi
 import okio.Path.Companion.toPath
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
-import platform.Foundation.NSUserDefaults
 import platform.Foundation.NSUserDomainMask
 
 private const val DATASTORE_FILE = "prefs.preferences_pb"
-private const val STATIC_PREFS_NAME = "static_preferences"
 
 @OptIn(ExperimentalForeignApi::class)
 actual fun createDataStore(): DataStore<Preferences> =
@@ -25,10 +21,8 @@ actual fun createDataStore(): DataStore<Preferences> =
                     inDomain = NSUserDomainMask,
                     appropriateForURL = null,
                     create = false,
-                    error = null
+                    error = null,
                 )
             (requireNotNull(documentDirectory).path + "/$DATASTORE_FILE").toPath()
         }
     )
-
-actual fun createStaticSettings(): Settings = NSUserDefaultsSettings(NSUserDefaults(suiteName = STATIC_PREFS_NAME))
