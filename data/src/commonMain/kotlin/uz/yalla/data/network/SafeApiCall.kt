@@ -12,7 +12,7 @@ import kotlinx.io.IOException
 import kotlinx.serialization.SerializationException
 import uz.yalla.core.error.DataError
 import uz.yalla.core.result.Either
-import uz.yalla.data.remote.ApiErrorBody
+import uz.yalla.data.api.ApiErrorResponse
 import kotlin.random.Random
 
 suspend inline fun <reified T> safeApiCall(
@@ -32,7 +32,7 @@ suspend inline fun <reified T> safeApiCall(
             in 300..399 -> Either.Failure(DataError.Network.Client)
             in 400..499 -> {
                 val message = try {
-                    response.body<ApiErrorBody>().message
+                    response.body<ApiErrorResponse>().message
                 } catch (_: Exception) {
                     null
                 }
@@ -54,7 +54,7 @@ suspend inline fun <reified T> safeApiCall(
         Either.Failure(DataError.Network.Server)
     } catch (e: ClientRequestException) {
         val message = try {
-            e.response.body<ApiErrorBody>().message
+            e.response.body<ApiErrorResponse>().message
         } catch (_: Exception) {
             null
         }
