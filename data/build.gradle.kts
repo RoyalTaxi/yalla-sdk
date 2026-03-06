@@ -29,6 +29,11 @@ kotlin {
             implementation(libs.koin.android)
         }
 
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.ktor.client.mock)
+        }
+
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }

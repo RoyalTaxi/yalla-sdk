@@ -49,7 +49,7 @@ internal class PositionPreferencesImpl(
     }
 }
 
-private fun parseGeoPoint(
+internal fun parseGeoPoint(
     raw: String?,
     fallbackRaw: String? = null,
 ): GeoPoint {
