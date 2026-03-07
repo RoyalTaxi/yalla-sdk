@@ -49,3 +49,21 @@ inline fun <D, E> Either<D, E>.onFailure(action: (E) -> Unit): Either<D, E> {
     if (this is Either.Failure) action(error)
     return this
 }
+
+/**
+ * Transforms the success [data] using [transform], preserving failures unchanged.
+ *
+ * ```kotlin
+ * val orderId: Either<Int, DataError> =
+ *     service.createOrder(request)
+ *         .mapSuccess { response -> response.result?.orderId.or0() }
+ * ```
+ *
+ * @param transform Mapping function applied to [Either.Success.data]
+ * @return New [Either] with transformed success type, or the original [Either.Failure]
+ */
+inline fun <D, E, R> Either<D, E>.mapSuccess(transform: (D) -> R): Either<R, E> =
+    when (this) {
+        is Either.Failure -> Either.Failure(error)
+        is Either.Success -> Either.Success(transform(data))
+    }
