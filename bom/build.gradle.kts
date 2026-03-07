@@ -30,6 +30,7 @@ publishing {
         }
     }
     repositories {
+        mavenLocal()
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/RoyalTaxi/yalla-sdk")
