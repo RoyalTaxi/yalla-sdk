@@ -2,6 +2,12 @@ plugins {
     id("yalla.sdk.kmp")
 }
 
+dokka {
+    dokkaSourceSets.configureEach {
+        includes.from("MODULE.md")
+    }
+}
+
 kotlin {
     sourceSets {
         commonMain.dependencies {
@@ -15,15 +21,17 @@ kotlin {
             api(libs.kotlinx.coroutines.core)
             api(libs.koin.core)
 
-            api(libs.multiplatform.settings)
-            api(libs.multiplatform.settings.no.arg)
-            api(libs.multiplatform.settings.coroutines)
             api(libs.datastore.preferences)
         }
 
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
             implementation(libs.koin.android)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.ktor.client.mock)
         }
 
         iosMain.dependencies {

@@ -28,6 +28,6 @@ interface SessionPreferences {
 
     fun setDeviceRegistered(value: Boolean)
 
-    /** Clears all session data (tokens, guest state, device registration). */
-    fun performLogout()
+    /** Clears all session and user data, preserving interface settings. */
+    fun clearSession()
 }

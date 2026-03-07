@@ -2,19 +2,19 @@ package uz.yalla.data.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
-import io.ktor.client.engine.darwin.Darwin
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.logging.LogLevel
+import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -25,53 +25,85 @@ import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.contract.preferences.PositionPreferences
 import uz.yalla.core.contract.preferences.SessionPreferences
 import uz.yalla.core.session.UnauthorizedSessionEvents
+import uz.yalla.data.util.ioDispatcher
+import uz.yalla.data.util.platformName
 
-private val localeCache = MutableStateFlow("")
-private val accessTokenCache = MutableStateFlow("")
-private val guestModeCache = MutableStateFlow(false)
-
-private val cacheScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 private const val BEARER_PREFIX = "Bearer "
+private const val REQUEST_TIMEOUT_MS = 15_000L
+private const val CONNECT_TIMEOUT_MS = 10_000L
+private const val SOCKET_TIMEOUT_MS = 15_000L
 
-actual fun provideNetworkClient(
+/**
+ * Creates a fully configured [HttpClient] for API communication.
+ *
+ * Sets up content negotiation, timeouts, authentication handling,
+ * guest mode guard, and dynamic headers. Platform engine is resolved
+ * via [createHttpEngine].
+ *
+ * @param config network configuration (base URL, brand, secret)
+ * @param sessionPrefs session state (token, guest mode)
+ * @param interfacePrefs interface state (locale)
+ * @param positionPrefs position state (last known location)
+ * @param inspektifySetup optional debug inspector plugin setup
+ * @return configured [HttpClient] instance
+ * @since 0.0.5
+ */
+fun createHttpClient(
     config: NetworkConfig,
     sessionPrefs: SessionPreferences,
     interfacePrefs: InterfacePreferences,
     positionPrefs: PositionPreferences,
-    inspektifySetup: (HttpClientConfig<*>.() -> Unit)?,
+    inspektifySetup: (HttpClientConfig<*>.() -> Unit)? = null,
 ): HttpClient {
-    cacheScope.launch {
+    val scope = CoroutineScope(ioDispatcher + SupervisorJob())
+    val localeCache = MutableStateFlow("")
+    val accessTokenCache = MutableStateFlow("")
+    val guestModeCache = MutableStateFlow(false)
+
+    scope.launch {
         interfacePrefs.localeType.collectLatest { localeCache.value = it.code }
     }
-    cacheScope.launch {
+    scope.launch {
         sessionPrefs.accessToken.collectLatest { accessTokenCache.value = it }
     }
-    cacheScope.launch {
+    scope.launch {
         sessionPrefs.isGuestMode.collectLatest { guestModeCache.value = it }
     }
 
-    return HttpClient(Darwin) {
+    return HttpClient(createHttpEngine()) {
         inspektifySetup?.invoke(this)
+
+        install(Logging) {
+            level = LogLevel.ALL
+        }
 
         install(HttpCallValidator) {
             validateResponse { response ->
                 if (response.status == HttpStatusCode.Unauthorized) {
-                    val requestToken = response.call.request.headers[HttpHeaders.Authorization].extractBearerToken()
-                    handleUnauthorized(sessionPrefs, requestToken)
+                    val requestToken =
+                        response.call.request
+                            .headers[HttpHeaders.Authorization]
+                            .extractBearerToken()
+                    handleUnauthorized(sessionPrefs, accessTokenCache, requestToken)
                 }
             }
             handleResponseExceptionWithRequest { cause, request ->
-                if (cause is ClientRequestException && cause.response.status == HttpStatusCode.Unauthorized) {
-                    val requestToken = request.headers[HttpHeaders.Authorization].extractBearerToken()
-                    handleUnauthorized(sessionPrefs, requestToken)
+                if (
+                    cause is ClientRequestException &&
+                    cause.response.status == HttpStatusCode.Unauthorized
+                ) {
+                    val requestToken =
+                        request.headers[HttpHeaders.Authorization]
+                            .extractBearerToken()
+                    handleUnauthorized(sessionPrefs, accessTokenCache, requestToken)
                 }
             }
         }
 
         install(HttpTimeout) {
-            requestTimeoutMillis = 15_000
-            connectTimeoutMillis = 10_000
-            socketTimeoutMillis = 15_000
+            requestTimeoutMillis = REQUEST_TIMEOUT_MS
+            connectTimeoutMillis = CONNECT_TIMEOUT_MS
+            socketTimeoutMillis = SOCKET_TIMEOUT_MS
         }
 
         install(createGuestModeGuardPlugin(guestModeCache))
@@ -80,12 +112,12 @@ actual fun provideNetworkClient(
             url(config.baseUrl)
             header("lang", localeCache.value)
             header("brand-id", config.brandId)
-            header("User-Agent-OS", config.userAgentOS.ifEmpty { "ios" })
+            header("User-Agent-OS", platformName)
             header("Content-Type", "application/json")
             header("Device-Mode", config.deviceMode)
             header("Device", config.deviceType)
             header("secret-key", config.secretKey)
-            header("Authorization", "Bearer " + accessTokenCache.value)
+            header("Authorization", BEARER_PREFIX + accessTokenCache.value)
         }
 
         install(ContentNegotiation) {
@@ -99,24 +131,21 @@ actual fun provideNetworkClient(
             )
         }
 
-        install(createDynamicHeadersPlugin(positionPrefs))
+        install(
+            createClientPlugin("DynamicHeaders") {
+                onRequest { request, _ ->
+                    val location = positionPrefs.lastMapPosition.first()
+                    request.headers.set("x-position", "${location.lat} ${location.lng}")
+                }
+            }
+        )
     }
 }
 
-private fun createDynamicHeadersPlugin(positionPrefs: PositionPreferences) =
-    createClientPlugin("DynamicHeaders") {
-        onRequest { request, _ ->
-            val location = positionPrefs.lastMapPosition.first()
-
-            request.headers.apply {
-                set("x-position", "${location.lat} ${location.lng}")
-            }
-        }
-    }
-
 private fun handleUnauthorized(
     sessionPrefs: SessionPreferences,
-    requestToken: String?
+    accessTokenCache: MutableStateFlow<String>,
+    requestToken: String?,
 ) {
     val currentToken = accessTokenCache.value
     if (currentToken.isEmpty()) return
@@ -124,8 +153,7 @@ private fun handleUnauthorized(
     if (requestToken != currentToken) return
     if (!accessTokenCache.compareAndSet(currentToken, "")) return
 
-    sessionPrefs.performLogout()
-    localeCache.value = ""
+    sessionPrefs.clearSession()
     UnauthorizedSessionEvents.publish()
 }
 
