@@ -2,36 +2,6 @@
 <resources>
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
-         CONSTANTS (Non-translatable)
-         ═══════════════════════════════════════════════════════════════════════════════ -->
-
-    <string name="app_name" translatable="false">Yalla</string>
-
-    <!-- Language Names -->
-    <string name="language_english" translatable="false">English</string>
-    <string name="language_russian" translatable="false">Русский</string>
-    <string name="language_uzbek_cyrillic" translatable="false">Ўзбек</string>
-    <string name="language_uzbek_latin" translatable="false">O'zbek</string>
-
-    <!-- Social Media -->
-    <string name="social_instagram" translatable="false">Instagram</string>
-    <string name="social_telegram" translatable="false">Telegram</string>
-
-    <!-- Phone -->
-    <string name="auth_phone_country_code" translatable="false">+998</string>
-    <string name="auth_phone_placeholder" translatable="false">(_ _) _ _ _  _ _  _ _</string>
-
-    <!-- Payment Card Formats -->
-    <string name="payment_card_humo_format" translatable="false">Humo ----{0}</string>
-    <string name="payment_card_uzcard_format" translatable="false">Uzcard ----{0}</string>
-    <string name="payment_date_default" translatable="false">01/24</string>
-
-    <!-- Format Templates -->
-    <string name="format_distance_km" translatable="false">{0} km</string>
-    <string name="format_percent" translatable="false">{0} %</string>
-
-
-    <!-- ═══════════════════════════════════════════════════════════════════════════════
          COMMON - Shared UI Elements
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
@@ -74,19 +44,18 @@
     <!-- Welcome Screen -->
     <string name="auth_welcome_title">Хуш келибсиз!</string>
     <string name="auth_welcome_description">Давом этиш учун телефон рақамингизни киритинг.</string>
-    <string name="auth_welcome_sms_hint">Тасдиқлаш коди билан СМС сизнинг рақамингизга юборилади</string>
+    <string name="auth_welcome_sms_hint">Рақамингизга тасдиқлаш коди билан СМС юборилади.</string>
 
     <!-- OTP Verification -->
     <string name="auth_otp_title">Хавфсизлик коди</string>
-    <string name="auth_otp_description">+998{0} рақамига юборилган 5 хонали кодни киритинг</string>
-    <string name="auth_otp_verify">Тасдиқлаш</string>
+    <string name="auth_otp_description">Илтимос, +998{0} рақамига юборилган 5 хонали кодни киритинг.</string>
     <string name="auth_otp_resend">Кодни қайта юбориш</string>
-    <string name="auth_otp_resend_countdown">{0} дан сўнг кодни қайта юбориш</string>
+    <string name="auth_otp_resend_countdown">{0} сониядан сўнг кодни қайта юбориш</string>
 
     <!-- Auth Required -->
-    <string name="auth_required_title">Давом этиш учун авторизация қилишингиз керак</string>
+    <string name="auth_required_title">Давом этиш учун ҳисобингизга киринг</string>
     <string name="auth_required_description">Бу атиги бир неча дақиқа олади</string>
-    <string name="auth_required_action">Авторизация қилиш</string>
+    <string name="auth_required_action">Кириш</string>
 
     <!-- Auth Messages -->
     <string name="auth_send_code_error">Тасдиқлаш кодини юбориб бўлмади</string>
@@ -97,7 +66,7 @@
          REGISTER - User Registration
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
-    <string name="register_title">Келинг танишамиз</string>
+    <string name="register_title">Келинг, танишамиз</string>
     <string name="register_subtitle">Сизга қандай мурожаат қилишим мумкин?</string>
     <string name="register_action">Рўйхатдан ўтиш</string>
 
@@ -122,14 +91,14 @@
 
     <!-- Photo Actions -->
     <string name="profile_photo_change">Расмни ўзгартириш</string>
-    <string name="profile_photo_take">Расм олиш</string>
+    <string name="profile_photo_take">Суратга олиш</string>
     <string name="profile_photo_gallery">Галереядан танлаш</string>
     <string name="profile_photo_delete">Расмни ўчириш</string>
 
     <!-- Delete Account -->
     <string name="profile_delete_title">Ҳисобни ўчириш</string>
-    <string name="profile_delete_confirm">Ҳисобингизни ўчиришга ишончингиз комилми?</string>
-    <string name="profile_delete_warning">Ҳисоб ўчирилгандан сўнг барча маълумотлар бутунлай йўқолади ва қайта тикланмайди</string>
+    <string name="profile_delete_confirm">Ҳисобингизни ростдан ҳам ўчирмоқчимисиз?</string>
+    <string name="profile_delete_warning">Ҳисоб ўчирилгандан сўнг барча маълумотлар бутунлай йўқолади ва қайта тикланмайди.</string>
     <string name="profile_delete_action">Ҳа, ҳисобни ўчириш</string>
 
     <!-- Logout -->
@@ -151,32 +120,32 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <!-- Language Selection -->
-    <string name="intro_language_title">Илова\nтилини танланг</string>
+    <string name="intro_language_title">Илова тилини танланг</string>
 
     <!-- Location Permission -->
     <string name="intro_location_title">Жойлашув</string>
-    <string name="intro_location_description">Аниқ такси чақириш учун жойлашувингизни тақдим этинг</string>
+    <string name="intro_location_description">Аниқ буюртма бериш учун жойлашувингизни кўрсатинг.</string>
 
     <!-- GPS & Location Access -->
     <string name="location_gps_title">GPS-ни\nёқинг</string>
-    <string name="location_gps_subtitle">Сизнинг вақтингиз - бизнинг тезлигимиз</string>
+    <string name="location_gps_subtitle">Сизнинг вақтингиз — бизнинг тезлигимиз</string>
     <string name="location_permission_title">Жойлашувни ёқинг</string>
-    <string name="location_permission_description">Аниқ чақирув учун жойлашувингизни тақдим этинг</string>
+    <string name="location_permission_description">Аниқ чақирув учун жойлашувингизни тақдим этинг.</string>
     <string name="location_permission_action">Рухсат бериш</string>
 
     <!-- Notification Permission -->
     <string name="intro_notification_title">Билдиришномалар</string>
-    <string name="intro_notification_description">Билдиришнома юбориш учун рухсат беринг</string>
+    <string name="intro_notification_description">Билдиришномалар юбориш учун рухсат беринг</string>
 
     <!-- Onboarding Slides -->
     <string name="intro_onboarding_1_title">Тез ва қулай</string>
-    <string name="intro_onboarding_1_description">Сайоҳатни буюртма қилинг — бир неча сонияда Yalla энг яқин ҳайдовчини топади.</string>
+    <string name="intro_onboarding_1_description">Сафарни буюртма қилинг — Yalla бир неча сонияда энг яқин ҳайдовчини топади.</string>
 
     <string name="intro_onboarding_2_title">Ишончли ҳайдовчилар</string>
     <string name="intro_onboarding_2_description">Yallaдаги ҳар бир ҳайдовчи текширувдан ўтган ва юқори рейтингга эга.</string>
 
     <string name="intro_onboarding_3_title">Шаффоф нарх</string>
-    <string name="intro_onboarding_3_description">Сайоҳат бошланишидан олдин нархни билиб олинг — яширин тўловлар ва кутилмаган харажатлар йўқ.</string>
+    <string name="intro_onboarding_3_description">Сафар бошланишидан олдин нархни билиб олинг — яширин тўловлар ва кутилмаган харажатлар йўқ.</string>
 
     <string name="intro_onboarding_4_title">Қулай тўлов</string>
     <string name="intro_onboarding_4_description">Ўзингизга қулай усулда тўланг — карта ёки нақд пул билан. Yalla билан ҳаммаси осон.</string>
@@ -193,7 +162,7 @@
     <!-- Theme Options -->
     <string name="settings_theme_light">Ёруғ мавзу</string>
     <string name="settings_theme_dark">Тунги мавзу</string>
-    <string name="settings_theme_system">Тизимли</string>
+    <string name="settings_theme_system">Тизим бўйича</string>
 
     <!-- Map Options -->
     <string name="settings_map">Илова харитаси</string>
@@ -205,7 +174,7 @@
          PLACES - Saved Addresses
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
-    <string name="places_title">Манзилларим</string>
+    <string name="places_title">Менинг манзилларим</string>
     <string name="places_add_hint">Тез буюртма қилиш учун манзил қўшинг</string>
 
     <!-- Place Types -->
@@ -217,7 +186,7 @@
 
     <!-- Address Form -->
     <string name="places_form_new">Янги манзил</string>
-    <string name="places_form_edit">Манзилни ўзгартириш</string>
+    <string name="places_form_edit">Манзилни таҳрирлаш</string>
     <string name="places_form_address_hint">Манзилни киритинг</string>
     <string name="places_form_name">Манзил номи</string>
     <string name="places_form_building">Уй рақами</string>
@@ -226,12 +195,12 @@
 
     <!-- Delete Address -->
     <string name="places_delete_title">Манзилни ўчириш</string>
-    <string name="places_delete_confirm">Сиз ҳақиқатдан ҳам ушбу манзилни ўчирмоқчимисиз?</string>
-    <string name="places_delete_warning">Ушбу манзилни ўчиргандан сўнг маълумотларни тиклаб бўлмайди</string>
+    <string name="places_delete_confirm">Сиз ҳақиқатан ҳам ушбу манзилни ўчирмоқчимисиз?</string>
+    <string name="places_delete_warning">Манзил ўчирилгандан сўнг маълумотларни тиклаб бўлмайди</string>
     <string name="places_delete_action">Ҳа, манзилни ўчириш</string>
 
     <!-- Place Messages -->
-    <string name="places_create_success">Манзил муваффақиятли яратилди</string>
+    <string name="places_create_success">Манзил муваффақиятли қўшилди</string>
     <string name="places_create_error">Манзилни яратиб бўлмади</string>
     <string name="places_update_success">Манзил муваффақиятли янгиланди</string>
     <string name="places_update_error">Манзилни янгилаб бўлмади</string>
@@ -244,7 +213,7 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="payment_title">Тўлов усули</string>
-    <string name="payment_section_cards">Карта ва бонус</string>
+    <string name="payment_section_cards">Карталар ва бонус</string>
     <string name="payment_section_other">Бошқа усуллар</string>
 
     <!-- Payment Types -->
@@ -258,8 +227,8 @@
     <string name="payment_card_add">Карта қўшиш</string>
     <string name="payment_card_number">Карта рақами</string>
     <string name="payment_card_delete">Картани ўчириш</string>
-    <string name="payment_card_delete_confirm">Картангизни ўчирмоқчимисиз?</string>
-    <string name="payment_card_delete_warning">**** {0} картаси ўчирилиб бўлгач, барча маълумотларни тиклаб бўлмайди</string>
+    <string name="payment_card_delete_confirm">Картангизни ростдан ҳам ўчирмоқчимисиз?</string>
+    <string name="payment_card_delete_warning">**** {0} картаси ўчирилгандан кейин маълумотларни қайта тиклаб бўлмайди.</string>
 
     <!-- Card Messages -->
     <string name="payment_card_add_success">Карта муваффақиятли қўшилди</string>
@@ -276,8 +245,8 @@
     <string name="bonus_section_title">Бонуслар</string>
     <string name="bonus_rate">1 танга = 1 сўм</string>
     <string name="bonus_balance">Сизда {0} балл бор</string>
-    <string name="bonus_pay">Бонус орқали тўлаш</string>
-    <string name="bonus_pay_for_next_trip">Эконом ва Комфортда юринг — кейинги саёҳатлар учун бонуслар билан тўланг.</string>
+    <string name="bonus_pay">Бонус билан тўлаш</string>
+    <string name="bonus_pay_for_next_trip">Эконом ва Комфортда сафар қилинг — кейинги сафарлар учун бонуслар билан тўланг.</string>
     <string name="bonus_amount">Бонус миқдори</string>
     <string name="cashback">Кешбек</string>
 
@@ -285,7 +254,7 @@
     <string name="bonus_promocode_title">Промокод</string>
     <string name="bonus_promocode_enter">Промокодни киритинг</string>
     <string name="bonus_promocode_placeholder">Кодни киритинг</string>
-    <string name="bonus_promocode_hint">Чегирма кейинги саёҳатингизда автоматик равишда қўлланилади</string>
+    <string name="bonus_promocode_hint">Чегирма кейинги сафарингизда автоматик қўлланади</string>
     <string name="bonus_promocode_success">Промокод муваффақиятли қўлланди</string>
     <string name="bonus_promocode_error">Бундай промокод мавжуд эмас</string>
 
@@ -295,9 +264,9 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <!-- Location Input -->
-    <string name="order_destination_hint">Қаерга борасиз?</string>
+    <string name="order_destination_hint">Қаерга борамиз?</string>
     <string name="order_destination_short">Қаерга борамиз?</string>
-    <string name="order_location_not_found">Биз бундай манзилни тополмадик,\nилтимос, тўғри киритинг</string>
+    <string name="order_location_not_found">Биз бу манзилни тополмадик.\nИлтимос, қайта уриниб кўринг.</string>
     <string name="order_location_set_mark">Белги қўйиш</string>
     <string name="order_location_not_supported">{0} такси хизмати томонидан қўллаб-қувватланмайди</string>
 
@@ -321,13 +290,13 @@
     <string name="order_list_title">Сизнинг буюртмаларингиз</string>
 
     <!-- Search Car -->
-    <string name="order_search_cars_nearby">Сизга яқин {0} та машина</string>
+    <string name="order_search_cars_nearby">Сизга яқин {0} та машина бор</string>
     <string name="order_search_selecting">Мос келадиганларни танлаймиз</string>
-    <string name="order_search_time_estimate">Бу {0} дақиқагача вақт олиши мумкин</string>
+    <string name="order_search_time_estimate">Бу жараён {0} дақиқагача давом этиши мумкин.</string>
     <string name="order_search_time_estimate_unknown">Бу бир неча дақиқа вақт олиши мумкин</string>
     <string name="order_action_order_more">Яна буюртма бериш</string>
-    <string name="order_trip_info">Сафар ҳақида маълумот</string>
-    <string name="order_trip_details">Сафар тафсилотлари</string>
+    <string name="order_trip_info">Буюртма ҳақида</string>
+    <string name="order_trip_details">Буюртма тафсилотлари</string>
     <string name="order_action_cancel">Буюртмани бекор қилиш</string>
 
     <!-- Order Bottom Sheet -->
@@ -335,8 +304,8 @@
     <string name="order_paid_waiting">Пуллик кутиш</string>
     <string name="order_eta_format">~ {0} мин</string>
     <string name="order_arriving_in">Келиш вақти</string>
-    <string name="order_contact_driver">Ҳайдовчи билан алоқа</string>
-    <string name="order_until_trip_end">Сафар охиригача</string>
+    <string name="order_contact_driver">Ҳайдовчи билан боғланиш</string>
+    <string name="order_until_trip_end">Сафар якунигача</string>
     <string name="order_pay_by_card">Карта орқали тўлаш</string>
     <string name="order_pay_by_cash">Нақд пул билан тўлаш</string>
     <string name="order_details_contact">Боғланиш</string>
@@ -348,19 +317,19 @@
     <string name="order_details_arrival">Етиб келиш</string>
 
     <!-- Cancel Order -->
-    <string name="order_cancel_confirm_title">Сафарни бекор қилмоқчимисиз?</string>
-    <string name="order_cancel_confirm_description">Қидирувни ёки сафарни бекор қилгандан кейин бошқа ҳайдовчини қидиришга тўғри келади</string>
+    <string name="order_cancel_confirm_title">Сафарни ростдан ҳам бекор қилмоқчимисиз?</string>
+    <string name="order_cancel_confirm_description">Қидирувни ёки сафарни бекор қилгандан сўнг бошқа ҳайдовчини қидиришга тўғри келади</string>
     <string name="order_cancel_countdown">{0} сония</string>
-    <string name="order_cancel_trip_title">Сафарни бекор қилиш?</string>
+    <string name="order_cancel_trip_title">Буюртмани бекор қилиш?</string>
     <string name="order_cancel_action_yes">Ҳа, бекор қилиш</string>
     <string name="order_cancel_before_search">Сафар ҳайдовчини қидириш бошланишидан олдин бекор қилинди</string>
     <string name="order_cancel_reason_title">Бекор қилиш сабаби</string>
-    <string name="order_cancel_reason_description">Сафарни нима сабабдан бекор қилдингиз?</string>
+    <string name="order_cancel_reason_description">Сафарни қайси сабаб билан бекор қилдингиз?</string>
 
     <!-- Order Messages -->
     <string name="order_create_success">Буюртма муваффақиятли яратилди</string>
     <string name="order_create_error">Буюртмани яратиб бўлмади</string>
-    <string name="order_cancel_success">Буюртма муваффақиятли бекор қилинди</string>
+    <string name="order_cancel_success">Буюртмангиз бекор қилинди</string>
     <string name="order_cancel_error">Буюртмани бекор қилиб бўлмади</string>
     <string name="order_cancel_reason_success">Бекор қилиш сабаби юборилди</string>
     <string name="order_cancel_reason_error">Бекор қилиш сабабини юбориб бўлмади</string>
@@ -373,8 +342,8 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="safety_title">Хавфсизлик</string>
-    <string name="safety_description_one">Компаниямиздаги барча ҳайдовчилар малакали ва катта ҳайдаш тажрибасига эга.</string>
-    <string name="safety_description_two">Биз синчковлик билан ҳар бир ҳайдовчини хавфсизликнинг барча мезонлари бўйича текширамиз</string>
+    <string name="safety_description_one">Барча ҳайдовчиларимиз малакали ва катта тажрибага эга.</string>
+    <string name="safety_description_two">Биз ҳар бир ҳайдовчини хавфсизликнинг барча мезонлари бўйича синчковлик билан текширамиз.</string>
     <string name="safety_action_understood">Тушунарли</string>
 
 
@@ -382,14 +351,14 @@
          HISTORY - Trip History
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
-    <string name="history_title">Менинг саёҳатларим</string>
-    <string name="history_menu_title">Сафар тарихи</string>
+    <string name="history_title">Менинг сафарларим</string>
+    <string name="history_menu_title">Сафарлар тарихи</string>
     <string name="history_delete">Сафарни ўчириш</string>
     <string name="history_empty">Ҳозирча сафарлар йўқ</string>
-    <string name="history_date_time">Саёҳат санаси ва вақти</string>
+    <string name="history_date_time">Сафар санаси ва вақти</string>
 
     <!-- Trip Status -->
-    <string name="history_status_completed">Саёҳат тугалланди</string>
+    <string name="history_status_completed">Сафар якунланди</string>
     <string name="history_status_canceled">Бекор қилинди</string>
     <string name="history_delete_success">Сафар муваффақиятли ўчирилди</string>
     <string name="history_delete_error">Сафарни ўчириб бўлмади</string>
@@ -411,17 +380,17 @@
     <string name="driver_label_title">Ҳайдовчи</string>
 
     <!-- Vehicle -->
-    <string name="driver_car">Авто</string>
+    <string name="driver_car">Автомобил</string>
     <string name="driver_tariff">Тариф</string>
 
     <!-- Become Driver Form -->
-    <string name="driver_become_description">Ариза қолдиринг ва биз сиз билан тез орада боғланамиз</string>
+    <string name="driver_become_description">Ариза қолдиринг, биз сиз билан тез орада боғланамиз</string>
     <string name="driver_become_name_hint">Исмингиз</string>
-    <string name="driver_become_submit">Ариза юбориш</string>
-    <string name="driver_become_success">Аризангиз муваффақиятли юборилди. Биз сиз билан тез орада боғланамиз.</string>
-    <string name="driver_become_error">Нимадир хато кетди. Қайтадан уриниб кўринг</string>
-    <string name="driver_become_select_region">Ҳудудни танланг</string>
-    <string name="driver_become_region_title">Ҳудудни танланг</string>
+    <string name="driver_become_submit">Аризани юбориш</string>
+    <string name="driver_become_success">Аризангиз муваффақиятли юборилди. Тез орада сиз билан боғланамиз.</string>
+    <string name="driver_become_error">Нимадир хато кетди. Қайтадан уриниб кўринг.</string>
+    <string name="driver_become_select_region">Вилоятингиз</string>
+    <string name="driver_become_region_title">Вилоятингиз</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
@@ -461,7 +430,7 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="notification_title">Билдиришномалар</string>
-    <string name="notification_empty">Ҳозирда билдиришномалар йўқ</string>
+    <string name="notification_empty">Ҳозирча билдиришномалар йўқ</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
@@ -476,8 +445,17 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="no_internet_title">Интернетга уланиш йўқ</string>
-    <string name="no_internet_description">Интернетга уланишни текширинг, кейинроқ қайта уриниб кўринг</string>
+    <string name="no_internet_description">Интернетга уланишни текширинг</string>
     <string name="no_internet_action">Янгилаш</string>
+
+
+    <!-- ═══════════════════════════════════════════════════════════════════════════════
+         FORCE UPDATE - App Update Required
+         ═══════════════════════════════════════════════════════════════════════════════ -->
+
+    <string name="force_update_title">Янгилаш керак</string>
+    <string name="force_update_description">Илованинг янги версияси мавжуд. Давом этиш учун янгиланг.</string>
+    <string name="force_update_action">Янгилаш</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
@@ -500,7 +478,7 @@
     <string name="error_data_format">Маълумотлар формати хатоси. Илтимос, иловангизни янгиланг.</string>
 
     <!-- Generic Errors -->
-    <string name="error_client_request">Биз томонимизда қандайдир хатолик юз берди. Илтимос, кейинроқ қайта уриниб кўринг.</string>
+    <string name="error_client_request">Бизнинг тарафимизда хатолик юз берди. Илтимос, кейинроқ қайта уриниб кўринг.</string>
     <string name="error_application">Илова хатоси юз берди. Илтимос, қўллаб-қувватлаш хизмати билан боғланинг.</string>
     <string name="error_unknown">Номаълум хатолик юз берди. Илтимос, қайта уриниб кўринг.</string>
     <string name="error_unexpected">Кутилмаган хатолик юз берди. Илтимос, кейинроқ қайта уриниб кўринг.</string>

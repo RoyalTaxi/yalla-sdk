@@ -2,36 +2,6 @@
 <resources>
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
-         CONSTANTS (Non-translatable)
-         ═══════════════════════════════════════════════════════════════════════════════ -->
-
-    <string name="app_name" translatable="false">Yalla</string>
-
-    <!-- Language Names -->
-    <string name="language_english" translatable="false">Aнглийский</string>
-    <string name="language_russian" translatable="false">Руский</string>
-    <string name="language_uzbek_cyrillic" translatable="false">Узбекский язык</string>
-    <string name="language_uzbek_latin" translatable="false">O'zbek</string>
-
-    <!-- Social Media -->
-    <string name="social_instagram" translatable="false">Инстаграм</string>
-    <string name="social_telegram" translatable="false">Telegram</string>
-
-    <!-- Phone -->
-    <string name="auth_phone_country_code" translatable="false">+998</string>
-    <string name="auth_phone_placeholder" translatable="false">(_ _) _ _ _  _ _  _ _</string>
-
-    <!-- Payment Card Formats -->
-    <string name="payment_card_humo_format" translatable="false">Humo ----{0}</string>
-    <string name="payment_card_uzcard_format" translatable="false">Uzcard ----{0}</string>
-    <string name="payment_date_default" translatable="false">01/24</string>
-
-    <!-- Format Templates -->
-    <string name="format_distance_km" translatable="false">{0} km</string>
-    <string name="format_percent" translatable="false">{0} %</string>
-
-
-    <!-- ═══════════════════════════════════════════════════════════════════════════════
          COMMON - Shared UI Elements
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
@@ -39,7 +9,7 @@
     <string name="common_action_activate">Активировать</string>
     <string name="common_action_all">Все</string>
     <string name="common_action_allow">Разрешить</string>
-    <string name="common_action_cancel">Отмена</string>
+    <string name="common_action_cancel">Отменить</string>
     <string name="common_action_confirm">Подтвердить</string>
     <string name="common_action_delete">Удалить</string>
     <string name="common_action_edit">Изменить</string>
@@ -73,20 +43,19 @@
 
     <!-- Welcome Screen -->
     <string name="auth_welcome_title">Добро пожаловать!</string>
-    <string name="auth_welcome_description">Укажите свой номер телефона,\nчтобы продолжить.</string>
-    <string name="auth_welcome_sms_hint">На ваш номер будет отправлено SMS\nс кодом подтверждения</string>
+    <string name="auth_welcome_description">Введите номер телефона, чтобы продолжить.</string>
+    <string name="auth_welcome_sms_hint">На ваш номер будет отправлено SMS с кодом подтверждения.</string>
 
     <!-- OTP Verification -->
     <string name="auth_otp_title">Код безопасности</string>
-    <string name="auth_otp_description">Введите {0}-значный код, который мы\nотправили на номер {1}</string>
-    <string name="auth_otp_verify">Далее</string>
+    <string name="auth_otp_description">Введите 5-значный код, отправленный на номер +998{0}.</string>
     <string name="auth_otp_resend">Отправить код ещё раз</string>
-    <string name="auth_otp_resend_countdown">Отправить код ещё раз через {0}</string>
+    <string name="auth_otp_resend_countdown">Отправить код ещё раз через {0} сек</string>
 
     <!-- Auth Required -->
     <string name="auth_required_title">Для продолжения необходимо войти в аккаунт</string>
     <string name="auth_required_description">Это займёт всего пару минут</string>
-    <string name="auth_required_action">Вход</string>
+    <string name="auth_required_action">Войти</string>
 
     <!-- Auth Messages -->
     <string name="auth_send_code_error">Не удалось отправить код подтверждения</string>
@@ -98,7 +67,7 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="register_title">Давайте знакомиться</string>
-    <string name="register_subtitle">Как мне обращаться к вам?</string>
+    <string name="register_subtitle">Как к вам обращаться?</string>
     <string name="register_action">Зарегистрироваться</string>
 
     <!-- Input Fields -->
@@ -129,7 +98,7 @@
     <!-- Delete Account -->
     <string name="profile_delete_title">Удалить аккаунт</string>
     <string name="profile_delete_confirm">Вы действительно хотите удалить свой аккаунт?</string>
-    <string name="profile_delete_warning">Удаленные данные не могут быть восстановлены.</string>
+    <string name="profile_delete_warning">После удаления все данные будут безвозвратно утеряны и не подлежат восстановлению.</string>
     <string name="profile_delete_action">Да, удалить аккаунт</string>
 
     <!-- Logout -->
@@ -151,35 +120,35 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <!-- Language Selection -->
-    <string name="intro_language_title">Выберите\nязык приложения</string>
+    <string name="intro_language_title">Выберите язык приложения</string>
 
     <!-- Location Permission -->
     <string name="intro_location_title">Местоположение</string>
-    <string name="intro_location_description">Чтобы точно оформить заказ,\nукажите своё местоположение.</string>
+    <string name="intro_location_description">Укажите своё местоположение для точного оформления заказа.</string>
 
     <!-- GPS & Location Access -->
     <string name="location_gps_title">Включите\nGPS</string>
-    <string name="location_gps_subtitle">Твоё время - наша скорость</string>
+    <string name="location_gps_subtitle">Ваше время — наша скорость</string>
     <string name="location_permission_title">Включите местоположение</string>
-    <string name="location_permission_description">Точное прибытие возможно после\nотправки вашего местоположения.</string>
+    <string name="location_permission_description">Отправьте своё местоположение для точной подачи.</string>
     <string name="location_permission_action">Разрешить</string>
 
     <!-- Notification Permission -->
     <string name="intro_notification_title">Уведомления</string>
-    <string name="intro_notification_description">Предоставльте разрешение на\nотправку уведомлений</string>
+    <string name="intro_notification_description">Разрешите отправку уведомлений</string>
 
     <!-- Onboarding Slides -->
-    <string name="intro_onboarding_1_title">Быстро и удобна</string>
-    <string name="intro_onboarding_1_description">Закажите поездку — за пару секунд Ялла\nмгновенно найдет ближайшего водителя.</string>
+    <string name="intro_onboarding_1_title">Быстро и удобно</string>
+    <string name="intro_onboarding_1_description">Закажите поездку — Yalla мгновенно найдёт ближайшего водителя.</string>
 
-    <string name="intro_onboarding_2_title">Надёжность водителей</string>
-    <string name="intro_onboarding_2_description">Для вас — только надёжные и опытные водители.</string>
+    <string name="intro_onboarding_2_title">Надёжные водители</string>
+    <string name="intro_onboarding_2_description">Каждый водитель Yalla проверен и имеет высокий рейтинг.</string>
 
     <string name="intro_onboarding_3_title">Прозрачная цена</string>
-    <string name="intro_onboarding_3_description">Узнайте цену заранее — без скрытых платежей.</string>
+    <string name="intro_onboarding_3_description">Узнайте стоимость до начала поездки — без скрытых платежей и сюрпризов.</string>
 
     <string name="intro_onboarding_4_title">Удобная оплата</string>
-    <string name="intro_onboarding_4_description">Плати, как удобно — картой или деньгами.\nВсё просто с Яллой.</string>
+    <string name="intro_onboarding_4_description">Платите, как удобно — картой или наличными. С Yalla всё просто.</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
@@ -192,13 +161,13 @@
 
     <!-- Theme Options -->
     <string name="settings_theme_light">Светлая тема</string>
-    <string name="settings_theme_dark">Темна тема</string>
+    <string name="settings_theme_dark">Тёмная тема</string>
     <string name="settings_theme_system">Системная</string>
 
     <!-- Map Options -->
     <string name="settings_map">Карта приложения</string>
-    <string name="settings_map_google">Google карта</string>
-    <string name="settings_map_libre">MapLibre карта</string>
+    <string name="settings_map_google">Google Карты</string>
+    <string name="settings_map_libre">MapLibre Карты</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
@@ -206,22 +175,22 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="places_title">Мои адреса</string>
-    <string name="places_add_hint">Добавить</string>
+    <string name="places_add_hint">Добавьте адрес для быстрого заказа</string>
 
     <!-- Place Types -->
-    <string name="places_type_home">Домой</string>
-    <string name="places_type_work">На работу</string>
+    <string name="places_type_home">Дом</string>
+    <string name="places_type_work">Работа</string>
     <string name="places_type_office">Офис</string>
     <string name="places_type_other">Другое</string>
     <string name="places_type_favorite">Избранное</string>
 
     <!-- Address Form -->
     <string name="places_form_new">Новый адрес</string>
-    <string name="places_form_edit">Изменить адрес</string>
-    <string name="places_form_address_hint">Вставьте адрес</string>
+    <string name="places_form_edit">Редактировать адрес</string>
+    <string name="places_form_address_hint">Введите адрес</string>
     <string name="places_form_name">Название адреса</string>
     <string name="places_form_building">Номер дома</string>
-    <string name="places_form_entrance">Вход</string>
+    <string name="places_form_entrance">Подъезд</string>
     <string name="places_form_comment">Комментарий</string>
 
     <!-- Delete Address -->
@@ -231,8 +200,8 @@
     <string name="places_delete_action">Да, удалить адрес</string>
 
     <!-- Place Messages -->
-    <string name="places_create_success">Адрес был успешно добавлен</string>
-    <string name="places_create_error">Не удалось создать адрес</string>
+    <string name="places_create_success">Адрес успешно добавлен</string>
+    <string name="places_create_error">Не удалось добавить адрес</string>
     <string name="places_update_success">Адрес успешно обновлён</string>
     <string name="places_update_error">Не удалось обновить адрес</string>
     <string name="places_delete_success">Адрес успешно удалён</string>
@@ -258,13 +227,13 @@
     <string name="payment_card_add">Добавить карту</string>
     <string name="payment_card_number">Номер карты</string>
     <string name="payment_card_delete">Удалить карту</string>
-    <string name="payment_card_delete_confirm">Вы действительно хотите удалить свою карту?</string>
-    <string name="payment_card_delete_warning">После удаления карты восстановить данные будет невозможно.</string>
+    <string name="payment_card_delete_confirm">Вы действительно хотите удалить эту карту?</string>
+    <string name="payment_card_delete_warning">После удаления карты **** {0} восстановить данные будет невозможно.</string>
 
     <!-- Card Messages -->
     <string name="payment_card_add_success">Карта успешно добавлена</string>
     <string name="payment_card_add_error">Неверные данные, попробуйте ещё раз</string>
-    <string name="payment_card_delete_success">Карта была успешно удалена</string>
+    <string name="payment_card_delete_success">Карта успешно удалена</string>
     <string name="payment_card_delete_error">Не удалось удалить карту</string>
 
 
@@ -276,10 +245,10 @@
     <string name="bonus_section_title">Бонусы</string>
     <string name="bonus_rate">1 монета = 1 сум</string>
     <string name="bonus_balance">У вас {0} баллов</string>
-    <string name="bonus_pay">Оплатить бонусом</string>
-    <string name="bonus_pay_for_next_trip">Ездите в Эконом и Комфорт - платите бонусами за следующие поездки.</string>
+    <string name="bonus_pay">Оплатить бонусами</string>
+    <string name="bonus_pay_for_next_trip">Ездите в Эконом и Комфорт — оплачивайте следующие поездки бонусами.</string>
     <string name="bonus_amount">Сумма бонуса</string>
-    <string name="cashback">С этой поездки вы получите 3% кешбека</string>
+    <string name="cashback">Кешбэк</string>
 
     <!-- Promocode -->
     <string name="bonus_promocode_title">Промокод</string>
@@ -295,9 +264,9 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <!-- Location Input -->
-    <string name="order_destination_hint">Куда едем?</string>
-    <string name="order_destination_short">Куда едем?</string>
-    <string name="order_location_not_found">Мы не нашли такой адрес,\nпопробуйте ввести правильно</string>
+    <string name="order_destination_hint">Куда поедем?</string>
+    <string name="order_destination_short">Куда поедем?</string>
+    <string name="order_location_not_found">Мы не нашли такой адрес.\nПожалуйста, попробуйте ещё раз.</string>
     <string name="order_location_set_mark">Поставить метку</string>
     <string name="order_location_not_supported">{0} не поддерживается сервисом такси</string>
 
@@ -316,18 +285,18 @@
 
     <!-- Order Status -->
     <string name="order_status_searching">Идёт поиск</string>
-    <string name="order_status_coming">Водитель заканчивает поездку и\nедет к вам</string>
+    <string name="order_status_coming">Едет к вам</string>
     <string name="order_status_by_instruction">По указанию</string>
     <string name="order_list_title">Ваши заказы</string>
 
     <!-- Search Car -->
     <string name="order_search_cars_nearby">Рядом с вами {0} машин</string>
     <string name="order_search_selecting">Выбираем подходящие</string>
-    <string name="order_search_time_estimate">Этот процесс может занять до {0} минут.</string>
+    <string name="order_search_time_estimate">Это может занять до {0} минут.</string>
     <string name="order_search_time_estimate_unknown">Это может занять несколько минут</string>
-    <string name="order_action_order_more">Заказать еще</string>
+    <string name="order_action_order_more">Заказать ещё</string>
     <string name="order_trip_info">Информация о поездке</string>
-    <string name="order_trip_details">О поездке</string>
+    <string name="order_trip_details">Детали поездки</string>
     <string name="order_action_cancel">Отменить заказ</string>
 
     <!-- Order Bottom Sheet -->
@@ -335,32 +304,32 @@
     <string name="order_paid_waiting">Платное ожидание</string>
     <string name="order_eta_format">~ {0} мин</string>
     <string name="order_arriving_in">Приедет через</string>
-    <string name="order_contact_driver">Связь с водителем</string>
+    <string name="order_contact_driver">Связаться с водителем</string>
     <string name="order_until_trip_end">До конца поездки</string>
     <string name="order_pay_by_card">Оплата картой</string>
     <string name="order_pay_by_cash">Оплата наличными</string>
     <string name="order_details_contact">Связаться</string>
     <string name="order_details_safety">Безопасность</string>
     <string name="order_details_share">Поделиться</string>
-    <string name="order_details_pickup_eta">Подача в ~{0}</string>
+    <string name="order_details_pickup_eta">Подача через ~{0}</string>
     <string name="order_details_about_trip">О поездке</string>
     <string name="order_details_need_help">Нужна помощь?</string>
     <string name="order_details_arrival">Прибытие</string>
 
     <!-- Cancel Order -->
     <string name="order_cancel_confirm_title">Вы действительно хотите отменить поездку?</string>
-    <string name="order_cancel_confirm_description">После отмены поиска или поездки\nпридется искать другого водителя</string>
-    <string name="order_cancel_countdown">{0} секунды</string>
+    <string name="order_cancel_confirm_description">После отмены придётся искать другого водителя</string>
+    <string name="order_cancel_countdown">{0} сек</string>
     <string name="order_cancel_trip_title">Отменить заказ?</string>
     <string name="order_cancel_action_yes">Да, отменить</string>
     <string name="order_cancel_before_search">Поездка была отменена до начала поиска водителя</string>
     <string name="order_cancel_reason_title">Причина отмены</string>
-    <string name="order_cancel_reason_description">Укажите причину отмены заказа</string>
+    <string name="order_cancel_reason_description">Укажите причину отмены поездки</string>
 
     <!-- Order Messages -->
     <string name="order_create_success">Заказ успешно создан</string>
     <string name="order_create_error">Не удалось создать заказ</string>
-    <string name="order_cancel_success">Ваш заказ был отменён</string>
+    <string name="order_cancel_success">Ваш заказ отменён</string>
     <string name="order_cancel_error">Не удалось отменить заказ</string>
     <string name="order_cancel_reason_success">Причина отмены отправлена</string>
     <string name="order_cancel_reason_error">Не удалось отправить причину отмены</string>
@@ -373,8 +342,8 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="safety_title">Безопасность</string>
-    <string name="safety_description_one">Все водители нашей\nкомпании квалифицированные\nи с большим опытом вождения.</string>
-    <string name="safety_description_two">Мы проводим детальную проверку всех\nводителей по критериям безопасности.</string>
+    <string name="safety_description_one">Все наши водители квалифицированные и с большим опытом вождения.</string>
+    <string name="safety_description_two">Мы тщательно проверяем каждого водителя по всем критериям безопасности.</string>
     <string name="safety_action_understood">Понятно</string>
 
 
@@ -383,15 +352,15 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="history_title">Мои поездки</string>
-    <string name="history_menu_title">История заказов</string>
+    <string name="history_menu_title">История поездок</string>
     <string name="history_delete">Удалить поездку</string>
-    <string name="history_empty">Пока поездок нет</string>
+    <string name="history_empty">Поездок пока нет</string>
     <string name="history_date_time">Дата и время поездки</string>
 
     <!-- Trip Status -->
-    <string name="history_status_completed">Поездка закончена</string>
+    <string name="history_status_completed">Завершена</string>
     <string name="history_status_canceled">Отменена</string>
-    <string name="history_delete_success">Поездка была успешно удалена</string>
+    <string name="history_delete_success">Поездка успешно удалена</string>
     <string name="history_delete_error">Не удалось удалить поездку</string>
 
 
@@ -401,25 +370,25 @@
 
     <string name="driver_status_coming">Подъезжает</string>
     <string name="driver_status_on_way">В пути</string>
-    <string name="driver_arrival_time">Приедет через {0} минут</string>
+    <string name="driver_arrival_time">{0} мин</string>
     <string name="driver_travel_time">Время пути: {0} мин</string>
     <string name="driver_become">Стать водителем</string>
 
     <!-- Labels -->
-    <string name="driver_label_rating">Рейтинг</string>
-    <string name="driver_label_trips">Поездки</string>
+    <string name="driver_label_rating">Рейтинг:</string>
+    <string name="driver_label_trips">Поездки:</string>
     <string name="driver_label_title">Водитель</string>
 
     <!-- Vehicle -->
-    <string name="driver_car">Авто</string>
+    <string name="driver_car">Автомобиль</string>
     <string name="driver_tariff">Тариф</string>
 
     <!-- Become Driver Form -->
-    <string name="driver_become_description">Оставь заявку и мы свяжемся с вами в ближайшее время</string>
+    <string name="driver_become_description">Оставьте заявку, и мы свяжемся с вами в ближайшее время</string>
     <string name="driver_become_name_hint">Ваше имя</string>
     <string name="driver_become_submit">Отправить заявку</string>
-    <string name="driver_become_success">Ваша заявка успешно отправлена.\nМы свяжемся с вами скоро.</string>
-    <string name="driver_become_error">Похоже что-то пошло не так.\nПопробуйте еще раз</string>
+    <string name="driver_become_success">Ваша заявка успешно отправлена. Мы свяжемся с вами в ближайшее время.</string>
+    <string name="driver_become_error">Что-то пошло не так. Попробуйте ещё раз.</string>
     <string name="driver_become_select_region">Ваш регион</string>
     <string name="driver_become_region_title">Ваш регион</string>
 
@@ -442,7 +411,7 @@
     <string name="contact_support_menu">Поддержка</string>
     <string name="contact_help">Помощь</string>
     <string name="contact_action_call">Позвонить</string>
-    <string name="contact_action_telegram">Телеграмм</string>
+    <string name="contact_action_telegram">Telegram</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
@@ -452,7 +421,7 @@
     <string name="info_about_title">О приложении</string>
     <string name="info_privacy_policy">Политика конфиденциальности</string>
     <string name="info_license">Лицензионное соглашение</string>
-    <string name="info_social_media">Мы в социальных сетях</string>
+    <string name="info_social_media">Мы в соцсетях</string>
     <string name="info_rate_app">Оценить приложение</string>
 
 
@@ -461,7 +430,7 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="notification_title">Уведомления</string>
-    <string name="notification_empty">Нет текущих уведомлений</string>
+    <string name="notification_empty">Уведомлений пока нет</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
@@ -475,8 +444,8 @@
          CONNECTION - No Internet
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
-    <string name="no_internet_title">Нет соединения с интернетом</string>
-    <string name="no_internet_description">Проверьте подключение к интернету\nповторите позже</string>
+    <string name="no_internet_title">Нет подключения к интернету</string>
+    <string name="no_internet_description">Проверьте подключение к интернету и попробуйте снова</string>
     <string name="no_internet_action">Обновить</string>
 
 
@@ -496,7 +465,7 @@
     <!-- Network Errors -->
     <string name="error_no_internet">Нет подключения к интернету. Проверьте настройки сети.</string>
     <string name="error_connection_timeout">Время ожидания истекло. Попробуйте ещё раз.</string>
-    <string name="error_network_unexpected">Произошла непредвиденная ошибка сети.</string>
+    <string name="error_network_unexpected">Произошла непредвиденная сетевая ошибка.</string>
 
     <!-- Server Errors -->
     <string name="error_server_busy">Серверы перегружены. Попробуйте чуть позже.</string>
@@ -510,8 +479,8 @@
 
     <!-- Generic Errors -->
     <string name="error_client_request">Что-то пошло не так. Попробуйте позже.</string>
-    <string name="error_application">Ошибка приложения. Обратитесь в поддержку.</string>
-    <string name="error_unknown">Неизвестная ошибка. Попробуйте ещё раз.</string>
-    <string name="error_unexpected">Непредвиденная ошибка. Попробуйте позже.</string>
+    <string name="error_application">Произошла ошибка приложения. Обратитесь в поддержку.</string>
+    <string name="error_unknown">Произошла неизвестная ошибка. Попробуйте ещё раз.</string>
+    <string name="error_unexpected">Произошла непредвиденная ошибка. Попробуйте позже.</string>
 
 </resources>
