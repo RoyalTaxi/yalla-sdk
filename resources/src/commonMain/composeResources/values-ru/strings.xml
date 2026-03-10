@@ -273,6 +273,7 @@
     <!-- Stops -->
     <string name="order_stops_title">Остановки</string>
     <string name="order_stops_add">Добавить остановку</string>
+    <string name="order_stops_count">{0} адресов</string>
 
     <!-- Driver Comment -->
     <string name="order_comment_title">Комментарий водителю</string>
@@ -335,6 +336,8 @@
     <string name="order_cancel_reason_error">Не удалось отправить причину отмены</string>
     <string name="order_rate_success">Поездка успешно оценена</string>
     <string name="order_rate_error">Не удалось оценить поездку</string>
+    <string name="order_payment_update_success">Способ оплаты изменён</string>
+    <string name="order_payment_update_error">Не удалось изменить способ оплаты</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════

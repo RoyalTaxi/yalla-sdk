@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
+import kotlin.math.ceil
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -156,7 +157,7 @@ fun SensitiveButton(
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     val progress = remember { Animatable(0f) }
-    val countdown by remember { derivedStateOf { (dimens.countdownSeconds * (1f - progress.value)).toInt() } }
+    val countdown by remember { derivedStateOf { ceil(dimens.countdownSeconds * (1f - progress.value)).toInt() } }
     val isEnabled by remember { derivedStateOf { progress.value >= 1f } }
 
     LaunchedEffect(lifecycleOwner) {

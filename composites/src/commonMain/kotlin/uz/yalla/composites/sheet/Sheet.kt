@@ -2,6 +2,7 @@ package uz.yalla.composites.sheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime
@@ -15,6 +16,7 @@ import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalBottomSheetDefaults
+import androidx.compose.material3.ModalBottomSheetProperties
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.contentColorFor
@@ -33,6 +35,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.fillMaxWidth
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import uz.yalla.design.theme.System
@@ -64,6 +67,8 @@ import uz.yalla.design.theme.System
  * @param dimens Dimension configuration, defaults to [SheetDefaults.dimens].
  * @param dragHandle Optional drag handle composable.
  * @param contentWindowInsets Window insets for content.
+ * @param properties Sheet properties.
+ * @param snackbarHost Optional snackbar host rendered as a Popup overlay inside the sheet.
  * @param onFullyExpanded Called when sheet fully expands.
  * @param content Sheet content.
  *
@@ -81,6 +86,8 @@ fun Sheet(
     dimens: SheetDefaults.SheetDimens = SheetDefaults.dimens(),
     dragHandle: @Composable (() -> Unit)? = { SheetDragHandle() },
     contentWindowInsets: @Composable () -> WindowInsets = { WindowInsets.ime.union(WindowInsets.navigationBars) },
+    properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties,
+    snackbarHost: @Composable (() -> Unit)? = null,
     onFullyExpanded: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit,
 ) {
@@ -119,8 +126,17 @@ fun Sheet(
             scrimColor = colors.scrim,
             dragHandle = dragHandle,
             contentWindowInsets = contentWindowInsets,
-            properties = ModalBottomSheetDefaults.properties,
-            content = content,
+            properties = properties,
+            content = {
+                Box {
+                    Column(modifier = Modifier.fillMaxWidth()) { content() }
+                    snackbarHost?.let { host ->
+                        Box(
+                            modifier = Modifier.fillMaxWidth().align(Alignment.TopCenter)
+                        ) { host() }
+                    }
+                }
+            },
         )
     }
 }

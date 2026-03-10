@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,14 +33,10 @@ actual fun DatePickerSheet(
     onEffect: (DatePickerSheetEffect) -> Unit,
 ) {
     var snappedDate by remember { mutableStateOf(state.startDate) }
-    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
 
-    AnimatedSheet(
+    Sheet(
         isVisible = state.isVisible,
-        sheetState = sheetState,
         onDismissRequest = { onEffect(DatePickerSheetEffect.Dismiss) },
-        colors = AnimatedSheetDefaults.colors(container = System.color.backgroundBase),
-        dimens = AnimatedSheetDefaults.dimens(shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp)),
         dragHandle = null,
     ) {
         Column(

@@ -273,6 +273,7 @@
     <!-- Stops -->
     <string name="order_stops_title">Stops</string>
     <string name="order_stops_add">Add a stop</string>
+    <string name="order_stops_count">{0} destinations</string>
 
     <!-- Driver Comment -->
     <string name="order_comment_title">Note for driver</string>
@@ -335,6 +336,8 @@
     <string name="order_cancel_reason_error">Failed to send cancellation reason</string>
     <string name="order_rate_success">Trip rated successfully</string>
     <string name="order_rate_error">Failed to rate trip</string>
+    <string name="order_payment_update_success">Payment method changed</string>
+    <string name="order_payment_update_error">Failed to change payment method</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════

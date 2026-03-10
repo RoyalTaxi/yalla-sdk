@@ -78,7 +78,7 @@
 
     <!-- OTP Verification -->
     <string name="auth_otp_title">Xavfsizlik kodi</string>
-    <string name="auth_otp_description">Iltimos, +998{0} raqamiga yuborilgan 5 xonali kodni kiriting.</string>
+    <string name="auth_otp_description">Iltimos, +998{0} raqamiga yuborilgan {1} xonali kodni kiriting.</string>
     <string name="auth_otp_resend">Kodni qayta yuborish</string>
     <string name="auth_otp_resend_countdown">{0} soniyadan so'ng kodni qayta yuborish</string>
 
@@ -303,6 +303,7 @@
     <!-- Stops -->
     <string name="order_stops_title">Bekatlar</string>
     <string name="order_stops_add">Bekat qo'shish</string>
+    <string name="order_stops_count">{0} manzil</string>
 
     <!-- Driver Comment -->
     <string name="order_comment_title">Haydovchiga izoh</string>
@@ -365,6 +366,8 @@
     <string name="order_cancel_reason_error">Bekor qilish sababini yuborib bo'lmadi</string>
     <string name="order_rate_success">Safar muvaffaqiyatli baholandi</string>
     <string name="order_rate_error">Safarni baholab bo'lmadi</string>
+    <string name="order_payment_update_success">To'lov turi o'zgartirildi</string>
+    <string name="order_payment_update_error">To'lov turini o'zgartirib bo'lmadi</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════

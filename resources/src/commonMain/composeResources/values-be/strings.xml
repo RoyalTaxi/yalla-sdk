@@ -273,6 +273,7 @@
     <!-- Stops -->
     <string name="order_stops_title">Бекатлар</string>
     <string name="order_stops_add">Бекат қўшиш</string>
+    <string name="order_stops_count">{0} манзил</string>
 
     <!-- Driver Comment -->
     <string name="order_comment_title">Ҳайдовчига изоҳ</string>
@@ -335,6 +336,8 @@
     <string name="order_cancel_reason_error">Бекор қилиш сабабини юбориб бўлмади</string>
     <string name="order_rate_success">Сафар муваффақиятли баҳоланди</string>
     <string name="order_rate_error">Сафарни баҳолаб бўлмади</string>
+    <string name="order_payment_update_success">Тўлов тури ўзгартирилди</string>
+    <string name="order_payment_update_error">Тўлов турини ўзгартириб бўлмади</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════

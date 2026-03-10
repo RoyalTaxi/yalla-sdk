@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.InputTransformation
+import androidx.compose.foundation.text.input.OutputTransformation
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.foundation.text.selection.TextSelectionColors
@@ -126,7 +127,8 @@ object PrimaryFieldDefaults {
  * @param focusRequester Optional focus requester
  * @param placeholder Placeholder text when empty
  * @param lineLimits Line limit configuration
- * @param inputTransformation Input transformation for formatting
+ * @param inputTransformation Input transformation for filtering
+ * @param outputTransformation Output transformation for visual formatting
  * @param leadingIcon Optional leading icon
  * @param trailingIcon Optional trailing icon
  * @param enabled Whether field is enabled
@@ -144,6 +146,7 @@ fun PrimaryField(
     placeholder: String? = null,
     lineLimits: TextFieldLineLimits = TextFieldLineLimits.SingleLine,
     inputTransformation: InputTransformation? = null,
+    outputTransformation: OutputTransformation? = null,
     leadingIcon: (@Composable (() -> Unit))? = null,
     trailingIcon: (@Composable (() -> Unit))? = null,
     enabled: Boolean = true,
@@ -171,6 +174,7 @@ fun PrimaryField(
         lineLimits = lineLimits,
         shape = dimens.shape,
         inputTransformation = inputTransformation,
+        outputTransformation = outputTransformation,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
         enabled = enabled,
