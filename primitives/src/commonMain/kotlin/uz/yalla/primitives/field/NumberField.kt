@@ -7,12 +7,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.InputTransformation
-import androidx.compose.foundation.text.input.OutputTransformation
-import androidx.compose.foundation.text.input.TextFieldBuffer
-import androidx.compose.foundation.text.input.TextFieldLineLimits
-import androidx.compose.foundation.text.input.TextFieldState
-import androidx.compose.foundation.text.input.insert
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,7 +24,11 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.design.theme.System
@@ -38,9 +36,12 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.auth_phone_country_code
 import uz.yalla.resources.auth_phone_placeholder
 
+private const val MAX_PHONE_DIGITS = 9
+
 @Composable
 fun NumberField(
-    state: TextFieldState,
+    value: String,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
     focusRequester: FocusRequester? = null
 ) {
@@ -74,11 +75,14 @@ fun NumberField(
             )
 
             TextField(
-                state = state,
+                value = value,
+                onValueChange = { newValue ->
+                    val filtered = newValue.filter { it.isDigit() }.take(MAX_PHONE_DIGITS)
+                    onValueChange(filtered)
+                },
                 textStyle = System.font.body.base.medium,
-                lineLimits = TextFieldLineLimits.SingleLine,
-                inputTransformation = DigitsOnlyTransformation,
-                outputTransformation = PhoneOutputTransformation,
+                singleLine = true,
+                visualTransformation = PhoneVisualTransformation,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier =
                     Modifier
@@ -118,23 +122,45 @@ fun NumberField(
     }
 }
 
-private object DigitsOnlyTransformation : InputTransformation {
-    override fun TextFieldBuffer.transformInput() {
-        if (!asCharSequence().all { it.isDigit() }) {
-            val filtered = asCharSequence().filter { it.isDigit() }.toString()
-            replace(0, length, filtered)
-        }
-        if (length > 9) {
-            replace(9, length, "")
-        }
-    }
-}
+private object PhoneVisualTransformation : VisualTransformation {
 
-private object PhoneOutputTransformation : OutputTransformation {
-    override fun TextFieldBuffer.transformOutput() {
-        if (length > 0) insert(0, "(")
-        if (length > 3) insert(3, ") ")
-        if (length > 8) insert(8, " ")
-        if (length > 11) insert(11, " ")
+    // Format: (XX) XXX XX XX
+    override fun filter(text: AnnotatedString): TransformedText {
+        val raw = text.text
+        if (raw.isEmpty()) return TransformedText(text, OffsetMapping.Identity)
+
+        val sb = StringBuilder()
+        val origToTrans = IntArray(raw.length + 1)
+
+        for (i in raw.indices) {
+            when (i) {
+                0 -> sb.append('(')
+                2 -> sb.append(") ")
+                5 -> sb.append(' ')
+                7 -> sb.append(' ')
+            }
+            origToTrans[i] = sb.length
+            sb.append(raw[i])
+        }
+        origToTrans[raw.length] = sb.length
+
+        val formatted = sb.toString()
+        val transToOrig = IntArray(formatted.length + 1)
+        var oi = 0
+        for (ti in 0..formatted.length) {
+            while (oi <= raw.length && origToTrans[oi] < ti) oi++
+            transToOrig[ti] = oi.coerceAtMost(raw.length)
+        }
+
+        return TransformedText(
+            AnnotatedString(formatted),
+            object : OffsetMapping {
+                override fun originalToTransformed(offset: Int) =
+                    origToTrans[offset.coerceIn(0, raw.length)]
+
+                override fun transformedToOriginal(offset: Int) =
+                    transToOrig[offset.coerceIn(0, formatted.length)]
+            }
+        )
     }
 }
