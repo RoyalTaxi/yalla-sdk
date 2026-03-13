@@ -12,11 +12,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
-import uz.yalla.resources.ic_focus_location
+import uz.yalla.resources.icons.FocusLocation
+import uz.yalla.resources.icons.YallaIcons
 import uz.yalla.resources.location_gps_title
 
 /**
@@ -126,7 +127,7 @@ fun EnableLocationButton(
         Spacer(modifier = Modifier.width(dimens.iconSpacing))
 
         Icon(
-            painter = painterResource(Res.drawable.ic_focus_location),
+            painter = rememberVectorPainter(YallaIcons.FocusLocation),
             contentDescription = null,
             tint = colors.icon
         )

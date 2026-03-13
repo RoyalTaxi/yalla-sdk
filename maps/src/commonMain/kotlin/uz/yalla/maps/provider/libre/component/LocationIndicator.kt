@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import io.github.dellisd.spatialk.geojson.dsl.featureCollection
 import io.github.dellisd.spatialk.geojson.dsl.point
 import kotlinx.coroutines.flow.collectLatest
-import org.jetbrains.compose.resources.painterResource
 import org.maplibre.compose.camera.CameraState
 import org.maplibre.compose.expressions.dsl.const
 import org.maplibre.compose.expressions.dsl.image
@@ -23,8 +22,7 @@ import org.maplibre.compose.sources.rememberGeoJsonSource
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.maps.provider.common.MapColors
 import uz.yalla.maps.provider.common.MapDimens
-import uz.yalla.resources.Res
-import uz.yalla.resources.ic_user_location
+import uz.yalla.maps.provider.common.UserLocationPainter
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.pow
@@ -57,7 +55,7 @@ fun LocationIndicator(
     SymbolLayer(
         id = "user-location",
         source = source,
-        iconImage = image(painterResource(Res.drawable.ic_user_location)),
+        iconImage = image(UserLocationPainter),
         iconAllowOverlap = const(true),
         iconIgnorePlacement = const(true)
     )

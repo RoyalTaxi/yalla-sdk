@@ -61,6 +61,7 @@ paging-compose-common = "3.3.0-alpha02-0.4.0"
 
 # Documentation
 dokka = "2.0.0"
+valkyrie = "0.4.0"
 
 # Code Quality
 detekt = "1.23.6"
@@ -183,5 +184,6 @@ detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+valkyrie = { id = "io.github.composegears.valkyrie", version.ref = "valkyrie" }
 yalla-sdk-kmp = { id = "yalla.sdk.kmp" }
 yalla-sdk-kmp-compose = { id = "yalla.sdk.kmp.compose" }

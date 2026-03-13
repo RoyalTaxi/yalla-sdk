@@ -13,10 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import uz.yalla.design.theme.System
 import uz.yalla.platform.model.IconType
-import uz.yalla.platform.toDrawableResource
+import uz.yalla.platform.toImageVector
 
 @Suppress("UNUSED_PARAMETER")
 @Composable
@@ -42,7 +42,7 @@ actual fun NativeCircleIconButton(
             )
     ) {
         Image(
-            painter = painterResource(iconType.toDrawableResource()),
+            painter = rememberVectorPainter(iconType.toImageVector()),
             contentDescription = null,
             colorFilter = ColorFilter.tint(System.color.iconBase)
         )

@@ -33,7 +33,7 @@ import uz.yalla.design.theme.System
  * ```kotlin
  * ActionItem(
  *     title = "Humo •••• 1234",
- *     leadingIcon = { Icon(painterResource(Res.drawable.ic_humo), null) },
+ *     leadingIcon = { Icon(rememberVectorPainter(YallaIcons.Humo), null) },
  *     action = { Icon(painterResource(Res.drawable.ic_trash), null) },
  *     onActionClick = { deleteCard(cardId) },
  * )

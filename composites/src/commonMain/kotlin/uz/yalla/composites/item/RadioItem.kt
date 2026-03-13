@@ -47,8 +47,8 @@ data class RadioItemState(
  *     state = RadioItemState(
  *         text = "Option 1",
  *         selected = selectedIndex == 0,
- *         checkedIcon = painterResource(Res.drawable.ic_checked),
- *         uncheckedIcon = painterResource(Res.drawable.ic_unchecked),
+ *         checkedIcon = rememberVectorPainter(YallaIcons.Checked),
+ *         uncheckedIcon = rememberVectorPainter(YallaIcons.Unchecked),
  *     ),
  *     onClick = { selectedIndex = 0 },
  * )

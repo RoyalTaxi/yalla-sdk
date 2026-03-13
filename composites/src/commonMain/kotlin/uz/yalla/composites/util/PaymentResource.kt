@@ -1,25 +1,30 @@
 package uz.yalla.composites.util
 
-import org.jetbrains.compose.resources.DrawableResource
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.painterResource
 import uz.yalla.core.payment.PaymentKind
 import uz.yalla.resources.Res
-import uz.yalla.resources.ic_cash
-import uz.yalla.resources.ic_humo
-import uz.yalla.resources.ic_uzcard
+import uz.yalla.resources.icons.Humo
+import uz.yalla.resources.icons.Uzcard
+import uz.yalla.resources.icons.YallaIcons
+import uz.yalla.resources.img_cash
 import uz.yalla.resources.payment_card_humo_format
 import uz.yalla.resources.payment_card_uzcard_format
 import uz.yalla.resources.payment_type_cash
 
-fun PaymentKind.getDrawableResource(): DrawableResource =
+@Composable
+fun PaymentKind.toPainter(): Painter =
     when (this) {
-        PaymentKind.Cash -> Res.drawable.ic_cash
+        PaymentKind.Cash -> painterResource(Res.drawable.img_cash)
 
         is PaymentKind.Card -> {
             if (cardId.length == 16) {
-                Res.drawable.ic_humo
+                rememberVectorPainter(YallaIcons.Humo)
             } else {
-                Res.drawable.ic_uzcard
+                rememberVectorPainter(YallaIcons.Uzcard)
             }
         }
     }

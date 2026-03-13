@@ -2,45 +2,46 @@ package uz.yalla.foundation.model
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import org.jetbrains.compose.resources.DrawableResource
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import org.jetbrains.compose.resources.StringResource
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.core.settings.LocaleKind
 import uz.yalla.resources.Res
-import uz.yalla.resources.ic_flag_en
-import uz.yalla.resources.ic_flag_ru
-import uz.yalla.resources.ic_flag_uz
+import uz.yalla.resources.icons.FlagRu
+import uz.yalla.resources.icons.FlagUs
+import uz.yalla.resources.icons.FlagUz
+import uz.yalla.resources.icons.YallaIcons
 import uz.yalla.resources.language_english
 import uz.yalla.resources.language_russian
 import uz.yalla.resources.language_uzbek_cyrillic
 import uz.yalla.resources.language_uzbek_latin
 
 sealed class LanguageModel(
-    val icon: DrawableResource,
+    val icon: ImageVector,
     val name: StringResource,
     val localeKind: LocaleKind
 ) {
     data object Uzbek : LanguageModel(
-        icon = Res.drawable.ic_flag_uz,
+        icon = YallaIcons.FlagUz,
         name = Res.string.language_uzbek_latin,
         localeKind = LocaleKind.Uz
     )
 
     data object UzbekCyrillic : LanguageModel(
-        icon = Res.drawable.ic_flag_uz,
+        icon = YallaIcons.FlagUz,
         name = Res.string.language_uzbek_cyrillic,
         localeKind = LocaleKind.UzCyrillic
     )
 
     data object Russian : LanguageModel(
-        icon = Res.drawable.ic_flag_ru,
+        icon = YallaIcons.FlagRu,
         name = Res.string.language_russian,
         localeKind = LocaleKind.Ru
     )
 
     data object English : LanguageModel(
-        icon = Res.drawable.ic_flag_en,
+        icon = YallaIcons.FlagUs,
         name = Res.string.language_english,
         localeKind = LocaleKind.En
     )
@@ -50,7 +51,7 @@ sealed class LanguageModel(
         SelectableItemModel(
             item = this,
             title = stringResource(name),
-            icon = painterResource(icon),
+            icon = rememberVectorPainter(icon),
             iconColor = Color.Unspecified
         )
 

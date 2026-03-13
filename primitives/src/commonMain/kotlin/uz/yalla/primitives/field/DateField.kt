@@ -22,10 +22,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.LocalDate
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import uz.yalla.design.theme.System
-import uz.yalla.resources.Res
-import uz.yalla.resources.ic_calendar
+import uz.yalla.resources.icons.Calendar
+import uz.yalla.resources.icons.YallaIcons
 
 /**
  * State for [DateField] component.
@@ -104,7 +104,7 @@ fun DateField(
             Spacer(modifier = Modifier.weight(1f))
 
             Icon(
-                painter = painterResource(Res.drawable.ic_calendar),
+                painter = rememberVectorPainter(YallaIcons.Calendar),
                 contentDescription = null,
                 tint = colors.icon,
             )

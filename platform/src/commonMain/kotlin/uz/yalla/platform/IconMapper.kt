@@ -1,25 +1,25 @@
 package uz.yalla.platform
 
-import org.jetbrains.compose.resources.DrawableResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import uz.yalla.platform.model.IconType
-import uz.yalla.resources.Res
-import uz.yalla.resources.ic_arrow_back
-import uz.yalla.resources.ic_close
-import uz.yalla.resources.ic_done_tick
-import uz.yalla.resources.ic_focus_destination
-import uz.yalla.resources.ic_focus_location
-import uz.yalla.resources.ic_focus_origin
-import uz.yalla.resources.ic_focus_route
-import uz.yalla.resources.ic_menu
+import uz.yalla.resources.icons.ArrowLeft
+import uz.yalla.resources.icons.Check
+import uz.yalla.resources.icons.FocusDestination
+import uz.yalla.resources.icons.FocusLocation
+import uz.yalla.resources.icons.FocusOrigin
+import uz.yalla.resources.icons.FocusRoute
+import uz.yalla.resources.icons.Menu
+import uz.yalla.resources.icons.X
+import uz.yalla.resources.icons.YallaIcons
 
-fun IconType.toDrawableResource(): DrawableResource =
+fun IconType.toImageVector(): ImageVector =
     when (this) {
-        IconType.MENU -> Res.drawable.ic_menu
-        IconType.CLOSE -> Res.drawable.ic_close
-        IconType.DONE -> Res.drawable.ic_done_tick
-        IconType.Back -> Res.drawable.ic_arrow_back
-        IconType.FOCUS_LOCATION -> Res.drawable.ic_focus_location
-        IconType.FOCUS_ROUTE -> Res.drawable.ic_focus_route
-        IconType.FOCUS_ORIGIN -> Res.drawable.ic_focus_origin
-        IconType.FOCUS_DESTINATION -> Res.drawable.ic_focus_destination
+        IconType.MENU -> YallaIcons.Menu
+        IconType.CLOSE -> YallaIcons.X
+        IconType.DONE -> YallaIcons.Check
+        IconType.Back -> YallaIcons.ArrowLeft
+        IconType.FOCUS_LOCATION -> YallaIcons.FocusLocation
+        IconType.FOCUS_ROUTE -> YallaIcons.FocusRoute
+        IconType.FOCUS_ORIGIN -> YallaIcons.FocusOrigin
+        IconType.FOCUS_DESTINATION -> YallaIcons.FocusDestination
     }

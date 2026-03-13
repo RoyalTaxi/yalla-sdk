@@ -60,8 +60,8 @@ data class SnackbarState(
  *     state = SnackbarState(
  *         message = "Card added successfully",
  *         variant = SnackbarVariant.Success,
- *         icon = painterResource(Res.drawable.ic_check_circle),
- *         dismissIcon = painterResource(Res.drawable.ic_x),
+ *         icon = rememberVectorPainter(YallaIcons.CheckCircle),
+ *         dismissIcon = rememberVectorPainter(YallaIcons.X),
  *     ),
  *     onDismiss = { snackbarHostState.currentSnackbarData?.dismiss() },
  * )

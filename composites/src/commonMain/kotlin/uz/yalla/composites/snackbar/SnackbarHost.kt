@@ -82,9 +82,9 @@ object AppSnackbarHostDefaults {
  * AppSnackbarHost(
  *     state = AppSnackbarHostState(
  *         data = currentSnackbar,
- *         successIcon = painterResource(Res.drawable.ic_check_circle),
- *         errorIcon = painterResource(Res.drawable.ic_warning),
- *         dismissIcon = painterResource(Res.drawable.ic_x),
+ *         successIcon = rememberVectorPainter(YallaIcons.CheckCircle),
+ *         errorIcon = rememberVectorPainter(YallaIcons.Warning),
+ *         dismissIcon = rememberVectorPainter(YallaIcons.X),
  *     ),
  *     hostState = snackbarHostState,
  *     onDismiss = { snackbarHostState.currentSnackbarData?.dismiss() },

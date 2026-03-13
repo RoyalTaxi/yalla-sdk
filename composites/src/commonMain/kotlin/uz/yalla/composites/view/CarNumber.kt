@@ -33,7 +33,7 @@ import org.jetbrains.compose.resources.painterResource
 import uz.yalla.core.settings.LocaleKind
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
-import uz.yalla.resources.ic_flag_rectangle
+import uz.yalla.resources.img_flag_uz_square
 
 /**
  * State for [CarNumber].
@@ -219,7 +219,7 @@ fun CarNumber(
                 modifier = Modifier.padding(vertical = 3.dp.scaled())
             ) {
                 Image(
-                    painter = painterResource(Res.drawable.ic_flag_rectangle),
+                    painter = painterResource(Res.drawable.img_flag_uz_square),
                     contentDescription = null,
                     modifier = Modifier.height(4.dp.scaled())
                 )

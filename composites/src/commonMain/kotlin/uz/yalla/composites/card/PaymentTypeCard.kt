@@ -22,16 +22,16 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import org.jetbrains.compose.resources.stringResource
-import uz.yalla.composites.util.getDrawableResource
 import uz.yalla.composites.util.getStringResource
+import uz.yalla.composites.util.toPainter
 import uz.yalla.core.payment.PaymentKind
 import uz.yalla.core.util.formatArgs
 import uz.yalla.design.theme.System
-import uz.yalla.resources.Res
-import uz.yalla.resources.ic_checkbox
-import uz.yalla.resources.ic_checkbox_border
+import uz.yalla.resources.icons.Checked
+import uz.yalla.resources.icons.Unchecked
+import uz.yalla.resources.icons.YallaIcons
 
 /**
  * Default configuration values for [PaymentTypeCard].
@@ -177,7 +177,7 @@ fun PaymentTypeCard(
                     .padding(dimens.contentPadding)
         ) {
             Icon(
-                painter = painterResource(state.paymentType.getDrawableResource()),
+                painter = state.paymentType.toPainter(),
                 contentDescription = null,
                 tint =
                     when (state.paymentType) {
@@ -207,8 +207,8 @@ fun PaymentTypeCard(
 
             Icon(
                 painter =
-                    painterResource(
-                        if (state.isSelected) Res.drawable.ic_checkbox else Res.drawable.ic_checkbox_border
+                    rememberVectorPainter(
+                        if (state.isSelected) YallaIcons.Checked else YallaIcons.Unchecked
                     ),
                 contentDescription = null,
                 tint = Color.Unspecified

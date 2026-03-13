@@ -8,6 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RippleConfiguration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import uz.yalla.design.color.ColorScheme
 import uz.yalla.design.color.LocalColorScheme
@@ -18,6 +19,8 @@ import uz.yalla.design.font.LocalFontScheme
 import uz.yalla.design.font.rememberFontScheme
 import androidx.compose.material3.darkColorScheme as materialDarkColorScheme
 import androidx.compose.material3.lightColorScheme as materialLightColorScheme
+
+private val LocalIsDark = staticCompositionLocalOf { false }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,6 +70,7 @@ fun YallaTheme(
         }
 
     CompositionLocalProvider(
+        LocalIsDark provides isDark,
         LocalColorScheme provides colorScheme,
         LocalFontScheme provides fontScheme,
         LocalRippleConfiguration provides rippleConfiguration
@@ -86,4 +90,8 @@ object System {
     val font: FontScheme
         @Composable
         get() = LocalFontScheme.current
+
+    val isDark: Boolean
+        @Composable
+        get() = LocalIsDark.current
 }

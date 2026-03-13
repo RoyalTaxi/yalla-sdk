@@ -26,11 +26,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import org.jetbrains.compose.resources.painterResource
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
-import uz.yalla.resources.ic_car
-import uz.yalla.resources.ic_warning
+import uz.yalla.resources.icons.Warning
+import uz.yalla.resources.icons.YallaIcons
+import uz.yalla.resources.img_car_cropped
 
 /**
  * UI state for [BrandServiceItem].
@@ -81,8 +83,8 @@ sealed interface BrandServiceItemIconModel {
  *     ),
  *     iconModel = BrandServiceItemIconModel.Async(service.iconUrl),
  *     asyncImage = BrandServiceItemDefaults.asyncImage(
- *         placeholder = painterResource(Res.drawable.ic_car),
- *         error = painterResource(Res.drawable.ic_warning),
+ *         placeholder = painterResource(Res.drawable.img_car_cropped),
+ *         error = rememberVectorPainter(YallaIcons.Warning),
  *     ),
  *     onClick = { onServiceClick(service.id) },
  * )
@@ -375,7 +377,7 @@ private fun BrandServiceItemPreview() {
                     ),
                 iconModel =
                     BrandServiceItemIconModel.Local(
-                        painter = painterResource(Res.drawable.ic_car),
+                        painter = painterResource(Res.drawable.img_car_cropped),
                     ),
                 onClick = {},
             )
@@ -392,8 +394,8 @@ private fun BrandServiceItemPreview() {
                     ),
                 asyncImage =
                     BrandServiceItemDefaults.asyncImage(
-                        placeholder = painterResource(Res.drawable.ic_car),
-                        error = painterResource(Res.drawable.ic_warning),
+                        placeholder = painterResource(Res.drawable.img_car_cropped),
+                        error = rememberVectorPainter(YallaIcons.Warning),
                     ),
                 onClick = {},
             )

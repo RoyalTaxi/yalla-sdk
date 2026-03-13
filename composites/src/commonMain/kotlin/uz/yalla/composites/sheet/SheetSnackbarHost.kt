@@ -8,14 +8,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import uz.yalla.composites.snackbar.AppSnackbarHost
 import uz.yalla.composites.snackbar.AppSnackbarHostState
 import uz.yalla.composites.snackbar.SnackbarData
-import uz.yalla.resources.Res
-import uz.yalla.resources.ic_check_circle
-import uz.yalla.resources.ic_warning
-import uz.yalla.resources.ic_x
+import uz.yalla.resources.icons.CheckCircle
+import uz.yalla.resources.icons.Warning
+import uz.yalla.resources.icons.X
+import uz.yalla.resources.icons.YallaIcons
 
 /**
  * State holder for sheet-local snackbar.
@@ -82,9 +82,9 @@ fun SheetSnackbarHost(
     AppSnackbarHost(
         state = AppSnackbarHostState(
             data = state.data,
-            successIcon = painterResource(Res.drawable.ic_check_circle),
-            errorIcon = painterResource(Res.drawable.ic_warning),
-            dismissIcon = painterResource(Res.drawable.ic_x),
+            successIcon = rememberVectorPainter(YallaIcons.CheckCircle),
+            errorIcon = rememberVectorPainter(YallaIcons.Warning),
+            dismissIcon = rememberVectorPainter(YallaIcons.X),
         ),
         hostState = state.hostState,
         onDismiss = { state.dismiss() },

@@ -31,7 +31,7 @@ import uz.yalla.platform.toggle.NativeSwitch
 import uz.yalla.resources.Res
 import uz.yalla.resources.bonus_balance
 import uz.yalla.resources.bonus_pay
-import uz.yalla.resources.ic_coin
+import uz.yalla.resources.img_coin
 
 /**
  * State for [EnableBonusCard].
@@ -191,7 +191,7 @@ fun EnableBonusCard(
                     .padding(dimens.contentPadding)
         ) {
             Icon(
-                painter = painterResource(Res.drawable.ic_coin),
+                painter = painterResource(Res.drawable.img_coin),
                 contentDescription = null,
                 tint = Color.Unspecified,
                 modifier =

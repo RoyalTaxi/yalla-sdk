@@ -25,14 +25,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.primitives.button.SupportButtonDefaults.colors
 import uz.yalla.primitives.button.SupportButtonDefaults.dimens
 import uz.yalla.primitives.button.SupportButtonDefaults.style
-import uz.yalla.resources.Res
-import uz.yalla.resources.ic_headset
+import uz.yalla.resources.icons.Headset
+import uz.yalla.resources.icons.YallaIcons
 
 /**
  * State for [SupportButton].
@@ -240,7 +240,7 @@ private fun SupportButtonPreview() {
                 state =
                     SupportButtonState(
                         text = "Помощь",
-                        icon = painterResource(Res.drawable.ic_headset),
+                        icon = rememberVectorPainter(YallaIcons.Headset),
                     ),
                 onClick = {},
                 modifier = Modifier.width(362.dp),

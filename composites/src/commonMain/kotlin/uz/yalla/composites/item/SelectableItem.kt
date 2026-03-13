@@ -18,11 +18,11 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import uz.yalla.design.theme.System
 import uz.yalla.foundation.model.SelectableItemModel
-import uz.yalla.resources.Res
-import uz.yalla.resources.ic_checked
+import uz.yalla.resources.icons.Checked
+import uz.yalla.resources.icons.YallaIcons
 
 /**
  * State for [SelectableItem].
@@ -125,7 +125,7 @@ object SelectableItemDefaults {
  *         item = SelectableItemModel(
  *             item = paymentType,
  *             title = "Credit Card",
- *             icon = painterResource(Res.drawable.ic_card),
+ *             icon = rememberVectorPainter(YallaIcons.Card),
  *             iconColor = System.color.iconBase
  *         ),
  *         isSelected = selectedType == paymentType,
@@ -189,7 +189,7 @@ fun <T> SelectableItem(
 
             if (state.isSelected) {
                 Icon(
-                    painter = painterResource(Res.drawable.ic_checked),
+                    painter = rememberVectorPainter(YallaIcons.Checked),
                     contentDescription = null,
                     tint = Color.Unspecified
                 )

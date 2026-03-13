@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
-import uz.yalla.resources.ic_coin
+import uz.yalla.resources.img_coin
 
 /**
  * Default configuration values for [BonusAmountItem].
@@ -191,7 +191,7 @@ private fun BonusAmountItemContent(
                 .padding(dimens.contentPadding)
     ) {
         Image(
-            painter = painterResource(Res.drawable.ic_coin),
+            painter = painterResource(Res.drawable.img_coin),
             contentDescription = null,
             modifier = Modifier.size(dimens.iconSize)
         )

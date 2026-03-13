@@ -22,11 +22,11 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import uz.yalla.design.theme.System
-import uz.yalla.resources.Res
-import uz.yalla.resources.ic_checkbox
-import uz.yalla.resources.ic_checkbox_border
+import uz.yalla.resources.icons.Checked
+import uz.yalla.resources.icons.Unchecked
+import uz.yalla.resources.icons.YallaIcons
 
 /**
  * State for [SelectableCard] component.
@@ -50,7 +50,7 @@ data class SelectableCardState(
  * SelectableCard(
  *     state = SelectableCardState(selected = isSelected),
  *     onClick = { onSelect() },
- *     leadingIcon = { Icon(painterResource(Res.drawable.ic_cash), null) },
+ *     leadingIcon = { Icon(rememberVectorPainter(YallaIcons.Cash), null) },
  *     content = { Text("Cash Payment") },
  * )
  * ```
@@ -121,8 +121,8 @@ fun SelectableCard(
 
             Icon(
                 painter =
-                    painterResource(
-                        if (state.selected) Res.drawable.ic_checkbox else Res.drawable.ic_checkbox_border
+                    rememberVectorPainter(
+                        if (state.selected) YallaIcons.Checked else YallaIcons.Unchecked
                     ),
                 contentDescription = null,
                 tint = Color.Unspecified,

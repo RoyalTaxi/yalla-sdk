@@ -43,16 +43,18 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.core.util.or0
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
 import uz.yalla.resources.common_status_loading
 import uz.yalla.resources.format_time_min_short
-import uz.yalla.resources.ic_focus_origin
-import uz.yalla.resources.ic_pin_loading
-import uz.yalla.resources.ic_pin_shadow
+import org.jetbrains.compose.resources.painterResource
+import uz.yalla.resources.icons.FocusOrigin
+import uz.yalla.resources.icons.PinShadow
+import uz.yalla.resources.icons.YallaIcons
+import uz.yalla.resources.img_spinner
 
 /**
  * Animated location pin with address label and timeout display.
@@ -165,7 +167,7 @@ fun LocationPin(
         val (shadow, stick, content, header) = createRefs()
 
         Image(
-            painter = painterResource(Res.drawable.ic_pin_shadow),
+            painter = rememberVectorPainter(YallaIcons.PinShadow),
             contentDescription = null,
             modifier =
                 Modifier
@@ -266,7 +268,7 @@ private fun PinContent(
             when {
                 jumping -> {
                     Image(
-                        painter = painterResource(Res.drawable.ic_pin_loading),
+                        painter = painterResource(Res.drawable.img_spinner),
                         contentDescription = null,
                         modifier =
                             Modifier
@@ -276,9 +278,10 @@ private fun PinContent(
                 }
                 timeout == null -> {
                     Icon(
-                        painter = painterResource(Res.drawable.ic_focus_origin),
+                        painter = rememberVectorPainter(YallaIcons.FocusOrigin),
                         contentDescription = null,
-                        tint = colors.icon
+                        tint = colors.icon,
+                        modifier = Modifier.size(18.dp)
                     )
                 }
                 else -> {

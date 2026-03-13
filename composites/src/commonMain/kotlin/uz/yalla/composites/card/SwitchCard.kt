@@ -55,7 +55,7 @@ data class SwitchCardState(
  *         subtitle = "Balance: 50,000 sum",
  *     ),
  *     onCheckedChange = { viewModel.toggleBonus(it) },
- *     leadingIcon = { Icon(painterResource(Res.drawable.ic_coin), null) },
+ *     leadingIcon = { Icon(rememberVectorPainter(YallaIcons.Coin), null) },
  * )
  * ```
  *

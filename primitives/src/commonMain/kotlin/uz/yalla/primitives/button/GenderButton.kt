@@ -19,14 +19,14 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.painterResource
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.core.profile.GenderKind
 import uz.yalla.design.theme.System
 import uz.yalla.primitives.util.resource
-import uz.yalla.resources.Res
-import uz.yalla.resources.ic_checked
-import uz.yalla.resources.ic_unchecked
+import uz.yalla.resources.icons.Checked
+import uz.yalla.resources.icons.Unchecked
+import uz.yalla.resources.icons.YallaIcons
 
 /**
  * State for [GenderButton] component.
@@ -173,9 +173,9 @@ fun GenderButton(
                 modifier = Modifier.size(dimens.iconSize),
                 painter =
                     if (state.isSelected) {
-                        painterResource(Res.drawable.ic_checked)
+                        rememberVectorPainter(YallaIcons.Checked)
                     } else {
-                        painterResource(Res.drawable.ic_unchecked)
+                        rememberVectorPainter(YallaIcons.Unchecked)
                     }
             )
         }

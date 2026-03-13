@@ -23,7 +23,7 @@ import org.jetbrains.compose.resources.painterResource
 import uz.yalla.design.theme.System
 import uz.yalla.primitives.transformation.MaskFormatter
 import uz.yalla.resources.Res
-import uz.yalla.resources.img_no_pfp
+import uz.yalla.resources.img_avatar_placeholder
 
 /**
  * State for [ProfileCard].
@@ -90,8 +90,8 @@ fun ProfileCard(
             AsyncImage(
                 model = state.imageUrl,
                 contentDescription = null,
-                placeholder = painterResource(Res.drawable.img_no_pfp),
-                error = painterResource(Res.drawable.img_no_pfp),
+                placeholder = painterResource(Res.drawable.img_avatar_placeholder),
+                error = painterResource(Res.drawable.img_avatar_placeholder),
                 contentScale = ContentScale.Crop,
                 modifier =
                     Modifier
