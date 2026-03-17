@@ -6,7 +6,6 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.core.settings.ThemeKind
-import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
 import uz.yalla.resources.icons.ThemeDark
 import uz.yalla.resources.icons.ThemeLight
@@ -55,7 +54,7 @@ sealed class ThemeModel(
             item = this,
             title = stringResource(name),
             icon = rememberVectorPainter(icon),
-            iconColor = System.color.iconBase
+            iconColor = uz.yalla.design.theme.System.color.iconBase
         )
 
     companion object {
