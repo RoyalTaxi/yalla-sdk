@@ -8,6 +8,15 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.settings_map_google
 import uz.yalla.resources.settings_map_libre
 
+/**
+ * UI-ready map provider model for settings screens.
+ *
+ * Sealed hierarchy mapping [MapKind] to display properties (localized name).
+ *
+ * @property name Localized map provider name
+ * @property mapKind Corresponding [MapKind] for persistence
+ * @since 0.0.1
+ */
 sealed class MapModel(
     val name: StringResource,
     val mapKind: MapKind
@@ -30,8 +39,14 @@ sealed class MapModel(
         )
 
     companion object {
+        /** All available map provider options. @since 0.0.1 */
         val all = listOf(Google, Libre)
 
+        /**
+         * Resolves a [MapModel] from the persisted [MapKind].
+         *
+         * @since 0.0.1
+         */
         fun fromMapKind(mapKind: MapKind): MapModel =
             when (mapKind) {
                 MapKind.Google -> Google

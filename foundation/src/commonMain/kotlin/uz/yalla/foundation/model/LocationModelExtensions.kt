@@ -6,6 +6,11 @@ import uz.yalla.core.location.AddressOption
 import uz.yalla.core.location.SavedAddress
 import uz.yalla.core.order.Order
 
+/**
+ * Converts address option to [FoundLocation] with coordinates and place metadata.
+ *
+ * @since 0.0.1
+ */
 fun AddressOption.toFoundLocation() =
     FoundLocation(
         id = id,
@@ -15,6 +20,11 @@ fun AddressOption.toFoundLocation() =
         placeKind = null
     )
 
+/**
+ * Converts saved address to [FoundLocation] with address details.
+ *
+ * @since 0.0.1
+ */
 fun SavedAddress.toFoundLocation() =
     FoundLocation(
         id = null,
@@ -24,6 +34,11 @@ fun SavedAddress.toFoundLocation() =
         placeKind = kind
     )
 
+/**
+ * Converts core [Address] to foundation [Location].
+ *
+ * @since 0.0.1
+ */
 fun Address.toLocation(point: GeoPoint = GeoPoint(lat = lat, lng = lng)) =
     Location(
         id = id,
@@ -31,6 +46,11 @@ fun Address.toLocation(point: GeoPoint = GeoPoint(lat = lat, lng = lng)) =
         point = point
     )
 
+/**
+ * Converts order route point to [Location].
+ *
+ * @since 0.0.1
+ */
 fun Order.Taxi.Route.toLocation() =
     Location(
         id = index,
@@ -38,6 +58,11 @@ fun Order.Taxi.Route.toLocation() =
         point = GeoPoint(lat = coords.lat, lng = coords.lng)
     )
 
+/**
+ * Returns all route locations sorted by index.
+ *
+ * @since 0.0.1
+ */
 fun Order.sortedRouteLocations(): List<Location> {
     return taxi.routes
         .sortedBy { route -> route.index }

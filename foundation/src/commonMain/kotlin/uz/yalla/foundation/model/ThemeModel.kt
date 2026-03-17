@@ -16,6 +16,16 @@ import uz.yalla.resources.settings_theme_dark
 import uz.yalla.resources.settings_theme_light
 import uz.yalla.resources.settings_theme_system
 
+/**
+ * UI-ready theme model for settings screens.
+ *
+ * Sealed hierarchy mapping [ThemeKind] to display properties (icon, localized name).
+ *
+ * @property icon Theme icon as [ImageVector]
+ * @property name Localized theme name
+ * @property themeKind Corresponding [ThemeKind] for persistence
+ * @since 0.0.1
+ */
 sealed class ThemeModel(
     val icon: ImageVector,
     val name: StringResource,
@@ -49,8 +59,14 @@ sealed class ThemeModel(
         )
 
     companion object {
+        /** All available theme options. @since 0.0.1 */
         val all = listOf(Light, Dark, System)
 
+        /**
+         * Resolves a [ThemeModel] from the persisted [ThemeKind].
+         *
+         * @since 0.0.1
+         */
         fun fromThemeKind(themeKind: ThemeKind): ThemeModel =
             when (themeKind) {
                 ThemeKind.Light -> Light

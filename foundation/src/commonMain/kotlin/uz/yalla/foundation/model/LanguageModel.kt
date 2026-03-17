@@ -17,6 +17,18 @@ import uz.yalla.resources.language_russian
 import uz.yalla.resources.language_uzbek_cyrillic
 import uz.yalla.resources.language_uzbek_latin
 
+/**
+ * UI-ready language model for language picker screens.
+ *
+ * Sealed hierarchy mapping [LocaleKind] to display properties (flag icon, localized name).
+ * Only [Uzbek] and [Russian] are in [all] — [UzbekCyrillic] and [English] are defined
+ * but not production-ready.
+ *
+ * @property icon Flag icon as [ImageVector]
+ * @property name Localized language name
+ * @property localeKind Corresponding [LocaleKind] for persistence
+ * @since 0.0.1
+ */
 sealed class LanguageModel(
     val icon: ImageVector,
     val name: StringResource,
@@ -56,8 +68,14 @@ sealed class LanguageModel(
         )
 
     companion object {
+        /** All production-ready language options. @since 0.0.1 */
         val all = listOf(Uzbek, Russian)
 
+        /**
+         * Resolves a [LanguageModel] from the persisted [LocaleKind].
+         *
+         * @since 0.0.1
+         */
         fun fromLocaleKind(localeKind: LocaleKind): LanguageModel =
             when (localeKind) {
                 LocaleKind.Uz -> Uzbek

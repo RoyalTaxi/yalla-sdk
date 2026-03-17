@@ -5,6 +5,11 @@ import uz.yalla.core.location.PlaceKind
 
 /**
  * A location with optional name and coordinates.
+ *
+ * @property id Optional location identifier
+ * @property name Optional human-readable location name
+ * @property point Optional geographic coordinates
+ * @since 0.0.1
  */
 data class Location(
     val id: Int? = null,
@@ -14,6 +19,13 @@ data class Location(
 
 /**
  * A found location from search results.
+ *
+ * @property id Optional location identifier
+ * @property name Optional human-readable location name
+ * @property address Optional formatted address string
+ * @property point Optional geographic coordinates
+ * @property placeKind Optional place type classification
+ * @since 0.0.1
  */
 data class FoundLocation(
     val id: Int? = null,
@@ -22,6 +34,11 @@ data class FoundLocation(
     val point: GeoPoint? = null,
     val placeKind: PlaceKind? = null
 ) {
+    /**
+     * Converts to [Location], dropping the [address] field.
+     *
+     * @since 0.0.1
+     */
     fun toLocation() =
         Location(
             id = this.id,
