@@ -4,12 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import org.jetbrains.compose.resources.StringResource
@@ -51,11 +48,6 @@ abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = Defa
 
     /** Loading state flow. Observe to show/hide loading indicators. */
     val loading: StateFlow<Boolean> = loadingController.loading
-
-    private val _failure = Channel<Int>(Channel.UNLIMITED)
-
-    /** Flow of failure codes for external observation. */
-    val failure: Flow<Int> = _failure.receiveAsFlow()
 
     private val _showErrorDialog = MutableStateFlow(false)
 
