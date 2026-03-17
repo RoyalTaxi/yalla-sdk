@@ -9,12 +9,15 @@ import androidx.compose.runtime.setValue
 import uz.yalla.core.settings.LocaleKind
 
 /**
- * Remembers and observes the current locale, triggering recomposition on change.
+ * Returns the current locale as [LocaleKind].
+ *
+ * **Note:** Uses `LaunchedEffect(Unit)` internally — the value is read once at composition
+ * and does NOT update if the locale changes during the composition lifecycle.
  *
  * @return Current [LocaleKind]
  */
 @Composable
-fun rememberCurrentLanguage(): LocaleKind {
+fun currentLocale(): LocaleKind {
     var language by remember { mutableStateOf(LocaleKind.from(getCurrentLanguage())) }
 
     LaunchedEffect(Unit) {

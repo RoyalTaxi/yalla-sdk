@@ -42,7 +42,7 @@ fun LocaleProvider(
 }
 
 /**
- * Retrieves current locale state from composition.
+ * Returns the current locale state from composition.
  */
 @Composable
-fun rememberLocaleState(): LocaleState = LocalLocaleState.current
+fun currentLocaleState(): LocaleState = LocalLocaleState.current
