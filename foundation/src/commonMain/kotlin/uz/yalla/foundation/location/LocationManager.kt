@@ -55,7 +55,7 @@ import uz.yalla.core.geo.GeoPoint
  * @since 0.0.1
  */
 class LocationManager(
-    private val locationTracker: LocationTracker,
+    val locationTracker: LocationTracker,
     private val defaultLocation: GeoPoint = DEFAULT_LOCATION,
 ) : LocationProvider {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
