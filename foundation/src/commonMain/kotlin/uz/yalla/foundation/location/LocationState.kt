@@ -12,6 +12,7 @@ import uz.yalla.core.geo.GeoPoint
  * @property speed Speed in m/s (if available)
  * @property bearing Bearing in degrees (if available)
  * @property timestamp Timestamp when location was captured
+ * @since 0.0.1
  */
 data class ExtendedLocation(
     val latitude: Double,
@@ -22,23 +23,45 @@ data class ExtendedLocation(
     val bearing: Float? = null,
     val timestamp: Long = 0L,
 ) {
-    /** Converts to [GeoPoint]. */
+    /**
+     * Converts to [GeoPoint].
+     *
+     * @since 0.0.1
+     */
     fun toGeoPoint(): GeoPoint = GeoPoint(latitude, longitude)
 }
 
 /**
  * Location permission state.
+ *
+ * @since 0.0.1
  */
 enum class LocationPermissionState {
-    /** Permission not yet requested. */
+    /**
+     * Permission not yet requested.
+     *
+     * @since 0.0.1
+     */
     NOT_DETERMINED,
 
-    /** Permission granted. */
+    /**
+     * Permission granted.
+     *
+     * @since 0.0.1
+     */
     GRANTED,
 
-    /** Permission denied. */
+    /**
+     * Permission denied.
+     *
+     * @since 0.0.1
+     */
     DENIED,
 
-    /** Permission denied permanently (user selected "Don't ask again"). */
+    /**
+     * Permission denied permanently (user selected "Don't ask again").
+     *
+     * @since 0.0.1
+     */
     DENIED_PERMANENTLY,
 }

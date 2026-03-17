@@ -52,6 +52,7 @@ import uz.yalla.core.geo.GeoPoint
  *
  * @param locationTracker Platform-specific location tracker from moko-geo
  * @param defaultLocation Fallback location when user location is unavailable
+ * @since 0.0.1
  */
 class LocationManager(
     private val locationTracker: LocationTracker,
@@ -61,24 +62,44 @@ class LocationManager(
 
     private val _extendedLocation = MutableStateFlow<ExtendedLocation?>(null)
 
-    /** Current device location with extended metadata. Null if location unavailable or tracking stopped. */
+    /**
+     * Current device location with extended metadata. Null if location unavailable or tracking stopped.
+     *
+     * @since 0.0.1
+     */
     val extendedLocation: StateFlow<ExtendedLocation?> = _extendedLocation.asStateFlow()
 
-    /** Current location as [GeoPoint]. Emits null if location unavailable. */
+    /**
+     * Current location as [GeoPoint]. Emits null if location unavailable.
+     *
+     * @since 0.0.1
+     */
     override val currentLocation: Flow<GeoPoint?> =
         _extendedLocation.map { it?.toGeoPoint() }
 
     private val _isTracking = MutableStateFlow(false)
 
-    /** Whether location tracking is currently active. */
+    /**
+     * Whether location tracking is currently active.
+     *
+     * @since 0.0.1
+     */
     val isTracking: StateFlow<Boolean> = _isTracking.asStateFlow()
 
     private val _permissionState = MutableStateFlow<LocationPermissionState?>(null)
 
-    /** Current location permission state. Null if not yet checked. */
+    /**
+     * Current location permission state. Null if not yet checked.
+     *
+     * @since 0.0.1
+     */
     val permissionState: StateFlow<LocationPermissionState?> = _permissionState.asStateFlow()
 
-    /** Starts location tracking. Requires location permission. */
+    /**
+     * Starts location tracking. Requires location permission.
+     *
+     * @since 0.0.1
+     */
     override fun startTracking() {
         if (_isTracking.value) return
 
@@ -109,7 +130,11 @@ class LocationManager(
         }
     }
 
-    /** Stops location tracking. */
+    /**
+     * Stops location tracking.
+     *
+     * @since 0.0.1
+     */
     override fun stopTracking() {
         if (!_isTracking.value) return
 
@@ -127,24 +152,41 @@ class LocationManager(
      * Updates the permission state.
      *
      * @param state New permission state, or null if unknown
+     * @since 0.0.1
      */
     fun updatePermissionState(state: LocationPermissionState?) {
         _permissionState.value = state
     }
 
-    /** Returns current location as [GeoPoint], or null if unavailable. */
+    /**
+     * Returns current location as [GeoPoint], or null if unavailable.
+     *
+     * @since 0.0.1
+     */
     override fun getCurrentLocation(): GeoPoint? = _extendedLocation.value?.toGeoPoint()
 
-    /** Returns current location as [GeoPoint], or [defaultLocation] if unavailable. */
+    /**
+     * Returns current location as [GeoPoint], or [defaultLocation] if unavailable.
+     *
+     * @since 0.0.1
+     */
     override fun getCurrentLocationOrDefault(): GeoPoint = getCurrentLocation() ?: defaultLocation
 
-    /** Cancels the internal coroutine scope. Call when this manager is no longer needed. */
+    /**
+     * Cancels the internal coroutine scope. Call when this manager is no longer needed.
+     *
+     * @since 0.0.1
+     */
     fun close() {
         scope.cancel()
     }
 
     companion object {
-        /** Default fallback location: Tashkent, Uzbekistan. */
+        /**
+         * Default fallback location: Tashkent, Uzbekistan.
+         *
+         * @since 0.0.1
+         */
         val DEFAULT_LOCATION = GeoPoint(41.2995, 69.2401)
     }
 }
