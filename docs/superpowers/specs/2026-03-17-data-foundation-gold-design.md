@@ -28,38 +28,46 @@ Data KDoc is already 100% — no gaps to fix. The only work is adding tests for 
 
 ### 1.1 SafeApiCallTest.kt
 
-Tests the core `safeApiCall<T>()` function using Ktor MockEngine. Each test creates a MockEngine with a specific response, calls `safeApiCall`, and asserts the `Either` result.
+Tests the core `safeApiCall<T>()` function. `safeApiCall` takes a `suspend () -> HttpResponse` lambda — create a MockEngine-backed HttpClient, then pass `{ client.get("/test") }` as the call lambda.
+
+**Critical: `expectSuccess` flag.** Ktor's default `expectSuccess = true` throws `ClientRequestException`/`ServerResponseException` for 4xx/5xx before `safeApiCall` can inspect status codes. The test client MUST set `expectSuccess = false` to exercise the status-code branching path (lines 42-71). Add separate exception-path tests that rely on default Ktor behavior to cover both paths.
 
 **Test infrastructure:** Reuse existing pattern from `GuestModeGuardTest.kt` — MockEngine + `runTest`.
 
-**Tests:**
+**Tests — Status code path (`expectSuccess = false`):**
 
 | Test | MockEngine Response | Expected Result |
 |------|-------------------|-----------------|
 | `shouldReturnSuccessOnHttp200` | 200 + JSON body | `Either.Success<T>` with deserialized body |
 | `shouldReturnSuccessForUnitResponse` | 200 + empty body | `Either.Success<Unit>` |
-| `shouldReturnClientErrorOnHttp400` | 400 + no message | `Either.Error(DataError.Network.Client)` |
-| `shouldReturnClientWithMessageOnHttp400WithBody` | 400 + ApiErrorResponse JSON | `Either.Error(DataError.Network.ClientWithMessage(400, msg))` |
-| `shouldReturnServerErrorOnHttp500` | 500 | `Either.Error(DataError.Network.Server)` |
-| `shouldReturnConnectionErrorOnIOException` | MockEngine throws IOException | `Either.Error(DataError.Network.Connection)` |
-| `shouldReturnSerializationErrorOnMalformedJson` | 200 + malformed JSON | `Either.Error(DataError.Network.Serialization)` |
-| `shouldReturnGuestErrorOnGuestBlockedException` | MockEngine throws GuestBlockedException | `Either.Error(DataError.Network.Guest)` |
+| `shouldReturnClientErrorOnHttp400` | 400 + no message | `Either.Failure(DataError.Network.Client)` |
+| `shouldReturnClientWithMessageOnHttp400WithBody` | 400 + ApiErrorResponse JSON | `Either.Failure(DataError.Network.ClientWithMessage(400, msg))` |
+| `shouldReturnServerErrorOnHttp500` | 500 | `Either.Failure(DataError.Network.Server)` |
+| `shouldReturnClientErrorOnHttp3xx` | 301 redirect | `Either.Failure(DataError.Network.Client)` |
+| `shouldReturnUnknownErrorOnUnexpectedStatusCode` | 600 or 100 | `Either.Failure(DataError.Network.Unknown)` |
+| `shouldReturnSerializationErrorOnMalformedJson` | 200 + malformed JSON | `Either.Failure(DataError.Network.Serialization)` |
+
+**Tests — Exception path (thrown by Ktor or MockEngine):**
+
+| Test | Exception | Expected Result |
+|------|-----------|-----------------|
+| `shouldReturnConnectionErrorOnIOException` | MockEngine throws IOException | `Either.Failure(DataError.Network.Connection)` |
+| `shouldReturnTimeoutErrorOnSocketTimeoutException` | MockEngine throws SocketTimeoutException | `Either.Failure(DataError.Network.Timeout)` |
+| `shouldReturnGuestErrorOnGuestBlockedException` | MockEngine throws GuestBlockedException | `Either.Failure(DataError.Network.Guest)` |
 
 **Implementation notes:**
-- Need a simple `@Serializable data class TestResponse(val id: Int, val name: String)` as test fixture
-- Create helper `fun mockClient(handler: MockRequestHandler): HttpClient` that configures ContentNegotiation + JSON like HttpClientFactory does
-- Use `io.ktor.client.engine.mock.respond()` with specific status codes and JSON content type
+- `@Serializable data class TestResponse(val id: Int, val name: String)` as test fixture
+- Helper `fun mockClient(expectSuccess: Boolean = false, handler: MockRequestHandler): HttpClient` configures ContentNegotiation + JSON
+- Call pattern: `safeApiCall<TestResponse> { client.get("/test") }`
 
 ### 1.2 SafeApiCallIntegrationTest.kt
 
-End-to-end tests that exercise the full `safeApiCall` + `retryWithBackoff` pipeline together.
+End-to-end tests exercising `safeApiCall` + `retryWithBackoff` pipeline. Reduced to 2 tests — `retryWithBackoff` already has 7 dedicated tests in `RetryWithBackoffTest.kt`.
 
 | Test | Scenario | Expected |
 |------|----------|----------|
-| `shouldRetryIdempotentCallOnIOException` | First 2 calls throw IOException, 3rd succeeds. `isIdempotent=true` | Success after retries |
-| `shouldNotRetryNonIdempotentCallOnIOException` | Throws IOException. `isIdempotent=false` | Immediate Connection error |
-| `shouldReturnConnectionErrorWhenRetriesExhausted` | All 3 retries throw IOException. `isIdempotent=true` | Connection error after 3 attempts |
-| `shouldRetryOnSocketTimeoutException` | First call times out, second succeeds. `isIdempotent=true` | Success after 1 retry |
+| `shouldRetryAndSucceedOnTransientFailure` | First call throws IOException, 2nd succeeds. `isIdempotent=true` | `Either.Success` after retry, `callCount == 2` |
+| `shouldReturnFailureWhenRetriesExhausted` | All calls throw IOException. `isIdempotent=true` | `Either.Failure(DataError.Network.Connection)` after 3+ attempts |
 
 **Implementation notes:**
 - Use `var callCount = 0` in MockEngine handler to track retry attempts
@@ -81,16 +89,24 @@ private class TestViewModel(
 
 **Test infrastructure:** `runTest` + turbine for StateFlow assertions.
 
+**Critical: Dispatchers.** `safeScope` uses `viewModelScope` which needs `Dispatchers.Main`. Tests must set up:
+```kotlin
+@OptIn(ExperimentalCoroutinesApi::class)
+@BeforeTest fun setUp() { Dispatchers.setMain(UnconfinedTestDispatcher()) }
+@AfterTest fun tearDown() { Dispatchers.resetMain() }
+```
+
 **Tests:**
 
 | Test | What it exercises | Assertion |
 |------|------------------|-----------|
 | `shouldStartWithLoadingFalse` | Initial state | `loading.value == false` |
-| `shouldShowLoadingDuringLaunchWithLoading` | `launchWithLoading` | loading becomes true then false |
+| `shouldShowLoadingDuringLaunchWithLoading` | `launchWithLoading` with block that delays longer than `showAfter` | loading becomes true then false via turbine |
 | `shouldShowErrorDialogOnHandleException` | `handleException(RuntimeException())` | `showErrorDialog.value == true`, `currentErrorMessageId` set |
 | `shouldShowErrorDialogOnHandleDataError` | `handleDataError(DataError.Network.Connection)` | `showErrorDialog.value == true`, mapped message set |
 | `shouldDismissErrorDialog` | `dismissErrorDialog()` after error | Both `showErrorDialog` and `currentErrorMessageId` reset |
 | `shouldCatchExceptionInSafeScope` | Launch failing coroutine in `safeScope` | Error dialog shown, no crash |
+| `shouldCatchExceptionInLaunchSafe` | Launch failing coroutine via `launchSafe` | Error dialog shown, no crash |
 | `shouldMapDataErrorToCorrectMessage` | `handleDataError` with different error types | Correct StringResource per error type |
 
 ### 2.2 DefaultDataErrorMapperTest.kt
@@ -114,22 +130,24 @@ Pure function mapping — simplest tests. No coroutines needed.
 
 ### 3.1 SettingsOptionsTest.kt
 
-Tests factory methods and companion collections for all three option sealed classes.
+Tests factory methods and companion collections for all three option sealed classes. All `from()` branches must be tested — including options not in `all` (e.g., UzbekCyrillic, English are valid `from()` inputs but excluded from `all`).
 
 | Test | What | Assertion |
 |------|------|-----------|
 | `shouldMapThemeKindLightToThemeOptionLight` | `ThemeOption.from(ThemeKind.Light)` | `== ThemeOption.Light` |
 | `shouldMapThemeKindDarkToThemeOptionDark` | `ThemeOption.from(ThemeKind.Dark)` | `== ThemeOption.Dark` |
 | `shouldMapThemeKindSystemToThemeOptionSystem` | `ThemeOption.from(ThemeKind.System)` | `== ThemeOption.System` |
-| `shouldContainAllThemeOptions` | `ThemeOption.all` | size 3, contains all |
+| `shouldContainAllThemeOptions` | `ThemeOption.all` | size 3, contains Light/Dark/System |
 | `shouldRoundTripThemeKind` | `ThemeOption.all.forEach { from(it.kind) == it }` | All round-trip |
 | `shouldMapLocaleKindUzToLanguageOptionUzbek` | `LanguageOption.from(LocaleKind.Uz)` | `== LanguageOption.Uzbek` |
 | `shouldMapLocaleKindRuToLanguageOptionRussian` | `LanguageOption.from(LocaleKind.Ru)` | `== LanguageOption.Russian` |
-| `shouldContainAllLanguageOptions` | `LanguageOption.all` | size 2 (Uzbek, Russian) |
+| `shouldMapLocaleKindUzCyrillicToUzbekCyrillic` | `LanguageOption.from(LocaleKind.UzCyrillic)` | `== LanguageOption.UzbekCyrillic` |
+| `shouldMapLocaleKindEnToEnglish` | `LanguageOption.from(LocaleKind.En)` | `== LanguageOption.English` |
+| `shouldContainAllLanguageOptions` | `LanguageOption.all` | size 2 (Uzbek, Russian — UI-visible only) |
 | `shouldRoundTripLocaleKind` | `LanguageOption.all.forEach { from(it.kind) == it }` | All round-trip |
 | `shouldMapMapKindGoogleToMapOptionGoogle` | `MapOption.from(MapKind.Google)` | `== MapOption.Google` |
 | `shouldMapMapKindLibreToMapOptionLibre` | `MapOption.from(MapKind.Libre)` | `== MapOption.Libre` |
-| `shouldContainAllMapOptions` | `MapOption.all` | size 2, contains all |
+| `shouldContainAllMapOptions` | `MapOption.all` | size 2, contains Google/Libre |
 | `shouldRoundTripMapKind` | `MapOption.all.forEach { from(it.kind) == it }` | All round-trip |
 
 ---
@@ -138,7 +156,7 @@ Tests factory methods and companion collections for all three option sealed clas
 
 ### 4.1 LocationMappersTest.kt
 
-Tests 5 extension functions that convert core/data models to foundation Location types.
+Tests 5 extension functions that convert core/data models to foundation Location types, plus `FoundLocation.toLocation()`.
 
 **Test fixtures:** Create minimal instances of `AddressOption`, `SavedAddress`, `Address`, `Order.Taxi.Route`, `Order` with known values.
 
@@ -150,6 +168,7 @@ Tests 5 extension functions that convert core/data models to foundation Location
 | `shouldMapAddressToLocationWithCustomPoint` | `Address.toLocation(customGeoPoint)` | Uses custom point, not address's own |
 | `shouldMapRouteToLocation` | `Order.Taxi.Route.toLocation()` | index as id, fullAddress as name |
 | `shouldSortRouteLocationsByIndex` | `Order.sortedRouteLocations()` | Sorted by route index |
+| `shouldMapFoundLocationToLocation` | `FoundLocation.toLocation()` | id, name, lat, lng preserved; address dropped |
 
 ---
 
@@ -159,19 +178,19 @@ Tests 5 extension functions that convert core/data models to foundation Location
 
 | Module | File | Tests | Framework |
 |--------|------|-------|-----------|
-| data | `SafeApiCallTest.kt` | 8 | MockEngine + runTest |
-| data | `SafeApiCallIntegrationTest.kt` | 4 | MockEngine + runTest |
-| foundation | `BaseViewModelTest.kt` | 7 | runTest + turbine |
+| data | `SafeApiCallTest.kt` | 11 | MockEngine + runTest |
+| data | `SafeApiCallIntegrationTest.kt` | 2 | MockEngine + runTest |
+| foundation | `BaseViewModelTest.kt` | 8 | runTest + turbine + Dispatchers.setMain |
 | foundation | `DefaultDataErrorMapperTest.kt` | 8 | kotlin.test only |
-| foundation | `SettingsOptionsTest.kt` | 13 | kotlin.test only |
-| foundation | `LocationMappersTest.kt` | 6 | kotlin.test only |
+| foundation | `SettingsOptionsTest.kt` | 15 | kotlin.test only |
+| foundation | `LocationMappersTest.kt` | 7 | kotlin.test only |
 
 ### Result
 
 | Module | Before | After |
 |--------|--------|-------|
-| Data | 27 tests / 5 files | 39 tests / 7 files |
-| Foundation | 8 tests / 1 file | 42 tests / 5 files |
+| Data | 27 tests / 5 files | 40 tests / 7 files |
+| Foundation | 8 tests / 1 file | 46 tests / 5 files |
 
 ### Out of Scope
 
