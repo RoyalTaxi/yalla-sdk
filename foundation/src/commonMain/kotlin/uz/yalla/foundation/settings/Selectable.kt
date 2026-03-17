@@ -23,7 +23,7 @@ interface Selectable {
 }
 
 /**
- * Converts any [Selectable] to a [SelectableItemModel] for use in selection lists.
+ * Converts any [Selectable] to a [OptionModel] for use in selection lists.
  *
  * @param iconColor Tint applied to the icon. Use [Color.Unspecified] for multi-color icons (e.g. flags).
  * @since 0.0.1
@@ -31,7 +31,7 @@ interface Selectable {
 @Composable
 fun <T : Selectable> T.toSelectableItem(
     iconColor: Color = Color.Unspecified
-) = SelectableItemModel(
+) = OptionModel(
     item = this,
     title = stringResource(name),
     icon = icon?.let { rememberVectorPainter(it) },

@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import uz.yalla.design.theme.System
-import uz.yalla.foundation.settings.SelectableItemModel
+import uz.yalla.foundation.settings.OptionModel
 import uz.yalla.resources.icons.Checked
 import uz.yalla.resources.icons.YallaIcons
 
@@ -32,7 +32,7 @@ import uz.yalla.resources.icons.YallaIcons
  * @property isSelected Whether this item is currently selected.
  */
 data class SelectableItemState<T>(
-    val item: SelectableItemModel<T>,
+    val item: OptionModel<T>,
     val isSelected: Boolean,
 )
 
@@ -122,7 +122,7 @@ object SelectableItemDefaults {
  * ```kotlin
  * SelectableItem(
  *     state = SelectableItemState(
- *         item = SelectableItemModel(
+ *         item = OptionModel(
  *             item = paymentType,
  *             title = "Credit Card",
  *             icon = rememberVectorPainter(YallaIcons.Card),
