@@ -56,7 +56,7 @@ sealed class LanguageModel(
         )
 
     companion object {
-        val LANGUAGES = listOf(Uzbek, Russian)
+        val all = listOf(Uzbek, Russian)
 
         fun fromLocaleKind(localeKind: LocaleKind): LanguageModel =
             when (localeKind) {

@@ -30,7 +30,7 @@ sealed class MapModel(
         )
 
     companion object {
-        val MAPS = listOf(Google, Libre)
+        val all = listOf(Google, Libre)
 
         fun fromMapKind(mapKind: MapKind): MapModel =
             when (mapKind) {

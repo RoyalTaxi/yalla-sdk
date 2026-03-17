@@ -21,19 +21,19 @@ sealed class ThemeModel(
     val name: StringResource,
     val themeKind: ThemeKind
 ) {
-    data object LIGHT : ThemeModel(
+    data object Light : ThemeModel(
         icon = YallaIcons.ThemeLight,
         name = Res.string.settings_theme_light,
         themeKind = ThemeKind.Light
     )
 
-    data object DARK : ThemeModel(
+    data object Dark : ThemeModel(
         icon = YallaIcons.ThemeDark,
         name = Res.string.settings_theme_dark,
         themeKind = ThemeKind.Dark
     )
 
-    data object SYSTEM : ThemeModel(
+    data object System : ThemeModel(
         icon = YallaIcons.ThemeSystem,
         name = Res.string.settings_theme_system,
         themeKind = ThemeKind.System
@@ -49,13 +49,13 @@ sealed class ThemeModel(
         )
 
     companion object {
-        val THEMES = listOf(LIGHT, DARK, SYSTEM)
+        val all = listOf(Light, Dark, System)
 
         fun fromThemeKind(themeKind: ThemeKind): ThemeModel =
             when (themeKind) {
-                ThemeKind.Light -> LIGHT
-                ThemeKind.Dark -> DARK
-                ThemeKind.System -> SYSTEM
+                ThemeKind.Light -> Light
+                ThemeKind.Dark -> Dark
+                ThemeKind.System -> System
             }
     }
 }
