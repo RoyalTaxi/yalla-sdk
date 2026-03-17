@@ -17,7 +17,6 @@ actual fun changeLanguage(languageCode: String) {
         listOf(languageCode),
         forKey = "AppleLanguages"
     )
-    NSUserDefaults.standardUserDefaults.synchronize()
 }
 
 /**

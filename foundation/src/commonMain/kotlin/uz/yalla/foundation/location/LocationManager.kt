@@ -1,5 +1,6 @@
 package uz.yalla.foundation.location
 
+import co.touchlab.kermit.Logger
 import dev.icerock.moko.geo.LocationTracker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -53,7 +54,7 @@ import uz.yalla.core.geo.GeoPoint
  * @param defaultLocation Fallback location when user location is unavailable
  */
 class LocationManager(
-    val locationTracker: LocationTracker,
+    private val locationTracker: LocationTracker,
     private val defaultLocation: GeoPoint = DEFAULT_LOCATION,
 ) : LocationProvider {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
@@ -101,8 +102,9 @@ class LocationManager(
                                 timestamp = extLoc.timestampMs,
                             )
                     }
-            }.onFailure {
+            }.onFailure { e ->
                 _isTracking.value = false
+                Logger.w("LocationManager") { "startTracking failed: ${e.message}" }
             }
         }
     }
@@ -115,6 +117,8 @@ class LocationManager(
             runCatching {
                 locationTracker.stopTracking()
                 _isTracking.value = false
+            }.onFailure { e ->
+                Logger.w("LocationManager") { "stopTracking failed: ${e.message}" }
             }
         }
     }
