@@ -55,6 +55,7 @@ class LoadingController(
     private var activeOperations = 0
     private var showJob: Job? = null
     private var visibleSince: TimeSource.Monotonic.ValueTimeMark? = null
+    private var generation = 0L
 
     /**
      * Executes [block] with loading state management.
@@ -97,21 +98,24 @@ class LoadingController(
             try {
                 block()
             } finally {
-                mutex.withLock {
+                val (remainingDelay, gen) = mutex.withLock {
                     activeOperations--
                     if (activeOperations == 0) {
                         localShowJob?.cancel()
                         showJob?.cancel()
                         showJob = null
-
-                        visibleSince?.let { mark ->
-                            val elapsed = mark.elapsedNow()
+                        val delay = visibleSince?.elapsedNow()?.let { elapsed ->
                             val remaining = minDisplayTime - elapsed
-                            if (remaining.isPositive()) {
-                                delay(remaining)
-                            }
+                            if (remaining.isPositive()) remaining else null
                         }
-
+                        Pair(delay, ++generation)
+                    } else {
+                        Pair(null, generation)
+                    }
+                }
+                remainingDelay?.let { delay(it) }
+                mutex.withLock {
+                    if (activeOperations == 0 && generation == gen) {
                         _loading.value = false
                         visibleSince = null
                     }
