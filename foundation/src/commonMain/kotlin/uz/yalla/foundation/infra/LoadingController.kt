@@ -1,4 +1,4 @@
-package uz.yalla.foundation.viewmodel
+package uz.yalla.foundation.infra
 
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope

@@ -1,4 +1,4 @@
-package uz.yalla.foundation.reactive
+package uz.yalla.foundation.locale
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -7,7 +7,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import uz.yalla.core.settings.LocaleKind
-import uz.yalla.foundation.locale.getCurrentLanguage
 
 /**
  * Remembers and observes the current locale, triggering recomposition on change.

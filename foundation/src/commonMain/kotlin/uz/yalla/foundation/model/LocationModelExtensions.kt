@@ -1,12 +1,10 @@
-package uz.yalla.foundation.util
+package uz.yalla.foundation.model
 
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.location.Address
 import uz.yalla.core.location.AddressOption
 import uz.yalla.core.location.SavedAddress
 import uz.yalla.core.order.Order
-import uz.yalla.foundation.model.FoundLocation
-import uz.yalla.foundation.model.Location
 
 fun AddressOption.toFoundLocation() =
     FoundLocation(

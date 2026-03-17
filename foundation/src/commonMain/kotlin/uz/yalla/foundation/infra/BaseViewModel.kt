@@ -1,4 +1,4 @@
-package uz.yalla.foundation.viewmodel
+package uz.yalla.foundation.infra
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -46,9 +46,7 @@ import kotlin.time.Duration
  *
  * @see LoadingController for loading state management details
  */
-abstract class BaseViewModel(
-    private val dataErrorMapper: DataErrorMapper = DefaultDataErrorMapper(),
-) : ViewModel() {
+abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = DefaultDataErrorMapper()) : ViewModel() {
     private val loadingController = LoadingController()
 
     /** Loading state flow. Observe to show/hide loading indicators. */

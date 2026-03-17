@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import uz.yalla.foundation.infra.LoadingController
 
 /**
  * Launches a coroutine in the ViewModel scope with loading state management.

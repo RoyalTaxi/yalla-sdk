@@ -1,4 +1,4 @@
-package uz.yalla.foundation.viewmodel
+package uz.yalla.foundation.infra
 
 import org.jetbrains.compose.resources.StringResource
 import uz.yalla.core.error.DataError

@@ -1,4 +1,4 @@
-package uz.yalla.foundation.reactive
+package uz.yalla.foundation.infra
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
