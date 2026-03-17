@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import uz.yalla.design.theme.System
-import uz.yalla.foundation.model.SelectableItemModel
+import uz.yalla.foundation.settings.SelectableItemModel
 import uz.yalla.resources.icons.Checked
 import uz.yalla.resources.icons.YallaIcons
 

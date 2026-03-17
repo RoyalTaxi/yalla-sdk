@@ -1,4 +1,4 @@
-package uz.yalla.foundation.model
+package uz.yalla.foundation.location
 
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.location.PlaceKind

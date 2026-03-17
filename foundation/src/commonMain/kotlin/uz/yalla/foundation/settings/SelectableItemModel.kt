@@ -1,10 +1,10 @@
-package uz.yalla.foundation.model
+package uz.yalla.foundation.settings
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 
 /**
- * Model for selectable list items.
+ * Presentation model for selectable list items.
  *
  * @param T Type of the underlying data item
  * @property item The data item
