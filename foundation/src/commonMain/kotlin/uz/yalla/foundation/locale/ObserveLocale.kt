@@ -13,8 +13,10 @@ import uz.yalla.core.settings.LocaleKind
  *
  * **Note:** Uses `LaunchedEffect(Unit)` internally — the value is read once at composition
  * and does NOT update if the locale changes during the composition lifecycle.
+ * For reactive locale observation, use [LocaleProvider] / [currentLocaleState] instead.
  *
  * @return Current [LocaleKind]
+ * @since 0.0.1
  */
 @Composable
 fun currentLocale(): LocaleKind {

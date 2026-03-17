@@ -11,6 +11,7 @@ import platform.Foundation.languageCode
  * Sets the AppleLanguages user default. App restart may be required.
  *
  * @param languageCode ISO 639-1 language code
+ * @since 0.0.1
  */
 actual fun changeLanguage(languageCode: String) {
     NSUserDefaults.standardUserDefaults.setObject(
@@ -23,5 +24,6 @@ actual fun changeLanguage(languageCode: String) {
  * Gets current system language on iOS.
  *
  * @return ISO 639-1 language code
+ * @since 0.0.1
  */
 actual fun getCurrentLanguage(): String = NSLocale.currentLocale.languageCode ?: "en"

@@ -5,10 +5,12 @@ import java.util.Locale
 /**
  * Changes the app language on Android.
  *
- * Note: Full implementation requires Activity recreation or AppCompatDelegate.
- * This is a basic implementation - integrate with your app's locale handling.
+ * **Limitation:** Only calls [Locale.setDefault]. For full in-app language change,
+ * the Activity must be recreated or AppCompatDelegate.setApplicationLocales used.
+ * This function alone does NOT update visible UI.
  *
  * @param languageCode ISO 639-1 language code
+ * @since 0.0.1
  */
 actual fun changeLanguage(languageCode: String) {
     val locale = Locale(languageCode)
@@ -19,5 +21,6 @@ actual fun changeLanguage(languageCode: String) {
  * Gets current system language on Android.
  *
  * @return ISO 639-1 language code
+ * @since 0.0.1
  */
 actual fun getCurrentLanguage(): String = Locale.getDefault().language
