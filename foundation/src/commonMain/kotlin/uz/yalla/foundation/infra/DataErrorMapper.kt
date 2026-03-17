@@ -12,5 +12,12 @@ import uz.yalla.core.error.DataError
  * @since 0.0.1
  */
 fun interface DataErrorMapper {
+    /**
+     * Maps a [DataError] to a localized user-facing message.
+     *
+     * @param error The data error to map
+     * @return Localized message resource for the error
+     * @since 0.0.1
+     */
     fun map(error: DataError): StringResource
 }

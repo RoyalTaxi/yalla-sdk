@@ -2,6 +2,12 @@ plugins {
     id("yalla.sdk.kmp.compose")
 }
 
+dokka {
+    dokkaSourceSets.configureEach {
+        includes.from("MODULE.md")
+    }
+}
+
 kotlin {
     sourceSets {
         commonMain.dependencies {
@@ -39,6 +45,11 @@ kotlin {
 
             // Connectivity
             implementation(libs.connectivity.device)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.turbine)
         }
 
         androidMain.dependencies {
