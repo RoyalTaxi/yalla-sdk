@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.Flow
  * @param flow Flow of events to observe
  * @param key Optional key for LaunchedEffect
  * @param onEvent Callback invoked for each event
+ * @since 0.0.1
  */
 @Composable
 fun <T> ObserveAsEvents(
@@ -54,6 +55,7 @@ fun <T> ObserveAsEvents(
  * @param minState Minimum lifecycle state for collection
  * @param key Optional key for LaunchedEffect
  * @param onEvent Callback invoked for each event
+ * @since 0.0.1
  */
 @Composable
 fun <T> ObserveAsEvents(

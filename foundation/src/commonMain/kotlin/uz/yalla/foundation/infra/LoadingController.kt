@@ -41,6 +41,7 @@ import kotlin.time.TimeSource
  *
  * @param showAfter Delay before showing loading indicator. Defaults to 400ms.
  * @param minDisplayTime Minimum time to keep indicator visible once shown. Defaults to 300ms.
+ * @since 0.0.1
  */
 class LoadingController(
     private val showAfter: Duration = DEFAULT_SHOW_AFTER,
@@ -48,7 +49,7 @@ class LoadingController(
 ) {
     private val _loading = MutableStateFlow(false)
 
-    /** Current loading state. Emits true when loading indicator should be visible. */
+    /** Current loading state. Emits true when loading indicator should be visible. @since 0.0.1 */
     val loading: StateFlow<Boolean> = _loading.asStateFlow()
 
     private val mutex = Mutex()
@@ -67,6 +68,7 @@ class LoadingController(
      * @param minDisplayTime Minimum display time once shown. Defaults to controller's configured value.
      * @param block Suspending operation to execute
      * @return Result of [block]
+     * @since 0.0.1
      */
     suspend fun <T> withLoading(
         showAfter: Duration = this.showAfter,
@@ -124,10 +126,10 @@ class LoadingController(
         }
 
     companion object {
-        /** Default delay before showing loading indicator. */
+        /** Default delay before showing loading indicator. @since 0.0.1 */
         val DEFAULT_SHOW_AFTER: Duration = 400.milliseconds
 
-        /** Default minimum display time once indicator is shown. */
+        /** Default minimum display time once indicator is shown. @since 0.0.1 */
         val DEFAULT_MIN_DISPLAY_TIME: Duration = 300.milliseconds
     }
 }

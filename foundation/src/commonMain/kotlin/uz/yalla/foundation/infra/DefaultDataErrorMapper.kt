@@ -10,6 +10,13 @@ import uz.yalla.resources.error_network_unexpected
 import uz.yalla.resources.error_no_internet
 import uz.yalla.resources.error_server_busy
 
+/**
+ * Default implementation mapping [DataError] subtypes to localized string resources.
+ *
+ * Maps each error category to its corresponding user-facing message.
+ *
+ * @since 0.0.1
+ */
 class DefaultDataErrorMapper : DataErrorMapper {
     override fun map(error: DataError): StringResource =
         when (error) {
