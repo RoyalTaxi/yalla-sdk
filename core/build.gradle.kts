@@ -8,6 +8,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
             api(libs.kotlinx.datetime)
+            api(libs.kermit)
         }
 
         commonTest.dependencies {

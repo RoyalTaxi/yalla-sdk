@@ -32,6 +32,7 @@ connectivity = "2.4.0"
 # DI & Architecture
 koin-bom = "4.1.0"
 orbit = "10.0.0"
+kermit = "2.0.4"
 
 # Storage
 datastore = "1.1.4"
@@ -126,6 +127,7 @@ koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", ver
 orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
+kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 
 # Storage
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
