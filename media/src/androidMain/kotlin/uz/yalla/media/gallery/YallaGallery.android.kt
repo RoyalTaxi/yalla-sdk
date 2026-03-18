@@ -46,7 +46,6 @@ import kotlinx.coroutines.withContext
 import uz.yalla.media.gallery.model.YallaMediaImage
 import uz.yalla.media.gallery.repository.YallaGalleryRepositoryImpl
 import uz.yalla.media.gallery.viewmodel.YallaGalleryViewModel
-import uz.yalla.media.gallery.viewmodel.YallaGalleryViewModelFactory
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalPermissionsApi::class)
 @ExperimentalYallaGalleryApi
@@ -67,11 +66,11 @@ actual fun YallaGallery(
     var hasRequested by remember { mutableStateOf(false) }
 
     val viewModel =
-        viewModel<YallaGalleryViewModel>(
-            factory = YallaGalleryViewModelFactory(YallaGalleryRepositoryImpl(context))
-        )
+        viewModel<YallaGalleryViewModel> {
+            YallaGalleryViewModel(YallaGalleryRepositoryImpl(context))
+        }
 
-    val images = viewModel.getImages().collectAsLazyPagingItems()
+    val images = viewModel.images.collectAsLazyPagingItems()
 
     LaunchedEffect(permissionState.status) {
         if (!permissionState.status.isGranted && !hasRequested) {
