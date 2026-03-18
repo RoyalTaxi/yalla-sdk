@@ -3,7 +3,7 @@ package uz.yalla.media.camera
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +28,8 @@ import platform.AVFoundation.AVCaptureVideoPreviewLayer
 import platform.AVFoundation.AVLayerVideoGravityResizeAspectFill
 import platform.AVFoundation.AVMediaTypeVideo
 import platform.AVFoundation.AVVideoCodecKey
+import platform.AVFoundation.AVCaptureSessionInterruptionEndedNotification
+import platform.AVFoundation.AVCaptureSessionWasInterruptedNotification
 import platform.AVFoundation.AVVideoCodecTypeJPEG
 import platform.AVFoundation.position
 import platform.Foundation.NSNotificationCenter
@@ -193,10 +195,28 @@ private fun RealDeviceCamera(
     }
 
     DisposableEffect(captureSession) {
+        val interruptionObserver = NSNotificationCenter.defaultCenter.addObserverForName(
+            name = AVCaptureSessionWasInterruptedNotification,
+            `object` = captureSession,
+            queue = null
+        ) { _ ->
+            state.isCameraReady = false
+        }
+
+        val interruptionEndedObserver = NSNotificationCenter.defaultCenter.addObserverForName(
+            name = AVCaptureSessionInterruptionEndedNotification,
+            `object` = captureSession,
+            queue = null
+        ) { _ ->
+            state.isCameraReady = true
+        }
+
         onDispose {
             orientationListener.value?.let {
                 NSNotificationCenter.defaultCenter.removeObserver(it)
             }
+            NSNotificationCenter.defaultCenter.removeObserver(interruptionObserver!!)
+            NSNotificationCenter.defaultCenter.removeObserver(interruptionEndedObserver!!)
             stopSession(captureSession)
             state.isCameraReady = false
         }
