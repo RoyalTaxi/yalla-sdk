@@ -145,8 +145,8 @@ object ServiceItemDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        name: Color = System.color.textBase,
-        price: Color = System.color.textSubtle,
+        name: Color = System.color.text.base,
+        price: Color = System.color.text.subtle,
     ) = ServiceItemColors(
         container = container,
         name = name,

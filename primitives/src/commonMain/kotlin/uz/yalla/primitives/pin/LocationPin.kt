@@ -404,14 +404,14 @@ object LocationPinDefaults {
 
     @Composable
     fun colors(
-        background: Color = System.color.backgroundBase,
-        border: Brush = System.color.sunsetNight,
-        stick: Color = System.color.backgroundBrandBase,
-        stickBorder: Color = System.color.backgroundBase,
-        header: Color = System.color.iconBase,
-        headerText: Color = System.color.backgroundBase,
-        icon: Color = System.color.iconBase,
-        text: Color = System.color.textBase
+        background: Color = System.color.background.base,
+        border: Brush = System.color.gradient.sunsetNight,
+        stick: Color = System.color.background.brand,
+        stickBorder: Color = System.color.background.base,
+        header: Color = System.color.icon.base,
+        headerText: Color = System.color.background.base,
+        icon: Color = System.color.icon.base,
+        text: Color = System.color.text.base
     ) = LocationPinColors(
         background = background,
         border = border,

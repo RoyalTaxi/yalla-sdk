@@ -70,9 +70,9 @@ object EnableBonusCardDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        iconBackground: Color = System.color.backgroundSecondary,
-        title: Color = System.color.textBase,
-        subtitle: Color = System.color.textBase,
+        iconBackground: Color = System.color.background.secondary,
+        title: Color = System.color.text.base,
+        subtitle: Color = System.color.text.base,
     ) = EnableBonusCardColors(
         container = container,
         iconBackground = iconBackground,

@@ -150,8 +150,8 @@ object EmptyStateDefaults {
 
     @Composable
     fun colors(
-        title: Color = System.color.textBase,
-        description: Color = System.color.textSubtle,
+        title: Color = System.color.text.base,
+        description: Color = System.color.text.subtle,
     ) = EmptyStateColors(
         title = title,
         description = description,

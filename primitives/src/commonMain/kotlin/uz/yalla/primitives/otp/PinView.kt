@@ -66,13 +66,13 @@ object PinViewDefaults {
 
     @Composable
     fun colors(
-        text: Color = System.color.textBase,
-        errorText: Color = System.color.textRed,
-        focusedBorder: Color = System.color.borderFilled,
-        filledBorder: Color = System.color.borderFilled,
-        emptyBorder: Color = System.color.borderDisabled,
-        errorBorder: Color = System.color.textRed,
-        cursor: Color = System.color.textBase
+        text: Color = System.color.text.base,
+        errorText: Color = System.color.text.red,
+        focusedBorder: Color = System.color.border.filled,
+        filledBorder: Color = System.color.border.filled,
+        emptyBorder: Color = System.color.border.disabled,
+        errorBorder: Color = System.color.text.red,
+        cursor: Color = System.color.text.base
     ) = PinViewColors(
         text = text,
         errorText = errorText,

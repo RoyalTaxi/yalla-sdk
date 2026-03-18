@@ -65,8 +65,8 @@ object HeaderableSheetDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundBase,
-        dragHandle: Color = System.color.backgroundTertiary
+        container: Color = System.color.background.base,
+        dragHandle: Color = System.color.background.tertiary
     ) = HeaderableSheetColors(
         container = container,
         dragHandle = dragHandle

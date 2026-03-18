@@ -94,7 +94,7 @@ object LoadingDialogDefaults {
     @Composable
     fun colors(
         container: Color = Color.White,
-        indicator: Color = System.color.backgroundBrandBase,
+        indicator: Color = System.color.background.brand,
     ) = LoadingDialogColors(
         container = container,
         indicator = indicator,

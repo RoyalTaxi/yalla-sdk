@@ -54,8 +54,8 @@ object BottomSheetButtonDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.buttonTertiary,
-        text: Color = System.color.backgroundBase,
+        container: Color = System.color.button.tertiary,
+        text: Color = System.color.background.base,
         icon: Color = Color.Unspecified
     ) = BottomSheetButtonColors(
         container = container,

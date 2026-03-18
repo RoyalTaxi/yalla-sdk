@@ -149,8 +149,8 @@ object ProfileCardDefaults {
 
     @Composable
     fun colors(
-        name: Color = System.color.textBase,
-        phone: Color = System.color.textBase,
+        name: Color = System.color.text.base,
+        phone: Color = System.color.text.base,
     ): ProfileCardColors =
         ProfileCardColors(
             name = name,

@@ -101,10 +101,10 @@ object IconButtonDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundTertiary,
-        content: Color = System.color.iconBase,
-        disabledContainer: Color = System.color.backgroundTertiary.copy(alpha = 0.5f),
-        disabledContent: Color = System.color.iconDisabled,
+        container: Color = System.color.background.tertiary,
+        content: Color = System.color.icon.base,
+        disabledContainer: Color = System.color.background.tertiary.copy(alpha = 0.5f),
+        disabledContent: Color = System.color.icon.disabled,
     ) = IconButtonColors(
         container = container,
         content = content,
@@ -114,10 +114,10 @@ object IconButtonDefaults {
 
     @Composable
     fun filledColors(
-        container: Color = System.color.buttonActive,
-        content: Color = System.color.iconWhite,
-        disabledContainer: Color = System.color.buttonDisabled,
-        disabledContent: Color = System.color.iconWhite,
+        container: Color = System.color.button.active,
+        content: Color = System.color.icon.white,
+        disabledContainer: Color = System.color.button.disabled,
+        disabledContent: Color = System.color.icon.white,
     ) = IconButtonColors(
         container = container,
         content = content,

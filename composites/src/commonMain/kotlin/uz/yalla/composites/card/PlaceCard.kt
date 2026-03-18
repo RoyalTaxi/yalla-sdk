@@ -71,14 +71,14 @@ object PlaceCardDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        name: Color = System.color.textBase,
-        address: Color = System.color.textBase,
-        hint: Color = System.color.textSubtle,
-        icon: Color = System.color.backgroundBrandBase,
-        iconBackground: Color = System.color.backgroundBrandBase.copy(alpha = 0.15f),
-        iconEmpty: Color = System.color.iconSubtle,
-        iconBackgroundEmpty: Color = System.color.backgroundTertiary,
+        container: Color = System.color.background.secondary,
+        name: Color = System.color.text.base,
+        address: Color = System.color.text.base,
+        hint: Color = System.color.text.subtle,
+        icon: Color = System.color.background.brand,
+        iconBackground: Color = System.color.background.brand.copy(alpha = 0.15f),
+        iconEmpty: Color = System.color.icon.subtle,
+        iconBackgroundEmpty: Color = System.color.background.tertiary,
     ) = PlaceCardColors(
         container = container,
         name = name,

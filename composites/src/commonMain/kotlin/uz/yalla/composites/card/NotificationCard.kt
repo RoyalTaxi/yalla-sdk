@@ -73,13 +73,13 @@ object NotificationCardDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        border: Color = System.color.borderDisabled,
-        title: Color = System.color.textBase,
-        dateTime: Color = System.color.textBase,
-        content: Color = System.color.textBase,
-        divider: Color = System.color.borderDisabled,
-        unreadIndicator: Color = System.color.backgroundBrandBase,
+        container: Color = System.color.background.secondary,
+        border: Color = System.color.border.disabled,
+        title: Color = System.color.text.base,
+        dateTime: Color = System.color.text.base,
+        content: Color = System.color.text.base,
+        divider: Color = System.color.border.disabled,
+        unreadIndicator: Color = System.color.background.brand,
     ) = NotificationCardColors(
         container = container,
         border = border,

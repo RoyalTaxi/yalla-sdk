@@ -159,11 +159,11 @@ object TariffItemDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        selectedContainer: Color = System.color.backgroundBase,
-        name: Color = System.color.textBase,
-        price: Color = System.color.textBase,
-        selectedBorder: Brush = System.color.sunsetNight,
+        container: Color = System.color.background.secondary,
+        selectedContainer: Color = System.color.background.base,
+        name: Color = System.color.text.base,
+        price: Color = System.color.text.base,
+        selectedBorder: Brush = System.color.gradient.sunsetNight,
     ) = TariffItemColors(
         container = container,
         selectedContainer = selectedContainer,

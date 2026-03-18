@@ -118,8 +118,8 @@ object ActionItemDefaults {
 
     @Composable
     fun colors(
-        iconBackground: Color = System.color.backgroundSecondary,
-        title: Color = System.color.textBase,
+        iconBackground: Color = System.color.background.secondary,
+        title: Color = System.color.text.base,
     ) = ActionItemColors(
         iconBackground = iconBackground,
         title = title,

@@ -273,10 +273,10 @@ object BrandServiceItemDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundTertiary,
-        selectedContainer: Color = System.color.backgroundBrandBase,
-        title: Color = System.color.textBase,
-        selectedTitle: Color = System.color.textWhite,
+        container: Color = System.color.background.tertiary,
+        selectedContainer: Color = System.color.background.brand,
+        title: Color = System.color.text.base,
+        selectedTitle: Color = System.color.text.white,
     ) = BrandServiceItemColors(
         container = container,
         selectedContainer = selectedContainer,

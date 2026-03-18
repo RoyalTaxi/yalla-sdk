@@ -27,7 +27,7 @@ object DrawerItemIconDefaults {
     )
 
     @Composable
-    fun colors(tint: Color = System.color.iconBase) =
+    fun colors(tint: Color = System.color.icon.base) =
         DrawerItemIconColors(
             tint = tint
         )
@@ -56,7 +56,7 @@ object DrawerItemIconDefaults {
  * ```kotlin
  * DrawerItemIcon(
  *     painter = painterResource(Res.drawable.ic_settings),
- *     colors = DrawerItemIconDefaults.colors(tint = System.color.iconBase)
+ *     colors = DrawerItemIconDefaults.colors(tint = System.color.icon.base)
  * )
  * ```
  *

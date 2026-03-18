@@ -144,9 +144,9 @@ object DateFieldDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        text: Color = System.color.textBase,
-        placeholder: Color = System.color.textSubtle,
-        icon: Color = System.color.iconBase,
+        text: Color = System.color.text.base,
+        placeholder: Color = System.color.text.subtle,
+        icon: Color = System.color.icon.base,
     ): DateFieldColors =
         DateFieldColors(
             container = container,

@@ -49,12 +49,12 @@ fun NumberField(
 
     Surface(
         modifier = modifier,
-        color = System.color.backgroundBase,
+        color = System.color.background.base,
         shape = RoundedCornerShape(10.dp),
         border =
             BorderStroke(
                 width = 1.dp,
-                color = if (isFocused) System.color.borderFilled else System.color.borderDisabled
+                color = if (isFocused) System.color.border.filled else System.color.border.disabled
             )
     ) {
         Row(
@@ -63,14 +63,14 @@ fun NumberField(
         ) {
             Text(
                 text = stringResource(Res.string.auth_phone_country_code),
-                color = System.color.textBase,
+                color = System.color.text.base,
                 style = System.font.body.base.medium,
                 modifier = Modifier.padding(16.dp)
             )
 
             VerticalDivider(
                 thickness = 1.dp,
-                color = System.color.borderDisabled,
+                color = System.color.border.disabled,
                 modifier = Modifier.padding(vertical = 6.dp)
             )
 
@@ -92,29 +92,29 @@ fun NumberField(
                 placeholder = @Composable {
                     Text(
                         text = stringResource(Res.string.auth_phone_placeholder),
-                        color = System.color.textSubtle,
+                        color = System.color.text.subtle,
                         style = System.font.body.base.medium
                     )
                 },
                 colors =
                     TextFieldDefaults.colors(
-                        focusedContainerColor = System.color.backgroundBase,
-                        unfocusedContainerColor = System.color.backgroundBase,
-                        disabledContainerColor = System.color.backgroundBase,
-                        errorContainerColor = System.color.backgroundBase,
+                        focusedContainerColor = System.color.background.base,
+                        unfocusedContainerColor = System.color.background.base,
+                        disabledContainerColor = System.color.background.base,
+                        errorContainerColor = System.color.background.base,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         disabledIndicatorColor = Color.Transparent,
                         errorIndicatorColor = Color.Transparent,
-                        focusedTextColor = System.color.textBase,
-                        unfocusedTextColor = System.color.textBase,
-                        disabledTextColor = System.color.textBase,
-                        errorTextColor = System.color.textBase,
-                        cursorColor = System.color.textLink,
+                        focusedTextColor = System.color.text.base,
+                        unfocusedTextColor = System.color.text.base,
+                        disabledTextColor = System.color.text.base,
+                        errorTextColor = System.color.text.base,
+                        cursorColor = System.color.text.link,
                         selectionColors =
                             TextSelectionColors(
-                                handleColor = System.color.textLink,
-                                backgroundColor = System.color.textLink.copy(.3f)
+                                handleColor = System.color.text.link,
+                                backgroundColor = System.color.text.link.copy(.3f)
                             )
                     )
             )

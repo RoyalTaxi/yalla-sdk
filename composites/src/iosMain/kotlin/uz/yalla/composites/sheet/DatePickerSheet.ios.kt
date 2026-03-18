@@ -36,7 +36,7 @@ actual fun DatePickerSheet(
     NativeSheet(
         isVisible = state.isVisible,
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
-        containerColor = System.color.backgroundBase,
+        containerColor = System.color.background.base,
         onDismissRequest = { onEffect(DatePickerSheetEffect.Dismiss) }
     ) {
         Column(
@@ -54,7 +54,7 @@ actual fun DatePickerSheet(
 
                 Text(
                     text = stringResource(Res.string.register_input_birthdate),
-                    color = System.color.textBase,
+                    color = System.color.text.base,
                     style = System.font.body.large.medium
                 )
 

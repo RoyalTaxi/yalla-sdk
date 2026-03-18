@@ -104,8 +104,8 @@ object NavigationButtonDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundTertiary,
-        content: Color = System.color.iconBase,
+        container: Color = System.color.background.tertiary,
+        content: Color = System.color.icon.base,
     ) = NavigationButtonColors(
         container = container,
         content = content,

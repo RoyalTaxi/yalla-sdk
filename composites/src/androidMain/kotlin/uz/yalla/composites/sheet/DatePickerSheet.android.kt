@@ -54,7 +54,7 @@ actual fun DatePickerSheet(
 
                 Text(
                     text = stringResource(Res.string.register_input_birthdate),
-                    color = System.color.textBase,
+                    color = System.color.text.base,
                     style = System.font.body.large.medium
                 )
 
@@ -75,7 +75,7 @@ actual fun DatePickerSheet(
                 maxDate = state.maxDate,
                 rowCount = 5,
                 textStyle = System.font.title.base,
-                textColor = System.color.textBase,
+                textColor = System.color.text.base,
                 onSnappedDate = { snappedDate = it },
                 selectorProperties = WheelPickerDefaults.selectorProperties(false)
             )

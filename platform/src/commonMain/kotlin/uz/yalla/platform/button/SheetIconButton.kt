@@ -24,8 +24,8 @@ fun SheetIconButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     border: BorderStroke? = null,
-    containerColor: Color = System.color.backgroundSecondary,
-    contentColor: Color = System.color.iconBase,
+    containerColor: Color = System.color.background.secondary,
+    contentColor: Color = System.color.icon.base,
 ) {
     Button(
         onClick = onClick,

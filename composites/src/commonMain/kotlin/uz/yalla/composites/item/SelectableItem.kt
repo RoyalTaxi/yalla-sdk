@@ -59,10 +59,10 @@ object SelectableItemDefaults {
 
     @Composable
     fun colors(
-        selectedContainer: Color = System.color.backgroundSecondary,
+        selectedContainer: Color = System.color.background.secondary,
         unselectedContainer: Color = Color.Transparent,
-        border: Color = System.color.borderDisabled,
-        text: Color = System.color.textBase
+        border: Color = System.color.border.disabled,
+        text: Color = System.color.text.base
     ) = SelectableItemColors(
         selectedContainer = selectedContainer,
         unselectedContainer = unselectedContainer,
@@ -126,7 +126,7 @@ object SelectableItemDefaults {
  *             item = paymentType,
  *             title = "Credit Card",
  *             icon = rememberVectorPainter(YallaIcons.Card),
- *             iconColor = System.color.iconBase
+ *             iconColor = System.color.icon.base
  *         ),
  *         isSelected = selectedType == paymentType,
  *     ),

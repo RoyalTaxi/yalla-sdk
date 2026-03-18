@@ -105,8 +105,8 @@ object DotsIndicatorDefaults {
 
     @Composable
     fun colors(
-        selected: Color = System.color.backgroundBrandBase,
-        unselected: Color = System.color.backgroundTertiary,
+        selected: Color = System.color.background.brand,
+        unselected: Color = System.color.background.tertiary,
     ) = DotsIndicatorColors(
         selected = selected,
         unselected = unselected,

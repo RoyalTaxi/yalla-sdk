@@ -25,7 +25,7 @@ actual fun NativeWheelDatePicker(
         modifier = modifier,
         rowCount = 5,
         textStyle = System.font.title.base,
-        textColor = System.color.textBase,
+        textColor = System.color.text.base,
         onSnappedDate = onDateChanged,
         selectorProperties = WheelPickerDefaults.selectorProperties(false)
     )

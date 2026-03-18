@@ -120,7 +120,7 @@ object RadioItemDefaults {
     )
 
     @Composable
-    fun colors(text: Color = System.color.textBase) =
+    fun colors(text: Color = System.color.text.base) =
         RadioItemColors(
             text = text,
         )

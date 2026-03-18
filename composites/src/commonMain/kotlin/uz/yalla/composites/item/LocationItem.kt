@@ -124,7 +124,7 @@ fun LocationItem(
  *         placeholder = "Where to?"
  *     ),
  *     onClick = { openLocationPicker() },
- *     leadingContent = { LocationDot(color = System.color.buttonActive) },
+ *     leadingContent = { LocationDot(color = System.color.button.active) },
  *     trailingContent = { AddButton(onClick = { addStop() }) },
  * )
  * ```
@@ -227,7 +227,7 @@ fun LocationDot(
             modifier
                 .size(dimens.dotSize)
                 .background(
-                    color = System.color.iconWhite,
+                    color = System.color.icon.white,
                     shape = CircleShape,
                 ).border(
                     width = dimens.dotBorderWidth,
@@ -260,10 +260,10 @@ object LocationItemDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        placeholder: Color = System.color.textSubtle,
-        location: Color = System.color.textBase,
-        arrow: Color = System.color.iconSubtle,
+        container: Color = System.color.background.secondary,
+        placeholder: Color = System.color.text.subtle,
+        location: Color = System.color.text.base,
+        arrow: Color = System.color.icon.subtle,
     ) = LocationItemColors(
         container = container,
         placeholder = placeholder,

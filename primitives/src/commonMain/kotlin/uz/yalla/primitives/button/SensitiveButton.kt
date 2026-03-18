@@ -70,8 +70,8 @@ object SensitiveButtonDefaults {
 
     @Composable
     fun colors(
-        progress: Color = System.color.buttonActive,
-        text: Color = System.color.textWhite,
+        progress: Color = System.color.button.active,
+        text: Color = System.color.text.white,
     ) = SensitiveButtonColors(
         progress = progress,
         text = text,

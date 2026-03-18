@@ -104,7 +104,7 @@ object LocationPointDefaults {
     @Composable
     fun originStyle(
         font: TextStyle = System.font.body.small.bold,
-        color: Color = System.color.textBase,
+        color: Color = System.color.text.base,
     ): LocationPointStyle =
         LocationPointStyle(
             font = font,
@@ -114,7 +114,7 @@ object LocationPointDefaults {
     @Composable
     fun destinationStyle(
         font: TextStyle = System.font.body.caption,
-        color: Color = System.color.textSubtle,
+        color: Color = System.color.text.subtle,
     ): LocationPointStyle =
         LocationPointStyle(
             font = font,

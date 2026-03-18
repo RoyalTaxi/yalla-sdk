@@ -131,10 +131,10 @@ object SplashOverlayDefaults {
 
     @Composable
     fun colors(
-        background: Brush = System.color.splashBackground,
-        indicator: Color = System.color.backgroundBase,
-        indicatorTrack: Color = System.color.backgroundBase.copy(alpha = .5f),
-        text: Color = System.color.backgroundBase,
+        background: Brush = System.color.gradient.splash,
+        indicator: Color = System.color.background.base,
+        indicatorTrack: Color = System.color.background.base.copy(alpha = .5f),
+        text: Color = System.color.background.base,
     ): SplashOverlayColors =
         SplashOverlayColors(
             background = background,

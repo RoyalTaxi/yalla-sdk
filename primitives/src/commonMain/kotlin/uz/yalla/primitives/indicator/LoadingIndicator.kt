@@ -73,8 +73,8 @@ object LoadingIndicatorDefaults {
 
     @Composable
     fun colors(
-        indicator: Color = System.color.buttonActive,
-        track: Color = System.color.backgroundTertiary,
+        indicator: Color = System.color.button.active,
+        track: Color = System.color.background.tertiary,
     ) = LoadingIndicatorColors(
         indicator = indicator,
         track = track,

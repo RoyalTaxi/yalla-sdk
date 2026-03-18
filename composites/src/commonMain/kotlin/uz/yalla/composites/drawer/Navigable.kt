@@ -46,10 +46,10 @@ object NavigableDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        title: Color = System.color.textBase,
-        description: Color = System.color.textBase,
-        chevron: Color = System.color.iconBase
+        container: Color = System.color.background.secondary,
+        title: Color = System.color.text.base,
+        description: Color = System.color.text.base,
+        chevron: Color = System.color.icon.base
     ) = NavigableColors(
         container = container,
         title = title,

@@ -58,8 +58,8 @@ object GenderButtonDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        text: Color = System.color.textBase
+        container: Color = System.color.background.secondary,
+        text: Color = System.color.text.base
     ) = GenderButtonColors(
         container = container,
         text = text

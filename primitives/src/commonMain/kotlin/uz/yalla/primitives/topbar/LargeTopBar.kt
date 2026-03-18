@@ -124,7 +124,7 @@ object LargeTopBarDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        title: Color = System.color.textBase,
+        title: Color = System.color.text.base,
     ) = LargeTopBarColors(
         container = container,
         title = title,

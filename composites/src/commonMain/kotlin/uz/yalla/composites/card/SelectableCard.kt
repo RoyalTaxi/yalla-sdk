@@ -153,7 +153,7 @@ object SelectableCardDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        iconBackground: Color = System.color.backgroundSecondary,
+        iconBackground: Color = System.color.background.secondary,
         disabledContainer: Color = Color.Transparent,
     ) = SelectableCardColors(
         container = container,

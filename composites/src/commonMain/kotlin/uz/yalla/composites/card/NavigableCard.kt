@@ -54,11 +54,11 @@ object NavigableCardDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        border: Color = System.color.borderDisabled,
-        arrow: Color = System.color.iconBase,
+        border: Color = System.color.border.disabled,
+        arrow: Color = System.color.icon.base,
         disabledContainer: Color = Color.Transparent,
-        disabledBorder: Color = System.color.borderDisabled.copy(alpha = 0.5f),
-        disabledArrow: Color = System.color.iconDisabled,
+        disabledBorder: Color = System.color.border.disabled.copy(alpha = 0.5f),
+        disabledArrow: Color = System.color.icon.disabled,
     ) = NavigableCardColors(
         container = container,
         border = border,

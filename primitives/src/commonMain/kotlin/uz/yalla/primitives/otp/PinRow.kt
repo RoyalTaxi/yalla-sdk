@@ -64,11 +64,11 @@ object PinRowDefaults {
 
     @Composable
     fun colors(
-        text: Color = System.color.textBase,
-        errorText: Color = System.color.textRed,
-        filledBorder: Color = System.color.borderFilled,
-        emptyBorder: Color = System.color.borderDisabled,
-        errorBorder: Color = System.color.textRed
+        text: Color = System.color.text.base,
+        errorText: Color = System.color.text.red,
+        filledBorder: Color = System.color.border.filled,
+        emptyBorder: Color = System.color.border.disabled,
+        errorBorder: Color = System.color.text.red
     ) = PinRowColors(
         text = text,
         errorText = errorText,

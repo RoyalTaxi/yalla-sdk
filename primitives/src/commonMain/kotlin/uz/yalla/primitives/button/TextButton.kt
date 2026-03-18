@@ -140,8 +140,8 @@ object TextButtonDefaults {
 
     @Composable
     fun colors(
-        content: Color = System.color.textLink,
-        disabledContent: Color = System.color.textBase,
+        content: Color = System.color.text.link,
+        disabledContent: Color = System.color.text.base,
     ) = TextButtonColors(
         content = content,
         disabledContent = disabledContent,

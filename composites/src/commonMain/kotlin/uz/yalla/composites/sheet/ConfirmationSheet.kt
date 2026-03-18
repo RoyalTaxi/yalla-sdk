@@ -210,9 +210,9 @@ object ConfirmationSheetDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundBase,
-        title: Color = System.color.textBase,
-        description: Color = System.color.textSubtle,
+        container: Color = System.color.background.base,
+        title: Color = System.color.text.base,
+        description: Color = System.color.text.subtle,
     ): ConfirmationSheetColors =
         ConfirmationSheetColors(
             container = container,

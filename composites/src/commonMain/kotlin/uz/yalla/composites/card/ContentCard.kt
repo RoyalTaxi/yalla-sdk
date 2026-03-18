@@ -109,8 +109,8 @@ object ContentCardDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        disabledContainer: Color = System.color.backgroundSecondary.copy(alpha = 0.6f),
+        container: Color = System.color.background.secondary,
+        disabledContainer: Color = System.color.background.secondary.copy(alpha = 0.6f),
     ) = ContentCardColors(
         container = container,
         disabledContainer = disabledContainer,

@@ -45,8 +45,8 @@ object BonusAmountItemDefaults {
 
     @Composable
     fun colors(
-        background: Brush = System.color.sunsetNight,
-        text: Color = System.color.textWhite
+        background: Brush = System.color.gradient.sunsetNight,
+        text: Color = System.color.text.white
     ) = BonusAmountItemColors(
         background = background,
         text = text

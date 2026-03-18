@@ -157,10 +157,10 @@ object AddressCardDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        name: Color = System.color.textBase,
-        address: Color = System.color.textBase,
-        metadata: Color = System.color.textBase,
+        container: Color = System.color.background.secondary,
+        name: Color = System.color.text.base,
+        address: Color = System.color.text.base,
+        metadata: Color = System.color.text.base,
     ): AddressCardColors =
         AddressCardColors(
             container = container,

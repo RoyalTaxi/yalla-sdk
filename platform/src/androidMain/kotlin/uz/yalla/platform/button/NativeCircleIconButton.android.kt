@@ -37,14 +37,14 @@ actual fun NativeCircleIconButton(
                 .then(if (border != null) Modifier.border(border, CircleShape) else Modifier),
         colors =
             IconButtonDefaults.iconButtonColors(
-                contentColor = System.color.iconBase,
-                containerColor = System.color.backgroundBase
+                contentColor = System.color.icon.base,
+                containerColor = System.color.background.base
             )
     ) {
         Image(
             painter = rememberVectorPainter(iconType.toImageVector()),
             contentDescription = null,
-            colorFilter = ColorFilter.tint(System.color.iconBase)
+            colorFilter = ColorFilter.tint(System.color.icon.base)
         )
     }
 }

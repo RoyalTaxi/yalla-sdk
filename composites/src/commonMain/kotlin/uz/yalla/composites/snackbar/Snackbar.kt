@@ -174,29 +174,29 @@ object SnackbarDefaults {
         when (variant) {
             SnackbarVariant.Success ->
                 SnackbarColors(
-                    container = System.color.buttonActive,
+                    container = System.color.button.active,
                     iconBackground = Color.White.copy(alpha = 0.2f),
-                    icon = System.color.iconWhite,
-                    text = System.color.iconWhite,
-                    dismissIcon = System.color.iconWhite,
+                    icon = System.color.icon.white,
+                    text = System.color.icon.white,
+                    dismissIcon = System.color.icon.white,
                 )
             SnackbarVariant.Error ->
                 SnackbarColors(
-                    container = System.color.borderError,
+                    container = System.color.border.error,
                     iconBackground = Color.White.copy(alpha = 0.2f),
-                    icon = System.color.iconWhite,
-                    text = System.color.iconWhite,
-                    dismissIcon = System.color.iconWhite,
+                    icon = System.color.icon.white,
+                    text = System.color.icon.white,
+                    dismissIcon = System.color.icon.white,
                 )
         }
 
     @Composable
     fun colors(
-        container: Color = System.color.buttonActive,
+        container: Color = System.color.button.active,
         iconBackground: Color = Color.White.copy(alpha = 0.2f),
-        icon: Color = System.color.iconWhite,
-        text: Color = System.color.iconWhite,
-        dismissIcon: Color = System.color.iconWhite,
+        icon: Color = System.color.icon.white,
+        text: Color = System.color.icon.white,
+        dismissIcon: Color = System.color.icon.white,
     ) = SnackbarColors(
         container = container,
         iconBackground = iconBackground,

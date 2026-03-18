@@ -131,9 +131,9 @@ object BonusCardDefaults {
 
     @Composable
     fun colors(
-        title: Color = System.color.textWhite,
-        subtitle: Color = System.color.textWhite,
-        balance: Color = System.color.textWhite,
+        title: Color = System.color.text.white,
+        subtitle: Color = System.color.text.white,
+        balance: Color = System.color.text.white,
     ): BonusCardColors =
         BonusCardColors(
             title = title,

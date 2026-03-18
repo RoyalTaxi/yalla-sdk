@@ -44,7 +44,7 @@ object ExpandableSheetDefaults {
     )
 
     @Composable
-    fun colors(container: Color = System.color.backgroundBase) =
+    fun colors(container: Color = System.color.background.base) =
         ExpandableSheetColors(
             container = container
         )

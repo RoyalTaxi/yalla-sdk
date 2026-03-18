@@ -152,7 +152,7 @@ fun Sheet(
 fun SheetDragHandle(
     modifier: Modifier = Modifier,
     dimens: SheetDefaults.SheetDimens = SheetDefaults.dimens(),
-    color: Color = System.color.backgroundTertiary,
+    color: Color = System.color.background.tertiary,
 ) {
     Box(
         contentAlignment = Alignment.Center,
@@ -194,7 +194,7 @@ object SheetDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundBase,
+        container: Color = System.color.background.base,
         scrim: Color = BottomSheetDefaults.ScrimColor,
     ): SheetColors =
         SheetColors(

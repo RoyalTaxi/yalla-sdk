@@ -77,11 +77,11 @@ object HistoryCardDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        time: Color = System.color.textBase,
-        price: Color = System.color.textBase,
-        statusCompleted: Color = System.color.textLink,
-        statusCanceled: Color = System.color.textRed,
+        container: Color = System.color.background.secondary,
+        time: Color = System.color.text.base,
+        price: Color = System.color.text.base,
+        statusCompleted: Color = System.color.text.link,
+        statusCanceled: Color = System.color.text.red,
     ) = HistoryCardColors(
         container = container,
         time = time,

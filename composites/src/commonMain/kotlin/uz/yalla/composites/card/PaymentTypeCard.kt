@@ -57,9 +57,9 @@ object PaymentTypeCardDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        iconBackground: Color = System.color.backgroundSecondary,
-        iconTint: Color = System.color.iconBase,
-        text: Color = System.color.textBase
+        iconBackground: Color = System.color.background.secondary,
+        iconTint: Color = System.color.icon.base,
+        text: Color = System.color.text.base
     ) = PaymentTypeCardColors(
         container = container,
         iconBackground = iconBackground,

@@ -178,10 +178,10 @@ object SecondaryButtonDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.buttonTertiary,
-        content: Color = System.color.backgroundBase,
-        disabledContainer: Color = System.color.buttonDisabled,
-        disabledContent: Color = System.color.textWhite
+        container: Color = System.color.button.tertiary,
+        content: Color = System.color.background.base,
+        disabledContainer: Color = System.color.button.disabled,
+        disabledContent: Color = System.color.text.white
     ) = SecondaryButtonColors(
         container = container,
         content = content,

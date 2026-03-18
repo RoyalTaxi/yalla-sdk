@@ -29,7 +29,7 @@ object SectionBackgroundDefaults {
     )
 
     @Composable
-    fun colors(background: Color = System.color.backgroundSecondary) =
+    fun colors(background: Color = System.color.background.secondary) =
         SectionBackgroundColors(
             background = background
         )

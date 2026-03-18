@@ -50,17 +50,17 @@ object PrimaryFieldDefaults {
 
     @Composable
     fun colors(
-        focusedText: Color = System.color.textBase,
-        unfocusedText: Color = System.color.textBase,
-        focusedBorder: Color = System.color.borderFilled,
-        unfocusedBorder: Color = System.color.borderDisabled,
-        cursor: Color = System.color.textLink,
+        focusedText: Color = System.color.text.base,
+        unfocusedText: Color = System.color.text.base,
+        focusedBorder: Color = System.color.border.filled,
+        unfocusedBorder: Color = System.color.border.disabled,
+        cursor: Color = System.color.text.link,
         selection: TextSelectionColors =
             TextSelectionColors(
-                handleColor = System.color.textLink,
-                backgroundColor = System.color.textLink.copy(.3f)
+                handleColor = System.color.text.link,
+                backgroundColor = System.color.text.link.copy(.3f)
             ),
-        placeholder: Color = System.color.textSubtle
+        placeholder: Color = System.color.text.subtle
     ) = PrimaryFieldColors(
         focusedText = focusedText,
         unfocusedText = unfocusedText,

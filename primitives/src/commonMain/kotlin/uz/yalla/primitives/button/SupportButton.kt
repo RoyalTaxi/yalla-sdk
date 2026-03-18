@@ -160,13 +160,13 @@ object SupportButtonDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        border: Color = System.color.borderDisabled,
-        text: Color = System.color.textBase,
-        icon: Color = System.color.iconBase,
+        border: Color = System.color.border.disabled,
+        text: Color = System.color.text.base,
+        icon: Color = System.color.icon.base,
         disabledContainer: Color = Color.Transparent,
-        disabledBorder: Color = System.color.borderDisabled.copy(alpha = 0.5f),
-        disabledText: Color = System.color.textSubtle,
-        disabledIcon: Color = System.color.iconSubtle,
+        disabledBorder: Color = System.color.border.disabled.copy(alpha = 0.5f),
+        disabledText: Color = System.color.text.subtle,
+        disabledIcon: Color = System.color.icon.subtle,
     ) = SupportButtonColors(
         container = container,
         border = border,

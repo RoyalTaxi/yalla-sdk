@@ -193,10 +193,10 @@ object ActionSheetDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundBase,
-        title: Color = System.color.textBase,
-        message: Color = System.color.textSubtle,
-        divider: Color = System.color.borderDisabled,
+        container: Color = System.color.background.base,
+        title: Color = System.color.text.base,
+        message: Color = System.color.text.subtle,
+        divider: Color = System.color.border.disabled,
     ) = ActionSheetColors(
         container = container,
         title = title,

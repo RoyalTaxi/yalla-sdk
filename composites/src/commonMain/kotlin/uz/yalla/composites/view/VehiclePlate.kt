@@ -152,10 +152,10 @@ object VehiclePlateDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundBase,
-        text: Color = System.color.textBase,
-        border: Color = System.color.borderDisabled,
-        divider: Color = System.color.borderDisabled,
+        container: Color = System.color.background.base,
+        text: Color = System.color.text.base,
+        border: Color = System.color.border.disabled,
+        divider: Color = System.color.border.disabled,
     ): VehiclePlateColors =
         VehiclePlateColors(
             container = container,

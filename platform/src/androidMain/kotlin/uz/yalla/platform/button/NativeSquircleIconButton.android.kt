@@ -34,8 +34,8 @@ actual fun NativeSquircleIconButton(
         border = border,
         colors =
             ButtonDefaults.buttonColors(
-                containerColor = System.color.backgroundSecondary,
-                contentColor = System.color.iconBase
+                containerColor = System.color.background.secondary,
+                contentColor = System.color.icon.base
             ),
         modifier =
             modifier
@@ -45,7 +45,7 @@ actual fun NativeSquircleIconButton(
         Image(
             painter = rememberVectorPainter(iconType.toImageVector()),
             contentDescription = null,
-            colorFilter = ColorFilter.tint(System.color.iconBase)
+            colorFilter = ColorFilter.tint(System.color.icon.base)
         )
     }
 }

@@ -39,8 +39,8 @@ object EnableLocationButtonDefaults {
 
     @Composable
     fun colors(
-        text: Color = System.color.textWhite,
-        icon: Color = System.color.iconWhite
+        text: Color = System.color.text.white,
+        icon: Color = System.color.icon.white
     ) = EnableLocationButtonColors(
         text = text,
         icon = icon

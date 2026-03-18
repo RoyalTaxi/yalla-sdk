@@ -127,11 +127,11 @@ object GradientButtonDefaults {
             Brush.linearGradient(
                 colors =
                     listOf(
-                        System.color.backgroundBrandBase,
-                        System.color.backgroundBrandBase,
+                        System.color.background.brand,
+                        System.color.background.brand,
                     )
             ),
-        content: Color = System.color.textWhite,
+        content: Color = System.color.text.white,
     ) = GradientButtonColors(
         containerBrush = containerBrush,
         content = content,
@@ -146,7 +146,7 @@ object GradientButtonDefaults {
     @Composable
     fun colors(
         containerColor: Color,
-        content: Color = System.color.textWhite,
+        content: Color = System.color.text.white,
     ) = GradientButtonColors(
         containerBrush = Brush.linearGradient(listOf(containerColor, containerColor)),
         content = content,

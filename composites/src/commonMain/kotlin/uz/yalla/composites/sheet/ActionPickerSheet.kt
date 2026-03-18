@@ -217,12 +217,12 @@ object ActionPickerDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundBase,
-        title: Color = System.color.textBase,
-        itemBackground: Color = System.color.backgroundSecondary,
-        itemIcon: Color = System.color.iconBase,
-        itemText: Color = System.color.textBase,
-        destructiveItemIcon: Color = System.color.iconRed,
+        container: Color = System.color.background.base,
+        title: Color = System.color.text.base,
+        itemBackground: Color = System.color.background.secondary,
+        itemIcon: Color = System.color.icon.base,
+        itemText: Color = System.color.text.base,
+        destructiveItemIcon: Color = System.color.icon.red,
     ): ActionPickerColors =
         ActionPickerColors(
             container = container,

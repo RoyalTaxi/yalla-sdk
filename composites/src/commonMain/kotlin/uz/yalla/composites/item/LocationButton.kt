@@ -36,8 +36,8 @@ object LocationButtonDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        text: Color = System.color.textBase
+        container: Color = System.color.background.secondary,
+        text: Color = System.color.text.base
     ) = LocationButtonColors(
         container = container,
         text = text
@@ -95,7 +95,7 @@ object LocationButtonDefaults {
  *     text = "Where to?",
  *     modifier = Modifier.fillMaxWidth().height(60.dp),
  *     onClick = { openLocationPicker() },
- *     leadingIcon = { LocationDot(color = System.color.buttonActive) }
+ *     leadingIcon = { LocationDot(color = System.color.button.active) }
  * )
  * ```
  *

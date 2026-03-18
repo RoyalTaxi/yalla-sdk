@@ -309,10 +309,10 @@ object PrimaryButtonDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.buttonActive,
-        content: Color = System.color.textWhite,
-        disabledContainer: Color = System.color.buttonDisabled,
-        disabledContent: Color = System.color.textWhite
+        container: Color = System.color.button.active,
+        content: Color = System.color.text.white,
+        disabledContainer: Color = System.color.button.disabled,
+        disabledContent: Color = System.color.text.white
     ) = PrimaryButtonColors(
         container = container,
         content = content,

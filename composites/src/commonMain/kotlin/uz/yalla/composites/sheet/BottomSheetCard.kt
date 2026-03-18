@@ -42,7 +42,7 @@ object BottomSheetCardDefaults {
     )
 
     @Composable
-    fun colors(container: Color = System.color.backgroundBase) =
+    fun colors(container: Color = System.color.background.base) =
         BottomSheetCardColors(
             container = container
         )

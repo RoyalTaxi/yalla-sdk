@@ -72,7 +72,7 @@ object CarNumberDefaults {
     @Composable
     fun colors(
         container: Color = Color.White,
-        border: Color = System.color.borderFilled,
+        border: Color = System.color.border.filled,
         text: Color = Color.Black,
         countryCode: Color = Color(0xFF029BB7)
     ) = CarNumberColors(

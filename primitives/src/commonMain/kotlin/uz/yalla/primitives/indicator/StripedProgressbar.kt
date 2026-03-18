@@ -152,8 +152,8 @@ object StripedProgressbarDefaults {
 
     @Composable
     fun colors(
-        track: Color = System.color.backgroundSecondary,
-        indicator: Brush = System.color.sunsetNight,
+        track: Color = System.color.background.secondary,
+        indicator: Brush = System.color.gradient.sunsetNight,
         stripe: Color = Color.White.copy(alpha = 0.2f),
     ): StripedProgressbarColors =
         StripedProgressbarColors(

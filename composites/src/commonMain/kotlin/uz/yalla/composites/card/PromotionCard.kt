@@ -129,9 +129,9 @@ object PromotionCardDefaults {
 
     @Composable
     fun colors(
-        container: Color = System.color.backgroundSecondary,
-        title: Color = System.color.textBase,
-        subtitle: Color = System.color.textSubtle,
+        container: Color = System.color.background.secondary,
+        title: Color = System.color.text.base,
+        subtitle: Color = System.color.text.subtle,
     ): PromotionCardColors =
         PromotionCardColors(
             container = container,

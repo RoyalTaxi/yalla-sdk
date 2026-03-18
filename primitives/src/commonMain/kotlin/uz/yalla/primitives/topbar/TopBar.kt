@@ -138,7 +138,7 @@ object TopBarDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        title: Color = System.color.textBase,
+        title: Color = System.color.text.base,
     ) = TopBarColors(
         container = container,
         title = title,
