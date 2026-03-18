@@ -40,6 +40,7 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.exifinterface)
             implementation(libs.androidx.lifecycle.viewmodel.compose)
+            implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.accompanist.permissions)
             implementation(libs.camera.camera2)
             implementation(libs.camera.lifecycle)
