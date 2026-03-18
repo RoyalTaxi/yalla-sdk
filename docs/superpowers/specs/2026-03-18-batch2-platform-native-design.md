@@ -1,250 +1,343 @@
-# Batch 2: Platform Module — Native iOS Building Blocks
+# Batch 2: Platform + Media Modules — Native iOS Building Blocks
 
 ## Overview
 
-Merge the `media` module into `platform` and transform the combined module into a comprehensive native iOS component library with plug-and-play building blocks. The goal: every platform-specific component feels like it was built by a senior Swift developer.
+Refactor the `platform` and `media` modules to gold standard with native iOS component architecture. Both modules remain **separate** (no merge) to keep the dependency graph clean — `platform` stays lightweight (UI components), `media` stays self-contained (camera/gallery/compression with heavy deps like CameraX, Paging3, AVFoundation).
+
+**Goal:** Every platform-specific component feels like it was built by a senior Swift developer.
 
 **Approach:** Phased implementation within Batch 2.
-- **Phase 1 (this spec):** Restructure + merge media + YallaPlatform.install() architecture + refactor existing components
-- **Phase 2 (future spec):** Add new native components (Sheet upgrade, Haptic, Browser, Navigation, TextField, SearchBar, ContextMenu, ShareSheet, SegmentedControl)
-- **Phase 3 (future spec):** Full KDoc + MODULE.md + comprehensive tests
+- **Phase 1 (this spec):** YallaPlatform.install() architecture + refactor existing components + fix bugs
+- **Phase 2 (future spec):** Add new native components (Sheet upgrade, Haptic, Browser, Navigation, etc.)
+- **Phase 3 (future spec):** Full KDoc + MODULE.md + comprehensive tests for both modules
+
+**Breaking change:** This is an alpha SDK (0.0.x). CompositionLocal factories are replaced by `YallaPlatform.install()`. No deprecation period — consumers must update integration code.
 
 ## Architecture Decisions
 
-### Hybrid Native Pattern
+### Decision 1: No Media Merge
 
-Two interop patterns coexist based on complexity:
+**media stays separate from platform.** Rationale (from architecture review):
+- `primitives` and `composites` depend on `platform`. Merging media would leak CameraX (3.5MB), Paging3 (1MB), AVFoundation cinterops to every UI module.
+- SDK consumers who only need buttons/sheets should not pull camera dependencies.
+- Modular SDKs are easier to maintain and adopt incrementally.
 
-| Pattern | When | Examples |
-|---------|------|----------|
-| **expect/actual** | Simple UIKit APIs callable from Kotlin/Native | UISwitch, UIDatePicker, UIActivityIndicatorView, UISegmentedControl, Haptics, SystemBars |
-| **Factory/delegate** | Complex components requiring real Swift environment | Navigation shell, In-app browser, Sheets with detents, TextField, SearchBar, ContextMenu |
+**Dependency graph (unchanged):**
+```
+platform --> design, resources
+media --> (standalone: paging, camerax, avfoundation, compose)
+primitives --> platform, design, resources, core
+composites --> platform, primitives, design, resources, core, foundation
+```
 
-**Rationale:** expect/actual is simpler and self-contained, but cannot access Swift-only APIs (SwiftUI, modern async/await patterns, SFSafariViewController). Factory pattern delegates creation to Swift code, giving full access to the Swift ecosystem.
+### Decision 2: Hybrid Native Pattern
 
-### YallaPlatform.install() — Centralized Factory Registry
+Two interop patterns based on complexity:
 
-All factory-pattern components register through a single `YallaPlatform.install()` call. This replaces the current scattered CompositionLocal factories (`LocalCircleIconButtonFactory`, `LocalSquircleIconButtonFactory`, `LocalSheetPresenterFactory`) with a unified entry point.
+| Pattern | Criteria | Examples |
+|---------|----------|----------|
+| **expect/actual** | Fully constructible from Kotlin/Native, no host VC/View needed | UISwitch, UIDatePicker, UIActivityIndicatorView, Haptics, SystemBars |
+| **Factory/delegate** | Needs Swift environment, host UIViewController, or Swift-only frameworks | Navigation shell, SFSafariViewController, Sheets with detents, TextField, SearchBar, ContextMenu, ShareSheet, PullToRefresh |
 
-**Current problem:** If a factory CompositionLocal is not provided, buttons silently fail to render (`val factory = ... ?: return`). No error, no warning — the component just disappears.
+**Note:** NativePullToRefresh requires factory pattern (UIRefreshControl needs a host UIScrollView). NativeShareSheet needs factory (requires parent UIViewController for presentation).
 
-**Solution:** `YallaPlatform.requireConfig()` throws an informative error if `install()` was not called.
+### Decision 3: YallaPlatform.install() — Centralized Factory Registry
+
+Replaces scattered CompositionLocal factories with a single install() call.
+
+**Pattern: interface (not expect class) + platform-specific implementations:**
 
 ```kotlin
 // commonMain — uz.yalla.platform.YallaPlatform
+interface PlatformConfig
+
 object YallaPlatform {
+    @PublishedApi
     internal var config: PlatformConfig? = null
+
     val isInstalled: Boolean get() = config != null
 
-    internal fun requireConfig(): PlatformConfig =
-        config ?: error(
+    fun install(config: PlatformConfig) {
+        this.config = config
+    }
+
+    @PublishedApi
+    internal inline fun <reified T : PlatformConfig> requireConfig(): T =
+        (config as? T) ?: error(
             "YallaPlatform not installed. Call YallaPlatform.install() " +
             "in your app's entry point before using platform components."
         )
+
+    /** Reset config — test-only, prevents global state pollution. */
+    @VisibleForTesting
+    fun reset() { config = null }
 }
+```
 
-// commonMain
-expect class PlatformConfig
-
+```kotlin
 // iosMain
-actual class PlatformConfig(
-    val sheetPresenterFactory: SheetPresenterFactory,
-    val circleButtonFactory: CircleButtonFactory,
-    val squircleButtonFactory: SquircleButtonFactory,
+class IosPlatformConfig private constructor(
+    val sheetPresenter: SheetPresenterFactory,
+    val circleButton: CircleIconButtonFactory,
+    val squircleButton: SquircleIconButtonFactory,
     val themeProvider: ThemeProvider? = null,
     // Phase 2 additions:
-    // val navigationFactory: NavigationFactory? = null,
-    // val browserFactory: BrowserFactory? = null,
-)
+    // val navigation: NavigationFactory? = null,
+    // val browser: BrowserFactory? = null,
+) : PlatformConfig {
+    class Builder {
+        var sheetPresenter: SheetPresenterFactory? = null
+        var circleButton: CircleIconButtonFactory? = null
+        var squircleButton: SquircleIconButtonFactory? = null
+        var themeProvider: ThemeProvider? = null
 
-fun YallaPlatform.install(config: PlatformConfig) {
-    this.config = config
+        fun build(): IosPlatformConfig {
+            return IosPlatformConfig(
+                sheetPresenter = requireNotNull(sheetPresenter) { "sheetPresenter is required" },
+                circleButton = requireNotNull(circleButton) { "circleButton is required" },
+                squircleButton = requireNotNull(squircleButton) { "squircleButton is required" },
+                themeProvider = themeProvider,
+            )
+        }
+    }
 }
 
+internal fun requireIosConfig(): IosPlatformConfig =
+    YallaPlatform.requireConfig<IosPlatformConfig>()
+```
+
+```kotlin
 // androidMain — no factories needed, everything is Compose
-actual class PlatformConfig
-fun YallaPlatform.install() { config = PlatformConfig() }
+class AndroidPlatformConfig : PlatformConfig
+
+fun YallaPlatform.installAndroid() {
+    YallaPlatform.install(AndroidPlatformConfig())
+}
 ```
 
-**Consumer usage (iOS AppDelegate in Swift):**
-```swift
-YallaPlatform.shared.install(config: PlatformConfig(
-    sheetPresenterFactory: MySheetFactory(),
-    circleButtonFactory: MyCircleButtonFactory(),
-    squircleButtonFactory: MySquircleButtonFactory()
-))
+**Why interface instead of expect class:** `expect class` with no constructor cannot have an `actual class` with constructor parameters. The compiler rejects mismatched constructors. The interface approach gives each platform full control over its config shape.
+
+**Why builder pattern:** Phase 2 adds 10+ factories. A flat constructor with 15 params is unreadable. Builder keeps the Swift call site clean and allows incremental registration.
+
+### Decision 4: Factory Types as Interfaces (not lambdas)
+
+**Before (current — data class with lambda fields):**
+```kotlin
+data class SheetPresenterFactory(
+    val present: (UIViewController, UIViewController, Double, Long, () -> Unit, () -> Unit) -> Unit,
+    val dismiss: (UIViewController, Boolean) -> Unit,
+    ...
+)
 ```
 
-### iOS Gallery Strategy
+**After (interfaces export as Swift protocols):**
+```kotlin
+interface SheetPresenterFactory {
+    fun present(parent: UIViewController, controller: UIViewController,
+                cornerRadius: Double, backgroundColor: Long,
+                onDismiss: () -> Unit, onPresented: () -> Unit)
+    fun updateHeight(controller: UIViewController, height: Double)
+    fun dismiss(controller: UIViewController, animated: Boolean)
+}
 
-**Decision:** Replace custom iOS gallery (PHAsset + manual grid) with native `PHPickerViewController`.
-
-**Rationale:** The custom iOS gallery loads ALL images into memory (no pagination), has no thumbnail cache, and reimplements what Apple's PHPicker already provides with better performance, accessibility, and privacy (limited photo access). Android's custom gallery using Paging3 is well-implemented and stays.
-
-**Impact:**
-- Remove: `YallaGallery.ios.kt`, `PhotoLibraryHelper.kt`, `ImageConversionHelper.kt`
-- iOS `YallaGallery` actual becomes a wrapper around `PHPickerViewController`
-- Android `YallaGallery` actual stays unchanged (Paging3 + MediaStore)
-
-## Package Structure
-
-After merge, the `platform` module organizes into:
-
+interface CircleIconButtonFactory {
+    fun create(icon: String, onClick: () -> Unit,
+               borderWidth: Double, borderColor: Long): UIViewController
+}
 ```
-uz.yalla.platform/
-├── YallaPlatform.kt              // install() entry point + PlatformConfig
-│
-├── ui/                           // Native UI components
-│   ├── button/                   // NativeCircle/SquircleIconButton, SheetIconButton
-│   ├── indicator/                // NativeLoadingIndicator
-│   ├── picker/                   // NativeWheelDatePicker
-│   ├── sheet/                    // NativeSheet, SheetPresenter (iOS)
-│   ├── toggle/                   // NativeSwitch
-│   └── icon/                     // IconMapper, IconType
-│
-├── media/                        // Device media capabilities
-│   ├── camera/                   // YallaCamera, CameraState, SystemCameraLauncher
-│   │                             //   Android: CameraX, iOS: AVFoundation
-│   ├── gallery/                  // YallaGallery
-│   │                             //   Android: Paging3 custom grid, iOS: PHPickerViewController
-│   ├── picker/                   // ImagePickerLauncher, resize, filters
-│   │                             //   Android: PickVisualMedia, iOS: PHPicker
-│   └── compression/              // CompressionConfig, ImageCompressor
-│
-├── system/                       // System-level utilities
-│   ├── bars/                     // SystemBarColors
-│   └── update/                   // AppUpdateState, VersionComparator
-│
-└── util/                         // Internal helpers
-    └── Color.kt                  // iOS Color-to-UIColor extension
+
+**Rationale:** Kotlin interfaces export cleanly to Swift as `@objc protocol`. Data classes with lambda fields export awkwardly. This also eliminates the `NativeSheetPresenterFactory` wrapper class entirely.
+
+### Decision 5: iOS Gallery → PHPickerViewController
+
+**In media module** (not platform). Replace custom iOS gallery (PHAsset + manual grid) with native PHPickerViewController.
+
+**Rationale:** Custom gallery loads ALL images into memory (no pagination, no thumbnail cache). PHPicker provides better performance, accessibility, privacy (limited photo access), and is 100% native. Android Paging3 gallery stays unchanged.
+
+## Bug Fixes (Phase 1)
+
+### Critical Bugs
+
+**BUG-1: Button onClick callback stale on recomposition (iOS)**
+- **Files:** `NativeCircleIconButton.ios.kt`, `NativeSquircleIconButton.ios.kt`
+- **Problem:** `UIKitViewController` factory runs once. `onClick` lambda is captured at creation and never updated. If parent recomposes with new onClick, old closure is still wired.
+- **Fix:** Use mutable callback holder pattern (same as NativeSwitch does correctly):
+```kotlin
+val callbackHolder = remember { mutableStateOf(onClick) }
+callbackHolder.value = onClick
+// factory uses callbackHolder.value inside tap handler
 ```
+
+**BUG-2: NSNotificationCenter observer leak (iOS camera)**
+- **File:** `YallaCamera.ios.kt` line 273
+- **Problem:** `OrientationListener` registered with NSNotificationCenter but never removed in `onDispose`.
+- **Fix:** Add `NSNotificationCenter.defaultCenter.removeObserver(orientationListener)` to `onDispose`.
+
+**BUG-3: YallaBitmapCache 1GB minimum (Android)**
+- **File:** `YallaBitmapCache.kt` line 20
+- **Problem:** `coerceAtLeast(1024 * 1024)` = 1,048,576 KB = 1GB minimum cache! Bug.
+- **Fix:** `coerceAtLeast(4 * 1024)` (4MB minimum). Also reduce from 25% to 12.5% (industry standard per Google docs).
+
+**BUG-4: SheetPresenter dismiss timing (iOS)**
+- **File:** `SheetPresenter.kt` line 75
+- **Problem:** `isProgrammaticDismiss` reset synchronously after `dismissViewControllerAnimated`, but dismiss is async. If onDismiss callback fires after reset, it's incorrectly treated as user-initiated.
+- **Fix:** Reset in the dismiss completion handler, not synchronously.
+
+### Important Fixes
+
+**FIX-5: NativeLoadingIndicator missing update block (iOS)**
+- **File:** `NativeLoadingIndicator.ios.kt`
+- **Problem:** No `update` block — color/background changes after initial composition are ignored.
+- **Fix:** Add `update` block that applies new color/backgroundColor to the UIActivityIndicatorView.
+
+**FIX-6: getRootViewController() 3x duplicate (iOS)**
+- **Files:** `NativeSheet.ios.kt`, `SystemCameraLauncher.ios.kt`, `ImagePickerLauncher.ios.kt`
+- **Fix:** Extract to single `internal fun findRootViewController(): UIViewController` utility.
+
+**FIX-7: Rotation logic duplicate (Android)**
+- **Files:** `gallery/ImageHelper.kt` (uses deprecated `android.media.ExifInterface`), `picker/ImageRotationHelper.kt` (uses AndroidX ExifInterface)
+- **Fix:** Consolidate to AndroidX version in single `ImageRotationHelper.kt`.
+
+**FIX-8: deprecated UIApplication.setStatusBarStyle (iOS)**
+- **File:** `SystemBarColors.ios.kt`
+- **Problem:** Deprecated since iOS 9. Also uses `SideEffect` which runs every recomposition (60fps during animation).
+- **Fix:** Use per-ViewController `preferredStatusBarStyle` + `setNeedsStatusBarAppearanceUpdate()`. Wrap in `LaunchedEffect` keyed on params.
+
+**FIX-9: CameraX deprecated LocalLifecycleOwner + executor leak (Android)**
+- **File:** `YallaCamera.android.kt`, `CameraProviderState.kt`
+- **Problem:** `LocalLifecycleOwner.current` deprecated in Compose 1.7+. `Executors.newSingleThreadExecutor()` in `produceState` never shut down.
+- **Fix:** Use `androidx.lifecycle.compose.LocalLifecycleOwner`. Use `Dispatchers.IO` instead of leaked executor.
+
+### Performance Improvements
+
+**PERF-1: UIGraphicsBeginImageContextWithOptions → UIGraphicsImageRenderer (iOS)**
+- **Files:** `ImageExtensions.kt`, `ImageResizeHelper.kt`, `ImageCompressor.ios.kt`
+- **Impact:** 2-3x faster, Metal-backed on supported devices.
+
+**PERF-2: Frame data double-copy (iOS camera)**
+- **File:** `CameraDelegates.kt`
+- **Problem:** Every frame: CVPixelBuffer → NSData → ByteArray = 2 copies. At 1080p@30fps = ~480MB/s.
+- **Fix:** Use `usePinned` to copy directly from CVPixelBuffer, or downsample first with vImage.
+
+**PERF-3: Compression binary search (both platforms)**
+- **Files:** `ImageCompressor.android.kt`, `ImageCompressor.ios.kt`
+- **Problem:** Linear quality drop (100→85→70→55→40→25) is aggressive, misses sweet spots.
+- **Fix:** Binary search between current quality and 10, targeting maxSizeBytes. Add dimension reduction as last resort.
+
+**PERF-4: Paging3 pageSize 10 → 50 (Android gallery)**
+- **File:** `YallaGalleryDataSource.kt`
+- **Problem:** 10 items fills ~3 rows in a 3-column grid. Constant loading spinners.
+- **Fix:** `pageSize = 50, initialLoadSize = 50`. MediaStore queries are cheap (return URIs, not pixels).
+
+**PERF-5: Replace dispatch_group + coroutine mixing with async/awaitAll (iOS picker)**
+- **File:** `ImagePickerLauncher.ios.kt`
+- **Problem:** GCD dispatch_group + Kotlin coroutine dispatchers = latent race condition on image data list.
+- **Fix:** Pure Kotlin `async`/`awaitAll` for coordinating async image loading.
 
 ## Refactoring Details
 
 ### 1. Button Deduplication (iOS)
 
-**Problem:** `NativeCircleIconButton.ios.kt` and `NativeSquircleIconButton.ios.kt` are 95% identical. Only shape and factory differ.
+**Problem:** `NativeCircleIconButton.ios.kt` and `NativeSquircleIconButton.ios.kt` are ~90% identical.
 
-**Solution:** Extract shared `internal fun NativeIconButton(factory, iconType, onClick, border, background, alpha)` in `iosMain`. Both public buttons delegate to it.
+**Differences to account for:**
+- Shape (circle vs rounded rect)
+- Factory type (CircleIconButtonFactory vs SquircleIconButtonFactory)
+- `NativeCircleIconButton` uses `key(iconType)` wrapper — squircle does not
+- `NativeCircleIconButton` has `alpha` parameter — squircle does not
 
-### 2. Silent Failure Fix
+**Solution:** Extract `internal fun NativeIconButton(factory, iconType, onClick, border, background, alpha: Float = 1f, useKey: Boolean = false)` in iosMain. Both public buttons delegate to it.
 
-**Before:**
+### 2. Silent Failure → Clear Error
+
+All CompositionLocal reads replaced with:
 ```kotlin
-val factory = LocalCircleIconButtonFactory.current ?: return  // SILENT!
+val config = requireIosConfig()
+val factory = config.circleButton  // Never null, crashes with clear message if not installed
 ```
 
-**After:**
-```kotlin
-val factory = YallaPlatform.requireConfig().circleButtonFactory  // LOUD!
+### 3. NativeSheetPresenterFactory Removal
+
+`NativeSheetPresenterFactory` wrapper class eliminated. `SheetPresenterFactory` becomes an interface that Swift can implement directly as a protocol.
+
+### 4. Camera Session Interruption (iOS — new)
+
+Add handling for `AVCaptureSessionWasInterrupted` / `AVCaptureSessionInterruptionEnded` notifications. Show user feedback when camera is interrupted (e.g., phone call).
+
+### 5. Material 2 → 3 Migration (media module, Android)
+
+Replace `androidx.compose.material.Card` + `ExperimentalMaterialApi` with `androidx.compose.material3.Card` (stable, no opt-in). Drop `compose.material` dependency.
+
+### 6. Paging3 ViewModel Fix (Android gallery)
+
+Store pager flow as `val` in ViewModel (currently creates new Pager on every call). Remove `YallaGalleryViewModelFactory` boilerplate — use `viewModel { }` factory lambda.
+
+## Package Structure
+
+**platform module (unchanged path):**
+```
+uz.yalla.platform/
+├── YallaPlatform.kt              // install() entry point + PlatformConfig interface
+├── button/                       // NativeCircle/SquircleIconButton, SheetIconButton
+├── indicator/                    // NativeLoadingIndicator
+├── picker/                       // NativeWheelDatePicker
+├── sheet/                        // NativeSheet, SheetPresenter (iOS)
+├── toggle/                       // NativeSwitch
+├── icon/                         // IconMapper, IconType
+├── system/                       // SystemBarColors, AppUpdateState, VersionComparator
+└── model/                        // IconType enum
 ```
 
-### 3. Unsafe Border Color Cast
-
-**Before:**
-```kotlin
-(border?.brush as? SolidColor)?.value?.toArgb()?.toLong() ?: 0L
+**media module (stays separate, same path):**
 ```
-
-**After:**
-```kotlin
-border?.toArgbLong() ?: 0L  // Extension that logs warning for non-solid brushes
-```
-
-### 4. Rotation Logic Deduplication (Android)
-
-**Problem:** `rotateImageIfRequired()` exists in both `gallery/ImageHelper.kt` and `picker/ImageRotationHelper.kt`.
-
-**Solution:** Single `ImageRotationHelper.kt` in `media/util/` package, used by both gallery and picker.
-
-### 5. iOS Gallery to PHPickerViewController
-
-Remove custom PHAsset grid on iOS. Replace with `PHPickerViewController` wrapper that matches the `YallaGallery` expect API surface.
-
-### 6. media Module Deletion
-
-1. Move all `media/src/` code into `platform/src/` under `uz.yalla.platform.media.*`
-2. Merge `media/build.gradle.kts` dependencies into `platform/build.gradle.kts`
-3. Delete `media/` module directory
-4. Remove from `settings.gradle.kts`
-5. Update all consumer imports (`uz.yalla.media.*` to `uz.yalla.platform.media.*`)
-
-## Dependency Changes
-
-### platform/build.gradle.kts additions (from media merge)
-
-```kotlin
-// Android
-androidMain.dependencies {
-    implementation(libs.camerax.core)
-    implementation(libs.camerax.camera2)
-    implementation(libs.camerax.lifecycle)
-    implementation(libs.camerax.view)
-    implementation(libs.paging.compose)
-    implementation(libs.paging.runtime)
-}
-
-// Common
-commonMain.dependencies {
-    // existing platform deps +
-    implementation(libs.paging.common)  // if multiplatform paging
-}
+uz.yalla.media/
+├── camera/                       // YallaCamera, CameraState, SystemCameraLauncher
+├── gallery/                      // YallaGallery (Android: Paging3, iOS: PHPicker)
+├── picker/                       // ImagePickerLauncher, resize, filters
+└── utils/                        // CompressionConfig, ImageCompressor
 ```
 
 ## Consumer Migration
 
-### Import changes for YallaClient
+### Factory migration (iOS only)
 
 | Before | After |
 |--------|-------|
-| `import uz.yalla.media.camera.*` | `import uz.yalla.platform.media.camera.*` |
-| `import uz.yalla.media.gallery.*` | `import uz.yalla.platform.media.gallery.*` |
-| `import uz.yalla.media.picker.*` | `import uz.yalla.platform.media.picker.*` |
-| `import uz.yalla.media.utils.*` | `import uz.yalla.platform.media.compression.*` |
+| `LocalCircleIconButtonFactory provides factory` in CompositionLocal | `YallaPlatform.install(IosPlatformConfig.Builder().apply { ... }.build())` once at app start |
+| `LocalSquircleIconButtonFactory provides factory` | (included in IosPlatformConfig) |
+| `LocalSheetPresenterFactory provides factory` | (included in IosPlatformConfig) |
+| `LocalThemeProvider provides provider` | (included in IosPlatformConfig) |
 
-### Factory migration (iOS)
-
-| Before | After |
-|--------|-------|
-| `LocalCircleIconButtonFactory provides factory` | `YallaPlatform.install(PlatformConfig(...))` |
-| `LocalSquircleIconButtonFactory provides factory` | (included in PlatformConfig) |
-| `LocalSheetPresenterFactory provides factory` | (included in PlatformConfig) |
-| `LocalThemeProvider provides provider` | (included in PlatformConfig) |
+**No import path changes** — media stays at `uz.yalla.media.*`, platform stays at `uz.yalla.platform.*`.
 
 ## Phase 2 Preview (future spec)
 
-New native components to be added after Phase 1:
+New native components (factory pattern unless noted):
 
-| Priority | Component | iOS Implementation | Android Implementation |
-|----------|-----------|-------------------|----------------------|
-| 1 | NativeSheet upgrade | UISheetPresentationController (detents, dismiss control) | ModalBottomSheet (stays) |
-| 2 | NativeHaptic | UIImpactFeedbackGenerator + UINotificationFeedbackGenerator | VibrationEffect |
-| 3 | NativeInAppBrowser | SFSafariViewController | CustomTabs |
-| 4 | NativeNavigation | UINavigationController (large titles, connected scroll) | Compose navigation (stays) |
-| 5 | NativeTextField | UITextField wrapper | Compose TextField (stays) |
-| 6 | NativeSearchBar | UISearchBar | Compose SearchBar (stays) |
-| 7 | NativeContextMenu | UIContextMenuInteraction | Compose DropdownMenu (stays) |
-| 8 | NativeShareSheet | UIActivityViewController | ShareCompat |
-| 9 | NativeSegmentedControl | UISegmentedControl | Compose TabRow (stays) |
-| 10 | NativePullToRefresh | UIRefreshControl | Material PullToRefresh (stays) |
-
-Each will be added to `PlatformConfig` as an optional factory field (nullable, with sensible defaults or clear error messages).
-
-## Phase 3 Preview (future spec)
-
-- 100% KDoc on all public APIs
-- MODULE.md for Dokka
-- Tests: VersionComparator logic, CompressionConfig presets, CameraMode conversion, factory error handling, ImagePicker selection modes
-- UI tests where applicable (compose-ui-test)
+| Priority | Component | iOS | Android | Pattern |
+|----------|-----------|-----|---------|---------|
+| 1 | NativeSheet upgrade | UISheetPresentationController (detents) | ModalBottomSheet | Factory |
+| 2 | NativeHaptic | UIImpactFeedbackGenerator | VibrationEffect | expect/actual |
+| 3 | NativeInAppBrowser | SFSafariViewController | CustomTabs | Factory |
+| 4 | NativeNavigation | UINavigationController (large titles) | Compose nav | Factory |
+| 5 | NativeTextField | UITextField wrapper | Compose TextField | Factory |
+| 6 | NativeSearchBar | UISearchBar | Compose SearchBar | Factory |
+| 7 | NativeContextMenu | UIContextMenuInteraction | DropdownMenu | Factory |
+| 8 | NativeShareSheet | UIActivityViewController | ShareCompat | Factory |
+| 9 | NativeSegmentedControl | UISegmentedControl | TabRow | expect/actual |
+| 10 | NativePullToRefresh | UIRefreshControl | Material PullToRefresh | Factory |
 
 ## Success Criteria (Phase 1)
 
-1. `media` module fully merged into `platform` — no `media/` directory remains
-2. `YallaPlatform.install()` replaces all scattered CompositionLocal factories
-3. All existing components work identically (no behavior regression)
-4. iOS button code deduplicated
-5. iOS gallery uses PHPickerViewController
-6. Android rotation logic consolidated
-7. No silent failures — all missing config produces clear error messages
-8. `./gradlew build` passes
-9. All consumer imports updated
+1. `YallaPlatform.install()` replaces all scattered CompositionLocal factories
+2. All 4 critical bugs fixed (stale callback, observer leak, cache bug, dismiss timing)
+3. All 5 important fixes applied
+4. All 5 performance improvements applied
+5. iOS button code deduplicated
+6. iOS gallery uses PHPickerViewController
+7. Android rotation logic consolidated to AndroidX ExifInterface
+8. Material 2 removed from media module (migrated to M3)
+9. No silent failures — all missing config produces clear error messages
+10. Factory types are interfaces (not data classes with lambdas)
+11. `./gradlew build` passes on both platforms
+12. `YallaPlatform.reset()` available for testing
