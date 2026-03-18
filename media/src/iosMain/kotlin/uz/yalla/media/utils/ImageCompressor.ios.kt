@@ -8,9 +8,7 @@ import platform.CoreGraphics.CGRectMake
 import platform.CoreGraphics.CGSizeMake
 import platform.Foundation.NSData
 import platform.Foundation.dataWithBytes
-import platform.UIKit.UIGraphicsBeginImageContextWithOptions
-import platform.UIKit.UIGraphicsEndImageContext
-import platform.UIKit.UIGraphicsGetImageFromCurrentImageContext
+import platform.UIKit.UIGraphicsImageRenderer
 import platform.UIKit.UIImage
 import platform.UIKit.UIImageJPEGRepresentation
 import platform.posix.memcpy
@@ -53,11 +51,10 @@ actual fun compressImage(
 
     val resizedImage =
         if (scale < 1.0) {
-            UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-            originalImage.drawInRect(CGRectMake(0.0, 0.0, newWidth, newHeight))
-            val image = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            image ?: originalImage
+            val renderer = UIGraphicsImageRenderer(size = newSize)
+            renderer.imageWithActions { _ ->
+                originalImage.drawInRect(CGRectMake(0.0, 0.0, newWidth, newHeight))
+            }
         } else {
             originalImage
         }
