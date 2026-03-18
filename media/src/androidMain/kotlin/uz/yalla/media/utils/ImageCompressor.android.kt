@@ -98,12 +98,13 @@ actual fun compressImage(
 
     // Dimension reduction fallback if even minimum quality exceeds size limit
     if (bestBytes == null) {
-        val smaller = Bitmap.createScaledBitmap(
-            resizedBitmap,
-            resizedBitmap.width / 2,
-            resizedBitmap.height / 2,
-            true,
-        )
+        val smaller =
+            Bitmap.createScaledBitmap(
+                resizedBitmap,
+                resizedBitmap.width / 2,
+                resizedBitmap.height / 2,
+                true,
+            )
         val stream = ByteArrayOutputStream()
         smaller.compress(Bitmap.CompressFormat.JPEG, 10, stream)
         bestBytes = stream.toByteArray()

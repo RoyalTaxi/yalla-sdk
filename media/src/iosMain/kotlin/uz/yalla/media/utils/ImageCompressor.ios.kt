@@ -82,9 +82,10 @@ actual fun compressImage(
     if (bestData == null) {
         val smallerSize = CGSizeMake(newWidth / 2.0, newHeight / 2.0)
         val renderer = UIGraphicsImageRenderer(size = smallerSize)
-        val smallerImage = renderer.imageWithActions { _ ->
-            resizedImage.drawInRect(CGRectMake(0.0, 0.0, newWidth / 2.0, newHeight / 2.0))
-        }
+        val smallerImage =
+            renderer.imageWithActions { _ ->
+                resizedImage.drawInRect(CGRectMake(0.0, 0.0, newWidth / 2.0, newHeight / 2.0))
+            }
         bestData = UIImageJPEGRepresentation(smallerImage, 0.1)
             ?: return imageBytes
     }
