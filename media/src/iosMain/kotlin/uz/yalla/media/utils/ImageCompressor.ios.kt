@@ -59,32 +59,41 @@ actual fun compressImage(
             originalImage
         }
 
-    var quality = config.quality.toDouble() / 100.0
-    var compressedData: NSData? = null
-    var attempts = 0
+    // Binary search for optimal quality that meets size constraint
+    // Map quality from 10-100 int range to 0.1-1.0 double range
+    var lo = 10
+    var hi = config.quality
+    var bestData: NSData? = null
 
-    while (quality > 0.1 && attempts < 5) {
-        compressedData = UIImageJPEGRepresentation(resizedImage, quality)
-        val size = compressedData?.length?.toInt() ?: 0
-
-        if (size <= maxSizeBytes || quality <= 0.1) {
-            break
+    while (lo <= hi) {
+        val mid = (lo + hi) / 2
+        val quality = mid.toDouble() / 100.0
+        val compressed = UIImageJPEGRepresentation(resizedImage, quality)
+        val size = compressed?.length?.toInt() ?: 0
+        if (size in 1..maxSizeBytes) {
+            bestData = compressed
+            lo = mid + 1
+        } else {
+            hi = mid - 1
         }
-
-        quality -= 0.15
-        attempts++
     }
 
-    val finalData =
-        compressedData
-            ?: UIImageJPEGRepresentation(resizedImage, 0.5)
+    // Dimension reduction fallback if even minimum quality exceeds size limit
+    if (bestData == null) {
+        val smallerSize = CGSizeMake(newWidth / 2.0, newHeight / 2.0)
+        val renderer = UIGraphicsImageRenderer(size = smallerSize)
+        val smallerImage = renderer.imageWithActions { _ ->
+            resizedImage.drawInRect(CGRectMake(0.0, 0.0, newWidth / 2.0, newHeight / 2.0))
+        }
+        bestData = UIImageJPEGRepresentation(smallerImage, 0.1)
             ?: return imageBytes
+    }
 
-    val finalSize = finalData.length.toInt()
+    val finalSize = bestData.length.toInt()
     val result = ByteArray(finalSize)
     if (finalSize > 0) {
         result.usePinned { pinned ->
-            memcpy(pinned.addressOf(0), finalData.bytes, finalData.length)
+            memcpy(pinned.addressOf(0), bestData.bytes, bestData.length)
         }
     }
 
