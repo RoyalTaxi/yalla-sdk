@@ -9,10 +9,48 @@ import org.jetbrains.compose.resources.FontResource
 import uz.yalla.resources.Res
 import uz.yalla.resources.nummernschild
 
+/**
+ * Platform-specific bold (700) font resource.
+ *
+ * Each platform (Android / iOS) provides the actual font file.
+ * Used by [FontScheme.Title] styles and [FontScheme.Body.Weighty.bold].
+ *
+ * @since 0.0.1
+ */
 expect val boldFont: FontResource
+
+/**
+ * Platform-specific medium (500) font resource.
+ *
+ * Each platform provides the actual font file.
+ * Used by [FontScheme.Body.caption] and [FontScheme.Body.Weighty.medium].
+ *
+ * @since 0.0.1
+ */
 expect val mediumFont: FontResource
+
+/**
+ * Platform-specific normal/regular (400) font resource.
+ *
+ * Each platform provides the actual font file.
+ * Used by [FontScheme.Body.Weighty.regular].
+ *
+ * @since 0.0.1
+ */
 expect val normalFont: FontResource
 
+/**
+ * Creates and remembers the complete [FontScheme] for the Yalla design system.
+ *
+ * Builds all title, body, and custom text styles using the platform-specific font resources
+ * ([boldFont], [mediumFont], [normalFont]) and the bundled Nummernschild font for license plates.
+ *
+ * This composable is called by [YallaTheme][uz.yalla.design.theme.YallaTheme] and its result
+ * is provided via [LocalFontScheme]. Callers generally do not need to invoke this directly.
+ *
+ * @return Fully configured [FontScheme] instance.
+ * @since 0.0.1
+ */
 @Composable
 fun rememberFontScheme(): FontScheme {
     return FontScheme(

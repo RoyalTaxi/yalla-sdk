@@ -20,8 +20,41 @@ import uz.yalla.design.font.rememberFontScheme
 import androidx.compose.material3.darkColorScheme as materialDarkColorScheme
 import androidx.compose.material3.lightColorScheme as materialLightColorScheme
 
+/** CompositionLocal tracking whether the current theme is dark mode. */
 private val LocalIsDark = staticCompositionLocalOf { false }
 
+/**
+ * Root composable that applies the Yalla design system.
+ *
+ * Sets up [ColorScheme], [FontScheme], and ripple configuration, then bridges them
+ * into Material3's [MaterialTheme] so both Yalla tokens (`System.color.*`) and M3
+ * components work correctly. Wrap your app or screen content with this composable.
+ *
+ * The Material3 color scheme mapping exists so standard M3 components (TextField,
+ * Button, etc.) pick up Yalla brand colors without additional configuration.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * @Composable
+ * fun App() {
+ *     YallaTheme {
+ *         // Yalla tokens available here:
+ *         Text(
+ *             text = "Hello Yalla",
+ *             color = System.color.text.base,
+ *             style = System.font.body.base.medium,
+ *         )
+ *     }
+ * }
+ * ```
+ *
+ * @param isDark Whether to use dark color scheme. Defaults to system setting.
+ * @param colorScheme Color tokens to apply. Defaults to [light] or [dark] based on [isDark].
+ * @param fontScheme Typography tokens to apply. Defaults to [rememberFontScheme].
+ * @param content Composable content wrapped by the theme.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun YallaTheme(
@@ -82,15 +115,34 @@ fun YallaTheme(
     }
 }
 
+/**
+ * Accessor for Yalla design tokens inside a composable scope.
+ *
+ * Provides convenient access to color, font, and dark-mode state without
+ * manually reading CompositionLocals. Must be used within a [YallaTheme].
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * val textColor = System.color.text.base
+ * val bodyStyle = System.font.body.base.medium
+ * val isDarkMode = System.isDark
+ * ```
+ *
+ * @since 0.0.1
+ */
 object System {
+    /** Current [ColorScheme] provided by the nearest [YallaTheme]. */
     val color: ColorScheme
         @Composable
         get() = LocalColorScheme.current
 
+    /** Current [FontScheme] provided by the nearest [YallaTheme]. */
     val font: FontScheme
         @Composable
         get() = LocalFontScheme.current
 
+    /** Whether the current theme is dark mode. */
     val isDark: Boolean
         @Composable
         get() = LocalIsDark.current
