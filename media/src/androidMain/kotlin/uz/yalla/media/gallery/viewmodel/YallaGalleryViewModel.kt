@@ -10,15 +10,13 @@ import kotlinx.coroutines.flow.Flow
 import uz.yalla.media.gallery.model.YallaMediaImage
 import uz.yalla.media.gallery.repository.YallaGalleryRepository
 
-internal class YallaGalleryViewModel(
-    private val yallaGalleryRepository: YallaGalleryRepository
-) : ViewModel() {
-    fun getImages(): Flow<PagingData<YallaMediaImage>> =
+internal class YallaGalleryViewModel(private val yallaGalleryRepository: YallaGalleryRepository) : ViewModel() {
+    val images: Flow<PagingData<YallaMediaImage>> =
         Pager(
             config =
                 PagingConfig(
-                    pageSize = 10,
-                    initialLoadSize = 10,
+                    pageSize = 50,
+                    initialLoadSize = 50,
                     enablePlaceholders = true
                 )
         ) {

@@ -16,8 +16,8 @@ internal object YallaBitmapCache {
 
     private fun calculateMemoryCacheSize(): Int {
         val maxMemory = Runtime.getRuntime().maxMemory() / 1024
-        val cacheSize = (maxMemory * 0.25).toInt()
-        return cacheSize.coerceAtLeast(1024 * 1024)
+        val cacheSize = (maxMemory * 0.125).toInt()
+        return cacheSize.coerceAtLeast(4 * 1024)
     }
 
     internal fun bitmapToByteArray(bitmap: Bitmap): ByteArray {

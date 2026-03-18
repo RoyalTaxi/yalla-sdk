@@ -78,30 +78,43 @@ actual fun compressImage(
             bitmap
         }
 
-    var quality = config.quality
-    var attempts = 0
-    var result: ByteArray
+    // Binary search for optimal quality that meets size constraint
+    var lo = 10
+    var hi = config.quality
+    var bestBytes: ByteArray? = null
 
-    while (quality > 10 && attempts < 5) {
-        val outputStream = ByteArrayOutputStream()
-        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
-        result = outputStream.toByteArray()
-
-        if (result.size <= maxSizeBytes || quality <= 10) {
-            resizedBitmap.recycle()
-            return result
+    while (lo <= hi) {
+        val mid = (lo + hi) / 2
+        val stream = ByteArrayOutputStream()
+        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, mid, stream)
+        val compressed = stream.toByteArray()
+        if (compressed.size <= maxSizeBytes) {
+            bestBytes = compressed
+            lo = mid + 1
+        } else {
+            hi = mid - 1
         }
-
-        quality -= 15
-        attempts++
     }
 
-    val outputStream = ByteArrayOutputStream()
-    resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 10, outputStream)
-    result = outputStream.toByteArray()
-    resizedBitmap.recycle()
+    // Dimension reduction fallback if even minimum quality exceeds size limit
+    if (bestBytes == null) {
+        val smaller =
+            Bitmap.createScaledBitmap(
+                resizedBitmap,
+                resizedBitmap.width / 2,
+                resizedBitmap.height / 2,
+                true,
+            )
+        val stream = ByteArrayOutputStream()
+        smaller.compress(Bitmap.CompressFormat.JPEG, 10, stream)
+        bestBytes = stream.toByteArray()
+        if (smaller != resizedBitmap) {
+            smaller.recycle()
+        }
+    }
 
-    return result
+    resizedBitmap.recycle()
+    return bestBytes
 }
 
 private fun calculateInSampleSize(

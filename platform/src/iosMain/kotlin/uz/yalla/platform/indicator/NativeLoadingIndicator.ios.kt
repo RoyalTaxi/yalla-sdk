@@ -26,6 +26,11 @@ actual fun NativeLoadingIndicator(
                 setOpaque(backgroundColor.isSpecified && backgroundColor.alpha == 1f)
                 startAnimating()
             }
+        },
+        update = { indicator ->
+            color.toUIColorOrNull()?.let { indicator.color = it }
+            indicator.backgroundColor = backgroundColor.toUIColorOrNull() ?: UIColor.clearColor
+            indicator.setOpaque(backgroundColor.isSpecified && backgroundColor.alpha == 1f)
         }
     )
 }

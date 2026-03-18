@@ -15,8 +15,7 @@ import platform.UIKit.UISceneActivationStateForegroundActive
 import platform.UIKit.UIViewController
 import platform.UIKit.UIWindow
 import platform.UIKit.UIWindowScene
-import uz.yalla.platform.LocalSheetPresenterFactory
-import uz.yalla.platform.LocalThemeProvider
+import uz.yalla.platform.config.requireIosConfig
 
 @Suppress("UNUSED_PARAMETER")
 @Composable
@@ -35,14 +34,13 @@ actual fun NativeSheet(
     val currentContent by rememberUpdatedState(content)
     val currentOnFullyExpanded by rememberUpdatedState(onFullyExpanded)
 
-    val sheetFactory = LocalSheetPresenterFactory.current
-    val themeProvider = LocalThemeProvider.current
+    val iosConfig = requireIosConfig()
     val backgroundColor = containerColor.toArgb().toLong()
 
     val presenter =
-        remember(sheetFactory) {
+        remember(iosConfig.sheetPresenter) {
             SheetPresenter(
-                factory = sheetFactory,
+                factory = iosConfig.sheetPresenter,
                 onDismissedByUser = { currentOnDismiss() }
             )
         }
@@ -63,7 +61,7 @@ actual fun NativeSheet(
         )
         presenter.present(
             parent = parent,
-            themeProvider = themeProvider,
+            themeProvider = iosConfig.themeProvider,
             backgroundColor = backgroundColor,
             onPresented = {
                 hasPresented.value = true

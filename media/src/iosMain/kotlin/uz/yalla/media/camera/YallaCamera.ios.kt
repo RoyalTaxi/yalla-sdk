@@ -3,10 +3,11 @@ package uz.yalla.media.camera
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,6 +23,8 @@ import platform.AVFoundation.AVCaptureDevicePositionFront
 import platform.AVFoundation.AVCapturePhotoOutput
 import platform.AVFoundation.AVCapturePhotoSettings
 import platform.AVFoundation.AVCaptureSession
+import platform.AVFoundation.AVCaptureSessionInterruptionEndedNotification
+import platform.AVFoundation.AVCaptureSessionWasInterruptedNotification
 import platform.AVFoundation.AVCaptureVideoDataOutput
 import platform.AVFoundation.AVCaptureVideoPreviewLayer
 import platform.AVFoundation.AVLayerVideoGravityResizeAspectFill
@@ -173,6 +176,12 @@ private fun RealDeviceCamera(
             createCaptureSession(camera, capturePhotoOutput, videoOutput, frameAnalyzerDelegate)
         }
 
+    // Lifted to RealDeviceCamera scope so DisposableEffect can clean up the observer
+    val orientationListener =
+        remember(capturePhotoOutput, videoOutput) {
+            mutableStateOf<OrientationListener?>(null)
+        }
+
     SideEffect {
         state.triggerCaptureAnchor = {
             capturePhoto(capturePhotoOutput, camera, photoCaptureDelegate)
@@ -186,7 +195,30 @@ private fun RealDeviceCamera(
     }
 
     DisposableEffect(captureSession) {
+        val interruptionObserver =
+            NSNotificationCenter.defaultCenter.addObserverForName(
+                name = AVCaptureSessionWasInterruptedNotification,
+                `object` = captureSession,
+                queue = null
+            ) { _ ->
+                state.isCameraReady = false
+            }
+
+        val interruptionEndedObserver =
+            NSNotificationCenter.defaultCenter.addObserverForName(
+                name = AVCaptureSessionInterruptionEndedNotification,
+                `object` = captureSession,
+                queue = null
+            ) { _ ->
+                state.isCameraReady = true
+            }
+
         onDispose {
+            orientationListener.value?.let {
+                NSNotificationCenter.defaultCenter.removeObserver(it)
+            }
+            NSNotificationCenter.defaultCenter.removeObserver(interruptionObserver!!)
+            NSNotificationCenter.defaultCenter.removeObserver(interruptionEndedObserver!!)
             stopSession(captureSession)
             state.isCameraReady = false
         }
@@ -203,7 +235,8 @@ private fun RealDeviceCamera(
         session = captureSession,
         state = state,
         photoOutput = capturePhotoOutput,
-        videoOutput = videoOutput
+        videoOutput = videoOutput,
+        orientationListener = orientationListener
     )
 }
 
@@ -235,14 +268,9 @@ private fun SetupCameraView(
     session: AVCaptureSession,
     state: YallaCameraState,
     photoOutput: AVCapturePhotoOutput,
-    videoOutput: AVCaptureVideoDataOutput?
+    videoOutput: AVCaptureVideoDataOutput?,
+    orientationListener: MutableState<OrientationListener?>
 ) {
-    // Remember orientation listener to avoid recreating it
-    val orientationListener =
-        remember(photoOutput, videoOutput) {
-            mutableStateOf<OrientationListener?>(null)
-        }
-
     UIKitView(
         modifier = modifier.background(Color.Black),
         factory = {

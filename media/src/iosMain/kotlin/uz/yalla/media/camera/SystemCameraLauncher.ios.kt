@@ -51,9 +51,7 @@ actual fun rememberSystemCameraLauncher(
     }
 }
 
-actual class SystemCameraLauncher actual constructor(
-    private val onLaunch: () -> Unit
-) {
+actual class SystemCameraLauncher actual constructor(private val onLaunch: () -> Unit) {
     actual fun launch() = onLaunch()
 }
 

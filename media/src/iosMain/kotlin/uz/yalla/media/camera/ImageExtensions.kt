@@ -7,9 +7,8 @@ import kotlinx.cinterop.usePinned
 import platform.CoreGraphics.CGRectMake
 import platform.CoreGraphics.CGSizeMake
 import platform.Foundation.NSData
-import platform.UIKit.UIGraphicsBeginImageContextWithOptions
-import platform.UIKit.UIGraphicsEndImageContext
-import platform.UIKit.UIGraphicsGetImageFromCurrentImageContext
+import platform.UIKit.UIGraphicsImageRenderer
+import platform.UIKit.UIGraphicsImageRendererFormat
 import platform.UIKit.UIImage
 import platform.UIKit.UIImageOrientation
 import platform.posix.memcpy
@@ -18,12 +17,11 @@ import platform.posix.memcpy
 internal fun UIImage.normalizeOrientation(): UIImage {
     if (imageOrientation == UIImageOrientation.UIImageOrientationUp) return this
 
-    UIGraphicsBeginImageContextWithOptions(size, false, scale)
-    drawInRect(CGRectMake(0.0, 0.0, size.useContents { width }, size.useContents { height }))
-    val normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-
-    return normalizedImage ?: this
+    val format = UIGraphicsImageRendererFormat().apply { this.scale = this@normalizeOrientation.scale }
+    val renderer = UIGraphicsImageRenderer(size = size, format = format)
+    return renderer.imageWithActions { _ ->
+        drawInRect(CGRectMake(0.0, 0.0, size.useContents { width }, size.useContents { height }))
+    }
 }
 
 @OptIn(ExperimentalForeignApi::class)
@@ -60,11 +58,9 @@ internal fun UIImage.resizeAndCompress(
             CGSizeMake(maxDimension * aspectRatio, maxDimension)
         }
 
-    // Resize image
-    UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-    drawInRect(CGRectMake(0.0, 0.0, newSize.useContents { width }, newSize.useContents { height }))
-    val resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-
-    return resizedImage ?: this
+    // Resize image using modern Metal-backed renderer
+    val renderer = UIGraphicsImageRenderer(size = newSize)
+    return renderer.imageWithActions { _ ->
+        drawInRect(CGRectMake(0.0, 0.0, newSize.useContents { width }, newSize.useContents { height }))
+    }
 }

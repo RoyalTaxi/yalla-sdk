@@ -1,6 +1,8 @@
 package uz.yalla.media.camera
 
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.addressOf
+import kotlinx.cinterop.usePinned
 import platform.AVFoundation.AVCaptureConnection
 import platform.AVFoundation.AVCaptureOutput
 import platform.AVFoundation.AVCapturePhoto
@@ -14,14 +16,12 @@ import platform.CoreVideo.CVPixelBufferGetBaseAddress
 import platform.CoreVideo.CVPixelBufferGetDataSize
 import platform.CoreVideo.CVPixelBufferLockBaseAddress
 import platform.CoreVideo.CVPixelBufferUnlockBaseAddress
-import platform.Foundation.NSData
 import platform.Foundation.NSError
-import platform.Foundation.dataWithBytes
 import platform.darwin.NSObject
+import platform.posix.memcpy
 
-internal class CameraFrameAnalyzerDelegate(
-    private val onFrame: ((frame: ByteArray) -> Unit)?
-) : NSObject(),
+internal class CameraFrameAnalyzerDelegate(private val onFrame: ((frame: ByteArray) -> Unit)?) :
+    NSObject(),
     AVCaptureVideoDataOutputSampleBufferDelegateProtocol {
     @OptIn(ExperimentalForeignApi::class)
     override fun captureOutput(
@@ -32,14 +32,19 @@ internal class CameraFrameAnalyzerDelegate(
     ) {
         if (onFrame == null) return
 
-        val imageBuffer = CMSampleBufferGetImageBuffer(didOutputSampleBuffer) ?: return
-        CVPixelBufferLockBaseAddress(imageBuffer, 0uL)
-        val baseAddress = CVPixelBufferGetBaseAddress(imageBuffer)
-        val bufferSize = CVPixelBufferGetDataSize(imageBuffer)
-        val data = NSData.dataWithBytes(bytes = baseAddress, length = bufferSize)
-        CVPixelBufferUnlockBaseAddress(imageBuffer, 0uL)
+        val pixelBuffer = CMSampleBufferGetImageBuffer(didOutputSampleBuffer) ?: return
+        CVPixelBufferLockBaseAddress(pixelBuffer, 0uL)
+        val baseAddress = CVPixelBufferGetBaseAddress(pixelBuffer)
+        val dataSize = CVPixelBufferGetDataSize(pixelBuffer)
 
-        onFrame.invoke(data.toByteArray())
+        // Single copy: CVPixelBuffer -> ByteArray directly (avoids intermediate NSData)
+        val byteArray = ByteArray(dataSize.toInt())
+        byteArray.usePinned { pinned ->
+            memcpy(pinned.addressOf(0), baseAddress, dataSize)
+        }
+
+        CVPixelBufferUnlockBaseAddress(pixelBuffer, 0uL)
+        onFrame.invoke(byteArray)
     }
 }
 

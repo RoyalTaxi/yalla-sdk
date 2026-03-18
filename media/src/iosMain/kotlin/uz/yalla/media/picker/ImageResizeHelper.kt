@@ -8,9 +8,7 @@ import kotlinx.cinterop.useContents
 import platform.CoreGraphics.CGRectMake
 import platform.CoreGraphics.CGSize
 import platform.CoreGraphics.CGSizeMake
-import platform.UIKit.UIGraphicsBeginImageContextWithOptions
-import platform.UIKit.UIGraphicsEndImageContext
-import platform.UIKit.UIGraphicsGetImageFromCurrentImageContext
+import platform.UIKit.UIGraphicsImageRenderer
 import platform.UIKit.UIImage
 import platform.UIKit.UIImageJPEGRepresentation
 import platform.posix.memcpy
@@ -63,9 +61,8 @@ private fun UIImage.calculateNewSize(
 
 @OptIn(ExperimentalForeignApi::class)
 internal fun UIImage.resize(targetSize: CValue<CGSize>): UIImage {
-    UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
-    drawInRect(CGRectMake(0.0, 0.0, targetSize.useContents { width }, targetSize.useContents { height }))
-    val newImage = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    return newImage!!
+    val renderer = UIGraphicsImageRenderer(size = targetSize)
+    return renderer.imageWithActions { _ ->
+        drawInRect(CGRectMake(0.0, 0.0, targetSize.useContents { width }, targetSize.useContents { height }))
+    }
 }
