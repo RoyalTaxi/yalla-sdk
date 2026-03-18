@@ -11,8 +11,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -35,7 +34,6 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterialApi::class)
 @ExperimentalYallaGalleryApi
 @Composable
 actual fun YallaGallery(
@@ -72,7 +70,6 @@ actual fun YallaGallery(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun GalleryGrid(
     state: GalleryPickerState,
@@ -110,7 +107,6 @@ private fun GalleryGrid(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun GalleryImageCard(
     bitmap: androidx.compose.ui.graphics.ImageBitmap,
