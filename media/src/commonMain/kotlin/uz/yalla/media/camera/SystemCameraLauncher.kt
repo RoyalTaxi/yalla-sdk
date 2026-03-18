@@ -9,8 +9,6 @@ expect fun rememberSystemCameraLauncher(
     onResult: (ByteArray?) -> Unit
 ): SystemCameraLauncher
 
-expect class SystemCameraLauncher(
-    onLaunch: () -> Unit
-) {
+expect class SystemCameraLauncher(onLaunch: () -> Unit) {
     fun launch()
 }

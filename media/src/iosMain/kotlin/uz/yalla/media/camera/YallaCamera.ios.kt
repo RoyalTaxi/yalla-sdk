@@ -23,13 +23,13 @@ import platform.AVFoundation.AVCaptureDevicePositionFront
 import platform.AVFoundation.AVCapturePhotoOutput
 import platform.AVFoundation.AVCapturePhotoSettings
 import platform.AVFoundation.AVCaptureSession
+import platform.AVFoundation.AVCaptureSessionInterruptionEndedNotification
+import platform.AVFoundation.AVCaptureSessionWasInterruptedNotification
 import platform.AVFoundation.AVCaptureVideoDataOutput
 import platform.AVFoundation.AVCaptureVideoPreviewLayer
 import platform.AVFoundation.AVLayerVideoGravityResizeAspectFill
 import platform.AVFoundation.AVMediaTypeVideo
 import platform.AVFoundation.AVVideoCodecKey
-import platform.AVFoundation.AVCaptureSessionInterruptionEndedNotification
-import platform.AVFoundation.AVCaptureSessionWasInterruptedNotification
 import platform.AVFoundation.AVVideoCodecTypeJPEG
 import platform.AVFoundation.position
 import platform.Foundation.NSNotificationCenter
@@ -195,21 +195,23 @@ private fun RealDeviceCamera(
     }
 
     DisposableEffect(captureSession) {
-        val interruptionObserver = NSNotificationCenter.defaultCenter.addObserverForName(
-            name = AVCaptureSessionWasInterruptedNotification,
-            `object` = captureSession,
-            queue = null
-        ) { _ ->
-            state.isCameraReady = false
-        }
+        val interruptionObserver =
+            NSNotificationCenter.defaultCenter.addObserverForName(
+                name = AVCaptureSessionWasInterruptedNotification,
+                `object` = captureSession,
+                queue = null
+            ) { _ ->
+                state.isCameraReady = false
+            }
 
-        val interruptionEndedObserver = NSNotificationCenter.defaultCenter.addObserverForName(
-            name = AVCaptureSessionInterruptionEndedNotification,
-            `object` = captureSession,
-            queue = null
-        ) { _ ->
-            state.isCameraReady = true
-        }
+        val interruptionEndedObserver =
+            NSNotificationCenter.defaultCenter.addObserverForName(
+                name = AVCaptureSessionInterruptionEndedNotification,
+                `object` = captureSession,
+                queue = null
+            ) { _ ->
+                state.isCameraReady = true
+            }
 
         onDispose {
             orientationListener.value?.let {

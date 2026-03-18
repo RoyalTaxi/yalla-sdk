@@ -71,9 +71,7 @@ private fun createCameraImageUri(context: Context): Uri? {
     return FileProvider.getUriForFile(context, context.packageName + ".provider", imageFile)
 }
 
-actual class SystemCameraLauncher actual constructor(
-    private val onLaunch: () -> Unit
-) {
+actual class SystemCameraLauncher actual constructor(private val onLaunch: () -> Unit) {
     private var isCameraActive = false
 
     fun markCameraInactive() {

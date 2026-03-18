@@ -19,9 +19,8 @@ import platform.Foundation.NSError
 import platform.Foundation.dataWithBytes
 import platform.darwin.NSObject
 
-internal class CameraFrameAnalyzerDelegate(
-    private val onFrame: ((frame: ByteArray) -> Unit)?
-) : NSObject(),
+internal class CameraFrameAnalyzerDelegate(private val onFrame: ((frame: ByteArray) -> Unit)?) :
+    NSObject(),
     AVCaptureVideoDataOutputSampleBufferDelegateProtocol {
     @OptIn(ExperimentalForeignApi::class)
     override fun captureOutput(

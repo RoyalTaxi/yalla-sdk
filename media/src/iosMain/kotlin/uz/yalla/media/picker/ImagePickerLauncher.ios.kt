@@ -5,7 +5,11 @@ import androidx.compose.runtime.remember
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import platform.Foundation.NSData
 import platform.PhotosUI.PHPickerResult
 import platform.PhotosUI.PHPickerViewController
 import platform.PhotosUI.PHPickerViewControllerDelegateProtocol
@@ -16,11 +20,7 @@ import platform.UIKit.UIViewController
 import platform.UIKit.UIWindow
 import platform.UIKit.UIWindowScene
 import platform.darwin.NSObject
-import platform.darwin.dispatch_get_main_queue
-import platform.darwin.dispatch_group_create
-import platform.darwin.dispatch_group_enter
-import platform.darwin.dispatch_group_leave
-import platform.darwin.dispatch_group_notify
+import kotlin.coroutines.resume
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
@@ -102,34 +102,32 @@ private fun processPickerResults(
     filterOptions: FilterOptions,
     onResult: (List<ByteArray>) -> Unit
 ) {
-    val dispatchGroup = dispatch_group_create()
-    val imageData = mutableListOf<ByteArray>()
+    scope.launch(Dispatchers.Main) {
+        val imageData =
+            results
+                .map { result ->
+                    async(Dispatchers.Default) {
+                        val nsData =
+                            suspendCancellableCoroutine<NSData?> { continuation ->
+                                result.itemProvider.loadDataRepresentationForTypeIdentifier("public.image") { data, _ ->
+                                    continuation.resume(data)
+                                }
+                            } ?: return@async null
 
-    results.forEach { result ->
-        dispatch_group_enter(dispatchGroup)
-        result.itemProvider.loadDataRepresentationForTypeIdentifier("public.image") { nsData, _ ->
-            scope.launch(Dispatchers.Main) {
-                nsData?.let { data ->
-                    UIImage
-                        .imageWithData(data)
-                        ?.fitInto(
-                            resizeOptions.width,
-                            resizeOptions.height,
-                            resizeOptions.resizeThresholdBytes,
-                            resizeOptions.compressionQuality,
-                            filterOptions
-                        )?.toByteArray(resizeOptions.compressionQuality)
-                        ?.let { imageData.add(it) }
-                }
-                dispatch_group_leave(dispatchGroup)
-            }
-        }
-    }
+                        UIImage
+                            .imageWithData(nsData)
+                            ?.fitInto(
+                                resizeOptions.width,
+                                resizeOptions.height,
+                                resizeOptions.resizeThresholdBytes,
+                                resizeOptions.compressionQuality,
+                                filterOptions
+                            )?.toByteArray(resizeOptions.compressionQuality)
+                    }
+                }.awaitAll()
+                .filterNotNull()
 
-    dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
-        scope.launch(Dispatchers.Main) {
-            onResult(imageData)
-        }
+        onResult(imageData)
     }
 }
 

@@ -7,9 +7,7 @@ import uz.yalla.media.gallery.model.YallaMediaImage
 import uz.yalla.media.gallery.util.createCursor
 import uz.yalla.media.gallery.util.fetchPagePicture
 
-internal class YallaGalleryRepositoryImpl(
-    private val context: Context
-) : YallaGalleryRepository {
+internal class YallaGalleryRepositoryImpl(private val context: Context) : YallaGalleryRepository {
     override suspend fun getCount(): Int {
         val cursor = context.createCursor(Int.MAX_VALUE, 0) ?: return 0
         val count = cursor.count
