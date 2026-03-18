@@ -11,13 +11,12 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIModalPresentationPageSheet
 import platform.UIKit.UIViewController
-import uz.yalla.platform.SheetPresenterFactory
+import uz.yalla.platform.config.SheetPresenterFactory
+import uz.yalla.platform.config.ThemeProvider
 import kotlin.math.abs
 
-internal typealias ThemeProvider = @Composable (@Composable () -> Unit) -> Unit
-
 internal class SheetPresenter(
-    private val factory: SheetPresenterFactory?,
+    private val factory: SheetPresenterFactory,
     private val onDismissedByUser: () -> Unit,
 ) {
     private var controller: UIViewController? = null
@@ -46,18 +45,14 @@ internal class SheetPresenter(
 
         controller = host
 
-        if (factory != null) {
-            factory.present(
-                parentController,
-                host,
-                CORNER_RADIUS,
-                backgroundColor,
-                { handleDismissCallback() },
-                onPresented
-            )
-        } else {
-            parentController.presentViewController(host, animated = true) { onPresented() }
-        }
+        factory.present(
+            parentController,
+            host,
+            CORNER_RADIUS,
+            backgroundColor,
+            { handleDismissCallback() },
+            onPresented
+        )
         updateDismissBehavior(dismissEnabled, onDismissAttempt)
     }
 
@@ -66,17 +61,18 @@ internal class SheetPresenter(
         isProgrammaticDismiss = true
         controller = null
 
-        if (factory != null) {
-            factory.dismiss(ctrl, animated)
-        } else {
-            ctrl.dismissViewControllerAnimated(animated, null)
-        }
+        factory.dismiss(ctrl, animated)
 
-        isProgrammaticDismiss = false
+        // BUG-4 fix: do NOT reset isProgrammaticDismiss synchronously.
+        // factory.dismiss() is async when animated — the onDismiss callback
+        // fires after the animation completes. If we reset the flag here,
+        // handleDismissCallback() would see isProgrammaticDismiss=false and
+        // wrongly invoke onDismissedByUser(). Instead, let
+        // handleDismissCallback() reset the flag after it runs.
     }
 
     fun updateBackground(backgroundColor: Long) {
-        controller?.let { factory?.updateBackground(it, backgroundColor) }
+        controller?.let { factory.updateBackground(it, backgroundColor) }
     }
 
     fun updateDismissBehavior(
@@ -85,7 +81,7 @@ internal class SheetPresenter(
     ) {
         this.dismissEnabled = dismissEnabled
         this.onDismissAttempt = onDismissAttempt
-        controller?.let { factory?.updateDismissBehavior?.invoke(it, dismissEnabled, onDismissAttempt) }
+        controller?.let { factory.updateDismissBehavior(it, dismissEnabled, onDismissAttempt) }
     }
 
     private fun createComposeController(
@@ -96,7 +92,11 @@ internal class SheetPresenter(
             configure = { opaque = false },
         ) {
             val themedContent: @Composable () -> Unit = { MeasuredContent(content) }
-            themeProvider?.invoke(themedContent) ?: themedContent()
+            if (themeProvider != null) {
+                themeProvider.provide(themedContent)
+            } else {
+                themedContent()
+            }
         }.apply {
             modalPresentationStyle = UIModalPresentationPageSheet
         }
@@ -118,7 +118,7 @@ internal class SheetPresenter(
                     if (shouldUpdate) {
                         lastMeasuredHeight = heightPt
                         hasMeasuredHeight = true
-                        controller?.let { factory?.updateHeight(it, heightPt) }
+                        controller?.let { factory.updateHeight(it, heightPt) }
                     }
                 },
         ) {
@@ -136,6 +136,9 @@ internal class SheetPresenter(
             controller = null
             onDismissedByUser()
         }
+        // BUG-4 fix: reset flag here (after the check) instead of in dismiss().
+        // This ensures the flag stays true for the entire async dismiss animation.
+        isProgrammaticDismiss = false
     }
 
     private companion object {
