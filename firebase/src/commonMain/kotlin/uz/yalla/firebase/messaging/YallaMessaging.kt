@@ -6,13 +6,31 @@ import dev.gitlive.firebase.messaging.messaging
 import uz.yalla.firebase.YallaFirebase
 
 /**
- * Wrapper for Firebase Cloud Messaging.
+ * Wrapper for Firebase Cloud Messaging (FCM) that provides token management and topic
+ * subscription with built-in error handling.
+ *
+ * All operations are `suspend` functions (following the GitLive Firebase SDK) and are
+ * wrapped in `try-catch` blocks. Exceptions thrown by the underlying Firebase SDK are
+ * swallowed and forwarded to [YallaFirebase.logger] under the `"Messaging"` tag — they
+ * do not propagate to the caller.
+ *
+ * Access this class via [YallaFirebase.messaging]; do not instantiate it directly.
+ *
+ * @since 0.0.1
  */
 class YallaMessaging {
     private val messaging: FirebaseMessaging by lazy { Firebase.messaging }
 
     /**
-     * Get the FCM registration token.
+     * Retrieves the current FCM registration token for this device.
+     *
+     * The token uniquely identifies this app installation and is used by your server to
+     * send targeted push notifications. The token may change over time; use
+     * [MessagingDelegate.onNewToken] to receive refresh events.
+     *
+     * @return The FCM registration token, or `null` if retrieval failed (error is logged
+     *   via [YallaFirebase.logger]).
+     * @since 0.0.1
      */
     suspend fun getToken(): String? {
         return try {
@@ -24,7 +42,15 @@ class YallaMessaging {
     }
 
     /**
-     * Subscribe to a topic for receiving targeted messages.
+     * Subscribes this device to an FCM topic.
+     *
+     * Topic subscriptions allow your server to send messages to all devices subscribed
+     * to that topic (e.g. `"news"`, `"driver_updates"`). The subscription is persistent
+     * across app restarts.
+     *
+     * @param topic The topic name to subscribe to (alphanumeric, dashes, and underscores;
+     *   max 900 chars).
+     * @since 0.0.1
      */
     suspend fun subscribeToTopic(topic: String) {
         try {
@@ -35,7 +61,12 @@ class YallaMessaging {
     }
 
     /**
-     * Unsubscribe from a topic.
+     * Unsubscribes this device from an FCM topic.
+     *
+     * After unsubscribing, the device will no longer receive messages sent to [topic].
+     *
+     * @param topic The topic name to unsubscribe from.
+     * @since 0.0.1
      */
     suspend fun unsubscribeFromTopic(topic: String) {
         try {
@@ -46,7 +77,13 @@ class YallaMessaging {
     }
 
     /**
-     * Delete the FCM instance ID and data.
+     * Deletes the FCM registration token and all associated data for this app installation.
+     *
+     * After deletion, a new token will be generated on the next call to [getToken] or
+     * on the next [MessagingDelegate.onNewToken] callback. Use this to implement
+     * a "reset push notifications" feature or on full account deletion.
+     *
+     * @since 0.0.1
      */
     suspend fun deleteToken() {
         try {
