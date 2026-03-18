@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -173,6 +174,12 @@ private fun RealDeviceCamera(
             createCaptureSession(camera, capturePhotoOutput, videoOutput, frameAnalyzerDelegate)
         }
 
+    // Lifted to RealDeviceCamera scope so DisposableEffect can clean up the observer
+    val orientationListener =
+        remember(capturePhotoOutput, videoOutput) {
+            mutableStateOf<OrientationListener?>(null)
+        }
+
     SideEffect {
         state.triggerCaptureAnchor = {
             capturePhoto(capturePhotoOutput, camera, photoCaptureDelegate)
@@ -187,6 +194,9 @@ private fun RealDeviceCamera(
 
     DisposableEffect(captureSession) {
         onDispose {
+            orientationListener.value?.let {
+                NSNotificationCenter.defaultCenter.removeObserver(it)
+            }
             stopSession(captureSession)
             state.isCameraReady = false
         }
@@ -203,7 +213,8 @@ private fun RealDeviceCamera(
         session = captureSession,
         state = state,
         photoOutput = capturePhotoOutput,
-        videoOutput = videoOutput
+        videoOutput = videoOutput,
+        orientationListener = orientationListener
     )
 }
 
@@ -235,14 +246,9 @@ private fun SetupCameraView(
     session: AVCaptureSession,
     state: YallaCameraState,
     photoOutput: AVCapturePhotoOutput,
-    videoOutput: AVCaptureVideoDataOutput?
+    videoOutput: AVCaptureVideoDataOutput?,
+    orientationListener: MutableState<OrientationListener?>
 ) {
-    // Remember orientation listener to avoid recreating it
-    val orientationListener =
-        remember(photoOutput, videoOutput) {
-            mutableStateOf<OrientationListener?>(null)
-        }
-
     UIKitView(
         modifier = modifier.background(Color.Black),
         factory = {
