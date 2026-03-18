@@ -27,6 +27,9 @@ DerivedData/
 *.swp
 *~
 
+# Worktrees
+.worktrees/
+
 # Kotlin
 .kotlin/
 kotlin-js-store/
