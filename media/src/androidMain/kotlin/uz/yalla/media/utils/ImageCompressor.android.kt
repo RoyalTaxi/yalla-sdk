@@ -6,6 +6,14 @@ import android.graphics.Matrix
 import java.io.ByteArrayOutputStream
 import kotlin.math.min
 
+/**
+ * Android implementation of [compressImage].
+ *
+ * Uses [BitmapFactory] for decoding, [Matrix] for scaling, and JPEG [Bitmap.compress]
+ * with binary-search quality reduction.
+ *
+ * @since 0.0.1
+ */
 actual fun compressImage(
     imageBytes: ByteArray,
     config: CompressionConfig,

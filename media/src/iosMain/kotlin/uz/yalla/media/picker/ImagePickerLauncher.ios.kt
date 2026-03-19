@@ -22,6 +22,7 @@ import platform.UIKit.UIWindowScene
 import platform.darwin.NSObject
 import kotlin.coroutines.resume
 
+/** iOS implementation of [rememberImagePickerLauncher] using PHPickerViewController. @since 0.0.1 */
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun rememberImagePickerLauncher(
@@ -131,9 +132,19 @@ private fun processPickerResults(
     }
 }
 
+/**
+ * iOS implementation of [ImagePickerLauncher].
+ *
+ * Directly delegates to the `onLaunch` closure which presents a `PHPickerViewController`.
+ *
+ * @param selectionMode Single or multiple selection mode.
+ * @param onLaunch Action that presents the PHPicker.
+ * @since 0.0.1
+ */
 actual class ImagePickerLauncher actual constructor(
     selectionMode: SelectionMode,
     private val onLaunch: () -> Unit
 ) {
+    /** @since 0.0.1 */
     actual fun launch() = onLaunch()
 }

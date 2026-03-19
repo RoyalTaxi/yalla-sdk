@@ -22,6 +22,7 @@ import platform.UIKit.UIWindowScene
 import platform.darwin.NSObject
 import platform.posix.memcpy
 
+/** iOS implementation of [rememberSystemCameraLauncher] using UIImagePickerController. @since 0.0.1 */
 @Composable
 actual fun rememberSystemCameraLauncher(
     scope: CoroutineScope,
@@ -51,7 +52,17 @@ actual fun rememberSystemCameraLauncher(
     }
 }
 
+/**
+ * iOS implementation of [SystemCameraLauncher].
+ *
+ * Directly delegates to the `onLaunch` closure without double-launch guarding
+ * (the iOS UIKit presentation handles this natively).
+ *
+ * @param onLaunch Action that presents `UIImagePickerController`.
+ * @since 0.0.1
+ */
 actual class SystemCameraLauncher actual constructor(private val onLaunch: () -> Unit) {
+    /** @since 0.0.1 */
     actual fun launch() = onLaunch()
 }
 

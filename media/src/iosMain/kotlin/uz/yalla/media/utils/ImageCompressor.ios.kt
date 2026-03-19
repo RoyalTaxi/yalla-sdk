@@ -14,6 +14,14 @@ import platform.UIKit.UIImageJPEGRepresentation
 import platform.posix.memcpy
 import kotlin.math.min
 
+/**
+ * iOS implementation of [compressImage].
+ *
+ * Uses [UIImage] for decoding, [UIGraphicsImageRenderer] for scaling, and
+ * `UIImageJPEGRepresentation` with binary-search quality reduction.
+ *
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 actual fun compressImage(
     imageBytes: ByteArray,

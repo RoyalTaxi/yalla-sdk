@@ -36,6 +36,14 @@ import platform.darwin.NSObject
 import platform.posix.memcpy
 import kotlin.coroutines.resume
 
+/**
+ * iOS implementation of [YallaGallery].
+ *
+ * Requests photo library access and presents a `PHPickerViewController` for single-image
+ * selection. The selected image is returned as JPEG bytes.
+ *
+ * @since 0.0.1
+ */
 @ExperimentalYallaGalleryApi
 @Composable
 actual fun YallaGallery(

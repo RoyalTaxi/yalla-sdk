@@ -37,6 +37,7 @@ import platform.Foundation.NSSelectorFromString
 import platform.UIKit.UIColor
 import platform.UIKit.UIView
 
+/** iOS implementation of the state-driven [YallaCamera] using AVFoundation. @since 0.0.1 */
 @Composable
 actual fun YallaCamera(
     state: YallaCameraState,
@@ -66,6 +67,7 @@ actual fun YallaCamera(
     }
 }
 
+/** iOS implementation of the full-featured [YallaCamera] with AVFoundation live preview. @since 0.0.1 */
 @Composable
 actual fun YallaCamera(
     modifier: Modifier,
@@ -84,6 +86,7 @@ actual fun YallaCamera(
     }
 }
 
+/** iOS implementation of the system-camera-delegating [YallaCamera]. @since 0.0.1 */
 @Composable
 actual fun YallaCamera(
     modifier: Modifier,

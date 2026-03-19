@@ -30,6 +30,7 @@ import java.util.concurrent.Executors
 
 private val executor = Executors.newSingleThreadExecutor()
 
+/** Android implementation of the full-featured [YallaCamera] with CameraX live preview. @since 0.0.1 */
 @Composable
 actual fun YallaCamera(
     modifier: Modifier,
@@ -63,6 +64,7 @@ private fun CompatOverlay(
     }
 }
 
+/** Android implementation of the state-driven [YallaCamera]. @since 0.0.1 */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 actual fun YallaCamera(
@@ -84,6 +86,7 @@ actual fun YallaCamera(
     }
 }
 
+/** Android implementation of the system-camera-delegating [YallaCamera]. @since 0.0.1 */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 actual fun YallaCamera(

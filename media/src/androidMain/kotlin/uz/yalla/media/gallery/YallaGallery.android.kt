@@ -46,6 +46,15 @@ import uz.yalla.media.gallery.model.YallaMediaImage
 import uz.yalla.media.gallery.repository.YallaGalleryRepositoryImpl
 import uz.yalla.media.gallery.viewmodel.YallaGalleryViewModel
 
+/**
+ * Android implementation of [YallaGallery].
+ *
+ * Renders a paginated grid of device photos using Paging 3 and CashApp Paging.
+ * Requests `READ_MEDIA_IMAGES` (API 33+) or `READ_EXTERNAL_STORAGE` permissions
+ * automatically via Accompanist.
+ *
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalPermissionsApi::class)
 @ExperimentalYallaGalleryApi
 @Composable

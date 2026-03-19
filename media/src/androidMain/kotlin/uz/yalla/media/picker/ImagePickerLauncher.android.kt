@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.CoroutineScope
 import uz.yalla.media.picker.SelectionMode.Companion.INFINITY
 
+/** Android implementation of [rememberImagePickerLauncher] using `PickVisualMedia` APIs. @since 0.0.1 */
 @Composable
 actual fun rememberImagePickerLauncher(
     selectionMode: SelectionMode,
@@ -132,16 +133,33 @@ private fun processMultipleImages(
     }
 }
 
+/**
+ * Android implementation of [ImagePickerLauncher].
+ *
+ * Guards against double-launch by tracking an internal active flag.
+ *
+ * @param selectionMode Single or multiple selection mode.
+ * @param onLaunch Action that launches the `PickVisualMedia` activity result contract.
+ * @since 0.0.1
+ */
 actual class ImagePickerLauncher actual constructor(
     selectionMode: SelectionMode,
     private val onLaunch: () -> Unit
 ) {
     private var isPhotoPickerActive = false
 
+    /**
+     * Resets the active flag so the picker can be launched again.
+     *
+     * Called automatically after the picker result is received.
+     *
+     * @since 0.0.1
+     */
     fun markPhotoPickerInactive() {
         isPhotoPickerActive = false
     }
 
+    /** @since 0.0.1 */
     actual fun launch() {
         if (isPhotoPickerActive) return
         isPhotoPickerActive = true

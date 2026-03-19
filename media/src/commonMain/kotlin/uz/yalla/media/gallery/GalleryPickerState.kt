@@ -11,6 +11,16 @@ private const val DEFAULT_ITEM_SPACING = 4
 private const val DEFAULT_CORNER_SIZE = 0
 private const val DEFAULT_COLUMNS = 3
 
+/**
+ * Creates and remembers a [GalleryPickerState] that survives configuration changes.
+ *
+ * @param contentPadding Horizontal padding around the grid in dp. Defaults to 4.
+ * @param itemSpacing Spacing between grid items in dp. Defaults to 4.
+ * @param cornerSize Corner radius of each thumbnail card in dp. Defaults to 0 (sharp corners).
+ * @param columns Number of grid columns. Defaults to 3.
+ * @return A saveable [GalleryPickerState] instance.
+ * @since 0.0.1
+ */
 @Composable
 fun rememberGalleryPickerState(
     contentPadding: Int = DEFAULT_CONTENT_PADDING,
@@ -27,6 +37,19 @@ fun rememberGalleryPickerState(
         )
     }
 
+/**
+ * Layout configuration for [YallaGallery].
+ *
+ * Controls the grid appearance — padding, spacing, corner radius, and column count.
+ * Create instances via [rememberGalleryPickerState] to automatically survive
+ * configuration changes.
+ *
+ * @property contentPadding Horizontal padding around the grid in dp.
+ * @property itemSpacing Spacing between grid items in dp.
+ * @property cornerSize Corner radius of each thumbnail card in dp.
+ * @property columns Number of grid columns.
+ * @since 0.0.1
+ */
 @Stable
 class GalleryPickerState(
     val contentPadding: Int,

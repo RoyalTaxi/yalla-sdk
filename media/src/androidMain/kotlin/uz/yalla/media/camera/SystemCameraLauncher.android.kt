@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 
+/** Android implementation of [rememberSystemCameraLauncher]. @since 0.0.1 */
 @Composable
 actual fun rememberSystemCameraLauncher(
     scope: CoroutineScope,
@@ -71,13 +72,29 @@ private fun createCameraImageUri(context: Context): Uri? {
     return FileProvider.getUriForFile(context, context.packageName + ".provider", imageFile)
 }
 
+/**
+ * Android implementation of [SystemCameraLauncher].
+ *
+ * Guards against double-launch by tracking an internal active flag.
+ *
+ * @param onLaunch Action that creates a temp URI and launches `TakePicture` contract.
+ * @since 0.0.1
+ */
 actual class SystemCameraLauncher actual constructor(private val onLaunch: () -> Unit) {
     private var isCameraActive = false
 
+    /**
+     * Resets the active flag so the launcher can be used again.
+     *
+     * Called automatically after the camera result is received.
+     *
+     * @since 0.0.1
+     */
     fun markCameraInactive() {
         isCameraActive = false
     }
 
+    /** @since 0.0.1 */
     actual fun launch() {
         if (isCameraActive) return
         isCameraActive = true
