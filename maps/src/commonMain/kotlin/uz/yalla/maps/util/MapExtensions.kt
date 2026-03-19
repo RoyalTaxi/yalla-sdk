@@ -49,20 +49,37 @@ fun Pair<Double, Double>.toPosition(): Position = Position(latitude = first, lon
 fun Pair<Double, Double>.toGeoPoint(): GeoPoint = GeoPoint(first, second)
 
 /**
- * Returns `true` if neither component is zero, indicating a valid coordinate.
+ * Returns `true` if neither component is zero, indicating a non-sentinel coordinate.
+ *
+ * This checks for the (0, 0) sentinel value, not geographic validity.
+ * Note: a coordinate like (0.0, 30.0) on the equator is geographically valid but returns `false`.
  *
  * @return `true` when both first and second are non-zero.
  * @since 0.0.1
  */
-fun Pair<Double, Double>.isValid(): Boolean = first != 0.0 && second != 0.0
+fun Pair<Double, Double>.isNonZero(): Boolean = first != 0.0 && second != 0.0
 
 /**
- * Returns `true` if neither latitude nor longitude is zero, indicating a valid coordinate.
+ * Returns `true` if the coordinate pair represents a valid geographic location.
+ *
+ * Latitude must be in [-90, 90] and longitude must be in [-180, 180].
+ *
+ * @return `true` when both components are within valid geographic ranges.
+ * @since 0.0.5
+ */
+fun Pair<Double, Double>.isValid(): Boolean =
+    first in -90.0..90.0 && second in -180.0..180.0
+
+/**
+ * Returns `true` if neither latitude nor longitude is zero, indicating a non-sentinel coordinate.
+ *
+ * This checks for the [GeoPoint.Zero] sentinel value, not geographic validity.
+ * Note: a coordinate like (0.0, 30.0) on the equator is geographically valid but returns `false`.
  *
  * @return `true` when both lat and lng are non-zero.
  * @since 0.0.1
  */
-fun GeoPoint.isValid(): Boolean = lat != 0.0 && lng != 0.0
+fun GeoPoint.isNonZero(): Boolean = lat != 0.0 && lng != 0.0
 
 // ============================================
 // Bounding Box
@@ -166,9 +183,10 @@ fun haversineDistance(
     val dLat = (lat2 - lat1).toRadians()
     val dLng = (lng2 - lng1).toRadians()
     val a =
-        sin(dLat / 2).pow(2) +
+        (sin(dLat / 2).pow(2) +
             cos(lat1.toRadians()) * cos(lat2.toRadians()) *
-            sin(dLng / 2).pow(2)
+            sin(dLng / 2).pow(2))
+            .coerceIn(0.0, 1.0)
     return EARTH_RADIUS_KM * 2 * atan2(sqrt(a), sqrt(1 - a))
 }
 

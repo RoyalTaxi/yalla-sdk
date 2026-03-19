@@ -14,4 +14,15 @@ package uz.yalla.maps.model
 data class LatLng(
     val latitude: Double,
     val longitude: Double
-)
+) {
+    /**
+     * Returns `true` if this coordinate is within valid geographic ranges.
+     *
+     * Latitude must be in [-90, 90] and longitude must be in [-180, 180].
+     *
+     * @return `true` when both latitude and longitude are within bounds.
+     * @since 0.0.5
+     */
+    fun isValid(): Boolean =
+        latitude in -90.0..90.0 && longitude in -180.0..180.0
+}
