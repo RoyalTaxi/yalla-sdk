@@ -87,9 +87,7 @@ object CarNumberDefaults {
      *
      * @param number Style applied to the license number text.
      */
-    data class CarNumberStyle(
-        val number: TextStyle
-    )
+    data class CarNumberStyle(val number: TextStyle)
 
     @Composable
     fun style(number: TextStyle = System.font.custom.carNumber) =

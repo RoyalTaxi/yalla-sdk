@@ -1,22 +1,8 @@
 package uz.yalla.primitives.navigation
 
-sealed interface ToolbarAction {
-    val onClick: () -> Unit
-
-    data class Text(
-        val label: String,
-        override val onClick: () -> Unit
-    ) : ToolbarAction
-
-    data class Icon(
-        val icon: ToolbarIcon,
-        override val onClick: () -> Unit
-    ) : ToolbarAction
-}
-
-enum class ToolbarIcon {
-    Edit,
-    ReadAll,
-    More,
-    Add
-}
+/**
+ * Re-exports from `platform` module for backward compatibility.
+ * Canonical types live in [uz.yalla.platform.navigation].
+ */
+typealias ToolbarAction = uz.yalla.platform.navigation.ToolbarAction
+typealias ToolbarIcon = uz.yalla.platform.navigation.ToolbarIcon

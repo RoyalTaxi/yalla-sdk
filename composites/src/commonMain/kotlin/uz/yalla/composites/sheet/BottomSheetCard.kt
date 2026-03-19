@@ -37,9 +37,7 @@ object BottomSheetCardDefaults {
      *
      * @param container Card background color.
      */
-    data class BottomSheetCardColors(
-        val container: Color
-    )
+    data class BottomSheetCardColors(val container: Color)
 
     @Composable
     fun colors(container: Color = System.color.background.base) =

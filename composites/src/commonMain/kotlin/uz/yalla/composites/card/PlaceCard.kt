@@ -76,7 +76,9 @@ object PlaceCardDefaults {
         address: Color = System.color.text.base,
         hint: Color = System.color.text.subtle,
         icon: Color = System.color.background.brand,
-        iconBackground: Color = System.color.background.brand.copy(alpha = 0.15f),
+        iconBackground: Color =
+            System.color.background.brand
+                .copy(alpha = 0.15f),
         iconEmpty: Color = System.color.icon.subtle,
         iconBackgroundEmpty: Color = System.color.background.tertiary,
     ) = PlaceCardColors(

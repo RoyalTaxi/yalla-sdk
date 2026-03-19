@@ -206,10 +206,11 @@ fun HistoryCard(
                     Spacer(Modifier.width(dimens.spacingSmall))
 
                     Text(
-                        text = when (state.status) {
-                            HistoryCardStatus.Completed -> stringResource(Res.string.history_status_completed)
-                            HistoryCardStatus.Canceled -> stringResource(Res.string.history_status_canceled)
-                        },
+                        text =
+                            when (state.status) {
+                                HistoryCardStatus.Completed -> stringResource(Res.string.history_status_completed)
+                                HistoryCardStatus.Canceled -> stringResource(Res.string.history_status_canceled)
+                            },
                         color =
                             when (state.status) {
                                 HistoryCardStatus.Completed -> colors.statusCompleted

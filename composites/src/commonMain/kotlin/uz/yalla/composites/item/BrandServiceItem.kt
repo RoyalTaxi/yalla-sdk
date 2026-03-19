@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +27,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import org.jetbrains.compose.resources.painterResource
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
@@ -56,18 +56,14 @@ sealed interface BrandServiceItemIconModel {
      *
      * @param painter Painter source for icon.
      */
-    data class Local(
-        val painter: Painter,
-    ) : BrandServiceItemIconModel
+    data class Local(val painter: Painter,) : BrandServiceItemIconModel
 
     /**
      * Async icon source passed to Coil model.
      *
      * @param model Coil model (e.g., URL string, ImageRequest).
      */
-    data class Async(
-        val model: Any?,
-    ) : BrandServiceItemIconModel
+    data class Async(val model: Any?,) : BrandServiceItemIconModel
 }
 
 /**
@@ -289,9 +285,7 @@ object BrandServiceItemDefaults {
      *
      * @param title Title text style.
      */
-    data class BrandServiceItemStyle(
-        val title: TextStyle,
-    )
+    data class BrandServiceItemStyle(val title: TextStyle,)
 
     @Composable
     fun style(title: TextStyle = System.font.body.base.medium) =

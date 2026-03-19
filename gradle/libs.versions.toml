@@ -32,6 +32,7 @@ connectivity = "2.4.0"
 # DI & Architecture
 koin-bom = "4.1.0"
 orbit = "10.0.0"
+decompose = "3.2.2"
 kermit = "2.0.4"
 
 # Storage
@@ -128,6 +129,8 @@ orbit-core = { module = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
+decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
 
 # Storage
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }

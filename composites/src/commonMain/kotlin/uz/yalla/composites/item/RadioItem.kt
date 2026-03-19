@@ -115,9 +115,7 @@ object RadioItemDefaults {
      *
      * @param text Text label color.
      */
-    data class RadioItemColors(
-        val text: Color,
-    )
+    data class RadioItemColors(val text: Color,)
 
     @Composable
     fun colors(text: Color = System.color.text.base) =
@@ -130,9 +128,7 @@ object RadioItemDefaults {
      *
      * @param text Text label style.
      */
-    data class RadioItemStyle(
-        val text: TextStyle,
-    )
+    data class RadioItemStyle(val text: TextStyle,)
 
     @Composable
     fun style(text: TextStyle = System.font.body.base.bold) =

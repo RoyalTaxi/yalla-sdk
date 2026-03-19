@@ -48,9 +48,7 @@ object LocationButtonDefaults {
      *
      * @param label Style applied to the button text.
      */
-    data class LocationButtonStyle(
-        val label: TextStyle
-    )
+    data class LocationButtonStyle(val label: TextStyle)
 
     @Composable
     fun style(label: TextStyle = System.font.body.base.bold) =
