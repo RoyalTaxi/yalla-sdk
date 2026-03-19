@@ -12,6 +12,15 @@ import uz.yalla.resources.icons.Menu
 import uz.yalla.resources.icons.X
 import uz.yalla.resources.icons.YallaIcons
 
+/**
+ * Maps an [IconType] to its corresponding [ImageVector] from the Yalla icon set.
+ *
+ * Used internally by platform button composables to resolve the vector drawable
+ * for each abstract icon identifier.
+ *
+ * @return The [ImageVector] resource for this icon type.
+ * @since 0.0.1
+ */
 fun IconType.toImageVector(): ImageVector =
     when (this) {
         IconType.MENU -> YallaIcons.Menu

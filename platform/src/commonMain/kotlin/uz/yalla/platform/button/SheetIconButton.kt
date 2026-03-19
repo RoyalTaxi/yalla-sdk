@@ -18,6 +18,30 @@ import uz.yalla.design.theme.System
 import uz.yalla.platform.model.IconType
 import uz.yalla.platform.toImageVector
 
+/**
+ * Small icon button designed for bottom sheet toolbars.
+ *
+ * A shared (non-expect) composable that renders a 48 dp rounded-square button
+ * using the Yalla design system colors. Typically placed in a row at the top of
+ * a [NativeSheet][uz.yalla.platform.sheet.NativeSheet].
+ *
+ * ## Usage
+ * ```kotlin
+ * Row {
+ *     SheetIconButton(iconType = IconType.CLOSE, onClick = onDismiss)
+ *     Spacer(Modifier.weight(1f))
+ *     SheetIconButton(iconType = IconType.DONE, onClick = onConfirm)
+ * }
+ * ```
+ *
+ * @param iconType The icon to display inside the button.
+ * @param onClick Callback invoked when the button is tapped.
+ * @param modifier Modifier applied to the button container.
+ * @param border Optional border stroke.
+ * @param containerColor Background fill color. Defaults to the secondary background.
+ * @param contentColor Icon tint color. Defaults to the base icon color.
+ * @since 0.0.1
+ */
 @Composable
 fun SheetIconButton(
     iconType: IconType,
