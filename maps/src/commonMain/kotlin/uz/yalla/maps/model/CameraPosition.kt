@@ -1,7 +1,10 @@
 package uz.yalla.maps.model
 
 /**
- * Represents the camera position for a map.
+ * Camera position for the compose-layer [GoogleMap][uz.yalla.maps.compose.GoogleMap].
+ *
+ * This type is consumed by the platform-specific map implementations. For the
+ * provider-agnostic API layer equivalent, see [uz.yalla.maps.api.model.CameraPosition].
  *
  * @property target The location that the camera is pointing at.
  * @property zoom The zoom level of the camera. Typically ranges from 0 (world view) to 21 (building view).
@@ -10,6 +13,7 @@ package uz.yalla.maps.model
  * @property tilt The angle, in degrees, of the camera angle from the nadir (directly facing the Earth).
  *                0 means the camera is looking straight down at the map. Values are clamped to a
  *                maximum depending on the zoom level (typically 0-65 degrees).
+ * @since 0.0.1
  */
 data class CameraPosition(
     val target: LatLng,

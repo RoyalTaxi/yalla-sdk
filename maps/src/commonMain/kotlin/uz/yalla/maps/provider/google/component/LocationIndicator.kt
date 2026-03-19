@@ -16,6 +16,16 @@ import uz.yalla.maps.provider.common.MapDimens
 import uz.yalla.maps.provider.common.UserLocationPainter
 import uz.yalla.maps.provider.google.toLatLng
 
+/**
+ * Google Maps user-location indicator with accuracy circle.
+ *
+ * Displays a [UserLocationPainter] dot at the user's position overlaid on
+ * a translucent [Circle] representing GPS accuracy.
+ *
+ * @param location Current user location, or `null` to hide the indicator.
+ * @param accuracyMeters GPS accuracy radius in meters.
+ * @since 0.0.1
+ */
 @Composable
 fun LocationIndicator(
     location: GeoPoint?,

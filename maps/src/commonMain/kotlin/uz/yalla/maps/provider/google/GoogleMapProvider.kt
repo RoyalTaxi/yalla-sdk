@@ -9,6 +9,14 @@ import uz.yalla.maps.api.StaticMap
 import uz.yalla.maps.api.model.MapCapabilities
 import uz.yalla.maps.api.model.MapStyle
 
+/**
+ * [MapProvider] implementation backed by Google Maps SDK.
+ *
+ * Exposes [MapCapabilities.GOOGLE] capabilities and creates Google-specific
+ * map composables and controllers.
+ *
+ * @since 0.0.1
+ */
 class GoogleMapProvider : MapProvider {
     override val type = MapKind.Google
     override val capabilities = MapCapabilities.GOOGLE

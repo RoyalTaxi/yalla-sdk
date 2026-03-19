@@ -25,6 +25,14 @@ import uz.yalla.maps.provider.libre.component.LocationIndicator
 import uz.yalla.maps.util.toGeoPoint
 import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
 
+/**
+ * MapLibre implementation of [LiteMap].
+ *
+ * Renders a MapLibre GL view with a single user-location indicator and
+ * automatic camera initialization to the user's location or a fallback point.
+ *
+ * @since 0.0.1
+ */
 class LibreLiteMap : LiteMap {
     @Composable
     override fun Content(

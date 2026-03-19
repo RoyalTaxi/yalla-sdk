@@ -9,6 +9,14 @@ import uz.yalla.maps.api.StaticMap
 import uz.yalla.maps.api.model.MapCapabilities
 import uz.yalla.maps.api.model.MapStyle
 
+/**
+ * [MapProvider] implementation backed by MapLibre GL.
+ *
+ * Exposes [MapCapabilities.LIBRE] capabilities and creates MapLibre-specific
+ * map composables and controllers. Uses CARTO tile styles by default.
+ *
+ * @since 0.0.1
+ */
 class LibreMapProvider : MapProvider {
     override val type = MapKind.Libre
     override val capabilities = MapCapabilities.LIBRE

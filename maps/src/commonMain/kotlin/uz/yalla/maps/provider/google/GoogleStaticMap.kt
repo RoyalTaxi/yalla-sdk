@@ -22,6 +22,14 @@ import uz.yalla.maps.provider.google.component.LocationsLayer
 import uz.yalla.maps.provider.google.component.RouteLayer
 import uz.yalla.maps.util.toGeoPoint
 
+/**
+ * Google Maps implementation of [StaticMap].
+ *
+ * Renders a non-interactive Google Maps view that auto-fits the camera
+ * to display the provided route and location markers.
+ *
+ * @since 0.0.1
+ */
 class GoogleStaticMap : StaticMap {
     @Composable
     override fun Content(

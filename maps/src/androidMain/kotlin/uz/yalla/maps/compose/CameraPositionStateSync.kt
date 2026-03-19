@@ -124,6 +124,12 @@ private fun GoogleCameraPosition.toCameraPosition() =
         bearing = bearing
     )
 
+/**
+ * Converts this [LatLng] to a Google Maps SDK `LatLng`.
+ *
+ * @return A `com.google.android.gms.maps.model.LatLng` with matching coordinates.
+ * @since 0.0.1
+ */
 fun LatLng.toGoogleLatLng() = GoogleLatLng(latitude, longitude)
 
 private fun GoogleCameraMoveStartedReason.toCameraMoveStartedReason() =

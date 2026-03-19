@@ -35,6 +35,14 @@ import uz.yalla.maps.provider.google.component.LocationsLayer
 import uz.yalla.maps.provider.google.component.RouteLayer
 import uz.yalla.maps.util.toGeoPoint
 
+/**
+ * Google Maps implementation of [ExtendedMap].
+ *
+ * Renders a full-featured Google Maps view with route polylines, location markers,
+ * user-location indicator, and custom content support via [MapScope].
+ *
+ * @since 0.0.1
+ */
 class GoogleExtendedMap : ExtendedMap {
     @Composable
     override fun Content(

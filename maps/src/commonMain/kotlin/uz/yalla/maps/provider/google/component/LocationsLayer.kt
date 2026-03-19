@@ -29,6 +29,19 @@ import uz.yalla.maps.provider.common.MapColors
 import uz.yalla.maps.provider.common.MapDimens
 import uz.yalla.maps.provider.google.toLatLng
 
+/**
+ * Google Maps marker layer rendering location markers for start, intermediate, and finish points.
+ *
+ * Each marker is a colored circle rendered via [rememberComposeBitmapDescriptor] with
+ * an optional text badge. Markers are placed as Google Maps [Marker] overlays.
+ *
+ * @param arrival Arrival time hint (currently unused, reserved for future badge content).
+ * @param duration Duration hint (currently unused, reserved for future badge content).
+ * @param locations Ordered list of geographic coordinates for the markers.
+ * @param startLabel Optional text label for the first (start) marker.
+ * @param endLabel Optional text label for the last (finish) marker.
+ * @since 0.0.1
+ */
 @Composable
 fun LocationsLayer(
     arrival: Int?,

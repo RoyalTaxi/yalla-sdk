@@ -29,6 +29,19 @@ import uz.yalla.maps.provider.common.LocationType
 import uz.yalla.maps.provider.common.MapColors
 import uz.yalla.maps.provider.common.MapDimens
 
+/**
+ * MapLibre symbol layer rendering location markers for start, intermediate, and finish points.
+ *
+ * Each marker is a colored circle with an optional text badge (label). Markers are
+ * rendered as symbol layers using a custom [Painter] for pixel-perfect control.
+ *
+ * @param arrival Arrival time hint (currently unused, reserved for future badge content).
+ * @param duration Duration hint (currently unused, reserved for future badge content).
+ * @param locations Ordered list of geographic coordinates for the markers.
+ * @param startLabel Optional text label for the first (start) marker.
+ * @param endLabel Optional text label for the last (finish) marker.
+ * @since 0.0.1
+ */
 @Composable
 fun LocationsLayer(
     arrival: Int?,

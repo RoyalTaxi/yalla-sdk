@@ -24,6 +24,14 @@ import uz.yalla.maps.util.toGeoPoint
 import kotlin.time.Duration.Companion.milliseconds
 import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
 
+/**
+ * MapLibre implementation of [StaticMap].
+ *
+ * Renders a non-interactive MapLibre GL view that auto-fits the camera
+ * to display the provided route and location markers.
+ *
+ * @since 0.0.1
+ */
 class LibreStaticMap : StaticMap {
     @Composable
     override fun Content(

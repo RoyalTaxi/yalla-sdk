@@ -15,6 +15,15 @@ import uz.yalla.maps.provider.common.MapDimens
 
 private const val ROUTE_LAYER_ID = "route-layer"
 
+/**
+ * MapLibre route polyline layer drawn from a list of [GeoPoint]s.
+ *
+ * Renders a colored line along the route path using a MapLibre [LineLayer].
+ * No-ops when fewer than two points are provided.
+ *
+ * @param route Ordered list of coordinates defining the route path.
+ * @since 0.0.1
+ */
 @Composable
 fun RouteLayer(route: List<GeoPoint>) {
     if (route.size < 2) return

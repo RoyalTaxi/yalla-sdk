@@ -22,6 +22,15 @@ import uz.yalla.maps.util.plus
 import kotlin.math.roundToInt
 import uz.yalla.maps.model.CameraPosition as ComposeCameraPosition
 
+/**
+ * [MapController] implementation for Google Maps.
+ *
+ * Manages camera animations, marker state, and content padding through the
+ * compose-layer [CameraPositionState]. Must be bound to a live composition
+ * via [bind] before camera operations can execute.
+ *
+ * @since 0.0.1
+ */
 class GoogleMapController : MapController {
     private var cameraState: CameraPositionState? = null
     private var coroutineScope: CoroutineScope? = null
@@ -35,6 +44,11 @@ class GoogleMapController : MapController {
     private var queuedRecenter: RecenterRequest? = null
 
     private val _contentPadding = MutableStateFlow(PaddingValues())
+    /**
+     * Resolved content padding as a reactive flow, consumed by the Google Maps composable.
+     *
+     * @since 0.0.1
+     */
     val contentPadding = _contentPadding.asStateFlow()
 
     private val _cameraPosition = MutableStateFlow(CameraPosition.DEFAULT)
@@ -46,6 +60,14 @@ class GoogleMapController : MapController {
     private val _isReady = MutableStateFlow(false)
     override val isReady = _isReady.asStateFlow()
 
+    /**
+     * Binds this controller to a live composition's camera state, coroutine scope, and density.
+     *
+     * @param camera The compose-layer camera state to drive.
+     * @param scope Coroutine scope for launching animations.
+     * @param density Screen density for pixel-to-dp conversions.
+     * @since 0.0.1
+     */
     fun bind(
         camera: CameraPositionState,
         scope: CoroutineScope,
@@ -62,10 +84,22 @@ class GoogleMapController : MapController {
         _contentPadding.value = targetPadding
     }
 
+    /**
+     * Records the current map viewport size for bounds-padding calculations.
+     *
+     * @param size The map view size in pixels.
+     * @since 0.0.1
+     */
     fun setMapSize(size: IntSize) {
         viewportSize = size
     }
 
+    /**
+     * Syncs the API-layer camera position from the compose-layer camera position.
+     *
+     * @param position The current compose-layer camera position.
+     * @since 0.0.1
+     */
     fun updateFromCamera(position: ComposeCameraPosition) {
         _cameraPosition.value =
             CameraPosition(
@@ -77,6 +111,11 @@ class GoogleMapController : MapController {
             )
     }
 
+    /**
+     * Called when the camera stops moving. Processes queued re-center requests and syncs state.
+     *
+     * @since 0.0.1
+     */
     fun onCameraIdle() {
         val camera = cameraState ?: return
 
@@ -102,6 +141,11 @@ class GoogleMapController : MapController {
         syncCameraState(camera)
     }
 
+    /**
+     * Called when the user manually moves the map. Clears any programmatic target.
+     *
+     * @since 0.0.1
+     */
     fun onUserGesture() {
         clearProgrammaticTarget()
         queuedRecenter = null
@@ -233,6 +277,12 @@ class GoogleMapController : MapController {
         }
     }
 
+    /**
+     * Updates the desired padding without triggering a camera re-center or animation.
+     *
+     * @param padding The new padding value.
+     * @since 0.0.1
+     */
     fun updatePaddingSilently(padding: PaddingValues) {
         if (targetPadding.hasSameValues(padding) && _contentPadding.value.hasSameValues(padding)) return
         targetPadding = padding

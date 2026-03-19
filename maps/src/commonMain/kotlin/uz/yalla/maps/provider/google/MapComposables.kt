@@ -57,6 +57,23 @@ private val DefaultProperties =
         maxZoomPreference = MapConstants.ZOOM_MAX.toFloat()
     )
 
+/**
+ * Shared base map composable for all Google Maps implementations.
+ *
+ * Wraps [GoogleMap] with standard Yalla UI settings (compass off, gestures configured)
+ * and default map properties. Used internally by [GoogleLiteMap], [GoogleExtendedMap],
+ * and [GoogleStaticMap].
+ *
+ * @param cameraState Camera position state driving the viewport.
+ * @param theme Color scheme preference (light, dark, system).
+ * @param modifier Compose [Modifier] applied to the map.
+ * @param gesturesEnabled Whether scroll and zoom gestures are active.
+ * @param contentPadding Safe-area padding for map controls.
+ * @param onMapSizeChanged Optional callback receiving map viewport size changes.
+ * @param onMapReady Callback invoked when tiles finish loading.
+ * @param content Optional overlay composable content.
+ * @since 0.0.1
+ */
 @Composable
 fun BaseMapContent(
     cameraState: CameraPositionState,
@@ -123,6 +140,17 @@ internal fun rememberAnimatedPadding(target: PaddingValues): PaddingValues {
     return PaddingValues(start = start, top = top, end = end, bottom = bottom)
 }
 
+/**
+ * Side-effect that tracks Google Maps camera movement and syncs the [controller].
+ *
+ * Observes [CameraPositionState.isMoving] and forwards idle/gesture events to
+ * [GoogleMapController], keeping marker state and camera position in sync.
+ *
+ * @param cameraState The compose-layer camera state to observe.
+ * @param controller The Google Maps controller to update.
+ * @param onMarkerChanged Optional callback invoked on marker position changes.
+ * @since 0.0.1
+ */
 @Composable
 fun CameraTrackingEffect(
     cameraState: CameraPositionState,

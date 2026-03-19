@@ -31,6 +31,15 @@ import uz.yalla.maps.provider.libre.LibreLiteMap
 import uz.yalla.maps.provider.libre.LibreMapProvider
 import uz.yalla.maps.provider.libre.LibreStaticMap
 
+/**
+ * [MapProvider] that delegates to Google or Libre at runtime based on user preference.
+ *
+ * Observes [InterfacePreferences.mapKind] and switches the active backend accordingly.
+ * Map composables it creates also observe the preference and swap implementations in place.
+ *
+ * @param interfacePreferences Source of the user's map provider preference.
+ * @since 0.0.1
+ */
 class SwitchingMapProvider(
     private val interfacePreferences: InterfacePreferences
 ) : MapProvider {

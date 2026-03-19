@@ -21,6 +21,15 @@ import uz.yalla.maps.util.toPosition
 import kotlin.time.Duration.Companion.milliseconds
 import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
 
+/**
+ * [MapController] implementation for MapLibre GL.
+ *
+ * Manages camera animations, marker state, and content padding through MapLibre's
+ * [CameraState]. Must be bound to a live composition via [bind] before camera
+ * operations can execute.
+ *
+ * @since 0.0.1
+ */
 class LibreMapController : MapController {
     private var cameraState: CameraState? = null
     private var coroutineScope: CoroutineScope? = null
@@ -43,6 +52,13 @@ class LibreMapController : MapController {
     private val _isReady = MutableStateFlow(false)
     override val isReady = _isReady.asStateFlow()
 
+    /**
+     * Binds this controller to a live MapLibre camera state and coroutine scope.
+     *
+     * @param camera The MapLibre camera state to drive.
+     * @param scope Coroutine scope for launching animations.
+     * @since 0.0.1
+     */
     fun bind(
         camera: CameraState,
         scope: CoroutineScope
@@ -57,6 +73,12 @@ class LibreMapController : MapController {
         appliedPadding = camera.position.padding
     }
 
+    /**
+     * Syncs the API-layer camera position from the MapLibre camera position.
+     *
+     * @param position The current MapLibre camera position.
+     * @since 0.0.1
+     */
     fun updateFromCamera(position: LibreCameraPosition) {
         appliedPadding = position.padding
         _cameraPosition.value =
@@ -69,6 +91,11 @@ class LibreMapController : MapController {
             )
     }
 
+    /**
+     * Called when the camera stops moving. Processes queued re-center requests and syncs state.
+     *
+     * @since 0.0.1
+     */
     fun onCameraIdle() {
         val camera = cameraState ?: return
 
@@ -102,6 +129,11 @@ class LibreMapController : MapController {
         syncCameraState(camera)
     }
 
+    /**
+     * Called when the user manually moves the map. Clears any programmatic target.
+     *
+     * @since 0.0.1
+     */
     fun onUserGesture() {
         clearProgrammaticTarget()
         queuedRecenter = null
@@ -109,6 +141,14 @@ class LibreMapController : MapController {
         skipNextIdleMarkerSync = false
     }
 
+    /**
+     * Returns whether the current marker sync should be suppressed (e.g., during padding-only changes).
+     *
+     * @param isMoving Whether the camera is currently moving.
+     * @param isByUser Whether the movement was user-initiated.
+     * @return `true` if the marker update should be suppressed.
+     * @since 0.0.1
+     */
     fun shouldSuppressMarkerUpdate(
         isMoving: Boolean,
         isByUser: Boolean
@@ -268,6 +308,12 @@ class LibreMapController : MapController {
         applyPaddingToCurrentCamera(camera)
     }
 
+    /**
+     * Updates the desired padding without triggering a camera re-center or animation.
+     *
+     * @param padding The new padding value.
+     * @since 0.0.1
+     */
     fun updatePaddingSilently(padding: PaddingValues) {
         if (targetPadding.hasSameValues(padding)) return
         targetPadding = padding

@@ -6,6 +6,19 @@ import androidx.compose.ui.unit.LayoutDirection
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.maps.util.hasSameValues
 
+/**
+ * Immutable snapshot of the map camera position used by [MapController].
+ *
+ * Represents the geographic target, zoom level, bearing, tilt, and content padding.
+ * Custom [equals] and [hashCode] implementations account for [PaddingValues] comparison.
+ *
+ * @property target The geographic coordinate the camera is centered on.
+ * @property zoom The zoom level (typically 0..21).
+ * @property bearing Camera heading in degrees clockwise from north.
+ * @property tilt Camera tilt angle from nadir in degrees (0 = straight down).
+ * @property padding Content padding applied to the map viewport.
+ * @since 0.0.1
+ */
 @Immutable
 data class CameraPosition(
     val target: GeoPoint,
@@ -35,6 +48,11 @@ data class CameraPosition(
     }
 
     companion object {
+        /**
+         * Default camera position centered at [GeoPoint.Zero] with zoom 15.
+         *
+         * @since 0.0.1
+         */
         val DEFAULT =
             CameraPosition(
                 target = GeoPoint.Zero,

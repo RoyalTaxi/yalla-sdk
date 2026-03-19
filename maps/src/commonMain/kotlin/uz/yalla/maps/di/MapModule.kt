@@ -9,6 +9,14 @@ import uz.yalla.maps.api.StaticMap
 import uz.yalla.maps.provider.SwitchingMapController
 import uz.yalla.maps.provider.SwitchingMapProvider
 
+/**
+ * Koin module providing map-related dependencies.
+ *
+ * Registers [MapProvider], [LiteMap], [ExtendedMap], [StaticMap], and [MapController]
+ * using [SwitchingMapProvider] and [SwitchingMapController] for runtime provider switching.
+ *
+ * @since 0.0.1
+ */
 val mapModule =
     module {
         single<MapProvider> { SwitchingMapProvider(get<MapDependencies>().interfacePreferences) }

@@ -24,12 +24,33 @@ import uz.yalla.maps.provider.libre.LibreMapController
 import uz.yalla.maps.util.hasSameValues
 import kotlin.time.Duration.Companion.seconds
 
+/**
+ * [MapController] that delegates to Google or Libre at runtime based on user preference.
+ *
+ * Maintains both a [googleController] and [libreController] lazily, forwarding
+ * all operations to whichever is currently active. When the user switches providers,
+ * the preserved camera position and marker state are handed off to the new backend.
+ *
+ * @param interfacePreferences Source of the user's map provider preference.
+ * @since 0.0.1
+ */
 class SwitchingMapController(
     interfacePreferences: InterfacePreferences,
 ) : MapController {
     private val _googleController = lazy { GoogleMapController() }
     private val _libreController = lazy { LibreMapController() }
+    /**
+     * Lazily initialized Google Maps controller, exposed for provider-specific access.
+     *
+     * @since 0.0.1
+     */
     val googleController by _googleController
+
+    /**
+     * Lazily initialized MapLibre controller, exposed for provider-specific access.
+     *
+     * @since 0.0.1
+     */
     val libreController by _libreController
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)

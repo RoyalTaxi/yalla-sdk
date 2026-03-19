@@ -34,6 +34,14 @@ import uz.yalla.maps.provider.libre.component.RouteLayer
 import uz.yalla.maps.util.toGeoPoint
 import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
 
+/**
+ * MapLibre implementation of [ExtendedMap].
+ *
+ * Renders a full-featured MapLibre GL view with route polylines, location markers,
+ * user-location indicator, and custom content support via [MapScope].
+ *
+ * @since 0.0.1
+ */
 class LibreExtendedMap : ExtendedMap {
     @Composable
     override fun Content(
