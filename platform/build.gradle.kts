@@ -11,6 +11,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
             implementation(compose.ui)
             implementation(compose.components.resources)
 
@@ -18,6 +19,10 @@ kotlin {
             api(libs.datetime.wheel.picker)
             api(libs.decompose)
             api(libs.decompose.compose)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
 
         androidMain.dependencies {

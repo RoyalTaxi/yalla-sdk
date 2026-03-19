@@ -4,7 +4,6 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import uz.yalla.primitives.navigation.ToolbarAction
 
 /**
  * Mutable state holder for dynamic toolbar actions.
