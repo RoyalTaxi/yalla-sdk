@@ -23,9 +23,7 @@ import uz.yalla.resources.icons.YallaIcons
  * @see rememberSheetSnackbarState
  * @see SheetSnackbarHost
  */
-class SheetSnackbarState(
-    val hostState: SnackbarHostState,
-) {
+class SheetSnackbarState(val hostState: SnackbarHostState,) {
     var data by mutableStateOf<SnackbarData?>(null)
         internal set
 
@@ -39,7 +37,10 @@ class SheetSnackbarState(
         this.data = null
     }
 
-    suspend fun show(message: String, isSuccess: Boolean = false) {
+    suspend fun show(
+        message: String,
+        isSuccess: Boolean = false
+    ) {
         show(SnackbarData(message = message, isSuccess = isSuccess))
     }
 
@@ -80,12 +81,13 @@ fun SheetSnackbarHost(
     modifier: Modifier = Modifier,
 ) {
     AppSnackbarHost(
-        state = AppSnackbarHostState(
-            data = state.data,
-            successIcon = rememberVectorPainter(YallaIcons.CheckCircle),
-            errorIcon = rememberVectorPainter(YallaIcons.Warning),
-            dismissIcon = rememberVectorPainter(YallaIcons.X),
-        ),
+        state =
+            AppSnackbarHostState(
+                data = state.data,
+                successIcon = rememberVectorPainter(YallaIcons.CheckCircle),
+                errorIcon = rememberVectorPainter(YallaIcons.Warning),
+                dismissIcon = rememberVectorPainter(YallaIcons.X),
+            ),
         hostState = state.hostState,
         onDismiss = { state.dismiss() },
         modifier = modifier,

@@ -24,9 +24,7 @@ object SectionBackgroundDefaults {
      *
      * @param background Background color of the section.
      */
-    data class SectionBackgroundColors(
-        val background: Color
-    )
+    data class SectionBackgroundColors(val background: Color)
 
     @Composable
     fun colors(background: Color = System.color.background.secondary) =
@@ -40,9 +38,7 @@ object SectionBackgroundDefaults {
      * @param shape Shape of the section container.
      * @param cornerRadius Corner radius of the shape.
      */
-    data class SectionBackgroundDimens(
-        val shape: Shape
-    )
+    data class SectionBackgroundDimens(val shape: Shape)
 
     @Composable
     fun dimens(shape: Shape = RoundedCornerShape(16.dp)) =

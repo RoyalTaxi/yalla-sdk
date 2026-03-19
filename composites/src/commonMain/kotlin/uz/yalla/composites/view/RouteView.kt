@@ -107,9 +107,7 @@ object RouteViewDefaults {
      *
      * @param itemSpacing Spacing between route locations.
      */
-    data class RouteViewDimens(
-        val itemSpacing: Dp,
-    )
+    data class RouteViewDimens(val itemSpacing: Dp)
 
     @Composable
     fun dimens(itemSpacing: Dp = 8.dp) =

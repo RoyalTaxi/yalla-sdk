@@ -24,9 +24,7 @@ sealed interface DatePickerSheetEffect {
     data object Dismiss : DatePickerSheetEffect
 
     /** User selected a date. */
-    data class Select(
-        val date: LocalDate
-    ) : DatePickerSheetEffect
+    data class Select(val date: LocalDate) : DatePickerSheetEffect
 }
 
 @Composable

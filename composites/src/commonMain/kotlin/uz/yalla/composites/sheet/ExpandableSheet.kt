@@ -39,9 +39,7 @@ object ExpandableSheetDefaults {
      *
      * @param container Card background color.
      */
-    data class ExpandableSheetColors(
-        val container: Color
-    )
+    data class ExpandableSheetColors(val container: Color)
 
     @Composable
     fun colors(container: Color = System.color.background.base) =

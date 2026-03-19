@@ -210,9 +210,7 @@ object SnackbarDefaults {
      *
      * @param message Message text style.
      */
-    data class SnackbarStyle(
-        val message: TextStyle,
-    )
+    data class SnackbarStyle(val message: TextStyle,)
 
     @Composable
     fun style(message: TextStyle = System.font.body.small.medium) =

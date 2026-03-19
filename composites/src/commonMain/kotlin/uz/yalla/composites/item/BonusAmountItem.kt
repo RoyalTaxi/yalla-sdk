@@ -57,9 +57,7 @@ object BonusAmountItemDefaults {
      *
      * @param amount Style for the bonus amount text.
      */
-    data class BonusAmountItemStyle(
-        val amount: TextStyle
-    )
+    data class BonusAmountItemStyle(val amount: TextStyle)
 
     @Composable
     fun style(amount: TextStyle = System.font.body.base.bold) =

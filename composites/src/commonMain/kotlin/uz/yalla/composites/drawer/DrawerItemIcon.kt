@@ -22,9 +22,7 @@ object DrawerItemIconDefaults {
      *
      * @param tint Icon tint color.
      */
-    data class DrawerItemIconColors(
-        val tint: Color
-    )
+    data class DrawerItemIconColors(val tint: Color)
 
     @Composable
     fun colors(tint: Color = System.color.icon.base) =
@@ -37,9 +35,7 @@ object DrawerItemIconDefaults {
      *
      * @param padding Padding around the icon.
      */
-    data class DrawerItemIconDimens(
-        val padding: Dp
-    )
+    data class DrawerItemIconDimens(val padding: Dp)
 
     @Composable
     fun dimens(padding: Dp = 10.dp) =

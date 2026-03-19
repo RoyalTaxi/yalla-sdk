@@ -130,9 +130,7 @@ object ActionItemDefaults {
      *
      * @param title Title text style.
      */
-    data class ActionItemStyle(
-        val title: TextStyle,
-    )
+    data class ActionItemStyle(val title: TextStyle,)
 
     @Composable
     fun style(title: TextStyle = System.font.body.base.bold) =
