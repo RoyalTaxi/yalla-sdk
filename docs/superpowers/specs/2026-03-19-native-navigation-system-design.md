@@ -38,9 +38,34 @@ Build a cross-platform navigation system for yalla-sdk's platform module that us
 
 ## Dependencies
 
-- **Decompose** 3.x — navigation logic, lifecycle, state preservation
+- **Decompose** 3.2.x (latest stable) — navigation logic, lifecycle, state preservation
 - **Essenty** (transitive via Decompose) — Lifecycle, StateKeeper, InstanceKeeper, BackHandler
 - No dependency on compose-cupertino (we write our own NativeNavHost)
+
+### Dependency Strategy
+
+Decompose is added to the **platform** module as `api` (not `implementation`) because `NativeNavHost` takes `NativeRootComponent` which exposes Decompose types (`Value`, `ChildStack`, `ComponentContext`). This means SDK consumers transitively get Decompose + Essenty.
+
+**Binary size impact:** Decompose is ~300KB, Essenty ~100KB. Acceptable for a navigation library.
+
+**Scope:** Decompose is used ONLY in the `platform` module. No other SDK modules depend on it. Consumer apps use Decompose in their `composeApp` module to create `NativeRootComponent`.
+
+```toml
+# gradle/libs.versions.toml
+decompose = "3.2.2"
+
+[libraries]
+decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
+```
+
+```kotlin
+// platform/build.gradle.kts
+commonMain.dependencies {
+    api(libs.decompose)
+    api(libs.decompose.compose)
+}
+```
 
 ## Core API (commonMain)
 
@@ -59,8 +84,10 @@ enum class LargeTitleMode {
 }
 
 // Per-screen configuration
+// Note: title is String (not StringResource) because iOS sets navigationItem.title
+// outside @Composable context. App resolves StringResource → String before creating config.
 data class ScreenConfig(
-    val title: StringResource? = null,
+    val title: String? = null,
     val largeTitleMode: LargeTitleMode = LargeTitleMode.Never,
     val showsNavigationBar: Boolean = true,
     val transparentNavigationBar: Boolean = false,
@@ -86,12 +113,12 @@ class ToolbarState {
 ### Screen Provider
 
 ```kotlin
-// App implements this to map routes → config + content
-interface ScreenProvider {
-    fun configFor(route: Route): ScreenConfig
+// App implements this — generic to preserve type safety (no unchecked casts)
+interface ScreenProvider<C : Route> {
+    fun configFor(route: C): ScreenConfig
 
     @Composable
-    fun Content(route: Route, navigator: Navigator, toolbarState: ToolbarState)
+    fun Content(route: C, navigator: Navigator, toolbarState: ToolbarState)
 }
 ```
 
@@ -103,23 +130,25 @@ interface ScreenProvider {
 interface Navigator {
     fun push(route: Route)
     fun pop()
-    fun popTo(route: Route)
+    fun popWhile(predicate: (Route) -> Boolean)  // matches Decompose API
     fun setRoot(route: Route)
-    fun replace(from: Route, to: Route)
+    fun replaceCurrent(route: Route)  // replaces top of stack only
     val canGoBack: StateFlow<Boolean>
-    val currentRoute: StateFlow<Route?>
+    val currentRoute: StateFlow<Route>  // non-nullable: Decompose stack always has ≥1 item
 }
 
 val LocalNavigator: ProvidableCompositionLocal<Navigator>
 ```
 
+**Note:** `popTo(route)` was removed — Decompose has `popWhile(predicate)` which is unambiguous. `replace(from, to)` was replaced with `replaceCurrent(route)` matching Decompose's `replaceCurrent` semantics (replaces stack top only).
+
 ### Entry Point
 
 ```kotlin
 @Composable
-expect fun NativeNavHost(
-    rootComponent: RootComponent,
-    screenProvider: ScreenProvider,
+expect fun <C : Route> NativeNavHost(
+    rootComponent: NativeRootComponent<C>,
+    screenProvider: ScreenProvider<C>,
     modifier: Modifier = Modifier,
 )
 ```
@@ -180,23 +209,34 @@ class IosPlatformConfig.Builder {
 }
 
 data class NavigationBarAppearance(
-    val tintColor: Long = 0,           // UIBarButtonItem tint
-    val largeTitleFontName: String? = null,  // custom font
-    val titleFontName: String? = null,
+    val tintColor: Long = 0,              // UIBarButtonItem tint (ARGB)
+    val titleColor: Long = 0,             // title text color (ARGB)
+    val backgroundColor: Long = 0,         // nav bar background (ARGB)
+    val isTranslucent: Boolean = true,     // blur effect behind bar
+    val showsSeparator: Boolean = true,    // bottom hairline separator
+    val largeTitleFontName: String? = null, // custom font for large title
+    val titleFontName: String? = null,     // custom font for small title
 )
 ```
 
 ### Bidirectional Sync Algorithm
 
+**Critical: Re-entrancy guard required.** When iOS triggers Decompose pop, the stack subscription fires back. Without a guard, this creates an infinite loop.
+
 ```
+// State
+var isSyncingFromNative = false  // re-entrancy guard
+
 DECOMPOSE → iOS:
   childStack.subscribe { newStack ->
+    if (isSyncingFromNative) return  // ← GUARD: skip if sync came from native
+
     let currentVCs = navController.viewControllers
     let newCount = newStack.items.count
 
-    if newCount > currentVCs.count → push new VC
-    if newCount < currentVCs.count → pop to index
-    if newCount == currentVCs.count && top changed → replace
+    if newCount > currentVCs.count → push new VC (animated: true)
+    if newCount < currentVCs.count → pop to index (animated: true)
+    if newCount == currentVCs.count && top changed → replace top VC (animated: false)
   }
 
 iOS → DECOMPOSE:
@@ -206,58 +246,76 @@ iOS → DECOMPOSE:
 
     if vcCount < stackCount {
       // User swiped back — sync Decompose
-      navigation.pop()  // or popTo(index)
+      isSyncingFromNative = true
+      navigation.pop()  // Decompose dispatches synchronously by default
+      isSyncingFromNative = false
     }
   }
 ```
+
+**Threading assumption:** Decompose's `StackNavigation.pop()` dispatches synchronously on the calling thread. Since `didShow` is called on the main thread and Decompose's subscription also runs on the main thread, the guard flag works correctly. If Decompose ever dispatches async, this must be replaced with a `Mutex` or similar mechanism.
+
+**Gesture cancellation:** If the user starts swipe-back but cancels (finger returns), `didShow` is NOT called — UINavigationController did not change its stack. No sync needed.
 
 ## Android Implementation
 
 ### Compose-Based Rendering
 
+**Key fix:** TopAppBar is rendered INSIDE `Children` block so each screen animates with its own bar config. This prevents visual flicker when navigating between screens with different bar configs.
+
+**Back handling:** Decompose's `handleBackButton = true` handles back presses. No separate `BackHandler` needed (avoids double-handling).
+
 ```kotlin
 @Composable
-actual fun NativeNavHost(
-    rootComponent: RootComponent,
-    screenProvider: ScreenProvider,
+actual fun <C : Route> NativeNavHost(
+    rootComponent: NativeRootComponent<C>,
+    screenProvider: ScreenProvider<C>,
     modifier: Modifier,
 ) {
     val childStack by rootComponent.childStack.subscribeAsState()
 
-    Scaffold(
-        topBar = {
-            val config = screenProvider.configFor(childStack.active.configuration)
-            if (config.showsNavigationBar) {
-                TopAppBar(
-                    title = { config.title?.let { Text(stringResource(it)) } },
-                    navigationIcon = {
-                        if (rootComponent.navigator.canGoBack.collectAsState().value) {
-                            IconButton(onClick = { rootComponent.navigator.pop() }) {
-                                Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back")
-                            }
-                        }
-                    },
-                    actions = { /* ToolbarState actions */ },
-                )
-            }
-        },
-    ) { padding ->
-        Children(
-            stack = childStack,
-            modifier = modifier.padding(padding),
-            animation = stackAnimation(slide()),
-        ) { child ->
-            val route = child.configuration as Route
-            val toolbarState = remember { ToolbarState() }
+    Children(
+        stack = childStack,
+        modifier = modifier,
+        animation = stackAnimation(slide()),
+    ) { child ->
+        val route = child.configuration
+        val config = screenProvider.configFor(route)
+        val toolbarState = remember(route) { ToolbarState() }
+        val canGoBack by rootComponent.navigator.canGoBack.collectAsState()
+
+        Scaffold(
+            topBar = {
+                if (config.showsNavigationBar) {
+                    val title = config.title?.let { stringResource(it) } ?: ""
+                    if (config.largeTitleMode == LargeTitleMode.Always) {
+                        LargeTopAppBar(
+                            title = { Text(title) },
+                            navigationIcon = {
+                                if (canGoBack) BackButton(rootComponent.navigator)
+                            },
+                            actions = { ToolbarActions(toolbarState) },
+                        )
+                    } else {
+                        TopAppBar(
+                            title = { Text(title) },
+                            navigationIcon = {
+                                if (canGoBack) BackButton(rootComponent.navigator)
+                            },
+                            actions = { ToolbarActions(toolbarState) },
+                        )
+                    }
+                }
+            },
+        ) { padding ->
             CompositionLocalProvider(LocalNavigator provides rootComponent.navigator) {
-                screenProvider.Content(route, rootComponent.navigator, toolbarState)
+                Box(Modifier.padding(padding)) {
+                    screenProvider.Content(route, rootComponent.navigator, toolbarState)
+                }
             }
         }
     }
-
-    BackHandler(enabled = rootComponent.navigator.canGoBack.value) {
-        rootComponent.navigator.pop()
-    }
+    // No BackHandler needed — Decompose handles back via handleBackButton = true
 }
 ```
 
@@ -279,25 +337,27 @@ sealed class AppRoute : Route {
 ### Screen Provider (commonMain)
 
 ```kotlin
-class AppScreenProvider : ScreenProvider {
-    override fun configFor(route: Route) = when (route as AppRoute) {
+class AppScreenProvider(
+    private val strings: AppStrings,  // resolved strings (from Koin or manual DI)
+) : ScreenProvider<AppRoute> {
+    override fun configFor(route: AppRoute) = when (route) {  // type-safe, no cast needed!
         AppRoute.Home -> ScreenConfig(showsNavigationBar = false)
         AppRoute.Menu -> ScreenConfig(
-            title = Res.string.menu,
+            title = strings.menu,
             largeTitleMode = LargeTitleMode.Always,
         )
         is AppRoute.OrderHistory -> ScreenConfig(
-            title = Res.string.order_history,
+            title = strings.orderHistory,
         )
         AppRoute.Settings -> ScreenConfig(
-            title = Res.string.settings,
+            title = strings.settings,
             largeTitleMode = LargeTitleMode.Always,
         )
     }
 
     @Composable
-    override fun Content(route: Route, navigator: Navigator, toolbarState: ToolbarState) {
-        when (route as AppRoute) {
+    override fun Content(route: AppRoute, navigator: Navigator, toolbarState: ToolbarState) {
+        when (route) {  // type-safe, no cast needed!
             AppRoute.Home -> HomeScreen()
             AppRoute.Menu -> MenuScreen(toolbarState)
             is AppRoute.OrderHistory -> OrderHistoryScreen(route.orderId)
