@@ -31,6 +31,7 @@ import uz.yalla.resources.img_avatar_placeholder
  * @property name User display name.
  * @property phone User phone number.
  * @property imageUrl Optional avatar URL.
+ * @since 0.0.1
  */
 data class ProfileCardState(
     val name: String,
@@ -66,6 +67,7 @@ data class ProfileCardState(
  *
  * @see ProfileCardState for state configuration
  * @see ProfileCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun ProfileCard(
@@ -134,6 +136,7 @@ fun ProfileCard(
  * Default values for [ProfileCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object ProfileCardDefaults {
     /**
@@ -141,12 +144,18 @@ object ProfileCardDefaults {
      *
      * @param name Name text color.
      * @param phone Phone text color.
+     * @since 0.0.1
      */
     data class ProfileCardColors(
         val name: Color,
         val phone: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         name: Color = System.color.text.base,
@@ -166,6 +175,7 @@ object ProfileCardDefaults {
      * @param phoneTopSpacing Spacing above phone.
      * @param bottomSpacing Bottom spacing.
      * @param phoneMask Phone number display mask.
+     * @since 0.0.1
      */
     data class ProfileCardDimens(
         val avatarSize: Dp,
@@ -176,6 +186,11 @@ object ProfileCardDefaults {
         val phoneMask: String,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         avatarSize: Dp = 80.dp,

@@ -37,6 +37,7 @@ import uz.yalla.primitives.button.PrimaryButtonState
  * @property title Main title text.
  * @property description Description text.
  * @property actionText Primary action button text.
+ * @since 0.0.1
  */
 data class ConfirmationSheetState(
     val isVisible: Boolean,
@@ -49,6 +50,7 @@ data class ConfirmationSheetState(
 
 /**
  * Effects emitted by [ConfirmationSheet].
+ * @since 0.0.1
  */
 sealed interface ConfirmationSheetEffect {
     /** User dismissed the sheet. */
@@ -93,6 +95,7 @@ sealed interface ConfirmationSheetEffect {
  * @see ConfirmationSheetState for content configuration
  * @see ConfirmationSheetEffect for available effects
  * @see ConfirmationSheetDefaults for default values
+ * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -193,6 +196,7 @@ fun ConfirmationSheet(
  * Default values for [ConfirmationSheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object ConfirmationSheetDefaults {
     /**
@@ -201,6 +205,7 @@ object ConfirmationSheetDefaults {
      * @param container Background color.
      * @param title Title text color.
      * @param description Description text color.
+     * @since 0.0.1
      */
     data class ConfirmationSheetColors(
         val container: Color,
@@ -208,6 +213,11 @@ object ConfirmationSheetDefaults {
         val description: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.base,
@@ -234,6 +244,7 @@ object ConfirmationSheetDefaults {
      * @param actionTopSpacing Spacing above action button.
      * @param actionHorizontalPadding Horizontal padding for action button.
      * @param actionBottomSpacing Bottom spacing.
+     * @since 0.0.1
      */
     data class ConfirmationSheetDimens(
         val shape: Shape,
@@ -249,6 +260,11 @@ object ConfirmationSheetDefaults {
         val actionBottomSpacing: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),

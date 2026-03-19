@@ -30,6 +30,7 @@ import uz.yalla.resources.icons.YallaIcons
  * @param T Type of the underlying data item.
  * @property item Selectable item model with icon and title.
  * @property isSelected Whether this item is currently selected.
+ * @since 0.0.1
  */
 data class SelectableItemState<T>(
     val item: OptionModel<T>,
@@ -40,6 +41,7 @@ data class SelectableItemState<T>(
  * Default configuration values for [SelectableItem].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SelectableItemDefaults {
     /**
@@ -49,6 +51,7 @@ object SelectableItemDefaults {
      * @param unselectedContainer Background color when not selected.
      * @param border Border color when not selected.
      * @param text Text color.
+     * @since 0.0.1
      */
     data class SelectableItemColors(
         val selectedContainer: Color,
@@ -57,6 +60,11 @@ object SelectableItemDefaults {
         val text: Color
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         selectedContainer: Color = System.color.background.secondary,
@@ -74,9 +82,15 @@ object SelectableItemDefaults {
      * Text style configuration for [SelectableItem].
      *
      * @param title Style applied to the item title.
+     * @since 0.0.1
      */
     data class SelectableItemStyle(val title: TextStyle)
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(title: TextStyle = System.font.body.small.medium) =
         SelectableItemStyle(
@@ -90,6 +104,7 @@ object SelectableItemDefaults {
      * @param contentPadding Padding inside the item.
      * @param iconSpacing Spacing between icon and text.
      * @param borderWidth Border width when not selected.
+     * @since 0.0.1
      */
     data class SelectableItemDimens(
         val shape: Shape,
@@ -98,6 +113,11 @@ object SelectableItemDefaults {
         val borderWidth: Dp
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
@@ -142,6 +162,7 @@ object SelectableItemDefaults {
  *
  * @see SelectableItemState for state configuration
  * @see SelectableItemDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun <T> SelectableItem(

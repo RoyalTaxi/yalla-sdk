@@ -26,6 +26,7 @@ import uz.yalla.design.theme.System
  *
  * @property plateNumber Main plate number.
  * @property region Optional region code.
+ * @since 0.0.1
  */
 data class VehiclePlateState(
     val plateNumber: String,
@@ -65,6 +66,7 @@ data class VehiclePlateState(
  *
  * @see VehiclePlateState for state configuration
  * @see VehiclePlateDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun VehiclePlate(
@@ -133,6 +135,7 @@ fun VehiclePlate(
  * Default values for [VehiclePlate].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object VehiclePlateDefaults {
     /**
@@ -142,6 +145,7 @@ object VehiclePlateDefaults {
      * @param text Text color.
      * @param border Border color.
      * @param divider Region divider color.
+     * @since 0.0.1
      */
     data class VehiclePlateColors(
         val container: Color,
@@ -150,6 +154,11 @@ object VehiclePlateDefaults {
         val divider: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.base,
@@ -174,6 +183,7 @@ object VehiclePlateDefaults {
      * @param contentHorizontalPadding Content horizontal padding.
      * @param dividerWidth Region divider width.
      * @param dividerVerticalPadding Region divider vertical padding.
+     * @since 0.0.1
      */
     data class VehiclePlateDimens(
         val shape: Shape,
@@ -185,6 +195,11 @@ object VehiclePlateDefaults {
         val dividerVerticalPadding: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(4.dp),

@@ -22,11 +22,18 @@ import uz.yalla.resources.icons.YallaIcons
  *
  * @see rememberSheetSnackbarState
  * @see SheetSnackbarHost
+ * @since 0.0.1
  */
 class SheetSnackbarState(val hostState: SnackbarHostState,) {
     var data by mutableStateOf<SnackbarData?>(null)
         internal set
 
+    /**
+     * Shows a snackbar with the given [data].
+     *
+     * @param data Snackbar content to display.
+     * @since 0.0.1
+     */
     suspend fun show(data: SnackbarData) {
         this.data = data
         hostState.currentSnackbarData?.dismiss()
@@ -37,6 +44,13 @@ class SheetSnackbarState(val hostState: SnackbarHostState,) {
         this.data = null
     }
 
+    /**
+     * Shows a snackbar with the given [message].
+     *
+     * @param message Message text.
+     * @param isSuccess Whether to show success or error styling.
+     * @since 0.0.1
+     */
     suspend fun show(
         message: String,
         isSuccess: Boolean = false
@@ -44,12 +58,23 @@ class SheetSnackbarState(val hostState: SnackbarHostState,) {
         show(SnackbarData(message = message, isSuccess = isSuccess))
     }
 
+    /**
+     * Dismisses the current snackbar immediately.
+     *
+     * @since 0.0.1
+     */
     fun dismiss() {
         hostState.currentSnackbarData?.dismiss()
         data = null
     }
 }
 
+/**
+ * Create and remember a [SheetSnackbarState].
+ *
+ * @return Remembered snackbar state for use with [SheetSnackbarHost].
+ * @since 0.0.1
+ */
 @Composable
 fun rememberSheetSnackbarState(): SheetSnackbarState {
     val hostState = remember { SnackbarHostState() }
@@ -74,6 +99,7 @@ fun rememberSheetSnackbarState(): SheetSnackbarState {
  *     snackbarHost = { SheetSnackbarHost(snackbar) },
  * ) { content() }
  * ```
+ * @since 0.0.1
  */
 @Composable
 fun SheetSnackbarHost(

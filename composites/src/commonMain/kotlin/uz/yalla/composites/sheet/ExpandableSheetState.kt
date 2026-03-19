@@ -22,9 +22,13 @@ import androidx.compose.ui.unit.Dp
 
 /**
  * Value states for expandable sheet.
+ * @since 0.0.1
  */
 enum class ExpandableSheetValue {
+    /** Sheet is collapsed showing only the collapsed content. */
     Collapsed,
+
+    /** Sheet is fully expanded showing the expanded content. */
     Expanded,
 }
 
@@ -49,6 +53,7 @@ enum class ExpandableSheetValue {
  * ```
  *
  * @see rememberExpandableSheetState
+ * @since 0.0.1
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Stable
@@ -177,6 +182,7 @@ class ExpandableSheetState internal constructor(
 
 /**
  * Spring animation for expandable sheet.
+ * @since 0.0.1
  */
 val ExpandableSheetSpringSpec: AnimationSpec<Float> =
     spring(
@@ -191,6 +197,7 @@ val ExpandableSheetSpringSpec: AnimationSpec<Float> =
  * @param snapAnimationSpec Animation for snapping
  * @param density Current density
  * @param positionalThreshold Threshold for snapping based on position
+ * @since 0.0.1
  */
 @Composable
 fun rememberExpandableSheetState(
@@ -210,6 +217,7 @@ fun rememberExpandableSheetState(
 
 /**
  * Modifier extension for anchored draggable behavior.
+ * @since 0.0.1
  */
 @OptIn(ExperimentalFoundationApi::class)
 fun Modifier.expandableSheetDraggable(state: ExpandableSheetState): Modifier =

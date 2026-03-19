@@ -39,6 +39,7 @@ import uz.yalla.resources.img_coin
  * @property balance Current bonus balance.
  * @property isBonusEnabled Whether bonus is currently enabled.
  * @property enabled Whether the switch is interactive.
+ * @since 0.0.1
  */
 data class EnableBonusCardState(
     val balance: Long,
@@ -50,6 +51,7 @@ data class EnableBonusCardState(
  * Default configuration values for [EnableBonusCard].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object EnableBonusCardDefaults {
     /**
@@ -59,6 +61,7 @@ object EnableBonusCardDefaults {
      * @param iconBackground Background color of the icon container.
      * @param title Title text color.
      * @param subtitle Subtitle text color.
+     * @since 0.0.1
      */
     data class EnableBonusCardColors(
         val container: Color,
@@ -67,6 +70,11 @@ object EnableBonusCardDefaults {
         val subtitle: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -85,12 +93,18 @@ object EnableBonusCardDefaults {
      *
      * @param title Style for the title text.
      * @param subtitle Style for the subtitle text.
+     * @since 0.0.1
      */
     data class EnableBonusCardStyle(
         val title: TextStyle,
         val subtitle: TextStyle
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         title: TextStyle = System.font.body.base.bold,
@@ -110,6 +124,7 @@ object EnableBonusCardDefaults {
      * @param iconSpacing Spacing between icon and text.
      * @param textSpacing Spacing between title and subtitle.
      * @param trailingSpacing Spacing before switch.
+     * @since 0.0.1
      */
     data class EnableBonusCardDimens(
         val contentPadding: PaddingValues,
@@ -121,6 +136,11 @@ object EnableBonusCardDefaults {
         val trailingSpacing: Dp
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
@@ -165,6 +185,7 @@ object EnableBonusCardDefaults {
  *
  * @see EnableBonusCardState for state configuration
  * @see EnableBonusCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun EnableBonusCard(

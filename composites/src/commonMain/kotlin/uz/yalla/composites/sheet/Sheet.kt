@@ -73,6 +73,7 @@ import uz.yalla.design.theme.System
  * @param content Sheet content.
  *
  * @see SheetDefaults for default values
+ * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -147,6 +148,7 @@ fun Sheet(
  * @param modifier Applied to drag handle.
  * @param dimens Dimension configuration.
  * @param color Handle color.
+ * @since 0.0.1
  */
 @Composable
 fun SheetDragHandle(
@@ -178,6 +180,7 @@ fun SheetDragHandle(
  * Default values for [Sheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 object SheetDefaults {
@@ -186,12 +189,18 @@ object SheetDefaults {
      *
      * @param container Background color.
      * @param scrim Scrim overlay color.
+     * @since 0.0.1
      */
     data class SheetColors(
         val container: Color,
         val scrim: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.base,
@@ -211,6 +220,7 @@ object SheetDefaults {
      * @param dragHandleHeight Drag handle height.
      * @param dragHandleContainerWidth Drag handle container width.
      * @param dragHandleContainerHeight Drag handle container height.
+     * @since 0.0.1
      */
     data class SheetDimens(
         val shape: Shape,
@@ -221,6 +231,11 @@ object SheetDefaults {
         val dragHandleContainerHeight: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),

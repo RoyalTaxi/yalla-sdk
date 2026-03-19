@@ -27,9 +27,13 @@ import uz.yalla.design.theme.System
 
 /**
  * Snackbar variant for success/error states.
+ * @since 0.0.1
  */
 enum class SnackbarVariant {
+    /** Positive feedback (e.g., card added, action completed). */
     Success,
+
+    /** Negative feedback (e.g., network error, validation failure). */
     Error,
 }
 
@@ -40,6 +44,7 @@ enum class SnackbarVariant {
  * @property variant Success or error variant.
  * @property icon Leading icon.
  * @property dismissIcon Dismiss button icon.
+ * @since 0.0.1
  */
 data class SnackbarState(
     val message: String,
@@ -76,6 +81,7 @@ data class SnackbarState(
  *
  * @see SnackbarState for state configuration
  * @see SnackbarDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun Snackbar(
@@ -150,6 +156,7 @@ fun Snackbar(
  * Default configuration values for [Snackbar].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SnackbarDefaults {
     /**
@@ -160,6 +167,7 @@ object SnackbarDefaults {
      * @param icon Icon tint color.
      * @param text Message text color.
      * @param dismissIcon Dismiss icon tint color.
+     * @since 0.0.1
      */
     data class SnackbarColors(
         val container: Color,
@@ -169,6 +177,11 @@ object SnackbarDefaults {
         val dismissIcon: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(variant: SnackbarVariant): SnackbarColors =
         when (variant) {
@@ -190,6 +203,11 @@ object SnackbarDefaults {
                 )
         }
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.button.active,
@@ -209,9 +227,15 @@ object SnackbarDefaults {
      * Text style configuration for [Snackbar].
      *
      * @param message Message text style.
+     * @since 0.0.1
      */
     data class SnackbarStyle(val message: TextStyle,)
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(message: TextStyle = System.font.body.small.medium) =
         SnackbarStyle(
@@ -230,6 +254,7 @@ object SnackbarDefaults {
      * @param iconBackgroundRadius Icon background corner radius.
      * @param dismissIconSize Dismiss icon size.
      * @param messageMaxLines Maximum lines for message text.
+     * @since 0.0.1
      */
     data class SnackbarDimens(
         val shape: Shape,
@@ -243,6 +268,11 @@ object SnackbarDefaults {
         val messageMaxLines: Int,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(12.dp),

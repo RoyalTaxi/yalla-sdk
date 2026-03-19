@@ -15,6 +15,14 @@ import uz.yalla.resources.payment_card_humo_format
 import uz.yalla.resources.payment_card_uzcard_format
 import uz.yalla.resources.payment_type_cash
 
+/**
+ * Resolves a [Painter] for this [PaymentKind].
+ *
+ * Returns a cash image for [PaymentKind.Cash] and a card-brand vector
+ * (Humo or Uzcard) for [PaymentKind.Card] based on `cardId` length.
+ *
+ * @since 0.0.1
+ */
 @Composable
 fun PaymentKind.toPainter(): Painter =
     when (this) {
@@ -29,6 +37,13 @@ fun PaymentKind.toPainter(): Painter =
         }
     }
 
+/**
+ * Resolves a [StringResource] label for this [PaymentKind].
+ *
+ * Returns a localized format string appropriate for the payment type.
+ *
+ * @since 0.0.1
+ */
 fun PaymentKind.getStringResource(): StringResource =
     when (this) {
         PaymentKind.Cash -> Res.string.payment_type_cash

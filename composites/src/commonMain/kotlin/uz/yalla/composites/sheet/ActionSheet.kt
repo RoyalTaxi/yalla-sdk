@@ -36,6 +36,7 @@ import uz.yalla.primitives.button.SecondaryButtonState
  * @property message Optional description text.
  * @property primaryAction Primary button text.
  * @property secondaryAction Optional secondary button text.
+ * @since 0.0.1
  */
 data class ActionSheetState(
     val isVisible: Boolean,
@@ -47,6 +48,7 @@ data class ActionSheetState(
 
 /**
  * Effects emitted by [ActionSheet].
+ * @since 0.0.1
  */
 sealed interface ActionSheetEffect {
     /** User dismissed the sheet. */
@@ -95,6 +97,7 @@ sealed interface ActionSheetEffect {
  * @see ActionSheetState for state configuration
  * @see ActionSheetEffect for available effects
  * @see ActionSheetDefaults for default values
+ * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -174,6 +177,7 @@ fun ActionSheet(
  * Default configuration values for [ActionSheet].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object ActionSheetDefaults {
     /**
@@ -183,6 +187,7 @@ object ActionSheetDefaults {
      * @param title Title text color.
      * @param message Message text color.
      * @param divider Divider color.
+     * @since 0.0.1
      */
     data class ActionSheetColors(
         val container: Color,
@@ -191,6 +196,11 @@ object ActionSheetDefaults {
         val divider: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.base,
@@ -209,12 +219,18 @@ object ActionSheetDefaults {
      *
      * @param title Title text style.
      * @param message Message text style.
+     * @since 0.0.1
      */
     data class ActionSheetStyle(
         val title: TextStyle,
         val message: TextStyle,
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         title: TextStyle = System.font.title.base,
@@ -236,6 +252,7 @@ object ActionSheetDefaults {
      * @param buttonSpacing Spacing between buttons.
      * @param bottomSpacing Bottom spacing.
      * @param dividerThickness Divider thickness.
+     * @since 0.0.1
      */
     data class ActionSheetDimens(
         val shape: Shape,
@@ -249,6 +266,11 @@ object ActionSheetDefaults {
         val dividerThickness: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),

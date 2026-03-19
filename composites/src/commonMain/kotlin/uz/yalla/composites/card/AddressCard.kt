@@ -33,6 +33,7 @@ import uz.yalla.design.theme.System
  * @param name Place name (Home, Work, custom).
  * @param address Street address.
  * @param metadata Optional footer text (e.g., duration).
+ * @since 0.0.1
  */
 data class AddressCardState(
     val name: String,
@@ -67,6 +68,7 @@ data class AddressCardState(
  * @param dimens Dimension configuration, defaults to [AddressCardDefaults.dimens].
  *
  * @see AddressCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun AddressCard(
@@ -138,6 +140,7 @@ fun AddressCard(
  * Default values for [AddressCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object AddressCardDefaults {
     /**
@@ -147,6 +150,7 @@ object AddressCardDefaults {
      * @param name Name text color.
      * @param address Address text color.
      * @param metadata Metadata text color.
+     * @since 0.0.1
      */
     data class AddressCardColors(
         val container: Color,
@@ -155,6 +159,11 @@ object AddressCardDefaults {
         val metadata: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -178,6 +187,7 @@ object AddressCardDefaults {
      * @param iconSpacing Spacing after icon.
      * @param contentSpacing Spacing between content elements.
      * @param contentPadding Padding around content.
+     * @since 0.0.1
      */
     data class AddressCardDimens(
         val shape: Shape,
@@ -188,6 +198,11 @@ object AddressCardDefaults {
         val contentPadding: PaddingValues,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(20.dp),

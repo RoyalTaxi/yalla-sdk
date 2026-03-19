@@ -30,6 +30,7 @@ import uz.yalla.design.theme.System
  * @property title Primary text.
  * @property subtitle Optional secondary text.
  * @property enabled Whether item is enabled.
+ * @since 0.0.1
  */
 data class ListItemState(
     val title: String,
@@ -66,6 +67,7 @@ data class ListItemState(
  * @param dimens Dimension configuration, defaults to [ListItemDefaults.dimens].
  *
  * @see ListItemDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun ListItem(
@@ -148,6 +150,7 @@ fun ListItem(
  * Default configuration values for [ListItem].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object ListItemDefaults {
     /**
@@ -159,6 +162,7 @@ object ListItemDefaults {
      * @param disabledContainer Background color when disabled.
      * @param disabledTitle Title text color when disabled.
      * @param disabledSubtitle Subtitle text color when disabled.
+     * @since 0.0.1
      */
     data class ListItemColors(
         val container: Color,
@@ -169,6 +173,11 @@ object ListItemDefaults {
         val disabledSubtitle: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -195,12 +204,18 @@ object ListItemDefaults {
      *
      * @param title Title text style.
      * @param subtitle Subtitle text style.
+     * @since 0.0.1
      */
     data class ListItemStyle(
         val title: TextStyle,
         val subtitle: TextStyle,
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         title: TextStyle = System.font.body.base.bold,
@@ -219,6 +234,7 @@ object ListItemDefaults {
      * @param titleSubtitleSpacing Spacing between title and subtitle.
      * @param titleMaxLines Max lines for title.
      * @param subtitleMaxLines Max lines for subtitle.
+     * @since 0.0.1
      */
     data class ListItemDimens(
         val shape: Shape,
@@ -229,6 +245,11 @@ object ListItemDefaults {
         val subtitleMaxLines: Int,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RectangleShape,

@@ -15,15 +15,22 @@ import uz.yalla.design.theme.System
  * Default configuration values for [DrawerItemIcon].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object DrawerItemIconDefaults {
     /**
      * Color configuration for [DrawerItemIcon].
      *
      * @param tint Icon tint color.
+     * @since 0.0.1
      */
     data class DrawerItemIconColors(val tint: Color)
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(tint: Color = System.color.icon.base) =
         DrawerItemIconColors(
@@ -34,9 +41,15 @@ object DrawerItemIconDefaults {
      * Dimension configuration for [DrawerItemIcon].
      *
      * @param padding Padding around the icon.
+     * @since 0.0.1
      */
     data class DrawerItemIconDimens(val padding: Dp)
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(padding: Dp = 10.dp) =
         DrawerItemIconDimens(
@@ -60,6 +73,7 @@ object DrawerItemIconDefaults {
  * @param modifier Applied to icon
  * @param colors Color configuration, defaults to [DrawerItemIconDefaults.colors]
  * @param dimens Dimension configuration, defaults to [DrawerItemIconDefaults.dimens]
+ * @since 0.0.1
  */
 @Composable
 fun DrawerItemIcon(

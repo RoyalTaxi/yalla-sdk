@@ -21,6 +21,7 @@ import uz.yalla.design.theme.System
  * Default configuration values for [LocationButton].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object LocationButtonDefaults {
     /**
@@ -28,12 +29,18 @@ object LocationButtonDefaults {
      *
      * @param container Button background color.
      * @param text Text color.
+     * @since 0.0.1
      */
     data class LocationButtonColors(
         val container: Color,
         val text: Color
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -47,9 +54,15 @@ object LocationButtonDefaults {
      * Text style configuration for [LocationButton].
      *
      * @param label Style applied to the button text.
+     * @since 0.0.1
      */
     data class LocationButtonStyle(val label: TextStyle)
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(label: TextStyle = System.font.body.base.bold) =
         LocationButtonStyle(
@@ -62,6 +75,7 @@ object LocationButtonDefaults {
      * @param shape Button shape.
      * @param contentPadding Padding inside the button.
      * @param iconSpacing Spacing between icons and text.
+     * @since 0.0.1
      */
     data class LocationButtonDimens(
         val shape: Shape,
@@ -69,6 +83,11 @@ object LocationButtonDefaults {
         val iconSpacing: Dp
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
@@ -107,6 +126,7 @@ object LocationButtonDefaults {
  * @param dimens Dimension configuration, defaults to [LocationButtonDefaults.dimens]
  *
  * @see LocationItem for multi-location display
+ * @since 0.0.1
  */
 @Composable
 fun LocationButton(

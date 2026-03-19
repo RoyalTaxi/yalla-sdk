@@ -30,6 +30,7 @@ import uz.yalla.design.theme.System
  * @param title Card title.
  * @param subtitle Descriptive subtitle.
  * @param balance Formatted balance amount.
+ * @since 0.0.1
  */
 data class BonusCardState(
     val title: String,
@@ -62,6 +63,7 @@ data class BonusCardState(
  * @param dimens Dimension configuration, defaults to [BonusCardDefaults.dimens].
  *
  * @see BonusCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun BonusCard(
@@ -114,6 +116,7 @@ fun BonusCard(
  * Default values for [BonusCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object BonusCardDefaults {
     /**
@@ -122,6 +125,7 @@ object BonusCardDefaults {
      * @param title Title text color.
      * @param subtitle Subtitle text color.
      * @param balance Balance text color.
+     * @since 0.0.1
      */
     data class BonusCardColors(
         val title: Color,
@@ -129,6 +133,11 @@ object BonusCardDefaults {
         val balance: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         title: Color = System.color.text.white,
@@ -147,6 +156,7 @@ object BonusCardDefaults {
      * @param shape Card corner shape.
      * @param height Card height.
      * @param contentPadding Padding around content.
+     * @since 0.0.1
      */
     data class BonusCardDimens(
         val shape: Shape,
@@ -154,6 +164,11 @@ object BonusCardDefaults {
         val contentPadding: PaddingValues,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),

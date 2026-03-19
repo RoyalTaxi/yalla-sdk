@@ -32,6 +32,7 @@ import uz.yalla.platform.toggle.NativeSwitch
  * @property title Primary title text.
  * @property subtitle Optional secondary text.
  * @property enabled Whether card and switch are enabled.
+ * @since 0.0.1
  */
 data class SwitchCardState(
     val checked: Boolean,
@@ -68,6 +69,7 @@ data class SwitchCardState(
  *
  * @see SwitchCardState for state configuration
  * @see SwitchCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun SwitchCard(
@@ -144,6 +146,7 @@ fun SwitchCard(
  * Default values for [SwitchCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SwitchCardDefaults {
     /**
@@ -153,6 +156,7 @@ object SwitchCardDefaults {
      * @param iconBackground Icon container background.
      * @param title Title text color.
      * @param subtitle Subtitle text color.
+     * @since 0.0.1
      */
     data class SwitchCardColors(
         val container: Color,
@@ -161,6 +165,11 @@ object SwitchCardDefaults {
         val subtitle: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -185,6 +194,7 @@ object SwitchCardDefaults {
      * @param horizontalPadding Horizontal padding.
      * @param verticalPadding Vertical padding.
      * @param contentSpacing Spacing between elements.
+     * @since 0.0.1
      */
     data class SwitchCardDimens(
         val shape: Shape,
@@ -196,6 +206,11 @@ object SwitchCardDefaults {
         val contentSpacing: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(0.dp),

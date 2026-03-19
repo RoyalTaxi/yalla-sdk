@@ -39,6 +39,7 @@ import uz.yalla.resources.img_car_cropped
  *
  * @param title Service title.
  * @param selected Whether service is selected.
+ * @since 0.0.1
  */
 data class BrandServiceItemState(
     val title: String,
@@ -49,12 +50,14 @@ data class BrandServiceItemState(
  * Icon model for [BrandServiceItem].
  *
  * Supports local painter icons and async models (e.g., URL string).
+ * @since 0.0.1
  */
 sealed interface BrandServiceItemIconModel {
     /**
      * Local static icon.
      *
      * @param painter Painter source for icon.
+     * @since 0.0.1
      */
     data class Local(val painter: Painter,) : BrandServiceItemIconModel
 
@@ -62,6 +65,7 @@ sealed interface BrandServiceItemIconModel {
      * Async icon source passed to Coil model.
      *
      * @param model Coil model (e.g., URL string, ImageRequest).
+     * @since 0.0.1
      */
     data class Async(val model: Any?,) : BrandServiceItemIconModel
 }
@@ -101,6 +105,7 @@ sealed interface BrandServiceItemIconModel {
  * @param dimens Dimension configuration, defaults to [BrandServiceItemDefaults.dimens].
  *
  * @see BrandServiceItemDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun BrandServiceItem(
@@ -250,6 +255,7 @@ private fun BrandServiceIconFallback(
  * Default configuration values for [BrandServiceItem].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object BrandServiceItemDefaults {
     /**
@@ -259,6 +265,7 @@ object BrandServiceItemDefaults {
      * @param selectedContainer Background color when selected.
      * @param title Title text color when unselected.
      * @param selectedTitle Title text color when selected.
+     * @since 0.0.1
      */
     data class BrandServiceItemColors(
         val container: Color,
@@ -267,6 +274,11 @@ object BrandServiceItemDefaults {
         val selectedTitle: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.tertiary,
@@ -284,9 +296,15 @@ object BrandServiceItemDefaults {
      * Text style configuration for [BrandServiceItem].
      *
      * @param title Title text style.
+     * @since 0.0.1
      */
     data class BrandServiceItemStyle(val title: TextStyle,)
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(title: TextStyle = System.font.body.base.medium) =
         BrandServiceItemStyle(
@@ -299,6 +317,7 @@ object BrandServiceItemDefaults {
      * @param placeholder Painter shown while async icon is loading.
      * @param error Painter shown when async icon loading fails.
      * @param fallback Painter shown when async model is empty.
+     * @since 0.0.1
      */
     data class BrandServiceItemAsyncImage(
         val placeholder: Painter?,
@@ -306,6 +325,11 @@ object BrandServiceItemDefaults {
         val fallback: Painter?,
     )
 
+    /**
+     * Creates default async image painters.
+     *
+     * @since 0.0.1
+     */
     fun asyncImage(
         placeholder: Painter? = null,
         error: Painter? = placeholder,
@@ -324,6 +348,7 @@ object BrandServiceItemDefaults {
      * @param itemSpacing Recommended spacing between multiple chips.
      * @param iconSize Icon size.
      * @param iconTextSpacing Spacing between icon and title.
+     * @since 0.0.1
      */
     data class BrandServiceItemDimens(
         val shape: Shape,
@@ -333,6 +358,11 @@ object BrandServiceItemDefaults {
         val iconTextSpacing: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(50.dp),

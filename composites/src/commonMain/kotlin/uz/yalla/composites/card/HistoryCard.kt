@@ -33,9 +33,13 @@ import uz.yalla.resources.history_status_completed
 
 /**
  * Status for [HistoryCard].
+ * @since 0.0.1
  */
 enum class HistoryCardStatus {
+    /** Ride or order was successfully completed. */
     Completed,
+
+    /** Ride or order was canceled. */
     Canceled,
 }
 
@@ -45,6 +49,7 @@ enum class HistoryCardStatus {
  * @param time Display time.
  * @param price Formatted price.
  * @param status Order status.
+ * @since 0.0.1
  */
 data class HistoryCardState(
     val time: String,
@@ -56,6 +61,7 @@ data class HistoryCardState(
  * Default configuration for [HistoryCard].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object HistoryCardDefaults {
     /**
@@ -66,6 +72,7 @@ object HistoryCardDefaults {
      * @param price Price text color.
      * @param statusCompleted Completed status text color.
      * @param statusCanceled Canceled status text color.
+     * @since 0.0.1
      */
     data class HistoryCardColors(
         val container: Color,
@@ -75,6 +82,11 @@ object HistoryCardDefaults {
         val statusCanceled: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -96,6 +108,7 @@ object HistoryCardDefaults {
      * @param time Time text style.
      * @param status Status text style.
      * @param price Price text style.
+     * @since 0.0.1
      */
     data class HistoryCardStyle(
         val time: TextStyle,
@@ -103,6 +116,11 @@ object HistoryCardDefaults {
         val price: TextStyle,
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         time: TextStyle = System.font.body.caption,
@@ -121,6 +139,7 @@ object HistoryCardDefaults {
      * @param contentPadding Padding around content.
      * @param spacingSmall Small spacing between elements.
      * @param spacingMedium Medium spacing between sections.
+     * @since 0.0.1
      */
     data class HistoryCardDimens(
         val shape: Shape,
@@ -129,6 +148,11 @@ object HistoryCardDefaults {
         val spacingMedium: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
@@ -158,6 +182,7 @@ object HistoryCardDefaults {
  * @param dimens Dimension configuration, defaults to [HistoryCardDefaults.dimens].
  *
  * @see HistoryCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun HistoryCard(

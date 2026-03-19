@@ -17,15 +17,22 @@ import uz.yalla.design.theme.System
  * Default configuration values for [SectionBackground].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SectionBackgroundDefaults {
     /**
      * Color configuration for [SectionBackground].
      *
      * @param background Background color of the section.
+     * @since 0.0.1
      */
     data class SectionBackgroundColors(val background: Color)
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(background: Color = System.color.background.secondary) =
         SectionBackgroundColors(
@@ -37,9 +44,15 @@ object SectionBackgroundDefaults {
      *
      * @param shape Shape of the section container.
      * @param cornerRadius Corner radius of the shape.
+     * @since 0.0.1
      */
     data class SectionBackgroundDimens(val shape: Shape)
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(shape: Shape = RoundedCornerShape(16.dp)) =
         SectionBackgroundDimens(
@@ -63,6 +76,7 @@ object SectionBackgroundDefaults {
  * @param colors Color configuration, defaults to [SectionBackgroundDefaults.colors]
  * @param dimens Dimension configuration, defaults to [SectionBackgroundDefaults.dimens]
  * @param content Column content
+ * @since 0.0.1
  */
 @Composable
 fun SectionBackground(

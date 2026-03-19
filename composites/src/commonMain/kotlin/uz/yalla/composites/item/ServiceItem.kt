@@ -31,6 +31,7 @@ import uz.yalla.platform.toggle.NativeSwitch
  * @param name Service name.
  * @param price Formatted price text.
  * @param checked Whether service is selected.
+ * @since 0.0.1
  */
 data class ServiceItemState(
     val name: String,
@@ -65,6 +66,7 @@ data class ServiceItemState(
  * @param dimens Dimension configuration, defaults to [ServiceItemDefaults.dimens].
  *
  * @see ServiceItemDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun ServiceItem(
@@ -127,6 +129,7 @@ fun ServiceItem(
  * Default configuration values for [ServiceItem].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object ServiceItemDefaults {
     /**
@@ -135,6 +138,7 @@ object ServiceItemDefaults {
      * @param container Background color.
      * @param name Name text color.
      * @param price Price text color.
+     * @since 0.0.1
      */
     data class ServiceItemColors(
         val container: Color,
@@ -142,6 +146,11 @@ object ServiceItemDefaults {
         val price: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -158,12 +167,18 @@ object ServiceItemDefaults {
      *
      * @param name Name text style.
      * @param price Price text style.
+     * @since 0.0.1
      */
     data class ServiceItemStyle(
         val name: TextStyle,
         val price: TextStyle,
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         name: TextStyle = System.font.body.base.bold,
@@ -180,6 +195,7 @@ object ServiceItemDefaults {
      * @param contentPadding Padding around content.
      * @param contentSpacing Spacing between elements.
      * @param titlePriceSpacing Spacing between title and price.
+     * @since 0.0.1
      */
     data class ServiceItemDimens(
         val shape: Shape,
@@ -188,6 +204,11 @@ object ServiceItemDefaults {
         val titlePriceSpacing: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RectangleShape,

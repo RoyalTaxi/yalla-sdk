@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
  *
  * @param connectivity Connectivity instance
  * @param scope Coroutine scope for collecting updates
+ * @since 0.0.1
  */
 @Stable
 class DeviceConnectivityState(
@@ -79,6 +80,7 @@ class DeviceConnectivityState(
  * @param connectivity Connectivity instance
  * @param scope Coroutine scope for collecting updates
  * @return Remembered connectivity state
+ * @since 0.0.1
  */
 @Composable
 fun rememberDeviceConnectivityState(

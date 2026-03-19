@@ -30,6 +30,7 @@ import uz.yalla.resources.img_coin
  * Default configuration values for [BonusAmountItem].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object BonusAmountItemDefaults {
     /**
@@ -37,12 +38,18 @@ object BonusAmountItemDefaults {
      *
      * @param background Background brush (gradient) of the item.
      * @param text Text color.
+     * @since 0.0.1
      */
     data class BonusAmountItemColors(
         val background: Brush,
         val text: Color
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         background: Brush = System.color.gradient.sunsetNight,
@@ -56,9 +63,15 @@ object BonusAmountItemDefaults {
      * Text style configuration for [BonusAmountItem].
      *
      * @param amount Style for the bonus amount text.
+     * @since 0.0.1
      */
     data class BonusAmountItemStyle(val amount: TextStyle)
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(amount: TextStyle = System.font.body.base.bold) =
         BonusAmountItemStyle(
@@ -73,6 +86,7 @@ object BonusAmountItemDefaults {
      * @param iconSize Size of the coin icon.
      * @param iconSpacing Spacing between icon and text.
      * @param trailingSpacing Extra spacing at the end.
+     * @since 0.0.1
      */
     data class BonusAmountItemDimens(
         val shape: Shape,
@@ -82,6 +96,11 @@ object BonusAmountItemDefaults {
         val trailingSpacing: Dp
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = CircleShape,
@@ -116,6 +135,7 @@ object BonusAmountItemDefaults {
  * @param colors Color configuration, defaults to [BonusAmountItemDefaults.colors].
  * @param style Text style configuration, defaults to [BonusAmountItemDefaults.style].
  * @param dimens Dimension configuration, defaults to [BonusAmountItemDefaults.dimens].
+ * @since 0.0.1
  */
 @Composable
 fun ClickableBonusAmountItem(
@@ -153,6 +173,7 @@ fun ClickableBonusAmountItem(
  * @param colors Color configuration, defaults to [BonusAmountItemDefaults.colors].
  * @param style Text style configuration, defaults to [BonusAmountItemDefaults.style].
  * @param dimens Dimension configuration, defaults to [BonusAmountItemDefaults.dimens].
+ * @since 0.0.1
  */
 @Composable
 fun BonusAmountItemView(

@@ -40,6 +40,7 @@ import uz.yalla.resources.img_flag_uz_square
  *
  * @property code Region code.
  * @property number License number parts.
+ * @since 0.0.1
  */
 data class CarNumberState(
     val code: String,
@@ -50,6 +51,7 @@ data class CarNumberState(
  * Default configuration values for [CarNumber].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object CarNumberDefaults {
     internal const val BASE_HEIGHT: Float = 24f
@@ -61,6 +63,7 @@ object CarNumberDefaults {
      * @param border Border and divider color.
      * @param text Text and dot color.
      * @param countryCode Country code text color.
+     * @since 0.0.1
      */
     data class CarNumberColors(
         val container: Color,
@@ -69,6 +72,11 @@ object CarNumberDefaults {
         val countryCode: Color
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = Color.White,
@@ -86,9 +94,15 @@ object CarNumberDefaults {
      * Text style configuration for [CarNumber].
      *
      * @param number Style applied to the license number text.
+     * @since 0.0.1
      */
     data class CarNumberStyle(val number: TextStyle)
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(number: TextStyle = System.font.custom.carNumber) =
         CarNumberStyle(
@@ -103,6 +117,7 @@ object CarNumberDefaults {
      * @param cornerRadius Corner radius of the card.
      * @param borderWidth Border width.
      * @param dotSize Size of the decorative dots.
+     * @since 0.0.1
      */
     data class CarNumberDimens(
         val height: Dp,
@@ -111,6 +126,11 @@ object CarNumberDefaults {
         val dotSize: Dp
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         height: Dp = 24.dp,
@@ -148,6 +168,7 @@ object CarNumberDefaults {
  *
  * @see CarNumberState for state configuration
  * @see CarNumberDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun CarNumber(

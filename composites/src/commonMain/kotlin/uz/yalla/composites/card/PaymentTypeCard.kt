@@ -37,6 +37,7 @@ import uz.yalla.resources.icons.YallaIcons
  * Default configuration values for [PaymentTypeCard].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object PaymentTypeCardDefaults {
     /**
@@ -46,6 +47,7 @@ object PaymentTypeCardDefaults {
      * @param iconBackground Background color of the icon container.
      * @param iconTint Tint color for the payment icon.
      * @param text Text color.
+     * @since 0.0.1
      */
     data class PaymentTypeCardColors(
         val container: Color,
@@ -54,6 +56,11 @@ object PaymentTypeCardDefaults {
         val text: Color
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -71,9 +78,15 @@ object PaymentTypeCardDefaults {
      * Text style configuration for [PaymentTypeCard].
      *
      * @param label Style for the payment label text.
+     * @since 0.0.1
      */
     data class PaymentTypeCardStyle(val label: TextStyle)
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(label: TextStyle = System.font.body.base.bold) =
         PaymentTypeCardStyle(
@@ -89,6 +102,7 @@ object PaymentTypeCardDefaults {
      * @param iconPadding Padding inside the icon container.
      * @param iconSpacing Spacing between icon and text.
      * @param trailingSpacing Spacing before checkbox.
+     * @since 0.0.1
      */
     data class PaymentTypeCardDimens(
         val contentPadding: PaddingValues,
@@ -99,6 +113,11 @@ object PaymentTypeCardDefaults {
         val trailingSpacing: Dp
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
@@ -122,6 +141,7 @@ object PaymentTypeCardDefaults {
  *
  * @property paymentType The payment kind to display.
  * @property isSelected Whether this payment type is selected.
+ * @since 0.0.1
  */
 data class PaymentTypeCardState(
     val paymentType: PaymentKind,
@@ -152,6 +172,7 @@ data class PaymentTypeCardState(
  *
  * @see PaymentTypeCardState for state configuration
  * @see PaymentTypeCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun PaymentTypeCard(

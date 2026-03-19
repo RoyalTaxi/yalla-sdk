@@ -30,6 +30,7 @@ import uz.yalla.design.theme.System
  * @property image Illustration image.
  * @property title Empty state title.
  * @property description Optional description text.
+ * @since 0.0.1
  */
 data class EmptyStateState(
     val image: Painter,
@@ -79,6 +80,7 @@ data class EmptyStateState(
  *
  * @see EmptyStateState for state configuration
  * @see EmptyStateDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun EmptyState(
@@ -135,6 +137,7 @@ fun EmptyState(
  * Default configuration values for [EmptyState].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object EmptyStateDefaults {
     /**
@@ -142,12 +145,18 @@ object EmptyStateDefaults {
      *
      * @param title Title text color.
      * @param description Description text color.
+     * @since 0.0.1
      */
     data class EmptyStateColors(
         val title: Color,
         val description: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         title: Color = System.color.text.base,
@@ -162,12 +171,18 @@ object EmptyStateDefaults {
      *
      * @param title Title text style.
      * @param description Description text style.
+     * @since 0.0.1
      */
     data class EmptyStateStyle(
         val title: TextStyle,
         val description: TextStyle,
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         title: TextStyle = System.font.title.base,
@@ -185,6 +200,7 @@ object EmptyStateDefaults {
      * @param imageTitleSpacing Spacing between image and title.
      * @param titleDescriptionSpacing Spacing between title and description.
      * @param descriptionActionSpacing Spacing between description and action.
+     * @since 0.0.1
      */
     data class EmptyStateDimens(
         val contentPadding: PaddingValues,
@@ -194,6 +210,11 @@ object EmptyStateDefaults {
         val descriptionActionSpacing: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(horizontal = 32.dp, vertical = 48.dp),

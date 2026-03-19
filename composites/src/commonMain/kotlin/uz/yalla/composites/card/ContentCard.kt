@@ -46,6 +46,7 @@ import uz.yalla.design.theme.System
  * @param content Card content.
  *
  * @see ContentCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun ContentCard(
@@ -94,6 +95,8 @@ fun ContentCard(
  * Default configuration values for [ContentCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ *
+ * @since 0.0.1
  */
 object ContentCardDefaults {
     /**
@@ -101,12 +104,18 @@ object ContentCardDefaults {
      *
      * @param container Background color when enabled.
      * @param disabledContainer Background color when disabled.
+     * @since 0.0.1
      */
     data class ContentCardColors(
         val container: Color,
         val disabledContainer: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -123,12 +132,18 @@ object ContentCardDefaults {
      *
      * @param shape Card shape.
      * @param contentPadding Padding inside the card.
+     * @since 0.0.1
      */
     data class ContentCardDimens(
         val shape: Shape,
         val contentPadding: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),

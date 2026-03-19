@@ -37,6 +37,7 @@ import uz.yalla.design.theme.System
  *
  * @property locations List of location names.
  * @property placeholder Text when locations is empty.
+ * @since 0.0.1
  */
 data class LocationItemState(
     val locations: List<String>,
@@ -66,6 +67,7 @@ data class LocationItemState(
  * @param colors Color configuration.
  * @param style Text style configuration.
  * @param dimens Dimension configuration.
+ * @since 0.0.1
  */
 @Composable
 fun LocationItem(
@@ -139,6 +141,7 @@ fun LocationItem(
  * @param dimens Dimension configuration, defaults to [LocationItemDefaults.dimens].
  *
  * @see LocationItemDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun LocationItem(
@@ -215,6 +218,7 @@ fun LocationItem(
  * @param color Dot border color.
  * @param modifier Applied to dot.
  * @param dimens Dimension configuration, defaults to [LocationItemDefaults.dimens].
+ * @since 0.0.1
  */
 @Composable
 fun LocationDot(
@@ -241,6 +245,7 @@ fun LocationDot(
  * Default configuration values for [LocationItem].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object LocationItemDefaults {
     /**
@@ -250,6 +255,7 @@ object LocationItemDefaults {
      * @param placeholder Placeholder text color.
      * @param location Location text color.
      * @param arrow Arrow icon tint.
+     * @since 0.0.1
      */
     data class LocationItemColors(
         val container: Color,
@@ -258,6 +264,11 @@ object LocationItemDefaults {
         val arrow: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -276,12 +287,18 @@ object LocationItemDefaults {
      *
      * @param placeholder Placeholder text style.
      * @param location Location text style.
+     * @since 0.0.1
      */
     data class LocationItemStyle(
         val placeholder: TextStyle,
         val location: TextStyle,
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         placeholder: TextStyle = System.font.body.base.bold,
@@ -302,6 +319,7 @@ object LocationItemDefaults {
      * @param dotBorderWidth Border width of dot indicator.
      * @param horizontalPadding Horizontal padding.
      * @param locationMaxLines Maximum lines for location text.
+     * @since 0.0.1
      */
     data class LocationItemDimens(
         val shape: Shape,
@@ -314,6 +332,11 @@ object LocationItemDefaults {
         val locationMaxLines: Int,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),

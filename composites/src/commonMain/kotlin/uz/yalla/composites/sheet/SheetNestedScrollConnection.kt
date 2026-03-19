@@ -7,6 +7,16 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.Velocity
 import kotlin.math.abs
 
+/**
+ * [NestedScrollConnection] that coordinates scroll gestures with an [ExpandableSheetState].
+ *
+ * Intercepts vertical scroll and fling events so that the sheet expands/collapses
+ * before the inner scrollable content scrolls.
+ *
+ * @param sheetState The expandable sheet state to coordinate with.
+ * @param canScrollUp Lambda returning whether the inner content can still scroll up.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalFoundationApi::class)
 class SheetNestedScrollConnection(
     private val sheetState: ExpandableSheetState,

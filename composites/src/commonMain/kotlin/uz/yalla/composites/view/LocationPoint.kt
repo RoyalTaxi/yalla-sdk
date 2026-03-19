@@ -25,6 +25,7 @@ import uz.yalla.design.theme.System
  *
  * @property icon Location marker icon.
  * @property label Address or place name.
+ * @since 0.0.1
  */
 data class LocationPointState(
     val icon: Painter,
@@ -55,6 +56,7 @@ data class LocationPointState(
  *
  * @see LocationPointState for state configuration
  * @see LocationPointDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun LocationPoint(
@@ -88,6 +90,7 @@ fun LocationPoint(
  * Default values for [LocationPoint].
  *
  * Provides theme-aware defaults for [originStyle], [destinationStyle], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object LocationPointDefaults {
     /**
@@ -95,12 +98,18 @@ object LocationPointDefaults {
      *
      * @param font Text style.
      * @param color Text color.
+     * @since 0.0.1
      */
     data class LocationPointStyle(
         val font: TextStyle,
         val color: Color,
     )
 
+    /**
+     * Creates origin point style with bold font.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun originStyle(
         font: TextStyle = System.font.body.small.bold,
@@ -111,6 +120,11 @@ object LocationPointDefaults {
             color = color,
         )
 
+    /**
+     * Creates destination point style with caption font.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun destinationStyle(
         font: TextStyle = System.font.body.caption,
@@ -126,12 +140,18 @@ object LocationPointDefaults {
      *
      * @param iconLabelSpacing Spacing between icon and label.
      * @param labelMaxLines Maximum lines for label text.
+     * @since 0.0.1
      */
     data class LocationPointDimens(
         val iconLabelSpacing: Dp,
         val labelMaxLines: Int,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         iconLabelSpacing: Dp = 8.dp,

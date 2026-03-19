@@ -33,6 +33,7 @@ import uz.yalla.resources.icons.YallaIcons
  *
  * @property selected Whether card is selected.
  * @property enabled Whether card is enabled.
+ * @since 0.0.1
  */
 data class SelectableCardState(
     val selected: Boolean,
@@ -65,6 +66,7 @@ data class SelectableCardState(
  *
  * @see SelectableCardState for state configuration
  * @see SelectableCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun SelectableCard(
@@ -135,6 +137,7 @@ fun SelectableCard(
  * Default configuration values for [SelectableCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SelectableCardDefaults {
     /**
@@ -143,6 +146,7 @@ object SelectableCardDefaults {
      * @param container Background color when enabled.
      * @param iconBackground Background color for icon container.
      * @param disabledContainer Background color when disabled.
+     * @since 0.0.1
      */
     data class SelectableCardColors(
         val container: Color,
@@ -150,6 +154,11 @@ object SelectableCardDefaults {
         val disabledContainer: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -171,6 +180,7 @@ object SelectableCardDefaults {
      * @param horizontalPadding Horizontal padding for content.
      * @param verticalPadding Vertical padding for content.
      * @param contentSpacing Spacing between elements.
+     * @since 0.0.1
      */
     data class SelectableCardDimens(
         val shape: Shape,
@@ -182,6 +192,11 @@ object SelectableCardDefaults {
         val contentSpacing: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(0.dp),

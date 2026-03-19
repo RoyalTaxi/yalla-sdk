@@ -32,15 +32,22 @@ import uz.yalla.design.theme.System
  * Default configuration values for [ExpandableSheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object ExpandableSheetDefaults {
     /**
      * Color configuration for [ExpandableSheet].
      *
      * @param container Card background color.
+     * @since 0.0.1
      */
     data class ExpandableSheetColors(val container: Color)
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(container: Color = System.color.background.base) =
         ExpandableSheetColors(
@@ -52,12 +59,18 @@ object ExpandableSheetDefaults {
      *
      * @param shape Card shape.
      * @param cornerRadius Corner radius of the card.
+     * @since 0.0.1
      */
     data class ExpandableSheetDimens(
         val shape: Shape,
         val cornerRadius: Dp
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         cornerRadius: Dp = 38.dp,
@@ -91,6 +104,7 @@ object ExpandableSheetDefaults {
  * @param colors Color configuration, defaults to [ExpandableSheetDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ExpandableSheetDefaults.dimens].
  * @param footer Optional footer content.
+ * @since 0.0.1
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

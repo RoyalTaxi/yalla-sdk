@@ -30,6 +30,7 @@ import uz.yalla.design.theme.System
  * @param name Tariff name.
  * @param price Formatted price.
  * @param selected Whether tariff is selected.
+ * @since 0.0.1
  */
 data class TariffItemState(
     val name: String,
@@ -70,6 +71,7 @@ data class TariffItemState(
  * @param dimens Dimension configuration, defaults to [TariffItemDefaults.dimens].
  *
  * @see TariffItemDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun TariffItem(
@@ -138,6 +140,7 @@ fun TariffItem(
  * Default configuration values for [TariffItem].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object TariffItemDefaults {
     /**
@@ -148,6 +151,7 @@ object TariffItemDefaults {
      * @param name Name text color.
      * @param price Price text color.
      * @param selectedBorder Border brush when selected.
+     * @since 0.0.1
      */
     data class TariffItemColors(
         val container: Color,
@@ -157,6 +161,11 @@ object TariffItemDefaults {
         val selectedBorder: Brush,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -177,12 +186,18 @@ object TariffItemDefaults {
      *
      * @param name Name text style.
      * @param price Price text style.
+     * @since 0.0.1
      */
     data class TariffItemStyle(
         val name: TextStyle,
         val price: TextStyle,
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         name: TextStyle = System.font.body.base.bold,
@@ -203,6 +218,7 @@ object TariffItemDefaults {
      * @param namePriceSpacing Spacing between name and price.
      * @param priceImageSpacing Spacing between price and image.
      * @param textMaxLines Maximum lines for name and price text.
+     * @since 0.0.1
      */
     data class TariffItemDimens(
         val shape: Shape,
@@ -215,6 +231,11 @@ object TariffItemDefaults {
         val textMaxLines: Int,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(20.dp),

@@ -49,6 +49,7 @@ import uz.yalla.design.theme.System
  * @param dimens Dimension configuration, defaults to [ActionItemDefaults.dimens].
  *
  * @see ActionItemDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun ActionItem(
@@ -103,6 +104,7 @@ fun ActionItem(
  * Default configuration values for [ActionItem].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object ActionItemDefaults {
     /**
@@ -110,12 +112,18 @@ object ActionItemDefaults {
      *
      * @param iconBackground Background color for icon container.
      * @param title Title text color.
+     * @since 0.0.1
      */
     data class ActionItemColors(
         val iconBackground: Color,
         val title: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         iconBackground: Color = System.color.background.secondary,
@@ -129,9 +137,15 @@ object ActionItemDefaults {
      * Text style configuration for [ActionItem].
      *
      * @param title Title text style.
+     * @since 0.0.1
      */
     data class ActionItemStyle(val title: TextStyle,)
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(title: TextStyle = System.font.body.base.bold) =
         ActionItemStyle(
@@ -146,6 +160,7 @@ object ActionItemDefaults {
      * @param iconPadding Padding inside icon container.
      * @param contentPadding Padding around content.
      * @param contentSpacing Spacing between elements.
+     * @since 0.0.1
      */
     data class ActionItemDimens(
         val iconShape: Shape,
@@ -155,6 +170,11 @@ object ActionItemDefaults {
         val contentSpacing: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         iconShape: Shape = RoundedCornerShape(10.dp),

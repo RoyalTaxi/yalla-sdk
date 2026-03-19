@@ -27,6 +27,7 @@ import uz.yalla.design.theme.System
  *
  * @param title Primary promotional text.
  * @param subtitle Secondary description.
+ * @since 0.0.1
  */
 data class PromotionCardState(
     val title: String,
@@ -58,6 +59,7 @@ data class PromotionCardState(
  * @param dimens Dimension configuration, defaults to [PromotionCardDefaults.dimens].
  *
  * @see PromotionCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun PromotionCard(
@@ -112,6 +114,7 @@ fun PromotionCard(
  * Default values for [PromotionCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object PromotionCardDefaults {
     /**
@@ -120,6 +123,7 @@ object PromotionCardDefaults {
      * @param container Background color.
      * @param title Title text color.
      * @param subtitle Subtitle text color.
+     * @since 0.0.1
      */
     data class PromotionCardColors(
         val container: Color,
@@ -127,6 +131,11 @@ object PromotionCardDefaults {
         val subtitle: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -146,6 +155,7 @@ object PromotionCardDefaults {
      * @param height Card height.
      * @param contentPadding Padding around content.
      * @param titleSubtitleSpacing Spacing between title and subtitle.
+     * @since 0.0.1
      */
     data class PromotionCardDimens(
         val shape: Shape,
@@ -154,6 +164,11 @@ object PromotionCardDefaults {
         val titleSubtitleSpacing: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),

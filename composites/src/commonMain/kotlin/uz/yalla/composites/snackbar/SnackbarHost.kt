@@ -21,6 +21,7 @@ import uz.yalla.design.theme.System
  *
  * @param message Message text.
  * @param isSuccess Whether this is a success or error message.
+ * @since 0.0.1
  */
 data class SnackbarData(
     val message: String,
@@ -34,6 +35,7 @@ data class SnackbarData(
  * @param successIcon Icon shown for success variant.
  * @param errorIcon Icon shown for error variant.
  * @param dismissIcon Icon for dismiss button.
+ * @since 0.0.1
  */
 data class AppSnackbarHostState(
     val data: SnackbarData?,
@@ -46,6 +48,7 @@ data class AppSnackbarHostState(
  * Default configuration for [AppSnackbarHost].
  *
  * Provides theme-aware defaults for [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object AppSnackbarHostDefaults {
     /**
@@ -53,12 +56,18 @@ object AppSnackbarHostDefaults {
      *
      * @param topPadding Top padding below status bar.
      * @param horizontalPadding Horizontal padding.
+     * @since 0.0.1
      */
     data class AppSnackbarHostDimens(
         val topPadding: Dp,
         val horizontalPadding: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         topPadding: Dp = 8.dp,
@@ -104,6 +113,7 @@ object AppSnackbarHostDefaults {
  *
  * @see AppSnackbarHostState for state configuration
  * @see AppSnackbarHostDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun AppSnackbarHost(

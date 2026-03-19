@@ -26,6 +26,7 @@ import uz.yalla.design.theme.System
  * @property selected Whether this item is selected.
  * @property checkedIcon Icon to show when selected.
  * @property uncheckedIcon Icon to show when not selected.
+ * @since 0.0.1
  */
 data class RadioItemState(
     val text: String,
@@ -63,6 +64,7 @@ data class RadioItemState(
  *
  * @see RadioItemState for state configuration
  * @see RadioItemDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun RadioItem(
@@ -108,15 +110,22 @@ fun RadioItem(
  * Default configuration values for [RadioItem].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object RadioItemDefaults {
     /**
      * Color configuration for [RadioItem].
      *
      * @param text Text label color.
+     * @since 0.0.1
      */
     data class RadioItemColors(val text: Color,)
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(text: Color = System.color.text.base) =
         RadioItemColors(
@@ -127,9 +136,15 @@ object RadioItemDefaults {
      * Text style configuration for [RadioItem].
      *
      * @param text Text label style.
+     * @since 0.0.1
      */
     data class RadioItemStyle(val text: TextStyle,)
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(text: TextStyle = System.font.body.base.bold) =
         RadioItemStyle(
@@ -144,6 +159,7 @@ object RadioItemDefaults {
      * @param contentSpacing Spacing between text and icon.
      * @param iconSize Icon size.
      * @param textMaxLines Maximum lines for text label.
+     * @since 0.0.1
      */
     data class RadioItemDimens(
         val height: Dp,
@@ -153,6 +169,11 @@ object RadioItemDefaults {
         val textMaxLines: Int,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         height: Dp = 64.dp,

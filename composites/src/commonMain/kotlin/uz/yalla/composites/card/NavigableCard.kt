@@ -30,6 +30,7 @@ import uz.yalla.design.theme.System
  * Default configuration values for [NavigableCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object NavigableCardDefaults {
     /**
@@ -41,6 +42,7 @@ object NavigableCardDefaults {
      * @param disabledContainer Disabled state background.
      * @param disabledBorder Disabled state border.
      * @param disabledArrow Disabled state arrow tint.
+     * @since 0.0.1
      */
     data class NavigableCardColors(
         val container: Color,
@@ -51,6 +53,11 @@ object NavigableCardDefaults {
         val disabledArrow: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -79,6 +86,7 @@ object NavigableCardDefaults {
      * @param iconSpacing Spacing between icon and content.
      * @param horizontalPadding Horizontal content padding.
      * @param verticalPadding Vertical content padding.
+     * @since 0.0.1
      */
     data class NavigableCardDimens(
         val radius: Dp,
@@ -89,6 +97,11 @@ object NavigableCardDefaults {
         val verticalPadding: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         radius: Dp = 16.dp,
@@ -119,6 +132,7 @@ object NavigableCardDefaults {
  * @param colors Color configuration, defaults to [NavigableCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [NavigableCardDefaults.dimens].
  * @param content Card content, receives modifier for weight.
+ * @since 0.0.1
  */
 @Composable
 fun NavigableCard(

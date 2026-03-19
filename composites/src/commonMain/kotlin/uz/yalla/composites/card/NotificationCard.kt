@@ -36,6 +36,7 @@ import uz.yalla.design.theme.System
  * @param dateTime Display timestamp.
  * @param content Notification body text.
  * @param isRead Whether notification has been read.
+ * @since 0.0.1
  */
 data class NotificationCardState(
     val title: String,
@@ -48,6 +49,7 @@ data class NotificationCardState(
  * Default configuration for [NotificationCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object NotificationCardDefaults {
     /**
@@ -60,6 +62,7 @@ object NotificationCardDefaults {
      * @param content Content text color.
      * @param divider Divider color.
      * @param unreadIndicator Unread indicator color.
+     * @since 0.0.1
      */
     data class NotificationCardColors(
         val container: Color,
@@ -71,6 +74,11 @@ object NotificationCardDefaults {
         val unreadIndicator: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -100,6 +108,7 @@ object NotificationCardDefaults {
      * @param indicatorHeight Unread indicator height.
      * @param indicatorWidth Unread indicator width.
      * @param indicatorRadius Unread indicator corner radius.
+     * @since 0.0.1
      */
     data class NotificationCardDimens(
         val radius: Dp,
@@ -111,6 +120,11 @@ object NotificationCardDefaults {
         val indicatorRadius: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         radius: Dp = 8.dp,
@@ -143,6 +157,7 @@ object NotificationCardDefaults {
  * @param dimens Dimension configuration, defaults to [NotificationCardDefaults.dimens].
  *
  * @see NotificationCardDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun NotificationCard(

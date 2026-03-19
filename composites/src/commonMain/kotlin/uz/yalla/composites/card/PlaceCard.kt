@@ -33,6 +33,7 @@ import uz.yalla.design.theme.System
  * @param name Place display name.
  * @param address Optional address text.
  * @param isEmpty Whether place is not yet configured.
+ * @since 0.0.1
  */
 data class PlaceCardState(
     val name: String,
@@ -44,6 +45,7 @@ data class PlaceCardState(
  * Default configuration values for [PlaceCard].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object PlaceCardDefaults {
     /**
@@ -57,6 +59,7 @@ object PlaceCardDefaults {
      * @param iconBackground Icon background when configured.
      * @param iconEmpty Icon tint when empty.
      * @param iconBackgroundEmpty Icon background when empty.
+     * @since 0.0.1
      */
     data class PlaceCardColors(
         val container: Color,
@@ -69,6 +72,11 @@ object PlaceCardDefaults {
         val iconBackgroundEmpty: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -97,12 +105,18 @@ object PlaceCardDefaults {
      *
      * @param name Name text style.
      * @param address Address text style.
+     * @since 0.0.1
      */
     data class PlaceCardStyle(
         val name: TextStyle,
         val address: TextStyle,
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         name: TextStyle = System.font.title.base,
@@ -121,6 +135,7 @@ object PlaceCardDefaults {
      * @param iconPadding Padding inside icon container.
      * @param contentPadding Padding around content.
      * @param addressMaxLines Maximum lines for address text.
+     * @since 0.0.1
      */
     data class PlaceCardDimens(
         val radius: Dp,
@@ -131,6 +146,11 @@ object PlaceCardDefaults {
         val addressMaxLines: Int,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         radius: Dp = 20.dp,
@@ -168,6 +188,7 @@ object PlaceCardDefaults {
  * @param colors Color configuration, defaults to [PlaceCardDefaults.colors].
  * @param style Text style configuration, defaults to [PlaceCardDefaults.style].
  * @param dimens Dimension configuration, defaults to [PlaceCardDefaults.dimens].
+ * @since 0.0.1
  */
 @Composable
 fun PlaceCard(

@@ -27,6 +27,7 @@ import uz.yalla.design.theme.System
  * Default configuration values for [Navigable].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object NavigableDefaults {
     /**
@@ -36,6 +37,7 @@ object NavigableDefaults {
      * @param title Title text color.
      * @param description Description text color.
      * @param chevron Chevron icon color.
+     * @since 0.0.1
      */
     data class NavigableColors(
         val container: Color,
@@ -44,6 +46,11 @@ object NavigableDefaults {
         val chevron: Color
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -62,12 +69,18 @@ object NavigableDefaults {
      *
      * @param title Style applied to the title text.
      * @param description Style applied to the description text.
+     * @since 0.0.1
      */
     data class NavigableStyle(
         val title: TextStyle,
         val description: TextStyle
     )
 
+    /**
+     * Creates theme-aware default text styles.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun style(
         title: TextStyle = System.font.body.large.medium,
@@ -85,6 +98,7 @@ object NavigableDefaults {
      * @param descriptionSpacing Spacing between title and description.
      * @param trailingSpacing Spacing before chevron.
      * @param chevronSize Size of the chevron icon.
+     * @since 0.0.1
      */
     data class NavigableDimens(
         val contentPadding: PaddingValues,
@@ -94,6 +108,11 @@ object NavigableDefaults {
         val chevronSize: Dp
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 9.dp),
@@ -133,6 +152,7 @@ object NavigableDefaults {
  * @param colors Color configuration, defaults to [NavigableDefaults.colors]
  * @param style Text style configuration, defaults to [NavigableDefaults.style]
  * @param dimens Dimension configuration, defaults to [NavigableDefaults.dimens]
+ * @since 0.0.1
  */
 @Composable
 fun Navigable(

@@ -36,6 +36,7 @@ import uz.yalla.platform.model.IconType
  * @param icon Icon painter.
  * @param onClick Called when action tapped.
  * @param isDestructive Whether this is a destructive action (shows icon in red).
+ * @since 0.0.1
  */
 data class ActionPickerItem(
     val title: String,
@@ -50,6 +51,7 @@ data class ActionPickerItem(
  * @property isVisible Whether sheet is visible.
  * @property title Sheet header title.
  * @property items List of selectable actions.
+ * @since 0.0.1
  */
 data class ActionPickerSheetState(
     val isVisible: Boolean,
@@ -59,6 +61,7 @@ data class ActionPickerSheetState(
 
 /**
  * Effects emitted by [ActionPickerSheet].
+ * @since 0.0.1
  */
 sealed interface ActionPickerSheetEffect {
     /** User dismissed the sheet. */
@@ -108,6 +111,7 @@ sealed interface ActionPickerSheetEffect {
  * @see ActionPickerSheetState for state configuration
  * @see ActionPickerSheetEffect for available effects
  * @see ActionPickerDefaults for default values
+ * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -194,6 +198,7 @@ private fun ActionPickerItemRow(
  * Default values for [ActionPickerSheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object ActionPickerDefaults {
     /**
@@ -205,6 +210,7 @@ object ActionPickerDefaults {
      * @param itemIcon Item icon tint.
      * @param itemText Item text color.
      * @param destructiveItemIcon Icon tint for destructive actions.
+     * @since 0.0.1
      */
     data class ActionPickerColors(
         val container: Color,
@@ -215,6 +221,11 @@ object ActionPickerDefaults {
         val destructiveItemIcon: Color,
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.base,
@@ -243,6 +254,7 @@ object ActionPickerDefaults {
      * @param itemShape Item button shape.
      * @param itemPadding Item button padding.
      * @param itemIconTextSpacing Spacing between icon and text in item.
+     * @since 0.0.1
      */
     data class ActionPickerDimens(
         val shape: Shape,
@@ -254,6 +266,11 @@ object ActionPickerDefaults {
         val itemIconTextSpacing: Dp,
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),

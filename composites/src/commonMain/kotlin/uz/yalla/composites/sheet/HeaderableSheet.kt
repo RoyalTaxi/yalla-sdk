@@ -43,13 +43,21 @@ import kotlin.math.roundToInt
 
 /**
  * Values for headerable sheet state.
+ * @since 0.0.1
  */
-enum class HeaderableSheetValue { Collapsed, Expanded }
+enum class HeaderableSheetValue {
+    /** Sheet body is hidden; only header and footer are visible. */
+    Collapsed,
+
+    /** Sheet body is fully visible between header and footer. */
+    Expanded,
+}
 
 /**
  * Default configuration values for [HeaderableSheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object HeaderableSheetDefaults {
     /**
@@ -57,12 +65,18 @@ object HeaderableSheetDefaults {
      *
      * @param container Card background color.
      * @param dragHandle Color of the drag handle.
+     * @since 0.0.1
      */
     data class HeaderableSheetColors(
         val container: Color,
         val dragHandle: Color
     )
 
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.base,
@@ -80,6 +94,7 @@ object HeaderableSheetDefaults {
      * @param dragHandleWidth Width of the drag handle.
      * @param dragHandleHeight Height of the drag handle.
      * @param dragHandleContainerHeight Height of the drag handle container.
+     * @since 0.0.1
      */
     data class HeaderableSheetDimens(
         val shape: Shape,
@@ -89,6 +104,11 @@ object HeaderableSheetDefaults {
         val dragHandleContainerHeight: Dp
     )
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(
         cornerRadius: Dp = 38.dp,
@@ -113,6 +133,7 @@ object HeaderableSheetDefaults {
  * @param density Screen density.
  * @param positionalThreshold Threshold for position-based snapping.
  * @param velocityThreshold Threshold for velocity-based snapping.
+ * @since 0.0.1
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Stable
@@ -226,6 +247,7 @@ class HeaderableSheetState internal constructor(
  * @param snapAnimationSpec Animation spec for snapping.
  * @param density Screen density.
  * @return Remembered sheet state.
+ * @since 0.0.1
  */
 @Composable
 fun rememberHeaderableSheetState(
@@ -269,6 +291,7 @@ fun rememberHeaderableSheetState(
  * @param modifier Applied to sheet.
  * @param colors Color configuration, defaults to [HeaderableSheetDefaults.colors].
  * @param dimens Dimension configuration, defaults to [HeaderableSheetDefaults.dimens].
+ * @since 0.0.1
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

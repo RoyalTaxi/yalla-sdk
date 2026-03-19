@@ -20,6 +20,7 @@ import uz.yalla.design.theme.System
  *
  * @property name Location display name.
  * @property isOrigin Whether this is the origin point.
+ * @since 0.0.1
  */
 data class RouteLocation(
     val name: String,
@@ -32,6 +33,7 @@ data class RouteLocation(
  * @property locations List of route locations.
  * @property originIcon Icon for origin point.
  * @property destinationIcon Icon for destination points.
+ * @since 0.0.1
  */
 data class RouteViewState(
     val locations: List<RouteLocation>,
@@ -65,6 +67,7 @@ data class RouteViewState(
  *
  * @see RouteViewState for state configuration
  * @see RouteViewDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun RouteView(
@@ -100,15 +103,22 @@ fun RouteView(
  * Default configuration values for [RouteView].
  *
  * Provides defaults for [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object RouteViewDefaults {
     /**
      * Dimension configuration for [RouteView].
      *
      * @param itemSpacing Spacing between route locations.
+     * @since 0.0.1
      */
     data class RouteViewDimens(val itemSpacing: Dp)
 
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
     @Composable
     fun dimens(itemSpacing: Dp = 8.dp) =
         RouteViewDimens(
