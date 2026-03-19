@@ -16,6 +16,8 @@ kotlin {
 
             api(libs.kotlinx.datetime)
             api(libs.datetime.wheel.picker)
+            api(libs.decompose)
+            api(libs.decompose.compose)
         }
 
         androidMain.dependencies {
