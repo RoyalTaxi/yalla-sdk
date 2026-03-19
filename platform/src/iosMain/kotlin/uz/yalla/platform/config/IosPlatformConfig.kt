@@ -2,6 +2,7 @@ package uz.yalla.platform.config
 
 import uz.yalla.platform.PlatformConfig
 import uz.yalla.platform.YallaPlatform
+import uz.yalla.platform.navigation.NavigationBarAppearance
 
 /**
  * iOS platform configuration containing native component factories.
@@ -25,6 +26,7 @@ class IosPlatformConfig private constructor(
     val circleButton: CircleIconButtonFactory,
     val squircleButton: SquircleIconButtonFactory,
     val themeProvider: ThemeProvider? = null,
+    val navigationBarAppearance: NavigationBarAppearance? = null,
 ) : PlatformConfig {
 
     class Builder {
@@ -32,6 +34,7 @@ class IosPlatformConfig private constructor(
         var circleButton: CircleIconButtonFactory? = null
         var squircleButton: SquircleIconButtonFactory? = null
         var themeProvider: ThemeProvider? = null
+        var navigationBarAppearance: NavigationBarAppearance? = null
 
         fun build(): IosPlatformConfig = IosPlatformConfig(
             sheetPresenter = requireNotNull(sheetPresenter) {
@@ -44,6 +47,7 @@ class IosPlatformConfig private constructor(
                 "squircleButton is required. Provide a SquircleIconButtonFactory implementation."
             },
             themeProvider = themeProvider,
+            navigationBarAppearance = navigationBarAppearance,
         )
     }
 }
