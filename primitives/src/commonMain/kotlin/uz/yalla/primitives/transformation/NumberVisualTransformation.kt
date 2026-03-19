@@ -11,7 +11,8 @@ import androidx.compose.ui.text.input.VisualTransformation
  * Similar to [PhoneVisualTransformation] but for general numeric input.
  *
  * @param mask Format pattern
- * @param maskChar Character representing input positions
+ * @param maskChar Character representing input positions.
+ * @since 0.0.1
  */
 class NumberVisualTransformation(
     private val mask: String,

@@ -96,6 +96,7 @@ import uz.yalla.resources.img_spinner
  * @param animation Animation configuration, defaults to [LocationPinDefaults.animation].
  *
  * @see LocationPinDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun LocationPin(
@@ -377,6 +378,7 @@ private fun PinHeader(
  * Default configuration values for [LocationPin].
  *
  * Provides theme-aware defaults for [colors], [style], [dimens], and [animation] that can be overridden.
+ * @since 0.0.1
  */
 object LocationPinDefaults {
     /**
@@ -402,6 +404,7 @@ object LocationPinDefaults {
         val text: Color
     )
 
+    /** Creates color configuration for [LocationPin]. */
     @Composable
     fun colors(
         background: Color = System.color.background.base,
@@ -436,6 +439,7 @@ object LocationPinDefaults {
         val header: TextStyle
     )
 
+    /** Creates text style configuration for [LocationPin]. */
     @Composable
     fun style(
         timeout: TextStyle = System.font.body.base.bold,
@@ -478,6 +482,7 @@ object LocationPinDefaults {
         val headerBottomOffset: Dp
     )
 
+    /** Creates dimension configuration for [LocationPin]. */
     @Composable
     fun dimens(
         stickHeight: Dp = 12.dp,

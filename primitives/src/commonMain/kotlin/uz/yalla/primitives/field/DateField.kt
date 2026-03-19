@@ -34,6 +34,7 @@ import uz.yalla.resources.icons.YallaIcons
  * @property placeholder Text shown when no date selected.
  * @property enabled When false, field is not clickable.
  * @property borderStroke Optional border around field.
+ * @since 0.0.1
  */
 data class DateFieldState(
     val date: LocalDate?,
@@ -70,6 +71,7 @@ data class DateFieldState(
  * @param dimens Dimension configuration, defaults to [DateFieldDefaults.dimens].
  *
  * @see DateFieldDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun DateField(
@@ -124,6 +126,7 @@ private fun LocalDate.formatDisplay(): String =
  * Default values for [DateField].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object DateFieldDefaults {
     /**
@@ -141,6 +144,7 @@ object DateFieldDefaults {
         val icon: Color,
     )
 
+    /** Creates color configuration for [DateField]. */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -164,6 +168,7 @@ object DateFieldDefaults {
         val text: TextStyle,
     )
 
+    /** Creates text style configuration for [DateField]. */
     @Composable
     fun style(text: TextStyle = System.font.body.base.medium): DateFieldStyle =
         DateFieldStyle(
@@ -181,6 +186,7 @@ object DateFieldDefaults {
         val contentPadding: Dp,
     )
 
+    /** Creates dimension configuration for [DateField]. */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(8.dp),

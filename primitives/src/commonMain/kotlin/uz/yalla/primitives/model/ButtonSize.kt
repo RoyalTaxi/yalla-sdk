@@ -8,6 +8,8 @@ package uz.yalla.primitives.model
  * - [Small]: Compact size for inline actions, secondary UI, or tight spaces.
  * - [Medium]: Standard size for most use cases. Default choice.
  * - [Large]: Prominent size for primary CTAs and important actions.
+ *
+ * @since 0.0.1
  */
 enum class ButtonSize {
     Small,

@@ -25,6 +25,7 @@ import uz.yalla.design.theme.System
  * Default configuration values for [PrimaryField].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object PrimaryFieldDefaults {
     /**
@@ -48,6 +49,7 @@ object PrimaryFieldDefaults {
         val placeholder: Color
     )
 
+    /** Creates color configuration for [PrimaryField]. */
     @Composable
     fun colors(
         focusedText: Color = System.color.text.base,
@@ -82,6 +84,7 @@ object PrimaryFieldDefaults {
         val placeholder: TextStyle
     )
 
+    /** Creates text style configuration for [PrimaryField]. */
     @Composable
     fun style(
         text: TextStyle = System.font.body.base.medium,
@@ -100,6 +103,7 @@ object PrimaryFieldDefaults {
         val shape: Shape
     )
 
+    /** Creates dimension configuration for [PrimaryField]. */
     @Composable
     fun dimens(shape: Shape = RoundedCornerShape(10.dp)) =
         PrimaryFieldDimens(
@@ -137,6 +141,7 @@ object PrimaryFieldDefaults {
  * @param colors Color configuration, defaults to [PrimaryFieldDefaults.colors]
  * @param style Text style configuration, defaults to [PrimaryFieldDefaults.style]
  * @param dimens Dimension configuration, defaults to [PrimaryFieldDefaults.dimens]
+ * @since 0.0.1
  */
 @Composable
 fun PrimaryField(

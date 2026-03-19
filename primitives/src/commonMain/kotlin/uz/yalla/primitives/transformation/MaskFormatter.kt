@@ -13,6 +13,8 @@ package uz.yalla.primitives.transformation
  * )
  * // Result: "+998 (90) 123-45-67"
  * ```
+ *
+ * @since 0.0.1
  */
 object MaskFormatter {
     /**
@@ -21,7 +23,8 @@ object MaskFormatter {
      * @param text Raw text to format (typically digits only)
      * @param mask Pattern with placeholder characters
      * @param maskChar Character in mask that should be replaced by input
-     * @return Formatted text with mask applied
+     * @return Formatted text with mask applied.
+     * @since 0.0.1
      */
     fun format(
         text: String,
@@ -53,7 +56,8 @@ object MaskFormatter {
      *
      * @param mask Pattern to analyze
      * @param maskChar Placeholder character
-     * @return Number of input positions available
+     * @return Number of input positions available.
+     * @since 0.0.1
      */
     fun countPlaceholders(
         mask: String,
@@ -66,7 +70,8 @@ object MaskFormatter {
      * @param formatted Text with mask applied
      * @param mask Pattern used for formatting
      * @param maskChar Placeholder character
-     * @return Raw input without mask characters
+     * @return Raw input without mask characters.
+     * @since 0.0.1
      */
     fun extractRaw(
         formatted: String,

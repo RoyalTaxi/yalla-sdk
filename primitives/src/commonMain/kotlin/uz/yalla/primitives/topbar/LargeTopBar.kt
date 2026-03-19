@@ -49,6 +49,7 @@ import uz.yalla.primitives.button.NavigationButtonState
  *
  * @see TopBar for standard variant
  * @see LargeTopBarDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun LargeTopBar(
@@ -108,6 +109,7 @@ fun LargeTopBar(
  * Default configuration values for [LargeTopBar].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object LargeTopBarDefaults {
     /**
@@ -121,6 +123,7 @@ object LargeTopBarDefaults {
         val title: Color,
     )
 
+    /** Creates color configuration for [LargeTopBar]. */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -139,6 +142,7 @@ object LargeTopBarDefaults {
         val title: TextStyle,
     )
 
+    /** Creates text style configuration for [LargeTopBar]. */
     @Composable
     fun style(title: TextStyle = System.font.title.xLarge) =
         LargeTopBarStyle(
@@ -158,6 +162,7 @@ object LargeTopBarDefaults {
         val titleTopSpacing: Dp,
     )
 
+    /** Creates dimension configuration for [LargeTopBar]. */
     @Composable
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(16.dp),

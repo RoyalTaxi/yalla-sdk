@@ -32,6 +32,7 @@ import uz.yalla.design.theme.System
  * @property length Number of PIN digits.
  * @property value Current PIN value.
  * @property isError Whether to show error state.
+ * @since 0.0.1
  */
 data class PinRowState(
     val length: Int,
@@ -43,6 +44,7 @@ data class PinRowState(
  * Default configuration values for [PinRow].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object PinRowDefaults {
     /**
@@ -62,6 +64,7 @@ object PinRowDefaults {
         val errorBorder: Color
     )
 
+    /** Creates color configuration for [PinRow]. */
     @Composable
     fun colors(
         text: Color = System.color.text.base,
@@ -86,6 +89,7 @@ object PinRowDefaults {
         val digit: TextStyle
     )
 
+    /** Creates text style configuration for [PinRow]. */
     @Composable
     fun style(digit: TextStyle = System.font.title.large) =
         PinRowStyle(
@@ -105,6 +109,7 @@ object PinRowDefaults {
         val borderWidth: Dp
     )
 
+    /** Creates dimension configuration for [PinRow]. */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(12.dp),
@@ -147,6 +152,7 @@ object PinRowDefaults {
  *
  * @see PinRowState for state configuration
  * @see PinRowDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun PinRow(

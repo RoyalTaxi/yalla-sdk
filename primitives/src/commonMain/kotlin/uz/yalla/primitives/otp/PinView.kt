@@ -31,6 +31,7 @@ import uz.yalla.design.theme.System
  *
  * @property value Current digit value.
  * @property isError Whether to show error state.
+ * @since 0.0.1
  */
 data class PinViewState(
     val value: Char?,
@@ -41,6 +42,7 @@ data class PinViewState(
  * Default configuration values for [PinView].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object PinViewDefaults {
     /**
@@ -64,6 +66,7 @@ object PinViewDefaults {
         val cursor: Color
     )
 
+    /** Creates color configuration for [PinView]. */
     @Composable
     fun colors(
         text: Color = System.color.text.base,
@@ -92,6 +95,7 @@ object PinViewDefaults {
         val digit: TextStyle
     )
 
+    /** Creates text style configuration for [PinView]. */
     @Composable
     fun style(digit: TextStyle = System.font.title.large) =
         PinViewStyle(
@@ -107,6 +111,7 @@ object PinViewDefaults {
         val shape: Shape
     )
 
+    /** Creates dimension configuration for [PinView]. */
     @Composable
     fun dimens(shape: Shape = RoundedCornerShape(12.dp)) =
         PinViewDimens(
@@ -134,6 +139,7 @@ object PinViewDefaults {
  * @param colors Color configuration, defaults to [PinViewDefaults.colors].
  * @param style Text style configuration, defaults to [PinViewDefaults.style].
  * @param dimens Dimension configuration, defaults to [PinViewDefaults.dimens].
+ * @since 0.0.1
  */
 @Composable
 fun PinView(

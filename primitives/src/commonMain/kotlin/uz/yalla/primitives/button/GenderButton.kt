@@ -33,6 +33,7 @@ import uz.yalla.resources.icons.YallaIcons
  *
  * @property gender GenderKind option to display.
  * @property isSelected Whether this option is selected.
+ * @since 0.0.1
  */
 data class GenderButtonState(
     val gender: GenderKind,
@@ -43,6 +44,7 @@ data class GenderButtonState(
  * Default configuration values for [GenderButton].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object GenderButtonDefaults {
     /**
@@ -56,6 +58,12 @@ object GenderButtonDefaults {
         val text: Color
     )
 
+    /**
+     * Creates color configuration for [GenderButton].
+     *
+     * @param container Button background color.
+     * @param text Text color.
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -74,6 +82,11 @@ object GenderButtonDefaults {
         val label: TextStyle
     )
 
+    /**
+     * Creates text style configuration for [GenderButton].
+     *
+     * @param label Style applied to the gender text.
+     */
     @Composable
     fun style(label: TextStyle = System.font.body.base.medium) =
         GenderButtonStyle(
@@ -95,6 +108,14 @@ object GenderButtonDefaults {
         val iconSize: Dp
     )
 
+    /**
+     * Creates dimension configuration for [GenderButton].
+     *
+     * @param shape Button shape.
+     * @param contentPadding Padding inside the button.
+     * @param innerStartPadding Padding before the text.
+     * @param iconSize Size of the checkbox icon.
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
@@ -134,6 +155,7 @@ object GenderButtonDefaults {
  *
  * @see GenderButtonState for state configuration
  * @see GenderButtonDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun GenderButton(

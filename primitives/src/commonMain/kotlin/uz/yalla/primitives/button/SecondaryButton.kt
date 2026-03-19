@@ -36,6 +36,7 @@ import uz.yalla.primitives.model.ButtonSize
  * @property enabled When false, button appears disabled and is not clickable.
  * @property loading When true, shows spinner and disables interaction.
  * @property size Button size variant.
+ * @since 0.0.1
  */
 data class SecondaryButtonState(
     val text: String,
@@ -70,6 +71,7 @@ data class SecondaryButtonState(
  *
  * @see PrimaryButton for primary actions
  * @see SecondaryButtonDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun SecondaryButton(
@@ -155,6 +157,7 @@ private fun SecondaryButtonPreview() {
  * Default configuration values for [SecondaryButton].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SecondaryButtonDefaults {
     /**
@@ -176,6 +179,14 @@ object SecondaryButtonDefaults {
         fun contentColor(enabled: Boolean): Color = if (enabled) content else disabledContent
     }
 
+    /**
+     * Creates color configuration for [SecondaryButton].
+     *
+     * @param container Background color when enabled.
+     * @param content Text and icon color when enabled.
+     * @param disabledContainer Background color when disabled.
+     * @param disabledContent Text and icon color when disabled.
+     */
     @Composable
     fun colors(
         container: Color = System.color.button.tertiary,
@@ -209,6 +220,13 @@ object SecondaryButtonDefaults {
             }
     }
 
+    /**
+     * Creates text style configuration for [SecondaryButton].
+     *
+     * @param small Style for small button size.
+     * @param medium Style for medium button size.
+     * @param large Style for large button size.
+     */
     @Composable
     fun style(
         small: TextStyle = System.font.body.small.medium,
@@ -272,6 +290,22 @@ object SecondaryButtonDefaults {
             }
     }
 
+    /**
+     * Creates dimension configuration for [SecondaryButton].
+     *
+     * @param shape Button shape.
+     * @param iconSize Icon dimensions for leading/trailing slots.
+     * @param iconSpacing Spacing between icon and text.
+     * @param smallMinWidth Minimum width for small size.
+     * @param smallMinHeight Minimum height for small size.
+     * @param smallContentPadding Content padding for small size.
+     * @param mediumMinWidth Minimum width for medium size.
+     * @param mediumMinHeight Minimum height for medium size.
+     * @param mediumContentPadding Content padding for medium size.
+     * @param largeMinWidth Minimum width for large size.
+     * @param largeMinHeight Minimum height for large size.
+     * @param largeContentPadding Content padding for large size.
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),

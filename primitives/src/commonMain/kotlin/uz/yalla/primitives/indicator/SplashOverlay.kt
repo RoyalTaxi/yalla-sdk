@@ -55,6 +55,7 @@ import uz.yalla.resources.location_gps_subtitle
  * @param dimens Dimension configuration, defaults to [SplashOverlayDefaults.dimens].
  *
  * @see SplashOverlayDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun SplashOverlay(
@@ -112,6 +113,7 @@ fun SplashOverlay(
  * Default values for [SplashOverlay].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SplashOverlayDefaults {
     /**
@@ -129,6 +131,7 @@ object SplashOverlayDefaults {
         val text: Color,
     )
 
+    /** Creates color configuration for [SplashOverlay]. */
     @Composable
     fun colors(
         background: Brush = System.color.gradient.splash,
@@ -158,6 +161,7 @@ object SplashOverlayDefaults {
         val indicatorGapSize: Dp,
     )
 
+    /** Creates dimension configuration for [SplashOverlay]. */
     @Composable
     fun dimens(
         contentSpacing: Dp = 24.dp,

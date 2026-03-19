@@ -26,6 +26,7 @@ import uz.yalla.design.theme.System
  * @property text Button label text.
  * @property painter Icon painter.
  * @property enabled Whether button is clickable.
+ * @since 0.0.1
  */
 data class BottomSheetButtonState(
     val text: String,
@@ -37,6 +38,7 @@ data class BottomSheetButtonState(
  * Default configuration values for [BottomSheetButton].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object BottomSheetButtonDefaults {
     /**
@@ -52,6 +54,13 @@ object BottomSheetButtonDefaults {
         val icon: Color
     )
 
+    /**
+     * Creates color configuration for [BottomSheetButton].
+     *
+     * @param container Button background color.
+     * @param text Text color.
+     * @param icon Icon tint color.
+     */
     @Composable
     fun colors(
         container: Color = System.color.button.tertiary,
@@ -72,6 +81,11 @@ object BottomSheetButtonDefaults {
         val label: TextStyle
     )
 
+    /**
+     * Creates text style configuration for [BottomSheetButton].
+     *
+     * @param label Style applied to the button text.
+     */
     @Composable
     fun style(label: TextStyle = System.font.body.base.medium) =
         BottomSheetButtonStyle(
@@ -91,6 +105,13 @@ object BottomSheetButtonDefaults {
         val iconSpacing: Dp
     )
 
+    /**
+     * Creates dimension configuration for [BottomSheetButton].
+     *
+     * @param shape Button shape.
+     * @param height Button height.
+     * @param iconSpacing Spacing between icon and text.
+     */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
@@ -128,6 +149,7 @@ object BottomSheetButtonDefaults {
  *
  * @see BottomSheetButtonState for state configuration
  * @see BottomSheetButtonDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun BottomSheetButton(

@@ -38,6 +38,7 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
  * @param dimens Dimension configuration, defaults to [LoadingDialogDefaults.dimens].
  *
  * @see LoadingDialogDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun LoadingDialog(
@@ -78,6 +79,7 @@ fun LoadingDialog(
  * Default configuration values for [LoadingDialog].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object LoadingDialogDefaults {
     /**
@@ -91,6 +93,7 @@ object LoadingDialogDefaults {
         val indicator: Color,
     )
 
+    /** Creates color configuration for [LoadingDialog]. */
     @Composable
     fun colors(
         container: Color = Color.White,
@@ -111,6 +114,7 @@ object LoadingDialogDefaults {
         val shape: Shape,
     )
 
+    /** Creates dimension configuration for [LoadingDialog]. */
     @Composable
     fun dimens(
         contentPadding: Dp = 20.dp,

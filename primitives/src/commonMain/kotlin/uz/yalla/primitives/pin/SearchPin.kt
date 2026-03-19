@@ -41,6 +41,7 @@ import uz.yalla.resources.Res
  * @param dimens Dimension configuration, defaults to [SearchPinDefaults.dimens].
  *
  * @see SearchPinDefaults for default values
+ * @since 0.0.1
  */
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -75,6 +76,7 @@ fun SearchPin(
  * Default configuration values for [SearchPin].
  *
  * Provides defaults for [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SearchPinDefaults {
     /**
@@ -88,6 +90,7 @@ object SearchPinDefaults {
         val lottieResourcePath: String
     )
 
+    /** Creates dimension configuration for [SearchPin]. */
     @Composable
     fun dimens(
         size: Dp = 200.dp,

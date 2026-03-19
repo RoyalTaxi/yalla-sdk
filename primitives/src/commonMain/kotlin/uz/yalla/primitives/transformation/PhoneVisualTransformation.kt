@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.VisualTransformation
  *
  * @param mask Format pattern. Use maskChar for input positions.
  * @param maskChar Character representing input positions in mask.
+ * @since 0.0.1
  */
 class PhoneVisualTransformation(
     private val mask: String,

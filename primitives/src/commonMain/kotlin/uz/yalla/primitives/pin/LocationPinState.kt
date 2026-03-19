@@ -7,6 +7,7 @@ package uz.yalla.primitives.pin
  * @property timeout Countdown time in minutes (null for no countdown).
  * @property jumping Whether the pin is animating (searching state).
  * @property loading Whether the pin shows loading indicator.
+ * @since 0.0.1
  */
 data class LocationPinState(
     val address: String? = null,

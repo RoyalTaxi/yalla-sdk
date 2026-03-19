@@ -45,6 +45,7 @@ import uz.yalla.resources.order_cancel_countdown
  *
  * @property countdownText Text shown during countdown (with %s placeholder for seconds).
  * @property confirmText Text shown when countdown completes.
+ * @since 0.0.1
  */
 data class SensitiveButtonState(
     val countdownText: String,
@@ -55,6 +56,7 @@ data class SensitiveButtonState(
  * Default configuration values for [SensitiveButton].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SensitiveButtonDefaults {
     /**
@@ -68,6 +70,12 @@ object SensitiveButtonDefaults {
         val text: Color,
     )
 
+    /**
+     * Creates color configuration for [SensitiveButton].
+     *
+     * @param progress Progress fill color.
+     * @param text Text color.
+     */
     @Composable
     fun colors(
         progress: Color = System.color.button.active,
@@ -86,6 +94,11 @@ object SensitiveButtonDefaults {
         val text: TextStyle,
     )
 
+    /**
+     * Creates text style configuration for [SensitiveButton].
+     *
+     * @param text Button text style.
+     */
     @Composable
     fun style(text: TextStyle = System.font.body.large.bold) =
         SensitiveButtonStyle(
@@ -105,6 +118,13 @@ object SensitiveButtonDefaults {
         val countdownSeconds: Int,
     )
 
+    /**
+     * Creates dimension configuration for [SensitiveButton].
+     *
+     * @param height Button height.
+     * @param shape Button shape.
+     * @param countdownSeconds Countdown duration in seconds.
+     */
     @Composable
     fun dimens(
         height: Dp = 60.dp,
@@ -145,6 +165,7 @@ object SensitiveButtonDefaults {
  * @param dimens Dimension configuration, defaults to [SensitiveButtonDefaults.dimens].
  *
  * @see SensitiveButtonDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun SensitiveButton(
@@ -204,7 +225,14 @@ fun SensitiveButton(
 }
 
 /**
- * Convenience overload using string resources.
+ * Convenience overload of [SensitiveButton] using string resources for countdown and confirm text.
+ *
+ * @param onClick Invoked when countdown completes and button is clicked.
+ * @param modifier Applied to button.
+ * @param colors Color configuration, defaults to [SensitiveButtonDefaults.colors].
+ * @param style Text style configuration, defaults to [SensitiveButtonDefaults.style].
+ * @param dimens Dimension configuration, defaults to [SensitiveButtonDefaults.dimens].
+ * @since 0.0.1
  */
 @Composable
 fun SensitiveButton(

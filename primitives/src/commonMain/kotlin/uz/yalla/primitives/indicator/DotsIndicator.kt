@@ -25,6 +25,7 @@ import uz.yalla.design.theme.System
  *
  * @property pageCount Total number of pages.
  * @property currentPage Currently selected page (0-indexed).
+ * @since 0.0.1
  */
 data class DotsIndicatorState(
     val pageCount: Int,
@@ -54,6 +55,7 @@ data class DotsIndicatorState(
  *
  * @see DotsIndicatorState for state configuration
  * @see DotsIndicatorDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun DotsIndicator(
@@ -90,6 +92,7 @@ fun DotsIndicator(
  * Default configuration values for [DotsIndicator].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object DotsIndicatorDefaults {
     /**
@@ -103,6 +106,7 @@ object DotsIndicatorDefaults {
         val unselected: Color,
     )
 
+    /** Creates color configuration for [DotsIndicator]. */
     @Composable
     fun colors(
         selected: Color = System.color.background.brand,
@@ -127,6 +131,7 @@ object DotsIndicatorDefaults {
         val animationDurationMillis: Int,
     )
 
+    /** Creates dimension configuration for [DotsIndicator]. */
     @Composable
     fun dimens(
         dotSize: Dp = 10.dp,

@@ -24,6 +24,7 @@ import uz.yalla.design.theme.System
  * State for [GradientButton] component.
  *
  * @property enabled When false, button is disabled.
+ * @since 0.0.1
  */
 data class GradientButtonState(
     val enabled: Boolean = true,
@@ -67,6 +68,7 @@ data class GradientButtonState(
  *
  * @see GradientButtonState for state configuration
  * @see GradientButtonDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun GradientButton(
@@ -102,6 +104,7 @@ fun GradientButton(
  * Default configuration values for [GradientButton].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object GradientButtonDefaults {
     /**
@@ -165,6 +168,7 @@ object GradientButtonDefaults {
         val disabledAlpha: Float,
     )
 
+    /** Creates dimension configuration for [GradientButton]. */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),

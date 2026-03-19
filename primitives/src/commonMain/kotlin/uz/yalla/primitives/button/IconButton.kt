@@ -20,6 +20,7 @@ import uz.yalla.primitives.model.ButtonSize
  *
  * @property enabled When false, button is disabled.
  * @property size Button size variant.
+ * @since 0.0.1
  */
 data class IconButtonState(
     val enabled: Boolean = true,
@@ -50,6 +51,7 @@ data class IconButtonState(
  * @param content Icon content.
  *
  * @see IconButtonDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun IconButton(
@@ -78,6 +80,7 @@ fun IconButton(
  * Default configuration values for [IconButton].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object IconButtonDefaults {
     /**
@@ -99,6 +102,14 @@ object IconButtonDefaults {
         fun contentColor(enabled: Boolean): Color = if (enabled) content else disabledContent
     }
 
+    /**
+     * Creates default color configuration for [IconButton].
+     *
+     * @param container Background color when enabled.
+     * @param content Icon color when enabled.
+     * @param disabledContainer Background color when disabled.
+     * @param disabledContent Icon color when disabled.
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.tertiary,
@@ -112,6 +123,14 @@ object IconButtonDefaults {
         disabledContent = disabledContent,
     )
 
+    /**
+     * Creates filled/prominent color configuration for [IconButton].
+     *
+     * @param container Background color when enabled.
+     * @param content Icon color when enabled.
+     * @param disabledContainer Background color when disabled.
+     * @param disabledContent Icon color when disabled.
+     */
     @Composable
     fun filledColors(
         container: Color = System.color.button.active,
@@ -162,6 +181,18 @@ object IconButtonDefaults {
             }
     }
 
+    /**
+     * Creates dimension configuration for [IconButton].
+     *
+     * @param smallSize Button size for small variant.
+     * @param mediumSize Button size for medium variant.
+     * @param largeSize Button size for large variant.
+     * @param smallIconSize Icon size for small variant.
+     * @param mediumIconSize Icon size for medium variant.
+     * @param largeIconSize Icon size for large variant.
+     * @param cornerRadius Corner radius of the button shape.
+     * @param shape Button shape.
+     */
     @Composable
     fun dimens(
         smallSize: Dp = 36.dp,

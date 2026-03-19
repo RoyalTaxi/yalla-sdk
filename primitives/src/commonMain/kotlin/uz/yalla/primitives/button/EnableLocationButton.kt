@@ -24,6 +24,7 @@ import uz.yalla.resources.location_gps_title
  * Default configuration values for [EnableLocationButton].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object EnableLocationButtonDefaults {
     /**
@@ -37,6 +38,12 @@ object EnableLocationButtonDefaults {
         val icon: Color
     )
 
+    /**
+     * Creates color configuration for [EnableLocationButton].
+     *
+     * @param text Text color.
+     * @param icon Icon tint color.
+     */
     @Composable
     fun colors(
         text: Color = System.color.text.white,
@@ -55,6 +62,11 @@ object EnableLocationButtonDefaults {
         val label: TextStyle
     )
 
+    /**
+     * Creates text style configuration for [EnableLocationButton].
+     *
+     * @param label Style applied to the button text.
+     */
     @Composable
     fun style(label: TextStyle = System.font.body.caption) =
         EnableLocationButtonStyle(
@@ -72,6 +84,12 @@ object EnableLocationButtonDefaults {
         val iconSpacing: Dp
     )
 
+    /**
+     * Creates dimension configuration for [EnableLocationButton].
+     *
+     * @param contentPadding Padding inside the button.
+     * @param iconSpacing Spacing between text and icon.
+     */
     @Composable
     fun dimens(
         contentPadding: PaddingValues =
@@ -104,6 +122,7 @@ object EnableLocationButtonDefaults {
  * @param colors Color configuration, defaults to [EnableLocationButtonDefaults.colors]
  * @param style Text style configuration, defaults to [EnableLocationButtonDefaults.style]
  * @param dimens Dimension configuration, defaults to [EnableLocationButtonDefaults.dimens]
+ * @since 0.0.1
  */
 @Composable
 fun EnableLocationButton(

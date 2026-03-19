@@ -40,6 +40,7 @@ import uz.yalla.resources.icons.YallaIcons
  * @property text Button label text.
  * @property icon Icon painter shown above the text.
  * @property enabled Whether button is clickable.
+ * @since 0.0.1
  */
 data class SupportButtonState(
     val text: String,
@@ -70,6 +71,7 @@ data class SupportButtonState(
  * @param colors Color configuration, defaults to [SupportButtonDefaults.colors].
  * @param style Text style configuration, defaults to [SupportButtonDefaults.style].
  * @param dimens Dimension configuration, defaults to [SupportButtonDefaults.dimens].
+ * @since 0.0.1
  */
 @Composable
 fun SupportButton(
@@ -124,6 +126,7 @@ fun SupportButton(
  * Default configuration values for [SupportButton].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object SupportButtonDefaults {
     /**
@@ -157,6 +160,7 @@ object SupportButtonDefaults {
         fun icon(enabled: Boolean): Color = if (enabled) icon else disabledIcon
     }
 
+    /** Creates color configuration for [SupportButton]. */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -187,6 +191,7 @@ object SupportButtonDefaults {
         val label: TextStyle,
     )
 
+    /** Creates text style configuration for [SupportButton]. */
     @Composable
     fun style(label: TextStyle = System.font.body.small.medium) =
         SupportButtonStyle(
@@ -210,6 +215,7 @@ object SupportButtonDefaults {
         val iconLabelSpacing: Dp,
     )
 
+    /** Creates dimension configuration for [SupportButton]. */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),

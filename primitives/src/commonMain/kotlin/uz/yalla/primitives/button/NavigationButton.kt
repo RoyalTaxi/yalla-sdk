@@ -23,6 +23,7 @@ import uz.yalla.design.theme.System
  *
  * @property icon Icon to display.
  * @property contentDescription Accessibility description.
+ * @since 0.0.1
  */
 data class NavigationButtonState(
     val icon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -59,6 +60,7 @@ data class NavigationButtonState(
  * @param dimens Dimension configuration, defaults to [NavigationButtonDefaults.dimens].
  *
  * @see NavigationButtonDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun NavigationButton(
@@ -89,6 +91,7 @@ fun NavigationButton(
  * Default configuration values for [NavigationButton].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object NavigationButtonDefaults {
     /**
@@ -102,6 +105,12 @@ object NavigationButtonDefaults {
         val content: Color,
     )
 
+    /**
+     * Creates color configuration for [NavigationButton].
+     *
+     * @param container Background color.
+     * @param content Icon color.
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.tertiary,
@@ -126,6 +135,14 @@ object NavigationButtonDefaults {
         val shape: Shape,
     )
 
+    /**
+     * Creates dimension configuration for [NavigationButton].
+     *
+     * @param size Button size.
+     * @param iconSize Icon size.
+     * @param cornerRadius Corner radius.
+     * @param shape Button shape.
+     */
     @Composable
     fun dimens(
         size: Dp = 40.dp,

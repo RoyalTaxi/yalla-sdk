@@ -31,6 +31,7 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
  * @param dimens Dimension configuration, defaults to [LoadingIndicatorDefaults.dimens].
  *
  * @see LoadingIndicatorDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun LoadingIndicator(
@@ -47,6 +48,8 @@ fun LoadingIndicator(
 
 /**
  * Size variants for [LoadingIndicator].
+ *
+ * @since 0.0.1
  */
 enum class LoadingIndicatorSize {
     Small,
@@ -58,6 +61,7 @@ enum class LoadingIndicatorSize {
  * Default configuration values for [LoadingIndicator].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object LoadingIndicatorDefaults {
     /**
@@ -71,6 +75,7 @@ object LoadingIndicatorDefaults {
         val track: Color,
     )
 
+    /** Creates color configuration for [LoadingIndicator]. */
     @Composable
     fun colors(
         indicator: Color = System.color.button.active,
@@ -113,6 +118,7 @@ object LoadingIndicatorDefaults {
             }
     }
 
+    /** Creates dimension configuration for [LoadingIndicator]. */
     @Composable
     fun dimens(
         smallSize: Dp = 20.dp,

@@ -38,6 +38,31 @@ import uz.yalla.resources.auth_phone_placeholder
 
 private const val MAX_PHONE_DIGITS = 9
 
+/**
+ * Phone number input field with country code prefix and formatted input.
+ *
+ * Displays a bordered surface with a fixed country code on the left and
+ * a formatted phone number input on the right. Input is automatically
+ * filtered to digits and limited to [MAX_PHONE_DIGITS].
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * var phone by remember { mutableStateOf("") }
+ *
+ * NumberField(
+ *     value = phone,
+ *     onValueChange = { phone = it },
+ *     modifier = Modifier.fillMaxWidth(),
+ * )
+ * ```
+ *
+ * @param value Current raw digit value (without formatting).
+ * @param onValueChange Called with filtered digits when input changes.
+ * @param modifier Applied to the field container.
+ * @param focusRequester Optional focus requester for programmatic focus.
+ * @since 0.0.1
+ */
 @Composable
 fun NumberField(
     value: String,

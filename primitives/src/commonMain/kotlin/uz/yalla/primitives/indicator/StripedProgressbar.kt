@@ -58,6 +58,7 @@ import kotlin.math.hypot
  * @param dimens Dimension configuration, defaults to [StripedProgressbarDefaults.dimens].
  *
  * @see StripedProgressbarDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun StripedProgressbar(
@@ -135,6 +136,7 @@ fun StripedProgressbar(
  * Default values for [StripedProgressbar].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object StripedProgressbarDefaults {
     /**
@@ -150,6 +152,7 @@ object StripedProgressbarDefaults {
         val stripe: Color,
     )
 
+    /** Creates color configuration for [StripedProgressbar]. */
     @Composable
     fun colors(
         track: Color = System.color.background.secondary,
@@ -181,6 +184,7 @@ object StripedProgressbarDefaults {
         val animationDurationMs: Int,
     )
 
+    /** Creates dimension configuration for [StripedProgressbar]. */
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(40.dp),

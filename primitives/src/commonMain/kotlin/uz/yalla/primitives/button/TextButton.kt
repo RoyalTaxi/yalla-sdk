@@ -33,6 +33,7 @@ import uz.yalla.primitives.model.ButtonSize
  * @property enabled When false, button is disabled.
  * @property loading When true, shows spinner.
  * @property size Button size variant.
+ * @since 0.0.1
  */
 data class TextButtonState(
     val text: String,
@@ -66,6 +67,7 @@ data class TextButtonState(
  *
  * @see PrimaryButton for primary actions
  * @see TextButtonDefaults for default values
+ * @since 0.0.1
  */
 @Composable
 fun TextButton(
@@ -123,6 +125,7 @@ fun TextButton(
  * Default configuration values for [TextButton].
  *
  * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * @since 0.0.1
  */
 object TextButtonDefaults {
     /**
@@ -138,6 +141,12 @@ object TextButtonDefaults {
         fun contentColor(enabled: Boolean): Color = if (enabled) content else disabledContent
     }
 
+    /**
+     * Creates color configuration for [TextButton].
+     *
+     * @param content Text/icon color when enabled.
+     * @param disabledContent Text/icon color when disabled.
+     */
     @Composable
     fun colors(
         content: Color = System.color.text.link,
@@ -167,6 +176,13 @@ object TextButtonDefaults {
             }
     }
 
+    /**
+     * Creates text style configuration for [TextButton].
+     *
+     * @param small Style for small size.
+     * @param medium Style for medium size.
+     * @param large Style for large size.
+     */
     @Composable
     fun style(
         small: TextStyle = System.font.body.small.regular,
@@ -228,6 +244,21 @@ object TextButtonDefaults {
             }
     }
 
+    /**
+     * Creates dimension configuration for [TextButton].
+     *
+     * @param smallMinWidth Minimum width for small size.
+     * @param mediumMinWidth Minimum width for medium size.
+     * @param largeMinWidth Minimum width for large size.
+     * @param smallMinHeight Minimum height for small size.
+     * @param mediumMinHeight Minimum height for medium size.
+     * @param largeMinHeight Minimum height for large size.
+     * @param smallContentPadding Content padding for small size.
+     * @param mediumContentPadding Content padding for medium size.
+     * @param largeContentPadding Content padding for large size.
+     * @param iconSize Size of icons.
+     * @param iconSpacing Spacing between icon and text.
+     */
     @Composable
     fun dimens(
         smallMinWidth: Dp = 60.dp,
