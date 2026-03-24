@@ -68,21 +68,21 @@ internal class ConfigPreferencesImpl(
     }
 
     override val maxBonus: Flow<Long> =
-        dataStore.data.map { it[PreferenceKeys.MAX_BONUS].or0() }
+        dataStore.data.map { it.getLongSafe(PreferenceKeys.MAX_BONUS) }
 
     override fun setMaxBonus(value: Long) {
         scope.launch { dataStore.edit { it[PreferenceKeys.MAX_BONUS] = value } }
     }
 
     override val minBonus: Flow<Long> =
-        dataStore.data.map { it[PreferenceKeys.MIN_BONUS].or0() }
+        dataStore.data.map { it.getLongSafe(PreferenceKeys.MIN_BONUS) }
 
     override fun setMinBonus(value: Long) {
         scope.launch { dataStore.edit { it[PreferenceKeys.MIN_BONUS] = value } }
     }
 
     override val balance: Flow<Long> =
-        dataStore.data.map { it[PreferenceKeys.BALANCE].or0() }
+        dataStore.data.map { it.getLongSafe(PreferenceKeys.BALANCE) }
 
     override fun setBalance(value: Long) {
         scope.launch { dataStore.edit { it[PreferenceKeys.BALANCE] = value } }
@@ -109,3 +109,14 @@ internal class ConfigPreferencesImpl(
         scope.launch { dataStore.edit { it[PreferenceKeys.ORDER_CANCEL_TIME] = value } }
     }
 }
+
+/**
+ * Safely reads a Long preference that may have been stored as Int
+ * by an older app version, avoiding ClassCastException.
+ */
+private fun Preferences.getLongSafe(key: Preferences.Key<Long>): Long =
+    try {
+        this[key] ?: 0L
+    } catch (_: ClassCastException) {
+        0L
+    }
