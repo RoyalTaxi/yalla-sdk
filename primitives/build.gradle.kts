@@ -26,6 +26,10 @@ kotlin {
             // Layout
             implementation(libs.constraintlayout)
         }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
     }
 }
 
