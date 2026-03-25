@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.primitives.button.NavigationButton
-import uz.yalla.primitives.button.NavigationButtonState
 
 /**
  * Large top bar with prominent title below navigation row.
@@ -75,10 +74,7 @@ fun LargeTopBar(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (onNavigationClick != null) {
-                NavigationButton(
-                    state = NavigationButtonState(),
-                    onClick = onNavigationClick
-                )
+                NavigationButton(onClick = onNavigationClick)
             } else {
                 Spacer(Modifier.width(dimens.navigationButtonSize))
             }

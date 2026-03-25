@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.primitives.button.NavigationButton
-import uz.yalla.primitives.button.NavigationButtonState
 
 /**
  * Standard top bar with optional navigation, title, and actions.
@@ -84,10 +83,7 @@ fun TopBar(
     ) {
         // Navigation button
         if (onNavigationClick != null) {
-            NavigationButton(
-                state = NavigationButtonState(),
-                onClick = onNavigationClick
-            )
+            NavigationButton(onClick = onNavigationClick)
         } else {
             Spacer(Modifier.width(dimens.navigationButtonSize))
         }
