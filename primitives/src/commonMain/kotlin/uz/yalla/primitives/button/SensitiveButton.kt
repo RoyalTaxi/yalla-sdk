@@ -14,9 +14,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
-import kotlin.math.ceil
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -24,13 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
+import kotlin.math.ceil
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.core.util.formatArgs
@@ -41,150 +42,96 @@ import uz.yalla.resources.order_cancel_action_yes
 import uz.yalla.resources.order_cancel_countdown
 
 /**
- * State for [SensitiveButton] component.
+ * Color configuration for [SensitiveButton].
  *
- * @property countdownText Text shown during countdown (with %s placeholder for seconds).
- * @property confirmText Text shown when countdown completes.
- * @since 0.0.1
+ * Use [SensitiveButtonDefaults.colors] to create with theme-aware defaults.
+ *
+ * @param progressColor Progress fill color during countdown.
+ * @param textColor Text color.
  */
-data class SensitiveButtonState(
-    val countdownText: String,
-    val confirmText: String,
+@Immutable
+data class SensitiveButtonColors(
+    val progressColor: Color,
+    val textColor: Color,
 )
 
 /**
- * Default configuration values for [SensitiveButton].
+ * Dimension configuration for [SensitiveButton].
  *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
- * @since 0.0.1
+ * Use [SensitiveButtonDefaults.dimens] to create with standard values.
+ *
+ * @param height Button height.
+ * @param shape Container shape.
+ * @param textStyle Text style for the button label.
  */
-object SensitiveButtonDefaults {
-    /**
-     * Color configuration for [SensitiveButton].
-     *
-     * @param progress Progress fill color.
-     * @param text Text color.
-     */
-    data class SensitiveButtonColors(
-        val progress: Color,
-        val text: Color,
-    )
-
-    /**
-     * Creates color configuration for [SensitiveButton].
-     *
-     * @param progress Progress fill color.
-     * @param text Text color.
-     */
-    @Composable
-    fun colors(
-        progress: Color = System.color.button.active,
-        text: Color = System.color.text.white,
-    ) = SensitiveButtonColors(
-        progress = progress,
-        text = text,
-    )
-
-    /**
-     * Text style configuration for [SensitiveButton].
-     *
-     * @param text Button text style.
-     */
-    data class SensitiveButtonStyle(
-        val text: TextStyle,
-    )
-
-    /**
-     * Creates text style configuration for [SensitiveButton].
-     *
-     * @param text Button text style.
-     */
-    @Composable
-    fun style(text: TextStyle = System.font.body.large.bold) =
-        SensitiveButtonStyle(
-            text = text,
-        )
-
-    /**
-     * Dimension configuration for [SensitiveButton].
-     *
-     * @param height Button height.
-     * @param shape Button shape.
-     * @param countdownSeconds Countdown duration in seconds.
-     */
-    data class SensitiveButtonDimens(
-        val height: Dp,
-        val shape: Shape,
-        val countdownSeconds: Int,
-    )
-
-    /**
-     * Creates dimension configuration for [SensitiveButton].
-     *
-     * @param height Button height.
-     * @param shape Button shape.
-     * @param countdownSeconds Countdown duration in seconds.
-     */
-    @Composable
-    fun dimens(
-        height: Dp = 60.dp,
-        shape: Shape = RoundedCornerShape(16.dp),
-        countdownSeconds: Int = 3,
-    ) = SensitiveButtonDimens(
-        height = height,
-        shape = shape,
-        countdownSeconds = countdownSeconds,
-    )
-}
+@Immutable
+data class SensitiveButtonDimens(
+    val height: Dp,
+    val shape: Shape,
+    val textStyle: TextStyle,
+)
 
 /**
  * Countdown confirmation button for destructive or sensitive actions.
  *
  * Displays a countdown timer that must complete before the button becomes active.
- * The progress bar fills from left to right during countdown.
+ * A progress bar fills from left to right during countdown, overlaying a background image.
+ * The button manages its own countdown animation internally.
  *
- * Use for actions like "Delete Account", "Cancel Order", or "Logout".
+ * Use for actions like "Cancel Order", "Delete Account", or "Logout".
  *
  * ## Usage
+ * ```kotlin
+ * SensitiveButton(onClick = { viewModel.cancelOrder() })
+ * ```
  *
+ * ## With Custom Text
  * ```kotlin
  * SensitiveButton(
- *     state = SensitiveButtonState(
- *         countdownText = "Hold to cancel (%s)",
- *         confirmText = "Yes, cancel",
- *     ),
- *     onClick = viewModel::cancelOrder,
+ *     onClick = { viewModel.deleteAccount() },
+ *     countdownSeconds = 5,
+ *     confirmText = "Yes, delete",
+ *     countdownText = "Deleting in %s...",
  * )
  * ```
  *
- * @param state Button state containing countdown and confirm text.
- * @param onClick Invoked when countdown completes and button is clicked.
- * @param modifier Applied to button.
- * @param colors Color configuration, defaults to [SensitiveButtonDefaults.colors].
- * @param style Text style configuration, defaults to [SensitiveButtonDefaults.style].
- * @param dimens Dimension configuration, defaults to [SensitiveButtonDefaults.dimens].
+ * @param onClick Called when the countdown completes and the user clicks. Not called during countdown.
+ * @param modifier [Modifier] applied to the root container.
+ * @param countdownSeconds Duration of the countdown in seconds.
+ * @param confirmText Text shown when countdown completes. Defaults to localized "Yes" string.
+ * @param countdownText Text shown during countdown with `%s` placeholder for remaining seconds.
+ *   Defaults to localized countdown string.
+ * @param colors [SensitiveButtonColors] for progress and text colors.
+ *   See [SensitiveButtonDefaults.colors].
+ * @param dimens [SensitiveButtonDimens] for dimensions and shape.
+ *   See [SensitiveButtonDefaults.dimens].
  *
- * @see SensitiveButtonDefaults for default values
- * @since 0.0.1
+ * @see SensitiveButtonDefaults
  */
 @Composable
 fun SensitiveButton(
-    state: SensitiveButtonState,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    colors: SensitiveButtonDefaults.SensitiveButtonColors = SensitiveButtonDefaults.colors(),
-    style: SensitiveButtonDefaults.SensitiveButtonStyle = SensitiveButtonDefaults.style(),
-    dimens: SensitiveButtonDefaults.SensitiveButtonDimens = SensitiveButtonDefaults.dimens(),
+    countdownSeconds: Int = 3,
+    confirmText: String? = null,
+    countdownText: String? = null,
+    colors: SensitiveButtonColors = SensitiveButtonDefaults.colors(),
+    dimens: SensitiveButtonDimens = SensitiveButtonDefaults.dimens(),
 ) {
+    val resolvedConfirmText = confirmText ?: stringResource(Res.string.order_cancel_action_yes)
+    val resolvedCountdownText = countdownText ?: stringResource(Res.string.order_cancel_countdown)
+
     val lifecycleOwner = LocalLifecycleOwner.current
     val progress = remember { Animatable(0f) }
-    val countdown by remember { derivedStateOf { ceil(dimens.countdownSeconds * (1f - progress.value)).toInt() } }
+    val countdown by remember {
+        derivedStateOf { ceil(countdownSeconds * (1f - progress.value)).toInt() }
+    }
     val isEnabled by remember { derivedStateOf { progress.value >= 1f } }
 
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             progress.snapTo(0f)
-            progress.animateTo(1f, tween(dimens.countdownSeconds * 1000, easing = LinearEasing))
+            progress.animateTo(1f, tween(countdownSeconds * 1000, easing = LinearEasing))
         }
     }
 
@@ -208,51 +155,64 @@ fun SensitiveButton(
                     .fillMaxWidth(progress.value)
                     .height(dimens.height)
                     .align(Alignment.CenterStart)
-                    .background(colors.progress, dimens.shape),
+                    .background(colors.progressColor, dimens.shape),
             )
 
             Text(
-                text =
-                    when {
-                        isEnabled -> state.confirmText
-                        else -> state.countdownText.formatArgs(countdown)
-                    },
-                color = colors.text,
-                style = style.text,
+                text = when {
+                    isEnabled -> resolvedConfirmText
+                    else -> resolvedCountdownText.formatArgs(countdown)
+                },
+                color = colors.textColor,
+                style = dimens.textStyle,
             )
         }
     }
 }
 
 /**
- * Convenience overload of [SensitiveButton] using string resources for countdown and confirm text.
+ * Default configuration values for [SensitiveButton].
  *
- * @param onClick Invoked when countdown completes and button is clicked.
- * @param modifier Applied to button.
- * @param colors Color configuration, defaults to [SensitiveButtonDefaults.colors].
- * @param style Text style configuration, defaults to [SensitiveButtonDefaults.style].
- * @param dimens Dimension configuration, defaults to [SensitiveButtonDefaults.dimens].
- * @since 0.0.1
+ * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
  */
-@Composable
-fun SensitiveButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    colors: SensitiveButtonDefaults.SensitiveButtonColors = SensitiveButtonDefaults.colors(),
-    style: SensitiveButtonDefaults.SensitiveButtonStyle = SensitiveButtonDefaults.style(),
-    dimens: SensitiveButtonDefaults.SensitiveButtonDimens = SensitiveButtonDefaults.dimens(),
-) {
-    SensitiveButton(
-        state =
-            SensitiveButtonState(
-                countdownText = stringResource(Res.string.order_cancel_countdown),
-                confirmText = stringResource(Res.string.order_cancel_action_yes),
-            ),
-        onClick = onClick,
-        modifier = modifier,
-        colors = colors,
-        style = style,
-        dimens = dimens,
+object SensitiveButtonDefaults {
+    /** Default button height. */
+    val Height = 60.dp
+
+    /** Default button shape. */
+    val Shape: Shape = RoundedCornerShape(16.dp)
+
+    /**
+     * Creates [SensitiveButtonColors] with theme-aware defaults.
+     *
+     * @param progressColor Progress fill color during countdown.
+     * @param textColor Text color.
+     */
+    @Composable
+    fun colors(
+        progressColor: Color = System.color.button.active,
+        textColor: Color = System.color.text.white,
+    ): SensitiveButtonColors = SensitiveButtonColors(
+        progressColor = progressColor,
+        textColor = textColor,
+    )
+
+    /**
+     * Creates [SensitiveButtonDimens] with standard values.
+     *
+     * @param height Button height.
+     * @param shape Container shape.
+     * @param textStyle Text style for the button label.
+     */
+    @Composable
+    fun dimens(
+        height: Dp = Height,
+        shape: Shape = SensitiveButtonDefaults.Shape,
+        textStyle: TextStyle = System.font.body.large.bold,
+    ): SensitiveButtonDimens = SensitiveButtonDimens(
+        height = height,
+        shape = shape,
+        textStyle = textStyle,
     )
 }
 
@@ -260,18 +220,14 @@ fun SensitiveButton(
 @Composable
 private fun SensitiveButtonPreview() {
     Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
+        modifier = Modifier
+            .background(Color.White)
+            .padding(16.dp),
     ) {
         SensitiveButton(
-            state =
-                SensitiveButtonState(
-                    countdownText = "Hold to cancel (%s)",
-                    confirmText = "Yes, cancel",
-                ),
             onClick = {},
+            confirmText = "Yes, cancel",
+            countdownText = "Hold to cancel (%s)",
         )
     }
 }
