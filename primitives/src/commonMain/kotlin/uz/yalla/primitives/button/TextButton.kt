@@ -1,288 +1,200 @@
 package uz.yalla.primitives.button
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
-import uz.yalla.platform.indicator.NativeLoadingIndicator
-import uz.yalla.primitives.model.ButtonSize
 
 /**
- * State for [TextButton] component.
+ * Color configuration for [TextButton].
  *
- * @property text Button label.
- * @property enabled When false, button is disabled.
- * @property loading When true, shows spinner.
- * @property size Button size variant.
- * @since 0.0.1
+ * Resolves container and content colors based on enabled state.
+ * Use [TextButtonDefaults.colors] to create with theme-aware defaults.
+ *
+ * @param containerColor Background color when enabled.
+ * @param contentColor Text and icon color when enabled.
+ * @param disabledContainerColor Background color when disabled or loading.
+ * @param disabledContentColor Text and icon color when disabled or loading.
  */
-data class TextButtonState(
-    val text: String,
-    val enabled: Boolean = true,
-    val loading: Boolean = false,
-    val size: ButtonSize = ButtonSize.Medium
+@Immutable
+data class TextButtonColors(
+    val containerColor: Color,
+    val contentColor: Color,
+    val disabledContainerColor: Color,
+    val disabledContentColor: Color,
+) {
+    /** Resolves container color based on [enabled] state. */
+    fun containerColor(enabled: Boolean): Color =
+        if (enabled) containerColor else disabledContainerColor
+
+    /** Resolves content color based on [enabled] state. */
+    fun contentColor(enabled: Boolean): Color =
+        if (enabled) contentColor else disabledContentColor
+}
+
+/**
+ * Dimension configuration for [TextButton].
+ *
+ * Use [TextButtonDefaults.dimens] to create with standard values.
+ *
+ * @param minHeight Minimum button height (touch target).
+ * @param contentPadding Padding between container and content.
+ * @param shape Container shape.
+ * @param iconSpacing Space between icon slots and content.
+ */
+@Immutable
+data class TextButtonDimens(
+    val minHeight: Dp,
+    val contentPadding: PaddingValues,
+    val shape: Shape,
+    val iconSpacing: Dp,
 )
 
 /**
- * Text-only button for low-emphasis actions.
+ * Text-only button for low-emphasis actions like "Skip", "Cancel", or "Resend".
  *
- * Use for tertiary actions, links, or actions that should be less prominent.
+ * Use for tertiary actions that should be less prominent than [PrimaryButton] or [SecondaryButton].
+ *
+ * ## Building Blocks
+ * Delegates to [ButtonLayout] for Container -> Provider -> Layout -> Content structure.
  *
  * ## Usage
- *
  * ```kotlin
- * TextButton(
- *     state = TextButtonState(text = "Learn More"),
- *     onClick = onLearnMore,
- * )
+ * TextButton(onClick = { skip() }) {
+ *     Text("Skip")
+ * }
  * ```
  *
- * @param state Button state containing text, enabled, loading, and size.
- * @param onClick Invoked on click.
- * @param modifier Applied to button.
- * @param colors Color configuration, defaults to [TextButtonDefaults.colors].
- * @param style Text style configuration, defaults to [TextButtonDefaults.style].
- * @param dimens Dimension configuration, defaults to [TextButtonDefaults.dimens].
- * @param leadingIcon Optional icon before text.
- * @param trailingIcon Optional icon after text.
+ * ## With Loading State
+ * ```kotlin
+ * TextButton(onClick = { resend() }, loading = isResending) {
+ *     Text("Resend")
+ * }
+ * ```
  *
- * @see PrimaryButton for primary actions
- * @see TextButtonDefaults for default values
- * @since 0.0.1
+ * ## With Icons
+ * ```kotlin
+ * TextButton(
+ *     onClick = { learnMore() },
+ *     trailingIcon = { Icon(YallaIcons.ArrowRight, contentDescription = null) },
+ * ) {
+ *     Text("Learn More")
+ * }
+ * ```
+ *
+ * @param onClick Called when this button is clicked. Not called when disabled or loading.
+ * @param modifier [Modifier] applied to the root container.
+ * @param enabled Controls the enabled state. When `false`, the button appears visually
+ *   disabled and does not respond to user input.
+ * @param loading When `true`, shows a platform-native loading indicator instead of content.
+ *   The button is not clickable while loading.
+ * @param colors [TextButtonColors] that resolve colors for different states.
+ *   See [TextButtonDefaults.colors].
+ * @param dimens [TextButtonDimens] that define dimensions and shape.
+ *   See [TextButtonDefaults.dimens].
+ * @param leadingIcon Optional composable displayed before the content.
+ * @param trailingIcon Optional composable displayed after the content.
+ * @param content The button content, typically a [Text].
+ *
+ * @see PrimaryButton
+ * @see SecondaryButton
+ * @see TextButtonDefaults
  */
 @Composable
 fun TextButton(
-    state: TextButtonState,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    colors: TextButtonDefaults.TextButtonColors = TextButtonDefaults.colors(),
-    style: TextButtonDefaults.TextButtonStyle = TextButtonDefaults.style(),
-    dimens: TextButtonDefaults.TextButtonDimens = TextButtonDefaults.dimens(),
+    enabled: Boolean = true,
+    loading: Boolean = false,
+    colors: TextButtonColors = TextButtonDefaults.colors(),
+    dimens: TextButtonDimens = TextButtonDefaults.dimens(),
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
+    content: @Composable RowScope.() -> Unit,
 ) {
-    val isInteractive = state.enabled && !state.loading
-
-    Surface(
+    val isInteractive = enabled && !loading
+    ButtonLayout(
         onClick = onClick,
-        modifier =
-            modifier.defaultMinSize(
-                minWidth = dimens.minWidth(state.size),
-                minHeight = dimens.minHeight(state.size),
-            ),
+        modifier = modifier,
         enabled = isInteractive,
-        shape = RoundedCornerShape(50),
-        color = Color.Transparent,
+        loading = loading,
+        shape = dimens.shape,
+        containerColor = colors.containerColor(isInteractive),
         contentColor = colors.contentColor(isInteractive),
-    ) {
-        Row(
-            modifier = Modifier.padding(dimens.contentPadding(state.size)),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            if (state.loading) {
-                NativeLoadingIndicator(
-                    modifier = Modifier.size(dimens.iconSize),
-                    color = LocalContentColor.current,
-                )
-            } else {
-                leadingIcon?.let { icon ->
-                    Box(Modifier.size(dimens.iconSize), Alignment.Center) { icon() }
-                    Spacer(Modifier.width(dimens.iconSpacing))
-                }
-
-                Text(text = state.text, style = style.forSize(state.size))
-
-                trailingIcon?.let { icon ->
-                    Spacer(Modifier.width(dimens.iconSpacing))
-                    Box(Modifier.size(dimens.iconSize), Alignment.Center) { icon() }
-                }
-            }
-        }
-    }
+        contentPadding = dimens.contentPadding,
+        minHeight = dimens.minHeight,
+        iconSpacing = dimens.iconSpacing,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        content = content,
+    )
 }
 
 /**
  * Default configuration values for [TextButton].
  *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
- * @since 0.0.1
+ * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
  */
 object TextButtonDefaults {
-    /**
-     * Color configuration for [TextButton].
-     *
-     * @param content Text/icon color when enabled.
-     * @param disabledContent Text/icon color when disabled.
-     */
-    data class TextButtonColors(
-        val content: Color,
-        val disabledContent: Color,
-    ) {
-        fun contentColor(enabled: Boolean): Color = if (enabled) content else disabledContent
-    }
+    /** Default minimum button height. */
+    val MinHeight = 48.dp
+
+    /** Default content padding. */
+    val ContentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp)
+
+    /** Default button shape. */
+    val Shape: Shape = RoundedCornerShape(12.dp)
 
     /**
-     * Creates color configuration for [TextButton].
+     * Creates [TextButtonColors] with theme-aware defaults.
      *
-     * @param content Text/icon color when enabled.
-     * @param disabledContent Text/icon color when disabled.
+     * @param containerColor Background color when enabled.
+     * @param contentColor Text/icon color when enabled.
+     * @param disabledContainerColor Background color when disabled.
+     * @param disabledContentColor Text/icon color when disabled.
      */
     @Composable
     fun colors(
-        content: Color = System.color.text.link,
-        disabledContent: Color = System.color.text.base,
-    ) = TextButtonColors(
-        content = content,
-        disabledContent = disabledContent,
+        containerColor: Color = Color.Transparent,
+        contentColor: Color = System.color.text.base,
+        disabledContainerColor: Color = Color.Transparent,
+        disabledContentColor: Color = System.color.text.subtle,
+    ): TextButtonColors = TextButtonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
     )
 
     /**
-     * Text style configuration for [TextButton].
+     * Creates [TextButtonDimens] with standard values.
      *
-     * @param small Style for small size.
-     * @param medium Style for medium size.
-     * @param large Style for large size.
+     * @param minHeight Minimum button height.
+     * @param contentPadding Padding between container and content.
+     * @param shape Container shape.
+     * @param iconSpacing Space between icons and content.
      */
-    data class TextButtonStyle(
-        val small: TextStyle,
-        val medium: TextStyle,
-        val large: TextStyle,
-    ) {
-        fun forSize(size: ButtonSize): TextStyle =
-            when (size) {
-                ButtonSize.Small -> small
-                ButtonSize.Medium -> medium
-                ButtonSize.Large -> large
-            }
-    }
-
-    /**
-     * Creates text style configuration for [TextButton].
-     *
-     * @param small Style for small size.
-     * @param medium Style for medium size.
-     * @param large Style for large size.
-     */
-    @Composable
-    fun style(
-        small: TextStyle = System.font.body.small.regular,
-        medium: TextStyle = System.font.body.small.regular,
-        large: TextStyle = System.font.body.small.regular,
-    ) = TextButtonStyle(
-        small = small,
-        medium = medium,
-        large = large,
-    )
-
-    /**
-     * Dimension configuration for [TextButton].
-     *
-     * @param smallMinWidth Minimum width for small size.
-     * @param mediumMinWidth Minimum width for medium size.
-     * @param largeMinWidth Minimum width for large size.
-     * @param smallMinHeight Minimum height for small size.
-     * @param mediumMinHeight Minimum height for medium size.
-     * @param largeMinHeight Minimum height for large size.
-     * @param smallContentPadding Content padding for small size.
-     * @param mediumContentPadding Content padding for medium size.
-     * @param largeContentPadding Content padding for large size.
-     * @param iconSize Size of icons.
-     * @param iconSpacing Spacing between icon and text.
-     */
-    data class TextButtonDimens(
-        val smallMinWidth: Dp,
-        val mediumMinWidth: Dp,
-        val largeMinWidth: Dp,
-        val smallMinHeight: Dp,
-        val mediumMinHeight: Dp,
-        val largeMinHeight: Dp,
-        val smallContentPadding: PaddingValues,
-        val mediumContentPadding: PaddingValues,
-        val largeContentPadding: PaddingValues,
-        val iconSize: Dp,
-        val iconSpacing: Dp,
-    ) {
-        fun minWidth(size: ButtonSize): Dp =
-            when (size) {
-                ButtonSize.Small -> smallMinWidth
-                ButtonSize.Medium -> mediumMinWidth
-                ButtonSize.Large -> largeMinWidth
-            }
-
-        fun minHeight(size: ButtonSize): Dp =
-            when (size) {
-                ButtonSize.Small -> smallMinHeight
-                ButtonSize.Medium -> mediumMinHeight
-                ButtonSize.Large -> largeMinHeight
-            }
-
-        fun contentPadding(size: ButtonSize): PaddingValues =
-            when (size) {
-                ButtonSize.Small -> smallContentPadding
-                ButtonSize.Medium -> mediumContentPadding
-                ButtonSize.Large -> largeContentPadding
-            }
-    }
-
-    /**
-     * Creates dimension configuration for [TextButton].
-     *
-     * @param smallMinWidth Minimum width for small size.
-     * @param mediumMinWidth Minimum width for medium size.
-     * @param largeMinWidth Minimum width for large size.
-     * @param smallMinHeight Minimum height for small size.
-     * @param mediumMinHeight Minimum height for medium size.
-     * @param largeMinHeight Minimum height for large size.
-     * @param smallContentPadding Content padding for small size.
-     * @param mediumContentPadding Content padding for medium size.
-     * @param largeContentPadding Content padding for large size.
-     * @param iconSize Size of icons.
-     * @param iconSpacing Spacing between icon and text.
-     */
-    @Composable
     fun dimens(
-        smallMinWidth: Dp = 60.dp,
-        mediumMinWidth: Dp = 80.dp,
-        largeMinWidth: Dp = 100.dp,
-        smallMinHeight: Dp = 36.dp,
-        mediumMinHeight: Dp = 44.dp,
-        largeMinHeight: Dp = 52.dp,
-        smallContentPadding: PaddingValues = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-        mediumContentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
-        largeContentPadding: PaddingValues = PaddingValues(horizontal = 20.dp, vertical = 14.dp),
-        iconSize: Dp = 20.dp,
+        minHeight: Dp = MinHeight,
+        contentPadding: PaddingValues = ContentPadding,
+        shape: Shape = Shape,
         iconSpacing: Dp = 8.dp,
-    ) = TextButtonDimens(
-        smallMinWidth = smallMinWidth,
-        mediumMinWidth = mediumMinWidth,
-        largeMinWidth = largeMinWidth,
-        smallMinHeight = smallMinHeight,
-        mediumMinHeight = mediumMinHeight,
-        largeMinHeight = largeMinHeight,
-        smallContentPadding = smallContentPadding,
-        mediumContentPadding = mediumContentPadding,
-        largeContentPadding = largeContentPadding,
-        iconSize = iconSize,
+    ): TextButtonDimens = TextButtonDimens(
+        minHeight = minHeight,
+        contentPadding = contentPadding,
+        shape = shape,
         iconSpacing = iconSpacing,
     )
 }
@@ -290,15 +202,19 @@ object TextButtonDefaults {
 @Preview
 @Composable
 private fun TextButtonPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        TextButton(
-            state = TextButtonState(text = "Learn More"),
-            onClick = {},
-        )
+    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+        TextButton(onClick = {}) {
+            Text("Skip")
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun TextButtonLoadingPreview() {
+    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+        TextButton(onClick = {}, loading = true) {
+            Text("Loading")
+        }
     }
 }
