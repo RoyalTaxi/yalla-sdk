@@ -1,186 +1,184 @@
 package uz.yalla.primitives.button
 
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
 /**
- * State for [BottomSheetButton] component.
+ * Color configuration for [BottomSheetButton].
  *
- * @property text Button label text.
- * @property painter Icon painter.
- * @property enabled Whether button is clickable.
- * @since 0.0.1
+ * Use [BottomSheetButtonDefaults.colors] to create with theme-aware defaults.
+ *
+ * @param containerColor Background color.
+ * @param contentColor Text and icon color.
+ * @param iconColor Icon tint color. Use [Color.Unspecified] for original painter colors.
  */
-data class BottomSheetButtonState(
-    val text: String,
-    val painter: Painter,
-    val enabled: Boolean = true,
+@Immutable
+data class BottomSheetButtonColors(
+    val containerColor: Color,
+    val contentColor: Color,
+    val iconColor: Color,
 )
 
 /**
- * Default configuration values for [BottomSheetButton].
+ * Dimension configuration for [BottomSheetButton].
  *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
- * @since 0.0.1
+ * Use [BottomSheetButtonDefaults.dimens] to create with standard values.
+ *
+ * @param minHeight Minimum button height (touch target).
+ * @param contentPadding Padding between container and content.
+ * @param shape Container shape.
+ * @param iconSpacing Space between icon and content.
  */
-object BottomSheetButtonDefaults {
-    /**
-     * Color configuration for [BottomSheetButton].
-     *
-     * @param container Button background color.
-     * @param text Text color.
-     * @param icon Icon tint color.
-     */
-    data class BottomSheetButtonColors(
-        val container: Color,
-        val text: Color,
-        val icon: Color
-    )
+@Immutable
+data class BottomSheetButtonDimens(
+    val minHeight: Dp,
+    val contentPadding: PaddingValues,
+    val shape: Shape,
+    val iconSpacing: Dp,
+)
 
-    /**
-     * Creates color configuration for [BottomSheetButton].
-     *
-     * @param container Button background color.
-     * @param text Text color.
-     * @param icon Icon tint color.
-     */
-    @Composable
-    fun colors(
-        container: Color = System.color.button.tertiary,
-        text: Color = System.color.background.base,
-        icon: Color = Color.Unspecified
-    ) = BottomSheetButtonColors(
-        container = container,
-        text = text,
-        icon = icon
-    )
-
-    /**
-     * Text style configuration for [BottomSheetButton].
-     *
-     * @param label Style applied to the button text.
-     */
-    data class BottomSheetButtonStyle(
-        val label: TextStyle
-    )
-
-    /**
-     * Creates text style configuration for [BottomSheetButton].
-     *
-     * @param label Style applied to the button text.
-     */
-    @Composable
-    fun style(label: TextStyle = System.font.body.base.medium) =
-        BottomSheetButtonStyle(
-            label = label
-        )
-
-    /**
-     * Dimension configuration for [BottomSheetButton].
-     *
-     * @param shape Button shape.
-     * @param height Button height.
-     * @param iconSpacing Spacing between icon and text.
-     */
-    data class BottomSheetButtonDimens(
-        val shape: Shape,
-        val height: Dp,
-        val iconSpacing: Dp
-    )
-
-    /**
-     * Creates dimension configuration for [BottomSheetButton].
-     *
-     * @param shape Button shape.
-     * @param height Button height.
-     * @param iconSpacing Spacing between icon and text.
-     */
-    @Composable
-    fun dimens(
-        shape: Shape = RoundedCornerShape(16.dp),
-        height: Dp = 60.dp,
-        iconSpacing: Dp = 8.dp
-    ) = BottomSheetButtonDimens(
-        shape = shape,
-        height = height,
-        iconSpacing = iconSpacing
+/**
+ * Button for bottom sheet actions with a leading icon and text.
+ *
+ * Delegates to [ButtonLayout] for consistent Container -> Provider -> Layout -> Content structure.
+ *
+ * ## Usage
+ * ```kotlin
+ * BottomSheetButton(
+ *     onClick = { callDriver() },
+ *     icon = painterResource(Res.drawable.ic_phone),
+ * ) {
+ *     Text("Call Driver")
+ * }
+ * ```
+ *
+ * ## In a Row
+ * ```kotlin
+ * Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+ *     BottomSheetButton(
+ *         onClick = { callDriver() },
+ *         icon = painterResource(Res.drawable.ic_phone),
+ *         modifier = Modifier.weight(1f),
+ *     ) {
+ *         Text("Call")
+ *     }
+ *     BottomSheetButton(
+ *         onClick = { sendMessage() },
+ *         icon = painterResource(Res.drawable.ic_chat),
+ *         modifier = Modifier.weight(1f),
+ *     ) {
+ *         Text("Message")
+ *     }
+ * }
+ * ```
+ *
+ * @param onClick Called when this button is clicked. Not called when disabled.
+ * @param icon [Painter] for the leading icon.
+ * @param modifier [Modifier] applied to the root container.
+ * @param enabled Controls the enabled state. When `false`, the button does not respond to input.
+ * @param colors [BottomSheetButtonColors] that define container, content, and icon colors.
+ *   See [BottomSheetButtonDefaults.colors].
+ * @param dimens [BottomSheetButtonDimens] that define dimensions and shape.
+ *   See [BottomSheetButtonDefaults.dimens].
+ * @param content The button content, typically a [Text].
+ *
+ * @see BottomSheetButtonDefaults
+ */
+@Composable
+fun BottomSheetButton(
+    onClick: () -> Unit,
+    icon: Painter,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    colors: BottomSheetButtonColors = BottomSheetButtonDefaults.colors(),
+    dimens: BottomSheetButtonDimens = BottomSheetButtonDefaults.dimens(),
+    content: @Composable RowScope.() -> Unit,
+) {
+    ButtonLayout(
+        onClick = onClick,
+        modifier = modifier,
+        enabled = enabled,
+        loading = false,
+        shape = dimens.shape,
+        containerColor = colors.containerColor,
+        contentColor = colors.contentColor,
+        contentPadding = dimens.contentPadding,
+        minHeight = dimens.minHeight,
+        iconSpacing = dimens.iconSpacing,
+        leadingIcon = {
+            Icon(
+                painter = icon,
+                contentDescription = null,
+                tint = colors.iconColor,
+            )
+        },
+        content = content,
     )
 }
 
 /**
- * Button for bottom sheet actions with icon and text.
+ * Default configuration values for [BottomSheetButton].
  *
- * ## Usage
- *
- * ```kotlin
- * BottomSheetButton(
- *     state = BottomSheetButtonState(
- *         text = "Call Driver",
- *         painter = painterResource(Res.drawable.ic_phone),
- *     ),
- *     onClick = { callDriver() },
- *     modifier = Modifier.weight(1f),
- * )
- * ```
- *
- * @param state Button state containing text, painter, and enabled.
- * @param onClick Invoked on click.
- * @param modifier Applied to button.
- * @param colors Color configuration, defaults to [BottomSheetButtonDefaults.colors].
- * @param style Text style configuration, defaults to [BottomSheetButtonDefaults.style].
- * @param dimens Dimension configuration, defaults to [BottomSheetButtonDefaults.dimens].
- *
- * @see BottomSheetButtonState for state configuration
- * @see BottomSheetButtonDefaults for default values
- * @since 0.0.1
+ * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
  */
-@Composable
-fun BottomSheetButton(
-    state: BottomSheetButtonState,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    colors: BottomSheetButtonDefaults.BottomSheetButtonColors = BottomSheetButtonDefaults.colors(),
-    style: BottomSheetButtonDefaults.BottomSheetButtonStyle = BottomSheetButtonDefaults.style(),
-    dimens: BottomSheetButtonDefaults.BottomSheetButtonDimens = BottomSheetButtonDefaults.dimens()
-) {
-    Button(
-        enabled = state.enabled,
-        shape = dimens.shape,
-        contentPadding = PaddingValues.Zero,
-        colors = ButtonDefaults.buttonColors(colors.container),
-        modifier = modifier.height(dimens.height),
-        onClick = onClick
-    ) {
-        Icon(
-            tint = colors.icon,
-            painter = state.painter,
-            contentDescription = null,
-            modifier = Modifier.size(24.dp)
-        )
+object BottomSheetButtonDefaults {
+    /** Default minimum button height. */
+    val MinHeight = 60.dp
 
-        Spacer(modifier = Modifier.width(dimens.iconSpacing))
+    /** Default content padding. */
+    val ContentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 16.dp)
 
-        Text(
-            text = state.text,
-            color = colors.text,
-            style = style.label
-        )
-    }
+    /** Default button shape. */
+    val Shape: Shape = RoundedCornerShape(16.dp)
+
+    /**
+     * Creates [BottomSheetButtonColors] with theme-aware defaults.
+     *
+     * @param containerColor Background color.
+     * @param contentColor Text color.
+     * @param iconColor Icon tint color. Use [Color.Unspecified] for original painter colors.
+     */
+    @Composable
+    fun colors(
+        containerColor: Color = System.color.button.tertiary,
+        contentColor: Color = System.color.background.base,
+        iconColor: Color = Color.Unspecified,
+    ): BottomSheetButtonColors = BottomSheetButtonColors(
+        containerColor = containerColor,
+        contentColor = contentColor,
+        iconColor = iconColor,
+    )
+
+    /**
+     * Creates [BottomSheetButtonDimens] with standard values.
+     *
+     * @param minHeight Minimum button height.
+     * @param contentPadding Padding between container and content.
+     * @param shape Container shape.
+     * @param iconSpacing Space between icon and content.
+     */
+    fun dimens(
+        minHeight: Dp = MinHeight,
+        contentPadding: PaddingValues = ContentPadding,
+        shape: Shape = BottomSheetButtonDefaults.Shape,
+        iconSpacing: Dp = 8.dp,
+    ): BottomSheetButtonDimens = BottomSheetButtonDimens(
+        minHeight = minHeight,
+        contentPadding = contentPadding,
+        shape = shape,
+        iconSpacing = iconSpacing,
+    )
 }
