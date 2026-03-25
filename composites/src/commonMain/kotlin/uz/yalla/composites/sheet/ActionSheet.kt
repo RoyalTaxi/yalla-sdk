@@ -24,9 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.primitives.button.PrimaryButton
-import uz.yalla.primitives.button.PrimaryButtonState
 import uz.yalla.primitives.button.SecondaryButton
-import uz.yalla.primitives.button.SecondaryButtonState
 
 /**
  * UI state for [ActionSheet].
@@ -153,19 +151,21 @@ fun ActionSheet(
             Spacer(Modifier.height(dimens.dividerButtonSpacing))
 
             PrimaryButton(
-                state = PrimaryButtonState(text = state.primaryAction),
                 onClick = { onEffect(ActionSheetEffect.Primary) },
                 modifier = Modifier.fillMaxWidth(),
-            )
+            ) {
+                Text(state.primaryAction)
+            }
 
             if (state.secondaryAction != null) {
                 Spacer(Modifier.height(dimens.buttonSpacing))
 
                 SecondaryButton(
-                    state = SecondaryButtonState(text = state.secondaryAction),
                     onClick = { onEffect(ActionSheetEffect.Secondary) },
                     modifier = Modifier.fillMaxWidth(),
-                )
+                ) {
+                    Text(state.secondaryAction)
+                }
             }
 
             Spacer(Modifier.height(dimens.bottomSpacing))
@@ -322,16 +322,18 @@ private fun ActionSheetContentPreview() {
             )
             Spacer(Modifier.height(16.dp))
             PrimaryButton(
-                state = PrimaryButtonState(text = "Delete"),
                 onClick = {},
                 modifier = Modifier.fillMaxWidth(),
-            )
+            ) {
+                Text("Delete")
+            }
             Spacer(Modifier.height(8.dp))
             SecondaryButton(
-                state = SecondaryButtonState(text = "Cancel"),
                 onClick = {},
                 modifier = Modifier.fillMaxWidth(),
-            )
+            ) {
+                Text("Cancel")
+            }
         }
     }
 }

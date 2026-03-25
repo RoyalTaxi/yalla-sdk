@@ -26,7 +26,6 @@ import uz.yalla.design.theme.System
 import uz.yalla.platform.button.SheetIconButton
 import uz.yalla.platform.model.IconType
 import uz.yalla.primitives.button.PrimaryButton
-import uz.yalla.primitives.button.PrimaryButtonState
 
 /**
  * State for [ConfirmationSheet].
@@ -179,13 +178,14 @@ fun ConfirmationSheet(
             Spacer(Modifier.height(dimens.actionTopSpacing))
 
             PrimaryButton(
-                state = PrimaryButtonState(text = state.actionText),
                 onClick = { onEffect(ConfirmationSheetEffect.Confirm) },
                 modifier =
                     Modifier
                         .fillMaxWidth()
                         .padding(horizontal = dimens.actionHorizontalPadding),
-            )
+            ) {
+                Text(state.actionText)
+            }
 
             Spacer(Modifier.height(dimens.actionBottomSpacing))
         }
