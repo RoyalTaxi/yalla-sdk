@@ -1,468 +1,221 @@
 package uz.yalla.primitives.button
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
-import uz.yalla.platform.indicator.NativeLoadingIndicator
-import uz.yalla.primitives.model.ButtonSize
 
 /**
- * State for [PrimaryButton] component.
+ * Color configuration for [PrimaryButton].
  *
- * Bundles button content and behavior properties for simplified component usage.
+ * Resolves container and content colors based on enabled state.
+ * Use [PrimaryButtonDefaults.colors] to create with theme-aware defaults.
  *
- * @property text Button label. Keep concise (1-3 words).
- * @property enabled When false, button appears disabled and is not clickable.
- * @property loading When true, shows spinner and disables interaction.
- * @property size Button size variant.
- * @since 0.0.1
+ * @param containerColor Background color when enabled.
+ * @param contentColor Text and icon color when enabled.
+ * @param disabledContainerColor Background color when disabled or loading.
+ * @param disabledContentColor Text and icon color when disabled or loading.
  */
-data class PrimaryButtonState(
-    val text: String,
-    val enabled: Boolean = true,
-    val loading: Boolean = false,
-    val size: ButtonSize = ButtonSize.Medium
+@Immutable
+data class PrimaryButtonColors(
+    val containerColor: Color,
+    val contentColor: Color,
+    val disabledContainerColor: Color,
+    val disabledContentColor: Color,
+) {
+    /** Resolves container color based on [enabled] state. */
+    fun containerColor(enabled: Boolean): Color =
+        if (enabled) containerColor else disabledContainerColor
+
+    /** Resolves content color based on [enabled] state. */
+    fun contentColor(enabled: Boolean): Color =
+        if (enabled) contentColor else disabledContentColor
+}
+
+/**
+ * Dimension configuration for [PrimaryButton].
+ *
+ * Use [PrimaryButtonDefaults.dimens] to create with standard values.
+ *
+ * @param minHeight Minimum button height (touch target).
+ * @param contentPadding Padding between container and content.
+ * @param shape Container shape.
+ * @param iconSpacing Space between icon slots and content.
+ */
+@Immutable
+data class PrimaryButtonDimens(
+    val minHeight: Dp,
+    val contentPadding: PaddingValues,
+    val shape: Shape,
+    val iconSpacing: Dp,
 )
 
 /**
  * Primary action button for main user interactions.
  *
- * Use for the single most important action on a screen, such as "Confirm",
- * "Continue", or "Submit". For secondary actions, use [SecondaryButton].
+ * Use for the single most important action on a screen: "Confirm", "Continue", "Submit".
+ * For secondary actions, see [SecondaryButton]. For low-emphasis, see [TextButton].
+ *
+ * ## Building Blocks
+ * Delegates to [ButtonLayout] for Container → Provider → Layout → Content structure.
  *
  * ## Usage
- *
  * ```kotlin
- * PrimaryButton(
- *     state = PrimaryButtonState(text = "Confirm Order"),
- *     onClick = viewModel::confirmOrder,
- * )
+ * PrimaryButton(onClick = { submitOrder() }) {
+ *     Text("Submit Order")
+ * }
  * ```
  *
  * ## With Loading State
- *
  * ```kotlin
- * PrimaryButton(
- *     state = PrimaryButtonState(
- *         text = "Submit",
- *         loading = state.isLoading
- *     ),
- *     onClick = onSubmit,
- * )
+ * PrimaryButton(onClick = { submit() }, loading = isSubmitting) {
+ *     Text("Submit")
+ * }
  * ```
  *
  * ## With Icons
- *
  * ```kotlin
  * PrimaryButton(
- *     state = PrimaryButtonState(text = "Add to Cart"),
- *     onClick = onAddToCart,
- *     leadingIcon = { Icon(Icons.Default.Add, null) },
- * )
+ *     onClick = { addToCart() },
+ *     leadingIcon = { Icon(YallaIcons.Plus, contentDescription = null) },
+ * ) {
+ *     Text("Add to Cart")
+ * }
  * ```
  *
- * @param state Button state containing text, enabled, loading, and size.
- * @param onClick Invoked on click. Not called when disabled or loading.
- * @param modifier Applied to button container.
- * @param colors Color configuration, defaults to [PrimaryButtonDefaults.colors].
- * @param style Text style configuration, defaults to [PrimaryButtonDefaults.style].
- * @param dimens Dimension configuration, defaults to [PrimaryButtonDefaults.dimens].
- * @param leadingIcon Optional composable before text.
- * @param trailingIcon Optional composable after text.
+ * @param onClick Called when this button is clicked. Not called when disabled or loading.
+ * @param modifier [Modifier] applied to the root container.
+ * @param enabled Controls the enabled state. When `false`, the button appears visually
+ *   disabled and does not respond to user input.
+ * @param loading When `true`, shows a platform-native loading indicator instead of content.
+ *   The button is not clickable while loading.
+ * @param colors [PrimaryButtonColors] that resolve colors for different states.
+ *   See [PrimaryButtonDefaults.colors].
+ * @param dimens [PrimaryButtonDimens] that define dimensions and shape.
+ *   See [PrimaryButtonDefaults.dimens].
+ * @param leadingIcon Optional composable displayed before the content.
+ * @param trailingIcon Optional composable displayed after the content.
+ * @param content The button content, typically a [Text].
  *
- * @see SecondaryButton for secondary actions
- * @see TextButton for low-emphasis actions
- * @see PrimaryButtonDefaults for default values
- * @since 0.0.1
+ * @see SecondaryButton
+ * @see TextButton
+ * @see PrimaryButtonDefaults
  */
 @Composable
 fun PrimaryButton(
-    state: PrimaryButtonState,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    colors: PrimaryButtonDefaults.PrimaryButtonColors = PrimaryButtonDefaults.colors(),
-    style: PrimaryButtonDefaults.PrimaryButtonStyle = PrimaryButtonDefaults.style(),
-    dimens: PrimaryButtonDefaults.PrimaryButtonDimens = PrimaryButtonDefaults.dimens(),
+    enabled: Boolean = true,
+    loading: Boolean = false,
+    colors: PrimaryButtonColors = PrimaryButtonDefaults.colors(),
+    dimens: PrimaryButtonDimens = PrimaryButtonDefaults.dimens(),
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-) {
-    val isInteractive = state.enabled && !state.loading
-    val containerColor = colors.containerColor(isInteractive)
-    val contentColor = colors.contentColor(isInteractive)
-
-    ButtonContainer(
-        onClick = onClick,
-        modifier =
-            modifier.defaultMinSize(
-                minWidth = dimens.minWidth(state.size),
-                minHeight = dimens.minHeight(state.size),
-            ),
-        enabled = isInteractive,
-        shape = dimens.shape,
-        containerColor = containerColor,
-        contentColor = contentColor,
-        contentPadding = dimens.contentPadding(state.size),
-    ) {
-        ButtonContent(
-            text = state.text,
-            textStyle = style.textStyle(state.size),
-            loading = state.loading,
-            leadingIcon = leadingIcon,
-            trailingIcon = trailingIcon,
-            dimens = dimens,
-            indicatorBackgroundColor = containerColor,
-        )
-    }
-}
-
-/**
- * Container surface for button with click handling.
- */
-@Composable
-private fun ButtonContainer(
-    onClick: () -> Unit,
-    modifier: Modifier,
-    enabled: Boolean,
-    shape: Shape,
-    containerColor: Color,
-    contentColor: Color,
-    contentPadding: PaddingValues,
     content: @Composable RowScope.() -> Unit,
 ) {
-    Surface(
+    val isInteractive = enabled && !loading
+    ButtonLayout(
         onClick = onClick,
         modifier = modifier,
-        enabled = enabled,
-        shape = shape,
-        color = containerColor,
+        enabled = isInteractive,
+        loading = loading,
+        shape = dimens.shape,
+        containerColor = colors.containerColor(isInteractive),
+        contentColor = colors.contentColor(isInteractive),
+        contentPadding = dimens.contentPadding,
+        minHeight = dimens.minHeight,
+        iconSpacing = dimens.iconSpacing,
+        leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
+        content = content,
+    )
+}
+
+/**
+ * Default configuration values for [PrimaryButton].
+ *
+ * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
+ */
+object PrimaryButtonDefaults {
+    /** Default minimum button height. */
+    val MinHeight = 60.dp
+
+    /** Default content padding. */
+    val ContentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp)
+
+    /** Default button shape. */
+    val Shape: Shape = RoundedCornerShape(16.dp)
+
+    /**
+     * Creates [PrimaryButtonColors] with theme-aware defaults.
+     *
+     * @param containerColor Background color when enabled.
+     * @param contentColor Text/icon color when enabled.
+     * @param disabledContainerColor Background color when disabled.
+     * @param disabledContentColor Text/icon color when disabled.
+     */
+    @Composable
+    fun colors(
+        containerColor: Color = System.color.button.active,
+        contentColor: Color = System.color.text.white,
+        disabledContainerColor: Color = System.color.button.disabled,
+        disabledContentColor: Color = System.color.text.white,
+    ): PrimaryButtonColors = PrimaryButtonColors(
+        containerColor = containerColor,
         contentColor = contentColor,
-    ) {
-        Row(
-            modifier = Modifier.padding(contentPadding),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically,
-            content = content,
-        )
-    }
-}
+        disabledContainerColor = disabledContainerColor,
+        disabledContentColor = disabledContentColor,
+    )
 
-/**
- * Button content with text, optional icons, and loading state.
- */
-@Composable
-private fun RowScope.ButtonContent(
-    text: String,
-    textStyle: TextStyle,
-    loading: Boolean,
-    leadingIcon: @Composable (() -> Unit)?,
-    trailingIcon: @Composable (() -> Unit)?,
-    dimens: PrimaryButtonDefaults.PrimaryButtonDimens,
-    indicatorBackgroundColor: Color,
-) {
-    if (loading) {
-        LoadingIndicator(
-            dimens = dimens,
-            backgroundColor = indicatorBackgroundColor,
-        )
-    } else {
-        TextWithIcons(
-            text = text,
-            textStyle = textStyle,
-            leadingIcon = leadingIcon,
-            trailingIcon = trailingIcon,
-            dimens = dimens,
-        )
-    }
-}
-
-/**
- * Text content with optional leading and trailing icons.
- */
-@Composable
-private fun TextWithIcons(
-    text: String,
-    textStyle: TextStyle,
-    leadingIcon: @Composable (() -> Unit)?,
-    trailingIcon: @Composable (() -> Unit)?,
-    dimens: PrimaryButtonDefaults.PrimaryButtonDimens,
-) {
-    leadingIcon?.let { icon ->
-        IconSlot(content = icon, dimens = dimens)
-        Spacer(Modifier.width(dimens.iconSpacing))
-    }
-
-    Text(text = text, style = textStyle)
-
-    trailingIcon?.let { icon ->
-        Spacer(Modifier.width(dimens.iconSpacing))
-        IconSlot(content = icon, dimens = dimens)
-    }
-}
-
-/**
- * Sized container for button icons.
- */
-@Composable
-private fun IconSlot(
-    content: @Composable () -> Unit,
-    dimens: PrimaryButtonDefaults.PrimaryButtonDimens,
-) {
-    Box(
-        modifier = Modifier.size(dimens.iconSize),
-        contentAlignment = Alignment.Center,
-    ) {
-        content()
-    }
-}
-
-/**
- * Loading spinner for button loading state.
- */
-@Composable
-private fun LoadingIndicator(
-    dimens: PrimaryButtonDefaults.PrimaryButtonDimens,
-    backgroundColor: Color,
-) {
-    NativeLoadingIndicator(
-        modifier = Modifier.size(dimens.iconSize),
-        color = LocalContentColor.current,
-        backgroundColor = backgroundColor,
+    /**
+     * Creates [PrimaryButtonDimens] with standard values.
+     *
+     * @param minHeight Minimum button height.
+     * @param contentPadding Padding between container and content.
+     * @param shape Container shape.
+     * @param iconSpacing Space between icons and content.
+     */
+    fun dimens(
+        minHeight: Dp = MinHeight,
+        contentPadding: PaddingValues = ContentPadding,
+        shape: Shape = Shape,
+        iconSpacing: Dp = 8.dp,
+    ): PrimaryButtonDimens = PrimaryButtonDimens(
+        minHeight = minHeight,
+        contentPadding = contentPadding,
+        shape = shape,
+        iconSpacing = iconSpacing,
     )
 }
 
 @Preview
 @Composable
 private fun PrimaryButtonPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        PrimaryButton(
-            state = PrimaryButtonState(text = "Continue"),
-            onClick = {},
-        )
+    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+        PrimaryButton(onClick = {}) {
+            Text("Continue")
+        }
     }
 }
 
 @Preview
 @Composable
 private fun PrimaryButtonLoadingPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        PrimaryButton(
-            state = PrimaryButtonState(text = "Loading", loading = true),
-            onClick = {},
-        )
+    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+        PrimaryButton(onClick = {}, loading = true) {
+            Text("Loading")
+        }
     }
-}
-
-/**
- * Default configuration values for [PrimaryButton].
- *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
- * @since 0.0.1
- */
-object PrimaryButtonDefaults {
-    /**
-     * Color configuration for [PrimaryButton].
-     *
-     * @param container Background color when enabled.
-     * @param content Text and icon color when enabled.
-     * @param disabledContainer Background color when disabled.
-     * @param disabledContent Text and icon color when disabled.
-     */
-    data class PrimaryButtonColors(
-        val container: Color,
-        val content: Color,
-        val disabledContainer: Color,
-        val disabledContent: Color
-    ) {
-        fun containerColor(enabled: Boolean): Color = if (enabled) container else disabledContainer
-
-        fun contentColor(enabled: Boolean): Color = if (enabled) content else disabledContent
-    }
-
-    /**
-     * Creates color configuration for [PrimaryButton].
-     *
-     * @param container Background color when enabled.
-     * @param content Text and icon color when enabled.
-     * @param disabledContainer Background color when disabled.
-     * @param disabledContent Text and icon color when disabled.
-     */
-    @Composable
-    fun colors(
-        container: Color = System.color.button.active,
-        content: Color = System.color.text.white,
-        disabledContainer: Color = System.color.button.disabled,
-        disabledContent: Color = System.color.text.white
-    ) = PrimaryButtonColors(
-        container = container,
-        content = content,
-        disabledContainer = disabledContainer,
-        disabledContent = disabledContent
-    )
-
-    /**
-     * Text style configuration for [PrimaryButton].
-     *
-     * @param small Style for small button size.
-     * @param medium Style for medium button size.
-     * @param large Style for large button size.
-     */
-    data class PrimaryButtonStyle(
-        val small: TextStyle,
-        val medium: TextStyle,
-        val large: TextStyle
-    ) {
-        fun textStyle(size: ButtonSize): TextStyle =
-            when (size) {
-                ButtonSize.Small -> small
-                ButtonSize.Medium -> medium
-                ButtonSize.Large -> large
-            }
-    }
-
-    /**
-     * Creates text style configuration for [PrimaryButton].
-     *
-     * @param small Style for small button size.
-     * @param medium Style for medium button size.
-     * @param large Style for large button size.
-     */
-    @Composable
-    fun style(
-        small: TextStyle = System.font.body.small.medium,
-        medium: TextStyle = System.font.body.base.medium,
-        large: TextStyle = System.font.body.large.medium
-    ) = PrimaryButtonStyle(
-        small = small,
-        medium = medium,
-        large = large
-    )
-
-    /**
-     * Dimension configuration for [PrimaryButton].
-     *
-     * @param shape Button shape.
-     * @param iconSize Icon dimensions for leading/trailing slots.
-     * @param iconSpacing Spacing between icon and text.
-     * @param smallMinWidth Minimum width for small size.
-     * @param smallMinHeight Minimum height for small size.
-     * @param smallContentPadding Content padding for small size.
-     * @param mediumMinWidth Minimum width for medium size.
-     * @param mediumMinHeight Minimum height for medium size.
-     * @param mediumContentPadding Content padding for medium size.
-     * @param largeMinWidth Minimum width for large size.
-     * @param largeMinHeight Minimum height for large size.
-     * @param largeContentPadding Content padding for large size.
-     */
-    data class PrimaryButtonDimens(
-        val shape: Shape,
-        val iconSize: Dp,
-        val iconSpacing: Dp,
-        val smallMinWidth: Dp,
-        val smallMinHeight: Dp,
-        val smallContentPadding: PaddingValues,
-        val mediumMinWidth: Dp,
-        val mediumMinHeight: Dp,
-        val mediumContentPadding: PaddingValues,
-        val largeMinWidth: Dp,
-        val largeMinHeight: Dp,
-        val largeContentPadding: PaddingValues
-    ) {
-        fun minWidth(size: ButtonSize): Dp =
-            when (size) {
-                ButtonSize.Small -> smallMinWidth
-                ButtonSize.Medium -> mediumMinWidth
-                ButtonSize.Large -> largeMinWidth
-            }
-
-        fun minHeight(size: ButtonSize): Dp =
-            when (size) {
-                ButtonSize.Small -> smallMinHeight
-                ButtonSize.Medium -> mediumMinHeight
-                ButtonSize.Large -> largeMinHeight
-            }
-
-        fun contentPadding(size: ButtonSize): PaddingValues =
-            when (size) {
-                ButtonSize.Small -> smallContentPadding
-                ButtonSize.Medium -> mediumContentPadding
-                ButtonSize.Large -> largeContentPadding
-            }
-    }
-
-    /**
-     * Creates dimension configuration for [PrimaryButton].
-     *
-     * @param shape Button shape.
-     * @param iconSize Icon dimensions for leading/trailing slots.
-     * @param iconSpacing Spacing between icon and text.
-     * @param smallMinWidth Minimum width for small size.
-     * @param smallMinHeight Minimum height for small size.
-     * @param smallContentPadding Content padding for small size.
-     * @param mediumMinWidth Minimum width for medium size.
-     * @param mediumMinHeight Minimum height for medium size.
-     * @param mediumContentPadding Content padding for medium size.
-     * @param largeMinWidth Minimum width for large size.
-     * @param largeMinHeight Minimum height for large size.
-     * @param largeContentPadding Content padding for large size.
-     */
-    @Composable
-    fun dimens(
-        shape: Shape = RoundedCornerShape(16.dp),
-        iconSize: Dp = 20.dp,
-        iconSpacing: Dp = 8.dp,
-        smallMinWidth: Dp = 80.dp,
-        smallMinHeight: Dp = 40.dp,
-        smallContentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 10.dp),
-        mediumMinWidth: Dp = 120.dp,
-        mediumMinHeight: Dp = 60.dp,
-        mediumContentPadding: PaddingValues = PaddingValues(horizontal = 24.dp, vertical = 16.dp),
-        largeMinWidth: Dp = 160.dp,
-        largeMinHeight: Dp = 60.dp,
-        largeContentPadding: PaddingValues = PaddingValues(horizontal = 32.dp, vertical = 18.dp)
-    ) = PrimaryButtonDimens(
-        shape = shape,
-        iconSize = iconSize,
-        iconSpacing = iconSpacing,
-        smallMinWidth = smallMinWidth,
-        smallMinHeight = smallMinHeight,
-        smallContentPadding = smallContentPadding,
-        mediumMinWidth = mediumMinWidth,
-        mediumMinHeight = mediumMinHeight,
-        mediumContentPadding = mediumContentPadding,
-        largeMinWidth = largeMinWidth,
-        largeMinHeight = largeMinHeight,
-        largeContentPadding = largeContentPadding
-    )
 }
