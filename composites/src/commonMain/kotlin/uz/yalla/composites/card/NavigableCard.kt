@@ -1,62 +1,75 @@
 package uz.yalla.composites.card
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
 /**
+ * Color configuration for [NavigableCard].
+ *
+ * @param container Card background color.
+ * @param border Border color when enabled.
+ * @param arrow Arrow icon tint when enabled.
+ * @param disabledContainer Background when disabled.
+ * @param disabledBorder Border color when disabled.
+ * @param disabledArrow Arrow tint when disabled.
+ * @since 0.0.5-alpha11
+ */
+@Immutable
+data class NavigableCardColors(
+    val container: Color,
+    val border: Color,
+    val arrow: Color,
+    val disabledContainer: Color,
+    val disabledBorder: Color,
+    val disabledArrow: Color,
+)
+
+/**
+ * Dimension configuration for [NavigableCard].
+ *
+ * @param shape Card corner shape.
+ * @param borderWidth Border stroke width.
+ * @param arrowSize Arrow icon size.
+ * @param iconSpacing Spacing between leading icon and content, and content and arrow.
+ * @param contentPadding Padding inside the card.
+ * @since 0.0.5-alpha11
+ */
+@Immutable
+data class NavigableCardDimens(
+    val shape: Shape,
+    val borderWidth: Dp,
+    val arrowSize: Dp,
+    val iconSpacing: Dp,
+    val contentPadding: PaddingValues,
+)
+
+/**
  * Default configuration values for [NavigableCard].
  *
- * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
  * @since 0.0.1
  */
 object NavigableCardDefaults {
-    /**
-     * Color configuration for [NavigableCard].
-     *
-     * @param container Card background color.
-     * @param border Border color.
-     * @param arrow Arrow icon tint.
-     * @param disabledContainer Disabled state background.
-     * @param disabledBorder Disabled state border.
-     * @param disabledArrow Disabled state arrow tint.
-     * @since 0.0.1
-     */
-    data class NavigableCardColors(
-        val container: Color,
-        val border: Color,
-        val arrow: Color,
-        val disabledContainer: Color,
-        val disabledBorder: Color,
-        val disabledArrow: Color,
-    )
 
     /**
      * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
      */
     @Composable
     fun colors(
@@ -64,11 +77,9 @@ object NavigableCardDefaults {
         border: Color = System.color.border.disabled,
         arrow: Color = System.color.icon.base,
         disabledContainer: Color = Color.Transparent,
-        disabledBorder: Color =
-            System.color.border.disabled
-                .copy(alpha = 0.5f),
+        disabledBorder: Color = System.color.border.disabled.copy(alpha = 0.5f),
         disabledArrow: Color = System.color.icon.disabled,
-    ) = NavigableCardColors(
+    ): NavigableCardColors = NavigableCardColors(
         container = container,
         border = border,
         arrow = arrow,
@@ -78,96 +89,87 @@ object NavigableCardDefaults {
     )
 
     /**
-     * Dimension configuration for [NavigableCard].
-     *
-     * @param radius Corner radius.
-     * @param borderWidth Border stroke width.
-     * @param arrowSize Arrow icon size.
-     * @param iconSpacing Spacing between icon and content.
-     * @param horizontalPadding Horizontal content padding.
-     * @param verticalPadding Vertical content padding.
-     * @since 0.0.1
-     */
-    data class NavigableCardDimens(
-        val radius: Dp,
-        val borderWidth: Dp,
-        val arrowSize: Dp,
-        val iconSpacing: Dp,
-        val horizontalPadding: Dp,
-        val verticalPadding: Dp,
-    )
-
-    /**
      * Creates default dimensions.
-     *
-     * @since 0.0.1
      */
-    @Composable
     fun dimens(
-        radius: Dp = 16.dp,
+        shape: Shape = RoundedCornerShape(16.dp),
         borderWidth: Dp = 1.dp,
         arrowSize: Dp = 24.dp,
         iconSpacing: Dp = 8.dp,
-        horizontalPadding: Dp = 16.dp,
-        verticalPadding: Dp = 18.dp,
-    ) = NavigableCardDimens(
-        radius = radius,
+        contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 18.dp),
+    ): NavigableCardDimens = NavigableCardDimens(
+        shape = shape,
         borderWidth = borderWidth,
         arrowSize = arrowSize,
         iconSpacing = iconSpacing,
-        horizontalPadding = horizontalPadding,
-        verticalPadding = verticalPadding,
+        contentPadding = contentPadding,
     )
 }
 
 /**
  * Navigable card with forward arrow indicating clickable navigation.
  *
- * Use for list items that navigate to another screen.
+ * Built on [ContentCard] with a trailing chevron icon.
  *
- * @param onClick Called when card is clicked.
- * @param modifier Applied to card.
- * @param leadingIcon Optional icon before content.
- * @param enabled Whether card is enabled.
+ * ## Usage
+ *
+ * ```kotlin
+ * NavigableCard(onClick = { navigateToSettings() }) { modifier ->
+ *     Text("Profile Settings", modifier = modifier)
+ * }
+ * ```
+ *
+ * ## With Leading Icon
+ *
+ * ```kotlin
+ * NavigableCard(
+ *     onClick = { addCard() },
+ *     leadingIcon = { Icon(YallaIcons.Plus, null) },
+ * ) { modifier ->
+ *     Text("Add Card", modifier = modifier)
+ * }
+ * ```
+ *
+ * @param onClick Called when the card is clicked.
+ * @param modifier Applied to the root card.
+ * @param enabled Whether the card responds to clicks.
  * @param colors Color configuration, defaults to [NavigableCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [NavigableCardDefaults.dimens].
- * @param content Card content, receives modifier for weight.
+ * @param leadingIcon Optional icon before content.
+ * @param content Card content. Receives a [Modifier] with `weight(1f)` for proper sizing.
+ *
+ * @see ContentCard
+ * @see NavigableCardDefaults
  * @since 0.0.1
  */
 @Composable
 fun NavigableCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    leadingIcon: (@Composable () -> Unit)? = null,
     enabled: Boolean = true,
-    colors: NavigableCardDefaults.NavigableCardColors = NavigableCardDefaults.colors(),
-    dimens: NavigableCardDefaults.NavigableCardDimens = NavigableCardDefaults.dimens(),
+    colors: NavigableCardColors = NavigableCardDefaults.colors(),
+    dimens: NavigableCardDimens = NavigableCardDefaults.dimens(),
+    leadingIcon: @Composable (() -> Unit)? = null,
     content: @Composable (Modifier) -> Unit,
 ) {
-    val shape: Shape = RoundedCornerShape(dimens.radius)
-
-    Card(
-        onClick = onClick,
+    ContentCard(
         modifier = modifier,
+        onClick = onClick,
         enabled = enabled,
-        shape = shape,
-        colors =
-            CardDefaults.cardColors(
-                containerColor = colors.container,
-                disabledContainerColor = colors.disabledContainer,
-            ),
-        border =
-            BorderStroke(
-                width = dimens.borderWidth,
-                color = if (enabled) colors.border else colors.disabledBorder,
-            ),
+        border = BorderStroke(
+            width = dimens.borderWidth,
+            color = if (enabled) colors.border else colors.disabledBorder,
+        ),
+        colors = ContentCardDefaults.colors(
+            container = colors.container,
+            disabledContainer = colors.disabledContainer,
+        ),
+        dimens = ContentCardDefaults.dimens(
+            shape = dimens.shape,
+            contentPadding = dimens.contentPadding,
+        ),
     ) {
         Row(
-            modifier =
-                Modifier.padding(
-                    horizontal = dimens.horizontalPadding,
-                    vertical = dimens.verticalPadding,
-                ),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -187,26 +189,5 @@ fun NavigableCard(
                 modifier = Modifier.size(dimens.arrowSize),
             )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun NavigableCardPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        NavigableCard(
-            onClick = {},
-            content = { modifier ->
-                Text(
-                    text = "Profile Settings",
-                    modifier = modifier,
-                )
-            },
-        )
     }
 }
