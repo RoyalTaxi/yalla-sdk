@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,6 +30,42 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import kotlin.math.hypot
+
+/**
+ * Color configuration for [StripedProgressbar].
+ *
+ * @param track Background track color.
+ * @param indicator Progress indicator brush (gradient).
+ * @param stripe Stripe overlay color (semi-transparent).
+ * @since 0.0.1
+ */
+@Immutable
+data class StripedProgressbarColors(
+    val track: Color,
+    val indicator: Brush,
+    val stripe: Color,
+)
+
+/**
+ * Dimension configuration for [StripedProgressbar].
+ *
+ * @param shape Progress bar shape.
+ * @param height Progress bar height.
+ * @param stripeWidth Width of each stripe.
+ * @param stripeGap Gap between stripes.
+ * @param stripeAngle Angle of stripes in degrees.
+ * @param animationDurationMs Animation duration for one stripe cycle.
+ * @since 0.0.1
+ */
+@Immutable
+data class StripedProgressbarDimens(
+    val shape: Shape,
+    val height: Dp,
+    val stripeWidth: Dp,
+    val stripeGap: Dp,
+    val stripeAngle: Float,
+    val animationDurationMs: Int,
+)
 
 /**
  * Animated striped progress bar with gradient fill.
@@ -64,8 +101,8 @@ import kotlin.math.hypot
 fun StripedProgressbar(
     progress: Float,
     modifier: Modifier = Modifier,
-    colors: StripedProgressbarDefaults.StripedProgressbarColors = StripedProgressbarDefaults.colors(),
-    dimens: StripedProgressbarDefaults.StripedProgressbarDimens = StripedProgressbarDefaults.dimens(),
+    colors: StripedProgressbarColors = StripedProgressbarDefaults.colors(),
+    dimens: StripedProgressbarDimens = StripedProgressbarDefaults.dimens(),
 ) {
     val clamped = progress.coerceIn(0f, 1f)
     val density = LocalDensity.current
@@ -139,19 +176,6 @@ fun StripedProgressbar(
  * @since 0.0.1
  */
 object StripedProgressbarDefaults {
-    /**
-     * Color configuration for [StripedProgressbar].
-     *
-     * @param track Background track color.
-     * @param indicator Progress indicator brush (gradient).
-     * @param stripe Stripe overlay color (semi-transparent).
-     */
-    data class StripedProgressbarColors(
-        val track: Color,
-        val indicator: Brush,
-        val stripe: Color,
-    )
-
     /** Creates color configuration for [StripedProgressbar]. */
     @Composable
     fun colors(
@@ -165,27 +189,7 @@ object StripedProgressbarDefaults {
             stripe = stripe,
         )
 
-    /**
-     * Dimension configuration for [StripedProgressbar].
-     *
-     * @param shape Progress bar shape.
-     * @param height Progress bar height.
-     * @param stripeWidth Width of each stripe.
-     * @param stripeGap Gap between stripes.
-     * @param stripeAngle Angle of stripes in degrees.
-     * @param animationDurationMs Animation duration for one stripe cycle.
-     */
-    data class StripedProgressbarDimens(
-        val shape: Shape,
-        val height: Dp,
-        val stripeWidth: Dp,
-        val stripeGap: Dp,
-        val stripeAngle: Float,
-        val animationDurationMs: Int,
-    )
-
     /** Creates dimension configuration for [StripedProgressbar]. */
-    @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(40.dp),
         height: Dp = 16.dp,

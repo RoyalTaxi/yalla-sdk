@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,20 +30,34 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
 /**
+ * Color configuration for [ExpandableSheet].
+ *
+ * @param container Card background color.
+ * @since 0.0.1
+ */
+@Immutable
+data class ExpandableSheetColors(val container: Color)
+
+/**
+ * Dimension configuration for [ExpandableSheet].
+ *
+ * @param shape Card shape.
+ * @param cornerRadius Corner radius of the card.
+ * @since 0.0.1
+ */
+@Immutable
+data class ExpandableSheetDimens(
+    val shape: Shape,
+    val cornerRadius: Dp
+)
+
+/**
  * Default configuration values for [ExpandableSheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
  * @since 0.0.1
  */
 object ExpandableSheetDefaults {
-    /**
-     * Color configuration for [ExpandableSheet].
-     *
-     * @param container Card background color.
-     * @since 0.0.1
-     */
-    data class ExpandableSheetColors(val container: Color)
-
     /**
      * Creates theme-aware default colors.
      *
@@ -55,23 +70,10 @@ object ExpandableSheetDefaults {
         )
 
     /**
-     * Dimension configuration for [ExpandableSheet].
-     *
-     * @param shape Card shape.
-     * @param cornerRadius Corner radius of the card.
-     * @since 0.0.1
-     */
-    data class ExpandableSheetDimens(
-        val shape: Shape,
-        val cornerRadius: Dp
-    )
-
-    /**
      * Creates default dimensions.
      *
      * @since 0.0.1
      */
-    @Composable
     fun dimens(
         cornerRadius: Dp = 38.dp,
         shape: Shape = RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)
@@ -113,8 +115,8 @@ fun ExpandableSheet(
     collapsedContent: @Composable () -> Unit,
     expandedContent: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    colors: ExpandableSheetDefaults.ExpandableSheetColors = ExpandableSheetDefaults.colors(),
-    dimens: ExpandableSheetDefaults.ExpandableSheetDimens = ExpandableSheetDefaults.dimens(),
+    colors: ExpandableSheetColors = ExpandableSheetDefaults.colors(),
+    dimens: ExpandableSheetDimens = ExpandableSheetDefaults.dimens(),
     footer: (@Composable () -> Unit)? = null
 ) {
     val density = LocalDensity.current

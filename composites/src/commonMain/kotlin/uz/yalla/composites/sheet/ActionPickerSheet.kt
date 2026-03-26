@@ -1,7 +1,6 @@
 package uz.yalla.composites.sheet
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -26,8 +25,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
-import uz.yalla.platform.button.SheetIconButton
-import uz.yalla.platform.model.IconType
 
 /**
  * Single action item for [ActionPickerSheet].
@@ -46,153 +43,48 @@ data class ActionPickerItem(
 )
 
 /**
- * State for [ActionPickerSheet].
+ * Color configuration for [ActionPickerSheet].
  *
- * @property isVisible Whether sheet is visible.
- * @property title Sheet header title.
- * @property items List of selectable actions.
+ * @param container Background color.
+ * @param title Title text color.
+ * @param itemBackground Item background color.
+ * @param itemIcon Item icon tint.
+ * @param itemText Item text color.
+ * @param destructiveItemIcon Icon tint for destructive actions.
  * @since 0.0.1
  */
-data class ActionPickerSheetState(
-    val isVisible: Boolean,
-    val title: String,
-    val items: List<ActionPickerItem>,
+@Immutable
+data class ActionPickerColors(
+    val container: Color,
+    val title: Color,
+    val itemBackground: Color,
+    val itemIcon: Color,
+    val itemText: Color,
+    val destructiveItemIcon: Color,
 )
 
 /**
- * Effects emitted by [ActionPickerSheet].
+ * Dimension configuration for [ActionPickerSheet].
+ *
+ * @param shape Sheet corner shape.
+ * @param contentPadding Content padding.
+ * @param titleItemsSpacing Spacing between title and items.
+ * @param itemSpacing Spacing between items.
+ * @param itemShape Item button shape.
+ * @param itemPadding Item button padding.
+ * @param itemIconTextSpacing Spacing between icon and text in item.
  * @since 0.0.1
  */
-sealed interface ActionPickerSheetEffect {
-    /** User dismissed the sheet. */
-    data object Dismiss : ActionPickerSheetEffect
-}
-
-/**
- * Sheet for selecting from multiple actions.
- *
- * Displays a list of selectable action items with icons.
- * Use for action menus, option pickers, and context actions.
- *
- * ## Usage
- *
- * ```kotlin
- * ActionPickerSheet(
- *     state = ActionPickerSheetState(
- *         isVisible = showActions,
- *         title = "Change Photo",
- *         items = listOf(
- *             ActionPickerItem(
- *                 title = "Take Photo",
- *                 icon = painterResource(Res.drawable.ic_camera),
- *                 onClick = { viewModel.takePhoto() },
- *             ),
- *             ActionPickerItem(
- *                 title = "Choose from Gallery",
- *                 icon = painterResource(Res.drawable.ic_gallery),
- *                 onClick = { viewModel.openGallery() },
- *             ),
- *         ),
- *     ),
- *     onEffect = { effect ->
- *         when (effect) {
- *             ActionPickerSheetEffect.Dismiss -> viewModel.hideActions()
- *         }
- *     },
- * )
- * ```
- *
- * @param state Sheet state including visibility, title, and items.
- * @param onEffect Callback for sheet effects (dismiss).
- * @param modifier Applied to sheet.
- * @param colors Color configuration, defaults to [ActionPickerDefaults.colors].
- * @param dimens Dimension configuration, defaults to [ActionPickerDefaults.dimens].
- *
- * @see ActionPickerSheetState for state configuration
- * @see ActionPickerSheetEffect for available effects
- * @see ActionPickerDefaults for default values
- * @since 0.0.1
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun ActionPickerSheet(
-    state: ActionPickerSheetState,
-    onEffect: (ActionPickerSheetEffect) -> Unit,
-    modifier: Modifier = Modifier,
-    colors: ActionPickerDefaults.ActionPickerColors = ActionPickerDefaults.colors(),
-    dimens: ActionPickerDefaults.ActionPickerDimens = ActionPickerDefaults.dimens(),
-) {
-    Sheet(
-        isVisible = state.isVisible,
-        onDismissRequest = { onEffect(ActionPickerSheetEffect.Dismiss) },
-        modifier = modifier,
-        shape = dimens.shape,
-        colors =
-            SheetDefaults.colors(
-                container = colors.container,
-            ),
-    ) {
-        Column(modifier = Modifier.padding(dimens.contentPadding)) {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                SheetIconButton(
-                    iconType = IconType.CLOSE,
-                    onClick = { onEffect(ActionPickerSheetEffect.Dismiss) },
-                    modifier = Modifier.align(Alignment.CenterStart),
-                )
-
-                Text(
-                    text = state.title,
-                    color = colors.title,
-                    style = System.font.body.large.medium,
-                    modifier = Modifier.align(Alignment.Center),
-                )
-            }
-
-            Spacer(modifier = Modifier.height(dimens.titleItemsSpacing))
-
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(dimens.itemSpacing)) {
-                items(state.items) { item ->
-                    ActionPickerItemRow(
-                        item = item,
-                        colors = colors,
-                        dimens = dimens,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun ActionPickerItemRow(
-    item: ActionPickerItem,
-    colors: ActionPickerDefaults.ActionPickerColors,
-    dimens: ActionPickerDefaults.ActionPickerDimens,
-    modifier: Modifier = Modifier,
-) {
-    Button(
-        onClick = item.onClick,
-        shape = dimens.itemShape,
-        contentPadding = dimens.itemPadding,
-        colors = ButtonDefaults.buttonColors(colors.itemBackground),
-        modifier = modifier,
-    ) {
-        Icon(
-            painter = item.icon,
-            contentDescription = null,
-            tint = if (item.isDestructive) colors.destructiveItemIcon else colors.itemIcon,
-        )
-
-        Spacer(modifier = Modifier.width(dimens.itemIconTextSpacing))
-
-        Text(
-            text = item.title,
-            color = colors.itemText,
-            style = System.font.body.base.medium,
-            modifier = Modifier.fillMaxWidth(),
-        )
-    }
-}
+@Immutable
+data class ActionPickerDimens(
+    val shape: Shape,
+    val contentPadding: PaddingValues,
+    val titleItemsSpacing: Dp,
+    val itemSpacing: Dp,
+    val itemShape: Shape,
+    val itemPadding: PaddingValues,
+    val itemIconTextSpacing: Dp,
+)
 
 /**
  * Default values for [ActionPickerSheet].
@@ -201,26 +93,6 @@ private fun ActionPickerItemRow(
  * @since 0.0.1
  */
 object ActionPickerDefaults {
-    /**
-     * Color configuration for [ActionPickerSheet].
-     *
-     * @param container Background color.
-     * @param title Title text color.
-     * @param itemBackground Item background color.
-     * @param itemIcon Item icon tint.
-     * @param itemText Item text color.
-     * @param destructiveItemIcon Icon tint for destructive actions.
-     * @since 0.0.1
-     */
-    data class ActionPickerColors(
-        val container: Color,
-        val title: Color,
-        val itemBackground: Color,
-        val itemIcon: Color,
-        val itemText: Color,
-        val destructiveItemIcon: Color,
-    )
-
     /**
      * Creates theme-aware default colors.
      *
@@ -245,35 +117,12 @@ object ActionPickerDefaults {
         )
 
     /**
-     * Dimension configuration for [ActionPickerSheet].
-     *
-     * @param shape Sheet corner shape.
-     * @param contentPadding Content padding.
-     * @param titleItemsSpacing Spacing between title and items.
-     * @param itemSpacing Spacing between items.
-     * @param itemShape Item button shape.
-     * @param itemPadding Item button padding.
-     * @param itemIconTextSpacing Spacing between icon and text in item.
-     * @since 0.0.1
-     */
-    data class ActionPickerDimens(
-        val shape: Shape,
-        val contentPadding: PaddingValues,
-        val titleItemsSpacing: Dp,
-        val itemSpacing: Dp,
-        val itemShape: Shape,
-        val itemPadding: PaddingValues,
-        val itemIconTextSpacing: Dp,
-    )
-
-    /**
      * Creates default dimensions.
      *
      * @since 0.0.1
      */
-    @Composable
     fun dimens(
-        shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+        shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
         contentPadding: PaddingValues = PaddingValues(10.dp),
         titleItemsSpacing: Dp = 24.dp,
         itemSpacing: Dp = 10.dp,
@@ -290,4 +139,114 @@ object ActionPickerDefaults {
             itemPadding = itemPadding,
             itemIconTextSpacing = itemIconTextSpacing,
         )
+}
+
+/**
+ * Sheet for selecting from multiple actions.
+ *
+ * Displays a list of selectable action items with icons.
+ * Use for action menus, option pickers, and context actions.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * ActionPickerSheet(
+ *     isVisible = showActions,
+ *     onDismissRequest = { viewModel.hideActions() },
+ *     title = "Change Photo",
+ *     items = listOf(
+ *         ActionPickerItem(
+ *             title = "Take Photo",
+ *             icon = painterResource(Res.drawable.ic_camera),
+ *             onClick = { viewModel.takePhoto() },
+ *         ),
+ *         ActionPickerItem(
+ *             title = "Choose from Gallery",
+ *             icon = painterResource(Res.drawable.ic_gallery),
+ *             onClick = { viewModel.openGallery() },
+ *         ),
+ *     ),
+ * )
+ * ```
+ *
+ * @param isVisible Whether sheet is visible.
+ * @param onDismissRequest Called when sheet is dismissed.
+ * @param title Sheet header title.
+ * @param items List of selectable actions.
+ * @param modifier Applied to sheet.
+ * @param colors Color configuration, defaults to [ActionPickerDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [ActionPickerDefaults.dimens].
+ *
+ * @see ActionPickerDefaults for default values
+ * @since 0.0.1
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun ActionPickerSheet(
+    isVisible: Boolean,
+    onDismissRequest: () -> Unit,
+    title: String,
+    items: List<ActionPickerItem>,
+    modifier: Modifier = Modifier,
+    colors: ActionPickerColors = ActionPickerDefaults.colors(),
+    dimens: ActionPickerDimens = ActionPickerDefaults.dimens(),
+) {
+    Sheet(
+        isVisible = isVisible,
+        onDismissRequest = onDismissRequest,
+        modifier = modifier,
+        colors = SheetDefaults.colors(container = colors.container),
+        dimens = SheetDefaults.dimens(shape = dimens.shape),
+    ) {
+        Column(modifier = Modifier.padding(dimens.contentPadding)) {
+            SheetHeader(
+                onClose = onDismissRequest,
+                title = title,
+                colors = SheetHeaderDefaults.colors(title = colors.title),
+            )
+
+            Spacer(modifier = Modifier.height(dimens.titleItemsSpacing))
+
+            LazyColumn(verticalArrangement = Arrangement.spacedBy(dimens.itemSpacing)) {
+                items(items) { item ->
+                    ActionPickerItemRow(
+                        item = item,
+                        colors = colors,
+                        dimens = dimens,
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun ActionPickerItemRow(
+    item: ActionPickerItem,
+    colors: ActionPickerColors,
+    dimens: ActionPickerDimens,
+    modifier: Modifier = Modifier,
+) {
+    Button(
+        onClick = item.onClick,
+        shape = dimens.itemShape,
+        contentPadding = dimens.itemPadding,
+        colors = ButtonDefaults.buttonColors(colors.itemBackground),
+        modifier = modifier,
+    ) {
+        Icon(
+            painter = item.icon,
+            contentDescription = null,
+            tint = if (item.isDestructive) colors.destructiveItemIcon else colors.itemIcon,
+        )
+
+        Spacer(modifier = Modifier.width(dimens.itemIconTextSpacing))
+
+        Text(
+            text = item.title,
+            color = colors.itemText,
+            style = System.font.body.base.medium,
+            modifier = Modifier.fillMaxWidth(),
+        )
+    }
 }

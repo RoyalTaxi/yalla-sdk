@@ -14,15 +14,43 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.primitives.button.NavigationButton
+
+/**
+ * Color configuration for [LargeTopBar].
+ *
+ * @param container Background color.
+ * @param title Title text color.
+ * @since 0.0.1
+ */
+@Immutable
+data class LargeTopBarColors(
+    val container: Color,
+    val title: Color,
+)
+
+/**
+ * Dimension configuration for [LargeTopBar].
+ *
+ * @param contentPadding Padding around content.
+ * @param navigationButtonSize Size of navigation button placeholder.
+ * @param titleTopSpacing Spacing above title.
+ * @since 0.0.1
+ */
+@Immutable
+data class LargeTopBarDimens(
+    val contentPadding: PaddingValues,
+    val navigationButtonSize: Dp,
+    val titleTopSpacing: Dp,
+)
 
 /**
  * Large top bar with prominent title below navigation row.
@@ -33,16 +61,21 @@ import uz.yalla.primitives.button.NavigationButton
  *
  * ```kotlin
  * LargeTopBar(
- *     title = "Order History",
+ *     title = {
+ *         Text(
+ *             text = "Order History",
+ *             style = System.font.title.xLarge,
+ *             color = System.color.text.base,
+ *         )
+ *     },
  *     onNavigationClick = onBack,
  * )
  * ```
  *
- * @param title Screen title.
+ * @param title Screen title slot.
  * @param modifier Applied to top bar.
  * @param onNavigationClick If provided, shows back button.
  * @param colors Color configuration, defaults to [LargeTopBarDefaults.colors].
- * @param style Text style configuration, defaults to [LargeTopBarDefaults.style].
  * @param dimens Dimension configuration, defaults to [LargeTopBarDefaults.dimens].
  * @param actions Optional action buttons.
  *
@@ -52,12 +85,11 @@ import uz.yalla.primitives.button.NavigationButton
  */
 @Composable
 fun LargeTopBar(
-    title: String?,
+    title: @Composable (() -> Unit)?,
     modifier: Modifier = Modifier,
     onNavigationClick: (() -> Unit)? = null,
-    colors: LargeTopBarDefaults.LargeTopBarColors = LargeTopBarDefaults.colors(),
-    style: LargeTopBarDefaults.LargeTopBarStyle = LargeTopBarDefaults.style(),
-    dimens: LargeTopBarDefaults.LargeTopBarDimens = LargeTopBarDefaults.dimens(),
+    colors: LargeTopBarColors = LargeTopBarDefaults.colors(),
+    dimens: LargeTopBarDimens = LargeTopBarDefaults.dimens(),
     actions: @Composable (() -> Unit)? = null,
 ) {
     Column(
@@ -92,11 +124,7 @@ fun LargeTopBar(
         if (title != null) {
             Spacer(Modifier.height(dimens.titleTopSpacing))
 
-            Text(
-                text = title,
-                style = style.title,
-                color = colors.title,
-            )
+            title()
         }
     }
 }
@@ -104,21 +132,10 @@ fun LargeTopBar(
 /**
  * Default configuration values for [LargeTopBar].
  *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
  * @since 0.0.1
  */
 object LargeTopBarDefaults {
-    /**
-     * Color configuration for [LargeTopBar].
-     *
-     * @param container Background color.
-     * @param title Title text color.
-     */
-    data class LargeTopBarColors(
-        val container: Color,
-        val title: Color,
-    )
-
     /** Creates color configuration for [LargeTopBar]. */
     @Composable
     fun colors(
@@ -129,37 +146,7 @@ object LargeTopBarDefaults {
         title = title,
     )
 
-    /**
-     * Text style configuration for [LargeTopBar].
-     *
-     * @param title Title text style.
-     */
-    data class LargeTopBarStyle(
-        val title: TextStyle,
-    )
-
-    /** Creates text style configuration for [LargeTopBar]. */
-    @Composable
-    fun style(title: TextStyle = System.font.title.xLarge) =
-        LargeTopBarStyle(
-            title = title,
-        )
-
-    /**
-     * Dimension configuration for [LargeTopBar].
-     *
-     * @param contentPadding Padding around content.
-     * @param navigationButtonSize Size of navigation button placeholder.
-     * @param titleTopSpacing Spacing above title.
-     */
-    data class LargeTopBarDimens(
-        val contentPadding: PaddingValues,
-        val navigationButtonSize: Dp,
-        val titleTopSpacing: Dp,
-    )
-
     /** Creates dimension configuration for [LargeTopBar]. */
-    @Composable
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(16.dp),
         navigationButtonSize: Dp = 40.dp,
@@ -181,7 +168,13 @@ private fun LargeTopBarPreview() {
                 .padding(16.dp)
     ) {
         LargeTopBar(
-            title = "Order History",
+            title = {
+                Text(
+                    text = "Order History",
+                    style = System.font.title.xLarge,
+                    color = System.color.text.base,
+                )
+            },
             onNavigationClick = {},
         )
     }

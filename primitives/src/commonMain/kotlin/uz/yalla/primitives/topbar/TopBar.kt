@@ -13,10 +13,10 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -24,13 +24,45 @@ import uz.yalla.design.theme.System
 import uz.yalla.primitives.button.NavigationButton
 
 /**
- * Standard top bar with optional navigation, title, and actions.
+ * Color configuration for [TopBar].
+ *
+ * @param container Background color.
+ * @param title Title text color.
+ * @since 0.0.1
+ */
+@Immutable
+data class TopBarColors(
+    val container: Color,
+    val title: Color,
+)
+
+/**
+ * Dimension configuration for [TopBar].
+ *
+ * @param contentPadding Padding around content.
+ * @param navigationButtonSize Size of navigation button placeholder.
+ * @since 0.0.1
+ */
+@Immutable
+data class TopBarDimens(
+    val contentPadding: PaddingValues,
+    val navigationButtonSize: Dp,
+)
+
+/**
+ * Standard top bar with optional navigation, title slot, and actions.
  *
  * ## Usage
  *
  * ```kotlin
  * TopBar(
- *     title = "Settings",
+ *     title = {
+ *         Text(
+ *             text = "Settings",
+ *             style = System.font.body.base.medium,
+ *             color = System.color.text.base,
+ *         )
+ *     },
  *     onNavigationClick = onBack,
  * )
  * ```
@@ -39,7 +71,13 @@ import uz.yalla.primitives.button.NavigationButton
  *
  * ```kotlin
  * TopBar(
- *     title = "Profile",
+ *     title = {
+ *         Text(
+ *             text = "Profile",
+ *             style = System.font.body.base.medium,
+ *             color = System.color.text.base,
+ *         )
+ *     },
  *     onNavigationClick = onBack,
  *     actions = {
  *         IconButton(onClick = onEdit) {
@@ -50,10 +88,9 @@ import uz.yalla.primitives.button.NavigationButton
  * ```
  *
  * @param modifier Applied to top bar.
- * @param title Optional title text.
+ * @param title Optional title slot.
  * @param onNavigationClick If provided, shows back button.
  * @param colors Color configuration, defaults to [TopBarDefaults.colors].
- * @param style Text style configuration, defaults to [TopBarDefaults.style].
  * @param dimens Dimension configuration, defaults to [TopBarDefaults.dimens].
  * @param actions Optional action buttons on the right.
  *
@@ -64,11 +101,10 @@ import uz.yalla.primitives.button.NavigationButton
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
-    title: String? = null,
+    title: @Composable (() -> Unit)? = null,
     onNavigationClick: (() -> Unit)? = null,
-    colors: TopBarDefaults.TopBarColors = TopBarDefaults.colors(),
-    style: TopBarDefaults.TopBarStyle = TopBarDefaults.style(),
-    dimens: TopBarDefaults.TopBarDimens = TopBarDefaults.dimens(),
+    colors: TopBarColors = TopBarDefaults.colors(),
+    dimens: TopBarDimens = TopBarDefaults.dimens(),
     actions: @Composable (() -> Unit)? = null,
 ) {
     Row(
@@ -94,11 +130,7 @@ fun TopBar(
                 modifier = Modifier.weight(1f),
                 contentAlignment = Alignment.Center,
             ) {
-                Text(
-                    text = title,
-                    style = style.title,
-                    color = colors.title,
-                )
+                title()
             }
         } else {
             Spacer(Modifier.weight(1f))
@@ -118,21 +150,10 @@ fun TopBar(
 /**
  * Default configuration values for [TopBar].
  *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
+ * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
  * @since 0.0.1
  */
 object TopBarDefaults {
-    /**
-     * Color configuration for [TopBar].
-     *
-     * @param container Background color.
-     * @param title Title text color.
-     */
-    data class TopBarColors(
-        val container: Color,
-        val title: Color,
-    )
-
     /** Creates color configuration for [TopBar]. */
     @Composable
     fun colors(
@@ -143,45 +164,13 @@ object TopBarDefaults {
         title = title,
     )
 
-    /**
-     * Text style configuration for [TopBar].
-     *
-     * @param title Title text style.
-     */
-    data class TopBarStyle(
-        val title: TextStyle,
-    )
-
-    /** Creates text style configuration for [TopBar]. */
-    @Composable
-    fun style(title: TextStyle = System.font.body.base.medium) =
-        TopBarStyle(
-            title = title,
-        )
-
-    /**
-     * Dimension configuration for [TopBar].
-     *
-     * @param contentPadding Padding around content.
-     * @param navigationButtonSize Size of navigation button placeholder.
-     * @param titleSpacing Spacing around title.
-     */
-    data class TopBarDimens(
-        val contentPadding: PaddingValues,
-        val navigationButtonSize: Dp,
-        val titleSpacing: Dp,
-    )
-
     /** Creates dimension configuration for [TopBar]. */
-    @Composable
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(16.dp),
         navigationButtonSize: Dp = 40.dp,
-        titleSpacing: Dp = 16.dp,
     ) = TopBarDimens(
         contentPadding = contentPadding,
         navigationButtonSize = navigationButtonSize,
-        titleSpacing = titleSpacing,
     )
 }
 
@@ -195,7 +184,13 @@ private fun TopBarPreview() {
                 .padding(16.dp)
     ) {
         TopBar(
-            title = "Settings",
+            title = {
+                Text(
+                    text = "Settings",
+                    style = System.font.body.base.medium,
+                    color = System.color.text.base,
+                )
+            },
             onNavigationClick = {},
         )
     }

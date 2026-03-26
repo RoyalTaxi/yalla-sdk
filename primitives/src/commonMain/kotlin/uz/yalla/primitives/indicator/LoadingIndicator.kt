@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,6 +14,54 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.platform.indicator.NativeLoadingIndicator
+
+/**
+ * Color configuration for [LoadingIndicator].
+ *
+ * @param indicator Spinner color.
+ * @param track Track color behind spinner.
+ * @since 0.0.1
+ */
+@Immutable
+data class LoadingIndicatorColors(
+    val indicator: Color,
+    val track: Color,
+)
+
+/**
+ * Dimension configuration for [LoadingIndicator].
+ *
+ * @param smallSize Size for small variant.
+ * @param mediumSize Size for medium variant.
+ * @param largeSize Size for large variant.
+ * @param smallStrokeWidth Stroke width for small variant.
+ * @param mediumStrokeWidth Stroke width for medium variant.
+ * @param largeStrokeWidth Stroke width for large variant.
+ * @since 0.0.1
+ */
+@Immutable
+data class LoadingIndicatorDimens(
+    val smallSize: Dp,
+    val mediumSize: Dp,
+    val largeSize: Dp,
+    val smallStrokeWidth: Dp,
+    val mediumStrokeWidth: Dp,
+    val largeStrokeWidth: Dp,
+) {
+    fun size(size: LoadingIndicatorSize): Dp =
+        when (size) {
+            LoadingIndicatorSize.Small -> smallSize
+            LoadingIndicatorSize.Medium -> mediumSize
+            LoadingIndicatorSize.Large -> largeSize
+        }
+
+    fun strokeWidth(size: LoadingIndicatorSize): Dp =
+        when (size) {
+            LoadingIndicatorSize.Small -> smallStrokeWidth
+            LoadingIndicatorSize.Medium -> mediumStrokeWidth
+            LoadingIndicatorSize.Large -> largeStrokeWidth
+        }
+}
 
 /**
  * Circular loading indicator.
@@ -37,8 +86,8 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
 fun LoadingIndicator(
     modifier: Modifier = Modifier,
     size: LoadingIndicatorSize = LoadingIndicatorSize.Medium,
-    colors: LoadingIndicatorDefaults.LoadingIndicatorColors = LoadingIndicatorDefaults.colors(),
-    dimens: LoadingIndicatorDefaults.LoadingIndicatorDimens = LoadingIndicatorDefaults.dimens(),
+    colors: LoadingIndicatorColors = LoadingIndicatorDefaults.colors(),
+    dimens: LoadingIndicatorDimens = LoadingIndicatorDefaults.dimens(),
 ) {
     NativeLoadingIndicator(
         modifier = modifier.size(dimens.size(size)),
@@ -64,17 +113,6 @@ enum class LoadingIndicatorSize {
  * @since 0.0.1
  */
 object LoadingIndicatorDefaults {
-    /**
-     * Color configuration for [LoadingIndicator].
-     *
-     * @param indicator Spinner color.
-     * @param track Track color behind spinner.
-     */
-    data class LoadingIndicatorColors(
-        val indicator: Color,
-        val track: Color,
-    )
-
     /** Creates color configuration for [LoadingIndicator]. */
     @Composable
     fun colors(
@@ -85,41 +123,7 @@ object LoadingIndicatorDefaults {
         track = track,
     )
 
-    /**
-     * Dimension configuration for [LoadingIndicator].
-     *
-     * @param smallSize Size for small variant.
-     * @param mediumSize Size for medium variant.
-     * @param largeSize Size for large variant.
-     * @param smallStrokeWidth Stroke width for small variant.
-     * @param mediumStrokeWidth Stroke width for medium variant.
-     * @param largeStrokeWidth Stroke width for large variant.
-     */
-    data class LoadingIndicatorDimens(
-        val smallSize: Dp,
-        val mediumSize: Dp,
-        val largeSize: Dp,
-        val smallStrokeWidth: Dp,
-        val mediumStrokeWidth: Dp,
-        val largeStrokeWidth: Dp,
-    ) {
-        fun size(size: LoadingIndicatorSize): Dp =
-            when (size) {
-                LoadingIndicatorSize.Small -> smallSize
-                LoadingIndicatorSize.Medium -> mediumSize
-                LoadingIndicatorSize.Large -> largeSize
-            }
-
-        fun strokeWidth(size: LoadingIndicatorSize): Dp =
-            when (size) {
-                LoadingIndicatorSize.Small -> smallStrokeWidth
-                LoadingIndicatorSize.Medium -> mediumStrokeWidth
-                LoadingIndicatorSize.Large -> largeStrokeWidth
-            }
-    }
-
     /** Creates dimension configuration for [LoadingIndicator]. */
-    @Composable
     fun dimens(
         smallSize: Dp = 20.dp,
         mediumSize: Dp = 36.dp,

@@ -22,6 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -54,24 +55,44 @@ enum class HeaderableSheetValue {
 }
 
 /**
+ * Color configuration for [HeaderableSheet].
+ *
+ * @param container Card background color.
+ * @param dragHandle Color of the drag handle.
+ * @since 0.0.1
+ */
+@Immutable
+data class HeaderableSheetColors(
+    val container: Color,
+    val dragHandle: Color
+)
+
+/**
+ * Dimension configuration for [HeaderableSheet].
+ *
+ * @param shape Card shape.
+ * @param cornerRadius Corner radius of the card.
+ * @param dragHandleWidth Width of the drag handle.
+ * @param dragHandleHeight Height of the drag handle.
+ * @param dragHandleContainerHeight Height of the drag handle container.
+ * @since 0.0.1
+ */
+@Immutable
+data class HeaderableSheetDimens(
+    val shape: Shape,
+    val cornerRadius: Dp,
+    val dragHandleWidth: Dp,
+    val dragHandleHeight: Dp,
+    val dragHandleContainerHeight: Dp
+)
+
+/**
  * Default configuration values for [HeaderableSheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
  * @since 0.0.1
  */
 object HeaderableSheetDefaults {
-    /**
-     * Color configuration for [HeaderableSheet].
-     *
-     * @param container Card background color.
-     * @param dragHandle Color of the drag handle.
-     * @since 0.0.1
-     */
-    data class HeaderableSheetColors(
-        val container: Color,
-        val dragHandle: Color
-    )
-
     /**
      * Creates theme-aware default colors.
      *
@@ -87,29 +108,10 @@ object HeaderableSheetDefaults {
     )
 
     /**
-     * Dimension configuration for [HeaderableSheet].
-     *
-     * @param shape Card shape.
-     * @param cornerRadius Corner radius of the card.
-     * @param dragHandleWidth Width of the drag handle.
-     * @param dragHandleHeight Height of the drag handle.
-     * @param dragHandleContainerHeight Height of the drag handle container.
-     * @since 0.0.1
-     */
-    data class HeaderableSheetDimens(
-        val shape: Shape,
-        val cornerRadius: Dp,
-        val dragHandleWidth: Dp,
-        val dragHandleHeight: Dp,
-        val dragHandleContainerHeight: Dp
-    )
-
-    /**
      * Creates default dimensions.
      *
      * @since 0.0.1
      */
-    @Composable
     fun dimens(
         cornerRadius: Dp = 38.dp,
         shape: Shape = RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius),
@@ -301,8 +303,8 @@ fun HeaderableSheet(
     body: @Composable () -> Unit,
     footer: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    colors: HeaderableSheetDefaults.HeaderableSheetColors = HeaderableSheetDefaults.colors(),
-    dimens: HeaderableSheetDefaults.HeaderableSheetDimens = HeaderableSheetDefaults.dimens()
+    colors: HeaderableSheetColors = HeaderableSheetDefaults.colors(),
+    dimens: HeaderableSheetDimens = HeaderableSheetDefaults.dimens()
 ) {
     val density = LocalDensity.current
     val statusBarHeightPx = WindowInsets.statusBars.getTop(density)
@@ -343,8 +345,8 @@ fun HeaderableSheet(
 private fun HeaderableSheetLayout(
     state: HeaderableSheetState,
     statusBarHeightPx: Int,
-    colors: HeaderableSheetDefaults.HeaderableSheetColors,
-    dimens: HeaderableSheetDefaults.HeaderableSheetDimens,
+    colors: HeaderableSheetColors,
+    dimens: HeaderableSheetDimens,
     header: @Composable () -> Unit,
     body: @Composable () -> Unit,
     footer: @Composable () -> Unit
@@ -389,8 +391,8 @@ private fun HeaderableSheetLayout(
 
 @Composable
 private fun DragHandle(
-    colors: HeaderableSheetDefaults.HeaderableSheetColors,
-    dimens: HeaderableSheetDefaults.HeaderableSheetDimens,
+    colors: HeaderableSheetColors,
+    dimens: HeaderableSheetDimens,
     modifier: Modifier = Modifier
 ) {
     Box(

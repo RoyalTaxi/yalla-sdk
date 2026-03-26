@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.State
@@ -27,20 +28,47 @@ import kotlinx.coroutines.flow.filter
 import uz.yalla.design.theme.System
 
 /**
+ * Color configuration for [BottomSheetCard].
+ *
+ * @param container Card background color.
+ * @since 0.0.1
+ */
+@Immutable
+data class BottomSheetCardColors(val container: Color)
+
+/**
+ * Dimension configuration for [BottomSheetCard].
+ *
+ * @param shape Card shape.
+ * @param cornerRadius Corner radius of the card.
+ * @since 0.0.1
+ */
+@Immutable
+data class BottomSheetCardDimens(
+    val shape: Shape,
+    val cornerRadius: Dp
+)
+
+/**
+ * Animation configuration for [BottomSheetCard].
+ *
+ * @param durationMillis Animation duration in milliseconds.
+ * @param collapsedFraction Fraction of height to offset when collapsed.
+ * @since 0.0.1
+ */
+@Immutable
+data class BottomSheetCardAnimation(
+    val durationMillis: Int,
+    val collapsedFraction: Float
+)
+
+/**
  * Default configuration values for [BottomSheetCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
  * @since 0.0.1
  */
 object BottomSheetCardDefaults {
-    /**
-     * Color configuration for [BottomSheetCard].
-     *
-     * @param container Card background color.
-     * @since 0.0.1
-     */
-    data class BottomSheetCardColors(val container: Color)
-
     /**
      * Creates theme-aware default colors.
      *
@@ -53,41 +81,16 @@ object BottomSheetCardDefaults {
         )
 
     /**
-     * Dimension configuration for [BottomSheetCard].
-     *
-     * @param shape Card shape.
-     * @param cornerRadius Corner radius of the card.
-     * @since 0.0.1
-     */
-    data class BottomSheetCardDimens(
-        val shape: Shape,
-        val cornerRadius: Dp
-    )
-
-    /**
      * Creates default dimensions.
      *
      * @since 0.0.1
      */
-    @Composable
     fun dimens(
         cornerRadius: Dp = 38.dp,
         shape: Shape = RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)
     ) = BottomSheetCardDimens(
         shape = shape,
         cornerRadius = cornerRadius
-    )
-
-    /**
-     * Animation configuration for [BottomSheetCard].
-     *
-     * @param durationMillis Animation duration in milliseconds.
-     * @param collapsedFraction Fraction of height to offset when collapsed.
-     * @since 0.0.1
-     */
-    data class BottomSheetCardAnimation(
-        val durationMillis: Int,
-        val collapsedFraction: Float
     )
 
     /**
@@ -133,8 +136,8 @@ fun BottomSheetCard(
     offset: Float,
     onHeightChanged: (Int) -> Unit,
     modifier: Modifier = Modifier,
-    colors: BottomSheetCardDefaults.BottomSheetCardColors = BottomSheetCardDefaults.colors(),
-    dimens: BottomSheetCardDefaults.BottomSheetCardDimens = BottomSheetCardDefaults.dimens(),
+    colors: BottomSheetCardColors = BottomSheetCardDefaults.colors(),
+    dimens: BottomSheetCardDimens = BottomSheetCardDefaults.dimens(),
     content: @Composable () -> Unit
 ) {
     Card(
@@ -161,7 +164,7 @@ fun BottomSheetCard(
 fun animateSheetOffset(
     isCollapsed: Boolean,
     sheetHeight: Int,
-    animation: BottomSheetCardDefaults.BottomSheetCardAnimation = BottomSheetCardDefaults.animation()
+    animation: BottomSheetCardAnimation = BottomSheetCardDefaults.animation()
 ): State<Float> =
     animateFloatAsState(
         animationSpec = tween(durationMillis = animation.durationMillis),

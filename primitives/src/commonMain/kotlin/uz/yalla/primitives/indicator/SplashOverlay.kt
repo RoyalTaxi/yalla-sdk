@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -25,6 +26,40 @@ import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_logo_splash
 import uz.yalla.resources.location_gps_subtitle
+
+/**
+ * Color configuration for [SplashOverlay].
+ *
+ * @param background Background brush (gradient) of the overlay.
+ * @param indicator Progress indicator color.
+ * @param indicatorTrack Progress indicator track color.
+ * @param text Loading message text color.
+ * @since 0.0.1
+ */
+@Immutable
+data class SplashOverlayColors(
+    val background: Brush,
+    val indicator: Color,
+    val indicatorTrack: Color,
+    val text: Color,
+)
+
+/**
+ * Dimension configuration for [SplashOverlay].
+ *
+ * @param contentSpacing Spacing between indicator and message text.
+ * @param bottomPadding Bottom padding for the loading section.
+ * @param indicatorStrokeWidth Stroke width of the progress indicator.
+ * @param indicatorGapSize Gap size in the progress indicator.
+ * @since 0.0.1
+ */
+@Immutable
+data class SplashOverlayDimens(
+    val contentSpacing: Dp,
+    val bottomPadding: Dp,
+    val indicatorStrokeWidth: Dp,
+    val indicatorGapSize: Dp,
+)
 
 /**
  * Full-screen splash overlay with logo and loading indicator.
@@ -61,8 +96,8 @@ import uz.yalla.resources.location_gps_subtitle
 fun SplashOverlay(
     modifier: Modifier = Modifier,
     message: String = stringResource(Res.string.location_gps_subtitle),
-    colors: SplashOverlayDefaults.SplashOverlayColors = SplashOverlayDefaults.colors(),
-    dimens: SplashOverlayDefaults.SplashOverlayDimens = SplashOverlayDefaults.dimens(),
+    colors: SplashOverlayColors = SplashOverlayDefaults.colors(),
+    dimens: SplashOverlayDimens = SplashOverlayDefaults.dimens(),
 ) {
     Box(
         modifier =
@@ -116,21 +151,6 @@ fun SplashOverlay(
  * @since 0.0.1
  */
 object SplashOverlayDefaults {
-    /**
-     * Color configuration for [SplashOverlay].
-     *
-     * @param background Background brush (gradient) of the overlay.
-     * @param indicator Progress indicator color.
-     * @param indicatorTrack Progress indicator track color.
-     * @param text Loading message text color.
-     */
-    data class SplashOverlayColors(
-        val background: Brush,
-        val indicator: Color,
-        val indicatorTrack: Color,
-        val text: Color,
-    )
-
     /** Creates color configuration for [SplashOverlay]. */
     @Composable
     fun colors(
@@ -146,23 +166,7 @@ object SplashOverlayDefaults {
             text = text,
         )
 
-    /**
-     * Dimension configuration for [SplashOverlay].
-     *
-     * @param contentSpacing Spacing between indicator and message text.
-     * @param bottomPadding Bottom padding for the loading section.
-     * @param indicatorStrokeWidth Stroke width of the progress indicator.
-     * @param indicatorGapSize Gap size in the progress indicator.
-     */
-    data class SplashOverlayDimens(
-        val contentSpacing: Dp,
-        val bottomPadding: Dp,
-        val indicatorStrokeWidth: Dp,
-        val indicatorGapSize: Dp,
-    )
-
     /** Creates dimension configuration for [SplashOverlay]. */
-    @Composable
     fun dimens(
         contentSpacing: Dp = 24.dp,
         bottomPadding: Dp = 64.dp,

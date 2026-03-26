@@ -13,11 +13,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -27,36 +27,102 @@ import uz.yalla.primitives.button.PrimaryButton
 import uz.yalla.primitives.button.SecondaryButton
 
 /**
- * UI state for [ActionSheet].
+ * Color configuration for [ActionSheet].
  *
- * @property isVisible Whether the sheet is visible.
- * @property title Sheet title.
- * @property message Optional description text.
- * @property primaryAction Primary button text.
- * @property secondaryAction Optional secondary button text.
+ * @param container Background color.
+ * @param title Title text color.
+ * @param message Message text color.
+ * @param divider Divider color.
  * @since 0.0.1
  */
-data class ActionSheetState(
-    val isVisible: Boolean,
-    val title: String,
-    val message: String? = null,
-    val primaryAction: String,
-    val secondaryAction: String? = null,
+@Immutable
+data class ActionSheetColors(
+    val container: Color,
+    val title: Color,
+    val message: Color,
+    val divider: Color,
 )
 
 /**
- * Effects emitted by [ActionSheet].
+ * Dimension configuration for [ActionSheet].
+ *
+ * @param shape Sheet corner shape.
+ * @param contentPadding Padding around content.
+ * @param topSpacing Top spacing.
+ * @param titleMessageSpacing Spacing between title and message.
+ * @param contentButtonsSpacing Spacing between content and divider.
+ * @param dividerButtonSpacing Spacing between divider and buttons.
+ * @param buttonSpacing Spacing between buttons.
+ * @param bottomSpacing Bottom spacing.
+ * @param dividerThickness Divider thickness.
  * @since 0.0.1
  */
-sealed interface ActionSheetEffect {
-    /** User dismissed the sheet. */
-    data object Dismiss : ActionSheetEffect
+@Immutable
+data class ActionSheetDimens(
+    val shape: Shape,
+    val contentPadding: PaddingValues,
+    val topSpacing: Dp,
+    val titleMessageSpacing: Dp,
+    val contentButtonsSpacing: Dp,
+    val dividerButtonSpacing: Dp,
+    val buttonSpacing: Dp,
+    val bottomSpacing: Dp,
+    val dividerThickness: Dp,
+)
 
-    /** User clicked primary action. */
-    data object Primary : ActionSheetEffect
+/**
+ * Default configuration values for [ActionSheet].
+ *
+ * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
+ */
+object ActionSheetDefaults {
+    /**
+     * Creates theme-aware default colors.
+     *
+     * @since 0.0.1
+     */
+    @Composable
+    fun colors(
+        container: Color = System.color.background.base,
+        title: Color = System.color.text.base,
+        message: Color = System.color.text.subtle,
+        divider: Color = System.color.border.disabled,
+    ): ActionSheetColors =
+        ActionSheetColors(
+            container = container,
+            title = title,
+            message = message,
+            divider = divider,
+        )
 
-    /** User clicked secondary action. */
-    data object Secondary : ActionSheetEffect
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
+    fun dimens(
+        shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
+        contentPadding: PaddingValues = PaddingValues(horizontal = 20.dp),
+        topSpacing: Dp = 16.dp,
+        titleMessageSpacing: Dp = 8.dp,
+        contentButtonsSpacing: Dp = 24.dp,
+        dividerButtonSpacing: Dp = 16.dp,
+        buttonSpacing: Dp = 8.dp,
+        bottomSpacing: Dp = 12.dp,
+        dividerThickness: Dp = 1.dp,
+    ): ActionSheetDimens =
+        ActionSheetDimens(
+            shape = shape,
+            contentPadding = contentPadding,
+            topSpacing = topSpacing,
+            titleMessageSpacing = titleMessageSpacing,
+            contentButtonsSpacing = contentButtonsSpacing,
+            dividerButtonSpacing = dividerButtonSpacing,
+            buttonSpacing = buttonSpacing,
+            bottomSpacing = bottomSpacing,
+            dividerThickness = dividerThickness,
+        )
 }
 
 /**
@@ -68,54 +134,53 @@ sealed interface ActionSheetEffect {
  *
  * ```kotlin
  * ActionSheet(
- *     state = ActionSheetState(
- *         isVisible = showDelete,
- *         title = "Delete Card",
- *         message = "Are you sure you want to delete this card?",
- *         primaryAction = "Delete",
- *         secondaryAction = "Cancel",
- *     ),
- *     onEffect = { effect ->
- *         when (effect) {
- *             ActionSheetEffect.Dismiss -> viewModel.dismissSheet()
- *             ActionSheetEffect.Primary -> viewModel.deleteCard()
- *             ActionSheetEffect.Secondary -> viewModel.cancelDelete()
- *         }
- *     },
+ *     isVisible = showDelete,
+ *     onDismissRequest = { viewModel.dismissSheet() },
+ *     title = "Delete Card",
+ *     primaryAction = "Delete",
+ *     onPrimaryAction = { viewModel.deleteCard() },
+ *     message = "Are you sure you want to delete this card?",
+ *     secondaryAction = "Cancel",
+ *     onSecondaryAction = { viewModel.cancelDelete() },
  * )
  * ```
  *
- * @param state Sheet state including visibility and content.
- * @param onEffect Callback for sheet effects (dismiss, primary, secondary).
+ * @param isVisible Whether the sheet is visible.
+ * @param onDismissRequest Called when sheet is dismissed.
+ * @param title Sheet title.
+ * @param primaryAction Primary button text.
+ * @param onPrimaryAction Called when primary button is tapped.
  * @param modifier Applied to sheet.
+ * @param message Optional description text.
+ * @param secondaryAction Optional secondary button text.
+ * @param onSecondaryAction Called when secondary button is tapped.
  * @param colors Color configuration, defaults to [ActionSheetDefaults.colors].
- * @param style Text style configuration, defaults to [ActionSheetDefaults.style].
  * @param dimens Dimension configuration, defaults to [ActionSheetDefaults.dimens].
  *
- * @see ActionSheetState for state configuration
- * @see ActionSheetEffect for available effects
  * @see ActionSheetDefaults for default values
  * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ActionSheet(
-    state: ActionSheetState,
-    onEffect: (ActionSheetEffect) -> Unit,
+    isVisible: Boolean,
+    onDismissRequest: () -> Unit,
+    title: String,
+    primaryAction: String,
+    onPrimaryAction: () -> Unit,
     modifier: Modifier = Modifier,
-    colors: ActionSheetDefaults.ActionSheetColors = ActionSheetDefaults.colors(),
-    style: ActionSheetDefaults.ActionSheetStyle = ActionSheetDefaults.style(),
-    dimens: ActionSheetDefaults.ActionSheetDimens = ActionSheetDefaults.dimens(),
+    message: String? = null,
+    secondaryAction: String? = null,
+    onSecondaryAction: (() -> Unit)? = null,
+    colors: ActionSheetColors = ActionSheetDefaults.colors(),
+    dimens: ActionSheetDimens = ActionSheetDefaults.dimens(),
 ) {
     Sheet(
-        isVisible = state.isVisible,
-        onDismissRequest = { onEffect(ActionSheetEffect.Dismiss) },
+        isVisible = isVisible,
+        onDismissRequest = onDismissRequest,
         modifier = modifier,
-        shape = dimens.shape,
-        colors =
-            SheetDefaults.colors(
-                container = colors.container,
-            ),
+        colors = SheetDefaults.colors(container = colors.container),
+        dimens = SheetDefaults.dimens(shape = dimens.shape),
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -124,18 +189,18 @@ fun ActionSheet(
             Spacer(Modifier.height(dimens.topSpacing))
 
             Text(
-                text = state.title,
-                style = style.title,
+                text = title,
+                style = System.font.title.base,
                 color = colors.title,
                 textAlign = TextAlign.Center,
             )
 
-            if (state.message != null) {
+            if (message != null) {
                 Spacer(Modifier.height(dimens.titleMessageSpacing))
 
                 Text(
-                    text = state.message,
-                    style = style.message,
+                    text = message,
+                    style = System.font.body.base.medium,
                     color = colors.message,
                     textAlign = TextAlign.Center,
                 )
@@ -151,20 +216,20 @@ fun ActionSheet(
             Spacer(Modifier.height(dimens.dividerButtonSpacing))
 
             PrimaryButton(
-                onClick = { onEffect(ActionSheetEffect.Primary) },
+                onClick = onPrimaryAction,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(state.primaryAction)
+                Text(primaryAction)
             }
 
-            if (state.secondaryAction != null) {
+            if (secondaryAction != null && onSecondaryAction != null) {
                 Spacer(Modifier.height(dimens.buttonSpacing))
 
                 SecondaryButton(
-                    onClick = { onEffect(ActionSheetEffect.Secondary) },
+                    onClick = onSecondaryAction,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text(state.secondaryAction)
+                    Text(secondaryAction)
                 }
             }
 
@@ -173,137 +238,14 @@ fun ActionSheet(
     }
 }
 
-/**
- * Default configuration values for [ActionSheet].
- *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
- * @since 0.0.1
- */
-object ActionSheetDefaults {
-    /**
-     * Color configuration for [ActionSheet].
-     *
-     * @param container Background color.
-     * @param title Title text color.
-     * @param message Message text color.
-     * @param divider Divider color.
-     * @since 0.0.1
-     */
-    data class ActionSheetColors(
-        val container: Color,
-        val title: Color,
-        val message: Color,
-        val divider: Color,
-    )
-
-    /**
-     * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun colors(
-        container: Color = System.color.background.base,
-        title: Color = System.color.text.base,
-        message: Color = System.color.text.subtle,
-        divider: Color = System.color.border.disabled,
-    ) = ActionSheetColors(
-        container = container,
-        title = title,
-        message = message,
-        divider = divider,
-    )
-
-    /**
-     * Text style configuration for [ActionSheet].
-     *
-     * @param title Title text style.
-     * @param message Message text style.
-     * @since 0.0.1
-     */
-    data class ActionSheetStyle(
-        val title: TextStyle,
-        val message: TextStyle,
-    )
-
-    /**
-     * Creates theme-aware default text styles.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun style(
-        title: TextStyle = System.font.title.base,
-        message: TextStyle = System.font.body.base.medium,
-    ) = ActionSheetStyle(
-        title = title,
-        message = message,
-    )
-
-    /**
-     * Dimension configuration for [ActionSheet].
-     *
-     * @param shape Sheet corner shape.
-     * @param contentPadding Padding around content.
-     * @param topSpacing Top spacing.
-     * @param titleMessageSpacing Spacing between title and message.
-     * @param contentButtonsSpacing Spacing between content and divider.
-     * @param dividerButtonSpacing Spacing between divider and buttons.
-     * @param buttonSpacing Spacing between buttons.
-     * @param bottomSpacing Bottom spacing.
-     * @param dividerThickness Divider thickness.
-     * @since 0.0.1
-     */
-    data class ActionSheetDimens(
-        val shape: Shape,
-        val contentPadding: PaddingValues,
-        val topSpacing: Dp,
-        val titleMessageSpacing: Dp,
-        val contentButtonsSpacing: Dp,
-        val dividerButtonSpacing: Dp,
-        val buttonSpacing: Dp,
-        val bottomSpacing: Dp,
-        val dividerThickness: Dp,
-    )
-
-    /**
-     * Creates default dimensions.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun dimens(
-        shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
-        contentPadding: PaddingValues = PaddingValues(horizontal = 20.dp),
-        topSpacing: Dp = 16.dp,
-        titleMessageSpacing: Dp = 8.dp,
-        contentButtonsSpacing: Dp = 24.dp,
-        dividerButtonSpacing: Dp = 16.dp,
-        buttonSpacing: Dp = 8.dp,
-        bottomSpacing: Dp = 12.dp,
-        dividerThickness: Dp = 1.dp,
-    ) = ActionSheetDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-        topSpacing = topSpacing,
-        titleMessageSpacing = titleMessageSpacing,
-        contentButtonsSpacing = contentButtonsSpacing,
-        dividerButtonSpacing = dividerButtonSpacing,
-        buttonSpacing = buttonSpacing,
-        bottomSpacing = bottomSpacing,
-        dividerThickness = dividerThickness,
-    )
-}
-
 @Preview
 @Composable
 private fun ActionSheetContentPreview() {
     val dimens = ActionSheetDefaults.dimens()
     Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
+        modifier = Modifier
+            .background(Color.White)
+            .padding(16.dp),
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
