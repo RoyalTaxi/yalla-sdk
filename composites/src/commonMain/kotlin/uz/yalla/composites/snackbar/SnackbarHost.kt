@@ -4,10 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHost as M3SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
@@ -29,54 +30,17 @@ data class SnackbarData(
 )
 
 /**
- * UI state for [AppSnackbarHost].
+ * Dimension configuration for [SnackbarHost].
  *
- * @param data Current snackbar data to display.
- * @param successIcon Icon shown for success variant.
- * @param errorIcon Icon shown for error variant.
- * @param dismissIcon Icon for dismiss button.
+ * @param topPadding Top padding below status bar.
+ * @param horizontalPadding Horizontal padding.
  * @since 0.0.1
  */
-data class AppSnackbarHostState(
-    val data: SnackbarData?,
-    val successIcon: Painter,
-    val errorIcon: Painter,
-    val dismissIcon: Painter,
+@Immutable
+data class SnackbarHostDimens(
+    val topPadding: Dp,
+    val horizontalPadding: Dp,
 )
-
-/**
- * Default configuration for [AppSnackbarHost].
- *
- * Provides theme-aware defaults for [dimens] that can be overridden.
- * @since 0.0.1
- */
-object AppSnackbarHostDefaults {
-    /**
-     * Dimension configuration for [AppSnackbarHost].
-     *
-     * @param topPadding Top padding below status bar.
-     * @param horizontalPadding Horizontal padding.
-     * @since 0.0.1
-     */
-    data class AppSnackbarHostDimens(
-        val topPadding: Dp,
-        val horizontalPadding: Dp,
-    )
-
-    /**
-     * Creates default dimensions.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun dimens(
-        topPadding: Dp = 8.dp,
-        horizontalPadding: Dp = 16.dp,
-    ) = AppSnackbarHostDimens(
-        topPadding = topPadding,
-        horizontalPadding = horizontalPadding,
-    )
-}
 
 /**
  * Snackbar host for displaying transient messages.
@@ -88,13 +52,11 @@ object AppSnackbarHostDefaults {
  * ```kotlin
  * val snackbarHostState = remember { SnackbarHostState() }
  *
- * AppSnackbarHost(
- *     state = AppSnackbarHostState(
- *         data = currentSnackbar,
- *         successIcon = rememberVectorPainter(YallaIcons.CheckCircle),
- *         errorIcon = rememberVectorPainter(YallaIcons.Warning),
- *         dismissIcon = rememberVectorPainter(YallaIcons.X),
- *     ),
+ * SnackbarHost(
+ *     data = currentSnackbar,
+ *     successIcon = rememberVectorPainter(YallaIcons.CheckCircle),
+ *     errorIcon = rememberVectorPainter(YallaIcons.Warning),
+ *     dismissIcon = rememberVectorPainter(YallaIcons.X),
  *     hostState = snackbarHostState,
  *     onDismiss = { snackbarHostState.currentSnackbarData?.dismiss() },
  * )
@@ -105,25 +67,30 @@ object AppSnackbarHostDefaults {
  * }
  * ```
  *
- * @param state Current UI state with data and icons.
+ * @param data Current snackbar data to display.
+ * @param successIcon Icon shown for success variant.
+ * @param errorIcon Icon shown for error variant.
+ * @param dismissIcon Icon for dismiss button.
  * @param hostState Material snackbar host state.
  * @param onDismiss Called when dismiss clicked.
  * @param modifier Applied to host.
- * @param dimens Dimension configuration, defaults to [AppSnackbarHostDefaults.dimens].
+ * @param dimens Dimension configuration, defaults to [SnackbarHostDefaults.dimens].
  *
- * @see AppSnackbarHostState for state configuration
- * @see AppSnackbarHostDefaults for default values
+ * @see SnackbarHostDefaults for default values
  * @since 0.0.1
  */
 @Composable
-fun AppSnackbarHost(
-    state: AppSnackbarHostState,
+fun SnackbarHost(
+    data: SnackbarData?,
+    successIcon: Painter,
+    errorIcon: Painter,
+    dismissIcon: Painter,
     hostState: SnackbarHostState,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    dimens: AppSnackbarHostDefaults.AppSnackbarHostDimens = AppSnackbarHostDefaults.dimens(),
+    dimens: SnackbarHostDimens = SnackbarHostDefaults.dimens(),
 ) {
-    SnackbarHost(
+    M3SnackbarHost(
         hostState = hostState,
         modifier =
             modifier
@@ -131,19 +98,40 @@ fun AppSnackbarHost(
                 .padding(top = dimens.topPadding)
                 .padding(horizontal = dimens.horizontalPadding),
     ) {
-        if (state.data != null) {
+        if (data != null) {
             Snackbar(
                 state =
                     SnackbarState(
-                        message = state.data.message,
-                        variant = if (state.data.isSuccess) SnackbarVariant.Success else SnackbarVariant.Error,
-                        icon = if (state.data.isSuccess) state.successIcon else state.errorIcon,
-                        dismissIcon = state.dismissIcon,
+                        message = data.message,
+                        variant = if (data.isSuccess) SnackbarVariant.Success else SnackbarVariant.Error,
+                        icon = if (data.isSuccess) successIcon else errorIcon,
+                        dismissIcon = dismissIcon,
                     ),
                 onDismiss = onDismiss,
             )
         }
     }
+}
+
+/**
+ * Default values for [SnackbarHost].
+ *
+ * @since 0.0.1
+ */
+object SnackbarHostDefaults {
+    /**
+     * Creates default dimensions.
+     *
+     * @since 0.0.1
+     */
+    fun dimens(
+        topPadding: Dp = 8.dp,
+        horizontalPadding: Dp = 16.dp,
+    ): SnackbarHostDimens =
+        SnackbarHostDimens(
+            topPadding = topPadding,
+            horizontalPadding = horizontalPadding,
+        )
 }
 
 @Preview

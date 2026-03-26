@@ -40,7 +40,7 @@ sealed interface SnackbarEvent {
  * ```
  *
  * @see SnackbarData
- * @see AppSnackbarHost
+ * @see SnackbarHost
  * @since 0.0.1
  */
 object SnackbarController {

@@ -1,8 +1,6 @@
 package uz.yalla.composites.item
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -12,80 +10,52 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
-/**
- * State for [ListItem] component.
- *
- * @property title Primary text.
- * @property subtitle Optional secondary text.
- * @property enabled Whether item is enabled.
- * @since 0.0.1
- */
-data class ListItemState(
-    val title: String,
-    val subtitle: String? = null,
-    val enabled: Boolean = true
+@Immutable
+data class ListItemColors(
+    val container: Color,
+    val title: Color,
+    val subtitle: Color,
+    val disabledContainer: Color,
+    val disabledTitle: Color,
+    val disabledSubtitle: Color,
 )
 
-/**
- * Standard list item with title, subtitle, and action slots.
- *
- * Versatile list item for settings, menus, and general lists.
- *
- * ## Usage
- *
- * ```kotlin
- * ListItem(
- *     state = ListItemState(
- *         title = "Profile Settings",
- *         subtitle = "Update your personal info"
- *     ),
- *     leadingContent = { Icon(Icons.Default.Person, null) },
- *     trailingContent = { Icon(Icons.Default.ChevronRight, null) },
- *     onClick = { navigateToProfile() },
- * )
- * ```
- *
- * @param state Item state containing title, subtitle, and enabled.
- * @param modifier Applied to item.
- * @param leadingContent Optional leading slot.
- * @param trailingContent Optional trailing slot.
- * @param onClick Optional click handler.
- * @param colors Color configuration, defaults to [ListItemDefaults.colors].
- * @param style Text style configuration, defaults to [ListItemDefaults.style].
- * @param dimens Dimension configuration, defaults to [ListItemDefaults.dimens].
- *
- * @see ListItemDefaults for default values
- * @since 0.0.1
- */
+@Immutable
+data class ListItemDimens(
+    val shape: Shape,
+    val contentPadding: PaddingValues,
+    val contentSpacing: Dp,
+    val titleSubtitleSpacing: Dp,
+    val titleMaxLines: Int,
+    val subtitleMaxLines: Int,
+)
+
 @Composable
 fun ListItem(
-    state: ListItemState,
+    title: String,
     modifier: Modifier = Modifier,
-    leadingContent: (@Composable () -> Unit)? = null,
-    trailingContent: (@Composable () -> Unit)? = null,
+    subtitle: String? = null,
+    enabled: Boolean = true,
     onClick: (() -> Unit)? = null,
-    colors: ListItemDefaults.ListItemColors = ListItemDefaults.colors(),
-    style: ListItemDefaults.ListItemStyle = ListItemDefaults.style(),
-    dimens: ListItemDefaults.ListItemDimens = ListItemDefaults.dimens(),
+    leadingContent: @Composable (() -> Unit)? = null,
+    trailingContent: @Composable (() -> Unit)? = null,
+    colors: ListItemColors = ListItemDefaults.colors(),
+    dimens: ListItemDimens = ListItemDefaults.dimens(),
 ) {
     val content: @Composable () -> Unit = {
         Row(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(dimens.contentPadding),
+            modifier = Modifier.fillMaxWidth().padding(dimens.contentPadding),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing),
         ) {
@@ -96,18 +66,18 @@ fun ListItem(
                 verticalArrangement = Arrangement.spacedBy(dimens.titleSubtitleSpacing),
             ) {
                 Text(
-                    text = state.title,
-                    style = style.title,
-                    color = if (state.enabled) colors.title else colors.disabledTitle,
+                    text = title,
+                    style = System.font.body.base.bold,
+                    color = if (enabled) colors.title else colors.disabledTitle,
                     maxLines = dimens.titleMaxLines,
                     overflow = TextOverflow.Ellipsis,
                 )
 
-                if (state.subtitle != null) {
+                if (subtitle != null) {
                     Text(
-                        text = state.subtitle,
-                        style = style.subtitle,
-                        color = if (state.enabled) colors.subtitle else colors.disabledSubtitle,
+                        text = subtitle,
+                        style = System.font.body.small.medium,
+                        color = if (enabled) colors.subtitle else colors.disabledSubtitle,
                         maxLines = dimens.subtitleMaxLines,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -122,13 +92,12 @@ fun ListItem(
         Card(
             onClick = onClick,
             modifier = modifier,
-            enabled = state.enabled,
+            enabled = enabled,
             shape = dimens.shape,
-            colors =
-                CardDefaults.cardColors(
-                    containerColor = colors.container,
-                    disabledContainerColor = colors.disabledContainer,
-                ),
+            colors = CardDefaults.cardColors(
+                containerColor = colors.container,
+                disabledContainerColor = colors.disabledContainer,
+            ),
         ) {
             content()
         }
@@ -136,61 +105,24 @@ fun ListItem(
         Card(
             modifier = modifier,
             shape = dimens.shape,
-            colors =
-                CardDefaults.cardColors(
-                    containerColor = colors.container,
-                ),
+            colors = CardDefaults.cardColors(containerColor = colors.container),
         ) {
             content()
         }
     }
 }
 
-/**
- * Default configuration values for [ListItem].
- *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
- * @since 0.0.1
- */
 object ListItemDefaults {
-    /**
-     * Color configuration for [ListItem].
-     *
-     * @param container Background color when enabled.
-     * @param title Title text color when enabled.
-     * @param subtitle Subtitle text color when enabled.
-     * @param disabledContainer Background color when disabled.
-     * @param disabledTitle Title text color when disabled.
-     * @param disabledSubtitle Subtitle text color when disabled.
-     * @since 0.0.1
-     */
-    data class ListItemColors(
-        val container: Color,
-        val title: Color,
-        val subtitle: Color,
-        val disabledContainer: Color,
-        val disabledTitle: Color,
-        val disabledSubtitle: Color,
-    )
 
-    /**
-     * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
-     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
         title: Color = System.color.text.base,
         subtitle: Color = System.color.text.subtle,
         disabledContainer: Color = Color.Transparent,
-        disabledTitle: Color =
-            System.color.text.subtle
-                .copy(alpha = 0.5f),
-        disabledSubtitle: Color =
-            System.color.text.subtle
-                .copy(alpha = 0.5f),
-    ) = ListItemColors(
+        disabledTitle: Color = System.color.text.subtle.copy(alpha = 0.5f),
+        disabledSubtitle: Color = System.color.text.subtle.copy(alpha = 0.5f),
+    ): ListItemColors = ListItemColors(
         container = container,
         title = title,
         subtitle = subtitle,
@@ -199,58 +131,6 @@ object ListItemDefaults {
         disabledSubtitle = disabledSubtitle,
     )
 
-    /**
-     * Text style configuration for [ListItem].
-     *
-     * @param title Title text style.
-     * @param subtitle Subtitle text style.
-     * @since 0.0.1
-     */
-    data class ListItemStyle(
-        val title: TextStyle,
-        val subtitle: TextStyle,
-    )
-
-    /**
-     * Creates theme-aware default text styles.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun style(
-        title: TextStyle = System.font.body.base.bold,
-        subtitle: TextStyle = System.font.body.small.medium,
-    ) = ListItemStyle(
-        title = title,
-        subtitle = subtitle,
-    )
-
-    /**
-     * Dimension configuration for [ListItem].
-     *
-     * @param shape Item shape.
-     * @param contentPadding Padding around content.
-     * @param contentSpacing Spacing between elements.
-     * @param titleSubtitleSpacing Spacing between title and subtitle.
-     * @param titleMaxLines Max lines for title.
-     * @param subtitleMaxLines Max lines for subtitle.
-     * @since 0.0.1
-     */
-    data class ListItemDimens(
-        val shape: Shape,
-        val contentPadding: PaddingValues,
-        val contentSpacing: Dp,
-        val titleSubtitleSpacing: Dp,
-        val titleMaxLines: Int,
-        val subtitleMaxLines: Int,
-    )
-
-    /**
-     * Creates default dimensions.
-     *
-     * @since 0.0.1
-     */
-    @Composable
     fun dimens(
         shape: Shape = RectangleShape,
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
@@ -258,7 +138,7 @@ object ListItemDefaults {
         titleSubtitleSpacing: Dp = 4.dp,
         titleMaxLines: Int = 1,
         subtitleMaxLines: Int = 2,
-    ) = ListItemDimens(
+    ): ListItemDimens = ListItemDimens(
         shape = shape,
         contentPadding = contentPadding,
         contentSpacing = contentSpacing,
@@ -266,24 +146,4 @@ object ListItemDefaults {
         titleMaxLines = titleMaxLines,
         subtitleMaxLines = subtitleMaxLines,
     )
-}
-
-@Preview
-@Composable
-private fun ListItemPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        ListItem(
-            state =
-                ListItemState(
-                    title = "Profile Settings",
-                    subtitle = "Update your personal info"
-                ),
-            onClick = {},
-        )
-    }
 }

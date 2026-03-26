@@ -1,180 +1,84 @@
 package uz.yalla.composites.view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
-/**
- * State for [LocationPoint].
- *
- * @property icon Location marker icon.
- * @property label Address or place name.
- * @since 0.0.1
- */
-data class LocationPointState(
-    val icon: Painter,
-    val label: String,
+@Immutable
+data class LocationPointColors(
+    val label: Color,
 )
 
-/**
- * Location point display with icon and label.
- *
- * Use for displaying origin/destination points in route views.
- *
- * ## Usage
- *
- * ```kotlin
- * LocationPoint(
- *     state = LocationPointState(
- *         icon = painterResource(Res.drawable.ic_origin),
- *         label = "123 Main Street",
- *     ),
- *     style = LocationPointDefaults.originStyle(),
- * )
- * ```
- *
- * @param state Location point state with icon and label.
- * @param modifier Applied to component.
- * @param style Text and color styling, defaults to [LocationPointDefaults.originStyle].
- * @param dimens Dimension configuration, defaults to [LocationPointDefaults.dimens].
- *
- * @see LocationPointState for state configuration
- * @see LocationPointDefaults for default values
- * @since 0.0.1
- */
+@Immutable
+data class LocationPointDimens(
+    val iconLabelSpacing: Dp,
+    val labelMaxLines: Int,
+)
+
+object LocationPointDefaults {
+
+    @Composable
+    fun colors(
+        label: Color = System.color.text.base,
+    ): LocationPointColors = LocationPointColors(
+        label = label,
+    )
+
+    @Composable
+    fun destinationColors(
+        label: Color = System.color.text.subtle,
+    ): LocationPointColors = LocationPointColors(
+        label = label,
+    )
+
+    fun dimens(
+        iconLabelSpacing: Dp = 8.dp,
+        labelMaxLines: Int = 1,
+    ): LocationPointDimens = LocationPointDimens(
+        iconLabelSpacing = iconLabelSpacing,
+        labelMaxLines = labelMaxLines,
+    )
+}
+
 @Composable
 fun LocationPoint(
-    state: LocationPointState,
+    icon: Painter,
+    label: String,
     modifier: Modifier = Modifier,
-    style: LocationPointDefaults.LocationPointStyle = LocationPointDefaults.originStyle(),
-    dimens: LocationPointDefaults.LocationPointDimens = LocationPointDefaults.dimens(),
+    labelStyle: TextStyle = System.font.body.small.bold,
+    colors: LocationPointColors = LocationPointDefaults.colors(),
+    dimens: LocationPointDimens = LocationPointDefaults.dimens(),
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
-            painter = state.icon,
+            painter = icon,
             contentDescription = null,
         )
 
         Spacer(Modifier.width(dimens.iconLabelSpacing))
 
         Text(
-            text = state.label,
-            style = style.font,
-            color = style.color,
+            text = label,
+            style = labelStyle,
+            color = colors.label,
             overflow = TextOverflow.Ellipsis,
             maxLines = dimens.labelMaxLines,
-        )
-    }
-}
-
-/**
- * Default values for [LocationPoint].
- *
- * Provides theme-aware defaults for [originStyle], [destinationStyle], and [dimens] that can be overridden.
- * @since 0.0.1
- */
-object LocationPointDefaults {
-    /**
-     * Style configuration for [LocationPoint].
-     *
-     * @param font Text style.
-     * @param color Text color.
-     * @since 0.0.1
-     */
-    data class LocationPointStyle(
-        val font: TextStyle,
-        val color: Color,
-    )
-
-    /**
-     * Creates origin point style with bold font.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun originStyle(
-        font: TextStyle = System.font.body.small.bold,
-        color: Color = System.color.text.base,
-    ): LocationPointStyle =
-        LocationPointStyle(
-            font = font,
-            color = color,
-        )
-
-    /**
-     * Creates destination point style with caption font.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun destinationStyle(
-        font: TextStyle = System.font.body.caption,
-        color: Color = System.color.text.subtle,
-    ): LocationPointStyle =
-        LocationPointStyle(
-            font = font,
-            color = color,
-        )
-
-    /**
-     * Dimension configuration for [LocationPoint].
-     *
-     * @param iconLabelSpacing Spacing between icon and label.
-     * @param labelMaxLines Maximum lines for label text.
-     * @since 0.0.1
-     */
-    data class LocationPointDimens(
-        val iconLabelSpacing: Dp,
-        val labelMaxLines: Int,
-    )
-
-    /**
-     * Creates default dimensions.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun dimens(
-        iconLabelSpacing: Dp = 8.dp,
-        labelMaxLines: Int = 1,
-    ): LocationPointDimens =
-        LocationPointDimens(
-            iconLabelSpacing = iconLabelSpacing,
-            labelMaxLines = labelMaxLines,
-        )
-}
-
-@Preview
-@Composable
-private fun LocationPointPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        Text(
-            text = "123 Main Street",
-            style = System.font.body.small.bold,
         )
     }
 }

@@ -31,7 +31,7 @@ Text input fields: [PrimaryField] (outlined), [NumberField] (phone input), and [
 # Package uz.yalla.primitives.indicator
 
 Progress and loading indicators: [DotsIndicator] for pagers, [LoadingIndicator] spinner,
-[StripedProgressbar] animated progress bar, and [SplashOverlay] full-screen loading overlay.
+[StripedProgressBar] animated progress bar, and [SplashOverlay] full-screen loading overlay.
 
 # Package uz.yalla.primitives.model
 

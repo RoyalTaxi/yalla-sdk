@@ -32,7 +32,7 @@ import uz.yalla.design.theme.System
 import kotlin.math.hypot
 
 /**
- * Color configuration for [StripedProgressbar].
+ * Color configuration for [StripedProgressBar].
  *
  * @param track Background track color.
  * @param indicator Progress indicator brush (gradient).
@@ -40,14 +40,14 @@ import kotlin.math.hypot
  * @since 0.0.1
  */
 @Immutable
-data class StripedProgressbarColors(
+data class StripedProgressBarColors(
     val track: Color,
     val indicator: Brush,
     val stripe: Color,
 )
 
 /**
- * Dimension configuration for [StripedProgressbar].
+ * Dimension configuration for [StripedProgressBar].
  *
  * @param shape Progress bar shape.
  * @param height Progress bar height.
@@ -58,7 +58,7 @@ data class StripedProgressbarColors(
  * @since 0.0.1
  */
 @Immutable
-data class StripedProgressbarDimens(
+data class StripedProgressBarDimens(
     val shape: Shape,
     val height: Dp,
     val stripeWidth: Dp,
@@ -77,12 +77,12 @@ data class StripedProgressbarDimens(
  *
  * ```kotlin
  * // Basic usage
- * StripedProgressbar(progress = 0.5f)
+ * StripedProgressBar(progress = 0.5f)
  *
  * // Custom colors
- * StripedProgressbar(
+ * StripedProgressBar(
  *     progress = downloadProgress,
- *     colors = StripedProgressbarDefaults.colors(
+ *     colors = StripedProgressBarDefaults.colors(
  *         track = Color.Gray,
  *         indicator = Brush.horizontalGradient(listOf(Color.Blue, Color.Cyan))
  *     )
@@ -91,18 +91,18 @@ data class StripedProgressbarDimens(
  *
  * @param progress Progress value between 0.0 and 1.0.
  * @param modifier Modifier for the progress bar.
- * @param colors Color configuration, defaults to [StripedProgressbarDefaults.colors].
- * @param dimens Dimension configuration, defaults to [StripedProgressbarDefaults.dimens].
+ * @param colors Color configuration, defaults to [StripedProgressBarDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [StripedProgressBarDefaults.dimens].
  *
- * @see StripedProgressbarDefaults for default values
+ * @see StripedProgressBarDefaults for default values
  * @since 0.0.1
  */
 @Composable
-fun StripedProgressbar(
+fun StripedProgressBar(
     progress: Float,
     modifier: Modifier = Modifier,
-    colors: StripedProgressbarColors = StripedProgressbarDefaults.colors(),
-    dimens: StripedProgressbarDimens = StripedProgressbarDefaults.dimens(),
+    colors: StripedProgressBarColors = StripedProgressBarDefaults.colors(),
+    dimens: StripedProgressBarDimens = StripedProgressBarDefaults.dimens(),
 ) {
     val clamped = progress.coerceIn(0f, 1f)
     val density = LocalDensity.current
@@ -170,26 +170,26 @@ fun StripedProgressbar(
 }
 
 /**
- * Default values for [StripedProgressbar].
+ * Default values for [StripedProgressBar].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
  * @since 0.0.1
  */
-object StripedProgressbarDefaults {
-    /** Creates color configuration for [StripedProgressbar]. */
+object StripedProgressBarDefaults {
+    /** Creates color configuration for [StripedProgressBar]. */
     @Composable
     fun colors(
         track: Color = System.color.background.secondary,
         indicator: Brush = System.color.gradient.sunsetNight,
         stripe: Color = Color.White.copy(alpha = 0.2f),
-    ): StripedProgressbarColors =
-        StripedProgressbarColors(
+    ): StripedProgressBarColors =
+        StripedProgressBarColors(
             track = track,
             indicator = indicator,
             stripe = stripe,
         )
 
-    /** Creates dimension configuration for [StripedProgressbar]. */
+    /** Creates dimension configuration for [StripedProgressBar]. */
     fun dimens(
         shape: Shape = RoundedCornerShape(40.dp),
         height: Dp = 16.dp,
@@ -197,8 +197,8 @@ object StripedProgressbarDefaults {
         stripeGap: Dp = 7.dp,
         stripeAngle: Float = 30f,
         animationDurationMs: Int = 250,
-    ): StripedProgressbarDimens =
-        StripedProgressbarDimens(
+    ): StripedProgressBarDimens =
+        StripedProgressBarDimens(
             shape = shape,
             height = height,
             stripeWidth = stripeWidth,

@@ -35,8 +35,7 @@ and [AndroidPlatformConfig].
 
 # Package uz.yalla.platform.button
 
-Native icon buttons: [NativeCircleIconButton], [NativeSquircleIconButton], and the
-shared [SheetIconButton] composable.
+Native icon buttons: [NativeCircleIconButton] and the shared [SheetIconButton] composable.
 
 # Package uz.yalla.platform.toggle
 

@@ -18,9 +18,9 @@ Components are organised by purpose:
 
 # Package uz.yalla.composites.card
 
-Content cards: [AddressCard], [BonusCard], [ContentCard], [EnableBonusCard], [HistoryCard],
-[NavigableCard], [NotificationCard], [PaymentTypeCard], [PlaceCard], [ProfileCard],
-[PromotionCard], [SelectableCard], and [SwitchCard].
+Content cards: [ContentCard] (building block), [SelectionCard], [ToggleCard], [BannerCard],
+[SummaryCard], [FeedCard], [InfoCard], [AvatarCard], [AddressCard], [NavigableCard],
+[ProfileCard], [PromotionCard], [SelectableCard], and [SwitchCard].
 
 # Package uz.yalla.composites.drawer
 
@@ -29,9 +29,9 @@ sections, and [Navigable] for clickable menu items with chevron.
 
 # Package uz.yalla.composites.item
 
-List and selection items: [ActionItem], [BonusAmountItem][ClickableBonusAmountItem],
-[BrandServiceItem], [ListItem], [LocationButton], [LocationItem], [RadioItem],
-[SelectableItem], [ServiceItem], and [TariffItem].
+List and selection items: [ListItem] (building block), [IconItem] (icon + text + trailing),
+[NavigableItem] (IconItem + arrow), [SelectableItem], [PricingItem], [AddressItem],
+[PlaceButton], and [ValueItem].
 
 # Package uz.yalla.composites.sheet
 
@@ -41,13 +41,13 @@ Bottom sheets: [Sheet] (modal wrapper), [BottomSheetCard] (animated card), [Expa
 
 # Package uz.yalla.composites.snackbar
 
-Snackbar system: [Snackbar] composable, [AppSnackbarHost] for hosting, and
+Snackbar system: [Snackbar] composable, [SnackbarHost] for hosting, and
 [SnackbarController] for global event-driven display.
 
 # Package uz.yalla.composites.view
 
-Display views: [CarNumber] (Uzbekistan license plate), [VehiclePlate] (generic plate),
-[RouteView] (origin/destination list), [LocationPoint], and [EmptyState].
+Display views: [CarNumber] (Uzbekistan license plate), [RouteView] (origin/destination list),
+[LocationPoint], and [EmptyState].
 
 # Package uz.yalla.composites.util
 

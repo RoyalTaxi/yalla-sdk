@@ -9,9 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import uz.yalla.composites.snackbar.AppSnackbarHost
-import uz.yalla.composites.snackbar.AppSnackbarHostState
 import uz.yalla.composites.snackbar.SnackbarData
+import uz.yalla.composites.snackbar.SnackbarHost
 import uz.yalla.resources.icons.CheckCircle
 import uz.yalla.resources.icons.Warning
 import uz.yalla.resources.icons.X
@@ -106,14 +105,11 @@ fun SheetSnackbarHost(
     state: SheetSnackbarState,
     modifier: Modifier = Modifier,
 ) {
-    AppSnackbarHost(
-        state =
-            AppSnackbarHostState(
-                data = state.data,
-                successIcon = rememberVectorPainter(YallaIcons.CheckCircle),
-                errorIcon = rememberVectorPainter(YallaIcons.Warning),
-                dismissIcon = rememberVectorPainter(YallaIcons.X),
-            ),
+    SnackbarHost(
+        data = state.data,
+        successIcon = rememberVectorPainter(YallaIcons.CheckCircle),
+        errorIcon = rememberVectorPainter(YallaIcons.Warning),
+        dismissIcon = rememberVectorPainter(YallaIcons.X),
         hostState = state.hostState,
         onDismiss = { state.dismiss() },
         modifier = modifier,
