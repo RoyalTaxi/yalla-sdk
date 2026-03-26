@@ -1,8 +1,7 @@
 package uz.yalla.primitives.field
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,40 +12,93 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.LocalDate
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import kotlinx.datetime.number
 import uz.yalla.design.theme.System
 import uz.yalla.resources.icons.Calendar
 import uz.yalla.resources.icons.YallaIcons
 
 /**
- * State for [DateField] component.
+ * Color configuration for [DateField].
  *
- * @property date Currently selected date, or null if none.
- * @property placeholder Text shown when no date selected.
- * @property enabled When false, field is not clickable.
- * @property borderStroke Optional border around field.
+ * Use [DateFieldDefaults.colors] to create with theme-aware defaults.
+ *
+ * @param containerColor Background color of the field.
+ * @param textColor Color of the selected date text.
+ * @param placeholderColor Color of the placeholder text.
+ * @param iconColor Color of the calendar icon.
+ */
+@Immutable
+data class DateFieldColors(
+    val containerColor: Color,
+    val textColor: Color,
+    val placeholderColor: Color,
+    val iconColor: Color,
+)
+
+/**
+ * Dimension configuration for [DateField].
+ *
+ * Use [DateFieldDefaults.dimens] to create with standard values.
+ *
+ * @param shape Corner shape of the field.
+ * @param contentPadding Padding inside the field container.
+ */
+@Immutable
+data class DateFieldDimens(
+    val shape: Shape,
+    val contentPadding: PaddingValues,
+)
+
+/**
+ * Default configuration values for [DateField].
+ *
+ * Provides theme-aware defaults for [colors], [textStyle], and [dimens].
  * @since 0.0.1
  */
-data class DateFieldState(
-    val date: LocalDate?,
-    val placeholder: String = "DD.MM.YYYY",
-    val enabled: Boolean = true,
-    val borderStroke: BorderStroke? = null
-)
+object DateFieldDefaults {
+
+    /** Creates theme-aware color configuration for [DateField]. */
+    @Composable
+    fun colors(
+        containerColor: Color = Color.Transparent,
+        textColor: Color = System.color.text.base,
+        placeholderColor: Color = System.color.text.subtle,
+        iconColor: Color = System.color.icon.base,
+    ): DateFieldColors = DateFieldColors(
+        containerColor = containerColor,
+        textColor = textColor,
+        placeholderColor = placeholderColor,
+        iconColor = iconColor,
+    )
+
+    /** Creates theme-aware text style for [DateField]. */
+    @Composable
+    fun textStyle(): TextStyle = System.font.body.base.medium
+
+    /** Creates dimension configuration for [DateField]. */
+    fun dimens(
+        shape: Shape = RoundedCornerShape(8.dp),
+        contentPadding: PaddingValues = PaddingValues(16.dp),
+    ): DateFieldDimens = DateFieldDimens(
+        shape = shape,
+        contentPadding = contentPadding,
+    )
+}
 
 /**
  * Read-only date field that opens a date picker on click.
  *
- * Displays formatted date or placeholder when no date selected.
+ * Displays formatted date or placeholder when no date is selected.
+ * Includes a trailing calendar icon.
  *
  * ## Usage
  *
@@ -55,19 +107,20 @@ data class DateFieldState(
  * var showPicker by remember { mutableStateOf(false) }
  *
  * DateField(
- *     state = DateFieldState(
- *         date = selectedDate,
- *         placeholder = "Select date"
- *     ),
+ *     date = selectedDate,
  *     onClick = { showPicker = true },
+ *     modifier = Modifier.fillMaxWidth(),
  * )
  * ```
  *
- * @param state Field state containing date, placeholder, enabled, and borderStroke.
- * @param onClick Invoked when field is clicked (open picker).
- * @param modifier Applied to field container.
+ * @param date Currently selected date, or null if none.
+ * @param onClick Invoked when the field is clicked (typically to open a picker).
+ * @param modifier Applied to the root card container.
+ * @param placeholder Text shown when no date is selected.
+ * @param enabled Whether the field is clickable.
+ * @param borderStroke Optional border around the field.
  * @param colors Color configuration, defaults to [DateFieldDefaults.colors].
- * @param style Text style configuration, defaults to [DateFieldDefaults.style].
+ * @param textStyle Text style for date and placeholder, defaults to [DateFieldDefaults.textStyle].
  * @param dimens Dimension configuration, defaults to [DateFieldDefaults.dimens].
  *
  * @see DateFieldDefaults for default values
@@ -75,32 +128,34 @@ data class DateFieldState(
  */
 @Composable
 fun DateField(
-    state: DateFieldState,
+    date: LocalDate?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    colors: DateFieldDefaults.DateFieldColors = DateFieldDefaults.colors(),
-    style: DateFieldDefaults.DateFieldStyle = DateFieldDefaults.style(),
-    dimens: DateFieldDefaults.DateFieldDimens = DateFieldDefaults.dimens(),
+    placeholder: String = "DD.MM.YYYY",
+    enabled: Boolean = true,
+    borderStroke: BorderStroke? = null,
+    colors: DateFieldColors = DateFieldDefaults.colors(),
+    textStyle: TextStyle = DateFieldDefaults.textStyle(),
+    dimens: DateFieldDimens = DateFieldDefaults.dimens(),
 ) {
     Card(
         modifier = modifier,
         onClick = onClick,
-        enabled = state.enabled,
+        enabled = enabled,
         shape = dimens.shape,
-        colors = CardDefaults.cardColors(colors.container),
-        border = state.borderStroke,
+        colors = CardDefaults.cardColors(colors.containerColor),
+        border = borderStroke,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(dimens.contentPadding),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimens.contentPadding),
         ) {
             Text(
-                text = state.date?.formatDisplay() ?: state.placeholder,
-                style = style.text,
-                color = if (state.date != null) colors.text else colors.placeholder,
+                text = date?.formatDisplay() ?: placeholder,
+                style = textStyle,
+                color = if (date != null) colors.textColor else colors.placeholderColor,
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -108,108 +163,16 @@ fun DateField(
             Icon(
                 painter = rememberVectorPainter(YallaIcons.Calendar),
                 contentDescription = null,
-                tint = colors.icon,
+                tint = colors.iconColor,
             )
         }
     }
 }
 
 /**
- * Formats LocalDate for display.
+ * Formats [LocalDate] as DD.MM.YYYY for display.
  */
 private fun LocalDate.formatDisplay(): String =
-    "${dayOfMonth.toString().padStart(2, '0')}." +
-        "${monthNumber.toString().padStart(2, '0')}." +
+    "${day.toString().padStart(2, '0')}." +
+        "${month.number.toString().padStart(2, '0')}." +
         "$year"
-
-/**
- * Default values for [DateField].
- *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
- * @since 0.0.1
- */
-object DateFieldDefaults {
-    /**
-     * Color configuration for [DateField].
-     *
-     * @param container Background color.
-     * @param text Selected date text color.
-     * @param placeholder Placeholder text color.
-     * @param icon Calendar icon color.
-     */
-    data class DateFieldColors(
-        val container: Color,
-        val text: Color,
-        val placeholder: Color,
-        val icon: Color,
-    )
-
-    /** Creates color configuration for [DateField]. */
-    @Composable
-    fun colors(
-        container: Color = Color.Transparent,
-        text: Color = System.color.text.base,
-        placeholder: Color = System.color.text.subtle,
-        icon: Color = System.color.icon.base,
-    ): DateFieldColors =
-        DateFieldColors(
-            container = container,
-            text = text,
-            placeholder = placeholder,
-            icon = icon,
-        )
-
-    /**
-     * Text style configuration for [DateField].
-     *
-     * @param text Text style for date and placeholder.
-     */
-    data class DateFieldStyle(
-        val text: TextStyle,
-    )
-
-    /** Creates text style configuration for [DateField]. */
-    @Composable
-    fun style(text: TextStyle = System.font.body.base.medium): DateFieldStyle =
-        DateFieldStyle(
-            text = text,
-        )
-
-    /**
-     * Dimension configuration for [DateField].
-     *
-     * @param shape Corner shape of the field.
-     * @param contentPadding Padding inside the field.
-     */
-    data class DateFieldDimens(
-        val shape: Shape,
-        val contentPadding: Dp,
-    )
-
-    /** Creates dimension configuration for [DateField]. */
-    @Composable
-    fun dimens(
-        shape: Shape = RoundedCornerShape(8.dp),
-        contentPadding: Dp = 16.dp,
-    ): DateFieldDimens =
-        DateFieldDimens(
-            shape = shape,
-            contentPadding = contentPadding,
-        )
-}
-
-@Preview
-@Composable
-private fun DateFieldPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        DateField(
-            state = DateFieldState(date = null),
-            onClick = {},
-        )
-    }
-}
