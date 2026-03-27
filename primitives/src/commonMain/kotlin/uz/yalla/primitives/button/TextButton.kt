@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 
 /**
  * Color configuration for [TextButton].
@@ -202,9 +203,11 @@ object TextButtonDefaults {
 @Preview
 @Composable
 private fun TextButtonPreview() {
-    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
-        TextButton(onClick = {}) {
-            Text("Skip")
+    YallaTheme {
+        Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+            TextButton(onClick = {}) {
+                Text("Skip")
+            }
         }
     }
 }
@@ -212,9 +215,11 @@ private fun TextButtonPreview() {
 @Preview
 @Composable
 private fun TextButtonLoadingPreview() {
-    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
-        TextButton(onClick = {}, loading = true) {
-            Text("Loading")
+    YallaTheme {
+        Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+            TextButton(onClick = {}, loading = true) {
+                Text("Loading")
+            }
         }
     }
 }

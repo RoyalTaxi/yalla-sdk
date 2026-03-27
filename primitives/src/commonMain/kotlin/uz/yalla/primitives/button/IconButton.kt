@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 
 /**
  * Color configuration for [IconButton].
@@ -196,7 +197,9 @@ object IconButtonDefaults {
 @Preview
 @Composable
 private fun IconButtonPreview() {
-    IconButton(onClick = {}) {
-        Box(Modifier.size(22.dp))
+    YallaTheme {
+        IconButton(onClick = {}) {
+            Box(Modifier.size(22.dp))
+        }
     }
 }

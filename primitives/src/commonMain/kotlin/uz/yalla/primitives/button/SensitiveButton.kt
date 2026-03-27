@@ -31,15 +31,18 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
-import kotlin.math.ceil
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.core.util.formatArgs
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
+import uz.yalla.primitives.button.SensitiveButtonDefaults.colors
+import uz.yalla.primitives.button.SensitiveButtonDefaults.dimens
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_sensitive_background
 import uz.yalla.resources.order_cancel_action_yes
 import uz.yalla.resources.order_cancel_countdown
+import kotlin.math.ceil
 
 /**
  * Color configuration for [SensitiveButton].
@@ -68,7 +71,6 @@ data class SensitiveButtonColors(
 data class SensitiveButtonDimens(
     val height: Dp,
     val shape: Shape,
-    val textStyle: TextStyle,
 )
 
 /**
@@ -115,6 +117,7 @@ fun SensitiveButton(
     countdownSeconds: Int = 3,
     confirmText: String? = null,
     countdownText: String? = null,
+    textStyle: TextStyle = System.font.body.large.bold,
     colors: SensitiveButtonColors = SensitiveButtonDefaults.colors(),
     dimens: SensitiveButtonDimens = SensitiveButtonDefaults.dimens(),
 ) {
@@ -164,7 +167,7 @@ fun SensitiveButton(
                     else -> resolvedCountdownText.formatArgs(countdown)
                 },
                 color = colors.textColor,
-                style = dimens.textStyle,
+                style = textStyle,
             )
         }
     }
@@ -204,30 +207,29 @@ object SensitiveButtonDefaults {
      * @param shape Container shape.
      * @param textStyle Text style for the button label.
      */
-    @Composable
     fun dimens(
         height: Dp = Height,
-        shape: Shape = SensitiveButtonDefaults.Shape,
-        textStyle: TextStyle = System.font.body.large.bold,
+        shape: Shape = Shape,
     ): SensitiveButtonDimens = SensitiveButtonDimens(
         height = height,
         shape = shape,
-        textStyle = textStyle,
     )
 }
 
 @Preview
 @Composable
 private fun SensitiveButtonPreview() {
-    Box(
-        modifier = Modifier
-            .background(Color.White)
-            .padding(16.dp),
-    ) {
-        SensitiveButton(
-            onClick = {},
-            confirmText = "Yes, cancel",
-            countdownText = "Hold to cancel (%s)",
-        )
+    YallaTheme {
+        Box(
+            modifier = Modifier
+                .background(Color.White)
+                .padding(16.dp),
+        ) {
+            SensitiveButton(
+                onClick = {},
+                confirmText = "Yes, cancel",
+                countdownText = "Hold to cancel (%s)",
+            )
+        }
     }
 }

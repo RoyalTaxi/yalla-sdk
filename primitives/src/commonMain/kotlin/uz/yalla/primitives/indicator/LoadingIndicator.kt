@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 import uz.yalla.platform.indicator.NativeLoadingIndicator
 
 /**
@@ -144,13 +145,15 @@ object LoadingIndicatorDefaults {
 @Preview
 @Composable
 private fun LoadingIndicatorPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        LoadingIndicator()
+    YallaTheme {
+        Box(
+            modifier =
+                Modifier
+                    .background(Color.White)
+                    .padding(16.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            LoadingIndicator()
+        }
     }
 }

@@ -11,10 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.primitives.button.BottomSheetButtonDefaults.colors
+import uz.yalla.primitives.button.BottomSheetButtonDefaults.dimens
 
 /**
  * Color configuration for [BottomSheetButton].
@@ -103,8 +104,8 @@ fun BottomSheetButton(
     icon: Painter,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    colors: BottomSheetButtonColors = BottomSheetButtonDefaults.colors(),
-    dimens: BottomSheetButtonDimens = BottomSheetButtonDefaults.dimens(),
+    colors: BottomSheetButtonColors = colors(),
+    dimens: BottomSheetButtonDimens = dimens(),
     content: @Composable RowScope.() -> Unit,
 ) {
     ButtonLayout(
@@ -173,7 +174,7 @@ object BottomSheetButtonDefaults {
     fun dimens(
         minHeight: Dp = MinHeight,
         contentPadding: PaddingValues = ContentPadding,
-        shape: Shape = BottomSheetButtonDefaults.Shape,
+        shape: Shape = Shape,
         iconSpacing: Dp = 8.dp,
     ): BottomSheetButtonDimens = BottomSheetButtonDimens(
         minHeight = minHeight,

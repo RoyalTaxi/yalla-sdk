@@ -27,6 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -37,74 +38,69 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import uz.yalla.core.util.or0
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
 import uz.yalla.resources.common_status_loading
 import uz.yalla.resources.format_time_min_short
-import org.jetbrains.compose.resources.painterResource
 import uz.yalla.resources.icons.FocusOrigin
 import uz.yalla.resources.icons.PinShadow
 import uz.yalla.resources.icons.YallaIcons
 import uz.yalla.resources.img_spinner
 
-/**
- * Animated location pin with address label and timeout display.
- *
- * The pin supports multiple states:
- * - **Idle**: Shows focus icon or timeout countdown
- * - **Jumping**: Animated bouncing with loading spinner
- * - **With address**: Shows address label above the pin
- *
- * ## Usage
- *
- * ```kotlin
- * // Simple idle pin
- * LocationPin(
- *     state = LocationPinState()
- * )
- *
- * // Pin with address and timeout
- * LocationPin(
- *     state = LocationPinState(
- *         address = "Home",
- *         timeout = 5
- *     )
- * )
- *
- * // Searching/jumping state
- * LocationPin(
- *     state = LocationPinState(
- *         jumping = true,
- *         address = "Searching..."
- *     )
- * )
- * ```
- *
- * @param state Pin state containing address, timeout, and animation flags.
- * @param modifier Modifier for the root layout.
- * @param colors Color configuration, defaults to [LocationPinDefaults.colors].
- * @param dimens Dimension configuration, defaults to [LocationPinDefaults.dimens].
- * @param animation Animation configuration, defaults to [LocationPinDefaults.animation].
- *
- * @see LocationPinDefaults for default values
- * @since 0.0.1
- */
+@Immutable
+data class LocationPinColors(
+    val background: Color,
+    val border: Brush,
+    val stick: Color,
+    val stickBorder: Color,
+    val header: Color,
+    val headerText: Color,
+    val icon: Color,
+    val text: Color,
+)
+
+@Immutable
+data class LocationPinDimens(
+    val stickHeight: Dp,
+    val stickWidth: Dp,
+    val jumpHeight: Dp,
+    val contentSize: Dp,
+    val contentShape: Shape,
+    val borderWidth: Dp,
+    val shadowSize: Dp,
+    val headerShape: Shape,
+    val headerVerticalPadding: Dp,
+    val headerHorizontalPadding: Dp,
+    val contentBottomOffset: Dp,
+    val headerBottomOffset: Dp,
+)
+
+private const val SHADOW_SHRINK_DURATION_MS = 400
+private const val JUMP_CYCLE_DURATION_MS = 700
+
 @Composable
 fun LocationPin(
-    state: LocationPinState,
     modifier: Modifier = Modifier,
-    colors: LocationPinDefaults.LocationPinColors = LocationPinDefaults.colors(),
-    dimens: LocationPinDefaults.LocationPinDimens = LocationPinDefaults.dimens(),
-    animation: LocationPinDefaults.LocationPinAnimation = LocationPinDefaults.animation(),
+    address: String? = null,
+    timeout: Int? = null,
+    jumping: Boolean = false,
+    loading: Boolean = false,
+    icon: @Composable (() -> Unit)? = null,
+    timeoutStyle: TextStyle = System.font.body.base.bold,
+    timeoutLabelStyle: TextStyle = System.font.body.small.bold,
+    headerStyle: TextStyle = System.font.body.caption,
+    colors: LocationPinColors = LocationPinDefaults.colors(),
+    dimens: LocationPinDimens = LocationPinDefaults.dimens(),
 ) {
     val density = LocalDensity.current
     val jumpHeightPx = with(density) { dimens.jumpHeight.toPx() }
@@ -114,15 +110,15 @@ fun LocationPin(
     val stickVisibleHeight = remember { Animatable(stickHeightPx) }
     val shadowScale = remember { Animatable(1f) }
 
-    LaunchedEffect(state.jumping) {
-        if (state.jumping) {
+    LaunchedEffect(jumping) {
+        if (jumping) {
             shadowScale.animateTo(
                 targetValue = 1.5f,
                 animationSpec =
                     tween(
-                        durationMillis = animation.shadowShrinkDurationMs,
-                        easing = EaseInOut
-                    )
+                        durationMillis = SHADOW_SHRINK_DURATION_MS,
+                        easing = EaseInOut,
+                    ),
             )
         } else {
             shadowScale.animateTo(
@@ -130,25 +126,25 @@ fun LocationPin(
                 animationSpec =
                     spring(
                         dampingRatio = Spring.DampingRatioLowBouncy,
-                        stiffness = Spring.StiffnessLow
-                    )
+                        stiffness = Spring.StiffnessLow,
+                    ),
             )
         }
     }
 
-    LaunchedEffect(state.jumping) {
-        if (state.jumping) {
+    LaunchedEffect(jumping) {
+        if (jumping) {
             jumpOffset.animateTo(
                 targetValue = -jumpHeightPx,
                 animationSpec =
                     infiniteRepeatable(
                         animation =
                             tween(
-                                durationMillis = animation.jumpCycleDurationMs,
-                                easing = EaseInOut
+                                durationMillis = JUMP_CYCLE_DURATION_MS,
+                                easing = EaseInOut,
                             ),
-                        repeatMode = RepeatMode.Reverse
-                    )
+                        repeatMode = RepeatMode.Reverse,
+                    ),
             )
         } else {
             jumpOffset.animateTo(
@@ -156,8 +152,8 @@ fun LocationPin(
                 animationSpec =
                     spring(
                         dampingRatio = Spring.DampingRatioLowBouncy,
-                        stiffness = Spring.StiffnessVeryLow
-                    )
+                        stiffness = Spring.StiffnessVeryLow,
+                    ),
             )
         }
     }
@@ -179,7 +175,7 @@ fun LocationPin(
                     }.constrainAs(shadow) {
                         linkTo(top = parent.top, bottom = parent.bottom)
                         linkTo(start = parent.start, end = parent.end)
-                    }
+                    },
         )
 
         PinStick(
@@ -192,34 +188,44 @@ fun LocationPin(
                     .constrainAs(stick) {
                         top.linkTo(content.bottom)
                         linkTo(start = parent.start, end = parent.end)
-                    }
+                    },
         )
 
         PinContent(
-            timeout = state.timeout,
-            jumping = state.jumping,
+            timeout = timeout,
+            jumping = jumping,
+            icon = icon ?: {
+                Icon(
+                    painter = rememberVectorPainter(YallaIcons.FocusOrigin),
+                    contentDescription = null,
+                    tint = colors.icon,
+                    modifier = Modifier.size(18.dp),
+                )
+            },
+            timeoutStyle = timeoutStyle,
+            timeoutLabelStyle = timeoutLabelStyle,
             colors = colors,
             dimens = dimens,
-            animation = animation,
             modifier =
                 Modifier
                     .graphicsLayer { translationY = jumpOffset.value }
                     .constrainAs(content) {
                         bottom.linkTo(shadow.bottom, margin = dimens.stickHeight + dimens.contentBottomOffset)
                         linkTo(start = parent.start, end = parent.end)
-                    }
+                    },
         )
 
-        state.address?.let { address ->
+        address?.let { addr ->
             PinHeader(
-                address = address,
+                address = addr,
+                headerStyle = headerStyle,
                 colors = colors,
                 dimens = dimens,
                 modifier =
                     Modifier.constrainAs(header) {
                         bottom.linkTo(content.top, margin = dimens.jumpHeight + dimens.headerBottomOffset)
                         linkTo(start = parent.start, end = parent.end)
-                    }
+                    },
             )
         }
     }
@@ -229,9 +235,11 @@ fun LocationPin(
 private fun PinContent(
     timeout: Int?,
     jumping: Boolean,
-    colors: LocationPinDefaults.LocationPinColors,
-    dimens: LocationPinDefaults.LocationPinDimens,
-    animation: LocationPinDefaults.LocationPinAnimation,
+    icon: @Composable () -> Unit,
+    timeoutStyle: TextStyle,
+    timeoutLabelStyle: TextStyle,
+    colors: LocationPinColors,
+    dimens: LocationPinDimens,
     modifier: Modifier = Modifier,
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "loader")
@@ -245,9 +253,9 @@ private fun PinContent(
                 animation =
                     tween(
                         easing = FastOutSlowInEasing,
-                        durationMillis = animation.jumpCycleDurationMs * 2
-                    )
-            )
+                        durationMillis = JUMP_CYCLE_DURATION_MS * 2,
+                    ),
+            ),
     )
 
     Box(
@@ -258,12 +266,12 @@ private fun PinContent(
                 .aspectRatio(1f)
                 .background(
                     shape = dimens.contentShape,
-                    color = colors.background
+                    color = colors.background,
                 ).border(
                     width = dimens.borderWidth,
                     shape = dimens.contentShape,
-                    brush = colors.border
-                )
+                    brush = colors.border,
+                ),
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             when {
@@ -274,31 +282,26 @@ private fun PinContent(
                         modifier =
                             Modifier
                                 .size(18.dp)
-                                .graphicsLayer { rotationZ = rotation }
+                                .graphicsLayer { rotationZ = rotation },
                     )
                 }
                 timeout == null -> {
-                    Icon(
-                        painter = rememberVectorPainter(YallaIcons.FocusOrigin),
-                        contentDescription = null,
-                        tint = colors.icon,
-                        modifier = Modifier.size(18.dp)
-                    )
+                    icon()
                 }
                 else -> {
                     Text(
                         text = timeout.or0().coerceAtLeast(1).toString(),
                         color = colors.text,
-                        style = uz.yalla.design.theme.System.font.body.base.bold
+                        style = timeoutStyle,
                     )
                     Text(
                         text = stringResource(Res.string.format_time_min_short),
                         color = colors.text,
                         style =
-                            uz.yalla.design.theme.System.font.body.small.bold.copy(
+                            timeoutLabelStyle.copy(
                                 fontSize = 9.sp,
-                                lineHeight = 8.sp
-                            )
+                                lineHeight = 8.sp,
+                            ),
                     )
                 }
             }
@@ -309,8 +312,8 @@ private fun PinContent(
 @Composable
 private fun PinStick(
     clipHeight: Dp,
-    colors: LocationPinDefaults.LocationPinColors,
-    dimens: LocationPinDefaults.LocationPinDimens,
+    colors: LocationPinColors,
+    dimens: LocationPinDimens,
     modifier: Modifier = Modifier,
 ) {
     Box(
@@ -318,7 +321,7 @@ private fun PinStick(
         modifier =
             modifier
                 .width(dimens.stickWidth)
-                .height(dimens.stickHeight)
+                .height(dimens.stickHeight),
     ) {
         Box(
             modifier =
@@ -328,12 +331,12 @@ private fun PinStick(
                     .clipToBounds()
                     .background(
                         shape = CircleShape,
-                        color = colors.stick
+                        color = colors.stick,
                     ).border(
                         width = 1.dp,
                         shape = CircleShape,
-                        color = colors.stickBorder
-                    )
+                        color = colors.stickBorder,
+                    ),
         )
     }
 }
@@ -341,21 +344,22 @@ private fun PinStick(
 @Composable
 private fun PinHeader(
     address: String,
-    colors: LocationPinDefaults.LocationPinColors,
-    dimens: LocationPinDefaults.LocationPinDimens,
+    headerStyle: TextStyle,
+    colors: LocationPinColors,
+    dimens: LocationPinDimens,
     modifier: Modifier = Modifier,
 ) {
     Surface(
         shape = dimens.headerShape,
         color = colors.header,
-        modifier = modifier
+        modifier = modifier,
     ) {
         Text(
             text =
                 address.takeIf { it.isNotBlank() }
                     ?: stringResource(Res.string.common_status_loading),
             color = colors.headerText,
-            style = uz.yalla.design.theme.System.font.body.caption,
+            style = headerStyle,
             maxLines = 1,
             modifier =
                 Modifier
@@ -364,47 +368,17 @@ private fun PinHeader(
                         animationSpec =
                             spring(
                                 dampingRatio = Spring.DampingRatioNoBouncy,
-                                stiffness = Spring.StiffnessMedium
-                            )
+                                stiffness = Spring.StiffnessMedium,
+                            ),
                     ).padding(
                         vertical = dimens.headerVerticalPadding,
-                        horizontal = dimens.headerHorizontalPadding
-                    )
+                        horizontal = dimens.headerHorizontalPadding,
+                    ),
         )
     }
 }
 
-/**
- * Default configuration values for [LocationPin].
- *
- * Provides theme-aware defaults for [colors], [style], [dimens], and [animation] that can be overridden.
- * @since 0.0.1
- */
 object LocationPinDefaults {
-    /**
-     * Color configuration for [LocationPin].
-     *
-     * @param background Background color of the pin content.
-     * @param border Border brush (gradient) of the pin content.
-     * @param stick Color of the stick.
-     * @param stickBorder Border color of the stick.
-     * @param header Background color of the address header.
-     * @param headerText Text color of the address header.
-     * @param icon Icon tint color.
-     * @param text Text color for timeout display.
-     */
-    data class LocationPinColors(
-        val background: Color,
-        val border: Brush,
-        val stick: Color,
-        val stickBorder: Color,
-        val header: Color,
-        val headerText: Color,
-        val icon: Color,
-        val text: Color
-    )
-
-    /** Creates color configuration for [LocationPin]. */
     @Composable
     fun colors(
         background: Color = System.color.background.base,
@@ -414,8 +388,8 @@ object LocationPinDefaults {
         header: Color = System.color.icon.base,
         headerText: Color = System.color.background.base,
         icon: Color = System.color.icon.base,
-        text: Color = System.color.text.base
-    ) = LocationPinColors(
+        text: Color = System.color.text.base,
+    ): LocationPinColors = LocationPinColors(
         background = background,
         border = border,
         stick = stick,
@@ -423,67 +397,9 @@ object LocationPinDefaults {
         header = header,
         headerText = headerText,
         icon = icon,
-        text = text
+        text = text,
     )
 
-    /**
-     * Text style configuration for [LocationPin].
-     *
-     * @param timeout Style for timeout number text.
-     * @param timeoutLabel Style for timeout label text.
-     * @param header Style for header text.
-     */
-    data class LocationPinStyle(
-        val timeout: TextStyle,
-        val timeoutLabel: TextStyle,
-        val header: TextStyle
-    )
-
-    /** Creates text style configuration for [LocationPin]. */
-    @Composable
-    fun style(
-        timeout: TextStyle = System.font.body.base.bold,
-        timeoutLabel: TextStyle = System.font.body.small.bold,
-        header: TextStyle = System.font.body.caption
-    ) = LocationPinStyle(
-        timeout = timeout,
-        timeoutLabel = timeoutLabel,
-        header = header
-    )
-
-    /**
-     * Dimension configuration for [LocationPin].
-     *
-     * @param stickHeight Height of the stick connecting pin to shadow.
-     * @param stickWidth Width of the stick.
-     * @param jumpHeight Maximum jump height during animation.
-     * @param contentSize Size of the main pin content box.
-     * @param contentShape Shape of the content box.
-     * @param borderWidth Border width of the content box.
-     * @param shadowSize Size of the shadow ellipse.
-     * @param headerShape Shape of the header label.
-     * @param headerVerticalPadding Vertical padding of the header label.
-     * @param headerHorizontalPadding Horizontal padding of the header label.
-     * @param contentBottomOffset Extra offset between pin content bottom and shadow.
-     * @param headerBottomOffset Extra offset between header bottom and pin content top.
-     */
-    data class LocationPinDimens(
-        val stickHeight: Dp,
-        val stickWidth: Dp,
-        val jumpHeight: Dp,
-        val contentSize: Dp,
-        val contentShape: Shape,
-        val borderWidth: Dp,
-        val shadowSize: Dp,
-        val headerShape: Shape,
-        val headerVerticalPadding: Dp,
-        val headerHorizontalPadding: Dp,
-        val contentBottomOffset: Dp,
-        val headerBottomOffset: Dp
-    )
-
-    /** Creates dimension configuration for [LocationPin]. */
-    @Composable
     fun dimens(
         stickHeight: Dp = 12.dp,
         stickWidth: Dp = 6.dp,
@@ -496,8 +412,8 @@ object LocationPinDefaults {
         headerVerticalPadding: Dp = 6.dp,
         headerHorizontalPadding: Dp = 12.dp,
         contentBottomOffset: Dp = 6.dp,
-        headerBottomOffset: Dp = 2.dp
-    ) = LocationPinDimens(
+        headerBottomOffset: Dp = 2.dp,
+    ): LocationPinDimens = LocationPinDimens(
         stickHeight = stickHeight,
         stickWidth = stickWidth,
         jumpHeight = jumpHeight,
@@ -509,25 +425,6 @@ object LocationPinDefaults {
         headerVerticalPadding = headerVerticalPadding,
         headerHorizontalPadding = headerHorizontalPadding,
         contentBottomOffset = contentBottomOffset,
-        headerBottomOffset = headerBottomOffset
-    )
-
-    /**
-     * Animation configuration for [LocationPin].
-     *
-     * @param shadowShrinkDurationMs Duration for shadow shrink animation in milliseconds.
-     * @param jumpCycleDurationMs Duration for one jump cycle in milliseconds.
-     */
-    data class LocationPinAnimation(
-        val shadowShrinkDurationMs: Int,
-        val jumpCycleDurationMs: Int
-    )
-
-    fun animation(
-        shadowShrinkDurationMs: Int = 400,
-        jumpCycleDurationMs: Int = 700
-    ) = LocationPinAnimation(
-        shadowShrinkDurationMs = shadowShrinkDurationMs,
-        jumpCycleDurationMs = jumpCycleDurationMs
+        headerBottomOffset = headerBottomOffset,
     )
 }

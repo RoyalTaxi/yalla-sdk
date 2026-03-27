@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -14,51 +15,22 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
 /**
- * Default configuration values for [SectionBackground].
+ * Color configuration for [SectionBackground].
  *
- * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @param background Background color of the section.
  * @since 0.0.1
  */
-object SectionBackgroundDefaults {
-    /**
-     * Color configuration for [SectionBackground].
-     *
-     * @param background Background color of the section.
-     * @since 0.0.1
-     */
-    data class SectionBackgroundColors(val background: Color)
+@Immutable
+data class SectionBackgroundColors(val background: Color)
 
-    /**
-     * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun colors(background: Color = System.color.background.secondary) =
-        SectionBackgroundColors(
-            background = background
-        )
-
-    /**
-     * Dimension configuration for [SectionBackground].
-     *
-     * @param shape Shape of the section container.
-     * @param cornerRadius Corner radius of the shape.
-     * @since 0.0.1
-     */
-    data class SectionBackgroundDimens(val shape: Shape)
-
-    /**
-     * Creates default dimensions.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun dimens(shape: Shape = RoundedCornerShape(16.dp)) =
-        SectionBackgroundDimens(
-            shape = shape
-        )
-}
+/**
+ * Dimension configuration for [SectionBackground].
+ *
+ * @param shape Shape of the section container.
+ * @since 0.0.1
+ */
+@Immutable
+data class SectionBackgroundDimens(val shape: Shape)
 
 /**
  * Container with rounded corners and secondary background.
@@ -81,9 +53,9 @@ object SectionBackgroundDefaults {
 @Composable
 fun SectionBackground(
     modifier: Modifier = Modifier,
-    colors: SectionBackgroundDefaults.SectionBackgroundColors = SectionBackgroundDefaults.colors(),
-    dimens: SectionBackgroundDefaults.SectionBackgroundDimens = SectionBackgroundDefaults.dimens(),
-    content: @Composable ColumnScope.() -> Unit
+    colors: SectionBackgroundColors = SectionBackgroundDefaults.colors(),
+    dimens: SectionBackgroundDimens = SectionBackgroundDefaults.dimens(),
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
         content = content,
@@ -93,4 +65,21 @@ fun SectionBackground(
                 .clip(dimens.shape)
                 .background(colors.background)
     )
+}
+
+/**
+ * Default configuration values for [SectionBackground].
+ *
+ * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
+ */
+object SectionBackgroundDefaults {
+    /** Creates theme-aware default colors. */
+    @Composable
+    fun colors(background: Color = System.color.background.secondary): SectionBackgroundColors =
+        SectionBackgroundColors(background = background)
+
+    /** Creates default dimensions. */
+    fun dimens(shape: Shape = RoundedCornerShape(16.dp)): SectionBackgroundDimens =
+        SectionBackgroundDimens(shape = shape)
 }

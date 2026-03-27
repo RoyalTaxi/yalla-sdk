@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 import uz.yalla.primitives.button.PrimaryButton
 import uz.yalla.primitives.button.SecondaryButton
 
@@ -241,40 +242,42 @@ fun ActionSheet(
 @Preview
 @Composable
 private fun ActionSheetContentPreview() {
-    val dimens = ActionSheetDefaults.dimens()
-    Box(
-        modifier = Modifier
-            .background(Color.White)
-            .padding(16.dp),
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(dimens.contentPadding),
+    YallaTheme {
+        val dimens = ActionSheetDefaults.dimens()
+        Box(
+            modifier = Modifier
+                .background(Color.White)
+                .padding(16.dp),
         ) {
-            Text(
-                text = "Delete Card",
-                style = System.font.title.base,
-                textAlign = TextAlign.Center,
-            )
-            Spacer(Modifier.height(8.dp))
-            Text(
-                text = "Are you sure you want to delete this card?",
-                style = System.font.body.base.medium,
-                textAlign = TextAlign.Center,
-            )
-            Spacer(Modifier.height(16.dp))
-            PrimaryButton(
-                onClick = {},
-                modifier = Modifier.fillMaxWidth(),
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(dimens.contentPadding),
             ) {
-                Text("Delete")
-            }
-            Spacer(Modifier.height(8.dp))
-            SecondaryButton(
-                onClick = {},
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text("Cancel")
+                Text(
+                    text = "Delete Card",
+                    style = System.font.title.base,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = "Are you sure you want to delete this card?",
+                    style = System.font.body.base.medium,
+                    textAlign = TextAlign.Center,
+                )
+                Spacer(Modifier.height(16.dp))
+                PrimaryButton(
+                    onClick = {},
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Delete")
+                }
+                Spacer(Modifier.height(8.dp))
+                SecondaryButton(
+                    onClick = {},
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text("Cancel")
+                }
             }
         }
     }

@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 
 /**
  * Data for snackbar display.
@@ -137,15 +138,17 @@ object SnackbarHostDefaults {
 @Preview
 @Composable
 private fun SnackbarHostPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        Text(
-            text = "Snackbar Preview",
-            style = System.font.body.base.medium,
-        )
+    YallaTheme {
+        Box(
+            modifier =
+                Modifier
+                    .background(Color.White)
+                    .padding(16.dp)
+        ) {
+            Text(
+                text = "Snackbar Preview",
+                style = System.font.body.base.medium,
+            )
+        }
     }
 }

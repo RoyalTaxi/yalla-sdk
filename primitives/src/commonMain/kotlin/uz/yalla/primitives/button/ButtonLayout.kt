@@ -49,7 +49,7 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
  * @param iconSpacing Horizontal space between icons and main content.
  * @param leadingIcon Optional composable rendered before main content.
  * @param trailingIcon Optional composable rendered after main content.
- * @param content Main button content, typically [Text].
+ * @param content Main button content, typically Text.
  */
 @Composable
 internal fun ButtonLayout(
@@ -95,16 +95,22 @@ internal fun ButtonLayout(
                         Box(
                             modifier = Modifier.size(iconSize),
                             contentAlignment = Alignment.Center,
-                        ) { icon() }
+                            content = { icon() }
+                        )
+
                         Spacer(Modifier.width(iconSpacing))
                     }
+
                     content()
+
                     trailingIcon?.let { icon ->
                         Spacer(Modifier.width(iconSpacing))
+
                         Box(
                             modifier = Modifier.size(iconSize),
                             contentAlignment = Alignment.Center,
-                        ) { icon() }
+                            content = { icon() }
+                        )
                     }
                 }
             }

@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 
 /**
  * Color configuration for [PrimaryButton].
@@ -203,9 +204,11 @@ object PrimaryButtonDefaults {
 @Preview
 @Composable
 private fun PrimaryButtonPreview() {
-    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
-        PrimaryButton(onClick = {}) {
-            Text("Continue")
+    YallaTheme {
+        Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+            PrimaryButton(onClick = {}) {
+                Text("Continue")
+            }
         }
     }
 }
@@ -213,9 +216,11 @@ private fun PrimaryButtonPreview() {
 @Preview
 @Composable
 private fun PrimaryButtonLoadingPreview() {
-    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
-        PrimaryButton(onClick = {}, loading = true) {
-            Text("Loading")
+    YallaTheme {
+        Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+            PrimaryButton(onClick = {}, loading = true) {
+                Text("Loading")
+            }
         }
     }
 }

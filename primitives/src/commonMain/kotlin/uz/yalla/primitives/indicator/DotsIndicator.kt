@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 
 /**
  * Color configuration for [DotsIndicator].
@@ -140,16 +141,18 @@ object DotsIndicatorDefaults {
 @Preview
 @Composable
 private fun DotsIndicatorPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp),
-        contentAlignment = Alignment.Center,
-    ) {
-        DotsIndicator(
-            pageCount = 5,
-            currentPage = 2,
-        )
+    YallaTheme {
+        Box(
+            modifier =
+                Modifier
+                    .background(Color.White)
+                    .padding(16.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            DotsIndicator(
+                pageCount = 5,
+                currentPage = 2,
+            )
+        }
     }
 }

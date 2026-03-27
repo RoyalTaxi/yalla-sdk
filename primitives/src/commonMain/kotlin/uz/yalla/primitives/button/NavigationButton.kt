@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 
 /**
  * Color configuration for [NavigationButton].
@@ -157,5 +158,7 @@ object NavigationButtonDefaults {
 @Preview
 @Composable
 private fun NavigationButtonPreview() {
-    NavigationButton(onClick = {})
+    YallaTheme {
+        NavigationButton(onClick = {})
+    }
 }

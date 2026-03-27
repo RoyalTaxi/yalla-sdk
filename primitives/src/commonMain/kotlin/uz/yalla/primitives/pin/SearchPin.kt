@@ -3,6 +3,7 @@ package uz.yalla.primitives.pin
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +18,19 @@ import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import uz.yalla.resources.Res
+
+/**
+ * Dimension configuration for [SearchPin].
+ *
+ * @param size Size of the search pin animation.
+ * @param lottieResourcePath Resource path for the Lottie animation.
+ * @since 0.0.1
+ */
+@Immutable
+data class SearchPinDimens(
+    val size: Dp,
+    val lottieResourcePath: String,
+)
 
 /**
  * Animated search/loading pin indicator using Lottie.
@@ -47,7 +61,7 @@ import uz.yalla.resources.Res
 @Composable
 fun SearchPin(
     modifier: Modifier = Modifier,
-    dimens: SearchPinDefaults.SearchPinDimens = SearchPinDefaults.dimens(),
+    dimens: SearchPinDimens = SearchPinDefaults.dimens(),
 ) {
     var lottieJson by remember { mutableStateOf<String?>(null) }
 
@@ -79,24 +93,12 @@ fun SearchPin(
  * @since 0.0.1
  */
 object SearchPinDefaults {
-    /**
-     * Dimension configuration for [SearchPin].
-     *
-     * @param size Size of the search pin animation.
-     * @param lottieResourcePath Resource path for the Lottie animation.
-     */
-    data class SearchPinDimens(
-        val size: Dp,
-        val lottieResourcePath: String
-    )
-
     /** Creates dimension configuration for [SearchPin]. */
-    @Composable
     fun dimens(
         size: Dp = 200.dp,
-        lottieResourcePath: String = "files/lottie_order_search.json"
-    ) = SearchPinDimens(
+        lottieResourcePath: String = "files/lottie_order_search.json",
+    ): SearchPinDimens = SearchPinDimens(
         size = size,
-        lottieResourcePath = lottieResourcePath
+        lottieResourcePath = lottieResourcePath,
     )
 }

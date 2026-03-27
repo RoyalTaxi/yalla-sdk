@@ -14,6 +14,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,27 +26,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
-/**
- * Snackbar variant for success/error states.
- * @since 0.0.1
- */
 enum class SnackbarVariant {
-    /** Positive feedback (e.g., card added, action completed). */
     Success,
-
-    /** Negative feedback (e.g., network error, validation failure). */
     Error,
 }
 
-/**
- * State for [Snackbar].
- *
- * @property message Snackbar text.
- * @property variant Success or error variant.
- * @property icon Leading icon.
- * @property dismissIcon Dismiss button icon.
- * @since 0.0.1
- */
 data class SnackbarState(
     val message: String,
     val variant: SnackbarVariant,
@@ -53,44 +38,36 @@ data class SnackbarState(
     val dismissIcon: Painter,
 )
 
-/**
- * Snackbar message with icon, text, and dismiss action.
- *
- * Use for transient feedback messages.
- *
- * ## Usage
- *
- * ```kotlin
- * Snackbar(
- *     state = SnackbarState(
- *         message = "Card added successfully",
- *         variant = SnackbarVariant.Success,
- *         icon = rememberVectorPainter(YallaIcons.CheckCircle),
- *         dismissIcon = rememberVectorPainter(YallaIcons.X),
- *     ),
- *     onDismiss = { snackbarHostState.currentSnackbarData?.dismiss() },
- * )
- * ```
- *
- * @param state Snackbar state with message, variant, and icons.
- * @param onDismiss Called when dismiss clicked.
- * @param modifier Applied to snackbar.
- * @param colors Color configuration, defaults to [SnackbarDefaults.colors].
- * @param style Text style configuration, defaults to [SnackbarDefaults.style].
- * @param dimens Dimension configuration, defaults to [SnackbarDefaults.dimens].
- *
- * @see SnackbarState for state configuration
- * @see SnackbarDefaults for default values
- * @since 0.0.1
- */
+@Immutable
+data class SnackbarColors(
+    val container: Color,
+    val iconBackground: Color,
+    val icon: Color,
+    val text: Color,
+    val dismissIcon: Color,
+)
+
+@Immutable
+data class SnackbarDimens(
+    val shape: Shape,
+    val contentSpacing: Dp,
+    val verticalPadding: Dp,
+    val horizontalPadding: Dp,
+    val iconSize: Dp,
+    val iconPadding: Dp,
+    val iconBackgroundRadius: Dp,
+    val dismissIconSize: Dp,
+    val messageMaxLines: Int,
+)
+
 @Composable
 fun Snackbar(
     state: SnackbarState,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    colors: SnackbarDefaults.SnackbarColors = SnackbarDefaults.colors(state.variant),
-    style: SnackbarDefaults.SnackbarStyle = SnackbarDefaults.style(),
-    dimens: SnackbarDefaults.SnackbarDimens = SnackbarDefaults.dimens(),
+    messageStyle: TextStyle = System.font.body.small.medium,
+    colors: SnackbarColors = SnackbarDefaults.colors(state.variant),
+    dimens: SnackbarDimens = SnackbarDefaults.dimens(),
 ) {
     Card(
         modifier = modifier,
@@ -132,7 +109,7 @@ fun Snackbar(
 
             Text(
                 text = state.message,
-                style = style.message,
+                style = messageStyle,
                 color = colors.text,
                 modifier = Modifier.weight(1f),
                 maxLines = dimens.messageMaxLines,
@@ -152,36 +129,7 @@ fun Snackbar(
     }
 }
 
-/**
- * Default configuration values for [Snackbar].
- *
- * Provides theme-aware defaults for [colors], [style], and [dimens] that can be overridden.
- * @since 0.0.1
- */
 object SnackbarDefaults {
-    /**
-     * Color configuration for [Snackbar].
-     *
-     * @param container Background color.
-     * @param iconBackground Background color for icon container.
-     * @param icon Icon tint color.
-     * @param text Message text color.
-     * @param dismissIcon Dismiss icon tint color.
-     * @since 0.0.1
-     */
-    data class SnackbarColors(
-        val container: Color,
-        val iconBackground: Color,
-        val icon: Color,
-        val text: Color,
-        val dismissIcon: Color,
-    )
-
-    /**
-     * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
-     */
     @Composable
     fun colors(variant: SnackbarVariant): SnackbarColors =
         when (variant) {
@@ -203,11 +151,6 @@ object SnackbarDefaults {
                 )
         }
 
-    /**
-     * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
-     */
     @Composable
     fun colors(
         container: Color = System.color.button.active,
@@ -215,7 +158,7 @@ object SnackbarDefaults {
         icon: Color = System.color.icon.white,
         text: Color = System.color.icon.white,
         dismissIcon: Color = System.color.icon.white,
-    ) = SnackbarColors(
+    ): SnackbarColors = SnackbarColors(
         container = container,
         iconBackground = iconBackground,
         icon = icon,
@@ -223,57 +166,6 @@ object SnackbarDefaults {
         dismissIcon = dismissIcon,
     )
 
-    /**
-     * Text style configuration for [Snackbar].
-     *
-     * @param message Message text style.
-     * @since 0.0.1
-     */
-    data class SnackbarStyle(val message: TextStyle,)
-
-    /**
-     * Creates theme-aware default text styles.
-     *
-     * @since 0.0.1
-     */
-    @Composable
-    fun style(message: TextStyle = System.font.body.small.medium) =
-        SnackbarStyle(
-            message = message,
-        )
-
-    /**
-     * Dimension configuration for [Snackbar].
-     *
-     * @param shape Snackbar corner shape.
-     * @param contentSpacing Spacing between elements.
-     * @param verticalPadding Vertical padding for content.
-     * @param horizontalPadding Horizontal padding for content.
-     * @param iconSize Leading icon size.
-     * @param iconPadding Padding inside icon container.
-     * @param iconBackgroundRadius Icon background corner radius.
-     * @param dismissIconSize Dismiss icon size.
-     * @param messageMaxLines Maximum lines for message text.
-     * @since 0.0.1
-     */
-    data class SnackbarDimens(
-        val shape: Shape,
-        val contentSpacing: Dp,
-        val verticalPadding: Dp,
-        val horizontalPadding: Dp,
-        val iconSize: Dp,
-        val iconPadding: Dp,
-        val iconBackgroundRadius: Dp,
-        val dismissIconSize: Dp,
-        val messageMaxLines: Int,
-    )
-
-    /**
-     * Creates default dimensions.
-     *
-     * @since 0.0.1
-     */
-    @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(12.dp),
         contentSpacing: Dp = 8.dp,
@@ -284,7 +176,7 @@ object SnackbarDefaults {
         iconBackgroundRadius: Dp = 36.dp,
         dismissIconSize: Dp = 20.dp,
         messageMaxLines: Int = 2,
-    ) = SnackbarDimens(
+    ): SnackbarDimens = SnackbarDimens(
         shape = shape,
         contentSpacing = contentSpacing,
         verticalPadding = verticalPadding,

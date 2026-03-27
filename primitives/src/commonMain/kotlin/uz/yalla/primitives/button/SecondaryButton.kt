@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 
 /**
  * Color configuration for [SecondaryButton].
@@ -203,9 +204,11 @@ object SecondaryButtonDefaults {
 @Preview
 @Composable
 private fun SecondaryButtonPreview() {
-    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
-        SecondaryButton(onClick = {}) {
-            Text("Cancel")
+    YallaTheme {
+        Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+            SecondaryButton(onClick = {}) {
+                Text("Cancel")
+            }
         }
     }
 }
@@ -213,9 +216,11 @@ private fun SecondaryButtonPreview() {
 @Preview
 @Composable
 private fun SecondaryButtonLoadingPreview() {
-    Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
-        SecondaryButton(onClick = {}, loading = true) {
-            Text("Loading")
+    YallaTheme {
+        Box(modifier = Modifier.background(Color.White).padding(16.dp)) {
+            SecondaryButton(onClick = {}, loading = true) {
+                Text("Loading")
+            }
         }
     }
 }

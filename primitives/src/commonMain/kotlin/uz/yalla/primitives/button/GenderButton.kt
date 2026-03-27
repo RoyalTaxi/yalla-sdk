@@ -59,7 +59,6 @@ data class GenderButtonDimens(
     val contentPadding: PaddingValues,
     val innerStartPadding: Dp,
     val iconSize: Dp,
-    val textStyle: TextStyle,
 )
 
 /**
@@ -108,6 +107,7 @@ fun GenderButton(
     isSelected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    textStyle: TextStyle = System.font.body.base.medium,
     colors: GenderButtonColors = GenderButtonDefaults.colors(),
     dimens: GenderButtonDimens = GenderButtonDefaults.dimens(),
 ) {
@@ -130,7 +130,7 @@ fun GenderButton(
                     ?.let { res -> stringResource(res) }
                     .orEmpty(),
                 color = colors.textColor,
-                style = dimens.textStyle,
+                style = textStyle,
             )
 
             Image(
@@ -182,18 +182,15 @@ object GenderButtonDefaults {
      * @param iconSize Size of the check/uncheck icon.
      * @param textStyle Text style for the gender label.
      */
-    @Composable
     fun dimens(
-        shape: Shape = GenderButtonDefaults.Shape,
+        shape: Shape = Shape,
         contentPadding: PaddingValues = ContentPadding,
         innerStartPadding: Dp = 12.dp,
         iconSize: Dp = 24.dp,
-        textStyle: TextStyle = System.font.body.base.medium,
     ): GenderButtonDimens = GenderButtonDimens(
         shape = shape,
         contentPadding = contentPadding,
         innerStartPadding = innerStartPadding,
         iconSize = iconSize,
-        textStyle = textStyle,
     )
 }

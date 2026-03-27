@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 import uz.yalla.primitives.button.NavigationButton
 
 /**
@@ -177,21 +178,23 @@ object TopBarDefaults {
 @Preview
 @Composable
 private fun TopBarPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        TopBar(
-            title = {
-                Text(
-                    text = "Settings",
-                    style = System.font.body.base.medium,
-                    color = System.color.text.base,
-                )
-            },
-            onNavigationClick = {},
-        )
+    YallaTheme {
+        Box(
+            modifier =
+                Modifier
+                    .background(Color.White)
+                    .padding(16.dp)
+        ) {
+            TopBar(
+                title = {
+                    Text(
+                        text = "Settings",
+                        style = System.font.body.base.medium,
+                        color = System.color.text.base,
+                    )
+                },
+                onNavigationClick = {},
+            )
+        }
     }
 }

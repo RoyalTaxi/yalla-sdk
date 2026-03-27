@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 
 /**
  * Color configuration for [Sheet].
@@ -258,12 +259,14 @@ fun SheetDragHandle(
 @Preview
 @Composable
 private fun SheetDragHandlePreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(Color.White)
-                .padding(16.dp)
-    ) {
-        SheetDragHandle()
+    YallaTheme {
+        Box(
+            modifier =
+                Modifier
+                    .background(Color.White)
+                    .padding(16.dp)
+        ) {
+            SheetDragHandle()
+        }
     }
 }

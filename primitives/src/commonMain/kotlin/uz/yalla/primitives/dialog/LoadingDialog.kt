@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,7 +16,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 import uz.yalla.platform.indicator.NativeLoadingIndicator
+
+/**
+ * Color configuration for [LoadingDialog].
+ *
+ * @param container Background color.
+ * @param indicator Spinner color.
+ * @since 0.0.1
+ */
+@Immutable
+data class LoadingDialogColors(
+    val container: Color,
+    val indicator: Color,
+)
+
+/**
+ * Dimension configuration for [LoadingDialog].
+ *
+ * @param contentPadding Padding inside dialog.
+ * @param shape Dialog shape.
+ * @since 0.0.1
+ */
+@Immutable
+data class LoadingDialogDimens(
+    val contentPadding: Dp,
+    val shape: Shape,
+)
 
 /**
  * Modal loading dialog with centered spinner.
@@ -46,8 +74,8 @@ fun LoadingDialog(
     onDismissRequest: () -> Unit = {},
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = false,
-    colors: LoadingDialogDefaults.LoadingDialogColors = LoadingDialogDefaults.colors(),
-    dimens: LoadingDialogDefaults.LoadingDialogDimens = LoadingDialogDefaults.dimens(),
+    colors: LoadingDialogColors = LoadingDialogDefaults.colors(),
+    dimens: LoadingDialogDimens = LoadingDialogDefaults.dimens(),
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -82,44 +110,21 @@ fun LoadingDialog(
  * @since 0.0.1
  */
 object LoadingDialogDefaults {
-    /**
-     * Color configuration for [LoadingDialog].
-     *
-     * @param container Background color.
-     * @param indicator Spinner color.
-     */
-    data class LoadingDialogColors(
-        val container: Color,
-        val indicator: Color,
-    )
-
     /** Creates color configuration for [LoadingDialog]. */
     @Composable
     fun colors(
         container: Color = Color.White,
         indicator: Color = System.color.background.brand,
-    ) = LoadingDialogColors(
+    ): LoadingDialogColors = LoadingDialogColors(
         container = container,
         indicator = indicator,
     )
 
-    /**
-     * Dimension configuration for [LoadingDialog].
-     *
-     * @param contentPadding Padding inside dialog.
-     * @param shape Dialog shape.
-     */
-    data class LoadingDialogDimens(
-        val contentPadding: Dp,
-        val shape: Shape,
-    )
-
     /** Creates dimension configuration for [LoadingDialog]. */
-    @Composable
     fun dimens(
         contentPadding: Dp = 20.dp,
         shape: Shape = CircleShape,
-    ) = LoadingDialogDimens(
+    ): LoadingDialogDimens = LoadingDialogDimens(
         contentPadding = contentPadding,
         shape = shape,
     )
@@ -128,15 +133,17 @@ object LoadingDialogDefaults {
 @Preview
 @Composable
 private fun LoadingDialogContentPreview() {
-    Box(
-        modifier =
-            Modifier
-                .background(
-                    color = Color.White,
-                    shape = CircleShape,
-                ),
-        contentAlignment = Alignment.Center,
-    ) {
-        Box(Modifier.padding(20.dp))
+    YallaTheme {
+        Box(
+            modifier =
+                Modifier
+                    .background(
+                        color = Color.White,
+                        shape = CircleShape,
+                    ),
+            contentAlignment = Alignment.Center,
+        ) {
+            Box(Modifier.padding(20.dp))
+        }
     }
 }
