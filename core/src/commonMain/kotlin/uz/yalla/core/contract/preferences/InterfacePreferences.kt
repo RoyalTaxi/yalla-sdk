@@ -29,4 +29,8 @@ interface InterfacePreferences {
     val skipOnboarding: Flow<Boolean>
 
     fun setSkipOnboarding(value: Boolean)
+
+    val onboardingStage: Flow<String>
+
+    fun setOnboardingStage(value: String)
 }

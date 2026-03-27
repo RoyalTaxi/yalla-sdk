@@ -46,6 +46,7 @@ internal object PreferenceKeys {
     val THEME_TYPE = stringPreferencesKey("themeType")
     val MAP_TYPE = stringPreferencesKey("mapType")
     val SKIP_ONBOARDING = booleanPreferencesKey("skipOnboarding")
+    val ONBOARDING_STAGE = stringPreferencesKey("onboardingStage")
 
     // Position
     val LAST_MAP_POSITION = stringPreferencesKey("lastMapPosition")

@@ -56,4 +56,11 @@ internal class InterfacePreferencesImpl(
     override fun setSkipOnboarding(value: Boolean) {
         scope.launch { dataStore.edit { it[PreferenceKeys.SKIP_ONBOARDING] = value } }
     }
+
+    override val onboardingStage: Flow<String> =
+        dataStore.data.map { it[PreferenceKeys.ONBOARDING_STAGE] ?: "FRESH" }
+
+    override fun setOnboardingStage(value: String) {
+        scope.launch { dataStore.edit { it[PreferenceKeys.ONBOARDING_STAGE] = value } }
+    }
 }

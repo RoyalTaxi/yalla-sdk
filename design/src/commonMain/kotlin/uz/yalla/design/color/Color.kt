@@ -14,6 +14,7 @@
  */
 package uz.yalla.design.color
 
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
@@ -193,17 +194,17 @@ val Color5 = Color(0xFFD6C8FF)
 
 // region Gradients
 
-/** Vertical purple gradient for splash and loading screens. */
+/** 45-degree purple gradient for splash, onboarding, and auth screens. */
 val SplashBackground =
-    Brush.verticalGradient(
+    Brush.linearGradient(
         colors =
             listOf(
                 Color(0xFF7957FF),
                 Color(0xFF562DF8),
                 Color(0xFF3812CE)
             ),
-        startY = 0f,
-        endY = 1000f
+        start = Offset(0f, 0f),
+        end = Offset(1000f, 1000f)
     )
 
 /** Diagonal pink-to-purple gradient for promotional and decorative elements. */

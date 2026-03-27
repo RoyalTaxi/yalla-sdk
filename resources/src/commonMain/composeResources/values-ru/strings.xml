@@ -14,6 +14,7 @@
     <string name="common_action_delete">Удалить</string>
     <string name="common_action_edit">Изменить</string>
     <string name="common_action_next">Далее</string>
+    <string name="common_action_start">Начать</string>
     <string name="common_action_save">Сохранить</string>
     <string name="common_action_select">Выбрать</string>
     <string name="common_action_send">Отправить</string>
