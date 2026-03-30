@@ -17,6 +17,8 @@ enum class HapticType {
     Success,
     /** Error notification pattern. */
     Error,
+    /** Triple error notification pattern (3x with 100ms interval). */
+    ErrorRepeat,
     /** Warning notification pattern. */
     Warning,
 }

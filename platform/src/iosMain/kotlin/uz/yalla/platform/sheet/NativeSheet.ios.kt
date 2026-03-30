@@ -27,6 +27,7 @@ actual fun NativeSheet(
     dismissEnabled: Boolean,
     onDismissAttempt: () -> Unit,
     isDark: Boolean?,
+    skipPartiallyExpanded: Boolean,
     onFullyExpanded: (() -> Unit)?,
     content: @Composable () -> Unit
 ) {

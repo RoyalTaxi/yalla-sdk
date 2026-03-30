@@ -12,6 +12,10 @@ actual fun rememberHapticController(): HapticController {
     return remember(view) {
         object : HapticController {
             override fun perform(type: HapticType) {
+                if (type == HapticType.ErrorRepeat) {
+                    performErrorRepeat()
+                    return
+                }
                 val feedbackConstant = when (type) {
                     HapticType.Light -> HapticFeedbackConstants.CLOCK_TICK
                     HapticType.Medium -> HapticFeedbackConstants.CONTEXT_CLICK
@@ -23,8 +27,18 @@ actual fun rememberHapticController(): HapticController {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.REJECT
                         else HapticFeedbackConstants.LONG_PRESS
                     HapticType.Warning -> HapticFeedbackConstants.CONTEXT_CLICK
+                    HapticType.ErrorRepeat -> error("handled above")
                 }
                 view.performHapticFeedback(feedbackConstant)
+            }
+
+            private fun performErrorRepeat() {
+                val constant =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.REJECT
+                    else HapticFeedbackConstants.LONG_PRESS
+                view.performHapticFeedback(constant)
+                view.postDelayed({ view.performHapticFeedback(constant) }, 100)
+                view.postDelayed({ view.performHapticFeedback(constant) }, 200)
             }
         }
     }

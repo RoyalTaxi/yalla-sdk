@@ -29,6 +29,8 @@ import androidx.compose.ui.graphics.Shape
  * @param dismissEnabled Whether the user can interactively dismiss the sheet. Default `true`.
  * @param onDismissAttempt Called when the user tries to dismiss but [dismissEnabled] is `false`.
  * @param isDark Forces dark/light appearance on the sheet. `null` follows the system theme.
+ * @param skipPartiallyExpanded On Android, skips the partially-expanded state and goes directly
+ *   to full expansion. Ignored on iOS (uses detent-based sizing). Default `false`.
  * @param onFullyExpanded Called when the sheet reaches its fully-expanded detent.
  * @param content Composable content rendered inside the sheet.
  * @since 0.0.1
@@ -42,6 +44,7 @@ expect fun NativeSheet(
     dismissEnabled: Boolean = true,
     onDismissAttempt: () -> Unit = {},
     isDark: Boolean? = null,
+    skipPartiallyExpanded: Boolean = false,
     onFullyExpanded: (() -> Unit)? = null,
     content: @Composable () -> Unit
 )

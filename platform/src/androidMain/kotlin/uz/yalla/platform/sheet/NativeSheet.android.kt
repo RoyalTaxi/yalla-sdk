@@ -40,6 +40,7 @@ actual fun NativeSheet(
     dismissEnabled: Boolean,
     onDismissAttempt: () -> Unit,
     isDark: Boolean?,
+    skipPartiallyExpanded: Boolean,
     onFullyExpanded: (() -> Unit)?,
     content: @Composable () -> Unit
 ) {
@@ -63,7 +64,7 @@ actual fun NativeSheet(
 
     val sheetState =
         rememberModalBottomSheetState(
-            skipPartiallyExpanded = false,
+            skipPartiallyExpanded = skipPartiallyExpanded,
             confirmValueChange = { value ->
                 val isHiding = value == SheetValue.Hidden
                 if (!currentDismissEnabled && currentIsVisible && isHiding) {

@@ -2,10 +2,15 @@ package uz.yalla.platform.haptic
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import platform.Foundation.NSTimeInterval
 import platform.UIKit.UIImpactFeedbackGenerator
 import platform.UIKit.UIImpactFeedbackStyle
 import platform.UIKit.UINotificationFeedbackGenerator
 import platform.UIKit.UINotificationFeedbackType
+import platform.darwin.DISPATCH_TIME_NOW
+import platform.darwin.dispatch_after
+import platform.darwin.dispatch_get_main_queue
+import platform.darwin.dispatch_time
 
 @Composable
 actual fun rememberHapticController(): HapticController {
@@ -47,6 +52,18 @@ actual fun rememberHapticController(): HapticController {
                         generator.notificationOccurred(
                             UINotificationFeedbackType.UINotificationFeedbackTypeError
                         )
+                    }
+                    HapticType.ErrorRepeat -> {
+                        val generator = UINotificationFeedbackGenerator()
+                        generator.prepare()
+                        val errorType = UINotificationFeedbackType.UINotificationFeedbackTypeError
+                        generator.notificationOccurred(errorType)
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100_000_000), dispatch_get_main_queue()) {
+                            generator.notificationOccurred(errorType)
+                        }
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 200_000_000), dispatch_get_main_queue()) {
+                            generator.notificationOccurred(errorType)
+                        }
                     }
                     HapticType.Warning -> {
                         val generator = UINotificationFeedbackGenerator()
