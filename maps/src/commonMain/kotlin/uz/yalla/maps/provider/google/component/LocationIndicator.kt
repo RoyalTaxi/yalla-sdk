@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.unit.dp
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.maps.compose.Circle
 import uz.yalla.maps.compose.Marker
@@ -42,7 +41,7 @@ fun LocationIndicator(
     )
 
     val icon = rememberComposeBitmapDescriptor("user-location") {
-        Canvas(modifier = Modifier.size(15.dp)) {
+        Canvas(modifier = Modifier.size(MapDimens.MarkerSize)) {
             with(UserLocationPainter) { draw(size) }
         }
     }
