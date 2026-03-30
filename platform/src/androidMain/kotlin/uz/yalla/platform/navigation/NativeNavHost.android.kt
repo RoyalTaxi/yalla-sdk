@@ -2,21 +2,22 @@ package uz.yalla.platform.navigation
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -56,44 +57,32 @@ actual fun <C : Route> NativeNavHost(
             if (config.showsNavigationBar) {
                 Scaffold(
                     topBar = {
-                        val containerColor = if (config.transparentNavigationBar) {
-                            Color.Transparent
-                        } else {
-                            TopAppBarDefaults.topAppBarColors().containerColor
-                        }
-
-                        when (config.largeTitleMode) {
-                            LargeTitleMode.Always -> LargeTopAppBar(
-                                title = { config.title?.let { Text(it) } },
-                                navigationIcon = { BackButton(canGoBack, navigator) },
-                                actions = { ToolbarActions(toolbarState) },
-                                colors = TopAppBarDefaults.topAppBarColors(
-                                    containerColor = containerColor,
-                                ),
-                            )
-
-                            LargeTitleMode.Never -> TopAppBar(
-                                title = { config.title?.let { Text(it) } },
-                                navigationIcon = { BackButton(canGoBack, navigator) },
-                                actions = { ToolbarActions(toolbarState) },
-                                colors = TopAppBarDefaults.topAppBarColors(
-                                    containerColor = containerColor,
-                                ),
-                            )
-                        }
+                        TopAppBar(
+                            title = {},
+                            navigationIcon = { BackButton(canGoBack, navigator) },
+                            actions = { ToolbarActions(toolbarState) },
+                        )
                     },
                 ) { paddingValues ->
-                    Box(
-                        modifier = Modifier
-                            .consumeWindowInsets(paddingValues)
-                            .padding(paddingValues),
-                    ) {
+                    SideEffect {
+                        if (toolbarState.contentPadding != paddingValues) {
+                            toolbarState.contentPadding = paddingValues
+                        }
+                    }
+                    Box(modifier = Modifier.consumeWindowInsets(paddingValues)) {
                         screenProvider.Content(route, navigator, toolbarState)
                     }
                 }
             } else {
-                // No navigation bar — render content directly
-                screenProvider.Content(route, navigator, toolbarState)
+                val systemBarsPadding = WindowInsets.systemBars.asPaddingValues()
+                SideEffect {
+                    if (toolbarState.contentPadding != systemBarsPadding) {
+                        toolbarState.contentPadding = systemBarsPadding
+                    }
+                }
+                Box(modifier = Modifier.consumeWindowInsets(systemBarsPadding)) {
+                    screenProvider.Content(route, navigator, toolbarState)
+                }
             }
         }
     }

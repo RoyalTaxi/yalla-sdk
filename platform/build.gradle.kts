@@ -28,6 +28,8 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)
             implementation(libs.google.play.app.update)
+            implementation(libs.androidx.browser)
+            implementation(libs.play.services.auth.api.phone)
         }
     }
 }

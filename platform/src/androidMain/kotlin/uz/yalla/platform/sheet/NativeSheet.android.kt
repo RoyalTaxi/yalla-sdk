@@ -1,9 +1,14 @@
 package uz.yalla.platform.sheet
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -18,8 +23,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalDensity
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 
@@ -42,6 +50,11 @@ actual fun NativeSheet(
             isAppearanceLightStatusBars = !darkMode,
             isAppearanceLightNavigationBars = !darkMode,
         )
+
+    val density = LocalDensity.current
+    val statusBarTopDp = with(density) {
+        WindowInsets.statusBars.getTop(this).toDp()
+    }
 
     var shouldShow by remember { mutableStateOf(false) }
     val currentDismissEnabled by rememberUpdatedState(dismissEnabled)
@@ -86,11 +99,11 @@ actual fun NativeSheet(
     if (shouldShow) {
         ModalBottomSheet(
             sheetState = sheetState,
-            shape = shape,
-            containerColor = containerColor,
+            shape = RectangleShape,
+            containerColor = Color.Transparent,
             dragHandle = null,
             properties = properties,
-            contentWindowInsets = { WindowInsets.ime.union(WindowInsets.navigationBars) },
+            contentWindowInsets = { WindowInsets.ime },
             onDismissRequest = {
                 if (currentDismissEnabled) {
                     shouldShow = false
@@ -99,7 +112,16 @@ actual fun NativeSheet(
                     currentOnDismissAttempt()
                 }
             },
-            content = { content() }
+            content = {
+                Column(
+                    modifier = Modifier
+                        .padding(top = statusBarTopDp)
+                        .background(color = containerColor, shape = shape)
+                        .fillMaxHeight(),
+                ) {
+                    content()
+                }
+            },
         )
     }
 }

@@ -46,6 +46,8 @@
     <string name="auth_welcome_title">Welcome!</string>
     <string name="auth_welcome_description">Enter your phone number to continue.</string>
     <string name="auth_welcome_sms_hint">A verification code will be sent to your number via SMS.</string>
+    <string name="auth_privacy_policy_agreement">By continuing, you agree to our Privacy Policy.</string>
+    <string name="auth_privacy_policy_link">Privacy Policy</string>
 
     <!-- OTP Verification -->
     <string name="auth_otp_title">Security Code</string>

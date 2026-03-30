@@ -74,10 +74,7 @@ actual fun rememberComposeBitmapDescriptor(
             // Re-throw to properly propagate cancellation
             throw e
         } catch (e: Exception) {
-            // Only log if still active (not cancelled)
-            if (coroutineContext.isActive) {
-                println("ComposeBitmapDescriptor: Failed to capture composable: ${e.message}")
-            }
+            // Non-fatal: capture failed, marker will use fallback
         }
     }
 

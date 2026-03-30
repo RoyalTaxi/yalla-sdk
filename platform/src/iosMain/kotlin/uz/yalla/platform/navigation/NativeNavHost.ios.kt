@@ -6,9 +6,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.UIKitViewController
 import androidx.compose.ui.window.ComposeUIViewController
 import kotlinx.cinterop.ExperimentalForeignApi
+import kotlinx.cinterop.useContents
 import kotlinx.coroutines.flow.collectLatest
 import platform.UIKit.*
 import uz.yalla.platform.config.requireIosConfig
@@ -16,11 +18,13 @@ import uz.yalla.platform.config.requireIosConfig
 /**
  * iOS actual for [NativeNavHost].
  *
- * Creates a [UINavigationController], embeds it via [UIKitViewController],
- * and uses [NavControllerSync] to keep Decompose's stack and UINavigationController
- * in bidirectional sync. Each route gets its own [ComposeUIViewController].
+ * Creates a [UINavigationController] managed by [UIKitNavigator] — a direct,
+ * single-source-of-truth navigator with no bidirectional sync layer.
  *
- * @since 0.0.5
+ * [NativeRootComponent] is used only to read the initial route. Decompose's
+ * ChildStack subscription is NOT used — UINavigationController owns the stack.
+ *
+ * @since 0.0.6
  */
 @OptIn(ExperimentalForeignApi::class)
 @Composable
@@ -29,75 +33,81 @@ actual fun <C : Route> NativeNavHost(
     screenProvider: ScreenProvider<C>,
     modifier: Modifier,
 ) {
+    val initialRoute = remember { rootComponent.childStack.value.active.configuration }
     val iosConfig = requireIosConfig()
-    val appearance = iosConfig.navigationBarAppearance
 
-    val navController = remember {
-        val initialStack = rootComponent.childStack.value
-        val initialRoute = initialStack.active.configuration
-        val initialContext = initialStack.active.instance
-        val initialVC = createViewController(initialRoute, initialContext, screenProvider, rootComponent.navigator)
-
-        val nc = UINavigationController(rootViewController = initialVC)
+    val (navController, navigator) = remember {
+        val nc = UINavigationController()
         nc.navigationBar.prefersLargeTitles = true
 
-        // Respect initial route's nav bar visibility.
-        val initialConfig = screenProvider.configFor(initialRoute)
-        nc.setNavigationBarHidden(!initialConfig.showsNavigationBar, animated = false)
+        iosConfig.navigationBarAppearance?.let { applyAppearance(nc, it) }
 
-        if (appearance != null) {
-            applyAppearance(nc, appearance)
-        }
-
-        val sync = NavControllerSync(
+        val nav = UIKitNavigator<C>(
             navController = nc,
-            childStack = rootComponent.childStack,
-            navigation = rootComponent.navigation,
-            viewControllerFactory = { route, context ->
-                createViewController(route, context, screenProvider, rootComponent.navigator)
-            },
+            vcFactory = { route, nav -> createViewController(route, screenProvider, nav) },
+            initialRoute = initialRoute,
         )
-        sync.start()
+        nav.setInitial()
 
-        nc
+        nc to nav
     }
 
-    UIKitViewController(
-        factory = { navController },
-        modifier = modifier,
-    )
+    // Expose navigator for ScreenFactory; clear on dispose to prevent retention.
+    androidx.compose.runtime.DisposableEffect(navigator) {
+        _iosNavigator = navigator
+        onDispose { _iosNavigator = null }
+    }
+
+    CompositionLocalProvider(LocalNavigator provides navigator) {
+        UIKitViewController(
+            factory = { navController },
+            modifier = modifier,
+        )
+    }
 }
+
+/** Navigator instance accessible from the app's entry point for session event handling. */
+@Suppress("ObjectPropertyName")
+var _iosNavigator: Navigator? = null
+    internal set
+
+// region ScreenContainerViewController
 
 /**
  * Container [UIViewController] that hosts a [ComposeUIViewController] child
  * and manages navigation bar visibility per-screen via [ScreenConfig].
- *
- * We use a container VC because [ComposeUIViewController] returns an opaque type
- * whose `navigationItem` is not directly accessible in Kotlin/Native interop.
- * The container VC's own `navigationItem` is fully accessible and configurable.
- *
- * [viewWillAppear] toggles the navigation bar hidden state based on [hidesNavBar],
- * matching the iOS convention where each VC controls its own nav bar visibility.
  */
+@OptIn(ExperimentalForeignApi::class)
 private class ScreenContainerViewController(
     private val hidesNavBar: Boolean,
-    private val transparentBar: Boolean,
+    private val toolbarState: ToolbarState,
 ) : UIViewController(nibName = null, bundle = null) {
 
     override fun viewWillAppear(animated: Boolean) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(hidesNavBar, animated = animated)
     }
+
+    override fun viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.safeAreaInsets.useContents {
+            val newPadding = androidx.compose.foundation.layout.PaddingValues(
+                top = top.dp, bottom = bottom.dp, start = left.dp, end = right.dp,
+            )
+            if (toolbarState.contentPadding != newPadding) {
+                toolbarState.contentPadding = newPadding
+            }
+        }
+    }
 }
 
-/**
- * Creates a [ScreenContainerViewController] hosting a [ComposeUIViewController] child,
- * with navigation item configured (title, large title mode, bar visibility).
- */
+// endregion
+
+// region VC Factory
+
 @OptIn(ExperimentalForeignApi::class)
 private fun <C : Route> createViewController(
     route: C,
-    context: com.arkivanov.decompose.ComponentContext,
     screenProvider: ScreenProvider<C>,
     navigator: Navigator,
 ): UIViewController {
@@ -106,7 +116,7 @@ private fun <C : Route> createViewController(
 
     val containerVC = ScreenContainerViewController(
         hidesNavBar = !config.showsNavigationBar,
-        transparentBar = config.transparentNavigationBar,
+        toolbarState = toolbarState,
     )
 
     val composeVC = ComposeUIViewController {
@@ -114,7 +124,6 @@ private fun <C : Route> createViewController(
             screenProvider.Content(route, navigator, toolbarState)
         }
 
-        // Observe ToolbarState changes and sync to UIBarButtonItems.
         LaunchedEffect(toolbarState) {
             snapshotFlow { toolbarState.actions }.collectLatest { actions ->
                 syncToolbarActions(containerVC, actions)
@@ -130,29 +139,13 @@ private fun <C : Route> createViewController(
     containerVC.view.addSubview(composeVC.view)
     composeVC.didMoveToParentViewController(containerVC)
 
-    containerVC.navigationItem.title = config.title
-    containerVC.navigationItem.setLargeTitleDisplayMode(
-        when (config.largeTitleMode) {
-            LargeTitleMode.Always -> UINavigationItemLargeTitleDisplayMode.UINavigationItemLargeTitleDisplayModeAlways
-            LargeTitleMode.Never -> UINavigationItemLargeTitleDisplayMode.UINavigationItemLargeTitleDisplayModeNever
-        }
-    )
-
-    // Apply transparent navigation bar appearance if configured.
-    if (config.transparentNavigationBar && config.showsNavigationBar) {
-        val transparentAppearance = UINavigationBarAppearance()
-        transparentAppearance.configureWithTransparentBackground()
-        containerVC.navigationItem.standardAppearance = transparentAppearance
-        containerVC.navigationItem.scrollEdgeAppearance = transparentAppearance
-    }
-
     return containerVC
 }
 
-/**
- * Syncs [ToolbarAction] list to [UIBarButtonItem] on the given VC's `navigationItem`.
- * Called from a `LaunchedEffect` inside the ComposeUIViewController.
- */
+// endregion
+
+// region Toolbar Sync
+
 @OptIn(ExperimentalForeignApi::class)
 private fun syncToolbarActions(vc: UIViewController, actions: List<ToolbarAction>) {
     if (actions.isEmpty()) {
@@ -187,7 +180,6 @@ private fun syncToolbarActions(vc: UIViewController, actions: List<ToolbarAction
     vc.navigationItem.rightBarButtonItems = items
 }
 
-/** Maps [ToolbarIcon] to SF Symbols [UIImage]. */
 private fun toolbarIconImage(icon: ToolbarIcon): UIImage? = when (icon) {
     ToolbarIcon.Edit -> UIImage.systemImageNamed("pencil")
     ToolbarIcon.ReadAll -> UIImage.systemImageNamed("envelope.open")
@@ -195,10 +187,10 @@ private fun toolbarIconImage(icon: ToolbarIcon): UIImage? = when (icon) {
     ToolbarIcon.Add -> UIImage.systemImageNamed("plus")
 }
 
-/**
- * Applies [NavigationBarAppearance] to the [UINavigationController]'s navigation bar.
- * Configures both standard and scroll-edge appearances for consistency.
- */
+// endregion
+
+// region Appearance
+
 private fun applyAppearance(
     navController: UINavigationController,
     appearance: NavigationBarAppearance,
@@ -216,9 +208,7 @@ private fun applyAppearance(
 
     if (appearance.titleColor != 0L) {
         val titleColor = argbToUIColor(appearance.titleColor)
-        val titleAttrs = mapOf<Any?, Any?>(
-            NSForegroundColorAttributeName to titleColor,
-        )
+        val titleAttrs = mapOf<Any?, Any?>(NSForegroundColorAttributeName to titleColor)
         barAppearance.titleTextAttributes = titleAttrs
         barAppearance.largeTitleTextAttributes = titleAttrs
     }
@@ -254,7 +244,6 @@ private fun applyAppearance(
     }
 }
 
-/** Converts an ARGB [Long] (0xAARRGGBB) to [UIColor]. */
 private fun argbToUIColor(argb: Long): UIColor {
     val a = ((argb shr 24) and 0xFF) / 255.0
     val r = ((argb shr 16) and 0xFF) / 255.0
@@ -262,3 +251,5 @@ private fun argbToUIColor(argb: Long): UIColor {
     val b = (argb and 0xFF) / 255.0
     return UIColor(red = r, green = g, blue = b, alpha = a)
 }
+
+// endregion

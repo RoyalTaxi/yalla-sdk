@@ -150,13 +150,13 @@ fun TextButton(
  */
 object TextButtonDefaults {
     /** Default minimum button height. */
-    val MinHeight = 48.dp
+    val MinHeight = 40.dp
 
     /** Default content padding. */
-    val ContentPadding = PaddingValues(horizontal = 16.dp, vertical = 10.dp)
+    val ContentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp)
 
     /** Default button shape. */
-    val Shape: Shape = RoundedCornerShape(12.dp)
+    val Shape: Shape = RoundedCornerShape(20.dp)
 
     /**
      * Creates [TextButtonColors] with theme-aware defaults.

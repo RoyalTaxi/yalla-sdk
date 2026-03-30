@@ -1,5 +1,9 @@
 package uz.yalla.primitives.otp
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,12 +16,15 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -151,6 +158,18 @@ fun PinRow(
     digitStyle: TextStyle = PinRowDefaults.digitStyle(),
     dimens: PinRowDimens = PinRowDefaults.dimens(),
 ) {
+    val shakeOffset = remember { Animatable(0f) }
+    val scaleAnim = remember { Animatable(1f) }
+
+    LaunchedEffect(isError) {
+        if (!isError) return@LaunchedEffect
+        repeat(3) {
+            shakeOffset.animateTo(10f, tween(40))
+            shakeOffset.animateTo(-10f, tween(40))
+        }
+        shakeOffset.animateTo(0f, tween(40))
+    }
+
     BasicTextField(
         value = TextFieldValue(value, selection = TextRange(value.length)),
         onValueChange = {
@@ -166,6 +185,11 @@ fun PinRow(
         },
         modifier = modifier
             .fillMaxWidth()
+            .graphicsLayer {
+                translationX = shakeOffset.value
+                scaleX = scaleAnim.value
+                scaleY = scaleAnim.value
+            }
             .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,

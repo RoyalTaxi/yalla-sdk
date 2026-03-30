@@ -18,13 +18,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.contract.preferences.PositionPreferences
 import uz.yalla.core.contract.preferences.SessionPreferences
 import uz.yalla.core.session.UnauthorizedSessionEvents
+import uz.yalla.core.geo.GeoPoint
 import uz.yalla.data.util.ioDispatcher
 import uz.yalla.data.util.platformName
 
@@ -59,6 +59,7 @@ fun createHttpClient(
     val localeCache = MutableStateFlow("")
     val accessTokenCache = MutableStateFlow("")
     val guestModeCache = MutableStateFlow(false)
+    val positionCache = MutableStateFlow(GeoPoint.Zero)
 
     scope.launch {
         interfacePrefs.localeType.collectLatest { localeCache.value = it.code }
@@ -69,12 +70,15 @@ fun createHttpClient(
     scope.launch {
         sessionPrefs.isGuestMode.collectLatest { guestModeCache.value = it }
     }
+    scope.launch {
+        positionPrefs.lastMapPosition.collectLatest { positionCache.value = it }
+    }
 
     return HttpClient(createHttpEngine()) {
         inspektifySetup?.invoke(this)
 
         install(Logging) {
-            level = LogLevel.ALL
+            level = LogLevel.NONE
         }
 
         install(HttpCallValidator) {
@@ -134,7 +138,7 @@ fun createHttpClient(
         install(
             createClientPlugin("DynamicHeaders") {
                 onRequest { request, _ ->
-                    val location = positionPrefs.lastMapPosition.first()
+                    val location = positionCache.value
                     request.headers.set("x-position", "${location.lat} ${location.lng}")
                 }
             }

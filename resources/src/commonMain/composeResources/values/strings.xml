@@ -76,6 +76,8 @@
     <string name="auth_welcome_title">Xush kelibsiz!</string>
     <string name="auth_welcome_description">Davom etish uchun telefon raqamingizni kiriting.</string>
     <string name="auth_welcome_sms_hint">Raqamingizga tasdiqlash kodi bilan SMS yuboriladi.</string>
+    <string name="auth_privacy_policy_agreement">Davom etish orqali maxfiylik siyosatimiz bilan rozilik bildirasiz.</string>
+    <string name="auth_privacy_policy_link">maxfiylik siyosatimiz</string>
 
     <!-- OTP Verification -->
     <string name="auth_otp_title">Xavfsizlik kodi</string>

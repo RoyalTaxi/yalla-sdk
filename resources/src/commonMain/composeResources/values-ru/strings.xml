@@ -46,6 +46,8 @@
     <string name="auth_welcome_title">Добро пожаловать!</string>
     <string name="auth_welcome_description">Введите номер телефона, чтобы продолжить.</string>
     <string name="auth_welcome_sms_hint">На ваш номер будет отправлено SMS с кодом подтверждения.</string>
+    <string name="auth_privacy_policy_agreement">Продолжая, вы соглашаетесь с нашей политикой конфиденциальности.</string>
+    <string name="auth_privacy_policy_link">политикой конфиденциальности</string>
 
     <!-- OTP Verification -->
     <string name="auth_otp_title">Код безопасности</string>

@@ -5,7 +5,7 @@ import com.arkivanov.decompose.router.stack.StackNavigation
 import com.arkivanov.decompose.router.stack.navigate
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.popWhile
-import com.arkivanov.decompose.router.stack.push
+import com.arkivanov.decompose.router.stack.pushNew
 import com.arkivanov.decompose.router.stack.replaceCurrent
 import com.arkivanov.decompose.value.Value
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,7 +39,7 @@ internal class NavigatorImpl<C : Route>(
 
     override fun push(route: Route) {
         @Suppress("UNCHECKED_CAST")
-        navigation.push(route as C)
+        navigation.pushNew(route as C)
     }
 
     override fun pop() {
