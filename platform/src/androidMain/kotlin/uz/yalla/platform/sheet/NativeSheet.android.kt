@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -64,7 +63,7 @@ actual fun NativeSheet(
 
     val sheetState =
         rememberModalBottomSheetState(
-            skipPartiallyExpanded = true,
+            skipPartiallyExpanded = false,
             confirmValueChange = { value ->
                 val isHiding = value == SheetValue.Hidden
                 if (!currentDismissEnabled && currentIsVisible && isHiding) {
@@ -116,8 +115,7 @@ actual fun NativeSheet(
                 Column(
                     modifier = Modifier
                         .padding(top = statusBarTopDp)
-                        .background(color = containerColor, shape = shape)
-                        .fillMaxHeight(),
+                        .background(color = containerColor, shape = shape),
                 ) {
                     content()
                 }
