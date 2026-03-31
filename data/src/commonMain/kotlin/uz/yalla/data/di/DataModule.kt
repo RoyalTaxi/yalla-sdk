@@ -8,12 +8,15 @@ import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.contract.preferences.PositionPreferences
 import uz.yalla.core.contract.preferences.SessionPreferences
 import uz.yalla.core.contract.preferences.UserPreferences
+import uz.yalla.core.contract.preferences.StaticPreferences
 import uz.yalla.data.local.ConfigPreferencesImpl
 import uz.yalla.data.local.InterfacePreferencesImpl
 import uz.yalla.data.local.PositionPreferencesImpl
 import uz.yalla.data.local.SessionPreferencesImpl
+import uz.yalla.data.local.StaticPreferencesImpl
 import uz.yalla.data.local.UserPreferencesImpl
 import uz.yalla.data.local.createDataStore
+import uz.yalla.data.local.createSettings
 import uz.yalla.data.util.ioDispatcher
 
 /**
@@ -33,11 +36,13 @@ import uz.yalla.data.util.ioDispatcher
  */
 val dataModule = module {
     single { createDataStore() }
+    single { createSettings() }
     single { CoroutineScope(ioDispatcher + SupervisorJob()) }
 
-    single<SessionPreferences> { SessionPreferencesImpl(get(), get()) }
+    single<StaticPreferences> { StaticPreferencesImpl(get()) }
+    single<SessionPreferences> { SessionPreferencesImpl(get(), get(), get()) }
     single<UserPreferences> { UserPreferencesImpl(get(), get()) }
     single<ConfigPreferences> { ConfigPreferencesImpl(get(), get()) }
-    single<InterfacePreferences> { InterfacePreferencesImpl(get(), get()) }
+    single<InterfacePreferences> { InterfacePreferencesImpl(get(), get(), get()) }
     single<PositionPreferences> { PositionPreferencesImpl(get(), get()) }
 }

@@ -22,6 +22,7 @@ kotlin {
             api(libs.koin.core)
 
             api(libs.datastore.preferences)
+            api(libs.multiplatform.settings)
         }
 
         androidMain.dependencies {

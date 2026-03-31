@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import uz.yalla.core.contract.preferences.InterfacePreferences
+import uz.yalla.core.contract.preferences.StaticPreferences
 import uz.yalla.core.settings.LocaleKind
 import uz.yalla.core.settings.MapKind
 import uz.yalla.core.settings.ThemeKind
@@ -21,16 +22,19 @@ import uz.yalla.core.util.orFalse
  *
  * @param dataStore shared preferences store
  * @param scope coroutine scope for write operations
+ * @param staticPreferences synchronous store for startup-critical values
  * @since 0.0.1
  */
 internal class InterfacePreferencesImpl(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope,
+    private val staticPreferences: StaticPreferences,
 ) : InterfacePreferences {
     override val localeType: Flow<LocaleKind> =
         dataStore.data.map { LocaleKind.from(it[PreferenceKeys.LOCALE_TYPE]) }
 
     override fun setLocaleType(value: LocaleKind) {
+        staticPreferences.setLocaleCode(value.code)
         scope.launch { dataStore.edit { it[PreferenceKeys.LOCALE_TYPE] = value.code } }
     }
 
@@ -61,6 +65,7 @@ internal class InterfacePreferencesImpl(
         dataStore.data.map { it[PreferenceKeys.ONBOARDING_STAGE] ?: "FRESH" }
 
     override fun setOnboardingStage(value: String) {
+        staticPreferences.setOnboardingStage(value)
         scope.launch { dataStore.edit { it[PreferenceKeys.ONBOARDING_STAGE] = value } }
     }
 }

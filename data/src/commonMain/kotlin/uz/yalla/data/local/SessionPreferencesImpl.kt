@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import uz.yalla.core.contract.preferences.SessionPreferences
+import uz.yalla.core.contract.preferences.StaticPreferences
 import uz.yalla.core.util.orFalse
 
 /**
@@ -19,11 +20,13 @@ import uz.yalla.core.util.orFalse
  *
  * @param dataStore shared preferences store
  * @param scope coroutine scope for write operations
+ * @param staticPreferences synchronous store for startup-critical values
  * @since 0.0.1
  */
 internal class SessionPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope,
+    private val staticPreferences: StaticPreferences,
 ) : SessionPreferences {
     override val accessToken: Flow<String> =
         dataStore.data.map { it[PreferenceKeys.ACCESS_TOKEN].orEmpty() }
@@ -43,6 +46,7 @@ internal class SessionPreferencesImpl(
         dataStore.data.map { it[PreferenceKeys.IS_GUEST_MODE].orFalse() }
 
     override fun setGuestMode(value: Boolean) {
+        staticPreferences.setGuestMode(value)
         scope.launch { dataStore.edit { it[PreferenceKeys.IS_GUEST_MODE] = value } }
     }
 
@@ -50,10 +54,13 @@ internal class SessionPreferencesImpl(
         dataStore.data.map { it[PreferenceKeys.IS_DEVICE_REGISTERED].orFalse() }
 
     override fun setDeviceRegistered(value: Boolean) {
+        staticPreferences.setDeviceRegistered(value)
         scope.launch { dataStore.edit { it[PreferenceKeys.IS_DEVICE_REGISTERED] = value } }
     }
 
     override fun clearSession() {
+        staticPreferences.setGuestMode(false)
+        staticPreferences.setDeviceRegistered(false)
         scope.launch {
             dataStore.edit { prefs ->
                 prefs.remove(PreferenceKeys.ACCESS_TOKEN)
