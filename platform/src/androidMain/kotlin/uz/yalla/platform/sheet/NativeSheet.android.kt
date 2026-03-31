@@ -5,10 +5,9 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime
-import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.union
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalBottomSheetProperties
@@ -116,7 +115,8 @@ actual fun NativeSheet(
                 Column(
                     modifier = Modifier
                         .padding(top = statusBarTopDp)
-                        .background(color = containerColor, shape = shape),
+                        .background(color = containerColor, shape = shape)
+                        .navigationBarsPadding(),
                 ) {
                     content()
                 }
