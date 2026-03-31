@@ -1,6 +1,5 @@
 package uz.yalla.maps.provider.common
 
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -27,18 +26,19 @@ internal object UserLocationPainter : Painter() {
     override val intrinsicSize = Size(SIZE, SIZE)
 
     override fun DrawScope.onDraw() {
-        val center = Offset(SIZE / 2, SIZE / 2)
-        val radius = (SIZE - STROKE_WIDTH) / 2
+        val drawCenter = this.center
+        val drawSize = minOf(size.width, size.height)
+        val radius = (drawSize - STROKE_WIDTH) / 2
 
         // Fill gradient: top to bottom #3400FF → #886BFF
         drawCircle(
             brush = Brush.verticalGradient(
                 colors = listOf(gradientStart, gradientEnd),
                 startY = 0f,
-                endY = SIZE
+                endY = size.height
             ),
             radius = radius,
-            center = center
+            center = drawCenter
         )
 
         // Stroke gradient: top to bottom #886BFF → #3400FF (reversed)
@@ -46,10 +46,10 @@ internal object UserLocationPainter : Painter() {
             brush = Brush.verticalGradient(
                 colors = listOf(gradientEnd, gradientStart),
                 startY = 0f,
-                endY = SIZE
+                endY = size.height
             ),
             radius = radius,
-            center = center,
+            center = drawCenter,
             style = Stroke(width = STROKE_WIDTH)
         )
     }
