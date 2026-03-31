@@ -40,8 +40,8 @@ fun LocationIndicator(
         strokeWidth = 1f
     )
 
-    val icon = rememberComposeBitmapDescriptor("user-location", MapDimens.MarkerSize) {
-        Canvas(modifier = Modifier.size(MapDimens.MarkerSize)) {
+    val icon = rememberComposeBitmapDescriptor("user-location", MapDimens.UserLocationSize) {
+        Canvas(modifier = Modifier.size(MapDimens.UserLocationSize)) {
             with(UserLocationPainter) { draw(size) }
         }
     }

@@ -1,7 +1,6 @@
 package uz.yalla.platform.sheet
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.ime
@@ -28,6 +27,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalDensity
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import uz.yalla.design.theme.System
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,7 +43,7 @@ actual fun NativeSheet(
     onFullyExpanded: (() -> Unit)?,
     content: @Composable () -> Unit
 ) {
-    val darkMode = isDark ?: isSystemInDarkTheme()
+    val darkMode = isDark ?: System.isDark
     val properties =
         ModalBottomSheetProperties(
             isAppearanceLightStatusBars = !darkMode,

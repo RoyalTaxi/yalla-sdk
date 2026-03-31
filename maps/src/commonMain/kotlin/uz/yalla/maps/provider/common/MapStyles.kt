@@ -37,6 +37,9 @@ object MapDimens {
     /** Outer diameter of location marker circles. */
     val MarkerSize = 22.dp
 
+    /** Outer diameter of user location indicator dot. */
+    val UserLocationSize = 16.dp
+
     /** Border width of location marker circles. */
     val MarkerBorderWidth = 6.dp
 

@@ -17,7 +17,7 @@ import androidx.compose.ui.graphics.painter.Painter
  */
 internal object UserLocationPainter : Painter() {
 
-    private const val SIZE = 40f
+    private const val SIZE = 48f
     private const val STROKE_WIDTH = 2f
 
     private val gradientStart = Color(0xFF3400FF)
