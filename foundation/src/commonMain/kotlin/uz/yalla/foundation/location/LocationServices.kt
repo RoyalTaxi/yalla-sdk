@@ -13,3 +13,17 @@ package uz.yalla.foundation.location
  * @since 0.0.8
  */
 expect fun isLocationServicesEnabled(): Boolean
+
+/**
+ * Opens the device's location services settings screen.
+ *
+ * Use when location permission is granted but location services are disabled,
+ * so the user can enable GPS without leaving the app flow.
+ *
+ * - **Android:** Opens [Settings.ACTION_LOCATION_SOURCE_SETTINGS].
+ * - **iOS:** Opens the app's settings page via [UIApplicationOpenSettingsURLString]
+ *   (iOS does not allow deep-linking to system Location Services settings).
+ *
+ * @since 0.0.8
+ */
+expect fun openLocationSettings()
