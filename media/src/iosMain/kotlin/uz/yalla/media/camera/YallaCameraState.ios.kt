@@ -28,6 +28,13 @@ actual class YallaCameraState(
     /** @since 0.0.1 */
     actual var isCameraReady: Boolean by mutableStateOf(false)
 
+    /**
+     * Anchor closure set by the composable to trigger AVFoundation photo capture.
+     *
+     * `null` when no camera view is composed; non-null when an AVCaptureSession is active.
+     *
+     * @since 0.0.1
+     */
     internal var triggerCaptureAnchor: (() -> Unit)? = null
 
     /** @since 0.0.1 */
@@ -47,10 +54,21 @@ actual class YallaCameraState(
         triggerCaptureAnchor?.invoke()
     }
 
+    /**
+     * Resets the capturing flag after a capture completes or fails.
+     *
+     * @since 0.0.1
+     */
     internal fun stopCapturing() {
         isCapturing = false
     }
 
+    /**
+     * Forwards captured image bytes to the user-provided callback.
+     *
+     * @param image JPEG bytes, or `null` on failure.
+     * @since 0.0.1
+     */
     internal fun onCapture(image: ByteArray?) {
         onCapture.invoke(image)
     }
@@ -94,7 +112,15 @@ actual class YallaCameraState(
     }
 }
 
-/** iOS implementation of [rememberYallaCameraState]. @since 0.0.1 */
+/**
+ * iOS implementation of [rememberYallaCameraState].
+ *
+ * Uses [rememberSaveable] with a custom [Saver] that persists the active [CameraMode]
+ * across configuration changes. The [onFrame] and [onCapture] callbacks are re-applied
+ * after restoration since they cannot be serialized.
+ *
+ * @since 0.0.1
+ */
 @Composable
 actual fun rememberYallaCameraState(
     initialCameraMode: CameraMode,

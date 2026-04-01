@@ -18,7 +18,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 
-/** Android implementation of [rememberSystemCameraLauncher]. @since 0.0.1 */
+/**
+ * Android implementation of [rememberSystemCameraLauncher].
+ *
+ * Creates a temporary file URI via [FileProvider], registers an
+ * `ActivityResultContracts.TakePicture` launcher, and reads the captured bytes back
+ * on [Dispatchers.IO] before delivering them to [onResult] on the main thread.
+ *
+ * @since 0.0.1
+ */
 @Composable
 actual fun rememberSystemCameraLauncher(
     scope: CoroutineScope,
@@ -66,8 +74,20 @@ actual fun rememberSystemCameraLauncher(
     return launcher
 }
 
+/**
+ * Creates a temporary file for camera output and returns its content URI via [FileProvider].
+ *
+ * Previous temporary files in the `share_images` directory are deleted to prevent unbounded
+ * disk growth.
+ *
+ * @param context Android context for file system and package name access.
+ * @return Content URI suitable for `TakePicture`, or `null` on failure.
+ * @since 0.0.1
+ */
 private fun createCameraImageUri(context: Context): Uri? {
     val imagesDir = File(context.filesDir, "share_images").apply { mkdirs() }
+    // Clean up leftover temp files from previous camera sessions to prevent unbounded growth.
+    imagesDir.listFiles()?.forEach { it.delete() }
     val imageFile = File.createTempFile("camera_", ".jpg", imagesDir)
     return FileProvider.getUriForFile(context, context.packageName + ".provider", imageFile)
 }

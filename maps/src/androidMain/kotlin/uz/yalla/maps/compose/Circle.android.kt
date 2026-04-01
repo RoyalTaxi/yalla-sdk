@@ -6,6 +6,12 @@ import uz.yalla.maps.model.LatLng
 import com.google.android.gms.maps.model.Circle as GoogleCircle
 import com.google.maps.android.compose.Circle as AndroidCircle
 
+/**
+ * Android implementation of [Circle] wrapping a Google Maps SDK `GMSCircle`.
+ *
+ * @property googleCircle The underlying Google Maps circle overlay.
+ * @since 0.0.1
+ */
 actual class Circle(
     val googleCircle: GoogleCircle
 ) {

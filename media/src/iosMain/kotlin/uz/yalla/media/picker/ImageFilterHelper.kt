@@ -54,9 +54,11 @@ internal fun applyFilterToUIImage(
             FilterOptions.Default -> ciImage
         }
 
-    val context = CIContext.contextWithOptions(null)
     return filteredCIImage?.let {
-        val filteredCGImage = context.createCGImage(it, fromRect = it.extent())
+        val filteredCGImage = sharedCIContext.createCGImage(it, fromRect = it.extent())
         UIImage.imageWithCGImage(filteredCGImage)
     } ?: image
 }
+
+// CIContext is expensive to create and thread-safe — reuse a single instance.
+private val sharedCIContext: CIContext by lazy { CIContext.contextWithOptions(null) }

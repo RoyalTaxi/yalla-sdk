@@ -25,6 +25,16 @@ import uz.yalla.platform.toImageVector
  * The [alpha] parameter is applied via [Modifier.graphicsLayer]; the [background]
  * parameter is currently unused on Android (the design system defaults are applied
  * via [IconButtonDefaults.iconButtonColors]).
+ *
+ * **Platform note:** The [alpha], [border], and [background] parameters are declared in
+ * the `expect` signature and fully utilized in the iOS actual (which wraps a native
+ * `UIButton`). On Android these are partially used or ignored:
+ * - [alpha] — applied via `graphicsLayer`
+ * - [border] — applied via `Modifier.border` when non-null
+ * - [background] — ignored; Android uses design-system defaults from [IconButtonDefaults]
+ *
+ * The suppress exists because the Kotlin compiler flags [background] as unused in this
+ * actual, even though the `expect` declaration requires the parameter for cross-platform parity.
  */
 @Suppress("UNUSED_PARAMETER")
 @Composable

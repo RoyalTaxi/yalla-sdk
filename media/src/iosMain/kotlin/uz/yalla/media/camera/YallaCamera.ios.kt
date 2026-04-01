@@ -37,7 +37,15 @@ import platform.Foundation.NSSelectorFromString
 import platform.UIKit.UIColor
 import platform.UIKit.UIView
 
-/** iOS implementation of the state-driven [YallaCamera] using AVFoundation. @since 0.0.1 */
+/**
+ * iOS implementation of the state-driven [YallaCamera] using AVFoundation.
+ *
+ * Checks camera authorization via [checkCameraPermission], discovers the hardware camera
+ * with [discoverCamera], and renders an `AVCaptureVideoPreviewLayer` inside a `UIKitView`.
+ * Falls back to a "camera unavailable" message on simulator.
+ *
+ * @since 0.0.1
+ */
 @Composable
 actual fun YallaCamera(
     state: YallaCameraState,
@@ -67,7 +75,14 @@ actual fun YallaCamera(
     }
 }
 
-/** iOS implementation of the full-featured [YallaCamera] with AVFoundation live preview. @since 0.0.1 */
+/**
+ * iOS implementation of the full-featured [YallaCamera] with AVFoundation live preview.
+ *
+ * Composes a [YallaCameraState]-driven camera view together with an overlay that renders
+ * the caller-supplied capture, switch, and progress slots.
+ *
+ * @since 0.0.1
+ */
 @Composable
 actual fun YallaCamera(
     modifier: Modifier,
@@ -86,7 +101,14 @@ actual fun YallaCamera(
     }
 }
 
-/** iOS implementation of the system-camera-delegating [YallaCamera]. @since 0.0.1 */
+/**
+ * iOS implementation of the system-camera-delegating [YallaCamera].
+ *
+ * Checks camera authorization, then delegates to [rememberSystemCameraLauncher] which
+ * presents a `UIImagePickerController` with camera source type.
+ *
+ * @since 0.0.1
+ */
 @Composable
 actual fun YallaCamera(
     modifier: Modifier,

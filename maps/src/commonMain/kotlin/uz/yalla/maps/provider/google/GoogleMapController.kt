@@ -56,6 +56,10 @@ class GoogleMapController : MapController {
 
     private var programmaticTarget: LatLng? = null
     private var programmaticZoom: Float? = null
+
+    // Lifecycle: set in updatePadding() when padding changes during a programmatic animation,
+    // consumed (and nulled) in onCameraIdle() which fires the re-center animation.
+    // Also cleared on: bind() (new camera), onUserGesture(), fitBounds(), reset().
     private var queuedRecenter: RecenterRequest? = null
 
     private val _contentPadding = MutableStateFlow(PaddingValues())

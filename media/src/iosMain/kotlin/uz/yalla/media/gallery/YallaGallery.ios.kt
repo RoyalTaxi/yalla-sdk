@@ -82,6 +82,11 @@ actual fun YallaGallery(
     }
 }
 
+/**
+ * Checks the current photo library authorization status and, if undetermined, requests access.
+ *
+ * @return `true` if authorized, `false` if denied or restricted.
+ */
 private suspend fun checkOrRequestPhotoLibraryAccess(): Boolean {
     val currentStatus = PHPhotoLibrary.authorizationStatus()
     if (currentStatus == PHAuthorizationStatusAuthorized) return true
@@ -94,6 +99,15 @@ private suspend fun checkOrRequestPhotoLibraryAccess(): Boolean {
     }
 }
 
+/**
+ * Presents a single-selection [PHPickerViewController] and suspends until the user picks an
+ * image or cancels.
+ *
+ * The selected image is decoded, re-encoded as JPEG at 90 % quality, and returned as a
+ * byte array. Returns `null` on cancellation or if any step in the pipeline fails.
+ *
+ * @return JPEG-encoded bytes of the selected image, or `null`.
+ */
 @OptIn(ExperimentalForeignApi::class)
 private suspend fun launchPHPicker(): ByteArray? =
     withContext(Dispatchers.Main) {
@@ -161,6 +175,13 @@ private suspend fun launchPHPicker(): ByteArray? =
         }
     }
 
+/**
+ * Resolves the topmost [UIViewController] that is safe to present from.
+ *
+ * Walks the `presentedViewController` chain starting from the key window's root controller.
+ *
+ * @return The topmost presentable controller, or `null` if none is available.
+ */
 private fun getRootViewController(): UIViewController? {
     @Suppress("DEPRECATION")
     val legacyKeyWindow = UIApplication.sharedApplication.keyWindow

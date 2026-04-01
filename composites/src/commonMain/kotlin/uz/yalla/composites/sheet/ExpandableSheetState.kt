@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 
@@ -203,7 +204,7 @@ val ExpandableSheetSpringSpec: AnimationSpec<Float> =
 fun rememberExpandableSheetState(
     initialValue: ExpandableSheetValue = ExpandableSheetValue.Collapsed,
     snapAnimationSpec: AnimationSpec<Float> = ExpandableSheetSpringSpec,
-    density: Density,
+    density: Density = LocalDensity.current,
     positionalThreshold: (totalDistance: Float) -> Float = { it * 0.5f },
 ): ExpandableSheetState =
     remember {

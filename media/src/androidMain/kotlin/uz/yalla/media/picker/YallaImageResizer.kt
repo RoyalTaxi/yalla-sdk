@@ -12,7 +12,31 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
+/**
+ * Asynchronous image resizer that reads a content URI, down-scales if needed, applies a
+ * color filter, and returns the result as a JPEG byte array.
+ *
+ * Intermediate results (resized and filtered bitmaps) are cached in [YallaBitmapCache]
+ * to avoid redundant work when the same URI is processed again.
+ *
+ * @since 0.0.1
+ */
 internal object YallaImageResizer {
+    /**
+     * Reads the image at [uri], resizes it when larger than [resizeThresholdBytes], applies
+     * the [filterOptions] filter, and delivers the JPEG bytes to [onResult] on the main thread.
+     *
+     * @param context              Android context for content resolver access.
+     * @param coroutineScope       Scope used to launch the background work.
+     * @param uri                  Content URI pointing to the source image.
+     * @param width                Maximum output width in pixels.
+     * @param height               Maximum output height in pixels.
+     * @param resizeThresholdBytes Byte-size threshold below which resizing is skipped.
+     * @param compressionQuality   JPEG compression quality (0.0 .. 1.0).
+     * @param filterOptions        Color filter to apply to the image.
+     * @param onResult             Callback with the processed JPEG bytes, or `null` on failure.
+     * @since 0.0.1
+     */
     internal fun resizeImageAsync(
         context: Context,
         coroutineScope: CoroutineScope,
@@ -37,6 +61,11 @@ internal object YallaImageResizer {
         }
     }
 
+    /**
+     * Queries the content resolver for the byte size of the file at [uri].
+     *
+     * @return File size in bytes, or `0` if the query fails.
+     */
     private fun getImageSize(
         context: Context,
         uri: Uri
@@ -47,6 +76,11 @@ internal object YallaImageResizer {
             sizeIndex?.let { cursor.getInt(it) } ?: 0
         }
 
+    /**
+     * Reads the image at [uri], applies EXIF rotation, and returns it as JPEG bytes.
+     *
+     * @return JPEG bytes, or `null` when the stream cannot be opened.
+     */
     private fun getOriginalImageByteArray(
         context: Context,
         uri: Uri
@@ -57,6 +91,14 @@ internal object YallaImageResizer {
             rotatedBitmap.toByteArray()
         }
 
+    /**
+     * Resizes the image at [uri] to fit within [width] x [height], applies EXIF rotation
+     * and the given [filterOptions], and returns the result as compressed JPEG bytes.
+     *
+     * Both the resized bitmap and the final filtered bitmap are cached in [YallaBitmapCache].
+     *
+     * @return Compressed JPEG bytes, or `null` when the image cannot be loaded.
+     */
     private suspend fun resizeImage(
         context: Context,
         uri: Uri,
@@ -84,6 +126,14 @@ internal object YallaImageResizer {
         }
     }
 
+    /**
+     * Loads and down-samples the image at [uri] to approximately [width] x [height].
+     *
+     * Checks [YallaBitmapCache] first; on a miss decodes with an appropriate `inSampleSize`
+     * and caches the result.
+     *
+     * @return The down-sampled bitmap, or `null` when the image cannot be decoded.
+     */
     private suspend fun loadResizedBitmap(
         context: Context,
         uri: Uri,
@@ -110,6 +160,12 @@ internal object YallaImageResizer {
         }
     }
 
+    /**
+     * Computes the largest power-of-two sample size that brings both dimensions at or below
+     * [targetWidth] and [targetHeight].
+     *
+     * @return A power-of-two sample size (1, 2, 4, ...).
+     */
     private fun calculateInSampleSize(
         outWidth: Int,
         outHeight: Int,
@@ -124,6 +180,12 @@ internal object YallaImageResizer {
     }
 }
 
+/**
+ * Encodes this [Bitmap] as JPEG bytes at the given [quality].
+ *
+ * @param quality JPEG quality (0-100). Defaults to 100.
+ * @return JPEG-encoded byte array.
+ */
 private fun Bitmap.toByteArray(quality: Int = 100): ByteArray =
     ByteArrayOutputStream().use { stream ->
         compress(Bitmap.CompressFormat.JPEG, quality, stream)

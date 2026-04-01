@@ -9,6 +9,11 @@ import android.provider.MediaStore
 import androidx.core.os.bundleOf
 import uz.yalla.media.gallery.model.YallaMediaImage
 
+/**
+ * MediaStore projection columns used for gallery image queries.
+ *
+ * Includes the row ID, display name, date taken, and album (bucket) name.
+ */
 private val projection =
     arrayOf(
         MediaStore.Images.Media._ID,
@@ -17,6 +22,17 @@ private val projection =
         MediaStore.Images.Media.BUCKET_DISPLAY_NAME
     )
 
+/**
+ * Creates a [Cursor] over the device's external images, sorted by date added (newest first).
+ *
+ * On API 29+ uses `ContentResolver.query` with a [bundleOf]-based arguments bundle;
+ * on older APIs falls back to a raw SQL `ORDER BY ... LIMIT ... OFFSET ...` clause.
+ *
+ * @param limit  Maximum number of rows to return.
+ * @param offset Number of rows to skip before the first result.
+ * @return A cursor positioned before the first row, or `null` on failure.
+ * @since 0.0.1
+ */
 internal fun Context.createCursor(
     limit: Int,
     offset: Int
@@ -46,6 +62,17 @@ internal fun Context.createCursor(
         )
     }
 
+/**
+ * Fetches a page of gallery images from the device media store.
+ *
+ * Opens a [Cursor] via [createCursor], iterates over the rows, and maps each one to a
+ * [YallaMediaImage] containing the row ID, content URI, and display name.
+ *
+ * @param limit  Maximum number of images to return.
+ * @param offset Number of images to skip (for pagination).
+ * @return List of [YallaMediaImage] items; empty if the cursor is `null` or yields no rows.
+ * @since 0.0.1
+ */
 internal fun Context.fetchPagePicture(
     limit: Int,
     offset: Int
@@ -74,6 +101,6 @@ internal fun Context.fetchPagePicture(
             )
         }
     }
-    cursor?.close()
+    // No manual cursor?.close() needed — cursor?.use {} already closes it.
     return pictures
 }

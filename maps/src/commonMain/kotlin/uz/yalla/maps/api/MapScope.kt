@@ -27,6 +27,13 @@ interface MapScope {
     val isGoogleMaps: Boolean
 }
 
+/**
+ * Default implementation of [MapScope].
+ *
+ * @param cameraState Camera position state for the active map.
+ * @param isGoogleMaps `true` when backed by Google Maps, `false` for MapLibre.
+ * @since 0.0.1
+ */
 internal class MapScopeImpl(
     override val cameraState: CameraPositionState,
     override val isGoogleMaps: Boolean

@@ -42,14 +42,35 @@ enum class CameraMoveStartedReason {
  */
 const val DEFAULT_ANIMATION_DURATION_MS: Int = 300
 
+/**
+ * Internal request type emitted by [CameraPositionState] to platform-specific handlers.
+ *
+ * @property durationMs Animation duration in milliseconds.
+ * @since 0.0.1
+ */
 internal sealed class CameraAnimationRequest {
     abstract val durationMs: Int
 
+    /**
+     * Request to animate the camera to a specific [position].
+     *
+     * @property position Target camera position.
+     * @property durationMs Animation duration in milliseconds.
+     * @since 0.0.1
+     */
     data class ToPosition(
         val position: CameraPosition,
         override val durationMs: Int,
     ) : CameraAnimationRequest()
 
+    /**
+     * Request to animate the camera to fit geographic [bounds] within the viewport.
+     *
+     * @property bounds Geographic bounding rectangle to fit.
+     * @property padding Pixel padding around the bounds.
+     * @property durationMs Animation duration in milliseconds.
+     * @since 0.0.1
+     */
     data class ToBounds(
         val bounds: LatLngBounds,
         val padding: Int,
@@ -93,8 +114,22 @@ class CameraPositionState(
     )
         internal set
 
+    /**
+     * Backing Compose state for the camera position, updated by both the cross-platform
+     * API and the platform-specific synchronization layer.
+     *
+     * @since 0.0.1
+     */
     internal var rawPosition: CameraPosition by mutableStateOf(position)
 
+    /**
+     * Platform-specific callback installed by the actual Google Maps synchronization layer.
+     *
+     * When set, [position] setter delegates through this to move the platform camera
+     * and update [rawPosition] atomically. When `null`, [rawPosition] is updated directly.
+     *
+     * @since 0.0.1
+     */
     internal var positionUpdater: ((CameraPosition) -> Unit)? = null
 
     /**
@@ -108,8 +143,18 @@ class CameraPositionState(
             positionUpdater?.invoke(value) ?: run { rawPosition = value }
         }
 
+    /**
+     * Channel for queued animation requests, consumed by the platform synchronization layer.
+     *
+     * @since 0.0.1
+     */
     internal val animationRequests = MutableSharedFlow<CameraAnimationRequest>(extraBufferCapacity = 1)
 
+    /**
+     * Channel for queued instant-move requests, consumed by the platform synchronization layer.
+     *
+     * @since 0.0.1
+     */
     internal val moveRequests = MutableSharedFlow<CameraPosition>(extraBufferCapacity = 1)
 
     /**

@@ -16,6 +16,17 @@ import uz.yalla.maps.model.CameraPosition
 import uz.yalla.maps.model.LatLng
 import uz.yalla.maps.model.LatLngBounds
 
+/**
+ * Sets up bidirectional synchronization between the cross-platform [CameraPositionState]
+ * and an iOS [GMSMapView].
+ *
+ * Animation requests, move requests, and position-update callbacks flow from the
+ * cross-platform state to the Google Maps iOS SDK, ensuring the two stay in sync.
+ *
+ * @param cameraPositionState The cross-platform camera state to synchronize.
+ * @param mapView The iOS Google Maps view to drive.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 internal fun SetupCameraPositionStateSync(
@@ -55,6 +66,16 @@ internal fun SetupCameraPositionStateSync(
     }
 }
 
+/**
+ * Updates the cross-platform camera state when the iOS map reports the camera is idle.
+ *
+ * Sets [CameraPositionState.isMoving] to `false` and copies the final position
+ * from the GMS camera to the cross-platform state.
+ *
+ * @param cameraPositionState The cross-platform camera state to update.
+ * @param idleAtCameraPosition The GMS camera position at rest.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun updateCameraPositionStateOnIdle(
     cameraPositionState: CameraPositionState,
@@ -71,6 +92,16 @@ internal fun updateCameraPositionStateOnIdle(
         )
 }
 
+/**
+ * Updates the cross-platform camera state during an active iOS camera movement.
+ *
+ * Copies the current GMS camera position (target, zoom, bearing, tilt) into
+ * [CameraPositionState.rawPosition] so Compose observers see real-time updates.
+ *
+ * @param cameraPositionState The cross-platform camera state to update.
+ * @param cameraPosition The current GMS camera position during movement.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun updateCameraPositionStateOnMove(
     cameraPositionState: CameraPositionState,
@@ -87,6 +118,12 @@ internal fun updateCameraPositionStateOnMove(
     }
 }
 
+/**
+ * Converts this cross-platform [CameraPosition] to a Google Maps iOS SDK `GMSCameraPosition`.
+ *
+ * @return A `GMSCameraPosition` with matching target, zoom, bearing, and viewing angle.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun CameraPosition.toGMSCameraPosition(): GMSCameraPosition =
     GMSCameraPosition.cameraWithTarget(
@@ -96,6 +133,12 @@ internal fun CameraPosition.toGMSCameraPosition(): GMSCameraPosition =
         viewingAngle = tilt.toDouble()
     )
 
+/**
+ * Converts this [LatLngBounds] to a Google Maps iOS SDK `GMSCoordinateBounds`.
+ *
+ * @return A `GMSCoordinateBounds` enclosing the same geographic rectangle.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun LatLngBounds.toGMSCoordinateBounds(): GMSCoordinateBounds =
     GMSCoordinateBounds()

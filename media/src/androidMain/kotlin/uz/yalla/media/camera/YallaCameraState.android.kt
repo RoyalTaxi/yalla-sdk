@@ -34,6 +34,13 @@ actual class YallaCameraState(
     /** @since 0.0.1 */
     actual var cameraMode: CameraMode by mutableStateOf(cameraMode)
 
+    /**
+     * Anchor closure set by the composable to trigger CameraX image capture.
+     *
+     * `null` when no camera preview is composed; non-null when a CameraX session is bound.
+     *
+     * @since 0.0.1
+     */
     internal var triggerCaptureAnchor: (() -> Unit)? = null
 
     /** @since 0.0.1 */
@@ -47,14 +54,32 @@ actual class YallaCameraState(
         triggerCaptureAnchor?.invoke()
     }
 
+    /**
+     * Resets the capturing flag after a capture completes or fails.
+     *
+     * @since 0.0.1
+     */
     internal fun stopCapturing() {
         isCapturing = false
     }
 
+    /**
+     * Forwards captured image bytes to the user-provided callback.
+     *
+     * @param image JPEG bytes, or `null` on failure.
+     * @since 0.0.1
+     */
     internal fun onCapture(image: ByteArray?) {
         onCapture.invoke(image)
     }
 
+    /**
+     * Marks the camera session as ready and the preview as visible.
+     *
+     * Called internally once the CameraX provider is bound to the lifecycle.
+     *
+     * @since 0.0.1
+     */
     internal fun onCameraReady() {
         isCameraReady = true
     }
@@ -87,7 +112,15 @@ actual class YallaCameraState(
     }
 }
 
-/** Android implementation of [rememberYallaCameraState]. @since 0.0.1 */
+/**
+ * Android implementation of [rememberYallaCameraState].
+ *
+ * Uses [rememberSaveable] with a custom [Saver] that persists the active [CameraMode]
+ * across configuration changes. The [onFrame] and [onCapture] callbacks are re-applied
+ * after restoration since they cannot be serialized.
+ *
+ * @since 0.0.1
+ */
 @Composable
 actual fun rememberYallaCameraState(
     initialCameraMode: CameraMode,

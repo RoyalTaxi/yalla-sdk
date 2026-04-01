@@ -14,6 +14,12 @@ import uz.yalla.maps.model.Cap
 import uz.yalla.maps.model.JointType
 import uz.yalla.maps.model.LatLng
 
+/**
+ * iOS implementation of [Polyline] wrapping a Google Maps iOS SDK `GMSPolyline`.
+ *
+ * @property gmsPolyline The underlying iOS polyline overlay.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 actual class Polyline(
     val gmsPolyline: GMSPolyline

@@ -70,28 +70,7 @@ internal class SessionPreferencesImpl(
         staticPreferences.setDeviceRegistered(false)
         scope.launch {
             dataStore.edit { prefs ->
-                prefs.remove(PreferenceKeys.ACCESS_TOKEN)
-                prefs.remove(PreferenceKeys.FIREBASE_TOKEN)
-                prefs.remove(PreferenceKeys.IS_GUEST_MODE)
-                prefs.remove(PreferenceKeys.IS_DEVICE_REGISTERED)
-                prefs.remove(PreferenceKeys.FIRST_NAME)
-                prefs.remove(PreferenceKeys.LAST_NAME)
-                prefs.remove(PreferenceKeys.NUMBER)
-                prefs.remove(PreferenceKeys.PAYMENT_TYPE)
-                prefs.remove(PreferenceKeys.CARD_ID)
-                prefs.remove(PreferenceKeys.CARD_NUMBER)
-                prefs.remove(PreferenceKeys.SUPPORT_NUMBER)
-                prefs.remove(PreferenceKeys.SUPPORT_TELEGRAM)
-                prefs.remove(PreferenceKeys.INFO_INSTAGRAM)
-                prefs.remove(PreferenceKeys.INFO_TELEGRAM)
-                prefs.remove(PreferenceKeys.PRIVACY_POLICY_RU)
-                prefs.remove(PreferenceKeys.PRIVACY_POLICY_UZ)
-                prefs.remove(PreferenceKeys.MAX_BONUS)
-                prefs.remove(PreferenceKeys.MIN_BONUS)
-                prefs.remove(PreferenceKeys.BALANCE)
-                prefs.remove(PreferenceKeys.IS_BONUS_ENABLED)
-                prefs.remove(PreferenceKeys.IS_CARD_ENABLED)
-                prefs.remove(PreferenceKeys.ORDER_CANCEL_TIME)
+                PreferenceKeys.SESSION_KEYS.forEach { prefs.remove(it) }
             }
         }
     }

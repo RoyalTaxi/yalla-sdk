@@ -39,7 +39,7 @@ internal class StaticPreferencesImpl(
         get() = settings[KEY_GUEST_MODE, false]
 
     override val onboardingStage: String
-        get() = settings[KEY_ONBOARDING_STAGE, FRESH]
+        get() = settings[KEY_ONBOARDING_STAGE, PreferenceKeys.DEFAULT_ONBOARDING_STAGE]
 
     override fun setLocaleCode(value: String) {
         settings[KEY_LOCALE] = value
@@ -63,6 +63,5 @@ internal class StaticPreferencesImpl(
         const val KEY_DEVICE_REGISTERED = "${PREFIX}device_registered"
         const val KEY_GUEST_MODE = "${PREFIX}guest_mode"
         const val KEY_ONBOARDING_STAGE = "${PREFIX}onboarding_stage"
-        const val FRESH = "FRESH"
     }
 }

@@ -146,27 +146,17 @@ fun ListItem(
         }
     }
 
-    if (onClick != null) {
-        Card(
-            onClick = onClick,
-            modifier = modifier,
-            enabled = enabled,
-            shape = dimens.shape,
-            colors = CardDefaults.cardColors(
-                containerColor = colors.container,
-                disabledContainerColor = colors.disabledContainer,
-            ),
-        ) {
-            content()
-        }
-    } else {
-        Card(
-            modifier = modifier,
-            shape = dimens.shape,
-            colors = CardDefaults.cardColors(containerColor = colors.container),
-        ) {
-            content()
-        }
+    Card(
+        onClick = onClick ?: {},
+        modifier = modifier,
+        enabled = onClick != null && enabled,
+        shape = dimens.shape,
+        colors = CardDefaults.cardColors(
+            containerColor = colors.container,
+            disabledContainerColor = if (onClick != null) colors.disabledContainer else colors.container,
+        ),
+    ) {
+        content()
     }
 }
 

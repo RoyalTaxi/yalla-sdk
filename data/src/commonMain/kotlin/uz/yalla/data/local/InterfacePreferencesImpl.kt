@@ -68,7 +68,7 @@ internal class InterfacePreferencesImpl(
     }
 
     override val onboardingStage: Flow<String> =
-        dataStore.data.map { it[PreferenceKeys.ONBOARDING_STAGE] ?: "FRESH" }
+        dataStore.data.map { it[PreferenceKeys.ONBOARDING_STAGE] ?: PreferenceKeys.DEFAULT_ONBOARDING_STAGE }
 
     override fun setOnboardingStage(value: String) {
         staticPreferences.setOnboardingStage(value)

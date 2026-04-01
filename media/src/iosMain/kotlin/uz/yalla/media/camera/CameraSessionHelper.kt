@@ -30,6 +30,11 @@ import platform.darwin.dispatch_group_leave
 import platform.darwin.dispatch_group_notify
 import platform.darwin.dispatch_queue_create
 
+/**
+ * Device types queried during camera discovery, ordered by preference.
+ *
+ * Includes wide-angle, dual-wide, dual, ultra-wide, and duo (legacy) camera types.
+ */
 private val deviceTypes =
     listOf(
         AVCaptureDeviceTypeBuiltInWideAngleCamera,
@@ -39,6 +44,15 @@ private val deviceTypes =
         AVCaptureDeviceTypeBuiltInDuoCamera
     )
 
+/**
+ * Discovers an [AVCaptureDevice] matching the requested [cameraMode].
+ *
+ * Uses a discovery session with the [deviceTypes] list filtered by front or back position.
+ *
+ * @param cameraMode Desired lens (front or back).
+ * @return The first matching capture device, or `null` on simulator / no camera hardware.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun discoverCamera(cameraMode: CameraMode): AVCaptureDevice? {
     val position =
@@ -54,6 +68,21 @@ internal fun discoverCamera(cameraMode: CameraMode): AVCaptureDevice? {
     ).devices.firstOrNull() as? AVCaptureDevice
 }
 
+/**
+ * Creates and configures an [AVCaptureSession] with input, photo output, and optional
+ * video data output for real-time frame analysis.
+ *
+ * The session is configured with `AVCaptureSessionPresetHigh` (falling back to
+ * `AVCaptureSessionPresetPhoto`) and video frames are delivered in `32BGRA` format
+ * on a dedicated serial dispatch queue.
+ *
+ * @param camera        Hardware camera device to use as input.
+ * @param photoOutput   Output for still-image capture.
+ * @param videoOutput   Optional output for real-time video frames; `null` to skip.
+ * @param frameAnalyzer Delegate receiving video frames; required when [videoOutput] is non-null.
+ * @return A configured (but not yet running) [AVCaptureSession].
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun createCaptureSession(
     camera: AVCaptureDevice,
@@ -103,6 +132,16 @@ internal fun createCaptureSession(
     return session
 }
 
+/**
+ * Starts the given [AVCaptureSession] on a high-priority background queue and invokes
+ * [onReady] on the main queue once the session is running.
+ *
+ * Uses `dispatch_group` to coordinate the background start with the main-queue callback.
+ *
+ * @param session The capture session to start.
+ * @param onReady Callback fired on the main thread when the session begins running.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun startSession(
     session: AVCaptureSession,
@@ -126,6 +165,14 @@ internal fun startSession(
     }
 }
 
+/**
+ * Stops the given [AVCaptureSession] on a high-priority background queue.
+ *
+ * Safe to call even if the session is already stopped.
+ *
+ * @param session The capture session to stop.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun stopSession(session: AVCaptureSession) {
     val queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH.toLong(), 0UL)
@@ -136,6 +183,19 @@ internal fun stopSession(session: AVCaptureSession) {
     }
 }
 
+/**
+ * Hot-swaps the camera input of a running [AVCaptureSession] to the lens specified by
+ * [newMode].
+ *
+ * Removes all existing inputs, discovers the new camera device, adds a fresh input, and
+ * commits the configuration — all on a high-priority background queue. [onReady] is
+ * dispatched on the main queue after the switch completes.
+ *
+ * @param session The running capture session whose input is replaced.
+ * @param newMode Target camera lens (front or back).
+ * @param onReady Callback fired on the main thread once the new input is active.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun switchCameraInput(
     session: AVCaptureSession,

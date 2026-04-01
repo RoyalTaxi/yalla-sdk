@@ -22,6 +22,14 @@ import uz.yalla.maps.config.platform.getPlatformGestures
 import uz.yalla.maps.config.platform.getPlatformOrnamentOptions
 import uz.yalla.maps.config.platform.getPlatformRenderOptions
 
+/**
+ * Resolves the effective [ThemeKind] for MapLibre, converting [ThemeKind.System]
+ * to [ThemeKind.Light] or [ThemeKind.Dark] based on the current system appearance.
+ *
+ * @param themeType The user's theme preference.
+ * @return A resolved theme that is always either [ThemeKind.Light] or [ThemeKind.Dark].
+ * @since 0.0.1
+ */
 @Composable
 internal fun rememberMapTheme(themeType: ThemeKind): ThemeKind {
     val isSystemDark = isSystemInDarkTheme()
@@ -35,6 +43,9 @@ internal fun rememberMapTheme(themeType: ThemeKind): ThemeKind {
     }
 }
 
+/**
+ * Converts this [ThemeKind] to the corresponding MapLibre [BaseStyle.Uri].
+ */
 private fun ThemeKind.toMapStyle(): BaseStyle.Uri =
     BaseStyle.Uri(
         when (this) {

@@ -35,6 +35,8 @@ internal fun applyFilter(
 
     val paint = Paint().apply { colorFilter = ColorMatrixColorFilter(colorMatrix) }
 
+    // Note: originalBitmap is intentionally NOT recycled here — the caller owns it
+    // and may still need it (e.g. for undo, caching, or displaying alongside the filtered result).
     return Bitmap.createBitmap(originalBitmap.width, originalBitmap.height, Bitmap.Config.ARGB_8888).also {
         Canvas(it).drawBitmap(originalBitmap, 0f, 0f, paint)
     }

@@ -9,7 +9,15 @@ import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.CoroutineScope
 import uz.yalla.media.picker.SelectionMode.Companion.INFINITY
 
-/** Android implementation of [rememberImagePickerLauncher] using `PickVisualMedia` APIs. @since 0.0.1 */
+/**
+ * Android implementation of [rememberImagePickerLauncher] using `PickVisualMedia` APIs.
+ *
+ * Delegates to [ActivityResultContracts.PickVisualMedia] for single-image selection and
+ * [ActivityResultContracts.PickMultipleVisualMedia] for multi-image selection. Selected
+ * images are resized and filtered via [YallaImageResizer] before being delivered.
+ *
+ * @since 0.0.1
+ */
 @Composable
 actual fun rememberImagePickerLauncher(
     selectionMode: SelectionMode,

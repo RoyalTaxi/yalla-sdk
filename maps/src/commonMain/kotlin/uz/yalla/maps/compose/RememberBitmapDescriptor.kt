@@ -24,4 +24,13 @@ fun rememberBitmapDescriptor(resource: DrawableResource): BitmapDescriptor {
     return remember(imageBitmap) { imageBitmap.toBitmapDescriptor() }
 }
 
+/**
+ * Converts this [ImageBitmap] to a platform-specific [BitmapDescriptor].
+ *
+ * On Android, extracts the `android.graphics.Bitmap` via `asAndroidBitmap`;
+ * on iOS, encodes to PNG and creates a `UIImage` at the device screen scale.
+ *
+ * @return A [BitmapDescriptor] wrapping the converted image.
+ * @since 0.0.1
+ */
 internal expect fun ImageBitmap.toBitmapDescriptor(): BitmapDescriptor

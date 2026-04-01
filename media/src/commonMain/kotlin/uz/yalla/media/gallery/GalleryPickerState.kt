@@ -58,6 +58,12 @@ class GalleryPickerState(
     val columns: Int
 ) {
     internal companion object {
+        /**
+         * [Saver] that serializes the four layout properties as a list of integers,
+         * enabling [rememberSaveable] to persist the state across configuration changes.
+         *
+         * @since 0.0.1
+         */
         val Saver: Saver<GalleryPickerState, *> =
             listSaver(
                 save = {

@@ -76,12 +76,10 @@ class LoadingController(
         block: suspend () -> T,
     ): T =
         coroutineScope {
-            val localShowJob: Job?
-
             mutex.withLock {
                 activeOperations++
                 if (activeOperations == 1 && !_loading.value) {
-                    localShowJob =
+                    showJob =
                         launch {
                             delay(showAfter)
                             mutex.withLock {
@@ -91,9 +89,6 @@ class LoadingController(
                                 }
                             }
                         }
-                    showJob = localShowJob
-                } else {
-                    localShowJob = null
                 }
             }
 
@@ -103,7 +98,6 @@ class LoadingController(
                 val (remainingDelay, gen) = mutex.withLock {
                     activeOperations--
                     if (activeOperations == 0) {
-                        localShowJob?.cancel()
                         showJob?.cancel()
                         showJob = null
                         val delay = visibleSince?.elapsedNow()?.let { elapsed ->

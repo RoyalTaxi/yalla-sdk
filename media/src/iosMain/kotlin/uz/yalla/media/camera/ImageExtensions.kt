@@ -13,6 +13,18 @@ import platform.UIKit.UIImage
 import platform.UIKit.UIImageOrientation
 import platform.posix.memcpy
 
+/**
+ * Redraws this [UIImage] so that its `imageOrientation` becomes `.up`.
+ *
+ * Images captured by the camera often carry a non-identity orientation tag.
+ * This function bakes the rotation into the pixel data using [UIGraphicsImageRenderer]
+ * so that downstream consumers (encoders, display layers) see a correctly-oriented image.
+ *
+ * If the image is already `.up`, the receiver is returned unchanged (no copy).
+ *
+ * @return A new [UIImage] with `UIImageOrientationUp`, or the same instance when already upright.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun UIImage.normalizeOrientation(): UIImage {
     if (imageOrientation == UIImageOrientation.UIImageOrientationUp) return this
@@ -24,6 +36,14 @@ internal fun UIImage.normalizeOrientation(): UIImage {
     }
 }
 
+/**
+ * Copies the contents of this [NSData] into a Kotlin [ByteArray].
+ *
+ * Uses `memcpy` for a single bulk copy. Returns an empty array when [length] is zero.
+ *
+ * @return A newly-allocated byte array containing the data's bytes.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun NSData.toByteArray(): ByteArray {
     val size = length.toInt()
@@ -36,6 +56,18 @@ internal fun NSData.toByteArray(): ByteArray {
     return byteArray
 }
 
+/**
+ * Scales this [UIImage] down so that neither dimension exceeds [maxDimension], preserving
+ * the aspect ratio.
+ *
+ * Uses [UIGraphicsImageRenderer] (Metal-backed on supported hardware) for the resize.
+ * If the image already fits within the requested bounds it is returned unchanged.
+ *
+ * @param maxDimension      Maximum width or height in points. Defaults to 1024.
+ * @param compressionQuality Unused in the resize step but kept for API symmetry.
+ * @return A resized [UIImage], or the receiver if no scaling is needed.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal fun UIImage.resizeAndCompress(
     maxDimension: Double = 1024.0,

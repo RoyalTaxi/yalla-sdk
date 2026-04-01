@@ -2,7 +2,7 @@ package uz.yalla.platform.system
 
 import android.app.Activity
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
@@ -22,15 +22,17 @@ actual fun SystemBarColors(
     statusBarColor: Color,
     navigationBarColor: Color
 ) {
+    val useDarkStatusBarIcons = statusBarColor.luminance() > 0.5f
+    val useDarkNavigationBarIcons = navigationBarColor.luminance() > 0.5f
     val context = LocalContext.current
 
-    SideEffect {
-        val window = (context as? Activity)?.window ?: return@SideEffect
+    // LaunchedEffect keyed on the derived booleans — only re-runs when icon style
+    // actually changes, unlike SideEffect which fires on every recomposition (60fps
+    // during animations).
+    LaunchedEffect(useDarkStatusBarIcons, useDarkNavigationBarIcons) {
+        val window = (context as? Activity)?.window ?: return@LaunchedEffect
         val view = window.decorView
         val insetsController = WindowCompat.getInsetsController(window, view)
-
-        val useDarkStatusBarIcons = statusBarColor.luminance() > 0.5f
-        val useDarkNavigationBarIcons = navigationBarColor.luminance() > 0.5f
 
         insetsController.isAppearanceLightStatusBars = useDarkStatusBarIcons
         insetsController.isAppearanceLightNavigationBars = useDarkNavigationBarIcons
@@ -47,8 +49,10 @@ actual fun SystemBarColors(
 actual fun SystemBarColors(darkIcons: Boolean) {
     val context = LocalContext.current
 
-    SideEffect {
-        val window = (context as? Activity)?.window ?: return@SideEffect
+    // LaunchedEffect keyed on darkIcons — only re-runs when the value actually
+    // changes, matching the iOS actual's behavior.
+    LaunchedEffect(darkIcons) {
+        val window = (context as? Activity)?.window ?: return@LaunchedEffect
         val view = window.decorView
         val insetsController = WindowCompat.getInsetsController(window, view)
 

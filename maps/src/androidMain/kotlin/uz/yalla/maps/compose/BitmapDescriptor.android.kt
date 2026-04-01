@@ -6,10 +6,27 @@ import java.nio.ByteBuffer
 import com.google.android.gms.maps.model.BitmapDescriptor as GoogleBitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory as GoogleBitmapDescriptorFactory
 
+/**
+ * Android implementation of [BitmapDescriptor].
+ *
+ * Wraps a Google Maps SDK `com.google.android.gms.maps.model.BitmapDescriptor`
+ * for use as a map marker or overlay icon.
+ *
+ * @property googleBitmapDescriptor The underlying Google Maps bitmap descriptor.
+ * @since 0.0.1
+ */
 actual class BitmapDescriptor(
     val googleBitmapDescriptor: GoogleBitmapDescriptor
 )
 
+/**
+ * Android implementation of [BitmapDescriptorFactory].
+ *
+ * Converts raw pixel data or encoded image bytes into Android [Bitmap][android.graphics.Bitmap]
+ * instances and wraps them via `GoogleBitmapDescriptorFactory.fromBitmap`.
+ *
+ * @since 0.0.1
+ */
 actual object BitmapDescriptorFactory {
     actual fun fromBytes(
         bytes: ByteArray,

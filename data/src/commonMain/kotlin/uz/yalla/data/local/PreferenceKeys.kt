@@ -1,5 +1,6 @@
 package uz.yalla.data.local
 
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
@@ -106,6 +107,39 @@ internal object PreferenceKeys {
 
     // endregion
 
+    /**
+     * Keys that belong to an authenticated session (auth, user profile, server config).
+     * [SessionPreferencesImpl.clearSession] removes exactly these keys on logout,
+     * while interface and position keys survive.
+     */
+    val SESSION_KEYS: List<Preferences.Key<*>> = listOf(
+        // Session
+        ACCESS_TOKEN,
+        FIREBASE_TOKEN,
+        IS_GUEST_MODE,
+        IS_DEVICE_REGISTERED,
+        // User
+        FIRST_NAME,
+        LAST_NAME,
+        NUMBER,
+        PAYMENT_TYPE,
+        CARD_ID,
+        CARD_NUMBER,
+        // Config
+        SUPPORT_NUMBER,
+        SUPPORT_TELEGRAM,
+        INFO_INSTAGRAM,
+        INFO_TELEGRAM,
+        PRIVACY_POLICY_RU,
+        PRIVACY_POLICY_UZ,
+        MAX_BONUS,
+        MIN_BONUS,
+        BALANCE,
+        IS_BONUS_ENABLED,
+        IS_CARD_ENABLED,
+        ORDER_CANCEL_TIME,
+    )
+
     // region Interface
 
     /** Active locale code (e.g. `"uz"`, `"ru"`). */
@@ -120,8 +154,11 @@ internal object PreferenceKeys {
     /** Whether the onboarding flow should be skipped. */
     val SKIP_ONBOARDING = booleanPreferencesKey("skipOnboarding")
 
-    /** Current onboarding stage identifier (default `"FRESH"`). */
+    /** Current onboarding stage identifier (default [DEFAULT_ONBOARDING_STAGE]). */
     val ONBOARDING_STAGE = stringPreferencesKey("onboardingStage")
+
+    /** Default value for [ONBOARDING_STAGE] when no stage has been persisted yet. */
+    const val DEFAULT_ONBOARDING_STAGE = "FRESH"
 
     // endregion
 

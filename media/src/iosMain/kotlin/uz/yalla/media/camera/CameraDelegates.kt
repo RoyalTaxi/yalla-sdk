@@ -20,6 +20,16 @@ import platform.Foundation.NSError
 import platform.darwin.NSObject
 import platform.posix.memcpy
 
+/**
+ * AVFoundation video data output delegate that forwards raw pixel data to a Kotlin callback.
+ *
+ * Each frame is extracted from the [CMSampleBufferRef]'s pixel buffer via a single
+ * `memcpy` (BGRA layout), avoiding an intermediate `NSData` allocation.
+ *
+ * @param onFrame Callback receiving the raw pixel bytes for each video frame, or `null`
+ *                to disable frame delivery.
+ * @since 0.0.1
+ */
 internal class CameraFrameAnalyzerDelegate(private val onFrame: ((frame: ByteArray) -> Unit)?) :
     NSObject(),
     AVCaptureVideoDataOutputSampleBufferDelegateProtocol {
@@ -48,6 +58,17 @@ internal class CameraFrameAnalyzerDelegate(private val onFrame: ((frame: ByteArr
     }
 }
 
+/**
+ * AVFoundation photo capture delegate that converts the captured photo to a byte array.
+ *
+ * On success the photo's `fileDataRepresentation` is delivered to [onCapture] as a
+ * [ByteArray]; on error (or when the representation is `null`) the callback receives `null`.
+ * [onCaptureEnd] is always invoked after the result to reset the capturing state.
+ *
+ * @param onCaptureEnd Action called after delivery to signal capture completion.
+ * @param onCapture    Callback receiving the JPEG/HEIC file bytes, or `null` on failure.
+ * @since 0.0.1
+ */
 internal class PhotoCaptureDelegate(
     private val onCaptureEnd: () -> Unit,
     private val onCapture: (byteArray: ByteArray?) -> Unit

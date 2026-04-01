@@ -32,6 +32,16 @@ import uz.yalla.maps.model.MapProperties
 import uz.yalla.maps.model.MapType
 import uz.yalla.maps.model.MapUiSettings
 
+/**
+ * iOS delegate that bridges `GMSMapView` camera events to the cross-platform [CameraPositionState].
+ *
+ * Forwards `willMove`, `didChangeCameraPosition`, `idleAtCameraPosition`, and
+ * `mapViewDidFinishTileRendering` callbacks to keep the Compose-side state in sync.
+ *
+ * @param cameraPositionState The cross-platform camera state to update on events.
+ * @param onMapLoaded Callback invoked once when the map tiles finish rendering.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 private class GMSMapViewDelegate(
     private val cameraPositionState: CameraPositionState,
@@ -207,6 +217,11 @@ actual fun GoogleMap(
             if (isPaddingChanged) {
                 val isPaddingDecreasing =
                     newTop < currentTop || newLeft < currentLeft || newBottom < currentBottom || newRight < currentRight
+
+                // Workaround: Google Maps iOS SDK doesn't properly interpolate padding when
+                // values decrease — the map jumps or ignores the change entirely. Resetting
+                // to zero first forces the SDK to recalculate from a clean baseline, ensuring
+                // the final padding is applied correctly.
                 if (isPaddingDecreasing) {
                     view.padding = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
                 }
@@ -216,6 +231,9 @@ actual fun GoogleMap(
     )
 }
 
+/**
+ * Converts this cross-platform [MapType] to the Google Maps iOS SDK integer constant.
+ */
 @OptIn(ExperimentalForeignApi::class)
 private fun MapType.toGMSMapType() =
     when (this) {

@@ -111,6 +111,15 @@ fun BaseMapContent(
     )
 }
 
+/**
+ * Remembers animated padding values that smoothly transition toward the [target].
+ *
+ * Each edge (start, end, top, bottom) is independently animated over [PADDING_ANIMATION_MS].
+ *
+ * @param target The desired padding to animate toward.
+ * @return Animated [PaddingValues] that converge toward [target].
+ * @since 0.0.1
+ */
 @Composable
 internal fun rememberAnimatedPadding(target: PaddingValues): PaddingValues {
     val layoutDirection = LocalLayoutDirection.current
@@ -184,6 +193,17 @@ fun CameraTrackingEffect(
     }
 }
 
+/**
+ * Side-effect that sets the Google Maps camera to [target] before the map reports ready.
+ *
+ * Ensures the map opens at the correct location instead of briefly showing the default
+ * position. Becomes a no-op once [isMapReady] is `true`.
+ *
+ * @param isMapReady Whether the map has finished loading.
+ * @param target The desired initial camera center.
+ * @param cameraState The compose-layer camera state to update.
+ * @since 0.0.1
+ */
 @Composable
 internal fun PreMapCameraPositionEffect(
     isMapReady: Boolean,

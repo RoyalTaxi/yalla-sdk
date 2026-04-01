@@ -4,6 +4,15 @@ import androidx.compose.runtime.AbstractApplier
 import cocoapods.GoogleMaps.GMSMapView
 import kotlinx.cinterop.ExperimentalForeignApi
 
+/**
+ * Compose [AbstractApplier] for the iOS Google Maps composition tree.
+ *
+ * Manages the lifecycle of [MapNode] children (markers, polylines, circles) by
+ * attaching them to and removing them from the underlying [GMSMapView].
+ *
+ * @property mapView The iOS Google Maps view that hosts the overlays.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 internal class MapApplier(
     val mapView: GMSMapView
