@@ -4,6 +4,7 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.crashlytics.FirebaseCrashlytics
 import dev.gitlive.firebase.crashlytics.crashlytics
 import uz.yalla.firebase.YallaFirebase
+import uz.yalla.firebase.analytics.YallaAnalytics
 
 /**
  * Wrapper for Firebase Crashlytics that provides safe crash reporting with built-in error handling.
@@ -14,6 +15,7 @@ import uz.yalla.firebase.YallaFirebase
  *
  * Access this class via [YallaFirebase.crashlytics]; do not instantiate it directly.
  *
+ * @see YallaFirebase.crashlytics
  * @since 0.0.1
  */
 class YallaCrashlytics {
@@ -27,6 +29,7 @@ class YallaCrashlytics {
      * are not sent to Crashlytics until a crash or [recordException] call occurs.
      *
      * @param message The message to log.
+     * @see recordException
      * @since 0.0.1
      */
     fun log(message: String) {
@@ -45,6 +48,8 @@ class YallaCrashlytics {
      * The exception appears under "Non-fatals" in the Firebase console.
      *
      * @param throwable The exception to record.
+     * @see log
+     * @see setCustomKey
      * @since 0.0.1
      */
     fun recordException(throwable: Throwable) {
@@ -64,6 +69,7 @@ class YallaCrashlytics {
      *
      * @param key The custom key name (max 1024 chars).
      * @param value The custom value (max 1024 chars).
+     * @see recordException
      * @since 0.0.1
      */
     fun setCustomKey(
@@ -84,6 +90,7 @@ class YallaCrashlytics {
      * like email or name) to comply with privacy regulations.
      *
      * @param userId An opaque identifier for the current user.
+     * @see setCustomKey
      * @since 0.0.1
      */
     fun setUserId(userId: String) {
@@ -101,6 +108,7 @@ class YallaCrashlytics {
      * no crash data is sent to Firebase. The setting persists across app restarts.
      *
      * @param enabled `true` to enable crash reporting, `false` to disable it.
+     * @see YallaAnalytics.setAnalyticsCollectionEnabled
      * @since 0.0.1
      */
     fun setCrashlyticsCollectionEnabled(enabled: Boolean) {

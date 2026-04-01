@@ -13,16 +13,26 @@ import platform.Foundation.NSData
 import platform.PhotosUI.PHPickerResult
 import platform.PhotosUI.PHPickerViewController
 import platform.PhotosUI.PHPickerViewControllerDelegateProtocol
-import platform.UIKit.UIApplication
 import platform.UIKit.UIImage
-import platform.UIKit.UISceneActivationStateForegroundActive
-import platform.UIKit.UIViewController
-import platform.UIKit.UIWindow
-import platform.UIKit.UIWindowScene
 import platform.darwin.NSObject
+import uz.yalla.media.utils.getRootViewController
 import kotlin.coroutines.resume
 
-/** iOS implementation of [rememberImagePickerLauncher] using PHPickerViewController. @since 0.0.1 */
+/**
+ * iOS implementation of [rememberImagePickerLauncher] using [PHPickerViewController].
+ *
+ * Presents the system photo picker via the topmost view controller obtained from
+ * [getRootViewController]. Selected images are resized and filtered according to the
+ * provided options before being delivered as byte arrays.
+ *
+ * @param selectionMode Single or multiple image selection.
+ * @param scope         Coroutine scope for async image processing.
+ * @param resizeOptions Target dimensions and compression quality.
+ * @param filterOptions Color filter to apply to selected images.
+ * @param onResult      Callback receiving the list of processed JPEG byte arrays.
+ * @return An [ImagePickerLauncher] instance remembered across recompositions.
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun rememberImagePickerLauncher(
@@ -47,34 +57,6 @@ actual fun rememberImagePickerLauncher(
             }
         }
     }
-}
-
-private fun getRootViewController(): UIViewController? {
-    @Suppress("DEPRECATION")
-    val legacyKeyWindow = UIApplication.sharedApplication.keyWindow
-
-    val keyWindow =
-        UIApplication.sharedApplication.connectedScenes
-            .filterIsInstance<UIWindowScene>()
-            .firstOrNull { it.activationState == UISceneActivationStateForegroundActive }
-            ?.windows
-            ?.filterIsInstance<UIWindow>()
-            ?.firstOrNull { it.isKeyWindow() }
-            ?: legacyKeyWindow
-
-    var rootVC = keyWindow?.rootViewController()
-
-    while (true) {
-        val presented = rootVC?.presentedViewController() ?: break
-        if (presented.view?.window != null && !presented.isBeingDismissed()) {
-            rootVC = presented
-        } else {
-            break
-        }
-    }
-
-    return rootVC?.takeIf { it.view?.window != null && !it.isBeingDismissed() }
-        ?: keyWindow?.rootViewController()
 }
 
 private fun createPickerDelegate(

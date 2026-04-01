@@ -15,10 +15,15 @@ import uz.yalla.core.util.orFalse
  * [DataStore]-backed implementation of [ConfigPreferences].
  *
  * Manages server-provided configuration: support contacts, social links,
- * privacy policy URLs, bonus limits, and balance.
+ * privacy policy URLs, bonus limits, balance, and payment feature toggles.
+ * These values are cleared on logout by [SessionPreferencesImpl.clearSession].
+ *
+ * Long values (bonus limits, balance) are read via [getLongSafe] to handle
+ * legacy entries that may have been stored as [Int] by an older app version.
  *
  * @param dataStore shared preferences store
  * @param scope coroutine scope for write operations
+ * @see SessionPreferencesImpl
  * @since 0.0.1
  */
 internal class ConfigPreferencesImpl(
@@ -111,8 +116,14 @@ internal class ConfigPreferencesImpl(
 }
 
 /**
- * Safely reads a Long preference that may have been stored as Int
- * by an older app version, avoiding ClassCastException.
+ * Safely reads a [Long] preference that may have been stored as [Int]
+ * by an older app version, preventing [ClassCastException].
+ *
+ * Returns `0L` when the key is absent or the stored type does not match.
+ *
+ * @param key the [Long] preference key to read
+ * @return stored value, or `0L` on absence or type mismatch
+ * @since 0.0.1
  */
 private fun Preferences.getLongSafe(key: Preferences.Key<Long>): Long =
     try {

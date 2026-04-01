@@ -26,12 +26,29 @@ import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_coin
 
+/**
+ * Color configuration for [ClickableValueItem] and [ValueItemView].
+ *
+ * @param background Gradient brush for the item background.
+ * @param text Text color for the bonus value.
+ * @since 0.0.1
+ */
 @Immutable
 data class ValueItemColors(
     val background: Brush,
     val text: Color,
 )
 
+/**
+ * Dimension configuration for [ClickableValueItem] and [ValueItemView].
+ *
+ * @param shape Item shape (pill by default).
+ * @param contentPadding Padding inside the item.
+ * @param iconSize Size of the coin icon.
+ * @param iconSpacing Spacing between coin icon and text.
+ * @param trailingSpacing Trailing spacer width after the text.
+ * @since 0.0.1
+ */
 @Immutable
 data class ValueItemDimens(
     val shape: Shape,
@@ -41,8 +58,16 @@ data class ValueItemDimens(
     val trailingSpacing: Dp,
 )
 
+/**
+ * Default configuration values for [ClickableValueItem] and [ValueItemView].
+ *
+ * @since 0.0.1
+ */
 object ValueItemDefaults {
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         background: Brush = System.color.gradient.sunsetNight,
@@ -52,6 +77,9 @@ object ValueItemDefaults {
         text = text,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         shape: Shape = CircleShape,
         contentPadding: PaddingValues = PaddingValues(4.dp),
@@ -67,6 +95,31 @@ object ValueItemDefaults {
     )
 }
 
+/**
+ * Clickable bonus value pill displaying a coin icon and numeric balance.
+ *
+ * Wrapped in a [Surface][androidx.compose.material3.Surface] for click handling.
+ * Use in app bars or headers where the user can tap to view bonus details.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * ClickableValueItem(
+ *     bonus = user.bonusBalance,
+ *     onClick = { navigateToBonuses() },
+ * )
+ * ```
+ *
+ * @param bonus Numeric bonus value to display.
+ * @param onClick Called when the item is clicked.
+ * @param modifier Applied to the root surface.
+ * @param colors Color configuration, defaults to [ValueItemDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [ValueItemDefaults.dimens].
+ *
+ * @see ValueItemView
+ * @see ValueItemDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun ClickableValueItem(
     bonus: Long,
@@ -87,6 +140,26 @@ fun ClickableValueItem(
     )
 }
 
+/**
+ * Non-interactive bonus value pill displaying a coin icon and numeric balance.
+ *
+ * Use for read-only display of bonus balance in cards and lists.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * ValueItemView(bonus = order.bonusEarned)
+ * ```
+ *
+ * @param bonus Numeric bonus value to display.
+ * @param modifier Applied to the root card.
+ * @param colors Color configuration, defaults to [ValueItemDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [ValueItemDefaults.dimens].
+ *
+ * @see ClickableValueItem
+ * @see ValueItemDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun ValueItemView(
     bonus: Long,

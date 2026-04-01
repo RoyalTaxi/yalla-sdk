@@ -17,12 +17,27 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [PlaceButton].
+ *
+ * @param container Button background color.
+ * @param text Text color.
+ * @since 0.0.1
+ */
 @Immutable
 data class PlaceButtonColors(
     val container: Color,
     val text: Color,
 )
 
+/**
+ * Dimension configuration for [PlaceButton].
+ *
+ * @param shape Button shape.
+ * @param contentPadding Padding inside the button.
+ * @param iconSpacing Spacing between icons and text.
+ * @since 0.0.1
+ */
 @Immutable
 data class PlaceButtonDimens(
     val shape: Shape,
@@ -30,8 +45,16 @@ data class PlaceButtonDimens(
     val iconSpacing: Dp,
 )
 
+/**
+ * Default configuration values for [PlaceButton].
+ *
+ * @since 0.0.1
+ */
 object PlaceButtonDefaults {
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -41,6 +64,9 @@ object PlaceButtonDefaults {
         text = text,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -52,6 +78,34 @@ object PlaceButtonDefaults {
     )
 }
 
+/**
+ * Button for saved places with leading and trailing icon slots.
+ *
+ * Used in the home search bar to let users quickly select favorite places
+ * (home, work, etc.).
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * PlaceButton(
+ *     text = "Home",
+ *     onClick = { selectHome() },
+ *     leadingIcon = { Icon(YallaIcons.Home, null) },
+ *     trailingIcon = { Icon(YallaIcons.Edit, null) },
+ * )
+ * ```
+ *
+ * @param text Button text.
+ * @param onClick Called when the button is clicked.
+ * @param modifier Applied to the root button.
+ * @param leadingIcon Optional icon before the text.
+ * @param trailingIcon Optional icon after the text.
+ * @param colors Color configuration, defaults to [PlaceButtonDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [PlaceButtonDefaults.dimens].
+ *
+ * @see PlaceButtonDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun PlaceButton(
     text: String,

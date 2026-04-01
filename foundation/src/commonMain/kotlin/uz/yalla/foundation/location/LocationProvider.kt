@@ -44,10 +44,12 @@ fun LocationProvider(
 }
 
 /**
- * Returns the current [LocationManager] from composition.
+ * Returns the current [LocationManager] from the composition tree.
  *
- * @throws IllegalStateException if called outside [LocationProvider]
+ * @return [LocationManager] provided by the nearest [LocationProvider].
+ * @throws IllegalStateException If called outside a [LocationProvider].
  * @since 0.0.1
+ * @see LocationProvider
  */
 @Composable
 fun currentLocationManager(): LocationManager = LocalLocationManager.current

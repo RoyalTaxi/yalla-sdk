@@ -31,6 +31,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [AddressItem].
+ *
+ * @param container Button/card background color.
+ * @param placeholder Text color when no locations are provided.
+ * @param location Text color for location names.
+ * @param arrow Arrow icon tint between locations.
+ * @since 0.0.1
+ */
 @Immutable
 data class AddressItemColors(
     val container: Color,
@@ -39,6 +48,19 @@ data class AddressItemColors(
     val arrow: Color,
 )
 
+/**
+ * Dimension configuration for [AddressItem].
+ *
+ * @param shape Button/card shape.
+ * @param minHeight Minimum item height.
+ * @param contentSpacing Spacing between leading content, text, and trailing content.
+ * @param flowRowSpacing Spacing between locations in the multi-location variant.
+ * @param dotSize Diameter of the [AddressDot] circle.
+ * @param dotBorderWidth Border width of the [AddressDot] circle.
+ * @param horizontalPadding Horizontal padding for the item content.
+ * @param locationMaxLines Maximum lines for each location text.
+ * @since 0.0.1
+ */
 @Immutable
 data class AddressItemDimens(
     val shape: Shape,
@@ -51,8 +73,16 @@ data class AddressItemDimens(
     val locationMaxLines: Int,
 )
 
+/**
+ * Default configuration values for [AddressItem] and [AddressDot].
+ *
+ * @since 0.0.1
+ */
 object AddressItemDefaults {
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -66,6 +96,9 @@ object AddressItemDefaults {
         arrow = arrow,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         minHeight: Dp = 60.dp,
@@ -87,6 +120,34 @@ object AddressItemDefaults {
     )
 }
 
+/**
+ * Single-address item rendered as a [Button][androidx.compose.material3.Button].
+ *
+ * Displays a single address text with optional leading and trailing content.
+ * Use for simple address display where only one location is shown.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * AddressItem(
+ *     text = "123 Main Street",
+ *     onClick = { openMap() },
+ *     leadingContent = { AddressDot(color = System.color.icon.brand) },
+ * )
+ * ```
+ *
+ * @param text Address text to display.
+ * @param onClick Called when the item is clicked.
+ * @param modifier Applied to the root button.
+ * @param leadingContent Optional composable before the text (e.g., [AddressDot]).
+ * @param trailingContent Optional composable after the text.
+ * @param colors Color configuration, defaults to [AddressItemDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [AddressItemDefaults.dimens].
+ *
+ * @see AddressDot
+ * @see AddressItemDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun AddressItem(
     text: String,
@@ -129,6 +190,37 @@ fun AddressItem(
     }
 }
 
+/**
+ * Multi-location address item rendered as a [Card][androidx.compose.material3.Card].
+ *
+ * When [locations] is empty, shows the [placeholder] text. When populated,
+ * displays locations in a [FlowRow][androidx.compose.foundation.layout.FlowRow]
+ * separated by forward arrows.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * AddressItem(
+ *     locations = listOf("Home", "Work"),
+ *     placeholder = "Where to?",
+ *     onClick = { openSearchSheet() },
+ *     leadingContent = { AddressDot(color = System.color.icon.brand) },
+ * )
+ * ```
+ *
+ * @param locations List of location names to display. Empty shows [placeholder].
+ * @param placeholder Text shown when [locations] is empty.
+ * @param onClick Called when the item is clicked.
+ * @param modifier Applied to the root card.
+ * @param leadingContent Optional composable before the locations.
+ * @param trailingContent Optional composable after the locations.
+ * @param colors Color configuration, defaults to [AddressItemDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [AddressItemDefaults.dimens].
+ *
+ * @see AddressDot
+ * @see AddressItemDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun AddressItem(
     locations: List<String>,
@@ -198,6 +290,19 @@ fun AddressItem(
     }
 }
 
+/**
+ * Colored dot indicator for address items.
+ *
+ * Renders a small circle with a colored border over a white fill. Used as the
+ * leading indicator in [AddressItem] to distinguish origin from destination.
+ *
+ * @param color Border color of the dot (e.g., brand color for origin, red for destination).
+ * @param modifier Applied to the dot.
+ * @param dimens Dimension configuration providing dot size and border width.
+ *
+ * @see AddressItem
+ * @since 0.0.1
+ */
 @Composable
 fun AddressDot(
     color: Color,

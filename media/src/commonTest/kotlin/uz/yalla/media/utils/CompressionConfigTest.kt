@@ -5,7 +5,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class CompressionConfigTest {
-
     // --- Default preset ---
 
     @Test
@@ -61,11 +60,12 @@ class CompressionConfigTest {
 
     @Test
     fun shouldHaveQualityWithinValidRangeOnAllPresets() {
-        val presets = listOf(
-            CompressionConfig.Default,
-            CompressionConfig.ProfilePhoto,
-            CompressionConfig.ChatImage,
-        )
+        val presets =
+            listOf(
+                CompressionConfig.Default,
+                CompressionConfig.ProfilePhoto,
+                CompressionConfig.ChatImage,
+            )
         presets.forEach { config ->
             assertTrue(config.quality in 1..100, "quality ${config.quality} out of 1..100")
         }
@@ -75,11 +75,12 @@ class CompressionConfigTest {
 
     @Test
     fun shouldHavePositiveMaxFileSizeOnAllPresets() {
-        val presets = listOf(
-            CompressionConfig.Default,
-            CompressionConfig.ProfilePhoto,
-            CompressionConfig.ChatImage,
-        )
+        val presets =
+            listOf(
+                CompressionConfig.Default,
+                CompressionConfig.ProfilePhoto,
+                CompressionConfig.ChatImage,
+            )
         presets.forEach { config ->
             assertTrue(config.maxFileSize > 0, "maxFileSize should be positive")
         }
@@ -87,11 +88,12 @@ class CompressionConfigTest {
 
     @Test
     fun shouldHavePositiveMaxDimensionOnAllPresets() {
-        val presets = listOf(
-            CompressionConfig.Default,
-            CompressionConfig.ProfilePhoto,
-            CompressionConfig.ChatImage,
-        )
+        val presets =
+            listOf(
+                CompressionConfig.Default,
+                CompressionConfig.ProfilePhoto,
+                CompressionConfig.ChatImage,
+            )
         presets.forEach { config ->
             assertTrue(config.maxDimension > 0, "maxDimension should be positive")
         }
@@ -101,11 +103,12 @@ class CompressionConfigTest {
 
     @Test
     fun shouldPreserveCustomValues() {
-        val custom = CompressionConfig(
-            maxFileSize = 256 * 1024,
-            maxDimension = 256,
-            quality = 90,
-        )
+        val custom =
+            CompressionConfig(
+                maxFileSize = 256 * 1024,
+                maxDimension = 256,
+                quality = 90,
+            )
         assertEquals(256 * 1024, custom.maxFileSize)
         assertEquals(256, custom.maxDimension)
         assertEquals(90, custom.quality)

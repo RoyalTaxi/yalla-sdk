@@ -11,6 +11,13 @@ import platform.UIKit.UIViewController
 import platform.UIKit.UIWindow
 import platform.UIKit.UIWindowScene
 
+/**
+ * iOS actual for [rememberInAppBrowser].
+ *
+ * Opens URLs in an [SFSafariViewController] presented as a page sheet from the key window's
+ * root view controller. Invalid URLs (where [NSURL.URLWithString] returns `null`) are
+ * silently ignored.
+ */
 @Composable
 actual fun rememberInAppBrowser(): InAppBrowserLauncher {
     return remember {
@@ -25,6 +32,11 @@ actual fun rememberInAppBrowser(): InAppBrowserLauncher {
     }
 }
 
+/**
+ * Finds the key window's root [UIViewController] for modal presentation.
+ *
+ * @return The root view controller of the active key window, or `null` if unavailable.
+ */
 @Suppress("UNCHECKED_CAST")
 private fun findRootController(): UIViewController? {
     val scenes = UIApplication.sharedApplication.connectedScenes as? Set<*>

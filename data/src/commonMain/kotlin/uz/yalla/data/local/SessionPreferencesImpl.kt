@@ -15,12 +15,19 @@ import uz.yalla.core.util.orFalse
  * [DataStore]-backed implementation of [SessionPreferences].
  *
  * Manages authentication tokens, guest mode, and device registration state.
- * [clearSession] removes session and user data while preserving
- * interface settings (locale, theme, map provider, onboarding).
+ * [clearSession] removes session, user, and config data while preserving
+ * interface settings (locale, theme, map provider, onboarding) and position data.
+ *
+ * Dual-writes guest mode and device registration state to [StaticPreferences]
+ * to ensure these values are available synchronously at startup before
+ * [DataStore] finishes loading.
  *
  * @param dataStore shared preferences store
  * @param scope coroutine scope for write operations
  * @param staticPreferences synchronous store for startup-critical values
+ * @see StaticPreferencesImpl
+ * @see UserPreferencesImpl
+ * @see ConfigPreferencesImpl
  * @since 0.0.1
  */
 internal class SessionPreferencesImpl(

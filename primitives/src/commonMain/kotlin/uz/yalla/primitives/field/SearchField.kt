@@ -30,6 +30,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [SearchField].
+ *
+ * Defines the visual palette used by the search field container, text, and placeholder.
+ * Use [SearchFieldDefaults.colors] to create with theme-aware defaults.
+ *
+ * @param container Background color of the search field card.
+ * @param text Color of the input text.
+ * @param placeholder Color of the placeholder text shown when the field is empty.
+ * @since 0.0.1
+ */
 @Immutable
 data class SearchFieldColors(
     val container: Color,
@@ -37,6 +48,18 @@ data class SearchFieldColors(
     val placeholder: Color,
 )
 
+/**
+ * Dimension configuration for [SearchField].
+ *
+ * Controls the shape, padding, icon spacing, and minimum height of the search field.
+ * Use [SearchFieldDefaults.dimens] to create with standard values.
+ *
+ * @param shape Corner shape of the search field card container.
+ * @param contentPadding Padding inside the card between the container edge and content row.
+ * @param iconSpacing Horizontal space between leading/trailing icons and the text input.
+ * @param minHeight Minimum height of the search field for touch target compliance.
+ * @since 0.0.1
+ */
 @Immutable
 data class SearchFieldDimens(
     val shape: Shape,
@@ -45,8 +68,21 @@ data class SearchFieldDimens(
     val minHeight: Dp,
 )
 
+/**
+ * Default configuration values for [SearchField].
+ *
+ * Provides theme-aware defaults for [colors] and [dimens] that can be individually overridden.
+ * @since 0.0.1
+ */
 object SearchFieldDefaults {
 
+    /**
+     * Creates theme-aware color configuration for [SearchField].
+     *
+     * @param container Background color of the card container.
+     * @param text Color of the input text.
+     * @param placeholder Color of the placeholder text.
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -58,6 +94,14 @@ object SearchFieldDefaults {
         placeholder = placeholder,
     )
 
+    /**
+     * Creates dimension configuration for [SearchField].
+     *
+     * @param shape Corner shape of the container card.
+     * @param contentPadding Padding inside the card.
+     * @param iconSpacing Space between icons and text input.
+     * @param minHeight Minimum height for touch target compliance.
+     */
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
@@ -71,6 +115,57 @@ object SearchFieldDefaults {
     )
 }
 
+/**
+ * Search input field with card-style container and optional icon slots.
+ *
+ * Renders a [BasicTextField] inside a [Card] with leading and trailing icon slots.
+ * The field displays a placeholder when empty and uses bold text styling
+ * consistent with the Yalla design system.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * val searchState = rememberTextFieldState()
+ *
+ * SearchField(
+ *     state = searchState,
+ *     placeholder = "Search for a place...",
+ *     leadingIcon = { Icon(YallaIcons.Search, contentDescription = null) },
+ *     modifier = Modifier.fillMaxWidth(),
+ * )
+ * ```
+ *
+ * ## With Trailing Clear Button
+ *
+ * ```kotlin
+ * SearchField(
+ *     state = searchState,
+ *     placeholder = "Search",
+ *     trailingIcon = {
+ *         if (searchState.text.isNotEmpty()) {
+ *             IconButton(onClick = { searchState.clearText() }) {
+ *                 Icon(Icons.Default.Clear, contentDescription = "Clear")
+ *             }
+ *         }
+ *     },
+ * )
+ * ```
+ *
+ * @param state Text field state managing the input value and selection.
+ * @param modifier [Modifier] applied to the root card container.
+ * @param placeholder Text shown when the field is empty.
+ * @param focusRequester Optional focus requester for programmatic focus control.
+ * @param colors [SearchFieldColors] that define container, text, and placeholder colors.
+ *   See [SearchFieldDefaults.colors].
+ * @param dimens [SearchFieldDimens] that define shape, padding, and sizing.
+ *   See [SearchFieldDefaults.dimens].
+ * @param leadingIcon Optional composable displayed before the text input.
+ * @param trailingIcon Optional composable displayed after the text input.
+ *
+ * @see PrimaryField for outlined text input variant
+ * @see SearchFieldDefaults for default values
+ * @since 0.0.1
+ */
 @Composable
 fun SearchField(
     state: TextFieldState,

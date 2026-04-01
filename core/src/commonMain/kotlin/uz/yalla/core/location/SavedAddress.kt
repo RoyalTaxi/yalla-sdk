@@ -23,6 +23,11 @@ data class SavedAddress(
     val kind: PlaceKind,
     val parent: Parent
 ) {
-    /** Parent location for hierarchical address display. */
+    /**
+     * Parent location for hierarchical address display (e.g., city or district name).
+     *
+     * @property name Parent location name, or `null` if not available
+     * @since 0.0.1
+     */
     data class Parent(val name: String?)
 }

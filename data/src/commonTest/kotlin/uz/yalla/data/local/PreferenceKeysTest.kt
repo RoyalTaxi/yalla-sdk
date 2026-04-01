@@ -33,6 +33,7 @@ class PreferenceKeysTest {
             PreferenceKeys.THEME_TYPE,
             PreferenceKeys.MAP_TYPE,
             PreferenceKeys.SKIP_ONBOARDING,
+            PreferenceKeys.ONBOARDING_STAGE,
             PreferenceKeys.LAST_MAP_POSITION,
             PreferenceKeys.LAST_GPS_POSITION,
         )

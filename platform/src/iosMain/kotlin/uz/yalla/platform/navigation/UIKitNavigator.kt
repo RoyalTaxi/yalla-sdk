@@ -21,6 +21,12 @@ import platform.darwin.NSObject
  *
  * @since 0.0.6
  */
+/**
+ * @param C Concrete route type (sealed class extending [Route]).
+ * @param navController The UIKit navigation controller that owns the view controller stack.
+ * @param vcFactory Factory that creates a [UIViewController] for a given route and navigator.
+ * @param initialRoute The first route placed on the stack.
+ */
 internal class UIKitNavigator<C : Route>(
     private val navController: UINavigationController,
     private val vcFactory: (route: C, navigator: Navigator) -> UIViewController,
@@ -41,7 +47,10 @@ internal class UIKitNavigator<C : Route>(
         navController.delegate = delegate
     }
 
-    /** Creates the initial VC and sets it on the navigation controller. */
+    /**
+     * Creates the initial [UIViewController] for the first route and sets it on the
+     * navigation controller. Must be called exactly once after construction.
+     */
     fun setInitial() {
         val route = routeStack.first()
         val vc = vcFactory(route, this)
@@ -106,8 +115,11 @@ internal class UIKitNavigator<C : Route>(
     }
 
     /**
-     * Detects user-initiated swipe-back and trims [routeStack] to match UINav.
-     * No Decompose call needed — UINav already popped the VC.
+     * `UINavigationControllerDelegate` that detects user-initiated swipe-back gestures.
+     *
+     * When the user swipes back, UIKit pops the VC automatically. This delegate
+     * observes `didShowViewController` and trims [routeStack] to match the actual
+     * UINavigationController stack size, keeping the parallel bookkeeping in sync.
      */
     private inner class SwipeBackDelegate : NSObject(), UINavigationControllerDelegateProtocol {
         override fun navigationController(

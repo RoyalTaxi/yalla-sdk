@@ -18,11 +18,17 @@ import uz.yalla.core.util.orFalse
  * [DataStore]-backed implementation of [InterfacePreferences].
  *
  * Manages user-facing settings: locale, theme, map provider, and onboarding state.
- * These values survive session clear (logout).
+ * These values survive session clear (logout) -- they are **not** removed by
+ * [SessionPreferencesImpl.clearSession].
+ *
+ * Dual-writes locale and onboarding stage to [StaticPreferences] to ensure
+ * these values are available synchronously at startup before [DataStore] finishes loading.
  *
  * @param dataStore shared preferences store
  * @param scope coroutine scope for write operations
  * @param staticPreferences synchronous store for startup-critical values
+ * @see StaticPreferencesImpl
+ * @see SessionPreferencesImpl
  * @since 0.0.1
  */
 internal class InterfacePreferencesImpl(

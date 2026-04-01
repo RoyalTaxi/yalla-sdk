@@ -28,7 +28,36 @@ import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
  * [CameraState]. Must be bound to a live composition via [bind] before camera
  * operations can execute.
  *
+ * ## Threading
+ *
+ * All public methods must be called from the main thread. Suspending camera operations
+ * ([moveTo], [animateTo], [fitBounds], etc.) delegate to [CameraState.animateTo] which
+ * is main-safe internally.
+ *
+ * ## Marker sync suppression flags
+ *
+ * Two boolean flags coordinate marker-position updates during padding-only camera moves
+ * where the visual center shifts but the user's logical position should not change:
+ *
+ * - **[suppressMarkerSyncUntilIdle]** — Set to `true` by [applyPaddingToCurrentCamera] when
+ *   padding is applied without a user gesture. While `true`, [shouldSuppressMarkerUpdate]
+ *   returns `true` for programmatic (non-user) camera moves, preventing the marker from
+ *   jumping to the new visual center during the padding animation. Cleared automatically
+ *   when the camera reports idle (i.e., the animation finishes).
+ *
+ * - **[skipNextIdleMarkerSync]** — Set to `true` alongside [suppressMarkerSyncUntilIdle]
+ *   as a one-shot flag. When the camera eventually idles after a padding change,
+ *   [onCameraIdle] checks this flag to skip the default idle behavior of syncing the
+ *   marker to the camera center. Without this flag, the marker would snap to the
+ *   post-padding center even though [suppressMarkerSyncUntilIdle] was just cleared.
+ *   Consumed (set to `false`) on the first idle event after being set.
+ *
+ * Both flags are cleared by [onUserGesture] and [reset] to ensure a clean state when
+ * the user manually interacts with the map.
+ *
  * @since 0.0.1
+ * @see uz.yalla.maps.provider.SwitchingMapController
+ * @see uz.yalla.maps.provider.google.GoogleMapController
  */
 class LibreMapController : MapController {
     private var cameraState: CameraState? = null
@@ -36,7 +65,27 @@ class LibreMapController : MapController {
     private var activeAnimationJob: Job? = null
     private var targetPadding = PaddingValues()
     private var appliedPadding = PaddingValues()
+
+    /**
+     * When `true`, programmatic (non-user) camera moves will not update the marker position.
+     *
+     * Set by [applyPaddingToCurrentCamera] to prevent marker jumps during padding animations.
+     * Cleared when the camera reports idle or when the user initiates a gesture.
+     *
+     * @see skipNextIdleMarkerSync
+     * @see shouldSuppressMarkerUpdate
+     */
     private var suppressMarkerSyncUntilIdle = false
+
+    /**
+     * One-shot flag: when `true`, the next [onCameraIdle] call skips marker-to-center sync.
+     *
+     * Always set together with [suppressMarkerSyncUntilIdle] by [applyPaddingToCurrentCamera].
+     * Consumed (reset to `false`) on the first idle event, ensuring that only the idle
+     * immediately following a padding change is suppressed.
+     *
+     * @see suppressMarkerSyncUntilIdle
+     */
     private var skipNextIdleMarkerSync = false
 
     private var programmaticTarget: io.github.dellisd.spatialk.geojson.Position? = null

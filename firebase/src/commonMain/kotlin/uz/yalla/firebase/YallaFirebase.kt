@@ -1,8 +1,10 @@
 package uz.yalla.firebase
 
+import uz.yalla.firebase.analytics.AnalyticsEvent
 import uz.yalla.firebase.analytics.YallaAnalytics
 import uz.yalla.firebase.crashlytics.YallaCrashlytics
 import uz.yalla.firebase.logging.YallaFirebaseLogger
+import uz.yalla.firebase.messaging.MessagingDelegate
 import uz.yalla.firebase.messaging.YallaMessaging
 
 /**
@@ -29,6 +31,10 @@ import uz.yalla.firebase.messaging.YallaMessaging
  * YallaFirebase.crashlytics.recordException(e)
  * ```
  *
+ * @see YallaAnalytics
+ * @see YallaCrashlytics
+ * @see YallaMessaging
+ * @see YallaFirebaseLogger
  * @since 0.0.1
  */
 object YallaFirebase {
@@ -39,6 +45,8 @@ object YallaFirebase {
      * (e.g., forward to Timber, NSLog, or a remote logging service).
      * Defaults to [YallaFirebaseLogger.Noop], which silently discards all messages.
      *
+     * @see YallaFirebaseLogger
+     * @see YallaFirebaseLogger.Noop
      * @since 0.0.1
      */
     var logger: YallaFirebaseLogger = YallaFirebaseLogger.Noop
@@ -61,6 +69,8 @@ object YallaFirebase {
      *
      * Instantiated on first access. Requires Firebase to be initialized beforehand.
      *
+     * @see YallaAnalytics
+     * @see AnalyticsEvent
      * @since 0.0.1
      */
     val analytics: YallaAnalytics by lazy { YallaAnalytics() }
@@ -70,6 +80,7 @@ object YallaFirebase {
      *
      * Instantiated on first access. Requires Firebase to be initialized beforehand.
      *
+     * @see YallaCrashlytics
      * @since 0.0.1
      */
     val crashlytics: YallaCrashlytics by lazy { YallaCrashlytics() }
@@ -79,6 +90,8 @@ object YallaFirebase {
      *
      * Instantiated on first access. Requires Firebase to be initialized beforehand.
      *
+     * @see YallaMessaging
+     * @see MessagingDelegate
      * @since 0.0.1
      */
     val messaging: YallaMessaging by lazy { YallaMessaging() }
@@ -94,6 +107,7 @@ object YallaFirebase {
      *   This call validates that a Firebase app is configured and sets [isInitialized].
      *   Throws [IllegalStateException] if `FirebaseApp.configure()` was not called.
      *
+     * @see isInitialized
      * @since 0.0.1
      */
     fun initialize() {
@@ -111,4 +125,18 @@ object YallaFirebase {
     }
 }
 
+/**
+ * Platform-specific Firebase initialization logic.
+ *
+ * Implemented separately for each target platform:
+ * - **Android**: No-op beyond marking initialized (Firebase auto-initializes via `google-services.json`).
+ * - **iOS**: Validates that `FirebaseApp.configure()` was called in Swift and throws
+ *   [IllegalStateException] if not.
+ *
+ * This function is called internally by [YallaFirebase.initialize] and should never be
+ * invoked directly by consumers.
+ *
+ * @see YallaFirebase.initialize
+ * @since 0.0.1
+ */
 internal expect fun initializePlatform()

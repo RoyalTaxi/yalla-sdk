@@ -26,18 +26,43 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
+/**
+ * State for [EmptyState] display.
+ *
+ * @property image Illustration painter.
+ * @property title Primary title text (e.g., "No rides yet").
+ * @property description Optional secondary description text.
+ * @since 0.0.1
+ */
 data class EmptyStateState(
     val image: Painter,
     val title: String,
     val description: String? = null,
 )
 
+/**
+ * Color configuration for [EmptyState].
+ *
+ * @param title Title text color.
+ * @param description Description text color.
+ * @since 0.0.1
+ */
 @Immutable
 data class EmptyStateColors(
     val title: Color,
     val description: Color,
 )
 
+/**
+ * Dimension configuration for [EmptyState].
+ *
+ * @param contentPadding Padding around the entire empty state layout.
+ * @param imageHeight Fixed height for the illustration image.
+ * @param imageTitleSpacing Spacing between image and title.
+ * @param titleDescriptionSpacing Spacing between title and description.
+ * @param descriptionActionSpacing Spacing between description and action button.
+ * @since 0.0.1
+ */
 @Immutable
 data class EmptyStateDimens(
     val contentPadding: PaddingValues,
@@ -47,6 +72,41 @@ data class EmptyStateDimens(
     val descriptionActionSpacing: Dp,
 )
 
+/**
+ * Centered empty state placeholder with illustration, title, description, and optional action.
+ *
+ * Use when a list or screen has no data to display (e.g., empty order history,
+ * no saved places, no notifications).
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * EmptyState(
+ *     state = EmptyStateState(
+ *         image = painterResource(Res.drawable.img_empty_history),
+ *         title = "No rides yet",
+ *         description = "Your ride history will appear here",
+ *     ),
+ *     action = {
+ *         PrimaryButton(onClick = { bookRide() }) {
+ *             Text("Book a ride")
+ *         }
+ *     },
+ * )
+ * ```
+ *
+ * @param state Data containing image, title, and optional description.
+ * @param modifier Applied to the root column.
+ * @param action Optional action composable rendered below the description.
+ * @param titleStyle Text style for the title.
+ * @param descriptionStyle Text style for the description.
+ * @param colors Color configuration, defaults to [EmptyStateDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [EmptyStateDefaults.dimens].
+ *
+ * @see EmptyStateState
+ * @see EmptyStateDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun EmptyState(
     state: EmptyStateState,
@@ -99,7 +159,15 @@ fun EmptyState(
     }
 }
 
+/**
+ * Default configuration values for [EmptyState].
+ *
+ * @since 0.0.1
+ */
 object EmptyStateDefaults {
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         title: Color = System.color.text.base,
@@ -109,6 +177,9 @@ object EmptyStateDefaults {
         description = description,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(horizontal = 32.dp, vertical = 48.dp),
         imageHeight: Dp = 180.dp,

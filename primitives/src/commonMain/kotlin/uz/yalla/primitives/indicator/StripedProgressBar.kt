@@ -94,6 +94,7 @@ data class StripedProgressBarDimens(
  * @param colors Color configuration, defaults to [StripedProgressBarDefaults.colors].
  * @param dimens Dimension configuration, defaults to [StripedProgressBarDefaults.dimens].
  *
+ * @see DotsIndicator for page position indicator
  * @see StripedProgressBarDefaults for default values
  * @since 0.0.1
  */

@@ -17,6 +17,20 @@ import platform.UIKit.UIWindow
 import platform.UIKit.UIWindowScene
 import uz.yalla.platform.config.requireIosConfig
 
+/**
+ * iOS actual for [NativeSheet].
+ *
+ * Presents content via a [SheetPresenter] backed by `UISheetPresentationController`.
+ * The sheet is presented from the key window's root view controller using the
+ * [SheetPresenterFactory] registered in [IosPlatformConfig].
+ *
+ * The `shape` and `skipPartiallyExpanded` parameters are ignored on iOS because
+ * `UISheetPresentationController` manages its own corner radius and detent behavior.
+ * The `isDark` parameter is also unused; the sheet inherits theme from [ThemeProvider].
+ *
+ * The sheet auto-measures its Compose content height and updates the native detent via
+ * [SheetPresenter.MeasuredContent].
+ */
 @Suppress("UNUSED_PARAMETER")
 @Composable
 actual fun NativeSheet(
@@ -87,6 +101,15 @@ actual fun NativeSheet(
     }
 }
 
+/**
+ * Finds the root [UIViewController] of the active key window.
+ *
+ * Iterates connected scenes to locate the foreground-active [UIWindowScene], then
+ * returns the `rootViewController` of its key window. Falls back to the deprecated
+ * `UIApplication.keyWindow` if no scene-based window is found.
+ *
+ * @return The root view controller, or `null` if no key window exists.
+ */
 @Suppress("UNCHECKED_CAST")
 private fun findKeyWindowRootController(): UIViewController? {
     val scenes = UIApplication.sharedApplication.connectedScenes as? Set<*>

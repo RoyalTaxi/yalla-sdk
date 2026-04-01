@@ -6,6 +6,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalView
 
+/**
+ * Android actual for [rememberHapticController].
+ *
+ * Uses [View.performHapticFeedback] with platform constants. On API 30+ (Android R),
+ * [HapticType.Success] maps to [HapticFeedbackConstants.CONFIRM] and [HapticType.Error]
+ * maps to [HapticFeedbackConstants.REJECT]; on older APIs both fall back to
+ * [HapticFeedbackConstants.LONG_PRESS].
+ *
+ * [HapticType.ErrorRepeat] fires the error haptic three times with 100 ms intervals
+ * via [View.postDelayed].
+ */
 @Composable
 actual fun rememberHapticController(): HapticController {
     val view = LocalView.current

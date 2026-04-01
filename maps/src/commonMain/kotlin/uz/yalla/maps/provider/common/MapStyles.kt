@@ -6,25 +6,32 @@ import androidx.compose.ui.unit.dp
 /**
  * Color tokens used by map overlay components (markers, routes, badges).
  *
+ * These values are **intentionally hardcoded** rather than referencing `yalla-design` tokens
+ * because the maps module has no dependency on the design module. Map overlays are rendered
+ * by the native map SDKs (Google Maps, MapLibre) which operate outside the Compose theme,
+ * so design-system tokens would not propagate correctly.
+ *
+ * If the brand palette changes, update these values manually to stay in sync.
+ *
  * @since 0.0.1
  */
 object MapColors {
-    /** Primary brand purple for routes and start markers. */
+    /** Primary brand purple (`#562DF8`) used for route polylines and start/origin markers. */
     val Primary = Color(0xFF562DF8)
 
-    /** Red color for the finish/destination marker. */
+    /** iOS system red (`#FF3B30`) used for the finish/destination marker. */
     val FinishMarker = Color(0xFFFF3B30)
 
-    /** Gray color for intermediate waypoint markers. */
+    /** iOS system gray (`#AEAEB2`) used for intermediate waypoint markers. */
     val IntermediateMarker = Color(0xFFAEAEB2)
 
-    /** Dark background for marker label badges. */
+    /** Near-black (`#1C1C1E`) background for label badge pills above markers. */
     val BadgeBackground = Color(0xFF1C1C1E)
 
-    /** White text color for badge labels. */
+    /** White text inside label badge pills. */
     val BadgeText = Color.White
 
-    /** White fill for the inner area of location markers. */
+    /** White fill for the inner circle of location markers, providing contrast against the colored border. */
     val MarkerFill = Color.White
 }
 

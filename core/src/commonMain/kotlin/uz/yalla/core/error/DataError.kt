@@ -24,6 +24,9 @@ sealed class DataError {
      * Network-related errors from API calls.
      *
      * Each subtype maps to a specific HTTP or connectivity failure scenario.
+     * Used by `safeApiCall` in the data layer to classify HTTP and I/O exceptions.
+     *
+     * @since 0.0.1
      */
     sealed class Network : DataError() {
         /** Device has no internet connection. */

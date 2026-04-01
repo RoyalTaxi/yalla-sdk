@@ -12,6 +12,16 @@ import platform.darwin.dispatch_after
 import platform.darwin.dispatch_get_main_queue
 import platform.darwin.dispatch_time
 
+/**
+ * iOS actual for [rememberHapticController].
+ *
+ * Uses `UIImpactFeedbackGenerator` for [HapticType.Light], [HapticType.Medium], and
+ * [HapticType.Heavy]; `UINotificationFeedbackGenerator` for [HapticType.Success],
+ * [HapticType.Error], [HapticType.Warning], and [HapticType.ErrorRepeat].
+ *
+ * [HapticType.ErrorRepeat] dispatches three error haptics at 0 ms, 100 ms, and 200 ms
+ * via `dispatch_after` on the main queue.
+ */
 @Composable
 actual fun rememberHapticController(): HapticController {
     return remember {

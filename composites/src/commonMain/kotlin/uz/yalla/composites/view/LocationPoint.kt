@@ -17,19 +17,40 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [LocationPoint].
+ *
+ * @param label Text color for the location label.
+ * @since 0.0.1
+ */
 @Immutable
 data class LocationPointColors(
     val label: Color,
 )
 
+/**
+ * Dimension configuration for [LocationPoint].
+ *
+ * @param iconLabelSpacing Spacing between the icon and the label text.
+ * @param labelMaxLines Maximum lines for the label text.
+ * @since 0.0.1
+ */
 @Immutable
 data class LocationPointDimens(
     val iconLabelSpacing: Dp,
     val labelMaxLines: Int,
 )
 
+/**
+ * Default configuration values for [LocationPoint].
+ *
+ * @since 0.0.1
+ */
 object LocationPointDefaults {
 
+    /**
+     * Creates theme-aware default colors for origin points.
+     */
     @Composable
     fun colors(
         label: Color = System.color.text.base,
@@ -37,6 +58,9 @@ object LocationPointDefaults {
         label = label,
     )
 
+    /**
+     * Creates theme-aware default colors for destination points.
+     */
     @Composable
     fun destinationColors(
         label: Color = System.color.text.subtle,
@@ -44,6 +68,9 @@ object LocationPointDefaults {
         label = label,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         iconLabelSpacing: Dp = 8.dp,
         labelMaxLines: Int = 1,
@@ -53,6 +80,32 @@ object LocationPointDefaults {
     )
 }
 
+/**
+ * Single location point with an icon and label.
+ *
+ * Used inside [RouteView] to display individual origin and destination points.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * LocationPoint(
+ *     icon = painterResource(Res.drawable.ic_origin),
+ *     label = "Home",
+ *     colors = LocationPointDefaults.colors(),
+ * )
+ * ```
+ *
+ * @param icon Location icon painter (origin or destination).
+ * @param label Location name text.
+ * @param modifier Applied to the root row.
+ * @param labelStyle Text style for the label.
+ * @param colors Color configuration, defaults to [LocationPointDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [LocationPointDefaults.dimens].
+ *
+ * @see RouteView
+ * @see LocationPointDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun LocationPoint(
     icon: Painter,

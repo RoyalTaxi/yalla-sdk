@@ -14,6 +14,8 @@ package uz.yalla.primitives.transformation
  * // Result: "+998 (90) 123-45-67"
  * ```
  *
+ * @see PhoneVisualTransformation for phone number formatting
+ * @see NumberVisualTransformation for generic number formatting
  * @since 0.0.1
  */
 object MaskFormatter {

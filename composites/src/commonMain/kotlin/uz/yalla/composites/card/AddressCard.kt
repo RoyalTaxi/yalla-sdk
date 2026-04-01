@@ -21,6 +21,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [AddressCard].
+ *
+ * @param container Card background color.
+ * @param title Title text color.
+ * @param subtitle Subtitle text color.
+ * @param footer Footer text color.
+ * @since 0.0.1
+ */
 @Immutable
 data class AddressCardColors(
     val container: Color,
@@ -29,6 +38,17 @@ data class AddressCardColors(
     val footer: Color,
 )
 
+/**
+ * Dimension configuration for [AddressCard].
+ *
+ * @param shape Card corner shape.
+ * @param maxWidth Maximum card width.
+ * @param height Fixed card height.
+ * @param contentPadding Padding inside the card.
+ * @param titleIconSpacing Spacing between leading icon and title.
+ * @param contentSpacing Spacing between title row and subtitle.
+ * @since 0.0.1
+ */
 @Immutable
 data class AddressCardDimens(
     val shape: Shape,
@@ -39,8 +59,16 @@ data class AddressCardDimens(
     val contentSpacing: Dp,
 )
 
+/**
+ * Default configuration values for [AddressCard].
+ *
+ * @since 0.0.1
+ */
 object AddressCardDefaults {
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -54,6 +82,9 @@ object AddressCardDefaults {
         footer = footer,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         shape: Shape = RoundedCornerShape(20.dp),
         maxWidth: Dp = 248.dp,
@@ -71,6 +102,38 @@ object AddressCardDefaults {
     )
 }
 
+/**
+ * Fixed-size address card for saved places (home, work, favorites).
+ *
+ * Displays a compact card with width-constrained layout containing a title row
+ * (with optional leading icon), subtitle, and footer. The card has a fixed height
+ * and max width, making it suitable for horizontal scrollable lists.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * AddressCard(
+ *     onClick = { navigateToPlace(place) },
+ *     leadingIcon = { Icon(YallaIcons.Home, null) },
+ *     subtitle = { Text(place.address, style = System.font.body.caption) },
+ *     footer = { Text(place.distance, style = System.font.body.caption) },
+ * ) {
+ *     Text(place.name, style = System.font.title.base)
+ * }
+ * ```
+ *
+ * @param onClick Called when the card is clicked.
+ * @param modifier Applied to the root card.
+ * @param colors Color configuration, defaults to [AddressCardDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [AddressCardDefaults.dimens].
+ * @param leadingIcon Optional icon displayed before the title.
+ * @param subtitle Optional secondary content below the title row.
+ * @param footer Optional footer content at the bottom of the card.
+ * @param title Primary content displayed in the title row.
+ *
+ * @see AddressCardDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun AddressCard(
     onClick: () -> Unit,

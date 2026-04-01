@@ -13,12 +13,16 @@ import uz.yalla.core.geo.GeoPoint
 /**
  * [DataStore]-backed implementation of [PositionPreferences].
  *
- * Stores geographic positions as `"lat,lng"` strings.
+ * Stores geographic positions as `"lat,lng"` strings and deserializes
+ * them into [GeoPoint] instances via [parseGeoPoint].
  * [lastGpsPosition] falls back to [lastMapPosition] when no GPS fix is available.
- * These values survive session clear (logout).
+ * These values survive session clear (logout) -- they are **not** removed by
+ * [SessionPreferencesImpl.clearSession].
  *
  * @param dataStore shared preferences store
  * @param scope coroutine scope for write operations
+ * @see parseGeoPoint
+ * @see SessionPreferencesImpl
  * @since 0.0.1
  */
 internal class PositionPreferencesImpl(
@@ -49,6 +53,18 @@ internal class PositionPreferencesImpl(
     }
 }
 
+/**
+ * Parses a `"lat,lng"` string into a [GeoPoint].
+ *
+ * Returns [GeoPoint] with `(0.0, 0.0)` when both [raw] and [fallbackRaw] are
+ * `null`, blank, or contain unparseable values.
+ *
+ * @param raw primary `"lat,lng"` string to parse
+ * @param fallbackRaw secondary string used when [raw] is `null` or blank
+ * @return parsed [GeoPoint], or `GeoPoint(0.0, 0.0)` on failure
+ * @see PositionPreferencesImpl
+ * @since 0.0.1
+ */
 internal fun parseGeoPoint(
     raw: String?,
     fallbackRaw: String? = null,

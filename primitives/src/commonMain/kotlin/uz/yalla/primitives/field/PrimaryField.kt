@@ -33,6 +33,7 @@ import uz.yalla.design.theme.System
  * @param cursorColor Cursor color.
  * @param selectionColors Text selection handle and highlight colors.
  * @param placeholderColor Placeholder text color.
+ * @since 0.0.1
  */
 @Immutable
 data class PrimaryFieldColors(
@@ -51,6 +52,7 @@ data class PrimaryFieldColors(
  * Use [PrimaryFieldDefaults.dimens] to create with standard values.
  *
  * @param shape Corner shape of the outlined field.
+ * @since 0.0.1
  */
 @Immutable
 data class PrimaryFieldDimens(
@@ -65,7 +67,17 @@ data class PrimaryFieldDimens(
  */
 object PrimaryFieldDefaults {
 
-    /** Creates theme-aware color configuration for [PrimaryField]. */
+    /**
+     * Creates theme-aware color configuration for [PrimaryField].
+     *
+     * @param focusedTextColor Text color when the field is focused.
+     * @param unfocusedTextColor Text color when the field is not focused.
+     * @param focusedBorderColor Border color when the field is focused.
+     * @param unfocusedBorderColor Border color when the field is not focused.
+     * @param cursorColor Color of the text cursor.
+     * @param selectionColors Colors for text selection handles and highlight.
+     * @param placeholderColor Color of the placeholder text.
+     */
     @Composable
     fun colors(
         focusedTextColor: Color = System.color.text.base,
@@ -93,7 +105,11 @@ object PrimaryFieldDefaults {
     @Composable
     fun textStyle(): TextStyle = System.font.body.base.medium
 
-    /** Creates dimension configuration for [PrimaryField]. */
+    /**
+     * Creates dimension configuration for [PrimaryField].
+     *
+     * @param shape Corner shape of the outlined text field.
+     */
     fun dimens(
         shape: Shape = RoundedCornerShape(10.dp),
     ): PrimaryFieldDimens = PrimaryFieldDimens(
@@ -136,6 +152,8 @@ object PrimaryFieldDefaults {
  * @param trailingIcon Optional trailing icon slot.
  * @param placeholder Optional placeholder content shown when field is empty.
  *
+ * @see NumberField for phone number input variant
+ * @see SearchField for search input variant
  * @see PrimaryFieldDefaults for default values
  * @since 0.0.1
  */

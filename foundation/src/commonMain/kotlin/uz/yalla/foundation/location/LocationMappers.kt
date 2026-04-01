@@ -7,9 +7,11 @@ import uz.yalla.core.location.SavedAddress
 import uz.yalla.core.order.Order
 
 /**
- * Converts address option to [FoundLocation] with coordinates and place metadata.
+ * Converts an [AddressOption] to a [FoundLocation] with coordinates and place metadata.
  *
+ * @return [FoundLocation] populated from this address option's fields.
  * @since 0.0.1
+ * @see FoundLocation
  */
 fun AddressOption.toFoundLocation() =
     FoundLocation(
@@ -21,9 +23,11 @@ fun AddressOption.toFoundLocation() =
     )
 
 /**
- * Converts saved address to [FoundLocation] with address details.
+ * Converts a [SavedAddress] to a [FoundLocation] with address details and place kind.
  *
+ * @return [FoundLocation] populated from this saved address's fields.
  * @since 0.0.1
+ * @see FoundLocation
  */
 fun SavedAddress.toFoundLocation() =
     FoundLocation(
@@ -35,9 +39,12 @@ fun SavedAddress.toFoundLocation() =
     )
 
 /**
- * Converts core [Address] to foundation [Location].
+ * Converts a core [Address] to a foundation [Location].
  *
+ * @param point Geographic coordinates to use. Defaults to the address's own lat/lng.
+ * @return [Location] populated from this address's fields.
  * @since 0.0.1
+ * @see Location
  */
 fun Address.toLocation(point: GeoPoint = GeoPoint(lat = lat, lng = lng)) =
     Location(
@@ -47,9 +54,14 @@ fun Address.toLocation(point: GeoPoint = GeoPoint(lat = lat, lng = lng)) =
     )
 
 /**
- * Converts order route point to [Location].
+ * Converts an order route point to a [Location].
  *
+ * Uses the route's [index][Order.Taxi.Route.index] as the location id and
+ * [fullAddress][Order.Taxi.Route.fullAddress] as the name.
+ *
+ * @return [Location] populated from this route point's fields.
  * @since 0.0.1
+ * @see Location
  */
 fun Order.Taxi.Route.toLocation() =
     Location(
@@ -59,9 +71,11 @@ fun Order.Taxi.Route.toLocation() =
     )
 
 /**
- * Returns all route locations sorted by index.
+ * Returns all route locations from this order, sorted by [route index][Order.Taxi.Route.index].
  *
+ * @return List of [Location] objects ordered by their route index.
  * @since 0.0.1
+ * @see Order.Taxi.Route.toLocation
  */
 fun Order.sortedRouteLocations(): List<Location> {
     return taxi.routes

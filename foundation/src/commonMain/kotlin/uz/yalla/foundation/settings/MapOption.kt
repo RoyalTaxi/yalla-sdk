@@ -20,11 +20,13 @@ sealed class MapOption(
     val kind: MapKind
 ) : Selectable {
 
+    /** Google Maps provider option. @since 0.0.1 */
     data object Google : MapOption(
         name = Res.string.settings_map_google,
         kind = MapKind.Google
     )
 
+    /** MapLibre (open-source) provider option. @since 0.0.1 */
     data object Libre : MapOption(
         name = Res.string.settings_map_libre,
         kind = MapKind.Libre
@@ -37,6 +39,8 @@ sealed class MapOption(
         /**
          * Resolves a [MapOption] from the persisted [MapKind].
          *
+         * @param kind The persisted map kind to resolve.
+         * @return Corresponding [MapOption] instance.
          * @since 0.0.1
          */
         fun from(kind: MapKind): MapOption =

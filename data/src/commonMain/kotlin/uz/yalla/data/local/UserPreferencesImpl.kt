@@ -14,9 +14,14 @@ import uz.yalla.core.payment.PaymentKind
  * [DataStore]-backed implementation of [UserPreferences].
  *
  * Manages user profile data: name, phone number, and payment method.
+ * These values are cleared on logout by [SessionPreferencesImpl.clearSession].
+ *
+ * The [paymentType] property deserializes stored identifiers and optional card
+ * details into [PaymentKind] sealed instances via [PaymentKind.from].
  *
  * @param dataStore shared preferences store
  * @param scope coroutine scope for write operations
+ * @see SessionPreferencesImpl
  * @since 0.0.1
  */
 internal class UserPreferencesImpl(
@@ -46,14 +51,11 @@ internal class UserPreferencesImpl(
 
     override val paymentType: Flow<PaymentKind> =
         dataStore.data.map { prefs ->
-            val id = prefs[PreferenceKeys.PAYMENT_TYPE] ?: PaymentKind.Cash.id
-            val cardId = prefs[PreferenceKeys.CARD_ID].orEmpty()
-            val cardNumber = prefs[PreferenceKeys.CARD_NUMBER].orEmpty()
-            if (id == "card" && cardId.isNotEmpty()) {
-                PaymentKind.Card(cardId, cardNumber)
-            } else {
-                PaymentKind.Cash
-            }
+            PaymentKind.from(
+                id = prefs[PreferenceKeys.PAYMENT_TYPE],
+                cardId = prefs[PreferenceKeys.CARD_ID],
+                maskedNumber = prefs[PreferenceKeys.CARD_NUMBER],
+            )
         }
 
     override fun setPaymentType(value: PaymentKind) {

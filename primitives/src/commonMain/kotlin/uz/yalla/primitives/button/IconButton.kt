@@ -26,6 +26,7 @@ import uz.yalla.design.theme.YallaTheme
  * @param contentColor Icon color when enabled.
  * @param disabledContainerColor Background color when disabled.
  * @param disabledContentColor Icon color when disabled.
+ * @since 0.0.1
  */
 @Immutable
 data class IconButtonColors(
@@ -51,6 +52,7 @@ data class IconButtonColors(
  * @param size Button size (width and height).
  * @param iconSize Icon size constraint.
  * @param shape Container shape.
+ * @since 0.0.1
  */
 @Immutable
 data class IconButtonDimens(
@@ -93,6 +95,7 @@ data class IconButtonDimens(
  * @param content The icon content.
  *
  * @see IconButtonDefaults
+ * @since 0.0.1
  */
 @Composable
 fun IconButton(
@@ -121,6 +124,7 @@ fun IconButton(
  * Default configuration values for [IconButton].
  *
  * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
+ * @since 0.0.1
  */
 object IconButtonDefaults {
     /** Default button size. */

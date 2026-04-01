@@ -8,6 +8,15 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 
+/**
+ * Android actual for [SystemBarColors] (color overload).
+ *
+ * Uses [WindowCompat.getInsetsController] to toggle light/dark status bar and
+ * navigation bar icons based on the luminance of the provided colors.
+ * A luminance > 0.5 results in dark icons (light background); otherwise light icons.
+ *
+ * Requires the hosting [Activity] window; silently no-ops if the context is not an Activity.
+ */
 @Composable
 actual fun SystemBarColors(
     statusBarColor: Color,
@@ -28,6 +37,12 @@ actual fun SystemBarColors(
     }
 }
 
+/**
+ * Android actual for [SystemBarColors] (icon-style overload).
+ *
+ * Sets both status bar and navigation bar icon appearance to dark or light.
+ * Uses [WindowCompat.getInsetsController]; no-ops if the context is not an [Activity].
+ */
 @Composable
 actual fun SystemBarColors(darkIcons: Boolean) {
     val context = LocalContext.current

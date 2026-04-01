@@ -32,8 +32,18 @@ import androidx.compose.ui.unit.dp
  */
 @Stable
 class ToolbarState {
-    /** Current toolbar actions. Changes trigger navigation bar updates. */
+    /**
+     * Whether the toolbar is visible. Setting to `false` hides the navigation bar for
+     * this screen. Default `true`.
+     */
     var visible: Boolean by mutableStateOf(true)
+
+    /**
+     * Current toolbar actions displayed in the trailing slot. Changes trigger
+     * navigation bar updates on both platforms.
+     *
+     * @see ToolbarAction
+     */
     var actions: List<ToolbarAction> by mutableStateOf(emptyList())
 
     /**

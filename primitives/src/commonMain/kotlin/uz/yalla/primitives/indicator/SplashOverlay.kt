@@ -89,6 +89,7 @@ data class SplashOverlayDimens(
  * @param colors Color configuration, defaults to [SplashOverlayDefaults.colors].
  * @param dimens Dimension configuration, defaults to [SplashOverlayDefaults.dimens].
  *
+ * @see LoadingIndicator for inline loading indicator
  * @see SplashOverlayDefaults for default values
  * @since 0.0.1
  */

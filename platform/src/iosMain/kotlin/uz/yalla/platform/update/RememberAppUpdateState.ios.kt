@@ -13,6 +13,17 @@ import platform.Foundation.NSURLSession
 import platform.Foundation.dataTaskWithURL
 import kotlin.coroutines.resume
 
+/**
+ * iOS actual for [rememberAppUpdateState].
+ *
+ * Queries the iTunes Search API (`itunes.apple.com/lookup`) for the latest version
+ * of the app identified by [appId] in the given [countryCode] region. Compares the
+ * store version against the installed version from `CFBundleShortVersionString` using
+ * [VersionComparator]. On success, sets [AppUpdateState.storeUrl] to the App Store
+ * track URL for direct linking.
+ *
+ * Failures are silently swallowed to avoid blocking the user.
+ */
 @Composable
 actual fun rememberAppUpdateState(
     appId: String,
@@ -42,6 +53,13 @@ actual fun rememberAppUpdateState(
     return state
 }
 
+/**
+ * Fetches the latest version and store URL from the iTunes Search API.
+ *
+ * @param bundleId The iOS bundle identifier to look up.
+ * @param countryCode ISO 3166-1 alpha-2 country code for the store region.
+ * @return A [Pair] of (version, trackViewUrl), or `null` if the lookup fails or yields no results.
+ */
 @OptIn(ExperimentalForeignApi::class)
 @Suppress("UNCHECKED_CAST")
 private suspend fun fetchStoreInfo(

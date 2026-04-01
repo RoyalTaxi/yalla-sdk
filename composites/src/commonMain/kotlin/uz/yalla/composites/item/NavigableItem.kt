@@ -15,6 +15,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [NavigableItem].
+ *
+ * @param container Item background color.
+ * @param iconBackground Background color of the icon container.
+ * @param icon Icon tint color.
+ * @param title Title text color.
+ * @param subtitle Subtitle text color.
+ * @param arrow Trailing chevron tint color.
+ * @since 0.0.1
+ */
 @Immutable
 data class NavigableItemColors(
     val container: Color,
@@ -25,6 +36,18 @@ data class NavigableItemColors(
     val arrow: Color,
 )
 
+/**
+ * Dimension configuration for [NavigableItem].
+ *
+ * @param height Item row height.
+ * @param contentPadding Padding around item content.
+ * @param contentSpacing Spacing between icon, text column, and trailing content.
+ * @param iconContainerSize Size of the icon container box.
+ * @param iconContainerShape Shape of the icon container background.
+ * @param iconPadding Padding inside the icon container.
+ * @param arrowSize Size of the trailing chevron icon.
+ * @since 0.0.1
+ */
 @Immutable
 data class NavigableItemDimens(
     val height: Dp,
@@ -36,6 +59,41 @@ data class NavigableItemDimens(
     val arrowSize: Dp,
 )
 
+/**
+ * List item with a trailing chevron indicating navigation.
+ *
+ * Built on [IconItem] with a default trailing forward-arrow icon. When custom
+ * [trailingContent] is provided, it replaces the default chevron.
+ *
+ * ## Composition hierarchy
+ *
+ * `NavigableItem` -> [IconItem] -> [ListItem]
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * NavigableItem(
+ *     title = "Payment Methods",
+ *     subtitle = "Manage your cards",
+ *     onClick = { navigateToPayments() },
+ *     icon = { Icon(YallaIcons.Card, null) },
+ * )
+ * ```
+ *
+ * @param title Primary text.
+ * @param onClick Called when the item is clicked.
+ * @param modifier Applied to the root item.
+ * @param subtitle Optional secondary text.
+ * @param icon Optional icon composable rendered inside a styled container.
+ * @param trailingContent Optional composable replacing the default chevron.
+ * @param colors Color configuration, defaults to [NavigableItemDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [NavigableItemDefaults.dimens].
+ *
+ * @see IconItem
+ * @see ListItem
+ * @see NavigableItemDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun NavigableItem(
     title: String,
@@ -77,8 +135,16 @@ fun NavigableItem(
     )
 }
 
+/**
+ * Default configuration values for [NavigableItem].
+ *
+ * @since 0.0.1
+ */
 object NavigableItemDefaults {
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -96,6 +162,9 @@ object NavigableItemDefaults {
         arrow = arrow,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         height: Dp = 60.dp,
         contentPadding: PaddingValues = PaddingValues(horizontal = 10.dp, vertical = 0.dp),

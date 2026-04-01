@@ -8,6 +8,13 @@ import androidx.compose.ui.graphics.Color
 import uz.yalla.platform.config.requireIosConfig
 import uz.yalla.platform.model.IconType
 
+/**
+ * iOS actual for [NativeCircleIconButton].
+ *
+ * Delegates to [NativeIconButton] with a [CircleShape] background and the
+ * [CircleIconButtonFactory] from [IosPlatformConfig]. The native button is
+ * recreated via `key(iconType)` when the icon changes.
+ */
 @Composable
 actual fun NativeCircleIconButton(
     iconType: IconType,

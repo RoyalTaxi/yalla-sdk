@@ -36,16 +36,26 @@ private const val SOCKET_TIMEOUT_MS = 15_000L
 /**
  * Creates a fully configured [HttpClient] for API communication.
  *
- * Sets up content negotiation, timeouts, authentication handling,
- * guest mode guard, and dynamic headers. Platform engine is resolved
- * via [createHttpEngine].
+ * Sets up content negotiation (lenient JSON), request/connect/socket timeouts,
+ * automatic 401 handling (clears session and publishes
+ * [UnauthorizedSessionEvents]), [guest mode guard][createGuestModeGuardPlugin],
+ * and dynamic headers (locale, position, brand, platform).
+ *
+ * The platform-specific engine is resolved via [createHttpEngine].
+ * Preference values are cached in [StateFlow][kotlinx.coroutines.flow.StateFlow]
+ * instances and updated reactively, ensuring headers always reflect current state
+ * without blocking the request path.
  *
  * @param config network configuration (base URL, brand, secret)
  * @param sessionPrefs session state (token, guest mode)
  * @param interfacePrefs interface state (locale)
  * @param positionPrefs position state (last known location)
- * @param inspektifySetup optional debug inspector plugin setup
- * @return configured [HttpClient] instance
+ * @param inspektifySetup optional debug inspector plugin setup (e.g. Inspektify)
+ * @return configured [HttpClient] instance ready for use with [safeApiCall]
+ * @see NetworkConfig
+ * @see createHttpEngine
+ * @see createGuestModeGuardPlugin
+ * @see safeApiCall
  * @since 0.0.5
  */
 fun createHttpClient(

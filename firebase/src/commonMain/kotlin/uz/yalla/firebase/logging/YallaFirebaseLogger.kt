@@ -14,6 +14,7 @@ package uz.yalla.firebase.logging
  * }
  * ```
  *
+ * @see uz.yalla.firebase.YallaFirebase.logger
  * @since 0.0.1
  */
 fun interface YallaFirebaseLogger {

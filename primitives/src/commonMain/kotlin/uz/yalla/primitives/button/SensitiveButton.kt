@@ -51,6 +51,7 @@ import kotlin.math.ceil
  *
  * @param progressColor Progress fill color during countdown.
  * @param textColor Text color.
+ * @since 0.0.1
  */
 @Immutable
 data class SensitiveButtonColors(
@@ -65,7 +66,7 @@ data class SensitiveButtonColors(
  *
  * @param height Button height.
  * @param shape Container shape.
- * @param textStyle Text style for the button label.
+ * @since 0.0.1
  */
 @Immutable
 data class SensitiveButtonDimens(
@@ -109,6 +110,7 @@ data class SensitiveButtonDimens(
  *   See [SensitiveButtonDefaults.dimens].
  *
  * @see SensitiveButtonDefaults
+ * @since 0.0.1
  */
 @Composable
 fun SensitiveButton(
@@ -177,6 +179,7 @@ fun SensitiveButton(
  * Default configuration values for [SensitiveButton].
  *
  * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
+ * @since 0.0.1
  */
 object SensitiveButtonDefaults {
     /** Default button height. */
@@ -205,7 +208,6 @@ object SensitiveButtonDefaults {
      *
      * @param height Button height.
      * @param shape Container shape.
-     * @param textStyle Text style for the button label.
      */
     fun dimens(
         height: Dp = Height,

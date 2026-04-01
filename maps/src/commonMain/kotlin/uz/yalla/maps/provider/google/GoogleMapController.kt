@@ -29,7 +29,22 @@ import uz.yalla.maps.model.CameraPosition as ComposeCameraPosition
  * compose-layer [CameraPositionState]. Must be bound to a live composition
  * via [bind] before camera operations can execute.
  *
+ * ## Threading
+ *
+ * All public methods must be called from the main thread. Suspending camera operations
+ * ([moveTo], [animateTo], [fitBounds], etc.) delegate to [CameraPositionState] which
+ * is main-safe internally.
+ *
+ * ## Padding model
+ *
+ * Google Maps handles content padding natively: the [contentPadding] flow is collected
+ * by the composable and applied as the map's built-in padding, which shifts the camera's
+ * logical center without moving the viewport edges. This differs from the MapLibre
+ * approach where padding is baked into each camera position.
+ *
  * @since 0.0.1
+ * @see uz.yalla.maps.provider.SwitchingMapController
+ * @see uz.yalla.maps.provider.libre.LibreMapController
  */
 class GoogleMapController : MapController {
     private var cameraState: CameraPositionState? = null

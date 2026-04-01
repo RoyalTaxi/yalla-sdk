@@ -1,13 +1,11 @@
 package uz.yalla.media.camera
 
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertNotEquals
 
 class CameraModeTest {
-
     @Test
     fun shouldReturnBackWhenInverseFront() {
         val result = CameraMode.Front.inverse()

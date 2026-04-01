@@ -26,7 +26,7 @@ fun IconType.toImageVector(): ImageVector =
         IconType.MENU -> YallaIcons.Menu
         IconType.CLOSE -> YallaIcons.X
         IconType.DONE -> YallaIcons.Check
-        IconType.Back -> YallaIcons.ArrowLeft
+        IconType.BACK -> YallaIcons.ArrowLeft
         IconType.FOCUS_LOCATION -> YallaIcons.FocusLocation
         IconType.FOCUS_ROUTE -> YallaIcons.FocusRoute
         IconType.FOCUS_ORIGIN -> YallaIcons.FocusOrigin

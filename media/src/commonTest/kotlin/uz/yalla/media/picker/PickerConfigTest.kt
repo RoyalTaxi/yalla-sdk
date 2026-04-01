@@ -6,7 +6,6 @@ import kotlin.test.assertIs
 import kotlin.test.assertNotEquals
 
 class PickerConfigTest {
-
     // --- SelectionMode ---
 
     @Test
@@ -66,12 +65,13 @@ class PickerConfigTest {
 
     @Test
     fun shouldPreserveCustomResizeOptions() {
-        val options = ResizeOptions(
-            width = 1024,
-            height = 768,
-            resizeThresholdBytes = 512_000L,
-            compressionQuality = 0.75,
-        )
+        val options =
+            ResizeOptions(
+                width = 1024,
+                height = 768,
+                resizeThresholdBytes = 512_000L,
+                compressionQuality = 0.75,
+            )
         assertEquals(1024, options.width)
         assertEquals(768, options.height)
         assertEquals(512_000L, options.resizeThresholdBytes)
@@ -92,23 +92,25 @@ class PickerConfigTest {
 
     @Test
     fun shouldHaveFourFilterOptions() {
-        val filters: List<FilterOptions> = listOf(
-            FilterOptions.Default,
-            FilterOptions.GrayScale,
-            FilterOptions.Sepia,
-            FilterOptions.Invert,
-        )
+        val filters: List<FilterOptions> =
+            listOf(
+                FilterOptions.Default,
+                FilterOptions.GrayScale,
+                FilterOptions.Sepia,
+                FilterOptions.Invert,
+            )
         assertEquals(4, filters.size)
     }
 
     @Test
     fun shouldDistinguishAllFilterOptions() {
-        val filters = setOf(
-            FilterOptions.Default,
-            FilterOptions.GrayScale,
-            FilterOptions.Sepia,
-            FilterOptions.Invert,
-        )
+        val filters =
+            setOf(
+                FilterOptions.Default,
+                FilterOptions.GrayScale,
+                FilterOptions.Sepia,
+                FilterOptions.Invert,
+            )
         assertEquals(4, filters.size)
     }
 

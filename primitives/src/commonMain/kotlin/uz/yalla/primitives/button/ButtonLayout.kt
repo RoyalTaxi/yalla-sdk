@@ -34,7 +34,7 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
  * - [Row] arranges icons and content with center alignment
  * - Loading state replaces content with platform-native spinner
  *
- * This is internal API — not exposed to SDK consumers.
+ * This is internal API -- not exposed to SDK consumers.
  *
  * @param onClick Called when the button is clicked.
  * @param modifier Applied to the root Surface.
@@ -50,6 +50,7 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
  * @param leadingIcon Optional composable rendered before main content.
  * @param trailingIcon Optional composable rendered after main content.
  * @param content Main button content, typically Text.
+ * @since 0.0.1
  */
 @Composable
 internal fun ButtonLayout(

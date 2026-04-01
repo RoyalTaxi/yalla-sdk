@@ -23,14 +23,29 @@ private const val RETRY_BACKOFF_FACTOR = 2.0
 /**
  * Executes an API call with error handling and optional retry.
  *
- * Wraps the raw [HttpResponse] into [Either] — mapping HTTP status codes
+ * Wraps the raw [HttpResponse] into [Either] -- mapping HTTP status codes
  * and exceptions to [DataError.Network] subtypes. Idempotent calls are
- * retried on IO failures with exponential backoff.
+ * retried on IO failures with exponential backoff via [retryWithBackoff].
  *
- * @param T the expected success response type
- * @param isIdempotent whether the call can be safely retried on IO failure
+ * Error mapping:
+ * | Condition | Result |
+ * |-----------|--------|
+ * | 200-299 | [Either.Success] with parsed body |
+ * | 300-399 | [DataError.Network.Client] |
+ * | 400-499 | [DataError.Network.ClientWithMessage] when body contains a message, otherwise [DataError.Network.Client] |
+ * | 500-599 | [DataError.Network.Server] |
+ * | [SocketTimeoutException] | [DataError.Network.Timeout] |
+ * | [IOException] | [DataError.Network.Connection] |
+ * | [SerializationException] | [DataError.Network.Serialization] |
+ * | [GuestBlockedException] | [DataError.Network.Guest] |
+ *
+ * @param T the expected success response type; use [Unit] for fire-and-forget calls
+ * @param isIdempotent whether the call can be safely retried on IO failure (default `false`)
  * @param call the suspend function producing the HTTP response
  * @return [Either.Success] with parsed body, or [Either.Failure] with typed error
+ * @see retryWithBackoff
+ * @see ApiErrorResponse
+ * @see GuestBlockedException
  * @since 0.0.1
  */
 suspend inline fun <reified T> safeApiCall(
@@ -90,10 +105,10 @@ suspend inline fun <reified T> safeApiCall(
         }
     } catch (_: RedirectResponseException) {
         Either.Failure(DataError.Network.Client)
-    } catch (_: IOException) {
-        Either.Failure(DataError.Network.Connection)
     } catch (_: SocketTimeoutException) {
         Either.Failure(DataError.Network.Timeout)
+    } catch (_: IOException) {
+        Either.Failure(DataError.Network.Connection)
     } catch (_: SerializationException) {
         Either.Failure(DataError.Network.Serialization)
     } catch (_: ResponseException) {
@@ -107,13 +122,19 @@ suspend inline fun <reified T> safeApiCall(
  *
  * Only retries on [IOException] and [SocketTimeoutException] when
  * [isIdempotent] is `true`. Non-retryable exceptions propagate immediately.
+ * Jitter is applied as a random offset up to half the current delay to
+ * prevent thundering-herd effects.
  *
- * @param times maximum number of attempts
- * @param initialDelay delay before the first retry in milliseconds
- * @param maxDelay upper bound for delay in milliseconds
- * @param factor multiplier applied to delay after each retry
+ * @param T the return type of [block]
+ * @param times maximum number of attempts (default [DEFAULT_RETRY_COUNT])
+ * @param initialDelay delay before the first retry in milliseconds (default [INITIAL_RETRY_DELAY_MS])
+ * @param maxDelay upper bound for delay in milliseconds (default [MAX_RETRY_DELAY_MS])
+ * @param factor multiplier applied to delay after each retry (default [RETRY_BACKOFF_FACTOR])
  * @param isIdempotent whether the operation is safe to retry
  * @param block the operation to execute
+ * @return the result of [block] on a successful attempt
+ * @throws Exception any non-retryable exception thrown by [block]
+ * @see safeApiCall
  * @since 0.0.1
  */
 @PublishedApi

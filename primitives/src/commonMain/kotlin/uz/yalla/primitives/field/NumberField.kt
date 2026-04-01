@@ -57,6 +57,7 @@ private const val MAX_PHONE_DIGITS = 9
  * @param unfocusedBorderColor Border color when not focused.
  * @param cursorColor Cursor color.
  * @param selectionColors Text selection handle and highlight colors.
+ * @since 0.0.1
  */
 @Immutable
 data class NumberFieldColors(
@@ -79,6 +80,7 @@ data class NumberFieldColors(
  * @param shape Corner shape of the container.
  * @param borderWidth Border width.
  * @param dividerThickness Thickness of the vertical divider.
+ * @since 0.0.1
  */
 @Immutable
 data class NumberFieldDimens(
@@ -95,7 +97,19 @@ data class NumberFieldDimens(
  */
 object NumberFieldDefaults {
 
-    /** Creates theme-aware color configuration for [NumberField]. */
+    /**
+     * Creates theme-aware color configuration for [NumberField].
+     *
+     * @param containerColor Background color of the field container.
+     * @param textColor Color of the input text.
+     * @param placeholderColor Color of the placeholder text.
+     * @param prefixColor Color of the country code prefix text.
+     * @param dividerColor Color of the vertical divider between prefix and input.
+     * @param focusedBorderColor Border color when the field is focused.
+     * @param unfocusedBorderColor Border color when the field is not focused.
+     * @param cursorColor Color of the text cursor.
+     * @param selectionColors Colors for text selection handles and highlight.
+     */
     @Composable
     fun colors(
         containerColor: Color = System.color.background.base,
@@ -127,7 +141,13 @@ object NumberFieldDefaults {
     @Composable
     fun textStyle(): TextStyle = System.font.body.base.medium
 
-    /** Creates dimension configuration for [NumberField]. */
+    /**
+     * Creates dimension configuration for [NumberField].
+     *
+     * @param shape Corner shape of the field container.
+     * @param borderWidth Width of the field border.
+     * @param dividerThickness Thickness of the vertical divider.
+     */
     fun dimens(
         shape: Shape = RoundedCornerShape(10.dp),
         borderWidth: Dp = 1.dp,
@@ -166,6 +186,7 @@ object NumberFieldDefaults {
  * @param textStyle Text style for input and prefix, defaults to [NumberFieldDefaults.textStyle].
  * @param dimens Dimension configuration, defaults to [NumberFieldDefaults.dimens].
  *
+ * @see PrimaryField for general text input
  * @see NumberFieldDefaults for default values
  * @since 0.0.1
  */

@@ -39,7 +39,16 @@ sealed class OrderStatus(val id: String) {
     data class Unknown(val originalId: String) : OrderStatus("unknown")
 
     companion object {
-        /** Parses an API status string into the corresponding [OrderStatus]. */
+        /**
+         * Parses an API status string into the corresponding [OrderStatus].
+         *
+         * Performs case-insensitive matching after trimming whitespace.
+         * The `"in_fetters"` alias is mapped to [InProgress] for legacy API compatibility.
+         * Returns [Unknown] for `null` or unrecognized values.
+         *
+         * @param id Wire-format status identifier from the API, or `null`
+         * @return The matching [OrderStatus], or [Unknown] with the original value preserved
+         */
         fun from(id: String?): OrderStatus =
             when (id?.trim()?.lowercase()) {
                 "new" -> New

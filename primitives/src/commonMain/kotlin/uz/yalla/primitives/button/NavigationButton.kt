@@ -27,6 +27,7 @@ import uz.yalla.design.theme.YallaTheme
  *
  * @param containerColor Background color.
  * @param contentColor Icon color.
+ * @since 0.0.1
  */
 @Immutable
 data class NavigationButtonColors(
@@ -42,6 +43,7 @@ data class NavigationButtonColors(
  * @param size Button size (width and height).
  * @param iconSize Icon size.
  * @param shape Container shape.
+ * @since 0.0.1
  */
 @Immutable
 data class NavigationButtonDimens(
@@ -80,6 +82,7 @@ data class NavigationButtonDimens(
  *   See [NavigationButtonDefaults.dimens].
  *
  * @see NavigationButtonDefaults
+ * @since 0.0.1
  */
 @Composable
 fun NavigationButton(
@@ -111,6 +114,7 @@ fun NavigationButton(
  * Default configuration values for [NavigationButton].
  *
  * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
+ * @since 0.0.1
  */
 object NavigationButtonDefaults {
     /** Default button size. */

@@ -46,9 +46,12 @@ fun LocaleProvider(
 }
 
 /**
- * Returns the current locale state from composition.
+ * Returns the current [LocaleState] from the composition tree.
  *
+ * @return [LocaleState] provided by the nearest [LocaleProvider].
+ * @throws IllegalStateException If called outside a [LocaleProvider].
  * @since 0.0.1
+ * @see LocaleProvider
  */
 @Composable
 fun currentLocaleState(): LocaleState = LocalLocaleState.current

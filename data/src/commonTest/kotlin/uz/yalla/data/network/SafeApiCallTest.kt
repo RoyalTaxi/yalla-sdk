@@ -181,10 +181,7 @@ class SafeApiCallTest {
     }
 
     @Test
-    fun shouldReturnConnectionErrorOnSocketTimeoutException() = runTest {
-        // NOTE: In Ktor 3.x, SocketTimeoutException extends IOException,
-        // so safeApiCall catches it as IOException (Connection) before the
-        // SocketTimeoutException catch block. This documents current behavior.
+    fun shouldReturnTimeoutErrorOnSocketTimeoutException() = runTest {
         val client = HttpClient(MockEngine) {
             engine { addHandler { throw SocketTimeoutException("timed out") } }
         }
@@ -192,7 +189,7 @@ class SafeApiCallTest {
         val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
 
         assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Connection, result.error)
+        assertEquals(DataError.Network.Timeout, result.error)
     }
 
     @Test

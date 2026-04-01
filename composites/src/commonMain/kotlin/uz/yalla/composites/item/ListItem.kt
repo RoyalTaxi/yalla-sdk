@@ -21,6 +21,17 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [ListItem].
+ *
+ * @param container Background color when enabled.
+ * @param title Title text color when enabled.
+ * @param subtitle Subtitle text color when enabled.
+ * @param disabledContainer Background color when disabled.
+ * @param disabledTitle Title text color when disabled.
+ * @param disabledSubtitle Subtitle text color when disabled.
+ * @since 0.0.1
+ */
 @Immutable
 data class ListItemColors(
     val container: Color,
@@ -31,6 +42,17 @@ data class ListItemColors(
     val disabledSubtitle: Color,
 )
 
+/**
+ * Dimension configuration for [ListItem].
+ *
+ * @param shape Card corner shape.
+ * @param contentPadding Padding around the row content.
+ * @param contentSpacing Horizontal spacing between leading content, text column, and trailing content.
+ * @param titleSubtitleSpacing Vertical spacing between title and subtitle.
+ * @param titleMaxLines Maximum lines for the title text.
+ * @param subtitleMaxLines Maximum lines for the subtitle text.
+ * @since 0.0.1
+ */
 @Immutable
 data class ListItemDimens(
     val shape: Shape,
@@ -41,6 +63,42 @@ data class ListItemDimens(
     val subtitleMaxLines: Int,
 )
 
+/**
+ * General-purpose list item -- the building block for all item variants.
+ *
+ * Renders a horizontal row with optional leading content, a title/subtitle column,
+ * and optional trailing content. When [onClick] is provided, the item is rendered
+ * as a clickable [Card][androidx.compose.material3.Card]; otherwise it is non-interactive.
+ *
+ * All composed items ([IconItem], [NavigableItem], etc.) build on top of this.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * ListItem(
+ *     title = "Notifications",
+ *     subtitle = "Manage push notifications",
+ *     onClick = { navigateToNotifications() },
+ *     leadingContent = { Icon(YallaIcons.Bell, null) },
+ *     trailingContent = { Badge(count = 3) },
+ * )
+ * ```
+ *
+ * @param title Primary text displayed in bold.
+ * @param modifier Applied to the root card.
+ * @param subtitle Optional secondary text displayed below the title.
+ * @param enabled Whether the item responds to clicks (only relevant when [onClick] is set).
+ * @param onClick Optional click handler. When null, the item is non-clickable.
+ * @param leadingContent Optional composable rendered before the text column.
+ * @param trailingContent Optional composable rendered after the text column.
+ * @param colors Color configuration, defaults to [ListItemDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [ListItemDefaults.dimens].
+ *
+ * @see ListItemDefaults
+ * @see IconItem
+ * @see NavigableItem
+ * @since 0.0.1
+ */
 @Composable
 fun ListItem(
     title: String,
@@ -112,8 +170,16 @@ fun ListItem(
     }
 }
 
+/**
+ * Default configuration values for [ListItem].
+ *
+ * @since 0.0.1
+ */
 object ListItemDefaults {
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -131,6 +197,9 @@ object ListItemDefaults {
         disabledSubtitle = disabledSubtitle,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         shape: Shape = RectangleShape,
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 12.dp),

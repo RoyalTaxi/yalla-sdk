@@ -29,24 +29,28 @@ sealed class LanguageOption(
     val kind: LocaleKind
 ) : Selectable {
 
+    /** Uzbek (Latin script) language option. @since 0.0.1 */
     data object Uzbek : LanguageOption(
         icon = YallaIcons.FlagUz,
         name = Res.string.language_uzbek_latin,
         kind = LocaleKind.Uz
     )
 
+    /** Uzbek (Cyrillic script) language option. Not yet production-ready. @since 0.0.1 */
     data object UzbekCyrillic : LanguageOption(
         icon = YallaIcons.FlagUz,
         name = Res.string.language_uzbek_cyrillic,
         kind = LocaleKind.UzCyrillic
     )
 
+    /** Russian language option. @since 0.0.1 */
     data object Russian : LanguageOption(
         icon = YallaIcons.FlagRu,
         name = Res.string.language_russian,
         kind = LocaleKind.Ru
     )
 
+    /** English language option. Not yet production-ready. @since 0.0.1 */
     data object English : LanguageOption(
         icon = YallaIcons.FlagUs,
         name = Res.string.language_english,
@@ -60,6 +64,8 @@ sealed class LanguageOption(
         /**
          * Resolves a [LanguageOption] from the persisted [LocaleKind].
          *
+         * @param kind The persisted locale kind to resolve.
+         * @return Corresponding [LanguageOption] instance.
          * @since 0.0.1
          */
         fun from(kind: LocaleKind): LanguageOption =

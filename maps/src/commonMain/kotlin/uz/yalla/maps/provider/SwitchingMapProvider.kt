@@ -8,6 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import uz.yalla.core.contract.preferences.InterfacePreferences
@@ -37,8 +38,17 @@ import uz.yalla.maps.provider.libre.LibreStaticMap
  * Observes [InterfacePreferences.mapKind] and switches the active backend accordingly.
  * Map composables it creates also observe the preference and swap implementations in place.
  *
+ * ## Lifecycle
+ *
+ * This provider creates an internal [CoroutineScope] to observe preference changes.
+ * Callers **must** call [close] when the provider is no longer needed to cancel the
+ * observation scope and prevent coroutine leaks. After [close] is called, the provider
+ * continues to delegate to the last-known backend but will no longer react to preference
+ * changes.
+ *
  * @param interfacePreferences Source of the user's map provider preference.
  * @since 0.0.1
+ * @see SwitchingMapController
  */
 class SwitchingMapProvider(
     private val interfacePreferences: InterfacePreferences
@@ -75,6 +85,19 @@ class SwitchingMapProvider(
     override fun createStaticMap(): StaticMap = SwitchingStaticMap(interfacePreferences)
 
     override fun createController(): MapController = SwitchingMapController(interfacePreferences)
+
+    /**
+     * Cancels the internal coroutine scope that observes [InterfacePreferences.mapKind].
+     *
+     * After this call the provider still delegates to the last-known backend but will
+     * no longer switch when the user changes their map preference. Safe to call multiple
+     * times.
+     *
+     * @since 0.0.1
+     */
+    fun close() {
+        scope.cancel()
+    }
 }
 
 private class SwitchingLiteMap(

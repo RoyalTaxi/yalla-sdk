@@ -16,6 +16,8 @@ import uz.yalla.firebase.YallaFirebase
  *
  * Access this class via [YallaFirebase.messaging]; do not instantiate it directly.
  *
+ * @see YallaFirebase.messaging
+ * @see MessagingDelegate
  * @since 0.0.1
  */
 class YallaMessaging {
@@ -30,6 +32,8 @@ class YallaMessaging {
      *
      * @return The FCM registration token, or `null` if retrieval failed (error is logged
      *   via [YallaFirebase.logger]).
+     * @see MessagingDelegate.onNewToken
+     * @see deleteToken
      * @since 0.0.1
      */
     suspend fun getToken(): String? {
@@ -50,6 +54,7 @@ class YallaMessaging {
      *
      * @param topic The topic name to subscribe to (alphanumeric, dashes, and underscores;
      *   max 900 chars).
+     * @see unsubscribeFromTopic
      * @since 0.0.1
      */
     suspend fun subscribeToTopic(topic: String) {
@@ -66,6 +71,7 @@ class YallaMessaging {
      * After unsubscribing, the device will no longer receive messages sent to [topic].
      *
      * @param topic The topic name to unsubscribe from.
+     * @see subscribeToTopic
      * @since 0.0.1
      */
     suspend fun unsubscribeFromTopic(topic: String) {
@@ -83,6 +89,8 @@ class YallaMessaging {
      * on the next [MessagingDelegate.onNewToken] callback. Use this to implement
      * a "reset push notifications" feature or on full account deletion.
      *
+     * @see getToken
+     * @see MessagingDelegate.onNewToken
      * @since 0.0.1
      */
     suspend fun deleteToken() {

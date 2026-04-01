@@ -161,6 +161,7 @@ class LocationManager(
     /**
      * Returns current location as [GeoPoint], or null if unavailable.
      *
+     * @return Current [GeoPoint] or `null` if location has not been received yet.
      * @since 0.0.1
      */
     override fun getCurrentLocation(): GeoPoint? = _extendedLocation.value?.toGeoPoint()
@@ -168,6 +169,7 @@ class LocationManager(
     /**
      * Returns current location as [GeoPoint], or [defaultLocation] if unavailable.
      *
+     * @return Current [GeoPoint] or [DEFAULT_LOCATION] (Tashkent) as fallback.
      * @since 0.0.1
      */
     override fun getCurrentLocationOrDefault(): GeoPoint = getCurrentLocation() ?: defaultLocation

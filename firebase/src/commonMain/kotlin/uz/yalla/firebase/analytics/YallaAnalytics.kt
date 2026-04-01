@@ -4,6 +4,7 @@ import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.analytics.FirebaseAnalytics
 import dev.gitlive.firebase.analytics.analytics
 import uz.yalla.firebase.YallaFirebase
+import uz.yalla.firebase.crashlytics.YallaCrashlytics
 
 /**
  * Wrapper for Firebase Analytics that provides safe event logging with built-in error handling.
@@ -14,6 +15,9 @@ import uz.yalla.firebase.YallaFirebase
  *
  * Access this class via [YallaFirebase.analytics]; do not instantiate it directly.
  *
+ * @see YallaFirebase.analytics
+ * @see AnalyticsEvent
+ * @see trackEvent
  * @since 0.0.1
  */
 class YallaAnalytics {
@@ -30,6 +34,8 @@ class YallaAnalytics {
      *   alphanumeric + underscores, must start with a letter).
      * @param params Optional map of event parameters (max 25 per event, values must be
      *   `String`, `Long`, or `Double`). Pass `null` to send no parameters.
+     * @see log
+     * @see trackEvent
      * @since 0.0.1
      */
     fun logEvent(
@@ -51,6 +57,8 @@ class YallaAnalytics {
      *
      * @param event The analytics event to log. Use [AnalyticsEvent] subclasses for
      *   structured events or [AnalyticsEvent.Custom] for arbitrary events.
+     * @see logEvent
+     * @see AnalyticsEvent
      * @since 0.0.1
      */
     fun log(event: AnalyticsEvent) {
@@ -67,6 +75,7 @@ class YallaAnalytics {
      * this operation as a coroutine.
      *
      * @param userId The user identifier to associate with events, or `null` to clear it.
+     * @see setUserProperty
      * @since 0.0.1
      */
     suspend fun setUserId(userId: String?) {
@@ -88,6 +97,7 @@ class YallaAnalytics {
      *
      * @param name The property name (max 24 chars, alphanumeric + underscores).
      * @param value The property value (max 36 chars).
+     * @see setUserId
      * @since 0.0.1
      */
     suspend fun setUserProperty(
@@ -108,6 +118,7 @@ class YallaAnalytics {
      * no data is sent to Firebase. The setting persists across app restarts.
      *
      * @param enabled `true` to enable data collection, `false` to disable it.
+     * @see YallaCrashlytics.setCrashlyticsCollectionEnabled
      * @since 0.0.1
      */
     fun setAnalyticsCollectionEnabled(enabled: Boolean) {

@@ -9,6 +9,14 @@ import dev.darkokoa.datetimewheelpicker.core.WheelPickerDefaults
 import kotlinx.datetime.LocalDate
 import uz.yalla.design.theme.System
 
+/**
+ * Android actual for [NativeWheelDatePicker].
+ *
+ * Delegates to the `datetimewheelpicker` library's [WheelDatePicker] composable.
+ * The picker renders 5 visible rows at 360x280 dp, styled with the Yalla design system
+ * text style and colors. Fallback bounds are 1900-01-01 to 2100-12-31 when
+ * [minDate]/[maxDate] are `null`.
+ */
 @Composable
 actual fun NativeWheelDatePicker(
     startDate: LocalDate,

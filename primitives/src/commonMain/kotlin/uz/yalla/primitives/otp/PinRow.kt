@@ -45,6 +45,7 @@ import uz.yalla.design.theme.System
  * @param filledBorderColor Border color for filled digit boxes.
  * @param emptyBorderColor Border color for empty digit boxes.
  * @param errorBorderColor Border color when in error state.
+ * @since 0.0.1
  */
 @Immutable
 data class PinRowColors(
@@ -63,6 +64,7 @@ data class PinRowColors(
  * @param shape Shape of individual digit boxes.
  * @param spacing Horizontal spacing between digit boxes.
  * @param borderWidth Border width of digit boxes.
+ * @since 0.0.1
  */
 @Immutable
 data class PinRowDimens(

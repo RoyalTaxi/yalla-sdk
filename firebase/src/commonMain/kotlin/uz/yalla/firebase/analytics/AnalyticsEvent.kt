@@ -21,6 +21,8 @@ package uz.yalla.firebase.analytics
  *
  * @property name The Firebase event name as it will appear in the Analytics dashboard.
  * @property params Optional map of event parameters. `null` means no parameters are sent.
+ * @see YallaAnalytics.log
+ * @see YallaAnalytics.logEvent
  * @since 0.0.1
  */
 sealed class AnalyticsEvent(
@@ -35,6 +37,7 @@ sealed class AnalyticsEvent(
      *
      * @property screenName Human-readable name of the screen (e.g. `"Home"`, `"Checkout"`).
      * @property screenClass Optional class or component name (e.g. `"HomeActivity"`).
+     * @see YallaAnalytics.log
      * @since 0.0.1
      */
     data class ScreenView(
@@ -58,6 +61,7 @@ sealed class AnalyticsEvent(
      *
      * @property buttonName Identifier for the button (e.g. `"login"`, `"confirm_payment"`).
      * @property source Optional context about the button's location in the UI.
+     * @see YallaAnalytics.log
      * @since 0.0.1
      */
     data class ButtonClick(
@@ -81,12 +85,22 @@ sealed class AnalyticsEvent(
      *
      * @property name The event name as it will appear in the Analytics dashboard.
      * @property params Optional map of arbitrary event parameters.
+     * @see YallaAnalytics.log
+     * @see trackEvent
      * @since 0.0.1
      */
     data class Custom(
         override val name: String,
         override val params: Map<String, Any>? = null
     ) : AnalyticsEvent(name, params) {
+        /**
+         * Creates a custom event with a name only and no parameters.
+         *
+         * Shorthand for `Custom(eventName, null)`.
+         *
+         * @param eventName The event name as it will appear in the Analytics dashboard.
+         * @since 0.0.1
+         */
         constructor(eventName: String) : this(eventName, null)
     }
 }

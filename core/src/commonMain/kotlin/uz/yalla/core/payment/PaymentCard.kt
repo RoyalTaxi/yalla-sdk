@@ -11,7 +11,12 @@ data class PaymentCard(
     val cardId: String,
     val maskedPan: String
 ) {
-    /** Converts to [PaymentKind.Card] for use in order creation. */
+    /**
+     * Converts this saved card to a [PaymentKind.Card] for use in order creation.
+     *
+     * @return A [PaymentKind.Card] with this card's ID and masked PAN
+     * @see PaymentKind.Card
+     */
     fun toPaymentType() =
         PaymentKind.Card(
             cardId = cardId,

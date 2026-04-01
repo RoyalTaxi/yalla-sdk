@@ -26,18 +26,21 @@ sealed class ThemeOption(
     val kind: ThemeKind
 ) : Selectable {
 
+    /** Light theme option — always uses light color scheme. @since 0.0.1 */
     data object Light : ThemeOption(
         icon = YallaIcons.ThemeLight,
         name = Res.string.settings_theme_light,
         kind = ThemeKind.Light
     )
 
+    /** Dark theme option — always uses dark color scheme. @since 0.0.1 */
     data object Dark : ThemeOption(
         icon = YallaIcons.ThemeDark,
         name = Res.string.settings_theme_dark,
         kind = ThemeKind.Dark
     )
 
+    /** System theme option — follows the OS dark/light setting. @since 0.0.1 */
     data object System : ThemeOption(
         icon = YallaIcons.ThemeSystem,
         name = Res.string.settings_theme_system,
@@ -51,6 +54,8 @@ sealed class ThemeOption(
         /**
          * Resolves a [ThemeOption] from the persisted [ThemeKind].
          *
+         * @param kind The persisted theme kind to resolve.
+         * @return Corresponding [ThemeOption] instance.
          * @since 0.0.1
          */
         fun from(kind: ThemeKind): ThemeOption =

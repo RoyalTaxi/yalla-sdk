@@ -57,6 +57,23 @@ import uz.yalla.resources.icons.PinShadow
 import uz.yalla.resources.icons.YallaIcons
 import uz.yalla.resources.img_spinner
 
+/**
+ * Color configuration for [LocationPin].
+ *
+ * Controls the visual appearance of the pin body, stick, header tooltip,
+ * and content elements. Use [LocationPinDefaults.colors] to create with
+ * theme-aware defaults.
+ *
+ * @param background Background color of the circular pin body.
+ * @param border Gradient brush applied as the pin body border.
+ * @param stick Color of the vertical stick connecting pin body to shadow.
+ * @param stickBorder Border color around the stick.
+ * @param header Background color of the address header tooltip.
+ * @param headerText Text color inside the address header tooltip.
+ * @param icon Tint color for the default focus-origin icon inside the pin body.
+ * @param text Color for timeout text displayed inside the pin body.
+ * @since 0.0.1
+ */
 @Immutable
 data class LocationPinColors(
     val background: Color,
@@ -69,6 +86,27 @@ data class LocationPinColors(
     val text: Color,
 )
 
+/**
+ * Dimension configuration for [LocationPin].
+ *
+ * Controls the sizes, shapes, and offsets of the pin body, stick, shadow,
+ * and header tooltip. Use [LocationPinDefaults.dimens] to create with
+ * standard values.
+ *
+ * @param stickHeight Height of the vertical stick below the pin body.
+ * @param stickWidth Width of the vertical stick.
+ * @param jumpHeight Maximum vertical displacement during jump animation.
+ * @param contentSize Width and height of the circular pin body.
+ * @param contentShape Shape of the pin body (typically rounded square).
+ * @param borderWidth Width of the gradient border around the pin body.
+ * @param shadowSize Size of the shadow ellipse rendered at the pin base.
+ * @param headerShape Shape of the address header tooltip above the pin.
+ * @param headerVerticalPadding Vertical padding inside the header tooltip.
+ * @param headerHorizontalPadding Horizontal padding inside the header tooltip.
+ * @param contentBottomOffset Offset from the shadow center to the pin body bottom.
+ * @param headerBottomOffset Offset from the pin body top to the header tooltip bottom.
+ * @since 0.0.1
+ */
 @Immutable
 data class LocationPinDimens(
     val stickHeight: Dp,
@@ -88,6 +126,57 @@ data class LocationPinDimens(
 private const val SHADOW_SHRINK_DURATION_MS = 400
 private const val JUMP_CYCLE_DURATION_MS = 700
 
+/**
+ * Animated map location pin with address tooltip and timeout display.
+ *
+ * Renders a styled pin marker composed of a circular body, a vertical stick,
+ * and a ground shadow. The pin supports several visual states:
+ * - **Idle**: Displays a static icon (default: focus-origin) inside the pin body.
+ * - **Jumping**: Bounces vertically with a rotating spinner, indicating map interaction
+ *   or location search.
+ * - **Timeout**: Shows estimated arrival time (in minutes) inside the pin body.
+ * - **Address**: Displays an address tooltip above the pin body.
+ *
+ * The pin layout uses [ConstraintLayout] to position the shadow, stick, body,
+ * and header relative to each other, with the jump animation applied as a
+ * graphics layer translation.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * // Basic pin
+ * LocationPin()
+ *
+ * // Pin with address tooltip
+ * LocationPin(address = "Tashkent, Amir Temur ko'chasi")
+ *
+ * // Jumping pin during map drag
+ * LocationPin(jumping = isDragging)
+ *
+ * // Pin showing ETA
+ * LocationPin(timeout = 5)
+ * ```
+ *
+ * @param modifier [Modifier] applied to the [ConstraintLayout] root.
+ * @param address Address text for the header tooltip. When `null`, no header is shown.
+ * @param timeout Estimated time in minutes to display inside the pin body.
+ *   When `null` and not jumping, shows the [icon] instead.
+ * @param jumping When `true`, animates the pin with a vertical bounce and shows a spinner.
+ * @param loading Currently unused; reserved for future loading states.
+ * @param icon Custom composable rendered inside the pin body when not jumping and no timeout.
+ *   Defaults to a focus-origin icon.
+ * @param timeoutStyle [TextStyle] for the timeout number.
+ * @param timeoutLabelStyle [TextStyle] for the "min" label below the timeout number.
+ * @param headerStyle [TextStyle] for the address header tooltip text.
+ * @param colors [LocationPinColors] that define the visual palette.
+ *   See [LocationPinDefaults.colors].
+ * @param dimens [LocationPinDimens] that define sizes, shapes, and offsets.
+ *   See [LocationPinDefaults.dimens].
+ *
+ * @see SearchPin for the animated search-in-progress indicator
+ * @see LocationPinDefaults for default values
+ * @since 0.0.1
+ */
 @Composable
 fun LocationPin(
     modifier: Modifier = Modifier,
@@ -378,7 +467,27 @@ private fun PinHeader(
     }
 }
 
+/**
+ * Default configuration values for [LocationPin].
+ *
+ * Provides theme-aware defaults for [colors] and standard [dimens]
+ * that can be individually overridden.
+ * @since 0.0.1
+ */
 object LocationPinDefaults {
+
+    /**
+     * Creates theme-aware color configuration for [LocationPin].
+     *
+     * @param background Background color of the pin body.
+     * @param border Gradient brush for the pin body border.
+     * @param stick Color of the vertical stick.
+     * @param stickBorder Border color around the stick.
+     * @param header Background color of the address tooltip.
+     * @param headerText Text color of the address tooltip.
+     * @param icon Tint color for the default icon.
+     * @param text Color for timeout text.
+     */
     @Composable
     fun colors(
         background: Color = System.color.background.base,
@@ -400,6 +509,22 @@ object LocationPinDefaults {
         text = text,
     )
 
+    /**
+     * Creates dimension configuration for [LocationPin].
+     *
+     * @param stickHeight Height of the vertical stick.
+     * @param stickWidth Width of the vertical stick.
+     * @param jumpHeight Maximum vertical displacement during jump animation.
+     * @param contentSize Width and height of the pin body.
+     * @param contentShape Shape of the pin body.
+     * @param borderWidth Width of the gradient border.
+     * @param shadowSize Size of the ground shadow ellipse.
+     * @param headerShape Shape of the address tooltip.
+     * @param headerVerticalPadding Vertical padding inside the tooltip.
+     * @param headerHorizontalPadding Horizontal padding inside the tooltip.
+     * @param contentBottomOffset Offset from shadow to pin body bottom.
+     * @param headerBottomOffset Offset from pin body top to tooltip bottom.
+     */
     fun dimens(
         stickHeight: Dp = 12.dp,
         stickWidth: Dp = 6.dp,

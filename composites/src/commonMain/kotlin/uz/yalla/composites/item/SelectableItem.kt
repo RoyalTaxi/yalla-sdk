@@ -23,6 +23,15 @@ import uz.yalla.design.theme.System
 import uz.yalla.resources.icons.Checked
 import uz.yalla.resources.icons.YallaIcons
 
+/**
+ * Color configuration for [SelectableItem].
+ *
+ * @param selectedContainer Background color when selected.
+ * @param unselectedContainer Background color when not selected.
+ * @param border Border color when not selected.
+ * @param text Text color for the title.
+ * @since 0.0.1
+ */
 @Immutable
 data class SelectableItemColors(
     val selectedContainer: Color,
@@ -31,6 +40,15 @@ data class SelectableItemColors(
     val text: Color,
 )
 
+/**
+ * Dimension configuration for [SelectableItem].
+ *
+ * @param shape Item surface shape.
+ * @param contentPadding Padding around item content.
+ * @param iconSpacing Spacing between the optional icon and the title text.
+ * @param borderWidth Border stroke width when not selected.
+ * @since 0.0.1
+ */
 @Immutable
 data class SelectableItemDimens(
     val shape: Shape,
@@ -39,8 +57,16 @@ data class SelectableItemDimens(
     val borderWidth: Dp,
 )
 
+/**
+ * Default configuration values for [SelectableItem].
+ *
+ * @since 0.0.1
+ */
 object SelectableItemDefaults {
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         selectedContainer: Color = System.color.background.secondary,
@@ -54,6 +80,9 @@ object SelectableItemDefaults {
         text = text,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
@@ -67,6 +96,38 @@ object SelectableItemDefaults {
     )
 }
 
+/**
+ * Single-choice selectable item with a check indicator.
+ *
+ * Renders a [Surface][androidx.compose.material3.Surface] with a title, optional leading icon,
+ * and a trailing check icon when selected. The border disappears and the background changes
+ * to indicate selection.
+ *
+ * Designed for use inside [SelectionSheet] or any single-choice list.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * SelectableItem(
+ *     title = "English",
+ *     isSelected = currentLanguage == "en",
+ *     onSelect = { selectLanguage("en") },
+ *     icon = { Icon(YallaIcons.Globe, null) },
+ * )
+ * ```
+ *
+ * @param title Primary text.
+ * @param isSelected Whether this item is currently selected.
+ * @param onSelect Called when the item is tapped.
+ * @param modifier Applied to the root surface.
+ * @param icon Optional leading icon composable.
+ * @param colors Color configuration, defaults to [SelectableItemDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [SelectableItemDefaults.dimens].
+ *
+ * @see SelectableItemDefaults
+ * @see uz.yalla.composites.sheet.SelectionSheet
+ * @since 0.0.1
+ */
 @Composable
 fun SelectableItem(
     title: String,

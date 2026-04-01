@@ -36,11 +36,27 @@ import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_flag_uz_square
 
+/**
+ * State for [CarNumber] display.
+ *
+ * @property code Region code portion of the license plate (e.g., "01").
+ * @property number Number segments of the license plate (e.g., ["A", "123", "BC"]).
+ * @since 0.0.1
+ */
 data class CarNumberState(
     val code: String,
     val number: List<String>,
 )
 
+/**
+ * Color configuration for [CarNumber].
+ *
+ * @param container Plate background color.
+ * @param border Plate border color.
+ * @param text Text and dot color.
+ * @param countryCode Country code text color below the flag.
+ * @since 0.0.1
+ */
 @Immutable
 data class CarNumberColors(
     val container: Color,
@@ -49,6 +65,17 @@ data class CarNumberColors(
     val countryCode: Color,
 )
 
+/**
+ * Dimension configuration for [CarNumber].
+ *
+ * All dimensions scale proportionally based on [height] relative to the [CarNumberDefaults.BASE_HEIGHT].
+ *
+ * @param height Overall plate height. Controls scaling of all internal dimensions.
+ * @param cornerRadius Corner radius of the plate card.
+ * @param borderWidth Border stroke width.
+ * @param dotSize Diameter of the decorative dots at plate edges.
+ * @since 0.0.1
+ */
 @Immutable
 data class CarNumberDimens(
     val height: Dp,
@@ -57,6 +84,34 @@ data class CarNumberDimens(
     val dotSize: Dp,
 )
 
+/**
+ * Uzbekistan-style car license plate display.
+ *
+ * Renders a styled card mimicking the Uzbekistan vehicle plate format: region code,
+ * number segments, country flag, and "Uz" label. All internal dimensions scale
+ * proportionally with [CarNumberDimens.height].
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * CarNumber(
+ *     state = CarNumberState(
+ *         code = "01",
+ *         number = listOf("A", "123", "BC"),
+ *     ),
+ * )
+ * ```
+ *
+ * @param state License plate data containing code and number segments.
+ * @param modifier Applied to the root card.
+ * @param numberStyle Text style for plate characters, defaults to a custom monospaced car number font.
+ * @param colors Color configuration, defaults to [CarNumberDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [CarNumberDefaults.dimens].
+ *
+ * @see CarNumberState
+ * @see CarNumberDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun CarNumber(
     state: CarNumberState,
@@ -154,9 +209,17 @@ fun CarNumber(
     }
 }
 
+/**
+ * Default configuration values for [CarNumber].
+ *
+ * @since 0.0.1
+ */
 object CarNumberDefaults {
     internal const val BASE_HEIGHT: Float = 24f
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         container: Color = Color.White,
@@ -170,6 +233,9 @@ object CarNumberDefaults {
         countryCode = countryCode,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         height: Dp = 24.dp,
         cornerRadius: Dp = 4.dp,

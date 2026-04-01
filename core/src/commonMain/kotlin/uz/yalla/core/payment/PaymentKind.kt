@@ -31,6 +31,11 @@ sealed class PaymentKind(val id: String) {
          * Parses payment type from API response fields.
          *
          * Falls back to [Cash] if [id] is unrecognized or [cardId] is blank.
+         *
+         * @param id Wire-format payment type ("cash" or "card"), or `null`
+         * @param cardId Card identifier from payment provider, or `null`
+         * @param maskedNumber Masked card PAN for display (e.g., "**** 1234"), or `null`
+         * @return [Card] if id is "card" and cardId is non-blank, [Cash] otherwise
          */
         fun from(
             id: String?,

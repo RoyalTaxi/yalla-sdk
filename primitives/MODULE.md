@@ -3,16 +3,19 @@
 Reusable Compose Multiplatform UI primitives for the Yalla SDK.
 
 This module provides the building blocks for Yalla application screens — buttons, fields,
-indicators, pins, top bars, OTP inputs, and text transformations. Each component follows a
-consistent `State` + `Defaults` (colors/style/dimens) pattern for full theme customization.
+indicators, pins, top bars, OTP inputs, and text transformations. Each component follows the
+gold standard `Colors` + `Dimens` + `Defaults` pattern for full theme customization.
 
 ## Architecture
 
-Components follow the **State + Defaults** pattern:
-- **State class** — immutable data bundle driving the component (text, enabled, loading, etc.)
-- **Defaults object** — factory functions (`colors()`, `style()`, `dimens()`) that read the
+Components follow the **Colors + Dimens + Defaults** pattern:
+- **`{Component}Colors`** — `@Immutable` data class holding all color values
+- **`{Component}Dimens`** — `@Immutable` data class holding all dimension/shape values
+- **`{Component}Defaults`** — object with factory functions (`colors()`, `dimens()`) that read the
   current theme via [System][uz.yalla.design.theme.System] and return overridable config objects
-- **Composable function** — accepts state, onClick, modifier, and optional defaults overrides
+- **Composable function** — stateless, accepts parameters in order: required → modifier → behavioral → styling → slots → content
+
+See [COMPONENT_STANDARD.md](../COMPONENT_STANDARD.md) for the full gold standard specification.
 
 # Package uz.yalla.primitives.button
 

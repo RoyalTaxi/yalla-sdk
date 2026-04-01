@@ -17,6 +17,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [IconItem].
+ *
+ * @param container Item background color.
+ * @param iconBackground Background color of the icon container.
+ * @param title Title text color.
+ * @param subtitle Subtitle text color.
+ * @since 0.0.1
+ */
 @Immutable
 data class IconItemColors(
     val container: Color,
@@ -25,6 +34,18 @@ data class IconItemColors(
     val subtitle: Color,
 )
 
+/**
+ * Dimension configuration for [IconItem].
+ *
+ * @param shape Item card shape.
+ * @param contentPadding Padding around item content.
+ * @param contentSpacing Spacing between icon, text column, and trailing content.
+ * @param iconContainerSize Size of the icon container box.
+ * @param iconContainerShape Shape of the icon container background.
+ * @param iconPadding Padding inside the icon container.
+ * @param titleSubtitleSpacing Vertical spacing between title and subtitle.
+ * @since 0.0.1
+ */
 @Immutable
 data class IconItemDimens(
     val shape: Shape,
@@ -36,6 +57,39 @@ data class IconItemDimens(
     val titleSubtitleSpacing: Dp,
 )
 
+/**
+ * List item with a styled icon container.
+ *
+ * Built on [ListItem]. Wraps the caller-provided [icon] composable in a sized, shaped,
+ * and background-colored container before passing it as [ListItem]'s leading content.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * IconItem(
+ *     title = "Language",
+ *     subtitle = "English",
+ *     onClick = { openLanguagePicker() },
+ *     icon = { Icon(YallaIcons.Globe, null) },
+ *     trailingContent = { Text("EN") },
+ * )
+ * ```
+ *
+ * @param title Primary text.
+ * @param onClick Called when the item is clicked.
+ * @param modifier Applied to the root item.
+ * @param subtitle Optional secondary text.
+ * @param enabled Whether the item responds to clicks.
+ * @param icon Optional icon composable rendered inside a styled container.
+ * @param trailingContent Optional composable rendered at the end of the row.
+ * @param colors Color configuration, defaults to [IconItemDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [IconItemDefaults.dimens].
+ *
+ * @see ListItem
+ * @see IconItemDefaults
+ * @see NavigableItem
+ * @since 0.0.1
+ */
 @Composable
 fun IconItem(
     title: String,
@@ -82,8 +136,16 @@ fun IconItem(
     )
 }
 
+/**
+ * Default configuration values for [IconItem].
+ *
+ * @since 0.0.1
+ */
 object IconItemDefaults {
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
@@ -97,6 +159,9 @@ object IconItemDefaults {
         subtitle = subtitle,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         shape: Shape = RectangleShape,
         contentPadding: PaddingValues = PaddingValues(horizontal = 20.dp, vertical = 8.dp),

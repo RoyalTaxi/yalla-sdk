@@ -49,6 +49,7 @@ data class LoadingIndicatorDimens(
     val mediumStrokeWidth: Dp,
     val largeStrokeWidth: Dp,
 ) {
+    /** Resolves the indicator diameter for the given [size] variant. */
     fun size(size: LoadingIndicatorSize): Dp =
         when (size) {
             LoadingIndicatorSize.Small -> smallSize
@@ -56,6 +57,7 @@ data class LoadingIndicatorDimens(
             LoadingIndicatorSize.Large -> largeSize
         }
 
+    /** Resolves the stroke width for the given [size] variant. */
     fun strokeWidth(size: LoadingIndicatorSize): Dp =
         when (size) {
             LoadingIndicatorSize.Small -> smallStrokeWidth
@@ -80,6 +82,7 @@ data class LoadingIndicatorDimens(
  * @param colors Color configuration, defaults to [LoadingIndicatorDefaults.colors].
  * @param dimens Dimension configuration, defaults to [LoadingIndicatorDefaults.dimens].
  *
+ * @see SplashOverlay for full-screen loading overlay
  * @see LoadingIndicatorDefaults for default values
  * @since 0.0.1
  */

@@ -10,6 +10,13 @@ import platform.UIKit.UIActivityIndicatorView
 import platform.UIKit.UIActivityIndicatorViewStyleMedium
 import platform.UIKit.UIColor
 
+/**
+ * iOS actual for [NativeLoadingIndicator].
+ *
+ * Renders a native [UIActivityIndicatorView] with medium style via [UIKitView].
+ * The spinner starts animating immediately on creation. The [color] and [backgroundColor]
+ * are applied both in `factory` (initial) and `update` (recomposition) blocks.
+ */
 @OptIn(ExperimentalForeignApi::class)
 @Composable
 actual fun NativeLoadingIndicator(
@@ -35,6 +42,9 @@ actual fun NativeLoadingIndicator(
     )
 }
 
+/**
+ * Converts a Compose [Color] to [UIColor], returning `null` for [Color.Unspecified].
+ */
 private fun Color.toUIColorOrNull(): UIColor? =
     takeIf { it.isSpecified }?.run {
         UIColor(red = red.toDouble(), green = green.toDouble(), blue = blue.toDouble(), alpha = alpha.toDouble())

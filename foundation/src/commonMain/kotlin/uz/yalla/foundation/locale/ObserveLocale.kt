@@ -15,8 +15,10 @@ import uz.yalla.core.settings.LocaleKind
  * and does NOT update if the locale changes during the composition lifecycle.
  * For reactive locale observation, use [LocaleProvider] / [currentLocaleState] instead.
  *
- * @return Current [LocaleKind]
+ * @return Current [LocaleKind] based on [getCurrentLanguage].
  * @since 0.0.1
+ * @see LocaleProvider
+ * @see currentLocaleState
  */
 @Composable
 fun currentLocale(): LocaleKind {

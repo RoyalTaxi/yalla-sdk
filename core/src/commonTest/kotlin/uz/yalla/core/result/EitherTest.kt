@@ -56,4 +56,40 @@ class EitherTest {
 
         assertEquals(0, invocationCount)
     }
+
+    @Test
+    fun shouldTransformDataOnMapSuccess() {
+        val either: Either<Int, String> = Either.Success(5)
+
+        val result = either.mapSuccess { it * 2 }
+
+        assertEquals(Either.Success(10), result)
+    }
+
+    @Test
+    fun shouldPreserveFailureOnMapSuccess() {
+        val either: Either<Int, String> = Either.Failure("error")
+
+        val result = either.mapSuccess { it * 2 }
+
+        assertEquals(Either.Failure("error"), result)
+    }
+
+    @Test
+    fun shouldTransformErrorOnMapFailure() {
+        val either: Either<Int, String> = Either.Failure("error")
+
+        val result = either.mapFailure { it.length }
+
+        assertEquals(Either.Failure(5), result)
+    }
+
+    @Test
+    fun shouldPreserveSuccessOnMapFailure() {
+        val either: Either<Int, String> = Either.Success(42)
+
+        val result = either.mapFailure { it.length }
+
+        assertEquals(Either.Success(42), result)
+    }
 }

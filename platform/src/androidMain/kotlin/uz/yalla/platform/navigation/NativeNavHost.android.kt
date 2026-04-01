@@ -88,6 +88,12 @@ actual fun <C : Route> NativeNavHost(
     }
 }
 
+/**
+ * Renders a back-arrow [IconButton] when there is more than one route on the stack.
+ *
+ * @param canGoBack `true` when the navigation stack has a back entry.
+ * @param navigator [Navigator] whose [Navigator.pop] is invoked on click.
+ */
 @Composable
 private fun BackButton(canGoBack: Boolean, navigator: Navigator) {
     if (canGoBack) {
@@ -100,6 +106,13 @@ private fun BackButton(canGoBack: Boolean, navigator: Navigator) {
     }
 }
 
+/**
+ * Renders [ToolbarState.actions] inside the [TopAppBar] actions slot.
+ *
+ * [ToolbarAction.Text] renders as a [TextButton]; [ToolbarAction.Icon] renders as an [IconButton].
+ *
+ * @param toolbarState The observable toolbar state for the current screen.
+ */
 @Composable
 private fun RowScope.ToolbarActions(toolbarState: ToolbarState) {
     toolbarState.actions.forEach { action ->

@@ -8,10 +8,30 @@ import androidx.compose.ui.text.input.VisualTransformation
 /**
  * Visual transformation for generic number formatting with mask.
  *
- * Similar to [PhoneVisualTransformation] but for general numeric input.
+ * Applies a mask pattern to numeric input, replacing mask characters with input digits.
+ * Uses [MaskFormatter] for the underlying formatting logic. Similar to
+ * [PhoneVisualTransformation] but for general numeric input such as card numbers
+ * or document IDs.
  *
- * @param mask Format pattern
- * @param maskChar Character representing input positions.
+ * ## Usage
+ *
+ * ```kotlin
+ * TextField(
+ *     value = cardNumber,
+ *     onValueChange = { cardNumber = it },
+ *     visualTransformation = NumberVisualTransformation(
+ *         mask = "____-____-____-____",
+ *         maskChar = '_'
+ *     )
+ * )
+ * ```
+ *
+ * @param mask Format pattern where [maskChar] positions are replaced by input characters.
+ *   All other characters are inserted as literal separators.
+ * @param maskChar Character in the mask that represents an input position. Defaults to `_`.
+ *
+ * @see PhoneVisualTransformation for phone-specific formatting
+ * @see MaskFormatter for the underlying formatting utility
  * @since 0.0.1
  */
 class NumberVisualTransformation(

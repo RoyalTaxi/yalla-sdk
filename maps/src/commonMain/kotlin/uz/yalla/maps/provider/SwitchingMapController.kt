@@ -22,7 +22,6 @@ import uz.yalla.maps.api.model.MarkerState
 import uz.yalla.maps.provider.google.GoogleMapController
 import uz.yalla.maps.provider.libre.LibreMapController
 import uz.yalla.maps.util.hasSameValues
-import kotlin.time.Duration.Companion.seconds
 
 /**
  * [MapController] that delegates to Google or Libre at runtime based on user preference.
@@ -31,14 +30,42 @@ import kotlin.time.Duration.Companion.seconds
  * all operations to whichever is currently active. When the user switches providers,
  * the preserved camera position and marker state are handed off to the new backend.
  *
+ * ## State preservation during provider switch
+ *
+ * When the active map provider changes, the following state is preserved and transferred
+ * to the new backend:
+ *
+ * - **Camera position** — target coordinate, zoom level, bearing, and tilt are captured
+ *   from the outgoing controller and applied to the incoming one once it reports [isReady].
+ * - **Content padding** — the last [setDesiredPadding] value is forwarded immediately;
+ *   an [updatePadding] call is issued after readiness to re-center correctly.
+ * - **Marker state** — the current [MarkerState] (position, visibility) is applied to the
+ *   incoming controller. The `isMoving` flag is reset to `false` on handoff.
+ *
+ * State that is **not** preserved: active animations (they are cancelled), provider-specific
+ * internal state (e.g., Google's content-padding flow or Libre's programmatic-target tracking).
+ *
+ * The handoff waits up to [PROVIDER_READY_TIMEOUT_MS] milliseconds for the new backend to
+ * become ready. If the timeout elapses, state is applied optimistically.
+ *
+ * ## Lifecycle
+ *
+ * Call [close] when the controller is no longer needed to cancel the internal coroutine scope
+ * and release both backend controllers. After [close] is called, calling any other method is
+ * a no-op; [isClosed] returns `true`.
+ *
  * @param interfacePreferences Source of the user's map provider preference.
  * @since 0.0.1
+ * @see SwitchingMapProvider
+ * @see GoogleMapController
+ * @see LibreMapController
  */
 class SwitchingMapController(
     interfacePreferences: InterfacePreferences,
 ) : MapController {
     private val _googleController = lazy { GoogleMapController() }
     private val _libreController = lazy { LibreMapController() }
+
     /**
      * Lazily initialized Google Maps controller, exposed for provider-specific access.
      *
@@ -60,6 +87,14 @@ class SwitchingMapController(
     private var handoffJob: Job? = null
     private var suppressStateSync: Boolean = false
     private var desiredPadding: PaddingValues = PaddingValues()
+
+    /**
+     * `true` after [close] has been called. Once closed, all mutating operations become no-ops.
+     *
+     * @since 0.0.1
+     */
+    var isClosed: Boolean = false
+        private set
 
     private val _cameraPosition = MutableStateFlow(CameraPosition.DEFAULT)
     override val cameraPosition = _cameraPosition.asStateFlow()
@@ -144,6 +179,8 @@ class SwitchingMapController(
     override fun onMapReady() = currentController.onMapReady()
 
     override fun close() {
+        if (isClosed) return
+        isClosed = true
         collectorJob?.cancel()
         handoffJob?.cancel()
         scope.cancel()
@@ -152,6 +189,7 @@ class SwitchingMapController(
     }
 
     override fun reset() {
+        if (isClosed) return
         collectorJob?.cancel()
         handoffJob?.cancel()
         suppressStateSync = false
@@ -203,7 +241,7 @@ class SwitchingMapController(
         handoffJob =
             scope.launch {
                 // Wait until the next provider map is ready before applying preserved camera/marker.
-                withTimeoutOrNull(5.seconds) {
+                withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) {
                     nextController.isReady
                         .filter { it }
                         .first()
@@ -239,5 +277,18 @@ class SwitchingMapController(
         val current = _markerState.value
         if (markerState == MarkerState.INITIAL && current != MarkerState.INITIAL) return
         _markerState.value = markerState
+    }
+
+    companion object {
+        /**
+         * Maximum time in milliseconds to wait for the incoming map provider to report
+         * [MapController.isReady] during a provider switch.
+         *
+         * If the timeout elapses, the preserved camera position and marker state are applied
+         * optimistically — the new backend will pick them up once it finishes loading.
+         *
+         * @since 0.0.1
+         */
+        const val PROVIDER_READY_TIMEOUT_MS = 5_000L
     }
 }

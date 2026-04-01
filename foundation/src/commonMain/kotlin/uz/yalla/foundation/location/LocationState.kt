@@ -24,9 +24,11 @@ data class ExtendedLocation(
     val timestamp: Long = 0L,
 ) {
     /**
-     * Converts to [GeoPoint].
+     * Converts this extended location to a [GeoPoint] using [latitude] and [longitude].
      *
+     * @return [GeoPoint] with this location's coordinates.
      * @since 0.0.1
+     * @see GeoPoint
      */
     fun toGeoPoint(): GeoPoint = GeoPoint(latitude, longitude)
 }

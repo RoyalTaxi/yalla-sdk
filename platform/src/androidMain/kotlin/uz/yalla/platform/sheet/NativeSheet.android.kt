@@ -29,6 +29,19 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import uz.yalla.design.theme.System
 
+/**
+ * Android actual for [NativeSheet].
+ *
+ * Uses Material3 [ModalBottomSheet] with a transparent container and custom background
+ * shape applied via [Modifier.background]. The sheet respects keyboard insets
+ * (`WindowInsets.ime`) and manages a two-phase show/hide lifecycle:
+ * 1. `shouldShow = true` triggers composition of the [ModalBottomSheet].
+ * 2. `isVisible = false` animates hide via [rememberModalBottomSheetState], then removes
+ *    the sheet from composition.
+ *
+ * The `skipPartiallyExpanded` parameter is forwarded directly to the sheet state;
+ * `onFullyExpanded` fires when [SheetValue.Expanded] is both current and target.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 actual fun NativeSheet(

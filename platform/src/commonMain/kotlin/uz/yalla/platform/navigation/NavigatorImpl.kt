@@ -19,6 +19,12 @@ import kotlinx.coroutines.flow.asStateFlow
  *
  * @since 0.0.5
  */
+/**
+ * @param C Concrete route type (sealed class extending [Route]).
+ * @param navigation Decompose stack navigation source for stack mutations.
+ * @param childStack Observable child stack value. Subscribed to keep [canGoBack] and
+ *   [currentRoute] in sync with the actual Decompose state.
+ */
 internal class NavigatorImpl<C : Route>(
     private val navigation: StackNavigation<C>,
     childStack: Value<ChildStack<C, *>>,

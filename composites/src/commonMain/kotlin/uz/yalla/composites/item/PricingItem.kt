@@ -21,6 +21,16 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [PricingItem].
+ *
+ * @param container Background color when not selected.
+ * @param selectedContainer Background color when selected.
+ * @param name Text color for the service name.
+ * @param price Text color for the price.
+ * @param selectedBorder Gradient brush for the border when selected.
+ * @since 0.0.1
+ */
 @Immutable
 data class PricingItemColors(
     val container: Color,
@@ -30,6 +40,19 @@ data class PricingItemColors(
     val selectedBorder: Brush,
 )
 
+/**
+ * Dimension configuration for [PricingItem].
+ *
+ * @param shape Card shape.
+ * @param height Fixed card height.
+ * @param minWidth Minimum card width.
+ * @param contentPadding Padding inside the card.
+ * @param selectedBorderWidth Border width when selected.
+ * @param namePriceSpacing Spacing between name and price texts.
+ * @param priceImageSpacing Spacing between price text and image.
+ * @param textMaxLines Maximum lines for name and price texts.
+ * @since 0.0.1
+ */
 @Immutable
 data class PricingItemDimens(
     val shape: Shape,
@@ -42,8 +65,16 @@ data class PricingItemDimens(
     val textMaxLines: Int,
 )
 
+/**
+ * Default configuration values for [PricingItem].
+ *
+ * @since 0.0.1
+ */
 object PricingItemDefaults {
 
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -59,6 +90,9 @@ object PricingItemDefaults {
         selectedBorder = selectedBorder,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         shape: Shape = RoundedCornerShape(20.dp),
         height: Dp = 120.dp,
@@ -80,6 +114,36 @@ object PricingItemDefaults {
     )
 }
 
+/**
+ * Pricing card for ride service selection.
+ *
+ * Displays a service name, price, and optional vehicle image. When [selected], shows
+ * a gradient border and a different background color.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * PricingItem(
+ *     name = "Standard",
+ *     price = "25,000 sum",
+ *     selected = selectedService == "standard",
+ *     onClick = { selectService("standard") },
+ *     image = { Image(painterResource(Res.drawable.img_sedan), null) },
+ * )
+ * ```
+ *
+ * @param name Service name (e.g., "Standard", "Comfort").
+ * @param price Formatted price text.
+ * @param selected Whether this item is currently selected.
+ * @param onClick Called when the item is clicked.
+ * @param modifier Applied to the root card.
+ * @param image Optional vehicle image rendered below the price.
+ * @param colors Color configuration, defaults to [PricingItemDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [PricingItemDefaults.dimens].
+ *
+ * @see PricingItemDefaults
+ * @since 0.0.1
+ */
 @Composable
 fun PricingItem(
     name: String,

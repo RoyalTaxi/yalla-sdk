@@ -23,10 +23,16 @@ interface Selectable {
 }
 
 /**
- * Converts any [Selectable] to a [OptionModel] for use in selection lists.
+ * Converts any [Selectable] to an [OptionModel] for use in selection lists.
  *
+ * Resolves the [Selectable.name] to a localized string and the optional [Selectable.icon]
+ * to a remembered [VectorPainter][androidx.compose.ui.graphics.vector.VectorPainter].
+ *
+ * @param T The concrete [Selectable] type.
  * @param iconColor Tint applied to the icon. Use [Color.Unspecified] for multi-color icons (e.g. flags).
+ * @return [OptionModel] ready for display in a selection list.
  * @since 0.0.1
+ * @see OptionModel
  */
 @Composable
 fun <T : Selectable> T.toSelectableItem(

@@ -23,6 +23,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
+/**
+ * Color configuration for [Navigable].
+ *
+ * @param container Surface background color.
+ * @param title Title text color.
+ * @param description Description text color.
+ * @param chevron Trailing chevron icon tint.
+ * @since 0.0.1
+ */
 @Immutable
 data class NavigableColors(
     val container: Color,
@@ -31,6 +40,16 @@ data class NavigableColors(
     val chevron: Color,
 )
 
+/**
+ * Dimension configuration for [Navigable].
+ *
+ * @param contentPadding Padding around the entire row.
+ * @param iconSpacing Spacing between leading icon and text column.
+ * @param descriptionSpacing Vertical spacing between title and description.
+ * @param trailingSpacing Spacing between trailing view and chevron.
+ * @param chevronSize Size of the trailing chevron icon.
+ * @since 0.0.1
+ */
 @Immutable
 data class NavigableDimens(
     val contentPadding: PaddingValues,
@@ -41,18 +60,46 @@ data class NavigableDimens(
 )
 
 /**
- * Navigable list item with title, optional description, and chevron.
+ * Navigable drawer/menu item with title, optional description, leading icon, and trailing chevron.
  *
- * @param title Primary text
- * @param onClick Invoked when item is clicked
- * @param modifier Applied to surface
- * @param description Optional secondary text
- * @param leadingIcon Optional leading icon slot
- * @param trailingView Optional trailing content before chevron
+ * Used inside [SectionBackground] for building grouped navigation menus in drawer screens.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * SectionBackground {
+ *     Navigable(
+ *         title = "Settings",
+ *         description = "Language, theme, notifications",
+ *         onClick = { navigateToSettings() },
+ *         leadingIcon = {
+ *             DrawerItemIcon(painter = painterResource(Res.drawable.ic_settings))
+ *         },
+ *     )
+ *     Navigable(
+ *         title = "About",
+ *         onClick = { navigateToAbout() },
+ *         leadingIcon = {
+ *             DrawerItemIcon(painter = painterResource(Res.drawable.ic_info))
+ *         },
+ *     )
+ * }
+ * ```
+ *
+ * @param title Primary text.
+ * @param onClick Invoked when the item is clicked.
+ * @param modifier Applied to the root surface.
+ * @param description Optional secondary text below the title.
+ * @param leadingIcon Optional leading icon slot (e.g., [DrawerItemIcon]).
+ * @param trailingView Optional trailing content rendered before the chevron.
  * @param titleStyle Text style for the title.
  * @param descriptionStyle Text style for the description.
- * @param colors Color configuration, defaults to [NavigableDefaults.colors]
- * @param dimens Dimension configuration, defaults to [NavigableDefaults.dimens]
+ * @param colors Color configuration, defaults to [NavigableDefaults.colors].
+ * @param dimens Dimension configuration, defaults to [NavigableDefaults.dimens].
+ *
+ * @see SectionBackground
+ * @see DrawerItemIcon
+ * @see NavigableDefaults
  * @since 0.0.1
  */
 @Composable
@@ -115,7 +162,16 @@ fun Navigable(
     }
 }
 
+/**
+ * Default configuration values for [Navigable].
+ *
+ * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
+ * @since 0.0.1
+ */
 object NavigableDefaults {
+    /**
+     * Creates theme-aware default colors.
+     */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -129,6 +185,9 @@ object NavigableDefaults {
         chevron = chevron,
     )
 
+    /**
+     * Creates default dimensions.
+     */
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 9.dp),
         iconSpacing: Dp = 6.dp,

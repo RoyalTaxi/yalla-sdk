@@ -18,6 +18,14 @@ import uz.yalla.design.theme.System
 import uz.yalla.platform.model.IconType
 import uz.yalla.platform.toImageVector
 
+/**
+ * Android actual for [NativeCircleIconButton].
+ *
+ * Renders as a Material3 [IconButton] with a 48 dp circular touch target.
+ * The [alpha] parameter is applied via [Modifier.graphicsLayer]; the [background]
+ * parameter is currently unused on Android (the design system defaults are applied
+ * via [IconButtonDefaults.iconButtonColors]).
+ */
 @Suppress("UNUSED_PARAMETER")
 @Composable
 actual fun NativeCircleIconButton(

@@ -25,6 +25,7 @@ import uz.yalla.primitives.button.BottomSheetButtonDefaults.dimens
  * @param containerColor Background color.
  * @param contentColor Text and icon color.
  * @param iconColor Icon tint color. Use [Color.Unspecified] for original painter colors.
+ * @since 0.0.1
  */
 @Immutable
 data class BottomSheetButtonColors(
@@ -42,6 +43,7 @@ data class BottomSheetButtonColors(
  * @param contentPadding Padding between container and content.
  * @param shape Container shape.
  * @param iconSpacing Space between icon and content.
+ * @since 0.0.1
  */
 @Immutable
 data class BottomSheetButtonDimens(
@@ -97,6 +99,7 @@ data class BottomSheetButtonDimens(
  * @param content The button content, typically a [Text].
  *
  * @see BottomSheetButtonDefaults
+ * @since 0.0.1
  */
 @Composable
 fun BottomSheetButton(
@@ -134,6 +137,7 @@ fun BottomSheetButton(
  * Default configuration values for [BottomSheetButton].
  *
  * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
+ * @since 0.0.1
  */
 object BottomSheetButtonDefaults {
     /** Default minimum button height. */

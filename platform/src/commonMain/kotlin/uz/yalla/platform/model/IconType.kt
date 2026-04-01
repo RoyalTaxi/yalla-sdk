@@ -18,7 +18,7 @@ enum class IconType {
     /** Checkmark / confirm icon. */
     DONE,
     /** Left arrow / back navigation icon. */
-    Back,
+    BACK,
     /** Focus the map on the user's current location. */
     FOCUS_LOCATION,
     /** Focus the map to show the full route. */

@@ -3,8 +3,11 @@ package uz.yalla.platform.otp
 import androidx.compose.runtime.Composable
 
 /**
- * No-op on iOS. SMS autofill is handled natively by the system
- * when a text field has `textContentType = .oneTimeCode`.
+ * iOS actual for [ObserveSmsCode].
+ *
+ * No-op implementation. On iOS, SMS autofill is handled natively by the system keyboard
+ * when a `UITextField` has `textContentType = .oneTimeCode`. The [onCodeReceived] callback
+ * is never invoked.
  */
 @Composable
 actual fun ObserveSmsCode(onCodeReceived: (String) -> Unit) {

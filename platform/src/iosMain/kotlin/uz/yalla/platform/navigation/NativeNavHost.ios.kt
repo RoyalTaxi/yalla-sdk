@@ -66,7 +66,15 @@ actual fun <C : Route> NativeNavHost(
     }
 }
 
-/** Navigator instance accessible from the app's entry point for session event handling. */
+/**
+ * Navigator instance accessible from the app's iOS entry point for session event handling.
+ *
+ * Set when [NativeNavHost] enters composition and cleared on dispose. App-level code
+ * (e.g., deep link handlers, push notification responders) can read this to navigate
+ * imperatively outside of Compose.
+ *
+ * @since 0.0.6
+ */
 @Suppress("ObjectPropertyName")
 var _iosNavigator: Navigator? = null
     internal set
@@ -76,6 +84,16 @@ var _iosNavigator: Navigator? = null
 /**
  * Container [UIViewController] that hosts a [ComposeUIViewController] child
  * and manages navigation bar visibility per-screen via [ScreenConfig].
+ *
+ * Responsible for:
+ * - Hiding/showing the navigation bar in [viewWillAppear] based on [hidesNavBar].
+ * - Computing safe-area-based [ToolbarState.contentPadding] in [viewDidLayoutSubviews]
+ *   so Compose screens have accurate inset information.
+ *
+ * @param hidesNavBar Whether the UINavigationController navigation bar should be hidden
+ *   for this screen. Derived from `!ScreenConfig.showsNavigationBar`.
+ * @param toolbarState Mutable state holder whose [ToolbarState.contentPadding] is updated
+ *   with the view's safe area insets on every layout pass.
  */
 @OptIn(ExperimentalForeignApi::class)
 private class ScreenContainerViewController(
@@ -105,6 +123,17 @@ private class ScreenContainerViewController(
 
 // region VC Factory
 
+/**
+ * Creates a [ScreenContainerViewController] wrapping a [ComposeUIViewController] for the given route.
+ *
+ * The Compose child renders the screen content via [ScreenProvider.Content] and observes
+ * [ToolbarState.actions] to synchronize native [UIBarButtonItem]s.
+ *
+ * @param route The route to render.
+ * @param screenProvider Provides screen configuration and composable content.
+ * @param navigator The [Navigator] provided to the screen via [LocalNavigator].
+ * @return A fully configured [UIViewController] ready to be pushed onto the UINavigationController.
+ */
 @OptIn(ExperimentalForeignApi::class)
 private fun <C : Route> createViewController(
     route: C,
@@ -146,6 +175,15 @@ private fun <C : Route> createViewController(
 
 // region Toolbar Sync
 
+/**
+ * Synchronizes the view controller's right bar button items with the given [actions].
+ *
+ * Maps [ToolbarAction.Text] to titled [UIBarButtonItem]s and [ToolbarAction.Icon] to
+ * image-based items using SF Symbols. Empty actions clear the items entirely.
+ *
+ * @param vc The view controller whose `navigationItem.rightBarButtonItems` will be updated.
+ * @param actions The current list of toolbar actions from [ToolbarState].
+ */
 @OptIn(ExperimentalForeignApi::class)
 private fun syncToolbarActions(vc: UIViewController, actions: List<ToolbarAction>) {
     if (actions.isEmpty()) {
@@ -180,6 +218,12 @@ private fun syncToolbarActions(vc: UIViewController, actions: List<ToolbarAction
     vc.navigationItem.rightBarButtonItems = items
 }
 
+/**
+ * Maps a [ToolbarIcon] to a UIKit [UIImage] using SF Symbols.
+ *
+ * @param icon The toolbar icon identifier.
+ * @return The corresponding SF Symbol image, or `null` if the symbol is unavailable.
+ */
 private fun toolbarIconImage(icon: ToolbarIcon): UIImage? = when (icon) {
     ToolbarIcon.Edit -> UIImage.systemImageNamed("pencil")
     ToolbarIcon.ReadAll -> UIImage.systemImageNamed("envelope.open")
@@ -191,6 +235,15 @@ private fun toolbarIconImage(icon: ToolbarIcon): UIImage? = when (icon) {
 
 // region Appearance
 
+/**
+ * Configures the [UINavigationController]'s navigation bar with the given appearance settings.
+ *
+ * Applies background color, title colors, custom fonts, separator visibility, translucency,
+ * and tint color from [NavigationBarAppearance]. A color value of `0L` means "use system default".
+ *
+ * @param navController The navigation controller whose bar will be styled.
+ * @param appearance The appearance configuration to apply.
+ */
 private fun applyAppearance(
     navController: UINavigationController,
     appearance: NavigationBarAppearance,
@@ -244,6 +297,12 @@ private fun applyAppearance(
     }
 }
 
+/**
+ * Converts an ARGB [Long] color value to a UIKit [UIColor].
+ *
+ * @param argb 32-bit ARGB color packed as a [Long] (e.g., `0xFF_FF_00_00L` for opaque red).
+ * @return The corresponding [UIColor] with channels normalized to 0.0-1.0.
+ */
 private fun argbToUIColor(argb: Long): UIColor {
     val a = ((argb shr 24) and 0xFF) / 255.0
     val r = ((argb shr 16) and 0xFF) / 255.0

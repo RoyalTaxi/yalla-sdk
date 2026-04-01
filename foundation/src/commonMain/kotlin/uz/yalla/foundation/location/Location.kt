@@ -35,9 +35,11 @@ data class FoundLocation(
     val placeKind: PlaceKind? = null
 ) {
     /**
-     * Converts to [Location], dropping the [address] field.
+     * Converts this [FoundLocation] to a [Location], dropping the [address] field.
      *
+     * @return [Location] with [id], [name], and [point] carried over.
      * @since 0.0.1
+     * @see Location
      */
     fun toLocation() =
         Location(

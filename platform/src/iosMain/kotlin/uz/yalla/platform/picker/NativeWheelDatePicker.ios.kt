@@ -26,6 +26,13 @@ import platform.UIKit.UIDatePicker
 import platform.UIKit.UIDatePickerMode
 import platform.UIKit.UIDatePickerStyle
 
+/**
+ * iOS actual for [NativeWheelDatePicker].
+ *
+ * Renders a native [UIDatePicker] with `.wheels` style and `.date` mode via [UIKitView].
+ * The picker's time zone is forced to UTC to avoid date-shifting issues across time zones.
+ * A [DateChangeHandler] target-action pair forwards value changes to [onDateChanged].
+ */
 @Composable
 actual fun NativeWheelDatePicker(
     startDate: LocalDate,
@@ -65,6 +72,11 @@ actual fun NativeWheelDatePicker(
     )
 }
 
+/**
+ * ObjC-compatible target for [UIDatePicker] value-changed events.
+ *
+ * @param onChange Callback invoked with the selected [LocalDate] when the picker value changes.
+ */
 private class DateChangeHandler(
     var onChange: (LocalDate) -> Unit
 ) : platform.darwin.NSObject() {
@@ -74,11 +86,21 @@ private class DateChangeHandler(
     }
 }
 
+/**
+ * Converts a kotlinx-datetime [LocalDate] to an [NSDate] at the start of day in UTC.
+ *
+ * @return The corresponding [NSDate].
+ */
 private fun LocalDate.toNSDate(): NSDate {
     val epochMillis = this.atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()
     return NSDate.dateWithTimeIntervalSince1970(epochMillis / 1000.0)
 }
 
+/**
+ * Converts an [NSDate] to a kotlinx-datetime [LocalDate] in UTC.
+ *
+ * @return The corresponding [LocalDate].
+ */
 private fun NSDate.toLocalDate(): LocalDate {
     val epochSeconds = timeIntervalSince1970.toLong()
     val instant = Instant.fromEpochSeconds(epochSeconds)

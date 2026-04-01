@@ -21,10 +21,22 @@ package uz.yalla.core.result
  * @since 0.0.1
  */
 sealed interface Either<out D, out E> {
-    /** Successful result containing [data]. */
+    /**
+     * Successful result containing [data].
+     *
+     * @param D The success data type
+     * @property data The successful result value
+     * @since 0.0.1
+     */
     data class Success<D>(val data: D) : Either<D, Nothing>
 
-    /** Failed result containing [error]. */
+    /**
+     * Failed result containing [error].
+     *
+     * @param E The error type
+     * @property error The failure reason
+     * @since 0.0.1
+     */
     data class Failure<E>(val error: E) : Either<Nothing, E>
 }
 
@@ -66,4 +78,22 @@ inline fun <D, E, R> Either<D, E>.mapSuccess(transform: (D) -> R): Either<R, E> 
     when (this) {
         is Either.Failure -> Either.Failure(error)
         is Either.Success -> Either.Success(transform(data))
+    }
+
+/**
+ * Transforms the failure [error] using [transform], preserving successes unchanged.
+ *
+ * ```kotlin
+ * val result: Either<Order, AppError> =
+ *     service.getOrder(id)
+ *         .mapFailure { networkError -> networkError.toAppError() }
+ * ```
+ *
+ * @param transform Mapping function applied to [Either.Failure.error]
+ * @return New [Either] with transformed error type, or the original [Either.Success]
+ */
+inline fun <D, E, R> Either<D, E>.mapFailure(transform: (E) -> R): Either<D, R> =
+    when (this) {
+        is Either.Failure -> Either.Failure(transform(error))
+        is Either.Success -> Either.Success(data)
     }

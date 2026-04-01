@@ -72,6 +72,7 @@ data class DotsIndicatorDimens(
  * @param colors Color configuration, defaults to [DotsIndicatorDefaults.colors].
  * @param dimens Dimension configuration, defaults to [DotsIndicatorDefaults.dimens].
  *
+ * @see StripedProgressBar for linear progress indicator
  * @see DotsIndicatorDefaults for default values
  * @since 0.0.1
  */

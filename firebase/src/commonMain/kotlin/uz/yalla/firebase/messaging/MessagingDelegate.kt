@@ -23,6 +23,8 @@ package uz.yalla.firebase.messaging
  * }
  * ```
  *
+ * @see YallaMessaging
+ * @see uz.yalla.firebase.YallaFirebase.messaging
  * @since 0.0.1
  */
 interface MessagingDelegate {
@@ -34,6 +36,7 @@ interface MessagingDelegate {
      * sent to your server to target push notifications to this device.
      *
      * @param token The new FCM registration token.
+     * @see YallaMessaging.getToken
      * @since 0.0.1
      */
     fun onNewToken(token: String)

@@ -22,8 +22,18 @@ import uz.yalla.data.util.ioDispatcher
 /**
  * Koin module providing data layer infrastructure.
  *
- * Registers [DataStore] and all five preferences implementations
- * (session, user, config, interface, position) sharing a single store.
+ * Registers:
+ * - [DataStore][androidx.datastore.core.DataStore] singleton for async preferences
+ * - [Settings][com.russhwolf.settings.Settings] singleton for synchronous preferences
+ * - [CoroutineScope] bound to [ioDispatcher][uz.yalla.data.util.ioDispatcher] for background writes
+ * - [StaticPreferences][uz.yalla.core.contract.preferences.StaticPreferences] -- synchronous startup reads
+ * - [SessionPreferences][uz.yalla.core.contract.preferences.SessionPreferences] -- tokens and guest mode
+ * - [UserPreferences][uz.yalla.core.contract.preferences.UserPreferences] -- profile data
+ * - [ConfigPreferences][uz.yalla.core.contract.preferences.ConfigPreferences] -- server config
+ * - [InterfacePreferences][uz.yalla.core.contract.preferences.InterfacePreferences] -- UI settings
+ * - [PositionPreferences][uz.yalla.core.contract.preferences.PositionPreferences] -- geographic state
+ *
+ * All five async preferences implementations share a single [DataStore] instance.
  *
  * Usage:
  * ```kotlin
@@ -32,6 +42,8 @@ import uz.yalla.data.util.ioDispatcher
  * }
  * ```
  *
+ * @see uz.yalla.data.local.createDataStore
+ * @see uz.yalla.data.local.createSettings
  * @since 0.0.4
  */
 val dataModule = module {

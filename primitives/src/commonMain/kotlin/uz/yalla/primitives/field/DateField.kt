@@ -35,6 +35,7 @@ import uz.yalla.resources.icons.YallaIcons
  * @param textColor Color of the selected date text.
  * @param placeholderColor Color of the placeholder text.
  * @param iconColor Color of the calendar icon.
+ * @since 0.0.1
  */
 @Immutable
 data class DateFieldColors(
@@ -51,6 +52,7 @@ data class DateFieldColors(
  *
  * @param shape Corner shape of the field.
  * @param contentPadding Padding inside the field container.
+ * @since 0.0.1
  */
 @Immutable
 data class DateFieldDimens(
@@ -66,7 +68,14 @@ data class DateFieldDimens(
  */
 object DateFieldDefaults {
 
-    /** Creates theme-aware color configuration for [DateField]. */
+    /**
+     * Creates theme-aware color configuration for [DateField].
+     *
+     * @param containerColor Background color of the field card.
+     * @param textColor Color of the displayed date text.
+     * @param placeholderColor Color of the placeholder text when no date is selected.
+     * @param iconColor Tint color of the trailing calendar icon.
+     */
     @Composable
     fun colors(
         containerColor: Color = Color.Transparent,
@@ -84,7 +93,12 @@ object DateFieldDefaults {
     @Composable
     fun textStyle(): TextStyle = System.font.body.base.medium
 
-    /** Creates dimension configuration for [DateField]. */
+    /**
+     * Creates dimension configuration for [DateField].
+     *
+     * @param shape Corner shape of the field card.
+     * @param contentPadding Padding inside the field card.
+     */
     fun dimens(
         shape: Shape = RoundedCornerShape(8.dp),
         contentPadding: PaddingValues = PaddingValues(16.dp),
@@ -123,6 +137,7 @@ object DateFieldDefaults {
  * @param textStyle Text style for date and placeholder, defaults to [DateFieldDefaults.textStyle].
  * @param dimens Dimension configuration, defaults to [DateFieldDefaults.dimens].
  *
+ * @see PrimaryField for general text input
  * @see DateFieldDefaults for default values
  * @since 0.0.1
  */

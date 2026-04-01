@@ -7,7 +7,6 @@ import kotlinx.cinterop.refTo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import platform.UIKit.UIApplication
 import platform.UIKit.UIImage
 import platform.UIKit.UIImageJPEGRepresentation
 import platform.UIKit.UIImagePickerController
@@ -15,14 +14,21 @@ import platform.UIKit.UIImagePickerControllerDelegateProtocol
 import platform.UIKit.UIImagePickerControllerOriginalImage
 import platform.UIKit.UIImagePickerControllerSourceType
 import platform.UIKit.UINavigationControllerDelegateProtocol
-import platform.UIKit.UISceneActivationStateForegroundActive
-import platform.UIKit.UIViewController
-import platform.UIKit.UIWindow
-import platform.UIKit.UIWindowScene
 import platform.darwin.NSObject
 import platform.posix.memcpy
+import uz.yalla.media.utils.getRootViewController
 
-/** iOS implementation of [rememberSystemCameraLauncher] using UIImagePickerController. @since 0.0.1 */
+/**
+ * iOS implementation of [rememberSystemCameraLauncher] using [UIImagePickerController].
+ *
+ * Presents the native camera UI via the topmost view controller obtained from
+ * [getRootViewController]. If the camera source is unavailable, [onResult] receives `null`.
+ *
+ * @param scope    Coroutine scope used for launching the presentation and delivering results.
+ * @param onResult Callback receiving the captured JPEG bytes, or `null` on cancellation/failure.
+ * @return A [SystemCameraLauncher] instance remembered across recompositions.
+ * @since 0.0.1
+ */
 @Composable
 actual fun rememberSystemCameraLauncher(
     scope: CoroutineScope,
@@ -93,38 +99,18 @@ private class SystemCameraDelegate(
     }
 }
 
-private fun getRootViewController(): UIViewController? {
-    @Suppress("DEPRECATION")
-    val legacyKeyWindow = UIApplication.sharedApplication.keyWindow
-
-    val keyWindow =
-        UIApplication.sharedApplication.connectedScenes
-            .filterIsInstance<UIWindowScene>()
-            .firstOrNull { it.activationState == UISceneActivationStateForegroundActive }
-            ?.windows
-            ?.filterIsInstance<UIWindow>()
-            ?.firstOrNull { it.isKeyWindow() }
-            ?: legacyKeyWindow
-
-    var rootVC = keyWindow?.rootViewController()
-
-    while (true) {
-        val presented = rootVC?.presentedViewController() ?: break
-        if (presented.view?.window != null && !presented.isBeingDismissed()) {
-            rootVC = presented
-        } else {
-            break
-        }
-    }
-
-    return rootVC?.takeIf { it.view?.window != null && !it.isBeingDismissed() }
-        ?: keyWindow?.rootViewController()
-}
-
+/**
+ * Converts this [UIImage] to a JPEG-encoded [ByteArray] at full quality.
+ *
+ * @return JPEG bytes, or `null` when [UIImageJPEGRepresentation] fails (e.g. invalid image).
+ * @since 0.0.1
+ */
 @OptIn(ExperimentalForeignApi::class)
 private fun UIImage.toByteArray(): ByteArray? {
     val jpegData = UIImageJPEGRepresentation(this, 1.0) ?: return null
-    return ByteArray(jpegData.length.toInt()).apply {
+    val length = jpegData.length.toInt()
+    if (length == 0) return null
+    return ByteArray(length).apply {
         memcpy(this.refTo(0), jpegData.bytes, jpegData.length)
     }
 }

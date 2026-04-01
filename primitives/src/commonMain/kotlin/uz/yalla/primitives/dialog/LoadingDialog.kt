@@ -65,6 +65,7 @@ data class LoadingDialogDimens(
  * @param colors Color configuration, defaults to [LoadingDialogDefaults.colors].
  * @param dimens Dimension configuration, defaults to [LoadingDialogDefaults.dimens].
  *
+ * @see uz.yalla.primitives.indicator.LoadingIndicator for inline loading indicator
  * @see LoadingDialogDefaults for default values
  * @since 0.0.1
  */

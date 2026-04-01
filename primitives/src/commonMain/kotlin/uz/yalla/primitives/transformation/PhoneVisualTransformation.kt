@@ -23,8 +23,12 @@ import androidx.compose.ui.text.input.VisualTransformation
  * )
  * ```
  *
- * @param mask Format pattern. Use maskChar for input positions.
- * @param maskChar Character representing input positions in mask.
+ * @param mask Format pattern where [maskChar] positions are replaced by input characters.
+ *   All other characters are inserted as literal separators.
+ * @param maskChar Character in the mask that represents an input position. Defaults to `#`.
+ *
+ * @see NumberVisualTransformation for generic numeric formatting
+ * @see MaskFormatter for the underlying formatting utility
  * @since 0.0.1
  */
 class PhoneVisualTransformation(

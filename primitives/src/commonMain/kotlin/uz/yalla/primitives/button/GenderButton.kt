@@ -35,6 +35,7 @@ import uz.yalla.resources.icons.YallaIcons
  *
  * @param containerColor Background color.
  * @param textColor Text color for the gender label.
+ * @since 0.0.1
  */
 @Immutable
 data class GenderButtonColors(
@@ -51,7 +52,7 @@ data class GenderButtonColors(
  * @param contentPadding Padding inside the button.
  * @param innerStartPadding Padding before the text label.
  * @param iconSize Size of the check/uncheck icon.
- * @param textStyle Text style for the gender label.
+ * @since 0.0.1
  */
 @Immutable
 data class GenderButtonDimens(
@@ -100,6 +101,7 @@ data class GenderButtonDimens(
  *   See [GenderButtonDefaults.dimens].
  *
  * @see GenderButtonDefaults
+ * @since 0.0.1
  */
 @Composable
 fun GenderButton(
@@ -150,6 +152,7 @@ fun GenderButton(
  * Default configuration values for [GenderButton].
  *
  * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
+ * @since 0.0.1
  */
 object GenderButtonDefaults {
     /** Default button shape. */
@@ -180,7 +183,6 @@ object GenderButtonDefaults {
      * @param contentPadding Padding inside the button.
      * @param innerStartPadding Padding before the text label.
      * @param iconSize Size of the check/uncheck icon.
-     * @param textStyle Text style for the gender label.
      */
     fun dimens(
         shape: Shape = Shape,

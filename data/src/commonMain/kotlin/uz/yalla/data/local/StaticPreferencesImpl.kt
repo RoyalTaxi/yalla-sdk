@@ -10,11 +10,19 @@ import uz.yalla.core.settings.LocaleKind
  * [Settings]-backed implementation of [StaticPreferences].
  *
  * Provides instant synchronous reads from platform-native storage
- * (SharedPreferences / NSUserDefaults). Values are kept in sync
- * via dual-write from [SessionPreferencesImpl] and
+ * (SharedPreferences on Android / NSUserDefaults on iOS). Values are
+ * kept in sync via dual-write from [SessionPreferencesImpl] and
  * [InterfacePreferencesImpl].
  *
+ * This class exists to solve the startup timing problem: [DataStore]
+ * reads are asynchronous, but certain values (locale, guest mode,
+ * device registration, onboarding stage) must be available immediately
+ * at app launch before any coroutine scope is ready.
+ *
  * @param settings platform-specific synchronous key-value store
+ * @see SessionPreferencesImpl
+ * @see InterfacePreferencesImpl
+ * @see createSettings
  * @since 0.0.7
  */
 internal class StaticPreferencesImpl(

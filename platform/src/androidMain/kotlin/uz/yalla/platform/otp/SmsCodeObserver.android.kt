@@ -13,6 +13,16 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
 
+/**
+ * Android actual for [ObserveSmsCode].
+ *
+ * Starts the SMS Retriever API client and registers a [BroadcastReceiver] for
+ * [SmsRetriever.SMS_RETRIEVED_ACTION]. When an SMS matching the app's hash is
+ * received, the raw message body is forwarded to [onCodeReceived].
+ *
+ * The receiver is registered with [ContextCompat.RECEIVER_EXPORTED] and unregistered
+ * in the `onDispose` callback to avoid leaks.
+ */
 @Composable
 actual fun ObserveSmsCode(onCodeReceived: (String) -> Unit) {
     val context = LocalContext.current

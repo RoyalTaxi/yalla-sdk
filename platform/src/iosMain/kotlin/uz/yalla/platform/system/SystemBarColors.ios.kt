@@ -11,6 +11,13 @@ import platform.UIKit.UIStatusBarStyleDarkContent
 import platform.UIKit.UIStatusBarStyleLightContent
 import platform.UIKit.setStatusBarStyle
 
+/**
+ * iOS actual for [SystemBarColors] (color overload).
+ *
+ * Derives the icon style from the [statusBarColor] luminance and delegates to the
+ * `darkIcons` overload. The [navigationBarColor] is ignored on iOS because the system
+ * navigation bar (home indicator area) does not have a configurable background.
+ */
 @Composable
 actual fun SystemBarColors(
     statusBarColor: Color,
@@ -20,6 +27,16 @@ actual fun SystemBarColors(
     SystemBarColors(darkIcons = useDarkIcons)
 }
 
+/**
+ * iOS actual for [SystemBarColors] (icon-style overload).
+ *
+ * Uses the deprecated `UIApplication.setStatusBarStyle` API. While deprecated since iOS 9,
+ * the per-ViewController `preferredStatusBarStyle` approach requires a custom Swift
+ * `UIViewController` subclass, which is not feasible from the Kotlin/Compose side.
+ *
+ * Keyed on [darkIcons] via [LaunchedEffect] to avoid re-running on every recomposition
+ * (important during 60fps animations).
+ */
 @Composable
 actual fun SystemBarColors(darkIcons: Boolean) {
     // LaunchedEffect keyed on darkIcons — only re-runs when the value actually

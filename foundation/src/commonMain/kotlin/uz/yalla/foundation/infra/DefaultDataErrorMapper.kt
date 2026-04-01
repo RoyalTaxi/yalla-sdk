@@ -18,6 +18,13 @@ import uz.yalla.resources.error_server_busy
  * @since 0.0.1
  */
 class DefaultDataErrorMapper : DataErrorMapper {
+    /**
+     * Maps a [DataError] subtype to its corresponding localized string resource.
+     *
+     * @param error The data error to map.
+     * @return Localized [StringResource] for the user-facing error message.
+     * @since 0.0.1
+     */
     override fun map(error: DataError): StringResource =
         when (error) {
             DataError.Network.Connection -> Res.string.error_no_internet

@@ -19,11 +19,30 @@ private const val DEFAULT_SLIDE_PX = 40f
  * adds [staggerMs] delay. Uses [graphicsLayer] so animation
  * triggers zero recomposition and zero relayout.
  *
- * @param visible whether the content should be revealed
- * @param index stagger position — higher index = later reveal
- * @param staggerMs delay between consecutive items
- * @param durationMs animation duration per item
- * @param slidePx vertical slide distance in pixels
+ * ## Usage
+ *
+ * ```kotlin
+ * Column {
+ *     items.forEachIndexed { index, item ->
+ *         Text(
+ *             text = item.title,
+ *             modifier = Modifier.staggerReveal(
+ *                 visible = isRevealed,
+ *                 index = index,
+ *             ),
+ *         )
+ *     }
+ * }
+ * ```
+ *
+ * @param visible Whether the content should be revealed.
+ * @param index Stagger position — higher index = later reveal.
+ * @param staggerMs Delay in milliseconds between consecutive items.
+ * @param durationMs Animation duration in milliseconds per item.
+ * @param slidePx Vertical slide distance in pixels.
+ * @return [Modifier] with stagger-reveal animation applied via [graphicsLayer].
+ * @since 0.0.1
+ * @see graphicsLayer
  */
 @Composable
 fun Modifier.staggerReveal(

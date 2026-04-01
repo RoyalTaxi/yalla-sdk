@@ -14,6 +14,15 @@ import platform.UIKit.UISwitch
 import platform.darwin.NSObject
 import platform.objc.sel_registerName
 
+/**
+ * iOS actual for [NativeSwitch].
+ *
+ * Renders a native [UISwitch] via [UIKitView]. The `UIControlEventValueChanged` event
+ * is forwarded to [onCheckedChange] through a [SwitchEventHandler] target-action pair.
+ *
+ * The view uses [UIKitInteropInteractionMode.NonCooperative] to ensure the native touch
+ * handling takes priority over Compose gesture detection.
+ */
 @OptIn(ExperimentalForeignApi::class, ExperimentalComposeUiApi::class)
 @Composable
 actual fun NativeSwitch(
@@ -52,6 +61,12 @@ actual fun NativeSwitch(
     )
 }
 
+/**
+ * ObjC-compatible target object for [UISwitch] value-changed events.
+ *
+ * Holds a mutable reference to the current [callback] so that recompositions with
+ * a new lambda are reflected without recreating the native switch.
+ */
 @ExperimentalForeignApi
 private class SwitchEventHandler : NSObject() {
     var callback: ((Boolean) -> Unit)? = null

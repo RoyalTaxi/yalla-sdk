@@ -21,6 +21,8 @@ import uz.yalla.firebase.YallaFirebase
  *
  * @param name The Firebase event name.
  * @param params Optional map of event parameters. Defaults to an empty map (no params sent).
+ * @see YallaAnalytics.logEvent
+ * @see AnalyticsEvent.Custom
  * @since 0.0.1
  */
 fun trackEvent(
