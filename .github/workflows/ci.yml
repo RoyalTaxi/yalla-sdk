@@ -13,6 +13,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -28,6 +29,7 @@ jobs:
   api-check:
     name: API check (Native + commonMain via Klib)
     runs-on: macos-latest
+    timeout-minutes: 30
     env:
       DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
     steps:
@@ -37,9 +39,11 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - uses: gradle/actions/setup-gradle@v4
-      - name: Install CocoaPods
+      - name: Install CocoaPods (if missing)
         run: |
-          brew install cocoapods || true
+          if ! command -v pod >/dev/null 2>&1; then
+            brew install cocoapods
+          fi
           pod --version
       - name: apiCheck
         run: ./gradlew apiCheck
@@ -47,6 +51,7 @@ jobs:
   test:
     name: Test (allTests on macOS)
     runs-on: macos-latest
+    timeout-minutes: 45
     env:
       DEVELOPER_DIR: /Applications/Xcode.app/Contents/Developer
     steps:
@@ -56,9 +61,14 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - uses: gradle/actions/setup-gradle@v4
-      - name: Install CocoaPods
+      - name: Install CocoaPods (if missing)
         run: |
-          brew install cocoapods || true
+          if ! command -v pod >/dev/null 2>&1; then
+            brew install cocoapods
+          fi
           pod --version
+      # This project uses AGP 9.0's KMP-Android target (com.android.kotlin.multiplatform.library),
+      # which does not emit a root `test` Gradle task. `allTests` is the canonical aggregate
+      # test task for KMP; it covers iOS simulator + Android + common tests for every module.
       - name: allTests
         run: ./gradlew allTests
