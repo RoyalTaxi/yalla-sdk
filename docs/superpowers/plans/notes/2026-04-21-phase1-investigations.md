@@ -101,6 +101,16 @@ Checked <https://github.com/Kotlin/binary-compatibility-validator> (README + rel
 
 **Follow-up for the spec (do NOT apply in this task):** The v1-launch spec's Section 3 and Section 6 assume option 1. Both sections should be upgraded to reference Klib-mode coverage in a follow-up commit — with `audit-api` remaining as advisory/fallback when the plugin is unavailable (Linux-only dev boxes).
 
+#### Followup — Task 3 wiring outcome (2026-04-21)
+
+Wired `binary-compatibility-validator 0.18.1` at commit `9031d23`. Klib mode enabled as decided. Concrete outcome:
+
+- **11 `.klib.api` baselines generated** — one per published module, covering Native targets (iosArm64, iosSimulatorArm64). Because `commonMain` compiles into the Native targets, every common-source public declaration also lands in the Klib dump. Common-surface regressions WILL be caught.
+- **0 `.api` (JVM/Android) baselines generated** — BCV 0.18.1 does not recognize AGP 9.0's `KotlinMultiplatformAndroidLibraryTarget` (applied via `com.android.kotlin.multiplatform.library` in our convention plugin). BCV's JVM-dump task registration only fires for classic `kotlin("jvm")` or legacy `kotlin-android` targets. Upstream issue tracked at <https://github.com/Kotlin/binary-compatibility-validator/issues>.
+- **Coverage role change**: the decision box above was written assuming BCV covers JVM/Android and `audit-api` covers iOS. Actual coverage is inverted: **BCV covers Native + commonMain; `audit-api` remains the manual gate for androidMain-only public-API additions** until BCV adds AGP 9.0 KMP-Android awareness.
+- **Operational rule** (until upstream fix): any PR that adds or changes a declaration inside `**/src/androidMain/**` must include a manual diff from the `audit-api` skill in the PR body alongside the automatic `apiCheck` result.
+- **Local-dev prerequisites** for `./gradlew apiCheck` / `apiDump`: macOS host; either `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer` or `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer` exported; `cocoapods` on PATH (`brew install cocoapods`). CI macos-latest runners have all of these out of the box.
+
 ### C. iOS snapshot testing tool pick
 
 Researched the three candidates via GitHub + web search.
