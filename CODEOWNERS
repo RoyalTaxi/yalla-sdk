@@ -1,0 +1,27 @@
+# CODEOWNERS — review ownership per module.
+# See https://docs.github.com/en/repositories/managing-your-repositories-settings-and-security/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+*                               @isloms
+
+# Module-scoped ownership (mirrors convention plugin structure)
+/core/                          @isloms
+/data/                          @isloms
+/resources/                     @isloms
+/design/                        @isloms
+/foundation/                    @isloms
+/platform/                      @isloms
+/primitives/                    @isloms
+/composites/                    @isloms
+/maps/                          @isloms
+/media/                         @isloms
+/firebase/                      @isloms
+/bom/                           @isloms
+
+# Build + CI
+/build-logic/                   @isloms
+/.github/                       @isloms
+/gradle/                        @isloms
+
+# Docs
+/docs/                          @isloms
