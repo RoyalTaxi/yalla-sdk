@@ -249,7 +249,7 @@ abstract interface uz.yalla.core.contract.preferences/UserPreferences { // uz.ya
 }
 
 sealed interface <#A: out kotlin/Any?, #B: out kotlin/Any?> uz.yalla.core.result/Either { // uz.yalla.core.result/Either|null[0]
-    final class <#A1: kotlin/Any?> Failure : uz.yalla.core.result/Either<kotlin/Nothing, #A1> { // uz.yalla.core.result/Either.Failure|null[0]
+    final class <#A1: kotlin/Any?> Failure : uz.yalla.core.result/Either<#A1, kotlin/Nothing> { // uz.yalla.core.result/Either.Failure|null[0]
         constructor <init>(#A1) // uz.yalla.core.result/Either.Failure.<init>|<init>(1:0){}[0]
 
         final val error // uz.yalla.core.result/Either.Failure.error|{}error[0]
@@ -262,7 +262,7 @@ sealed interface <#A: out kotlin/Any?, #B: out kotlin/Any?> uz.yalla.core.result
         final fun toString(): kotlin/String // uz.yalla.core.result/Either.Failure.toString|toString(){}[0]
     }
 
-    final class <#A1: kotlin/Any?> Success : uz.yalla.core.result/Either<#A1, kotlin/Nothing> { // uz.yalla.core.result/Either.Success|null[0]
+    final class <#A1: kotlin/Any?> Success : uz.yalla.core.result/Either<kotlin/Nothing, #A1> { // uz.yalla.core.result/Either.Success|null[0]
         constructor <init>(#A1) // uz.yalla.core.result/Either.Success.<init>|<init>(1:0){}[0]
 
         final val data // uz.yalla.core.result/Either.Success.data|{}data[0]
@@ -1014,7 +1014,10 @@ final fun (kotlin/Long?).uz.yalla.core.util/toLocalFormattedDate(): kotlin/Strin
 final fun (kotlin/Long?).uz.yalla.core.util/toLocalFormattedTime(): kotlin/String // uz.yalla.core.util/toLocalFormattedTime|toLocalFormattedTime@kotlin.Long?(){}[0]
 final fun (kotlin/String).uz.yalla.core.util/formatArgs(kotlin/Array<out kotlin/Any>...): kotlin/String // uz.yalla.core.util/formatArgs|formatArgs@kotlin.String(kotlin.Array<out|kotlin.Any>...){}[0]
 final fun (uz.yalla.core.order/Order.Executor).uz.yalla.core.order/toExecutor(): uz.yalla.core.order/Executor // uz.yalla.core.order/toExecutor|toExecutor@uz.yalla.core.order.Order.Executor(){}[0]
-final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/mapFailure(kotlin/Function1<#B, #C>): uz.yalla.core.result/Either<#A, #C> // uz.yalla.core.result/mapFailure|mapFailure@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:1,0:2>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]
-final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/mapSuccess(kotlin/Function1<#A, #C>): uz.yalla.core.result/Either<#C, #B> // uz.yalla.core.result/mapSuccess|mapSuccess@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:0,0:2>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]
-final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/onFailure(kotlin/Function1<#B, kotlin/Unit>): uz.yalla.core.result/Either<#A, #B> // uz.yalla.core.result/onFailure|onFailure@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:1,kotlin.Unit>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
-final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/onSuccess(kotlin/Function1<#A, kotlin/Unit>): uz.yalla.core.result/Either<#A, #B> // uz.yalla.core.result/onSuccess|onSuccess@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:0,kotlin.Unit>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/fold(kotlin/Function1<#A, #C>, kotlin/Function1<#B, #C>): #C // uz.yalla.core.result/fold|fold@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:0,0:2>;kotlin.Function1<0:1,0:2>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/mapFailure(kotlin/Function1<#A, #C>): uz.yalla.core.result/Either<#C, #B> // uz.yalla.core.result/mapFailure|mapFailure@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:0,0:2>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/mapSuccess(kotlin/Function1<#B, #C>): uz.yalla.core.result/Either<#A, #C> // uz.yalla.core.result/mapSuccess|mapSuccess@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:1,0:2>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/getOrNull(): #B? // uz.yalla.core.result/getOrNull|getOrNull@uz.yalla.core.result.Either<0:0,0:1>(){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/getOrThrow(): #B // uz.yalla.core.result/getOrThrow|getOrThrow@uz.yalla.core.result.Either<0:0,0:1>(){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/onFailure(kotlin/Function1<#A, kotlin/Unit>): uz.yalla.core.result/Either<#A, #B> // uz.yalla.core.result/onFailure|onFailure@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:0,kotlin.Unit>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]
+final inline fun <#A: kotlin/Any?, #B: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/onSuccess(kotlin/Function1<#B, kotlin/Unit>): uz.yalla.core.result/Either<#A, #B> // uz.yalla.core.result/onSuccess|onSuccess@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:1,kotlin.Unit>){0§<kotlin.Any?>;1§<kotlin.Any?>}[0]

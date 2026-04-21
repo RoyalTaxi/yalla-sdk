@@ -51,7 +51,7 @@ private const val RETRY_BACKOFF_FACTOR = 2.0
 suspend inline fun <reified T> safeApiCall(
     isIdempotent: Boolean = false,
     crossinline call: suspend () -> HttpResponse,
-): Either<T, DataError.Network> =
+): Either<DataError.Network, T> =
     try {
         val response = retryWithBackoff(isIdempotent = isIdempotent) { call() }
         when (response.status.value) {

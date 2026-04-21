@@ -7,7 +7,7 @@ import kotlin.test.assertSame
 class EitherTest {
     @Test
     fun shouldInvokeActionAndReturnSameInstanceWhenSuccess() {
-        val either: Either<Int, String> = Either.Success(7)
+        val either: Either<String, Int> = Either.Success(7)
         var capturedValue: Int? = null
 
         val result =
@@ -21,7 +21,7 @@ class EitherTest {
 
     @Test
     fun shouldNotInvokeSuccessActionWhenFailure() {
-        val either: Either<Int, String> = Either.Failure("error")
+        val either: Either<String, Int> = Either.Failure("error")
         var invocationCount = 0
 
         either.onSuccess {
@@ -33,7 +33,7 @@ class EitherTest {
 
     @Test
     fun shouldInvokeActionAndReturnSameInstanceWhenFailure() {
-        val either: Either<Int, String> = Either.Failure("error")
+        val either: Either<String, Int> = Either.Failure("error")
         var capturedError: String? = null
 
         val result =
@@ -47,7 +47,7 @@ class EitherTest {
 
     @Test
     fun shouldNotInvokeFailureActionWhenSuccess() {
-        val either: Either<Int, String> = Either.Success(42)
+        val either: Either<String, Int> = Either.Success(42)
         var invocationCount = 0
 
         either.onFailure {
@@ -59,7 +59,7 @@ class EitherTest {
 
     @Test
     fun shouldTransformDataOnMapSuccess() {
-        val either: Either<Int, String> = Either.Success(5)
+        val either: Either<String, Int> = Either.Success(5)
 
         val result = either.mapSuccess { it * 2 }
 
@@ -68,7 +68,7 @@ class EitherTest {
 
     @Test
     fun shouldPreserveFailureOnMapSuccess() {
-        val either: Either<Int, String> = Either.Failure("error")
+        val either: Either<String, Int> = Either.Failure("error")
 
         val result = either.mapSuccess { it * 2 }
 
@@ -77,7 +77,7 @@ class EitherTest {
 
     @Test
     fun shouldTransformErrorOnMapFailure() {
-        val either: Either<Int, String> = Either.Failure("error")
+        val either: Either<String, Int> = Either.Failure("error")
 
         val result = either.mapFailure { it.length }
 
@@ -86,7 +86,7 @@ class EitherTest {
 
     @Test
     fun shouldPreserveSuccessOnMapFailure() {
-        val either: Either<Int, String> = Either.Success(42)
+        val either: Either<String, Int> = Either.Success(42)
 
         val result = either.mapFailure { it.length }
 

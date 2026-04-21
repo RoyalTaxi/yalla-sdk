@@ -114,3 +114,15 @@ The existing `.editorconfig` already disables nine ktlint_official rules (`trail
 **Consequence**: Five rules no longer enforced. The remaining ktlint_official rules continue to enforce 120-column max, indentation, naming, and import ordering. CI gates on `./gradlew ktlintCheck` per Phase 1 plan. If a future PR wants to re-enable any disabled rule, it must include a full-codebase reformat in the same commit and pass CI, with an ADR update.
 
 Decided: 2026-04-21. Part of Phase 1 of the v1.0 launch.
+
+---
+
+## ADR-010: Either generic parameter order flipped to `<E, D>` (error-first)
+
+**Decision**: Flip `Either<out D, out E>` to `Either<out E, out D>` — error first, success second. Applies to the sealed interface declaration and every extension (`mapSuccess`, `mapFailure`, `fold`, `getOrNull`, `getOrThrow`, etc.).
+
+**Why**: Ecosystem convention is error-first. Arrow's `Either<A, B>` is `<Left=Error, Right=Success>`. Every Kotlin engineer who has used Arrow reads `Either<X, Y>` with `X` as the error type. Our previous order (`<Data, Error>`) inverted that and would confuse every non-Yalla contributor permanently after 1.0. Fix it now, while pre-1.0 full-risk mode allows breaking changes.
+
+**Consequence**: Every call-site in `core`, `data`, and YallaClient flips. Cumulative breaking: `0.0.8-alpha04` → `0.0.9-alpha01`. YallaClient's scratch branch `chore/sdk-phase2-either-flip` merges to YallaClient's `dev` branch in lockstep with this SDK PR.
+
+Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.
