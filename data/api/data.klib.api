@@ -101,7 +101,7 @@ final class uz.yalla.data.api/ApiErrorResponse { // uz.yalla.data.api/ApiErrorRe
 }
 
 final class uz.yalla.data.network/NetworkConfig { // uz.yalla.data.network/NetworkConfig|null[0]
-    constructor <init>(kotlin/String, kotlin/String, kotlin/String, kotlin/String = ..., kotlin/String = ...) // uz.yalla.data.network/NetworkConfig.<init>|<init>(kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.String){}[0]
+    constructor <init>(kotlin/String, kotlin/String, kotlin/String, kotlin/String = ..., kotlin/String = ..., kotlin.collections/List<kotlin/String> = ...) // uz.yalla.data.network/NetworkConfig.<init>|<init>(kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.collections.List<kotlin.String>){}[0]
 
     final val baseUrl // uz.yalla.data.network/NetworkConfig.baseUrl|{}baseUrl[0]
         final fun <get-baseUrl>(): kotlin/String // uz.yalla.data.network/NetworkConfig.baseUrl.<get-baseUrl>|<get-baseUrl>(){}[0]
@@ -111,6 +111,8 @@ final class uz.yalla.data.network/NetworkConfig { // uz.yalla.data.network/Netwo
         final fun <get-deviceMode>(): kotlin/String // uz.yalla.data.network/NetworkConfig.deviceMode.<get-deviceMode>|<get-deviceMode>(){}[0]
     final val deviceType // uz.yalla.data.network/NetworkConfig.deviceType|{}deviceType[0]
         final fun <get-deviceType>(): kotlin/String // uz.yalla.data.network/NetworkConfig.deviceType.<get-deviceType>|<get-deviceType>(){}[0]
+    final val guestAllowedSegments // uz.yalla.data.network/NetworkConfig.guestAllowedSegments|{}guestAllowedSegments[0]
+        final fun <get-guestAllowedSegments>(): kotlin.collections/List<kotlin/String> // uz.yalla.data.network/NetworkConfig.guestAllowedSegments.<get-guestAllowedSegments>|<get-guestAllowedSegments>(){}[0]
     final val secretKey // uz.yalla.data.network/NetworkConfig.secretKey|{}secretKey[0]
         final fun <get-secretKey>(): kotlin/String // uz.yalla.data.network/NetworkConfig.secretKey.<get-secretKey>|<get-secretKey>(){}[0]
 
@@ -119,7 +121,8 @@ final class uz.yalla.data.network/NetworkConfig { // uz.yalla.data.network/Netwo
     final fun component3(): kotlin/String // uz.yalla.data.network/NetworkConfig.component3|component3(){}[0]
     final fun component4(): kotlin/String // uz.yalla.data.network/NetworkConfig.component4|component4(){}[0]
     final fun component5(): kotlin/String // uz.yalla.data.network/NetworkConfig.component5|component5(){}[0]
-    final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ...): uz.yalla.data.network/NetworkConfig // uz.yalla.data.network/NetworkConfig.copy|copy(kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.String){}[0]
+    final fun component6(): kotlin.collections/List<kotlin/String> // uz.yalla.data.network/NetworkConfig.component6|component6(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin/String = ..., kotlin.collections/List<kotlin/String> = ...): uz.yalla.data.network/NetworkConfig // uz.yalla.data.network/NetworkConfig.copy|copy(kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.String;kotlin.collections.List<kotlin.String>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.data.network/NetworkConfig.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.data.network/NetworkConfig.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.data.network/NetworkConfig.toString|toString(){}[0]
@@ -127,6 +130,8 @@ final class uz.yalla.data.network/NetworkConfig { // uz.yalla.data.network/Netwo
 
 final val uz.yalla.data.di/dataModule // uz.yalla.data.di/dataModule|{}dataModule[0]
     final fun <get-dataModule>(): org.koin.core.module/Module // uz.yalla.data.di/dataModule.<get-dataModule>|<get-dataModule>(){}[0]
+final val uz.yalla.data.network/DEFAULT_GUEST_ALLOWED_SEGMENTS // uz.yalla.data.network/DEFAULT_GUEST_ALLOWED_SEGMENTS|{}DEFAULT_GUEST_ALLOWED_SEGMENTS[0]
+    final fun <get-DEFAULT_GUEST_ALLOWED_SEGMENTS>(): kotlin.collections/List<kotlin/String> // uz.yalla.data.network/DEFAULT_GUEST_ALLOWED_SEGMENTS.<get-DEFAULT_GUEST_ALLOWED_SEGMENTS>|<get-DEFAULT_GUEST_ALLOWED_SEGMENTS>(){}[0]
 final val uz.yalla.data.util/ioDispatcher // uz.yalla.data.util/ioDispatcher|{}ioDispatcher[0]
     final fun <get-ioDispatcher>(): kotlinx.coroutines/CoroutineDispatcher // uz.yalla.data.util/ioDispatcher.<get-ioDispatcher>|<get-ioDispatcher>(){}[0]
 final val uz.yalla.data.util/platformName // uz.yalla.data.util/platformName|{}platformName[0]

@@ -23,16 +23,24 @@ internal class GuestBlockedException : RuntimeException()
  * caught and mapped to [DataError.Network.Guest][uz.yalla.core.error.DataError.Network.Guest]
  * by [safeApiCall].
  *
+ * The default [allowedSegments] mirrors
+ * [DEFAULT_GUEST_ALLOWED_SEGMENTS][uz.yalla.data.network.DEFAULT_GUEST_ALLOWED_SEGMENTS]
+ * so direct callers keep the legacy whitelist. [createHttpClient] sources the
+ * set from [NetworkConfig.guestAllowedSegments] instead, letting integrators
+ * override the whitelist per environment without touching this plugin.
+ *
  * @param isGuestMode reactive guest mode state
- * @param allowedSegments URL segments permitted in guest mode
+ * @param allowedSegments URL segments permitted in guest mode, defaults to the
+ *   legacy six-endpoint whitelist
  * @return Ktor client plugin instance
  * @throws GuestBlockedException when a request is blocked in guest mode
  * @see safeApiCall
+ * @see NetworkConfig.guestAllowedSegments
  * @since 0.0.1
  */
 fun createGuestModeGuardPlugin(
     isGuestMode: StateFlow<Boolean>,
-    allowedSegments: Set<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS,
+    allowedSegments: Set<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS.toSet(),
 ) = createClientPlugin("GuestModeGuard") {
     onRequest { request, _ ->
         if (!isGuestMode.value) return@onRequest
@@ -44,13 +52,3 @@ fun createGuestModeGuardPlugin(
         }
     }
 }
-
-private val DEFAULT_GUEST_ALLOWED_SEGMENTS =
-    setOf(
-        "client",
-        "valid",
-        "register",
-        "location-name",
-        "cost",
-        "lists",
-    )

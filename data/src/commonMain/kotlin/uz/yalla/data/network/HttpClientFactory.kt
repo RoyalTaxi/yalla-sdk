@@ -130,7 +130,7 @@ fun createHttpClient(
             socketTimeoutMillis = SOCKET_TIMEOUT_MS
         }
 
-        install(createGuestModeGuardPlugin(guestModeCache))
+        install(createGuestModeGuardPlugin(guestModeCache, config.guestAllowedSegments.toSet()))
 
         defaultRequest {
             url(config.baseUrl)
