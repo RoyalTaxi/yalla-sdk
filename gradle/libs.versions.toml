@@ -75,6 +75,9 @@ ktlint = "1.3.1"
 ktlint-gradle = "12.1.0"
 spotless = "6.25.0"
 
+# API stability
+binary-compatibility-validator = "0.18.1"
+
 [libraries]
 # Build tools (for build-logic)
 gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -196,5 +199,6 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 valkyrie = { id = "io.github.composegears.valkyrie", version.ref = "valkyrie" }
+binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 yalla-sdk-kmp = { id = "yalla.sdk.kmp" }
 yalla-sdk-kmp-compose = { id = "yalla.sdk.kmp.compose" }

@@ -17,6 +17,20 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.spotless) apply false
     alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.binary.compatibility.validator)
+}
+
+@OptIn(kotlinx.validation.ExperimentalBCVApi::class)
+apiValidation {
+    // BOM has no public API surface (it is a java-platform with no code)
+    ignoredProjects.addAll(listOf("bom"))
+
+    // Experimental Klib mode: covers KMP Native targets (iosArm64, iosSimulatorArm64)
+    // in addition to JVM/Android. Validated by Task 2 Investigation B; plugin version 0.18.1,
+    // @ExperimentalBCVApi as of 2026-04-21.
+    klib {
+        enabled = true
+    }
 }
 
 subprojects {
