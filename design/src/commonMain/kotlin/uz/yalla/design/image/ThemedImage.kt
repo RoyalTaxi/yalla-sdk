@@ -3,9 +3,9 @@ package uz.yalla.design.image
 import org.jetbrains.compose.resources.DrawableResource
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_dark_blurry_logo
+import uz.yalla.resources.img_dark_close_circle
 import uz.yalla.resources.img_dark_login
 import uz.yalla.resources.img_dark_logout
-import uz.yalla.resources.img_dark_close_circle
 import uz.yalla.resources.img_dark_map_pin
 import uz.yalla.resources.img_dark_notification_mute
 import uz.yalla.resources.img_dark_order_history
@@ -15,9 +15,9 @@ import uz.yalla.resources.img_dark_shield_check
 import uz.yalla.resources.img_dark_tariff_card
 import uz.yalla.resources.img_dark_trash_can
 import uz.yalla.resources.img_light_blurry_logo
+import uz.yalla.resources.img_light_close_circle
 import uz.yalla.resources.img_light_login
 import uz.yalla.resources.img_light_logout
-import uz.yalla.resources.img_light_close_circle
 import uz.yalla.resources.img_light_map_pin
 import uz.yalla.resources.img_light_notification_mute
 import uz.yalla.resources.img_light_order_history

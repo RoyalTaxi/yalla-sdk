@@ -23,7 +23,7 @@ import uz.yalla.resources.icons.YallaIcons
  * @see SheetSnackbarHost
  * @since 0.0.1
  */
-class SheetSnackbarState(val hostState: SnackbarHostState,) {
+class SheetSnackbarState(val hostState: SnackbarHostState) {
     var data by mutableStateOf<SnackbarData?>(null)
         internal set
 

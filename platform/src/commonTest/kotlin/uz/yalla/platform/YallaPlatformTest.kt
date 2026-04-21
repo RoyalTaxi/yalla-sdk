@@ -2,12 +2,12 @@ package uz.yalla.platform
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 private class FakePlatformConfig : PlatformConfig
+
 private class OtherPlatformConfig : PlatformConfig
 
 class YallaPlatformTest {

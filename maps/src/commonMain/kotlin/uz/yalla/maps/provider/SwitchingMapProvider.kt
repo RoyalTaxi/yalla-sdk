@@ -56,13 +56,13 @@ class SwitchingMapProvider(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     private val googleProvider by lazy { GoogleMapProvider() }
     private val libreProvider by lazy { LibreMapProvider() }
-    private var _currentProvider: MapProvider? = null
-    private val currentProvider: MapProvider get() = _currentProvider ?: googleProvider
+    private var userSelectedProvider: MapProvider? = null
+    private val currentProvider: MapProvider get() = userSelectedProvider ?: googleProvider
 
     init {
         scope.launch {
             interfacePreferences.mapKind.collectLatest { type ->
-                _currentProvider =
+                userSelectedProvider =
                     when (type) {
                         MapKind.Google -> googleProvider
                         MapKind.Libre -> libreProvider

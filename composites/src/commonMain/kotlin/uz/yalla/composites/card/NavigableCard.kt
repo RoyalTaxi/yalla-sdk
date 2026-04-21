@@ -77,7 +77,8 @@ object NavigableCardDefaults {
         border: Color = System.color.border.disabled,
         arrow: Color = System.color.icon.base,
         disabledContainer: Color = Color.Transparent,
-        disabledBorder: Color = System.color.border.disabled.copy(alpha = 0.5f),
+        disabledBorder: Color = System.color.border.disabled
+            .copy(alpha = 0.5f),
         disabledArrow: Color = System.color.icon.disabled,
     ): NavigableCardColors = NavigableCardColors(
         container = container,

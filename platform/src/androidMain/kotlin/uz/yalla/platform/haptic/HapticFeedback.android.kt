@@ -32,11 +32,17 @@ actual fun rememberHapticController(): HapticController {
                     HapticType.Medium -> HapticFeedbackConstants.CONTEXT_CLICK
                     HapticType.Heavy -> HapticFeedbackConstants.LONG_PRESS
                     HapticType.Success ->
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.CONFIRM
-                        else HapticFeedbackConstants.LONG_PRESS
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            HapticFeedbackConstants.CONFIRM
+                        } else {
+                            HapticFeedbackConstants.LONG_PRESS
+                        }
                     HapticType.Error ->
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.REJECT
-                        else HapticFeedbackConstants.LONG_PRESS
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            HapticFeedbackConstants.REJECT
+                        } else {
+                            HapticFeedbackConstants.LONG_PRESS
+                        }
                     HapticType.Warning -> HapticFeedbackConstants.CONTEXT_CLICK
                     HapticType.ErrorRepeat -> error("handled above")
                 }
@@ -45,8 +51,11 @@ actual fun rememberHapticController(): HapticController {
 
             private fun performErrorRepeat() {
                 val constant =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) HapticFeedbackConstants.REJECT
-                    else HapticFeedbackConstants.LONG_PRESS
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        HapticFeedbackConstants.REJECT
+                    } else {
+                        HapticFeedbackConstants.LONG_PRESS
+                    }
                 view.performHapticFeedback(constant)
                 view.postDelayed({ view.performHapticFeedback(constant) }, 100)
                 view.postDelayed({ view.performHapticFeedback(constant) }, 200)

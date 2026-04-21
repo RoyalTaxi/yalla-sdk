@@ -5,7 +5,6 @@ import uz.yalla.core.location.Address
 import uz.yalla.core.location.AddressOption
 import uz.yalla.core.location.PlaceKind
 import uz.yalla.core.location.SavedAddress
-import uz.yalla.core.order.ExtraService
 import uz.yalla.core.order.Order
 import uz.yalla.core.order.OrderStatus
 import uz.yalla.core.payment.PaymentKind

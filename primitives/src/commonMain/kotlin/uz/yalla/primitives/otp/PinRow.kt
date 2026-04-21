@@ -1,8 +1,6 @@
 package uz.yalla.primitives.otp
 
 import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -191,8 +189,7 @@ fun PinRow(
                 translationX = shakeOffset.value
                 scaleX = scaleAnim.value
                 scaleY = scaleAnim.value
-            }
-            .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
+            }.then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
         decorationBox = {

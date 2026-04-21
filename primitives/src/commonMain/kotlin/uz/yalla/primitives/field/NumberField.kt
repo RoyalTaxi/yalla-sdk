@@ -123,7 +123,8 @@ object NumberFieldDefaults {
         selectionColors: TextSelectionColors =
             TextSelectionColors(
                 handleColor = System.color.text.link,
-                backgroundColor = System.color.text.link.copy(.3f)
+                backgroundColor = System.color.text.link
+                    .copy(.3f)
             ),
     ): NumberFieldColors = NumberFieldColors(
         containerColor = containerColor,
@@ -242,8 +243,11 @@ fun NumberField(
                     .weight(1f)
                     .onFocusChanged { isFocused = it.isFocused }
                     .then(
-                        if (focusRequester != null) Modifier.focusRequester(focusRequester)
-                        else Modifier
+                        if (focusRequester != null) {
+                            Modifier.focusRequester(focusRequester)
+                        } else {
+                            Modifier
+                        }
                     ),
                 placeholder = @Composable {
                     Text(

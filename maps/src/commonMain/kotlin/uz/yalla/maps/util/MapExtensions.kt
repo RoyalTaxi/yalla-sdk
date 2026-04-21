@@ -183,10 +183,11 @@ fun haversineDistance(
     val dLat = (lat2 - lat1).toRadians()
     val dLng = (lng2 - lng1).toRadians()
     val a =
-        (sin(dLat / 2).pow(2) +
-            cos(lat1.toRadians()) * cos(lat2.toRadians()) *
-            sin(dLng / 2).pow(2))
-            .coerceIn(0.0, 1.0)
+        (
+            sin(dLat / 2).pow(2) +
+                cos(lat1.toRadians()) * cos(lat2.toRadians()) *
+                sin(dLng / 2).pow(2)
+        ).coerceIn(0.0, 1.0)
     return EARTH_RADIUS_KM * 2 * atan2(sqrt(a), sqrt(1 - a))
 }
 

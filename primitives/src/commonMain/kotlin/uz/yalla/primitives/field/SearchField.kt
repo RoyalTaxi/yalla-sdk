@@ -213,7 +213,8 @@ fun SearchField(
                         .fillMaxWidth()
                         .applyFocusRequester(focusRequester),
                     cursorBrush = SolidColor(System.color.text.link),
-                    textStyle = System.font.body.base.bold.copy(color = colors.text),
+                    textStyle = System.font.body.base.bold
+                        .copy(color = colors.text),
                     lineLimits = TextFieldLineLimits.SingleLine,
                 )
             }

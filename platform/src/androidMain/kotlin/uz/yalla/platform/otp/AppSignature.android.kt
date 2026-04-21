@@ -45,16 +45,19 @@ fun getAppSignature(context: Context): String? {
     return runCatching {
         val packageName = context.packageName
         val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            context.packageManager.getPackageInfo(
-                packageName,
-                PackageManager.GET_SIGNING_CERTIFICATES
-            ).signingInfo?.apkContentsSigners
+            context.packageManager
+                .getPackageInfo(
+                    packageName,
+                    PackageManager.GET_SIGNING_CERTIFICATES
+                ).signingInfo
+                ?.apkContentsSigners
         } else {
             @Suppress("DEPRECATION")
-            context.packageManager.getPackageInfo(
-                packageName,
-                PackageManager.GET_SIGNATURES
-            ).signatures
+            context.packageManager
+                .getPackageInfo(
+                    packageName,
+                    PackageManager.GET_SIGNATURES
+                ).signatures
         }
 
         signatures?.firstNotNullOfOrNull { signature ->
@@ -63,7 +66,8 @@ fun getAppSignature(context: Context): String? {
                 digest()
             }
             val truncatedHash = Arrays.copyOfRange(hash, 0, NUM_HASHED_BYTES)
-            Base64.encodeToString(truncatedHash, Base64.NO_PADDING or Base64.NO_WRAP)
+            Base64
+                .encodeToString(truncatedHash, Base64.NO_PADDING or Base64.NO_WRAP)
                 .takeIf { it.length >= NUM_BASE64_CHAR }
                 ?.substring(0, NUM_BASE64_CHAR)
         }

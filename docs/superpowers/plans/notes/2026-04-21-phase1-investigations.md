@@ -38,6 +38,19 @@ Files affected in `:composites` are all test files under `composites/src/commonT
 - Android unit test tasks (`testDebugUnitTest`) aren't emitted by these modules either; tests run via `iosSimulatorArm64Test` + `testDebugUnitTest` aggregated by `allTests`.
 - **Net effect:** no test count can be captured on this host. CI has Xcode and should be the authoritative source of the test-count baseline. Later in Phase 1, once CI is wired up, the baseline row should be updated from the CI run.
 
+### Remediation applied (post-37f62b1)
+
+The `ktlintCheck` failure in the baseline was larger than the first pass reported: 901 violations across 21 rules, 535 residual after `ktlintFormat` (oscillation loop between Compose-hostile rules). Per ADR-009 (see `docs/06-DECISIONS.md`), disabled five conflict rules in `.editorconfig`:
+- `multiline-expression-wrapping`
+- `function-signature`
+- `class-signature`
+- `argument-list-wrapping`
+- `no-empty-first-line-in-class-body`
+
+Post-remediation: `./gradlew ktlintFormat && ./gradlew ktlintCheck` PASS.
+
+**Test runner note:** `./gradlew test` does not exist on this KMP project (no JVM target declared). The canonical task is `./gradlew allTests`, which requires full Xcode (not just Command Line Tools). CI (macos-latest runners) will execute `allTests`; local verification on non-Xcode dev machines is limited to `./gradlew check` or per-module Android unit tests.
+
 ## Alpha-Start Investigations (Task 2)
 
 (filled in during Task 2)

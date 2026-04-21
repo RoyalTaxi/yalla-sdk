@@ -9,16 +9,22 @@ import androidx.compose.runtime.Composable
 enum class HapticType {
     /** Subtle tap for minor UI events. */
     Light,
+
     /** Standard tap for confirmations. */
     Medium,
+
     /** Strong tap for significant events. */
     Heavy,
+
     /** Success notification pattern. */
     Success,
+
     /** Error notification pattern. */
     Error,
+
     /** Triple error notification pattern (3x with 100ms interval). */
     ErrorRepeat,
+
     /** Warning notification pattern. */
     Warning,
 }

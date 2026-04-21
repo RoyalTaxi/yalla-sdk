@@ -1,9 +1,7 @@
 package uz.yalla.maps.di
 
-import kotlinx.coroutines.flow.Flow
 import uz.yalla.core.contract.location.LocationProvider
 import uz.yalla.core.contract.preferences.InterfacePreferences
-import uz.yalla.core.settings.ThemeKind
 
 /**
  * External dependencies required by the maps module.

@@ -13,18 +13,25 @@ package uz.yalla.platform.model
 enum class IconType {
     /** Hamburger menu icon. */
     MENU,
+
     /** Close / dismiss (X) icon. */
     CLOSE,
+
     /** Checkmark / confirm icon. */
     DONE,
+
     /** Left arrow / back navigation icon. */
     BACK,
+
     /** Focus the map on the user's current location. */
     FOCUS_LOCATION,
+
     /** Focus the map to show the full route. */
     FOCUS_ROUTE,
+
     /** Focus the map on the ride origin point. */
     FOCUS_ORIGIN,
+
     /** Focus the map on the ride destination point. */
     FOCUS_DESTINATION,
 }

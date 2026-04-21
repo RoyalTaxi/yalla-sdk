@@ -19,13 +19,11 @@ import platform.darwin.NSObject
  *
  * Swipe-back is detected via [UINavigationControllerDelegateProtocol.didShowViewController].
  *
- * @since 0.0.6
- */
-/**
  * @param C Concrete route type (sealed class extending [Route]).
  * @param navController The UIKit navigation controller that owns the view controller stack.
  * @param vcFactory Factory that creates a [UIViewController] for a given route and navigator.
  * @param initialRoute The first route placed on the stack.
+ * @since 0.0.6
  */
 internal class UIKitNavigator<C : Route>(
     private val navController: UINavigationController,

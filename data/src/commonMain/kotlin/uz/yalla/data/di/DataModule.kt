@@ -7,8 +7,8 @@ import uz.yalla.core.contract.preferences.ConfigPreferences
 import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.contract.preferences.PositionPreferences
 import uz.yalla.core.contract.preferences.SessionPreferences
-import uz.yalla.core.contract.preferences.UserPreferences
 import uz.yalla.core.contract.preferences.StaticPreferences
+import uz.yalla.core.contract.preferences.UserPreferences
 import uz.yalla.data.local.ConfigPreferencesImpl
 import uz.yalla.data.local.InterfacePreferencesImpl
 import uz.yalla.data.local.PositionPreferencesImpl

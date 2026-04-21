@@ -157,7 +157,8 @@ object SplashOverlayDefaults {
     fun colors(
         background: Brush = System.color.gradient.splash,
         indicator: Color = System.color.background.base,
-        indicatorTrack: Color = System.color.background.base.copy(alpha = .5f),
+        indicatorTrack: Color = System.color.background.base
+            .copy(alpha = .5f),
         text: Color = System.color.background.base,
     ): SplashOverlayColors =
         SplashOverlayColors(

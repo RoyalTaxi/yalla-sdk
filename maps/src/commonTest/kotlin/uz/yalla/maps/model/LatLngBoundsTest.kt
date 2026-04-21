@@ -27,7 +27,8 @@ class LatLngBoundsTest {
 
     @Test
     fun shouldBuildFromMultiplePoints() {
-        val bounds = LatLngBounds.Builder()
+        val bounds = LatLngBounds
+            .Builder()
             .include(LatLng(40.0, 68.0))
             .include(LatLng(42.0, 70.0))
             .include(LatLng(41.0, 69.0))
@@ -41,7 +42,8 @@ class LatLngBoundsTest {
 
     @Test
     fun shouldBuildFromSinglePoint() {
-        val bounds = LatLngBounds.Builder()
+        val bounds = LatLngBounds
+            .Builder()
             .include(LatLng(41.0, 69.0))
             .build()
 

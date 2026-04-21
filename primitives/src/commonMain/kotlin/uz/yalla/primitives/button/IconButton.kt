@@ -148,7 +148,8 @@ object IconButtonDefaults {
     fun colors(
         containerColor: Color = System.color.background.tertiary,
         contentColor: Color = System.color.icon.base,
-        disabledContainerColor: Color = System.color.background.tertiary.copy(alpha = 0.5f),
+        disabledContainerColor: Color = System.color.background.tertiary
+            .copy(alpha = 0.5f),
         disabledContentColor: Color = System.color.icon.disabled,
     ): IconButtonColors = IconButtonColors(
         containerColor = containerColor,

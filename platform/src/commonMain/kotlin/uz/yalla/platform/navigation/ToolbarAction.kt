@@ -47,10 +47,13 @@ sealed interface ToolbarAction {
 enum class ToolbarIcon {
     /** Pencil / edit icon. SF Symbol: `pencil`. */
     Edit,
+
     /** Open envelope / mark-all-read icon. SF Symbol: `envelope.open`. */
     ReadAll,
+
     /** Ellipsis / more options icon. SF Symbol: `ellipsis`. */
     More,
+
     /** Plus / add icon. SF Symbol: `plus`. */
     Add,
 }

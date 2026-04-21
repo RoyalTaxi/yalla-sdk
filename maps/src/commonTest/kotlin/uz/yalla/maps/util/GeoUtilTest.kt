@@ -299,7 +299,8 @@ class GeoUtilTest {
 
     @Test
     fun boundsBuilderMultiplePointsSpanCorrectly() {
-        val builder = LatLngBounds.Builder()
+        val builder = LatLngBounds
+            .Builder()
             .include(LatLng(10.0, 20.0))
             .include(LatLng(30.0, 40.0))
             .include(LatLng(20.0, 30.0))
@@ -314,7 +315,8 @@ class GeoUtilTest {
 
     @Test
     fun boundsBuilderChainingWorks() {
-        val bounds = LatLngBounds.Builder()
+        val bounds = LatLngBounds
+            .Builder()
             .include(LatLng(0.0, 0.0))
             .include(LatLng(10.0, 10.0))
             .build()
@@ -349,7 +351,8 @@ class GeoUtilTest {
 
     @Test
     fun boundsBuilderWithNegativeCoordinates() {
-        val bounds = LatLngBounds.Builder()
+        val bounds = LatLngBounds
+            .Builder()
             .include(LatLng(-10.0, -20.0))
             .include(LatLng(10.0, 20.0))
             .build()

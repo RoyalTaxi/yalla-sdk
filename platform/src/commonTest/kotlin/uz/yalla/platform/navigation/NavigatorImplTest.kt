@@ -13,7 +13,9 @@ import kotlin.test.assertTrue
 @Serializable
 private sealed class TestRoute : Route {
     @Serializable data object Home : TestRoute()
+
     @Serializable data object Detail : TestRoute()
+
     @Serializable data object Settings : TestRoute()
 }
 
