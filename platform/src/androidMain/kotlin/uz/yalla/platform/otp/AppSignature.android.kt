@@ -52,6 +52,7 @@ fun getAppSignature(context: Context): String? {
                 ).signingInfo
                 ?.apkContentsSigners
         } else {
+            // PackageManager.GET_SIGNATURES is deprecated in API 28+; kept for the pre-P branch above.
             @Suppress("DEPRECATION")
             context.packageManager
                 .getPackageInfo(

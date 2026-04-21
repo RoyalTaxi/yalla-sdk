@@ -36,6 +36,7 @@ internal class CameraFrameAnalyzerDelegate(private val onFrame: ((frame: ByteArr
     @OptIn(ExperimentalForeignApi::class)
     override fun captureOutput(
         output: AVCaptureOutput,
+        // Objective-C selector uses this parameter label; Kotlin must rename to match the ObjC protocol.
         @Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
         didOutputSampleBuffer: CMSampleBufferRef?,
         fromConnection: AVCaptureConnection

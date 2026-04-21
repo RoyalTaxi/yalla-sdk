@@ -39,6 +39,7 @@ sealed interface DatePickerSheetEffect {
  * @since 0.0.1
  */
 @Composable
+// Kotlin compiler flags PascalCase for non-class functions; Composables use PascalCase by convention.
 @Suppress("FunctionName")
 expect fun DatePickerSheet(
     state: DatePickerSheetState,

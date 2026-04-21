@@ -71,6 +71,7 @@ private fun createPickerDelegate(
     ) {
         picker.dismissViewControllerAnimated(flag = true, completion = null)
 
+        // PHPicker delegate delivers a List<*>; the element type is ObjC-documented but un-generified.
         @Suppress("UNCHECKED_CAST")
         val results = didFinishPicking as List<PHPickerResult>
 

@@ -35,6 +35,9 @@ actual fun rememberInAppBrowser(): InAppBrowserLauncher {
 /**
  * Finds the key window's root [UIViewController] for modal presentation.
  *
+ * [UIApplication.connectedScenes] is an erased `NSSet` — `UNCHECKED_CAST` is suppressed because the body
+ * narrows element types via safe `as?` checks.
+ *
  * @return The root view controller of the active key window, or `null` if unavailable.
  */
 @Suppress("UNCHECKED_CAST")

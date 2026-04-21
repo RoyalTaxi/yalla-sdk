@@ -130,4 +130,44 @@ Rationale:
 
 **Fallback:** If `precision: 0.99` on the picked simulator (iPhone 15 Pro sim, iOS 17.5 baseline) produces flaky diffs due to Core Animation rasterization variance, degrade to `perceptualPrecision: 0.98` (CIE94 color tolerance) — this is the library's documented escape hatch. If *that* fails, degrade to manual real-device verification via the `mobile` MCP and document the limitation in `SECURITY.md` / README per the spec.
 
+## detekt Suppression Audit (Task 10)
+
+Inventory of every `@Suppress`, `@file:Suppress`, and `@SuppressLint` in production Kotlin sources (excludes `build/` and `.gradle/`). Line numbers are pre-edit, captured before inline justifications were added.
+
+| File | Line | Rule suppressed | Existing justification? | Action |
+|---|---|---|---|---|
+| `composites/src/androidMain/.../DatePickerSheet.android.kt` | 30 | `FunctionName` | No | justify |
+| `composites/src/commonMain/.../DatePickerSheet.kt` | 42 | `FunctionName` | No | justify |
+| `composites/src/iosMain/.../DatePickerSheet.ios.kt` | 29 | `FunctionName` | No | justify |
+| `media/src/androidMain/.../picker/ImagePicker.kt` | 35 | `@SuppressLint("NewApi","ClassVerificationFailure")` | Implicit (runtime guard `isSystemPickerAvailable()`) | justify |
+| `media/src/iosMain/.../camera/CameraDelegates.kt` | 39 | `PARAMETER_NAME_CHANGED_ON_OVERRIDE` | No | justify |
+| `media/src/iosMain/.../camera/CameraOrientationHelper.kt` | 44 | `UNUSED_PARAMETER` | KDoc identifies `@ObjCAction` notification handler | justify |
+| `media/src/iosMain/.../camera/CameraSessionHelper.kt` | 122 | `UNCHECKED_CAST` | No | justify |
+| `media/src/iosMain/.../gallery/YallaGallery.ios.kt` | 130 | `UNCHECKED_CAST` | No | justify |
+| `media/src/iosMain/.../gallery/YallaGallery.ios.kt` | 186 | `DEPRECATION` | No | justify |
+| `media/src/iosMain/.../picker/ImagePickerLauncher.ios.kt` | 74 | `UNCHECKED_CAST` | No | justify |
+| `media/src/iosMain/.../utils/ViewControllerHelper.kt` | 23 | `DEPRECATION` | Function KDoc explains fallback | justify |
+| `platform/src/androidMain/.../button/NativeCircleIconButton.android.kt` | 39 | `UNUSED_PARAMETER` | Function KDoc explains `expect` parity | justify |
+| `platform/src/androidMain/.../otp/AppSignature.android.kt` | 55 | `DEPRECATION` | Implicit from surrounding `if/else` SDK-version branch | justify |
+| `platform/src/commonMain/.../navigation/NavigatorImpl.kt` | 45 | `UNCHECKED_CAST` | No | justify |
+| `platform/src/commonMain/.../navigation/NavigatorImpl.kt` | 58 | `UNCHECKED_CAST` | No | justify |
+| `platform/src/commonMain/.../navigation/NavigatorImpl.kt` | 63 | `UNCHECKED_CAST` | No | justify |
+| `platform/src/iosMain/.../browser/InAppBrowser.ios.kt` | 40 | `UNCHECKED_CAST` | No | justify |
+| `platform/src/iosMain/.../navigation/NativeNavHost.ios.kt` | 78 | `ObjectPropertyName`, `ktlint:standard:backing-property-naming` | Property KDoc exists but `@Suppress` itself is bare | justify |
+| `platform/src/iosMain/.../navigation/UIKitNavigator.kt` | 78 | `UNCHECKED_CAST` | No | justify |
+| `platform/src/iosMain/.../navigation/UIKitNavigator.kt` | 99 | `UNCHECKED_CAST` | No | justify |
+| `platform/src/iosMain/.../navigation/UIKitNavigator.kt` | 107 | `UNCHECKED_CAST` | No | justify |
+| `platform/src/iosMain/.../sheet/NativeSheet.ios.kt` | 34 | `UNUSED_PARAMETER` | Function KDoc explains unused-on-iOS parity | justify |
+| `platform/src/iosMain/.../sheet/NativeSheet.ios.kt` | 113 | `UNCHECKED_CAST` | No | justify |
+| `platform/src/iosMain/.../system/SystemBarColors.ios.kt` | 1 (file) | `@file:Suppress("DEPRECATION")` | Function KDoc on each actual explains; file-level directive is bare | justify |
+| `platform/src/iosMain/.../update/RememberAppUpdateState.ios.kt` | 64 | `UNCHECKED_CAST` | No | justify |
+
+**Summary:** 25 total (23 declaration-level `@Suppress` + 1 `@file:Suppress` + 1 `@SuppressLint`); 25 justified inline; 0 stale-removed; 0 deferred to Phase 2+.
+
+**Notes on the audit:**
+- detekt is wired at the subproject level but currently reports `NO-SOURCE` on every `:<module>:detekt` task — the default source target (`src/main/java`) does not match the KMP layout. So the `@Suppress` annotations in this audit target Kotlin-compiler warnings and ktlint rules, not detekt itself. Wiring detekt to the actual KMP source roots is a separate concern (flag only; not in scope for Task 10).
+- `@Suppress("FunctionName")` on the three `DatePickerSheet` Composables: both ktlint (`function-naming_ignore_when_annotated_with = Composable`, `.editorconfig` lines 22–23) and detekt (`FunctionNaming.ignoreAnnotated: [Composable]`, `config/detekt/detekt.yml:29`) already exempt Composables. The Kotlin compiler's own `FunctionName` warning is the only remaining signal these suppressions silence. Left in place with justification because removal risk-adjusted negative (empirically removing them is out-of-scope churn for zero user-visible benefit); consider removing opportunistically during the Phase 2 Composite-module polish pass.
+- The file-level `@file:Suppress("DEPRECATION")` on `SystemBarColors.ios.kt` is the one structurally unusual annotation — flagged here per Task 10 guidance. Kept because both actual functions in the file touch the same deprecated `setStatusBarStyle` API; a declaration-level suppression would duplicate the annotation without narrowing scope.
+- ktlint's `standard:no-consecutive-comments` rule forbids an EOL `//` comment directly below a KDoc block. For five declaration-level suppressions whose call site already had a KDoc (`ImagePicker.kt`, `NativeCircleIconButton.android.kt`, `InAppBrowser.ios.kt`, `NativeNavHost.ios.kt`, and both sites in `NativeSheet.ios.kt`), the justification was folded into the existing KDoc as an extra paragraph rather than added as a fresh EOL comment. All other sites received a one-line `//` comment immediately above the annotation.
+- No entries were "resolve the underlying issue" — every suppression in the inventory is a genuine platform-interop workaround (ObjC type erasure, iOS `keyWindow` fallback, Android `GET_SIGNATURES` pre-P branch, `expect`/`actual` parameter parity, or Compose Composable naming). None is a code smell hiding a refactor.
 

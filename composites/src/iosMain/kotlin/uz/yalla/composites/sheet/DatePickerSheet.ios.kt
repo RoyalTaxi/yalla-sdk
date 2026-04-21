@@ -26,6 +26,7 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.register_input_birthdate
 
 @Composable
+// Kotlin compiler flags PascalCase for non-class functions; Composables use PascalCase by convention.
 @Suppress("FunctionName")
 actual fun DatePickerSheet(
     state: DatePickerSheetState,

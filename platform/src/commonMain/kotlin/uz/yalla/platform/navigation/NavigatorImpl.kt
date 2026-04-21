@@ -42,6 +42,7 @@ internal class NavigatorImpl<C : Route>(
     }
 
     override fun push(route: Route) {
+        // Route is the erased public type; C is the module-local generic bound — cast is safe by contract.
         @Suppress("UNCHECKED_CAST")
         navigation.pushNew(route as C)
     }
@@ -55,11 +56,13 @@ internal class NavigatorImpl<C : Route>(
     }
 
     override fun setRoot(route: Route) {
+        // Route is the erased public type; C is the module-local generic bound — cast is safe by contract.
         @Suppress("UNCHECKED_CAST")
         navigation.navigate { listOf(route as C) }
     }
 
     override fun replaceCurrent(route: Route) {
+        // Route is the erased public type; C is the module-local generic bound — cast is safe by contract.
         @Suppress("UNCHECKED_CAST")
         navigation.replaceCurrent(route as C)
     }

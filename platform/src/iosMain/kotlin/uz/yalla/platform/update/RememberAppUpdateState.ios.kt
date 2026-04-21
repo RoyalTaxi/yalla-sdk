@@ -61,6 +61,7 @@ actual fun rememberAppUpdateState(
  * @return A [Pair] of (version, trackViewUrl), or `null` if the lookup fails or yields no results.
  */
 @OptIn(ExperimentalForeignApi::class)
+// NSJSONSerialization returns an erased Map/List tree; body narrows each node via `as?` before use.
 @Suppress("UNCHECKED_CAST")
 private suspend fun fetchStoreInfo(
     bundleId: String,

@@ -20,6 +20,7 @@ import platform.UIKit.UIWindowScene
  * @since 0.0.1
  */
 internal fun getRootViewController(): UIViewController? {
+    // UIApplication.keyWindow is deprecated in iOS 13 but retained as a fallback when no UIWindowScene is active.
     @Suppress("DEPRECATION")
     val legacyKeyWindow = UIApplication.sharedApplication.keyWindow
 
