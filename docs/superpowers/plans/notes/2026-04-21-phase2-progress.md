@@ -24,3 +24,14 @@ Any regressions during Phase 2 must be measured against this baseline.
 - YallaClient :androidApp:assembleDebug: BUILD SUCCESSFUL
 - Status: SDK-side done; YallaClient awaits yalla-sdk 0.0.9-alpha01 publish before merge.
 
+### Task 2 — createHttpClient scope ownership
+- SDK commit: 894752e
+- YallaClient commit: 9354c087c (extends PR #304)
+- Contract change: createHttpClient(... scope: CoroutineScope)
+- Default Koin binding: process-lifetime scope (SDK)
+- YallaClient override: explicit named CoroutineScope binding (`AppQualifier.SDK_HTTP_CLIENT_SCOPE`) passed to all three `single<HttpClient>` definitions; process-lifetime for now, ready to swap for a per-session scope once a session boundary exists
+- apiCheck post-refactor: green (data/api/data.klib.api updated — adds `kotlinx.coroutines/CoroutineScope` param to `createHttpClient`)
+- mavenLocal snapshot: 0.0.9-alpha01-phase2-httpclient
+- YallaClient :androidApp:assembleDebug: BUILD SUCCESSFUL
+- Status: SDK-side done; YallaClient holds pending SDK 0.0.9-alpha01 publish.
+
