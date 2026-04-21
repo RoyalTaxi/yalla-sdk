@@ -1165,6 +1165,7 @@ final object uz.yalla.core.session/UnauthorizedSessionEvents { // uz.yalla.core.
     final val events // uz.yalla.core.session/UnauthorizedSessionEvents.events|{}events[0]
         final fun <get-events>(): kotlinx.coroutines.flow/Flow<kotlin/Unit> // uz.yalla.core.session/UnauthorizedSessionEvents.events.<get-events>|<get-events>(){}[0]
 
+    final fun drainPendingEventIfExists() // uz.yalla.core.session/UnauthorizedSessionEvents.drainPendingEventIfExists|drainPendingEventIfExists(){}[0]
     final fun publish() // uz.yalla.core.session/UnauthorizedSessionEvents.publish|publish(){}[0]
 }
 
