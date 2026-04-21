@@ -8,7 +8,7 @@ Versioning follows [SemVer](https://semver.org/spec/v2.0.0.html) **post-1.0**; p
 ## [Unreleased]
 
 ### Added
-- `binary-compatibility-validator` plugin; `apiCheck` enforces JVM/Android API stability in CI.
+- `binary-compatibility-validator` plugin; `apiCheck` enforces public-API stability for Native (iosArm64, iosSimulatorArm64) + commonMain surfaces. androidMain-only surface is gated by the manual `audit-api` skill (BCV 0.18.1 doesn't cover AGP 9.0's `KotlinMultiplatformAndroidLibraryTarget` yet).
 - Root POM metadata (name, description, url, licenses, scm, developers) on every published module.
 - GitHub Pages deployment pipeline for Dokka reference docs.
 - OSS-hygiene files: `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `CHANGELOG.md`, `SUPPORT.md`, `CODEOWNERS`, PR + issue templates.

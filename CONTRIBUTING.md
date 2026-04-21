@@ -9,7 +9,7 @@ The Yalla SDK is Yalla-opinionated. PRs adding backend-agnostic abstractions, al
 ## Before Submitting a PR
 
 - Read the relevant docs under `docs/`.
-- Run `./gradlew ktlintCheck detekt apiCheck test` locally; all must pass.
+- Run `./gradlew ktlintCheck detekt` locally at minimum (fast, no Xcode needed). For full coverage: `./gradlew apiCheck allTests` (requires Xcode + CocoaPods; these also run on `main` via `publish.yml`). PR CI runs lint-only.
 - If your change modifies public API, run `./gradlew apiDump` and commit the updated `<module>/api/*.api` baselines.
 - If your change affects iOS binary-compat, run the `audit-api` skill (see `.claude/skills/audit-api/SKILL.md`) and include its diff in the PR body.
 

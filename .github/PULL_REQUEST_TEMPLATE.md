@@ -6,8 +6,8 @@
 
 - [ ] `ktlintCheck` passes locally (`./gradlew ktlintCheck`)
 - [ ] `detekt` passes locally (`./gradlew detekt`)
-- [ ] `apiCheck` passes locally (`./gradlew apiCheck`) OR baselines updated with `apiDump` and included in this PR
-- [ ] Tests cover the change (`./gradlew test allTests`)
+- [ ] `apiCheck` passes locally if your env supports it (`./gradlew apiCheck` — requires Xcode + CocoaPods for iOS Klib dumps) OR baselines updated with `apiDump`
+- [ ] Tests cover the change (`./gradlew allTests` — requires Xcode + CocoaPods; CI on `main` will catch what PR gate doesn't)
 - [ ] Docs updated if public surface changed
 - [ ] Visual-verified via the live-verify loop (wire to YallaClient, launch emulator via mobile/android MCPs, pixel-accurate against design intent) for non-trivial UI changes
 - [ ] CHANGELOG.md entry added under `[Unreleased]`
