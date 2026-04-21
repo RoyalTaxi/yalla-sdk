@@ -1,7 +1,4 @@
 [versions]
-# SDK
-yalla-sdk = "0.0.1-alpha08"
-
 # Core
 agp = "9.0.0"
 kotlin = "2.3.0"
@@ -184,9 +181,6 @@ camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax" 
 # Paging
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "paging-common" }
 paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "paging-compose-common" }
-
-# Yalla SDK
-yalla-data = { module = "uz.yalla.sdk:data", version.ref = "yalla-sdk" }
 
 [plugins]
 android-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
