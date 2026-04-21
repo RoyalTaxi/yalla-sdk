@@ -38,6 +38,11 @@ final enum class uz.yalla.core.location/PointKind : kotlin/Enum<uz.yalla.core.lo
 
     final fun valueOf(kotlin/String): uz.yalla.core.location/PointKind // uz.yalla.core.location/PointKind.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<uz.yalla.core.location/PointKind> // uz.yalla.core.location/PointKind.values|values#static(){}[0]
+
+    final object Companion : kotlinx.serialization.internal/SerializerFactory { // uz.yalla.core.location/PointKind.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.location/PointKind> // uz.yalla.core.location/PointKind.Companion.serializer|serializer(){}[0]
+        final fun serializer(kotlin/Array<out kotlinx.serialization/KSerializer<*>>...): kotlinx.serialization/KSerializer<*> // uz.yalla.core.location/PointKind.Companion.serializer|serializer(kotlin.Array<out|kotlinx.serialization.KSerializer<*>>...){}[0]
+    }
 }
 
 final enum class uz.yalla.core.profile/GenderKind : kotlin/Enum<uz.yalla.core.profile/GenderKind> { // uz.yalla.core.profile/GenderKind|null[0]
@@ -332,6 +337,19 @@ final class uz.yalla.core.location/Address { // uz.yalla.core.location/Address|n
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.location/Address.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.core.location/Address.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.core.location/Address.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.location/Address> { // uz.yalla.core.location/Address.$serializer|null[0]
+        final val descriptor // uz.yalla.core.location/Address.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.location/Address.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.location/Address.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.location/Address // uz.yalla.core.location/Address.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.location/Address) // uz.yalla.core.location/Address.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.location.Address){}[0]
+    }
+
+    final object Companion { // uz.yalla.core.location/Address.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.location/Address> // uz.yalla.core.location/Address.Companion.serializer|serializer(){}[0]
+    }
 }
 
 final class uz.yalla.core.location/AddressOption { // uz.yalla.core.location/AddressOption|null[0]
@@ -363,6 +381,19 @@ final class uz.yalla.core.location/AddressOption { // uz.yalla.core.location/Add
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.location/AddressOption.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.core.location/AddressOption.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.core.location/AddressOption.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.location/AddressOption> { // uz.yalla.core.location/AddressOption.$serializer|null[0]
+        final val descriptor // uz.yalla.core.location/AddressOption.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.location/AddressOption.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.location/AddressOption.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.location/AddressOption // uz.yalla.core.location/AddressOption.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.location/AddressOption) // uz.yalla.core.location/AddressOption.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.location.AddressOption){}[0]
+    }
+
+    final object Companion { // uz.yalla.core.location/AddressOption.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.location/AddressOption> // uz.yalla.core.location/AddressOption.Companion.serializer|serializer(){}[0]
+    }
 }
 
 final class uz.yalla.core.location/PointRequest { // uz.yalla.core.location/PointRequest|null[0]
@@ -382,6 +413,21 @@ final class uz.yalla.core.location/PointRequest { // uz.yalla.core.location/Poin
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.location/PointRequest.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.core.location/PointRequest.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.core.location/PointRequest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.location/PointRequest> { // uz.yalla.core.location/PointRequest.$serializer|null[0]
+        final val descriptor // uz.yalla.core.location/PointRequest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.location/PointRequest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.location/PointRequest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.location/PointRequest // uz.yalla.core.location/PointRequest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.location/PointRequest) // uz.yalla.core.location/PointRequest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.location.PointRequest){}[0]
+    }
+
+    final object Companion { // uz.yalla.core.location/PointRequest.Companion|null[0]
+        final val $childSerializers // uz.yalla.core.location/PointRequest.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.location/PointRequest> // uz.yalla.core.location/PointRequest.Companion.serializer|serializer(){}[0]
+    }
 }
 
 final class uz.yalla.core.location/Route { // uz.yalla.core.location/Route|null[0]
@@ -416,6 +462,34 @@ final class uz.yalla.core.location/Route { // uz.yalla.core.location/Route|null[
         final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.location/Route.Point.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // uz.yalla.core.location/Route.Point.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // uz.yalla.core.location/Route.Point.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.location/Route.Point> { // uz.yalla.core.location/Route.Point.$serializer|null[0]
+            final val descriptor // uz.yalla.core.location/Route.Point.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.location/Route.Point.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.location/Route.Point.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.location/Route.Point // uz.yalla.core.location/Route.Point.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.location/Route.Point) // uz.yalla.core.location/Route.Point.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.location.Route.Point){}[0]
+        }
+
+        final object Companion { // uz.yalla.core.location/Route.Point.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.location/Route.Point> // uz.yalla.core.location/Route.Point.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.location/Route> { // uz.yalla.core.location/Route.$serializer|null[0]
+        final val descriptor // uz.yalla.core.location/Route.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.location/Route.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.location/Route.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.location/Route // uz.yalla.core.location/Route.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.location/Route) // uz.yalla.core.location/Route.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.location.Route){}[0]
+    }
+
+    final object Companion { // uz.yalla.core.location/Route.Companion|null[0]
+        final val $childSerializers // uz.yalla.core.location/Route.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.location/Route> // uz.yalla.core.location/Route.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -463,6 +537,34 @@ final class uz.yalla.core.location/SavedAddress { // uz.yalla.core.location/Save
         final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.location/SavedAddress.Parent.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // uz.yalla.core.location/SavedAddress.Parent.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // uz.yalla.core.location/SavedAddress.Parent.toString|toString(){}[0]
+
+        final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.location/SavedAddress.Parent> { // uz.yalla.core.location/SavedAddress.Parent.$serializer|null[0]
+            final val descriptor // uz.yalla.core.location/SavedAddress.Parent.$serializer.descriptor|{}descriptor[0]
+                final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.location/SavedAddress.Parent.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+            final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.location/SavedAddress.Parent.$serializer.childSerializers|childSerializers(){}[0]
+            final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.location/SavedAddress.Parent // uz.yalla.core.location/SavedAddress.Parent.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+            final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.location/SavedAddress.Parent) // uz.yalla.core.location/SavedAddress.Parent.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.location.SavedAddress.Parent){}[0]
+        }
+
+        final object Companion { // uz.yalla.core.location/SavedAddress.Parent.Companion|null[0]
+            final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.location/SavedAddress.Parent> // uz.yalla.core.location/SavedAddress.Parent.Companion.serializer|serializer(){}[0]
+        }
+    }
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.location/SavedAddress> { // uz.yalla.core.location/SavedAddress.$serializer|null[0]
+        final val descriptor // uz.yalla.core.location/SavedAddress.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.location/SavedAddress.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.location/SavedAddress.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.location/SavedAddress // uz.yalla.core.location/SavedAddress.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.location/SavedAddress) // uz.yalla.core.location/SavedAddress.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.location.SavedAddress){}[0]
+    }
+
+    final object Companion { // uz.yalla.core.location/SavedAddress.Companion|null[0]
+        final val $childSerializers // uz.yalla.core.location/SavedAddress.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.location/SavedAddress> // uz.yalla.core.location/SavedAddress.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -489,6 +591,19 @@ final class uz.yalla.core.order/Executor { // uz.yalla.core.order/Executor|null[
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.order/Executor.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.core.order/Executor.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.core.order/Executor.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.order/Executor> { // uz.yalla.core.order/Executor.$serializer|null[0]
+        final val descriptor // uz.yalla.core.order/Executor.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.order/Executor.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.order/Executor.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.order/Executor // uz.yalla.core.order/Executor.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.order/Executor) // uz.yalla.core.order/Executor.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.order.Executor){}[0]
+    }
+
+    final object Companion { // uz.yalla.core.order/Executor.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.order/Executor> // uz.yalla.core.order/Executor.Companion.serializer|serializer(){}[0]
+    }
 }
 
 final class uz.yalla.core.order/ExtraService { // uz.yalla.core.order/ExtraService|null[0]
@@ -514,11 +629,22 @@ final class uz.yalla.core.order/ExtraService { // uz.yalla.core.order/ExtraServi
     final fun hashCode(): kotlin/Int // uz.yalla.core.order/ExtraService.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.core.order/ExtraService.toString|toString(){}[0]
 
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.order/ExtraService> { // uz.yalla.core.order/ExtraService.$serializer|null[0]
+        final val descriptor // uz.yalla.core.order/ExtraService.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.order/ExtraService.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.order/ExtraService.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.order/ExtraService // uz.yalla.core.order/ExtraService.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.order/ExtraService) // uz.yalla.core.order/ExtraService.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.order.ExtraService){}[0]
+    }
+
     final object Companion { // uz.yalla.core.order/ExtraService.Companion|null[0]
         final const val COST_TYPE_COST // uz.yalla.core.order/ExtraService.Companion.COST_TYPE_COST|{}COST_TYPE_COST[0]
             final fun <get-COST_TYPE_COST>(): kotlin/String // uz.yalla.core.order/ExtraService.Companion.COST_TYPE_COST.<get-COST_TYPE_COST>|<get-COST_TYPE_COST>(){}[0]
         final const val COST_TYPE_PERCENT // uz.yalla.core.order/ExtraService.Companion.COST_TYPE_PERCENT|{}COST_TYPE_PERCENT[0]
             final fun <get-COST_TYPE_PERCENT>(): kotlin/String // uz.yalla.core.order/ExtraService.Companion.COST_TYPE_PERCENT.<get-COST_TYPE_PERCENT>|<get-COST_TYPE_PERCENT>(){}[0]
+
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.order/ExtraService> // uz.yalla.core.order/ExtraService.Companion.serializer|serializer(){}[0]
     }
 }
 
@@ -770,6 +896,19 @@ final class uz.yalla.core.order/ServiceBrand { // uz.yalla.core.order/ServiceBra
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.order/ServiceBrand.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.core.order/ServiceBrand.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.core.order/ServiceBrand.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.order/ServiceBrand> { // uz.yalla.core.order/ServiceBrand.$serializer|null[0]
+        final val descriptor // uz.yalla.core.order/ServiceBrand.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.order/ServiceBrand.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.order/ServiceBrand.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.order/ServiceBrand // uz.yalla.core.order/ServiceBrand.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.order/ServiceBrand) // uz.yalla.core.order/ServiceBrand.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.order.ServiceBrand){}[0]
+    }
+
+    final object Companion { // uz.yalla.core.order/ServiceBrand.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.order/ServiceBrand> // uz.yalla.core.order/ServiceBrand.Companion.serializer|serializer(){}[0]
+    }
 }
 
 final class uz.yalla.core.payment/PaymentCard { // uz.yalla.core.payment/PaymentCard|null[0]
@@ -787,6 +926,19 @@ final class uz.yalla.core.payment/PaymentCard { // uz.yalla.core.payment/Payment
     final fun hashCode(): kotlin/Int // uz.yalla.core.payment/PaymentCard.hashCode|hashCode(){}[0]
     final fun toPaymentType(): uz.yalla.core.payment/PaymentKind.Card // uz.yalla.core.payment/PaymentCard.toPaymentType|toPaymentType(){}[0]
     final fun toString(): kotlin/String // uz.yalla.core.payment/PaymentCard.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.payment/PaymentCard> { // uz.yalla.core.payment/PaymentCard.$serializer|null[0]
+        final val descriptor // uz.yalla.core.payment/PaymentCard.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.payment/PaymentCard.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.payment/PaymentCard.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.payment/PaymentCard // uz.yalla.core.payment/PaymentCard.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.payment/PaymentCard) // uz.yalla.core.payment/PaymentCard.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.payment.PaymentCard){}[0]
+    }
+
+    final object Companion { // uz.yalla.core.payment/PaymentCard.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.payment/PaymentCard> // uz.yalla.core.payment/PaymentCard.Companion.serializer|serializer(){}[0]
+    }
 }
 
 final class uz.yalla.core.profile/Client { // uz.yalla.core.profile/Client|null[0]
@@ -818,6 +970,19 @@ final class uz.yalla.core.profile/Client { // uz.yalla.core.profile/Client|null[
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.profile/Client.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.core.profile/Client.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.core.profile/Client.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<uz.yalla.core.profile/Client> { // uz.yalla.core.profile/Client.$serializer|null[0]
+        final val descriptor // uz.yalla.core.profile/Client.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // uz.yalla.core.profile/Client.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // uz.yalla.core.profile/Client.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): uz.yalla.core.profile/Client // uz.yalla.core.profile/Client.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, uz.yalla.core.profile/Client) // uz.yalla.core.profile/Client.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;uz.yalla.core.profile.Client){}[0]
+    }
+
+    final object Companion { // uz.yalla.core.profile/Client.Companion|null[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<uz.yalla.core.profile/Client> // uz.yalla.core.profile/Client.Companion.serializer|serializer(){}[0]
+    }
 }
 
 sealed class uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError|null[0]

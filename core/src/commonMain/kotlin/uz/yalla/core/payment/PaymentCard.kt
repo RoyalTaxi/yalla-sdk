@@ -1,5 +1,8 @@
 package uz.yalla.core.payment
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * A saved payment card from the user's wallet.
  *
@@ -7,9 +10,10 @@ package uz.yalla.core.payment
  * @property maskedPan Masked card number for display
  * @since 0.0.1
  */
+@Serializable
 data class PaymentCard(
-    val cardId: String,
-    val maskedPan: String
+    @SerialName("cardId") val cardId: String,
+    @SerialName("maskedPan") val maskedPan: String
 ) {
     /**
      * Converts this saved card to a [PaymentKind.Card] for use in order creation.
