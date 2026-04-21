@@ -34,12 +34,12 @@ Full pipeline per global CLAUDE.md. Project-specific VERIFY for this repo:
 ./gradlew detekt                                  # Static analysis
 ```
 
-**Note**: the `org.jetbrains.kotlinx.binary-compatibility-validator` plugin is **NOT currently wired up** in this repo. `./gradlew apiCheck` does not exist. The `audit-api` skill provides a manual-diff fallback until the plugin is added.
+**Note**: the `org.jetbrains.kotlinx.binary-compatibility-validator` plugin is wired as of commit `9031d23` (version `0.18.1`, experimental Klib mode enabled). `./gradlew apiCheck` runs green and covers all 11 published modules on Native (iosArm64, iosSimulatorArm64) plus everything in `commonMain` that compiles into those targets. Gap: BCV 0.18.1 does not recognize AGP 9.0's `KotlinMultiplatformAndroidLibraryTarget`, so **androidMain-only public API is not mechanically covered**. The `audit-api` skill remains the manual gate for that specific case until the upstream gap closes.
 
 **Library-specific hard rules**:
 - **No breaking changes without a patch bump + alpha reset** (during pre-1.0). Breaking change = anything that makes downstream `YallaClient` fail to compile or change runtime behavior
 - **Public API is annotated and stable.** `@OptIn`-gated APIs can change; non-gated APIs cannot without deprecation cycle
-- **Binary compatibility matters**: since `apiCheck` isn't wired up, rely on the `audit-api` skill for manual public-API diffs before any non-trivial bump
+- **Binary compatibility matters**: `./gradlew apiCheck` gates Native + commonMain automatically; run the `audit-api` skill in addition for any PR that adds or changes declarations in `**/src/androidMain/**`
 - **Unified version**: the repo uses a single `yalla.sdk.version` in `gradle.properties`. All modules publish at that version. The `bom/` module is a `java-platform` that auto-tracks it
 
 ## Modules
@@ -88,7 +88,10 @@ Group ID for all published artifacts: `uz.yalla.sdk`. See `docs/01-ARCHITECTURE.
 ./gradlew ktlintCheck
 ./gradlew detekt
 
-# NOTE: apiCheck / apiDump not wired up. Use the audit-api skill for public API diffs.
+# API validation
+./gradlew apiCheck                                # Native + commonMain (BCV 0.18.1, Klib mode)
+./gradlew apiDump                                 # Regenerate *.klib.api baselines after intended changes
+# NOTE: androidMain-only additions need a manual audit-api skill run — BCV 0.18.1 gap vs AGP 9.0 KMP target.
 
 # Publish (CI does this automatically on push to main — don't run locally)
 git push origin main                              # normal path
@@ -135,14 +138,15 @@ Full details in `docs/04-PUBLISHING.md`. TL;DR:
 
 1. Feature branch, make your change
 2. If breaking, write ADR in `docs/06-DECISIONS.md`
-3. Run `audit-api` skill for a manual public-API diff (apiCheck not wired up)
-4. Update `yalla.sdk.version` in `gradle.properties` via `bump-version` skill
-5. Full build + tests locally
-6. Commit, PR, merge to main
-7. CI publishes all modules automatically via `.github/workflows/publish.yml`
-8. Update downstream consumers (`YallaClient`'s `gradle/libs.versions.toml`) in a separate PR
+3. Run `./gradlew apiCheck` (Native + commonMain); if it flags intended changes, run `./gradlew apiDump` to regenerate baselines
+4. If the change touches `**/src/androidMain/**`, also run the `audit-api` skill and paste its diff into the PR body (BCV 0.18.1 gap vs AGP 9.0 KMP-Android target)
+5. Update `yalla.sdk.version` in `gradle.properties` via `bump-version` skill
+6. Full build + tests locally
+7. Commit, PR, merge to main
+8. CI publishes all modules automatically via `.github/workflows/publish.yml`
+9. Update downstream consumers (`YallaClient`'s `gradle/libs.versions.toml`) in a separate PR
 
-The `bump-version` skill handles steps 4-6. The `audit-api` skill handles step 3.
+The `bump-version` skill handles steps 5-7. The `audit-api` skill handles the androidMain carve-out in step 4.
 
 ## Second Brain
 
@@ -153,7 +157,7 @@ Project-specific Obsidian vault: `docs/obsidian/` (symlinked into `~/Ildam-Brain
 Defined in `.claude/skills/`:
 - `bump-version` — Bump unified `yalla.sdk.version` in `gradle.properties`, commit, CI publishes
 - `publish-module` — Docs + emergency local-publish fallback (normal path is CI)
-- `audit-api` — Manual public-API diff (apiCheck fallback)
+- `audit-api` — Manual public-API diff, used specifically for androidMain-only additions where BCV 0.18.1 has a coverage gap vs AGP 9.0's KMP-Android target
 - `add-module` — Scaffold a new module following the component standard
 
 ## Subagents Available

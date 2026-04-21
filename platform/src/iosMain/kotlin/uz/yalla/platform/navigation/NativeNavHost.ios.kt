@@ -73,9 +73,13 @@ actual fun <C : Route> NativeNavHost(
  * (e.g., deep link handlers, push notification responders) can read this to navigate
  * imperatively outside of Compose.
  *
+ * The leading-underscore name is the published public contract read by Swift entry points;
+ * `ObjectPropertyName` and `backing-property-naming` are suppressed because a rename would
+ * break consumers.
+ *
  * @since 0.0.6
  */
-@Suppress("ObjectPropertyName")
+@Suppress("ObjectPropertyName", "ktlint:standard:backing-property-naming")
 var _iosNavigator: Navigator? = null
     internal set
 

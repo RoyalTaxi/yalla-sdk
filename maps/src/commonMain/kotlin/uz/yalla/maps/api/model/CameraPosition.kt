@@ -30,8 +30,10 @@ data class CameraPosition(
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is CameraPosition) return false
-        return target == other.target && zoom == other.zoom &&
-            bearing == other.bearing && tilt == other.tilt &&
+        return target == other.target &&
+            zoom == other.zoom &&
+            bearing == other.bearing &&
+            tilt == other.tilt &&
             padding.hasSameValues(other.padding)
     }
 

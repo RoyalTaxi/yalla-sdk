@@ -27,7 +27,9 @@ internal fun isSystemPickerAvailable(): Boolean =
  * Returns the maximum number of images the system Photo Picker allows in a single selection.
  *
  * On devices with the system picker this delegates to [MediaStore.getPickImagesMaxLimit];
- * otherwise falls back to [Integer.MAX_VALUE] (effectively unlimited).
+ * otherwise falls back to [Integer.MAX_VALUE] (effectively unlimited). The `NewApi` and
+ * `ClassVerificationFailure` lint warnings are suppressed because the API-gated call is
+ * guarded at runtime by [isSystemPickerAvailable].
  *
  * @return Maximum selectable item count.
  * @since 0.0.1

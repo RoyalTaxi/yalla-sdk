@@ -26,7 +26,8 @@ actual fun rememberInAppBrowser(): InAppBrowserLauncher {
                 val uri = Uri.parse(url)
                 if (uri.scheme.isNullOrBlank()) return
                 try {
-                    CustomTabsIntent.Builder()
+                    CustomTabsIntent
+                        .Builder()
                         .setShowTitle(true)
                         .build()
                         .launchUrl(context, uri)

@@ -19,13 +19,11 @@ import platform.darwin.NSObject
  *
  * Swipe-back is detected via [UINavigationControllerDelegateProtocol.didShowViewController].
  *
- * @since 0.0.6
- */
-/**
  * @param C Concrete route type (sealed class extending [Route]).
  * @param navController The UIKit navigation controller that owns the view controller stack.
  * @param vcFactory Factory that creates a [UIViewController] for a given route and navigator.
  * @param initialRoute The first route placed on the stack.
+ * @since 0.0.6
  */
 internal class UIKitNavigator<C : Route>(
     private val navController: UINavigationController,
@@ -77,6 +75,7 @@ internal class UIKitNavigator<C : Route>(
         while (routeStack.size > 1 && predicate(routeStack.last())) {
             routeStack.removeLast()
         }
+        // UINavigationController.viewControllers is ObjC NSArray<*>; every element is known to be UIViewController.
         @Suppress("UNCHECKED_CAST")
         val trimmed = (navController.viewControllers as List<UIViewController>).take(routeStack.size)
         navController.setViewControllers(trimmed, animated = true)
@@ -98,6 +97,7 @@ internal class UIKitNavigator<C : Route>(
         if (routeStack.isNotEmpty()) routeStack.removeLast()
         routeStack.add(typed)
 
+        // UINavigationController.viewControllers is ObjC NSArray<*>; every element is known to be UIViewController.
         @Suppress("UNCHECKED_CAST")
         val vcs = (navController.viewControllers as List<UIViewController>).toMutableList()
         if (vcs.isNotEmpty()) vcs.removeLast()
@@ -106,6 +106,7 @@ internal class UIKitNavigator<C : Route>(
         updateState()
     }
 
+    // Route is the erased public type; C is the module-local generic bound — cast is safe by contract.
     @Suppress("UNCHECKED_CAST")
     private fun Route.typed(): C = this as C
 

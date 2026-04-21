@@ -19,14 +19,12 @@ import uz.yalla.platform.navigation.NavigationBarAppearance
  * )
  * ```
  *
- * @since 0.0.1
- */
-/**
  * @param sheetPresenter Factory for presenting and managing native bottom sheets.
  * @param circleButton Factory for creating circle-shaped native icon buttons.
  * @param squircleButton Factory for creating squircle-shaped native icon buttons.
  * @param themeProvider Optional Compose theme wrapper for sheets outside the main tree. `null` to skip.
  * @param navigationBarAppearance Optional global navigation bar appearance. `null` for system defaults.
+ * @since 0.0.1
  */
 class IosPlatformConfig private constructor(
     val sheetPresenter: SheetPresenterFactory,
@@ -47,12 +45,16 @@ class IosPlatformConfig private constructor(
     class Builder {
         /** Factory for presenting native bottom sheets. Required. */
         var sheetPresenter: SheetPresenterFactory? = null
+
         /** Factory for creating circular icon buttons. Required. */
         var circleButton: CircleIconButtonFactory? = null
+
         /** Factory for creating squircle (rounded rect) icon buttons. Required. */
         var squircleButton: SquircleIconButtonFactory? = null
+
         /** Optional Compose theme wrapper for sheets presented outside the Compose tree. */
         var themeProvider: ThemeProvider? = null
+
         /** Optional global navigation bar appearance. Applied once at [NativeNavHost] creation. */
         var navigationBarAppearance: NavigationBarAppearance? = null
 

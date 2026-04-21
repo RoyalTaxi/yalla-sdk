@@ -1,0 +1,27 @@
+name: Feature request
+description: Suggest a new capability for the SDK
+title: "[feature] "
+labels: [feature-request]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The SDK is Yalla-opinionated. Most feature requests are closed as out-of-scope unless they align with YallaClient's roadmap. Open source does not mean open roadmap.
+  - type: textarea
+    id: what
+    attributes:
+      label: What do you want to be able to do
+      description: Describe the capability from an API user's perspective.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What problem are you solving? What are you doing today instead?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

@@ -29,7 +29,9 @@ import uz.yalla.platform.config.requireIosConfig
  * The `isDark` parameter is also unused; the sheet inherits theme from [ThemeProvider].
  *
  * The sheet auto-measures its Compose content height and updates the native detent via
- * [SheetPresenter.MeasuredContent].
+ * [SheetPresenter.MeasuredContent]. `UNUSED_PARAMETER` is suppressed because `shape`,
+ * `isDark`, and `skipPartiallyExpanded` are required by the `expect` contract but unused
+ * in this actual, per the parameter notes above.
  */
 @Suppress("UNUSED_PARAMETER")
 @Composable
@@ -106,7 +108,9 @@ actual fun NativeSheet(
  *
  * Iterates connected scenes to locate the foreground-active [UIWindowScene], then
  * returns the `rootViewController` of its key window. Falls back to the deprecated
- * `UIApplication.keyWindow` if no scene-based window is found.
+ * `UIApplication.keyWindow` if no scene-based window is found. [UIApplication.connectedScenes]
+ * is an erased `NSSet` — `UNCHECKED_CAST` is suppressed because the body narrows element
+ * types via safe `as?` checks.
  *
  * @return The root view controller, or `null` if no key window exists.
  */

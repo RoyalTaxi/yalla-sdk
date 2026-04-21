@@ -23,8 +23,8 @@ import kotlinx.serialization.json.Json
 import uz.yalla.core.contract.preferences.InterfacePreferences
 import uz.yalla.core.contract.preferences.PositionPreferences
 import uz.yalla.core.contract.preferences.SessionPreferences
-import uz.yalla.core.session.UnauthorizedSessionEvents
 import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.session.UnauthorizedSessionEvents
 import uz.yalla.data.util.ioDispatcher
 import uz.yalla.data.util.platformName
 

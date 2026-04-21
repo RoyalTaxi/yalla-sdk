@@ -41,6 +41,7 @@ internal class OrientationListener(
      * @since 0.0.1
      */
     @OptIn(BetaInteropApi::class)
+    // @ObjCAction notification handler: NSNotification parameter is required by the ObjC selector even if unused here.
     @Suppress("UNUSED_PARAMETER")
     @ObjCAction
     fun orientationDidChange(arg: NSNotification) {

@@ -211,7 +211,8 @@ private fun MapContent(
         snapshotFlow { cameraState.position }
             .collect { pos ->
                 adaptedCameraState.rawPosition = uz.yalla.maps.model.CameraPosition(
-                    target = uz.yalla.maps.model.LatLng(pos.target.latitude, pos.target.longitude),
+                    target = uz.yalla.maps.model
+                        .LatLng(pos.target.latitude, pos.target.longitude),
                     zoom = pos.zoom.toFloat()
                 )
             }

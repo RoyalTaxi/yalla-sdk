@@ -50,6 +50,12 @@ yalla-sdk = "0.0.7-alpha03"
 - **JDK 21 required** — CI uses JDK 21. Local builds should too (`JAVA_HOME` set globally).
 - **Credentials** — CI uses `GITHUB_ACTOR` and `GITHUB_TOKEN` secrets. Local publishing needs these as env vars.
 
+## Docs Publishing (Dokka → GitHub Pages)
+
+The `.github/workflows/docs.yml` workflow generates Dokka reference docs on every push to `main` and deploys to GitHub Pages at <https://royaltaxi.github.io/yalla-sdk/>.
+
+**One-time setup (by repo maintainer):** enable GitHub Pages in repo Settings → Pages with source set to **"GitHub Actions"**. Without this, the deploy job fails even if Dokka generation succeeds. Check the first `main` push after Phase 1 merges — if deploy fails with "pages not enabled," flip the setting and re-run.
+
 ## When to Bump
 
 | Change type | Version part | Example |

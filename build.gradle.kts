@@ -17,6 +17,20 @@ plugins {
     alias(libs.plugins.detekt) apply false
     alias(libs.plugins.spotless) apply false
     alias(libs.plugins.ktlint) apply false
+    alias(libs.plugins.binary.compatibility.validator)
+}
+
+@OptIn(kotlinx.validation.ExperimentalBCVApi::class)
+apiValidation {
+    // BOM has no public API surface (it is a java-platform with no code)
+    ignoredProjects.addAll(listOf("bom"))
+
+    // Experimental Klib mode: covers KMP Native targets (iosArm64, iosSimulatorArm64)
+    // in addition to JVM/Android. Validated by Task 2 Investigation B; plugin version 0.18.1,
+    // @ExperimentalBCVApi as of 2026-04-21.
+    klib {
+        enabled = true
+    }
 }
 
 subprojects {
@@ -66,5 +80,27 @@ subprojects {
             reporter(ReporterType.CHECKSTYLE)
             reporter(ReporterType.PLAIN)
         }
+    }
+}
+
+// Dokka aggregation: every published module contributes to a single docs site.
+dependencies {
+    dokka(project(":core"))
+    dokka(project(":data"))
+    dokka(project(":resources"))
+    dokka(project(":design"))
+    dokka(project(":foundation"))
+    dokka(project(":platform"))
+    dokka(project(":primitives"))
+    dokka(project(":composites"))
+    dokka(project(":maps"))
+    dokka(project(":media"))
+    dokka(project(":firebase"))
+}
+
+dokka {
+    moduleName.set("Yalla SDK")
+    dokkaPublications.html {
+        outputDirectory.set(rootProject.layout.buildDirectory.dir("dokka"))
     }
 }

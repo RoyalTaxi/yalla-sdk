@@ -176,8 +176,10 @@ object ListItemDefaults {
         title: Color = System.color.text.base,
         subtitle: Color = System.color.text.subtle,
         disabledContainer: Color = Color.Transparent,
-        disabledTitle: Color = System.color.text.subtle.copy(alpha = 0.5f),
-        disabledSubtitle: Color = System.color.text.subtle.copy(alpha = 0.5f),
+        disabledTitle: Color = System.color.text.subtle
+            .copy(alpha = 0.5f),
+        disabledSubtitle: Color = System.color.text.subtle
+            .copy(alpha = 0.5f),
     ): ListItemColors = ListItemColors(
         container = container,
         title = title,

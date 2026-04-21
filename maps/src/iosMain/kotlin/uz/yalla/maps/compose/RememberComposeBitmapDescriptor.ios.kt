@@ -23,7 +23,6 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ensureActive
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 import org.jetbrains.skia.EncodedImageFormat
 import platform.CoreGraphics.CGRectMake
@@ -217,7 +216,11 @@ internal suspend fun captureComposableToUIImage(content: @Composable () -> Unit)
         val measuredSize =
             kotlinx.coroutines.withTimeoutOrNull(MEASURE_TIMEOUT_MS) {
                 sizeDeferred.await()
-            } ?: error("Composable content failed to measure within ${MEASURE_TIMEOUT_MS}ms - ensure it has non-zero intrinsic size")
+            }
+                ?: error(
+                    "Composable content failed to measure within ${MEASURE_TIMEOUT_MS}ms - " +
+                        "ensure it has non-zero intrinsic size"
+                )
 
         coroutineContext.ensureActive()
 
@@ -232,7 +235,11 @@ internal suspend fun captureComposableToUIImage(content: @Composable () -> Unit)
         val bitmap =
             kotlinx.coroutines.withTimeoutOrNull(CAPTURE_TIMEOUT_MS) {
                 captureComplete.await()
-            } ?: error("GraphicsLayer capture failed to complete within ${CAPTURE_TIMEOUT_MS}ms - content may not be rendering correctly")
+            }
+                ?: error(
+                    "GraphicsLayer capture failed to complete within ${CAPTURE_TIMEOUT_MS}ms - " +
+                        "content may not be rendering correctly"
+                )
 
         return bitmap.toUIImage()
     } finally {

@@ -110,10 +110,15 @@ Emergency local override is allowed but opt-in. See the `publish-module` skill f
 - [ ] Version bumped via `bump-version` skill
 - [ ] Full build passes: `./gradlew build`
 - [ ] All tests pass: `./gradlew test`
-- [ ] Public API audited via `audit-api` skill (apiCheck not wired up — this is the manual fallback)
+- [ ] `./gradlew apiCheck` passes (see API Validation below)
+- [ ] If the PR touches `**/src/androidMain/**`, include a manual `audit-api` diff in the PR body (BCV coverage gap, see below)
 - [ ] Breaking changes have an ADR in `docs/06-DECISIONS.md`
 
 Skipping any of these ships broken artifacts to downstream consumers.
+
+## API Validation (apiCheck + audit-api roles)
+
+`./gradlew apiCheck` is wired as of commit `9031d23` via `binary-compatibility-validator 0.18.1` + experimental Klib mode. It covers all 11 published modules on Native (iosArm64, iosSimulatorArm64) and, through `commonMain` → Native compilation, every common-source declaration. **It does NOT currently cover androidMain-only public API** — BCV 0.18.1 does not recognize AGP 9.0's new `KotlinMultiplatformAndroidLibraryTarget`. Until that gap closes upstream, the `audit-api` skill is the manual gate specifically for androidMain-only additions; PRs that touch `**/src/androidMain/**` must include its diff in the PR body.
 
 ## Never
 

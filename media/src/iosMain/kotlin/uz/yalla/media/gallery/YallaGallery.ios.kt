@@ -127,6 +127,7 @@ private suspend fun launchPHPicker(): ByteArray? =
                     ) {
                         picker.dismissViewControllerAnimated(true, null)
 
+                        // PHPicker delegate delivers a List<*>; the element type is ObjC-documented but un-generified.
                         @Suppress("UNCHECKED_CAST")
                         val results = didFinishPicking as List<PHPickerResult>
                         val result = results.firstOrNull()
@@ -183,6 +184,7 @@ private suspend fun launchPHPicker(): ByteArray? =
  * @return The topmost presentable controller, or `null` if none is available.
  */
 private fun getRootViewController(): UIViewController? {
+    // UIApplication.keyWindow is deprecated in iOS 13 but retained as a fallback when no UIWindowScene is active.
     @Suppress("DEPRECATION")
     val legacyKeyWindow = UIApplication.sharedApplication.keyWindow
 

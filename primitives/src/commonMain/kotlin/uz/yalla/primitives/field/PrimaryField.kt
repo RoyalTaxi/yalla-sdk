@@ -88,7 +88,8 @@ object PrimaryFieldDefaults {
         selectionColors: TextSelectionColors =
             TextSelectionColors(
                 handleColor = System.color.text.link,
-                backgroundColor = System.color.text.link.copy(.3f)
+                backgroundColor = System.color.text.link
+                    .copy(.3f)
             ),
         placeholderColor: Color = System.color.text.subtle,
     ): PrimaryFieldColors = PrimaryFieldColors(

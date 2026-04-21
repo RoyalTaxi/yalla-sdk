@@ -17,13 +17,11 @@ import kotlinx.coroutines.flow.asStateFlow
  *
  * Observes [childStack] changes to keep [canGoBack] and [currentRoute] in sync.
  *
- * @since 0.0.5
- */
-/**
  * @param C Concrete route type (sealed class extending [Route]).
  * @param navigation Decompose stack navigation source for stack mutations.
  * @param childStack Observable child stack value. Subscribed to keep [canGoBack] and
  *   [currentRoute] in sync with the actual Decompose state.
+ * @since 0.0.5
  */
 internal class NavigatorImpl<C : Route>(
     private val navigation: StackNavigation<C>,
@@ -44,6 +42,7 @@ internal class NavigatorImpl<C : Route>(
     }
 
     override fun push(route: Route) {
+        // Route is the erased public type; C is the module-local generic bound — cast is safe by contract.
         @Suppress("UNCHECKED_CAST")
         navigation.pushNew(route as C)
     }
@@ -57,11 +56,13 @@ internal class NavigatorImpl<C : Route>(
     }
 
     override fun setRoot(route: Route) {
+        // Route is the erased public type; C is the module-local generic bound — cast is safe by contract.
         @Suppress("UNCHECKED_CAST")
         navigation.navigate { listOf(route as C) }
     }
 
     override fun replaceCurrent(route: Route) {
+        // Route is the erased public type; C is the module-local generic bound — cast is safe by contract.
         @Suppress("UNCHECKED_CAST")
         navigation.replaceCurrent(route as C)
     }

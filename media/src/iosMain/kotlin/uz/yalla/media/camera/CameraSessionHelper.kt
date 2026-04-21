@@ -119,6 +119,7 @@ internal fun createCaptureSession(
         videoOutput.setSampleBufferDelegate(frameAnalyzer, queue)
         videoOutput.alwaysDiscardsLateVideoFrames = true
 
+        // AVFoundation expects an erased Map<Any?, *>; Kotlin can only express the narrow type via cast.
         @Suppress("UNCHECKED_CAST")
         videoOutput.videoSettings =
             mapOf(

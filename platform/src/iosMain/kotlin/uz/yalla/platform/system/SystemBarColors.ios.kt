@@ -1,3 +1,5 @@
+// UIApplication.setStatusBarStyle is deprecated since iOS 9, but the per-ViewController replacement requires a
+// Swift-side UIViewController subclass that is not feasible from Kotlin/Compose — see the function KDoc for details.
 @file:Suppress("DEPRECATION")
 
 package uz.yalla.platform.system

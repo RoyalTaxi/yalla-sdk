@@ -141,9 +141,17 @@ class <Name>Test {
 }
 ```
 
-### 9. API Dump (skip — not wired up)
+### 9. API Dump
 
-The `binary-compatibility-validator` plugin is not currently wired up in this repo. `apiDump` and `apiCheck` tasks do not exist. Skip this step. If/when the validator is added, the generated dump goes under `<name>/api/`.
+The `binary-compatibility-validator` plugin is wired as of commit `9031d23` (version `0.18.1`, experimental Klib mode). After the new module compiles, run:
+
+```bash
+./gradlew :<name>:apiDump
+```
+
+This generates the Klib baseline under `<name>/api/` covering Native (iosArm64, iosSimulatorArm64) + commonMain. Commit the generated `*.klib.api` files — subsequent PRs run `./gradlew apiCheck` against that baseline.
+
+Coverage gap: BCV 0.18.1 does not recognize AGP 9.0's `KotlinMultiplatformAndroidLibraryTarget`, so androidMain-only public API is not mechanically covered. `audit-api` is the manual gate for androidMain-only additions until BCV 0.18.1's AGP 9.0 gap closes upstream.
 
 ### 10. Update Documentation
 
@@ -157,7 +165,9 @@ The `binary-compatibility-validator` plugin is not currently wired up in this re
 ```bash
 ./gradlew :<name>:build
 ./gradlew :<name>:test
-# apiCheck not wired up — skip
+./gradlew :<name>:apiCheck          # Native + commonMain via BCV 0.18.1 Klib mode
+# For androidMain-only additions, also invoke the audit-api skill — it is the manual gate
+# for androidMain-only additions until BCV 0.18.1's AGP 9.0 gap closes upstream.
 ```
 
 ### 12. Commit

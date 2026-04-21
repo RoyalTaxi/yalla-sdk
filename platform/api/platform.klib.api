@@ -1,0 +1,337 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <uz.yalla.sdk:platform>
+final enum class uz.yalla.platform.haptic/HapticType : kotlin/Enum<uz.yalla.platform.haptic/HapticType> { // uz.yalla.platform.haptic/HapticType|null[0]
+    enum entry Error // uz.yalla.platform.haptic/HapticType.Error|null[0]
+    enum entry ErrorRepeat // uz.yalla.platform.haptic/HapticType.ErrorRepeat|null[0]
+    enum entry Heavy // uz.yalla.platform.haptic/HapticType.Heavy|null[0]
+    enum entry Light // uz.yalla.platform.haptic/HapticType.Light|null[0]
+    enum entry Medium // uz.yalla.platform.haptic/HapticType.Medium|null[0]
+    enum entry Success // uz.yalla.platform.haptic/HapticType.Success|null[0]
+    enum entry Warning // uz.yalla.platform.haptic/HapticType.Warning|null[0]
+
+    final val entries // uz.yalla.platform.haptic/HapticType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<uz.yalla.platform.haptic/HapticType> // uz.yalla.platform.haptic/HapticType.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): uz.yalla.platform.haptic/HapticType // uz.yalla.platform.haptic/HapticType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<uz.yalla.platform.haptic/HapticType> // uz.yalla.platform.haptic/HapticType.values|values#static(){}[0]
+}
+
+final enum class uz.yalla.platform.model/IconType : kotlin/Enum<uz.yalla.platform.model/IconType> { // uz.yalla.platform.model/IconType|null[0]
+    enum entry BACK // uz.yalla.platform.model/IconType.BACK|null[0]
+    enum entry CLOSE // uz.yalla.platform.model/IconType.CLOSE|null[0]
+    enum entry DONE // uz.yalla.platform.model/IconType.DONE|null[0]
+    enum entry FOCUS_DESTINATION // uz.yalla.platform.model/IconType.FOCUS_DESTINATION|null[0]
+    enum entry FOCUS_LOCATION // uz.yalla.platform.model/IconType.FOCUS_LOCATION|null[0]
+    enum entry FOCUS_ORIGIN // uz.yalla.platform.model/IconType.FOCUS_ORIGIN|null[0]
+    enum entry FOCUS_ROUTE // uz.yalla.platform.model/IconType.FOCUS_ROUTE|null[0]
+    enum entry MENU // uz.yalla.platform.model/IconType.MENU|null[0]
+
+    final val entries // uz.yalla.platform.model/IconType.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<uz.yalla.platform.model/IconType> // uz.yalla.platform.model/IconType.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): uz.yalla.platform.model/IconType // uz.yalla.platform.model/IconType.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<uz.yalla.platform.model/IconType> // uz.yalla.platform.model/IconType.values|values#static(){}[0]
+}
+
+final enum class uz.yalla.platform.navigation/ToolbarIcon : kotlin/Enum<uz.yalla.platform.navigation/ToolbarIcon> { // uz.yalla.platform.navigation/ToolbarIcon|null[0]
+    enum entry Add // uz.yalla.platform.navigation/ToolbarIcon.Add|null[0]
+    enum entry Edit // uz.yalla.platform.navigation/ToolbarIcon.Edit|null[0]
+    enum entry More // uz.yalla.platform.navigation/ToolbarIcon.More|null[0]
+    enum entry ReadAll // uz.yalla.platform.navigation/ToolbarIcon.ReadAll|null[0]
+
+    final val entries // uz.yalla.platform.navigation/ToolbarIcon.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<uz.yalla.platform.navigation/ToolbarIcon> // uz.yalla.platform.navigation/ToolbarIcon.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): uz.yalla.platform.navigation/ToolbarIcon // uz.yalla.platform.navigation/ToolbarIcon.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<uz.yalla.platform.navigation/ToolbarIcon> // uz.yalla.platform.navigation/ToolbarIcon.values|values#static(){}[0]
+}
+
+abstract interface <#A: uz.yalla.platform.navigation/Route> uz.yalla.platform.navigation/ScreenProvider { // uz.yalla.platform.navigation/ScreenProvider|null[0]
+    abstract fun Content(#A, uz.yalla.platform.navigation/Navigator, uz.yalla.platform.navigation/ToolbarState, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.platform.navigation/ScreenProvider.Content|Content(1:0;uz.yalla.platform.navigation.Navigator;uz.yalla.platform.navigation.ToolbarState;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+    abstract fun configFor(#A): uz.yalla.platform.navigation/ScreenConfig // uz.yalla.platform.navigation/ScreenProvider.configFor|configFor(1:0){}[0]
+}
+
+abstract interface uz.yalla.platform.browser/InAppBrowserLauncher { // uz.yalla.platform.browser/InAppBrowserLauncher|null[0]
+    abstract fun open(kotlin/String) // uz.yalla.platform.browser/InAppBrowserLauncher.open|open(kotlin.String){}[0]
+}
+
+abstract interface uz.yalla.platform.config/CircleIconButtonFactory { // uz.yalla.platform.config/CircleIconButtonFactory|null[0]
+    abstract fun create(kotlin/String, kotlin/Function0<kotlin/Unit>, kotlin/Double, kotlin/Long): platform.UIKit/UIViewController // uz.yalla.platform.config/CircleIconButtonFactory.create|create(kotlin.String;kotlin.Function0<kotlin.Unit>;kotlin.Double;kotlin.Long){}[0]
+}
+
+abstract interface uz.yalla.platform.config/SheetPresenterFactory { // uz.yalla.platform.config/SheetPresenterFactory|null[0]
+    abstract fun dismiss(platform.UIKit/UIViewController, kotlin/Boolean) // uz.yalla.platform.config/SheetPresenterFactory.dismiss|dismiss(platform.UIKit.UIViewController;kotlin.Boolean){}[0]
+    abstract fun present(platform.UIKit/UIViewController, platform.UIKit/UIViewController, kotlin/Double, kotlin/Long, kotlin/Function0<kotlin/Unit>, kotlin/Function0<kotlin/Unit>) // uz.yalla.platform.config/SheetPresenterFactory.present|present(platform.UIKit.UIViewController;platform.UIKit.UIViewController;kotlin.Double;kotlin.Long;kotlin.Function0<kotlin.Unit>;kotlin.Function0<kotlin.Unit>){}[0]
+    abstract fun updateBackground(platform.UIKit/UIViewController, kotlin/Long) // uz.yalla.platform.config/SheetPresenterFactory.updateBackground|updateBackground(platform.UIKit.UIViewController;kotlin.Long){}[0]
+    abstract fun updateDismissBehavior(platform.UIKit/UIViewController, kotlin/Boolean, kotlin/Function0<kotlin/Unit>) // uz.yalla.platform.config/SheetPresenterFactory.updateDismissBehavior|updateDismissBehavior(platform.UIKit.UIViewController;kotlin.Boolean;kotlin.Function0<kotlin.Unit>){}[0]
+    abstract fun updateHeight(platform.UIKit/UIViewController, kotlin/Double) // uz.yalla.platform.config/SheetPresenterFactory.updateHeight|updateHeight(platform.UIKit.UIViewController;kotlin.Double){}[0]
+}
+
+abstract interface uz.yalla.platform.config/SquircleIconButtonFactory { // uz.yalla.platform.config/SquircleIconButtonFactory|null[0]
+    abstract fun create(kotlin/String, kotlin/Function0<kotlin/Unit>, kotlin/Double, kotlin/Long): platform.UIKit/UIViewController // uz.yalla.platform.config/SquircleIconButtonFactory.create|create(kotlin.String;kotlin.Function0<kotlin.Unit>;kotlin.Double;kotlin.Long){}[0]
+}
+
+abstract interface uz.yalla.platform.config/ThemeProvider { // uz.yalla.platform.config/ThemeProvider|null[0]
+    abstract fun provide(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.platform.config/ThemeProvider.provide|provide(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+}
+
+abstract interface uz.yalla.platform.haptic/HapticController { // uz.yalla.platform.haptic/HapticController|null[0]
+    abstract fun perform(uz.yalla.platform.haptic/HapticType) // uz.yalla.platform.haptic/HapticController.perform|perform(uz.yalla.platform.haptic.HapticType){}[0]
+}
+
+abstract interface uz.yalla.platform.navigation/Navigator { // uz.yalla.platform.navigation/Navigator|null[0]
+    abstract val canGoBack // uz.yalla.platform.navigation/Navigator.canGoBack|{}canGoBack[0]
+        abstract fun <get-canGoBack>(): kotlinx.coroutines.flow/StateFlow<kotlin/Boolean> // uz.yalla.platform.navigation/Navigator.canGoBack.<get-canGoBack>|<get-canGoBack>(){}[0]
+    abstract val currentRoute // uz.yalla.platform.navigation/Navigator.currentRoute|{}currentRoute[0]
+        abstract fun <get-currentRoute>(): kotlinx.coroutines.flow/StateFlow<uz.yalla.platform.navigation/Route> // uz.yalla.platform.navigation/Navigator.currentRoute.<get-currentRoute>|<get-currentRoute>(){}[0]
+
+    abstract fun pop() // uz.yalla.platform.navigation/Navigator.pop|pop(){}[0]
+    abstract fun popWhile(kotlin/Function1<uz.yalla.platform.navigation/Route, kotlin/Boolean>) // uz.yalla.platform.navigation/Navigator.popWhile|popWhile(kotlin.Function1<uz.yalla.platform.navigation.Route,kotlin.Boolean>){}[0]
+    abstract fun push(uz.yalla.platform.navigation/Route) // uz.yalla.platform.navigation/Navigator.push|push(uz.yalla.platform.navigation.Route){}[0]
+    abstract fun replaceCurrent(uz.yalla.platform.navigation/Route) // uz.yalla.platform.navigation/Navigator.replaceCurrent|replaceCurrent(uz.yalla.platform.navigation.Route){}[0]
+    abstract fun setRoot(uz.yalla.platform.navigation/Route) // uz.yalla.platform.navigation/Navigator.setRoot|setRoot(uz.yalla.platform.navigation.Route){}[0]
+}
+
+abstract interface uz.yalla.platform.navigation/Route // uz.yalla.platform.navigation/Route|null[0]
+
+abstract interface uz.yalla.platform/PlatformConfig // uz.yalla.platform/PlatformConfig|null[0]
+
+sealed interface uz.yalla.platform.navigation/ToolbarAction { // uz.yalla.platform.navigation/ToolbarAction|null[0]
+    abstract val onClick // uz.yalla.platform.navigation/ToolbarAction.onClick|{}onClick[0]
+        abstract fun <get-onClick>(): kotlin/Function0<kotlin/Unit> // uz.yalla.platform.navigation/ToolbarAction.onClick.<get-onClick>|<get-onClick>(){}[0]
+
+    final class Icon : uz.yalla.platform.navigation/ToolbarAction { // uz.yalla.platform.navigation/ToolbarAction.Icon|null[0]
+        constructor <init>(uz.yalla.platform.navigation/ToolbarIcon, kotlin/Function0<kotlin/Unit>) // uz.yalla.platform.navigation/ToolbarAction.Icon.<init>|<init>(uz.yalla.platform.navigation.ToolbarIcon;kotlin.Function0<kotlin.Unit>){}[0]
+
+        final val icon // uz.yalla.platform.navigation/ToolbarAction.Icon.icon|{}icon[0]
+            final fun <get-icon>(): uz.yalla.platform.navigation/ToolbarIcon // uz.yalla.platform.navigation/ToolbarAction.Icon.icon.<get-icon>|<get-icon>(){}[0]
+        final val onClick // uz.yalla.platform.navigation/ToolbarAction.Icon.onClick|{}onClick[0]
+            final fun <get-onClick>(): kotlin/Function0<kotlin/Unit> // uz.yalla.platform.navigation/ToolbarAction.Icon.onClick.<get-onClick>|<get-onClick>(){}[0]
+
+        final fun component1(): uz.yalla.platform.navigation/ToolbarIcon // uz.yalla.platform.navigation/ToolbarAction.Icon.component1|component1(){}[0]
+        final fun component2(): kotlin/Function0<kotlin/Unit> // uz.yalla.platform.navigation/ToolbarAction.Icon.component2|component2(){}[0]
+        final fun copy(uz.yalla.platform.navigation/ToolbarIcon = ..., kotlin/Function0<kotlin/Unit> = ...): uz.yalla.platform.navigation/ToolbarAction.Icon // uz.yalla.platform.navigation/ToolbarAction.Icon.copy|copy(uz.yalla.platform.navigation.ToolbarIcon;kotlin.Function0<kotlin.Unit>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.platform.navigation/ToolbarAction.Icon.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.platform.navigation/ToolbarAction.Icon.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.platform.navigation/ToolbarAction.Icon.toString|toString(){}[0]
+    }
+
+    final class Text : uz.yalla.platform.navigation/ToolbarAction { // uz.yalla.platform.navigation/ToolbarAction.Text|null[0]
+        constructor <init>(kotlin/String, kotlin/Function0<kotlin/Unit>) // uz.yalla.platform.navigation/ToolbarAction.Text.<init>|<init>(kotlin.String;kotlin.Function0<kotlin.Unit>){}[0]
+
+        final val label // uz.yalla.platform.navigation/ToolbarAction.Text.label|{}label[0]
+            final fun <get-label>(): kotlin/String // uz.yalla.platform.navigation/ToolbarAction.Text.label.<get-label>|<get-label>(){}[0]
+        final val onClick // uz.yalla.platform.navigation/ToolbarAction.Text.onClick|{}onClick[0]
+            final fun <get-onClick>(): kotlin/Function0<kotlin/Unit> // uz.yalla.platform.navigation/ToolbarAction.Text.onClick.<get-onClick>|<get-onClick>(){}[0]
+
+        final fun component1(): kotlin/String // uz.yalla.platform.navigation/ToolbarAction.Text.component1|component1(){}[0]
+        final fun component2(): kotlin/Function0<kotlin/Unit> // uz.yalla.platform.navigation/ToolbarAction.Text.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/Function0<kotlin/Unit> = ...): uz.yalla.platform.navigation/ToolbarAction.Text // uz.yalla.platform.navigation/ToolbarAction.Text.copy|copy(kotlin.String;kotlin.Function0<kotlin.Unit>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.platform.navigation/ToolbarAction.Text.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.platform.navigation/ToolbarAction.Text.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.platform.navigation/ToolbarAction.Text.toString|toString(){}[0]
+    }
+}
+
+final class <#A: uz.yalla.platform.navigation/Route> uz.yalla.platform.navigation/NativeRootComponent : com.arkivanov.decompose/ComponentContext { // uz.yalla.platform.navigation/NativeRootComponent|null[0]
+    constructor <init>(com.arkivanov.decompose/ComponentContext, #A, kotlinx.serialization/KSerializer<#A>?) // uz.yalla.platform.navigation/NativeRootComponent.<init>|<init>(com.arkivanov.decompose.ComponentContext;1:0;kotlinx.serialization.KSerializer<1:0>?){}[0]
+
+    final val backHandler // uz.yalla.platform.navigation/NativeRootComponent.backHandler|{}backHandler[0]
+        final fun <get-backHandler>(): com.arkivanov.essenty.backhandler/BackHandler // uz.yalla.platform.navigation/NativeRootComponent.backHandler.<get-backHandler>|<get-backHandler>(){}[0]
+    final val childStack // uz.yalla.platform.navigation/NativeRootComponent.childStack|{}childStack[0]
+        final fun <get-childStack>(): com.arkivanov.decompose.value/Value<com.arkivanov.decompose.router.stack/ChildStack<#A, com.arkivanov.decompose/ComponentContext>> // uz.yalla.platform.navigation/NativeRootComponent.childStack.<get-childStack>|<get-childStack>(){}[0]
+    final val componentContextFactory // uz.yalla.platform.navigation/NativeRootComponent.componentContextFactory|{}componentContextFactory[0]
+        final fun <get-componentContextFactory>(): com.arkivanov.decompose/ComponentContextFactory<com.arkivanov.decompose/ComponentContext> // uz.yalla.platform.navigation/NativeRootComponent.componentContextFactory.<get-componentContextFactory>|<get-componentContextFactory>(){}[0]
+    final val instanceKeeper // uz.yalla.platform.navigation/NativeRootComponent.instanceKeeper|{}instanceKeeper[0]
+        final fun <get-instanceKeeper>(): com.arkivanov.essenty.instancekeeper/InstanceKeeper // uz.yalla.platform.navigation/NativeRootComponent.instanceKeeper.<get-instanceKeeper>|<get-instanceKeeper>(){}[0]
+    final val lifecycle // uz.yalla.platform.navigation/NativeRootComponent.lifecycle|{}lifecycle[0]
+        final fun <get-lifecycle>(): com.arkivanov.essenty.lifecycle/Lifecycle // uz.yalla.platform.navigation/NativeRootComponent.lifecycle.<get-lifecycle>|<get-lifecycle>(){}[0]
+    final val navigator // uz.yalla.platform.navigation/NativeRootComponent.navigator|{}navigator[0]
+        final fun <get-navigator>(): uz.yalla.platform.navigation/Navigator // uz.yalla.platform.navigation/NativeRootComponent.navigator.<get-navigator>|<get-navigator>(){}[0]
+    final val stateKeeper // uz.yalla.platform.navigation/NativeRootComponent.stateKeeper|{}stateKeeper[0]
+        final fun <get-stateKeeper>(): com.arkivanov.essenty.statekeeper/StateKeeper // uz.yalla.platform.navigation/NativeRootComponent.stateKeeper.<get-stateKeeper>|<get-stateKeeper>(){}[0]
+}
+
+final class uz.yalla.platform.config/IosPlatformConfig : uz.yalla.platform/PlatformConfig { // uz.yalla.platform.config/IosPlatformConfig|null[0]
+    final val circleButton // uz.yalla.platform.config/IosPlatformConfig.circleButton|{}circleButton[0]
+        final fun <get-circleButton>(): uz.yalla.platform.config/CircleIconButtonFactory // uz.yalla.platform.config/IosPlatformConfig.circleButton.<get-circleButton>|<get-circleButton>(){}[0]
+    final val navigationBarAppearance // uz.yalla.platform.config/IosPlatformConfig.navigationBarAppearance|{}navigationBarAppearance[0]
+        final fun <get-navigationBarAppearance>(): uz.yalla.platform.navigation/NavigationBarAppearance? // uz.yalla.platform.config/IosPlatformConfig.navigationBarAppearance.<get-navigationBarAppearance>|<get-navigationBarAppearance>(){}[0]
+    final val sheetPresenter // uz.yalla.platform.config/IosPlatformConfig.sheetPresenter|{}sheetPresenter[0]
+        final fun <get-sheetPresenter>(): uz.yalla.platform.config/SheetPresenterFactory // uz.yalla.platform.config/IosPlatformConfig.sheetPresenter.<get-sheetPresenter>|<get-sheetPresenter>(){}[0]
+    final val squircleButton // uz.yalla.platform.config/IosPlatformConfig.squircleButton|{}squircleButton[0]
+        final fun <get-squircleButton>(): uz.yalla.platform.config/SquircleIconButtonFactory // uz.yalla.platform.config/IosPlatformConfig.squircleButton.<get-squircleButton>|<get-squircleButton>(){}[0]
+    final val themeProvider // uz.yalla.platform.config/IosPlatformConfig.themeProvider|{}themeProvider[0]
+        final fun <get-themeProvider>(): uz.yalla.platform.config/ThemeProvider? // uz.yalla.platform.config/IosPlatformConfig.themeProvider.<get-themeProvider>|<get-themeProvider>(){}[0]
+
+    final class Builder { // uz.yalla.platform.config/IosPlatformConfig.Builder|null[0]
+        constructor <init>() // uz.yalla.platform.config/IosPlatformConfig.Builder.<init>|<init>(){}[0]
+
+        final var circleButton // uz.yalla.platform.config/IosPlatformConfig.Builder.circleButton|{}circleButton[0]
+            final fun <get-circleButton>(): uz.yalla.platform.config/CircleIconButtonFactory? // uz.yalla.platform.config/IosPlatformConfig.Builder.circleButton.<get-circleButton>|<get-circleButton>(){}[0]
+            final fun <set-circleButton>(uz.yalla.platform.config/CircleIconButtonFactory?) // uz.yalla.platform.config/IosPlatformConfig.Builder.circleButton.<set-circleButton>|<set-circleButton>(uz.yalla.platform.config.CircleIconButtonFactory?){}[0]
+        final var navigationBarAppearance // uz.yalla.platform.config/IosPlatformConfig.Builder.navigationBarAppearance|{}navigationBarAppearance[0]
+            final fun <get-navigationBarAppearance>(): uz.yalla.platform.navigation/NavigationBarAppearance? // uz.yalla.platform.config/IosPlatformConfig.Builder.navigationBarAppearance.<get-navigationBarAppearance>|<get-navigationBarAppearance>(){}[0]
+            final fun <set-navigationBarAppearance>(uz.yalla.platform.navigation/NavigationBarAppearance?) // uz.yalla.platform.config/IosPlatformConfig.Builder.navigationBarAppearance.<set-navigationBarAppearance>|<set-navigationBarAppearance>(uz.yalla.platform.navigation.NavigationBarAppearance?){}[0]
+        final var sheetPresenter // uz.yalla.platform.config/IosPlatformConfig.Builder.sheetPresenter|{}sheetPresenter[0]
+            final fun <get-sheetPresenter>(): uz.yalla.platform.config/SheetPresenterFactory? // uz.yalla.platform.config/IosPlatformConfig.Builder.sheetPresenter.<get-sheetPresenter>|<get-sheetPresenter>(){}[0]
+            final fun <set-sheetPresenter>(uz.yalla.platform.config/SheetPresenterFactory?) // uz.yalla.platform.config/IosPlatformConfig.Builder.sheetPresenter.<set-sheetPresenter>|<set-sheetPresenter>(uz.yalla.platform.config.SheetPresenterFactory?){}[0]
+        final var squircleButton // uz.yalla.platform.config/IosPlatformConfig.Builder.squircleButton|{}squircleButton[0]
+            final fun <get-squircleButton>(): uz.yalla.platform.config/SquircleIconButtonFactory? // uz.yalla.platform.config/IosPlatformConfig.Builder.squircleButton.<get-squircleButton>|<get-squircleButton>(){}[0]
+            final fun <set-squircleButton>(uz.yalla.platform.config/SquircleIconButtonFactory?) // uz.yalla.platform.config/IosPlatformConfig.Builder.squircleButton.<set-squircleButton>|<set-squircleButton>(uz.yalla.platform.config.SquircleIconButtonFactory?){}[0]
+        final var themeProvider // uz.yalla.platform.config/IosPlatformConfig.Builder.themeProvider|{}themeProvider[0]
+            final fun <get-themeProvider>(): uz.yalla.platform.config/ThemeProvider? // uz.yalla.platform.config/IosPlatformConfig.Builder.themeProvider.<get-themeProvider>|<get-themeProvider>(){}[0]
+            final fun <set-themeProvider>(uz.yalla.platform.config/ThemeProvider?) // uz.yalla.platform.config/IosPlatformConfig.Builder.themeProvider.<set-themeProvider>|<set-themeProvider>(uz.yalla.platform.config.ThemeProvider?){}[0]
+
+        final fun build(): uz.yalla.platform.config/IosPlatformConfig // uz.yalla.platform.config/IosPlatformConfig.Builder.build|build(){}[0]
+    }
+}
+
+final class uz.yalla.platform.navigation/NavigationBarAppearance { // uz.yalla.platform.navigation/NavigationBarAppearance|null[0]
+    constructor <init>(kotlin/Long = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/String? = ..., kotlin/String? = ...) // uz.yalla.platform.navigation/NavigationBarAppearance.<init>|<init>(kotlin.Long;kotlin.Long;kotlin.Long;kotlin.Boolean;kotlin.Boolean;kotlin.String?;kotlin.String?){}[0]
+
+    final val backgroundColor // uz.yalla.platform.navigation/NavigationBarAppearance.backgroundColor|{}backgroundColor[0]
+        final fun <get-backgroundColor>(): kotlin/Long // uz.yalla.platform.navigation/NavigationBarAppearance.backgroundColor.<get-backgroundColor>|<get-backgroundColor>(){}[0]
+    final val isTranslucent // uz.yalla.platform.navigation/NavigationBarAppearance.isTranslucent|{}isTranslucent[0]
+        final fun <get-isTranslucent>(): kotlin/Boolean // uz.yalla.platform.navigation/NavigationBarAppearance.isTranslucent.<get-isTranslucent>|<get-isTranslucent>(){}[0]
+    final val largeTitleFontName // uz.yalla.platform.navigation/NavigationBarAppearance.largeTitleFontName|{}largeTitleFontName[0]
+        final fun <get-largeTitleFontName>(): kotlin/String? // uz.yalla.platform.navigation/NavigationBarAppearance.largeTitleFontName.<get-largeTitleFontName>|<get-largeTitleFontName>(){}[0]
+    final val showsSeparator // uz.yalla.platform.navigation/NavigationBarAppearance.showsSeparator|{}showsSeparator[0]
+        final fun <get-showsSeparator>(): kotlin/Boolean // uz.yalla.platform.navigation/NavigationBarAppearance.showsSeparator.<get-showsSeparator>|<get-showsSeparator>(){}[0]
+    final val tintColor // uz.yalla.platform.navigation/NavigationBarAppearance.tintColor|{}tintColor[0]
+        final fun <get-tintColor>(): kotlin/Long // uz.yalla.platform.navigation/NavigationBarAppearance.tintColor.<get-tintColor>|<get-tintColor>(){}[0]
+    final val titleColor // uz.yalla.platform.navigation/NavigationBarAppearance.titleColor|{}titleColor[0]
+        final fun <get-titleColor>(): kotlin/Long // uz.yalla.platform.navigation/NavigationBarAppearance.titleColor.<get-titleColor>|<get-titleColor>(){}[0]
+    final val titleFontName // uz.yalla.platform.navigation/NavigationBarAppearance.titleFontName|{}titleFontName[0]
+        final fun <get-titleFontName>(): kotlin/String? // uz.yalla.platform.navigation/NavigationBarAppearance.titleFontName.<get-titleFontName>|<get-titleFontName>(){}[0]
+
+    final fun component1(): kotlin/Long // uz.yalla.platform.navigation/NavigationBarAppearance.component1|component1(){}[0]
+    final fun component2(): kotlin/Long // uz.yalla.platform.navigation/NavigationBarAppearance.component2|component2(){}[0]
+    final fun component3(): kotlin/Long // uz.yalla.platform.navigation/NavigationBarAppearance.component3|component3(){}[0]
+    final fun component4(): kotlin/Boolean // uz.yalla.platform.navigation/NavigationBarAppearance.component4|component4(){}[0]
+    final fun component5(): kotlin/Boolean // uz.yalla.platform.navigation/NavigationBarAppearance.component5|component5(){}[0]
+    final fun component6(): kotlin/String? // uz.yalla.platform.navigation/NavigationBarAppearance.component6|component6(){}[0]
+    final fun component7(): kotlin/String? // uz.yalla.platform.navigation/NavigationBarAppearance.component7|component7(){}[0]
+    final fun copy(kotlin/Long = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Boolean = ..., kotlin/Boolean = ..., kotlin/String? = ..., kotlin/String? = ...): uz.yalla.platform.navigation/NavigationBarAppearance // uz.yalla.platform.navigation/NavigationBarAppearance.copy|copy(kotlin.Long;kotlin.Long;kotlin.Long;kotlin.Boolean;kotlin.Boolean;kotlin.String?;kotlin.String?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.platform.navigation/NavigationBarAppearance.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // uz.yalla.platform.navigation/NavigationBarAppearance.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // uz.yalla.platform.navigation/NavigationBarAppearance.toString|toString(){}[0]
+}
+
+final class uz.yalla.platform.navigation/ScreenConfig { // uz.yalla.platform.navigation/ScreenConfig|null[0]
+    constructor <init>(kotlin/Boolean = ...) // uz.yalla.platform.navigation/ScreenConfig.<init>|<init>(kotlin.Boolean){}[0]
+
+    final val showsNavigationBar // uz.yalla.platform.navigation/ScreenConfig.showsNavigationBar|{}showsNavigationBar[0]
+        final fun <get-showsNavigationBar>(): kotlin/Boolean // uz.yalla.platform.navigation/ScreenConfig.showsNavigationBar.<get-showsNavigationBar>|<get-showsNavigationBar>(){}[0]
+
+    final fun component1(): kotlin/Boolean // uz.yalla.platform.navigation/ScreenConfig.component1|component1(){}[0]
+    final fun copy(kotlin/Boolean = ...): uz.yalla.platform.navigation/ScreenConfig // uz.yalla.platform.navigation/ScreenConfig.copy|copy(kotlin.Boolean){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.platform.navigation/ScreenConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // uz.yalla.platform.navigation/ScreenConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // uz.yalla.platform.navigation/ScreenConfig.toString|toString(){}[0]
+}
+
+final class uz.yalla.platform.navigation/ToolbarState { // uz.yalla.platform.navigation/ToolbarState|null[0]
+    constructor <init>() // uz.yalla.platform.navigation/ToolbarState.<init>|<init>(){}[0]
+
+    final var actions // uz.yalla.platform.navigation/ToolbarState.actions|{}actions[0]
+        final fun <get-actions>(): kotlin.collections/List<uz.yalla.platform.navigation/ToolbarAction> // uz.yalla.platform.navigation/ToolbarState.actions.<get-actions>|<get-actions>(){}[0]
+        final fun <set-actions>(kotlin.collections/List<uz.yalla.platform.navigation/ToolbarAction>) // uz.yalla.platform.navigation/ToolbarState.actions.<set-actions>|<set-actions>(kotlin.collections.List<uz.yalla.platform.navigation.ToolbarAction>){}[0]
+    final var contentPadding // uz.yalla.platform.navigation/ToolbarState.contentPadding|{}contentPadding[0]
+        final fun <get-contentPadding>(): androidx.compose.foundation.layout/PaddingValues // uz.yalla.platform.navigation/ToolbarState.contentPadding.<get-contentPadding>|<get-contentPadding>(){}[0]
+        final fun <set-contentPadding>(androidx.compose.foundation.layout/PaddingValues) // uz.yalla.platform.navigation/ToolbarState.contentPadding.<set-contentPadding>|<set-contentPadding>(androidx.compose.foundation.layout.PaddingValues){}[0]
+    final var visible // uz.yalla.platform.navigation/ToolbarState.visible|{}visible[0]
+        final fun <get-visible>(): kotlin/Boolean // uz.yalla.platform.navigation/ToolbarState.visible.<get-visible>|<get-visible>(){}[0]
+        final fun <set-visible>(kotlin/Boolean) // uz.yalla.platform.navigation/ToolbarState.visible.<set-visible>|<set-visible>(kotlin.Boolean){}[0]
+}
+
+final class uz.yalla.platform.update/AppUpdateState { // uz.yalla.platform.update/AppUpdateState|null[0]
+    constructor <init>() // uz.yalla.platform.update/AppUpdateState.<init>|<init>(){}[0]
+
+    final var isChecking // uz.yalla.platform.update/AppUpdateState.isChecking|{}isChecking[0]
+        final fun <get-isChecking>(): kotlin/Boolean // uz.yalla.platform.update/AppUpdateState.isChecking.<get-isChecking>|<get-isChecking>(){}[0]
+    final var isUpdateAvailable // uz.yalla.platform.update/AppUpdateState.isUpdateAvailable|{}isUpdateAvailable[0]
+        final fun <get-isUpdateAvailable>(): kotlin/Boolean // uz.yalla.platform.update/AppUpdateState.isUpdateAvailable.<get-isUpdateAvailable>|<get-isUpdateAvailable>(){}[0]
+    final var storeUrl // uz.yalla.platform.update/AppUpdateState.storeUrl|{}storeUrl[0]
+        final fun <get-storeUrl>(): kotlin/String // uz.yalla.platform.update/AppUpdateState.storeUrl.<get-storeUrl>|<get-storeUrl>(){}[0]
+}
+
+final object uz.yalla.platform.update/VersionComparator { // uz.yalla.platform.update/VersionComparator|null[0]
+    final fun isNewer(kotlin/String, kotlin/String): kotlin/Boolean // uz.yalla.platform.update/VersionComparator.isNewer|isNewer(kotlin.String;kotlin.String){}[0]
+}
+
+final object uz.yalla.platform/YallaPlatform { // uz.yalla.platform/YallaPlatform|null[0]
+    final val isInstalled // uz.yalla.platform/YallaPlatform.isInstalled|{}isInstalled[0]
+        final fun <get-isInstalled>(): kotlin/Boolean // uz.yalla.platform/YallaPlatform.isInstalled.<get-isInstalled>|<get-isInstalled>(){}[0]
+
+    final var config // uz.yalla.platform/YallaPlatform.config|{}config[0]
+        final fun <get-config>(): uz.yalla.platform/PlatformConfig? // uz.yalla.platform/YallaPlatform.config.<get-config>|<get-config>(){}[0]
+        final fun <set-config>(uz.yalla.platform/PlatformConfig?) // uz.yalla.platform/YallaPlatform.config.<set-config>|<set-config>(uz.yalla.platform.PlatformConfig?){}[0]
+
+    final fun install(uz.yalla.platform/PlatformConfig) // uz.yalla.platform/YallaPlatform.install|install(uz.yalla.platform.PlatformConfig){}[0]
+    final fun reset() // uz.yalla.platform/YallaPlatform.reset|reset(){}[0]
+    final inline fun <#A1: reified uz.yalla.platform/PlatformConfig> requireConfig(): #A1 // uz.yalla.platform/YallaPlatform.requireConfig|requireConfig(){0§<uz.yalla.platform.PlatformConfig>}[0]
+}
+
+final val uz.yalla.platform.config/uz_yalla_platform_config_IosPlatformConfig$stableprop // uz.yalla.platform.config/uz_yalla_platform_config_IosPlatformConfig$stableprop|#static{}uz_yalla_platform_config_IosPlatformConfig$stableprop[0]
+final val uz.yalla.platform.config/uz_yalla_platform_config_IosPlatformConfig_Builder$stableprop // uz.yalla.platform.config/uz_yalla_platform_config_IosPlatformConfig_Builder$stableprop|#static{}uz_yalla_platform_config_IosPlatformConfig_Builder$stableprop[0]
+final val uz.yalla.platform.navigation/LocalNavigator // uz.yalla.platform.navigation/LocalNavigator|{}LocalNavigator[0]
+    final fun <get-LocalNavigator>(): androidx.compose.runtime/ProvidableCompositionLocal<uz.yalla.platform.navigation/Navigator> // uz.yalla.platform.navigation/LocalNavigator.<get-LocalNavigator>|<get-LocalNavigator>(){}[0]
+final val uz.yalla.platform.navigation/uz_yalla_platform_navigation_NativeRootComponent$stableprop // uz.yalla.platform.navigation/uz_yalla_platform_navigation_NativeRootComponent$stableprop|#static{}uz_yalla_platform_navigation_NativeRootComponent$stableprop[0]
+final val uz.yalla.platform.navigation/uz_yalla_platform_navigation_NavigationBarAppearance$stableprop // uz.yalla.platform.navigation/uz_yalla_platform_navigation_NavigationBarAppearance$stableprop|#static{}uz_yalla_platform_navigation_NavigationBarAppearance$stableprop[0]
+final val uz.yalla.platform.navigation/uz_yalla_platform_navigation_ScreenConfig$stableprop // uz.yalla.platform.navigation/uz_yalla_platform_navigation_ScreenConfig$stableprop|#static{}uz_yalla_platform_navigation_ScreenConfig$stableprop[0]
+final val uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarAction_Icon$stableprop // uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarAction_Icon$stableprop|#static{}uz_yalla_platform_navigation_ToolbarAction_Icon$stableprop[0]
+final val uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarAction_Text$stableprop // uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarAction_Text$stableprop|#static{}uz_yalla_platform_navigation_ToolbarAction_Text$stableprop[0]
+final val uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarState$stableprop // uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarState$stableprop|#static{}uz_yalla_platform_navigation_ToolbarState$stableprop[0]
+final val uz.yalla.platform.update/uz_yalla_platform_update_AppUpdateState$stableprop // uz.yalla.platform.update/uz_yalla_platform_update_AppUpdateState$stableprop|#static{}uz_yalla_platform_update_AppUpdateState$stableprop[0]
+final val uz.yalla.platform.update/uz_yalla_platform_update_VersionComparator$stableprop // uz.yalla.platform.update/uz_yalla_platform_update_VersionComparator$stableprop|#static{}uz_yalla_platform_update_VersionComparator$stableprop[0]
+final val uz.yalla.platform/uz_yalla_platform_YallaPlatform$stableprop // uz.yalla.platform/uz_yalla_platform_YallaPlatform$stableprop|#static{}uz_yalla_platform_YallaPlatform$stableprop[0]
+final val uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_array$stableprop // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_array$stableprop|#static{}uz_yalla_sdk_platform_generated_resources_Res_array$stableprop[0]
+final val uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_drawable$stableprop // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_drawable$stableprop|#static{}uz_yalla_sdk_platform_generated_resources_Res_drawable$stableprop[0]
+final val uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_font$stableprop // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_font$stableprop|#static{}uz_yalla_sdk_platform_generated_resources_Res_font$stableprop[0]
+final val uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_plurals$stableprop // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_plurals$stableprop|#static{}uz_yalla_sdk_platform_generated_resources_Res_plurals$stableprop[0]
+final val uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_string$stableprop // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_string$stableprop|#static{}uz_yalla_sdk_platform_generated_resources_Res_string$stableprop[0]
+
+final var uz.yalla.platform.navigation/_iosNavigator // uz.yalla.platform.navigation/_iosNavigator|{}_iosNavigator[0]
+    final fun <get-_iosNavigator>(): uz.yalla.platform.navigation/Navigator? // uz.yalla.platform.navigation/_iosNavigator.<get-_iosNavigator>|<get-_iosNavigator>(){}[0]
+
+final fun (androidx.compose.ui.graphics/Color).uz.yalla.platform/toUIColor(): platform.UIKit/UIColor? // uz.yalla.platform/toUIColor|toUIColor@androidx.compose.ui.graphics.Color(){}[0]
+final fun (uz.yalla.platform.model/IconType).uz.yalla.platform/toAssetName(): kotlin/String // uz.yalla.platform/toAssetName|toAssetName@uz.yalla.platform.model.IconType(){}[0]
+final fun (uz.yalla.platform.model/IconType).uz.yalla.platform/toImageVector(): androidx.compose.ui.graphics.vector/ImageVector // uz.yalla.platform/toImageVector|toImageVector@uz.yalla.platform.model.IconType(){}[0]
+final fun <#A: uz.yalla.platform.navigation/Route> uz.yalla.platform.navigation/NativeNavHost(uz.yalla.platform.navigation/NativeRootComponent<#A>, uz.yalla.platform.navigation/ScreenProvider<#A>, androidx.compose.ui/Modifier?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.platform.navigation/NativeNavHost|NativeNavHost(uz.yalla.platform.navigation.NativeRootComponent<0:0>;uz.yalla.platform.navigation.ScreenProvider<0:0>;androidx.compose.ui.Modifier?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){0§<uz.yalla.platform.navigation.Route>}[0]
+final fun uz.yalla.platform.browser/rememberInAppBrowser(androidx.compose.runtime/Composer?, kotlin/Int): uz.yalla.platform.browser/InAppBrowserLauncher // uz.yalla.platform.browser/rememberInAppBrowser|rememberInAppBrowser(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun uz.yalla.platform.button/NativeCircleIconButton(uz.yalla.platform.model/IconType, kotlin/Function0<kotlin/Unit>, androidx.compose.ui/Modifier?, kotlin/Float, androidx.compose.foundation/BorderStroke?, androidx.compose.ui.graphics/Color, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.platform.button/NativeCircleIconButton|NativeCircleIconButton(uz.yalla.platform.model.IconType;kotlin.Function0<kotlin.Unit>;androidx.compose.ui.Modifier?;kotlin.Float;androidx.compose.foundation.BorderStroke?;androidx.compose.ui.graphics.Color;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.platform.button/SheetIconButton(uz.yalla.platform.model/IconType, kotlin/Function0<kotlin/Unit>, androidx.compose.ui/Modifier?, androidx.compose.foundation/BorderStroke?, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.platform.button/SheetIconButton|SheetIconButton(uz.yalla.platform.model.IconType;kotlin.Function0<kotlin.Unit>;androidx.compose.ui.Modifier?;androidx.compose.foundation.BorderStroke?;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.platform.config/uz_yalla_platform_config_IosPlatformConfig$stableprop_getter(): kotlin/Int // uz.yalla.platform.config/uz_yalla_platform_config_IosPlatformConfig$stableprop_getter|uz_yalla_platform_config_IosPlatformConfig$stableprop_getter(){}[0]
+final fun uz.yalla.platform.config/uz_yalla_platform_config_IosPlatformConfig_Builder$stableprop_getter(): kotlin/Int // uz.yalla.platform.config/uz_yalla_platform_config_IosPlatformConfig_Builder$stableprop_getter|uz_yalla_platform_config_IosPlatformConfig_Builder$stableprop_getter(){}[0]
+final fun uz.yalla.platform.haptic/rememberHapticController(androidx.compose.runtime/Composer?, kotlin/Int): uz.yalla.platform.haptic/HapticController // uz.yalla.platform.haptic/rememberHapticController|rememberHapticController(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun uz.yalla.platform.indicator/NativeLoadingIndicator(androidx.compose.ui/Modifier?, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.platform.indicator/NativeLoadingIndicator|NativeLoadingIndicator(androidx.compose.ui.Modifier?;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.platform.navigation/uz_yalla_platform_navigation_NativeRootComponent$stableprop_getter(): kotlin/Int // uz.yalla.platform.navigation/uz_yalla_platform_navigation_NativeRootComponent$stableprop_getter|uz_yalla_platform_navigation_NativeRootComponent$stableprop_getter(){}[0]
+final fun uz.yalla.platform.navigation/uz_yalla_platform_navigation_NavigationBarAppearance$stableprop_getter(): kotlin/Int // uz.yalla.platform.navigation/uz_yalla_platform_navigation_NavigationBarAppearance$stableprop_getter|uz_yalla_platform_navigation_NavigationBarAppearance$stableprop_getter(){}[0]
+final fun uz.yalla.platform.navigation/uz_yalla_platform_navigation_ScreenConfig$stableprop_getter(): kotlin/Int // uz.yalla.platform.navigation/uz_yalla_platform_navigation_ScreenConfig$stableprop_getter|uz_yalla_platform_navigation_ScreenConfig$stableprop_getter(){}[0]
+final fun uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarAction_Icon$stableprop_getter(): kotlin/Int // uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarAction_Icon$stableprop_getter|uz_yalla_platform_navigation_ToolbarAction_Icon$stableprop_getter(){}[0]
+final fun uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarAction_Text$stableprop_getter(): kotlin/Int // uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarAction_Text$stableprop_getter|uz_yalla_platform_navigation_ToolbarAction_Text$stableprop_getter(){}[0]
+final fun uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarState$stableprop_getter(): kotlin/Int // uz.yalla.platform.navigation/uz_yalla_platform_navigation_ToolbarState$stableprop_getter|uz_yalla_platform_navigation_ToolbarState$stableprop_getter(){}[0]
+final fun uz.yalla.platform.otp/ObserveSmsCode(kotlin/Function1<kotlin/String, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.platform.otp/ObserveSmsCode|ObserveSmsCode(kotlin.Function1<kotlin.String,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun uz.yalla.platform.otp/getAppSignature(): kotlin/String? // uz.yalla.platform.otp/getAppSignature|getAppSignature(){}[0]
+final fun uz.yalla.platform.picker/NativeWheelDatePicker(kotlinx.datetime/LocalDate, androidx.compose.ui/Modifier?, kotlinx.datetime/LocalDate?, kotlinx.datetime/LocalDate?, kotlin/Function1<kotlinx.datetime/LocalDate, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.platform.picker/NativeWheelDatePicker|NativeWheelDatePicker(kotlinx.datetime.LocalDate;androidx.compose.ui.Modifier?;kotlinx.datetime.LocalDate?;kotlinx.datetime.LocalDate?;kotlin.Function1<kotlinx.datetime.LocalDate,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.platform.sheet/NativeSheet(kotlin/Boolean, androidx.compose.ui.graphics/Shape, androidx.compose.ui.graphics/Color, kotlin/Function0<kotlin/Unit>, kotlin/Boolean, kotlin/Function0<kotlin/Unit>?, kotlin/Boolean?, kotlin/Boolean, kotlin/Function0<kotlin/Unit>?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.platform.sheet/NativeSheet|NativeSheet(kotlin.Boolean;androidx.compose.ui.graphics.Shape;androidx.compose.ui.graphics.Color;kotlin.Function0<kotlin.Unit>;kotlin.Boolean;kotlin.Function0<kotlin.Unit>?;kotlin.Boolean?;kotlin.Boolean;kotlin.Function0<kotlin.Unit>?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.platform.system/SystemBarColors(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.platform.system/SystemBarColors|SystemBarColors(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.platform.system/SystemBarColors(kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.platform.system/SystemBarColors|SystemBarColors(kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun uz.yalla.platform.toggle/NativeSwitch(kotlin/Boolean, kotlin/Function1<kotlin/Boolean, kotlin/Unit>, androidx.compose.ui/Modifier?, kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.platform.toggle/NativeSwitch|NativeSwitch(kotlin.Boolean;kotlin.Function1<kotlin.Boolean,kotlin.Unit>;androidx.compose.ui.Modifier?;kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.platform.update/rememberAppUpdateState(kotlin/String, kotlin/String?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): uz.yalla.platform.update/AppUpdateState // uz.yalla.platform.update/rememberAppUpdateState|rememberAppUpdateState(kotlin.String;kotlin.String?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.platform.update/uz_yalla_platform_update_AppUpdateState$stableprop_getter(): kotlin/Int // uz.yalla.platform.update/uz_yalla_platform_update_AppUpdateState$stableprop_getter|uz_yalla_platform_update_AppUpdateState$stableprop_getter(){}[0]
+final fun uz.yalla.platform.update/uz_yalla_platform_update_VersionComparator$stableprop_getter(): kotlin/Int // uz.yalla.platform.update/uz_yalla_platform_update_VersionComparator$stableprop_getter|uz_yalla_platform_update_VersionComparator$stableprop_getter(){}[0]
+final fun uz.yalla.platform.util/statusBarHeight(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.ui.unit/Dp // uz.yalla.platform.util/statusBarHeight|statusBarHeight(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun uz.yalla.platform/uz_yalla_platform_YallaPlatform$stableprop_getter(): kotlin/Int // uz.yalla.platform/uz_yalla_platform_YallaPlatform$stableprop_getter|uz_yalla_platform_YallaPlatform$stableprop_getter(){}[0]
+final fun uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_array$stableprop_getter(): kotlin/Int // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_array$stableprop_getter|uz_yalla_sdk_platform_generated_resources_Res_array$stableprop_getter(){}[0]
+final fun uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_drawable$stableprop_getter(): kotlin/Int // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_drawable$stableprop_getter|uz_yalla_sdk_platform_generated_resources_Res_drawable$stableprop_getter(){}[0]
+final fun uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_font$stableprop_getter(): kotlin/Int // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_font$stableprop_getter|uz_yalla_sdk_platform_generated_resources_Res_font$stableprop_getter(){}[0]
+final fun uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_plurals$stableprop_getter(): kotlin/Int // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_plurals$stableprop_getter|uz_yalla_sdk_platform_generated_resources_Res_plurals$stableprop_getter(){}[0]
+final fun uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_string$stableprop_getter(): kotlin/Int // uz.yalla.sdk.platform.generated.resources/uz_yalla_sdk_platform_generated_resources_Res_string$stableprop_getter|uz_yalla_sdk_platform_generated_resources_Res_string$stableprop_getter(){}[0]

@@ -65,5 +65,7 @@ object YallaPlatform {
      * **Testing only.** Call between tests to prevent global state pollution.
      * Do not call in production code.
      */
-    fun reset() { config = null }
+    fun reset() {
+        config = null
+    }
 }

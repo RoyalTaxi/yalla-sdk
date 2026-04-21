@@ -63,6 +63,7 @@ class GoogleMapController : MapController {
     private var queuedRecenter: RecenterRequest? = null
 
     private val _contentPadding = MutableStateFlow(PaddingValues())
+
     /**
      * Resolved content padding as a reactive flow, consumed by the Google Maps composable.
      *

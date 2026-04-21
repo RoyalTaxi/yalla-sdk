@@ -161,8 +161,7 @@ fun FeedCard(
                                 topEnd = dimens.indicatorRadius,
                                 bottomEnd = dimens.indicatorRadius,
                             ),
-                        )
-                        .background(colors.indicator),
+                        ).background(colors.indicator),
                 )
             }
 

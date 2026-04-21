@@ -2,7 +2,6 @@ package uz.yalla.platform.haptic
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import platform.Foundation.NSTimeInterval
 import platform.UIKit.UIImpactFeedbackGenerator
 import platform.UIKit.UIImpactFeedbackStyle
 import platform.UIKit.UINotificationFeedbackGenerator

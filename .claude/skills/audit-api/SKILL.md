@@ -1,6 +1,6 @@
 ---
 name: audit-api
-description: Audit the public API surface of yalla-sdk modules and produce a diff against the last published version. Used as the fallback for apiCheck since binary-compatibility-validator is not currently wired up. Triggers include phrases like "audit API", "what changed in API", "check api compatibility", "apicheck", "public api diff".
+description: Audit the public API surface of yalla-sdk modules and produce a diff against the last published version. `audit-api` is the manual gate for androidMain-only additions until BCV 0.18.1's AGP 9.0 gap closes upstream — `./gradlew apiCheck` already covers Native + commonMain automatically. Triggers include phrases like "audit API", "what changed in API", "check api compatibility", "androidMain api diff", "public api diff".
 allowed-tools: Read, Bash, Glob, Grep
 ---
 
@@ -8,16 +8,18 @@ allowed-tools: Read, Bash, Glob, Grep
 
 Produce a report of what changed in the public API surface of yalla-sdk modules since the last release.
 
-## Important: apiCheck Is Not Wired Up
+## Important: Scope of This Skill
 
-The `org.jetbrains.kotlinx.binary-compatibility-validator` plugin is **not currently applied** in this repo. `./gradlew apiCheck` and `./gradlew apiDump` do not exist.
+`./gradlew apiCheck` IS wired as of commit `9031d23` — `binary-compatibility-validator` 0.18.1 in experimental Klib mode. It covers Native (`iosArm64`, `iosSimulatorArm64`) plus everything in `commonMain` that compiles into those targets. Run `./gradlew apiCheck` first on any PR that touches public API; it is the primary mechanism.
 
-Confirm before starting:
+Coverage gap: BCV 0.18.1 does not recognize AGP 9.0's `KotlinMultiplatformAndroidLibraryTarget`, so androidMain-only public API additions are not mechanically covered. `audit-api` is the manual gate for androidMain-only additions until BCV 0.18.1's AGP 9.0 gap closes upstream. Use this skill when your diff adds or changes declarations under `**/src/androidMain/**`, and paste its diff into the PR body alongside the `apiCheck` result.
+
+Sanity check (defensive — `apiCheck` should be present, but this confirms the plugin is applied to the module you're targeting):
 ```bash
 ./gradlew :<module>:tasks --all 2>&1 | grep -iE "(apiCheck|apiDump)" || echo "not wired up"
 ```
 
-If the grep is empty, fall back to manual diffing (steps below). If/when the validator is wired up, this skill should switch to running `./gradlew apiCheck` as the primary mechanism.
+If the grep is empty for a given module, that module's `build.gradle.kts` is missing the validator — raise it as a separate task rather than working around it here.
 
 ## Process
 
@@ -115,6 +117,6 @@ Bump level:
 ## Non-goals
 
 - Do NOT modify any source files — this skill is read-only
-- Do NOT wire up `binary-compatibility-validator` yourself — if Islom wants it, he'll open a separate task for it
+- Do NOT attempt to replace `./gradlew apiCheck` — BCV 0.18.1 is the primary mechanism for Native + commonMain; `audit-api` only fills the androidMain carve-out
 - Do NOT bump versions — that's `bump-version`'s job
 - Do NOT publish — CI does that automatically after the version bump lands on main
