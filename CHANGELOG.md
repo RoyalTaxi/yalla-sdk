@@ -7,19 +7,39 @@ Versioning follows [SemVer](https://semver.org/spec/v2.0.0.html) **post-1.0**; p
 
 ## [Unreleased]
 
+## [0.0.9-alpha01] — 2026-04-21
+
+### Breaking
+- `Either<D, E>` flipped to `Either<E, D>` (error-first). Every consumer's generic order changes. See ADR-010.
+- `createHttpClient` takes a `CoroutineScope` parameter; caller owns lifecycle. SDK default Koin binding provides a process-lifetime scope; consumers should override with a lifecycle-owned scope. See ADR-011.
+
 ### Added
-- `binary-compatibility-validator` plugin; `apiCheck` enforces public-API stability for Native (iosArm64, iosSimulatorArm64) + commonMain surfaces. androidMain-only surface is gated by the manual `audit-api` skill (BCV 0.18.1 doesn't cover AGP 9.0's `KotlinMultiplatformAndroidLibraryTarget` yet).
-- Root POM metadata (name, description, url, licenses, scm, developers) on every published module.
-- GitHub Pages deployment pipeline for Dokka reference docs.
-- OSS-hygiene files: `LICENSE`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `CHANGELOG.md`, `SUPPORT.md`, `CODEOWNERS`, PR + issue templates.
-- Public `.github/workflows/ci.yml` — PR + push gate for lint, API check, and tests.
+- `Either.getOrNull()`, `Either.getOrThrow()`, `Either.fold(ifFailure, ifSuccess)` extensions.
+- Unit tests for all 6 preference-impl classes (60 tests) with an `InMemoryDataStore` test harness + `MapSettings`.
+- HttpClient integration tests (6 tests via Ktor MockEngine): 401 emit, IO-error retry, guest-mode blocking, connection error, timeout, scope cancellation.
+- `GuestModeGuardConfigTest` covering the new configurable whitelist.
+- `@Serializable` + `@SerialName` pinned on 17 public domain models in `core` (Address, AddressOption, PointRequest, Route+Route.Point, SavedAddress+Parent, PointKind, Executor, ExtraService, ServiceBrand, PaymentCard, Client, GeoPoint, PlaceKind, GenderKind, LocaleKind, MapKind, ThemeKind). 17 round-trip tests added.
+- `UnauthorizedSessionEvents.drainPendingEventIfExists()` helper (needed by tests).
+- `DEFAULT_GUEST_ALLOWED_SEGMENTS` public constant in `uz.yalla.data.network`.
 
-### Removed
-- Stale `yalla-sdk = "0.0.1-alpha08"` entry from `gradle/libs.versions.toml` (dead; publishing reads `gradle.properties`).
+### Changed
+- `NetworkConfig.guestAllowedSegments: List<String>` now configurable (default preserves the legacy 6-endpoint whitelist).
+- `GuestModeGuard` accepts its whitelist via `NetworkConfig` (not hardcoded).
+- `multiplatform-settings-test` added to catalog + `data:commonTest`.
 
-### Notes
+### Documentation
+- ADR-010 (Either generic flip), ADR-011 (createHttpClient scope ownership), ADR-012 (3xx redirect mapping kept as Client) added.
+- `core` semantic-stability pass recorded in Phase 2 progress notes. 36 public declarations reviewed; 6 follow-up candidates documented.
 
-Phase 1 of the v1.0 launch (see `docs/superpowers/specs/2026-04-21-yalla-sdk-v1-launch-design.md`). No code-level changes in this phase.
+### Deferred to 1.x
+- `OrderStatus`, `PaymentKind`, `Order` need hand-written `KSerializer`s to preserve string-ID wire contracts (flagged in Task 4 concerns).
+- `safeApiCall` incorrectly maps `HttpRequestTimeoutException` (Ktor 3.x) to `DataError.Network.Connection` because it extends `IOException` (flagged in Task 7 concerns). `SocketTimeoutException` correctly maps to `Timeout`.
+
+### Known Phase-2 concerns captured
+- `Order.StatusTime.status: String` should become `OrderStatus`-typed pre-1.0.
+- `ExtraService.costType: String` should become an enum pre-1.0.
+- `PointKind` is the only enum without a `.from()` fallback — unknown wire values currently throw on decode.
+- `DataError.Network` sealed hierarchy adds cost: any new subtype breaks exhaustive `when`.
 
 ---
 
