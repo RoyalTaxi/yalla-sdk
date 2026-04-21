@@ -82,3 +82,25 @@ subprojects {
         }
     }
 }
+
+// Dokka aggregation: every published module contributes to a single docs site.
+dependencies {
+    dokka(project(":core"))
+    dokka(project(":data"))
+    dokka(project(":resources"))
+    dokka(project(":design"))
+    dokka(project(":foundation"))
+    dokka(project(":platform"))
+    dokka(project(":primitives"))
+    dokka(project(":composites"))
+    dokka(project(":maps"))
+    dokka(project(":media"))
+    dokka(project(":firebase"))
+}
+
+dokka {
+    moduleName.set("Yalla SDK")
+    dokkaPublications.html {
+        outputDirectory.set(rootProject.layout.buildDirectory.dir("dokka"))
+    }
+}
