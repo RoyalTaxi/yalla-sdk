@@ -68,3 +68,24 @@ Any regressions during Phase 2 must be measured against this baseline.
 - Non-breaking
 - Status: done
 
+### Task 6 — GuestModeGuard configurable whitelist
+- Commit: f3c8ce8
+- Default: 6 legacy endpoints preserved in `NetworkConfig.guestAllowedSegments` default
+  (`client`, `valid`, `register`, `location-name`, `cost`, `lists`); hoisted from the
+  former `private val DEFAULT_GUEST_ALLOWED_SEGMENTS` in `GuestModeGuard.kt` to a
+  public top-level `val` alongside `NetworkConfig`
+- `createGuestModeGuardPlugin` parameter kept (default now sources from the new
+  exported constant), so direct plugin consumers keep the previous signature
+- `createHttpClient` threads `config.guestAllowedSegments.toSet()` into the plugin,
+  honoring the caller's configuration
+- Test: `GuestModeGuardConfigTest` — 5 cases (default size + membership, default
+  matches exported constant, custom whitelist allows/blocks, empty whitelist blocks
+  all guest requests, empty whitelist is inert when guest mode is off). Existing
+  `GuestModeGuardTest` still green
+- apiCheck: green; diff is additive (new `guestAllowedSegments` property with
+  default + `component6()` + `copy()` overload widened + top-level
+  `DEFAULT_GUEST_ALLOWED_SEGMENTS`)
+- ktlint + detekt: green
+- Non-breaking
+- Status: done
+
