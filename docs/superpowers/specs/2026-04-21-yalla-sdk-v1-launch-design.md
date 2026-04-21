@@ -34,8 +34,8 @@ Success means that a senior engineer at a comparable ride-hailing startup in the
 4. Zero unmanaged-scope leaks in long-lived objects: `LocationManager`, `SwitchingMapProvider`, `createHttpClient` adopt caller-owned lifecycles (`close()` contract or injected `CoroutineScope`). **YallaClient's DI architecture verified capable of absorbing the contract change before alpha begins.**
 5. ADR-005 string→slot migration completed for the 7 affected composites (`ListItem`, `IconItem`, `NavigableItem`, `SelectableItem`, `PricingItem`, `AddressItem`, `Navigable` drawer), plus `EmptyStateState` decomposition — all before API freeze.
 6. Three still-present unused components (`ContentCard`, `AddressCard`, `RouteView`) removed.
-7. `Either<out D, out E>` generic parameter order **flipped to `Either<out E, out D>` (error-first, ecosystem-standard)** during alpha — cheap mechanical refactor now, impossible at 1.0 without 2.0.
-8. Yalla-shaped public surface gated with `@InternalYallaApi`: `ApiResponse<T>` / `ApiErrorResponse` / `ApiListResponse` / `UnauthorizedSessionEvents` + the 6 `core/contract/preferences/` interfaces. Library surface stays sharp; Yalla-internal shape is honestly labeled.
+7. `Either<out D, out E>` generic parameter order flipped to `Either<out E, out D>` (error-first, ecosystem convention) during alpha. Pre-1.0 full-risk mode: we break it and move on. Mechanical refactor; YallaClient call-sites updated in lockstep.
+8. Yalla-shaped public surface (`ApiResponse<T>`, `ApiErrorResponse`, `ApiListResponse`, `UnauthorizedSessionEvents`, the 6 `core/contract/preferences/` interfaces) ships as plain public API at 1.0. No `@InternalYallaApi` gate, no `@RequiresOptIn` marker — under full-risk mode we don't build opt-in machinery we don't need. Changing any of these shapes post-1.0 requires a 2.0 major bump. Accepted consequence.
 9. Missing primary-market locale (`values-uz` Latin) added. `values-be` renamed to `values-uz-Cyrl` (it contains Uzbek Cyrillic, not Belarusian).
 10. Source published under Apache 2.0 on the public `RoyalTaxi/yalla-sdk` repo. Distribution via GitHub Packages (`https://maven.pkg.github.com/RoyalTaxi/yalla-sdk`). Dokka reference docs hosted on GitHub Pages.
 11. OSS-hygiene files in place: `LICENSE`, `README.md` (public-facing), `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`, `CHANGELOG.md`, issue + PR templates, `SUPPORT.md`, `CODEOWNERS`.
@@ -44,7 +44,7 @@ Success means that a senior engineer at a comparable ride-hailing startup in the
 ## Non-Goals
 
 - **Sonatype / Maven Central distribution.** Explicitly excluded from 1.0.
-- **Backend-agnostic abstraction.** Consumer model A locked — Yalla's backend shape stays, gated `@InternalYallaApi` so it is honestly labeled rather than paraded as general library surface.
+- **Backend-agnostic abstraction.** Consumer model A locked — Yalla's backend shape stays as plain public API; no gating, no opt-in markers. Honest labeling lives in README, not in annotation ceremony.
 - **Sample apps.** No HelloTaxi, no driver/passenger/dispatcher demos. YallaClient is the integration witness.
 - **External paid security audit.** `SECURITY.md` + disclosure process at 1.0; paid audit deferred to 1.x.
 - **Community localization flow.** uz/ru/en in; broader i18n is 1.x.
@@ -55,7 +55,17 @@ Success means that a senior engineer at a comparable ride-hailing startup in the
 
 ## Consumer Model
 
-**Model A: Yalla-first, others welcome.** Public API stays opinionated around Yalla's backend envelope, preference schema, and Uzbekistan-specific defaults — **but the Yalla-specific shapes are gated with `@InternalYallaApi`**, not shipped as blessed library surface. Any consumer that wants to use them must opt in explicitly and accept their internal nature.
+**Model A: Yalla-first, others welcome.** Public API stays opinionated around Yalla's backend envelope, preference schema, and Uzbekistan-specific defaults. No opt-in gates: Yalla's shape *is* the library's shape. Consumers adopt the conventions or fork. Honest labeling lives in `README.md`, not in annotation ceremony.
+
+## Pre-1.0 Development Mode
+
+Until `1.0.0` tags, the repo operates in full-risk, no-ceremony mode:
+
+- **No deprecation cycle.** Breaking changes land directly. `@Deprecated` is not used during alpha/beta/rc.
+- **No `@RequiresOptIn` markers.** Nothing is marked experimental because *everything* is. `@ExperimentalYallaApi` and `@InternalYallaApi` are **not introduced**; the existing `@ExperimentalYallaGalleryApi` is retired (its usages become plain public API).
+- **Yalla-shaped public surface** ships as plain public API at 1.0. Changing it post-1.0 requires a 2.0 major bump — documented accepted consequence.
+- **Version ladder still applies** (third-segment bumps + alpha resets for each breaking cluster, per `.claude/rules/publishing.md`) as a tracking mechanism, not as a staging ritual.
+- **At the 1.0 tag the posture flips.** Post-1.0 follows strict SemVer. `@Deprecated` becomes usable when helpful but not mandated — SemVer itself is the primary contract with consumers.
 
 ## Quality Bar
 
@@ -87,7 +97,7 @@ Other quality requirements:
 - detekt + ktlint clean
 - Dokka docs site on GitHub Pages
 - `SECURITY.md` + vulnerability-disclosure process live
-- Published API stability guarantee with deprecation-cycle SLA — one-minor minimum, plan to widen to 3 minors or 6 months if external consumers appear
+- Post-1.0 API stability via strict SemVer: breaking changes = 2.0. `@Deprecated` used when helpful but not mandated. Pre-1.0 is full-risk — no deprecation, no markers (see Pre-1.0 Development Mode section)
 
 ---
 
@@ -113,7 +123,7 @@ Current version: `0.0.8-alpha04`. Outstanding breaking-change clusters for 1.0 (
 2. Scope-ownership refactor — `createHttpClient`
 3. Scope-ownership refactor — `LocationManager`
 4. Scope-ownership refactor — `SwitchingMapProvider`
-5. `ApiResponse` / `UnauthorizedSessionEvents` / preference interfaces gated `@InternalYallaApi`
+5. (removed — Yalla-shaped public surfaces ship as plain public API under full-risk mode; shape-changes post-1.0 = 2.0)
 6. ADR-005 string→slot migration on 7 composites
 7. `EmptyStateState` decomposition
 8. 3 unused-component deletions (minor binary break)
@@ -123,7 +133,7 @@ Current version: `0.0.8-alpha04`. Outstanding breaking-change clusters for 1.0 (
 12. `SystemBarColors` canonical shape pick
 13. `ObserveSmsCode` iOS posture decision
 14. `YallaGallery` API narrowing
-15. `@RequiresOptIn` marker consolidation (retire `ExperimentalYallaGalleryApi`)
+15. `@ExperimentalYallaGalleryApi` retirement (no replacement marker; call sites become plain public API)
 
 Realistic version path: **`0.0.8-alpha04 → 0.0.9-alpha01 → 0.0.10-alpha01 → … → roughly 0.0.23-alpha01 → 0.0.23-beta01 → 1.0.0-rc1 → 1.0.0`**. Ten-plus third-segment bumps during alpha is the honest cost of paying down the debt before freeze. Skipping it = shipping the debt into 1.0 permanently.
 
@@ -154,9 +164,8 @@ All of:
 - 3 still-present unused components (`ContentCard`, `AddressCard`, `RouteView`) removed.
 - ADR-005 migration done (7 affected composites + `EmptyStateState` decomposition).
 - 3 scope leaks fixed (`LocationManager`, `SwitchingMapProvider`, `createHttpClient`) with YallaClient call sites migrated in lockstep.
-- `Either<D, E>` flipped to `Either<E, D>` with ADR in `docs/06-DECISIONS.md` and YallaClient call sites migrated.
-- `@InternalYallaApi` marker declared in `core`; applied to `ApiResponse<T>`, `ApiErrorResponse`, `ApiListResponse`, `UnauthorizedSessionEvents`, and the 6 `core/contract/preferences/` interfaces; YallaClient call sites opt in.
-- `@RequiresOptIn` marker consolidated to exactly 2: `ExperimentalYallaApi` + `InternalYallaApi` (both in `core`, both `@Retention(AnnotationRetention.BINARY)`). `ExperimentalYallaGalleryApi` retired; call sites migrated to `ExperimentalYallaApi`.
+- `Either<D, E>` flipped to `Either<E, D>` with YallaClient call sites migrated.
+- All existing `@RequiresOptIn` marker usage removed. `@ExperimentalYallaGalleryApi` retired; its call sites become plain public API. No new markers introduced.
 - `StaticPreferences` contract reviewed and either retained with full impl (already complete) or deleted.
 - `values-uz/strings.xml` (Latin) added. Islom self-reviews translations.
 - `values-be` renamed to `values-uz-Cyrl` (contains Uzbek Cyrillic text, not Belarusian).
@@ -261,22 +270,21 @@ Aggregate: 2–3 days of GitHub Actions authoring + runner setup.
 
 Sizing legend: **XS** (hours), **S** (~1 day), **M** (~2–3 days), **L** (~4–7 days), **XL** (1+ week). These are execution-time estimates assuming Claude producing + Islom reviewing at pace. Calendar time is higher — see Rollup.
 
-### core — Size: M (was S; generic-order flip + marker declarations bumps it)
+### core — Size: M
 
-- **Flip `Either<out D, out E>` → `Either<out E, out D>`** (error-first). Mechanical refactor across all of `core` + `data`; includes YallaClient call-site updates in lockstep. Write ADR in `docs/06-DECISIONS.md`.
-- Declare **exactly 2** `@RequiresOptIn` markers: `ExperimentalYallaApi`, `InternalYallaApi`. Both `@Retention(AnnotationRetention.BINARY)`. Documented in `library-api.md`.
-- Apply `@InternalYallaApi` to the 6 preference contract interfaces (`SessionPreferences`, `UserPreferences`, `ConfigPreferences`, `InterfacePreferences`, `PositionPreferences`, `StaticPreferences`) — they are interfaces, adding methods post-1.0 without the gate is a 2.0.
-- Add `@Serializable` to domain models traveling over Ktor. Every serialized property gets explicit `@SerialName` to decouple Kotlin property name from wire name.
-- Add `getOrNull()`, `getOrThrow()`, `fold()` extensions to `Either` (non-breaking).
+- **Flip `Either<out D, out E>` → `Either<out E, out D>`** (error-first). Mechanical refactor across `core` + `data` + YallaClient call-sites in lockstep. No ADR required — pre-1.0 full-risk, we just break and ship.
+- No `@RequiresOptIn` markers introduced. Pre-1.0 is anything-goes; post-1.0, if a genuinely experimental surface ever appears in a 1.x minor, we can introduce a marker then.
+- Preference contract interfaces remain plain public API. Adding a method post-1.0 = 2.0. Accepted.
+- Add `@Serializable` to domain models traveling over Ktor. Every serialized property gets explicit `@SerialName` to decouple Kotlin property name from wire name (this *is* load-bearing for 1.0 stability — wire format is API).
+- Add `getOrNull()`, `getOrThrow()`, `fold()` extensions to `Either`.
 - Tests for untested domain models + preference-contract interface conformance.
 - `StaticPreferences` contract: already has impl; verify intentional; keep or delete accordingly.
-- Semantic-stability pass: review every `sealed`/`enum` (`DataError`, `OrderStatus`, `GenderKind`, `LocaleKind`, `MapKind`, `ThemeKind`, `PaymentKind`, `PlaceKind`, `PointKind`) for add-case hazards — document "add-case is minor but source-breaking; use `@Deprecated` warm-up" posture.
+- Semantic-stability pass at Gate 1: review every public `sealed`/`enum`/`data class`/`@Serializable` model for shape hazards. Post-1.0, adding a sealed subclass or enum value is source-breaking for exhaustive `when`s — document the posture.
 
 ### data — Size: L
 
 - **Fix `createHttpClient` scope ownership** — replace unmanaged `SupervisorJob` with caller-owned lifecycle (`HttpClientFactory.create(scope: CoroutineScope)` or `install(scope)` via Koin). YallaClient migration in lockstep.
-- **Gate `ApiResponse<T>`, `ApiErrorResponse`, `ApiListResponse` with `@InternalYallaApi`.** These encode Yalla's backend envelope; honest labeling.
-- **Gate `UnauthorizedSessionEvents` with `@InternalYallaApi`.** It is a global mutable `object`; library-surface honesty requires the marker.
+- `ApiResponse<T>`, `ApiErrorResponse`, `ApiListResponse`, `UnauthorizedSessionEvents` all ship as plain public API at 1.0. No gate, no marker. Shape changes post-1.0 = 2.0. Documented in `README.md` as Yalla-specific surface.
 - Unit tests for all 6 preference-impl classes (in-memory DataStore + fake Settings).
 - Review redirect handling: 301–399 → `DataError.Network.Client` is unusual. Either remap to `Server` / dedicated `Redirect`, or keep with explicit KDoc justifying.
 - Make `GuestModeGuard` whitelist configurable via `NetworkConfig`.
@@ -338,8 +346,8 @@ Sizing legend: **XS** (hours), **S** (~1 day), **M** (~2–3 days), **L** (~4–
 
 ### media — Size: L
 
-- **Resolve `YallaGallery` Android/iOS parity**: narrow the common API to what both platforms can deliver identically; richer features (Paging3-backed grid) move behind `ExperimentalYallaApi` (after `ExperimentalYallaGalleryApi` is retired).
-- Retire `ExperimentalYallaGalleryApi` marker (missing `@Retention(BINARY)` per repo rule); migrate call sites to the consolidated `ExperimentalYallaApi`.
+- **Resolve `YallaGallery` Android/iOS parity**: narrow the common API to what both platforms can deliver identically. Richer Android-specific features (Paging3-backed grid) either move into Android-only surfaces or are cut for 1.0. No opt-in marker — everything ships as plain public API under full-risk mode.
+- Retire `@ExperimentalYallaGalleryApi` entirely. Call sites become plain public API.
 - EXIF orientation in camera capture (currently stripped on Android).
 - Per-instance CameraX executor (not module-global).
 - Tests for compression correctness + picker paths.
@@ -363,15 +371,15 @@ Sizing legend: **XS** (hours), **S** (~1 day), **M** (~2–3 days), **L** (~4–
 - Getting-started walkthrough with code snippets per module surface.
 - Tighten `02-COMPONENT-GUIDE.md` post-ADR-005.
 - Write `MIGRATION.md` scaffold.
-- Audit `06-DECISIONS.md`; formalize the 4 asymmetry ADRs + the `Either`-flip ADR + the `@InternalYallaApi` ADR.
+- Audit `06-DECISIONS.md`; formalize the 4 asymmetry ADRs + the "Pre-1.0 full-risk mode" ADR.
 - Dokka landing page + per-module index content.
 
 ### Rollup
 
 | Module | Size | Top risks |
 |---|---|---|
-| core | M | Either flip (mechanical but everywhere); @InternalYallaApi gating on 6 interfaces |
-| data | L | Scope-ownership refactor + @InternalYallaApi gating + preference-impl tests |
+| core | M | Either flip (mechanical but everywhere); @Serializable + @SerialName pass for wire stability |
+| data | L | Scope-ownership refactor + preference-impl tests + integration tests for HTTP client |
 | resources | M | Uzbek locale quality; `values-be` rename coordination |
 | design | XS | — |
 | foundation | M | Scope-ownership; language-option guards |
@@ -379,12 +387,12 @@ Sizing legend: **XS** (hours), **S** (~1 day), **M** (~2–3 days), **L** (~4–
 | primitives | M | Test coverage + visual goldens |
 | composites | L | ADR-005 breaking migration (7 components) + deletions + goldens |
 | maps | L | Scope-ownership + iOS interop + overlay interface |
-| media | L | Gallery parity + marker consolidation + EXIF + executor |
+| media | L | Gallery parity + `@ExperimentalYallaGalleryApi` retirement + EXIF + executor |
 | firebase | S | Init guards |
 | bom | S | Scope documentation + apiCheck |
 | docs | M | Getting-started rewrite (load-bearing) |
 
-**Aggregate raw execution sizing:** 40–50 person-days of focused work (up from earlier 35–45 after accounting for `Either` flip, `@InternalYallaApi` gating, marker consolidation, 4 micro-ADRs, BOM work, CI creation from scratch).
+**Aggregate raw execution sizing:** 35–45 person-days of focused work. Full-risk mode removes the `@InternalYallaApi`-gating + `@RequiresOptIn`-consolidation work, offsetting the `Either` flip + 4 micro-ADRs + BOM hardening + CI creation. Net back to the original envelope.
 
 **Calendar time is the real number.** Serial-review bottleneck: Claude produces ~1 module per 1–3 days, Islom reviews at 1 module per ~1 week. With 13 logical workstreams (12 modules + docs + CI), calendar time is **8–12 weeks** end-to-end, assuming nothing regresses and Islom stays on pace. The spec's earlier "35–45 person-days" framing misrepresented this. Compression is possible through parallel agent teams for non-overlapping modules, but review bandwidth remains the bottleneck.
 
@@ -398,9 +406,11 @@ Sizing legend: **XS** (hours), **S** (~1 day), **M** (~2–3 days), **L** (~4–
 - **1.N.0 (minor)** — additive only. New APIs, modules, components allowed. No removals, no signature changes. Deprecations OK (WARNING level). Adding members to public sealed hierarchies or enum values requires a `@Deprecated` warm-up cycle for consumers' exhaustive `when`s.
 - **2.0.0 (major)** — breaking allowed. Requires ADR + `MIGRATION.md` entry.
 
-### Deprecation Cycle
+### Deprecation Cycle (Post-1.0 Only)
 
-Deprecate in `N.x` with `@Deprecated(level = WARNING, replaceWith = ...)`. Escalate to `ERROR` one minor later if forcing migration. **Remove only in `(N+1).0`. Minimum one minor between deprecation and removal** — acceptable for a new 1.0 where YallaClient is the sole real consumer. **Widen to 3 minors or 6 months if external consumers appear.** Policy change itself is a 1.x documentation update, not a major bump.
+Pre-1.0 is full-risk — no `@Deprecated`, no migration cycle, we just break. At the 1.0 tag this flips.
+
+Post-1.0, strict SemVer is the primary contract: **breaking changes require 2.0**. `@Deprecated(level = WARNING, replaceWith = ...)` can be used in a 1.x minor as courtesy when we know something is headed for removal; minimum one minor between deprecation and removal in 2.0. Nothing is mandated beyond SemVer itself. Widen to 3 minors / 6 months if external consumers appear.
 
 ### Patch Cadence (Normal Part of the Model)
 
@@ -464,7 +474,7 @@ Emergency hotfix escape: `1.0.x-hotfix` published to GitHub Packages, rolled for
 1. **Consumer-model drift.** Locked to A; revisiting reopens the spec.
 2. **"While we're in there."** No new features in 1.0. Only Section 4 items.
 3. **ADR-005 scope creep.** Signature change only; no Items API redesign.
-4. **Expanding the `@RequiresOptIn` marker set beyond 2.** Any new marker requires an ADR.
+4. **Introducing a `@RequiresOptIn` marker pre-1.0.** Don't — full-risk mode. Post-1.0 can introduce markers via ADR if needed.
 
 ### Post-1.0 Risks (Noted, Not Mitigated Pre-1.0)
 
@@ -524,7 +534,7 @@ Explicit review of every public surface for stability hazards:
 - Every `sealed` hierarchy: does adding a subclass force downstream `when` updates? Document the "sealed addition requires `@Deprecated` warm-up" posture.
 - Every `enum`: does reordering / adding values require migration? All enums use string discriminators for persistence; ordinal changes are safe but add-case is source-breaking.
 - Every `@Serializable` public model: `@SerialName` on every property to decouple Kotlin name from wire name. Constructor signatures: positional-arg breakage on `data class` copy() is a real hazard.
-- Every public `interface`: gated `@InternalYallaApi` or intentionally extensible? Adding an abstract method to a public interface is major-version break.
+- Every public `interface`: accept that it is extensible only via 2.0. Under full-risk mode we don't gate; we accept the 2.0 consequence when we add members later.
 - Nullable boundaries and generic variance: any `T? = null` default in the public signature is binary-locked.
 
 ---
@@ -547,8 +557,9 @@ Explicit review of every public surface for stability hazards:
 | 12 | No deadline; quality not sacrificed | User explicit |
 | 13 | Maintainership: Islom sole maintainer at 1.0 | Section 5 |
 | 14 | **`Either<D, E>` flipped to `Either<E, D>` (error-first) during alpha** | Post-critique revision |
-| 15 | **`ApiResponse<T>` + `UnauthorizedSessionEvents` + 6 preference interfaces gated `@InternalYallaApi`** | Post-critique revision |
-| 16 | **`@RequiresOptIn` marker policy: exactly 2 markers (`ExperimentalYallaApi`, `InternalYallaApi`), both `@Retention(BINARY)`** | Post-critique revision |
+| 15 | **Pre-1.0 full-risk mode: no deprecation, no `@Deprecated`, no `@RequiresOptIn` markers. Break freely until 1.0.0 tag.** | Full-risk clarification |
+| 16 | **Yalla-shaped public surface (`ApiResponse`, `UnauthorizedSessionEvents`, preference interfaces) ships as plain public API at 1.0. Shape changes post-1.0 = 2.0. No gating.** | Full-risk clarification |
+| 22 | **All existing `@RequiresOptIn` markers retired (including `@ExperimentalYallaGalleryApi`). No new markers at 1.0. Post-1.0 can introduce markers for genuinely experimental 1.x additions.** | Full-risk clarification |
 | 17 | **`apiCheck` enforces JVM/Android only; `audit-api` skill is iOS API-stability primary gate** | Post-critique revision |
 | 18 | **Visual regression tolerance: Android 0.1%, iOS 1%** (not 0% pixel-perfect) | Post-critique revision |
 | 19 | **Coverage is risk-based per module, not universal 60% line floor** | Post-critique revision |
@@ -562,7 +573,7 @@ Flagged in `.claude/rules/publishing.md`:
 1. **`gradle/libs.versions.toml`** carries `yalla-sdk = "0.0.1-alpha08"`, which is stale. Publishing reads `gradle.properties`. **Action:** delete during Gate 1 cleanup.
 2. **`docs/04-PUBLISHING.md`** labels breaking changes as "Minor" while the example (`0.0.7 → 0.0.8`) is a third-segment bump. **Action:** rewrite the table during the docs pass.
 3. **`values-be`** directory contains Uzbek Cyrillic text under a Belarusian locale code. **Action:** rename to `values-uz-Cyrl` during Gate 1.
-4. **`@ExperimentalYallaGalleryApi`** in `media/src/commonMain/kotlin/uz/yalla/media/gallery/` is missing `@Retention(AnnotationRetention.BINARY)` per `.claude/rules/library-api.md` template. **Action:** retire the marker during Gate 1 and migrate call sites to the consolidated `ExperimentalYallaApi`.
+4. **`@ExperimentalYallaGalleryApi`** in `media/src/commonMain/kotlin/uz/yalla/media/gallery/` is missing `@Retention(AnnotationRetention.BINARY)` per `.claude/rules/library-api.md` template. **Action:** retire the marker entirely during Gate 1. Call sites become plain public API. (Full-risk mode means no opt-in markers pre-1.0.)
 5. **`StaticPreferencesImpl` presumed missing in earlier audit — it is in fact complete.** No action; note removed from Gate 1 work.
 6. **`CarNumberState` presumed bundled in earlier audit — it is in fact a clean data class.** No action; note removed from ADR-005 scope.
 
