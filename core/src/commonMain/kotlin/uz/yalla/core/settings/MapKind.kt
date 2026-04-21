@@ -1,5 +1,6 @@
 package uz.yalla.core.settings
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import uz.yalla.core.util.normalizedId
 
@@ -17,9 +18,11 @@ import uz.yalla.core.util.normalizedId
 @Serializable
 enum class MapKind(val id: String) {
     /** Google Maps SDK. Default on Android. */
+    @SerialName("google")
     Google("google"),
 
     /** MapLibre GL Native. Default on iOS. */
+    @SerialName("libre")
     Libre("libre");
 
     companion object {

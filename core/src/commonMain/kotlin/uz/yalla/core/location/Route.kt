@@ -1,5 +1,8 @@
 package uz.yalla.core.location
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * A calculated route between waypoints, returned by the routing API.
  *
@@ -12,10 +15,11 @@ package uz.yalla.core.location
  * @see PointRequest
  * @since 0.0.1
  */
+@Serializable
 data class Route(
-    val distance: Double,
-    val duration: Double,
-    val points: List<Point>
+    @SerialName("distance") val distance: Double,
+    @SerialName("duration") val duration: Double,
+    @SerialName("points") val points: List<Point>
 ) {
     /**
      * A single coordinate in the route polyline.
@@ -24,8 +28,9 @@ data class Route(
      * @property lng Longitude in degrees
      * @since 0.0.1
      */
+    @Serializable
     data class Point(
-        val lat: Double,
-        val lng: Double
+        @SerialName("lat") val lat: Double,
+        @SerialName("lng") val lng: Double
     )
 }

@@ -1,5 +1,8 @@
 package uz.yalla.core.order
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * Optional extra service that can be added to an order.
  *
@@ -25,11 +28,12 @@ package uz.yalla.core.order
  * @see Order.Taxi.services
  * @since 0.0.1
  */
+@Serializable
 data class ExtraService(
-    val id: Int,
-    val cost: Int,
-    val name: String,
-    val costType: String
+    @SerialName("id") val id: Int,
+    @SerialName("cost") val cost: Int,
+    @SerialName("name") val name: String,
+    @SerialName("costType") val costType: String
 ) {
     companion object {
         /** Cost type indicating a fixed monetary amount. */

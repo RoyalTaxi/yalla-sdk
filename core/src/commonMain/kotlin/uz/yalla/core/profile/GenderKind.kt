@@ -1,5 +1,6 @@
 package uz.yalla.core.profile
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import uz.yalla.core.util.normalizedId
 
@@ -16,12 +17,15 @@ import uz.yalla.core.util.normalizedId
 @Serializable
 enum class GenderKind(val id: String) {
     /** Male gender. */
+    @SerialName("male")
     Male("male"),
 
     /** Female gender. */
+    @SerialName("female")
     Female("female"),
 
     /** User has not selected a gender. Default value. */
+    @SerialName("not_selected")
     NotSelected("not_selected");
 
     companion object {

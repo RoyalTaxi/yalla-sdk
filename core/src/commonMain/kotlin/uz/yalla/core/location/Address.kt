@@ -1,5 +1,8 @@
 package uz.yalla.core.location
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * Basic address representation with geographic coordinates.
  *
@@ -15,10 +18,11 @@ package uz.yalla.core.location
  * @see SavedAddress
  * @since 0.0.1
  */
+@Serializable
 data class Address(
-    val id: Int?,
-    val name: String,
-    val lat: Double,
-    val lng: Double,
-    val isFromDatabase: Boolean
+    @SerialName("id") val id: Int?,
+    @SerialName("name") val name: String,
+    @SerialName("lat") val lat: Double,
+    @SerialName("lng") val lng: Double,
+    @SerialName("isFromDatabase") val isFromDatabase: Boolean
 )

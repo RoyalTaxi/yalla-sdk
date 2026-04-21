@@ -1,5 +1,6 @@
 package uz.yalla.core.settings
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import uz.yalla.core.util.normalizedLocaleCode
 
@@ -16,15 +17,19 @@ import uz.yalla.core.util.normalizedLocaleCode
 @Serializable
 enum class LocaleKind(val code: String) {
     /** Uzbek (Latin script). Default locale. */
+    @SerialName("uz")
     Uz("uz"),
 
     /** Uzbek (Cyrillic script). */
+    @SerialName("uz-Cyrl")
     UzCyrillic("uz-Cyrl"),
 
     /** Russian. */
+    @SerialName("ru")
     Ru("ru"),
 
     /** English. */
+    @SerialName("en")
     En("en");
 
     companion object {

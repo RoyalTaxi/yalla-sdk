@@ -1,5 +1,6 @@
 package uz.yalla.core.settings
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import uz.yalla.core.util.normalizedId
 
@@ -16,12 +17,15 @@ import uz.yalla.core.util.normalizedId
 @Serializable
 enum class ThemeKind(val id: String) {
     /** Always light theme, regardless of system setting. */
+    @SerialName("light")
     Light("light"),
 
     /** Always dark theme, regardless of system setting. */
+    @SerialName("dark")
     Dark("dark"),
 
     /** Follow the device's system-wide appearance setting. Default. */
+    @SerialName("system")
     System("system");
 
     companion object {

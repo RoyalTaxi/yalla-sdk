@@ -1,5 +1,6 @@
 package uz.yalla.core.location
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import uz.yalla.core.util.normalizedId
 
@@ -16,12 +17,15 @@ import uz.yalla.core.util.normalizedId
 @Serializable
 enum class PlaceKind(val id: String) {
     /** User's home address. */
+    @SerialName("home")
     Home("home"),
 
     /** User's work/office address. */
+    @SerialName("work")
     Work("work"),
 
     /** Any other saved location. */
+    @SerialName("other")
     Other("other"),
     ;
 

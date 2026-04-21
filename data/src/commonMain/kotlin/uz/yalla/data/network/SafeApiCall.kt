@@ -51,7 +51,7 @@ private const val RETRY_BACKOFF_FACTOR = 2.0
 suspend inline fun <reified T> safeApiCall(
     isIdempotent: Boolean = false,
     crossinline call: suspend () -> HttpResponse,
-): Either<T, DataError.Network> =
+): Either<DataError.Network, T> =
     try {
         val response = retryWithBackoff(isIdempotent = isIdempotent) { call() }
         when (response.status.value) {
@@ -62,6 +62,12 @@ suspend inline fun <reified T> safeApiCall(
                     Either.Success(response.body())
                 }
             }
+            // 3xx mapping rationale (ADR-012):
+            // Ktor's HttpClient follows redirects automatically when a valid Location
+            // header is present. A 3xx surfacing here means the server returned an
+            // unfollowable redirect (missing/invalid Location) -- a client-facing
+            // protocol issue, not a server error. Callers can differentiate via
+            // the underlying HttpResponse status if they need finer handling.
             in 300..399 -> Either.Failure(DataError.Network.Client)
             in 400..499 -> {
                 val message =

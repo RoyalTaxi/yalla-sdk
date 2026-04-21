@@ -25,7 +25,11 @@ import uz.yalla.data.util.ioDispatcher
  * Registers:
  * - [DataStore][androidx.datastore.core.DataStore] singleton for async preferences
  * - [Settings][com.russhwolf.settings.Settings] singleton for synchronous preferences
- * - [CoroutineScope] bound to [ioDispatcher][uz.yalla.data.util.ioDispatcher] for background writes
+ * - [CoroutineScope] bound to [ioDispatcher][uz.yalla.data.util.ioDispatcher] for background writes.
+ *   **Default is process-lifetime.** Consumers that need per-lifecycle cancellation (e.g. an
+ *   [HttpClient][io.ktor.client.HttpClient] owned by an Activity/session) should override this
+ *   single in their own Koin module with a narrower scope — see ADR-011. The default suits
+ *   preference implementations, which are process-lifetime by design.
  * - [StaticPreferences][uz.yalla.core.contract.preferences.StaticPreferences] -- synchronous startup reads
  * - [SessionPreferences][uz.yalla.core.contract.preferences.SessionPreferences] -- tokens and guest mode
  * - [UserPreferences][uz.yalla.core.contract.preferences.UserPreferences] -- profile data
@@ -49,6 +53,8 @@ import uz.yalla.data.util.ioDispatcher
 val dataModule = module {
     single { createDataStore() }
     single { createSettings() }
+    // Default process-lifetime scope; override at the consumer level for per-lifecycle clients.
+    // See ADR-011 (docs/06-DECISIONS.md).
     single { CoroutineScope(ioDispatcher + SupervisorJob()) }
 
     single<StaticPreferences> { StaticPreferencesImpl(get()) }

@@ -1,5 +1,8 @@
 package uz.yalla.core.location
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * A waypoint for route calculation requests.
  *
@@ -13,8 +16,9 @@ package uz.yalla.core.location
  * @see Route
  * @since 0.0.1
  */
+@Serializable
 data class PointRequest(
-    val kind: PointKind,
-    val lng: Double,
-    val lat: Double
+    @SerialName("kind") val kind: PointKind,
+    @SerialName("lng") val lng: Double,
+    @SerialName("lat") val lat: Double
 )

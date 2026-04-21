@@ -33,4 +33,21 @@ object UnauthorizedSessionEvents {
     fun publish() {
         eventsChannel.trySend(Unit)
     }
+
+    /**
+     * Drops any event sitting in the CONFLATED channel without suspending.
+     *
+     * Because the event bus is a process-scoped singleton, a test that triggers
+     * a 401 can leak a pending event into later tests that share the same test
+     * process. Call this in a `@BeforeTest` (or equivalent) block to guarantee
+     * each test starts from a clean slate.
+     *
+     * Safe to call at any time: non-suspending, returns immediately when the
+     * channel is already empty.
+     *
+     * @since 0.0.9
+     */
+    fun drainPendingEventIfExists() {
+        eventsChannel.tryReceive()
+    }
 }

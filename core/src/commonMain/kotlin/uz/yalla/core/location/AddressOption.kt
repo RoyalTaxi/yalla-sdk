@@ -1,5 +1,8 @@
 package uz.yalla.core.location
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * Address search result or autocomplete suggestion.
  *
@@ -17,12 +20,13 @@ package uz.yalla.core.location
  * @see Address
  * @since 0.0.1
  */
+@Serializable
 data class AddressOption(
-    val id: Int,
-    val title: String,
-    val address: String,
-    val distance: Double,
-    val lat: Double,
-    val lng: Double,
-    val isFromDatabase: Boolean
+    @SerialName("id") val id: Int,
+    @SerialName("title") val title: String,
+    @SerialName("address") val address: String,
+    @SerialName("distance") val distance: Double,
+    @SerialName("lat") val lat: Double,
+    @SerialName("lng") val lng: Double,
+    @SerialName("isFromDatabase") val isFromDatabase: Boolean
 )

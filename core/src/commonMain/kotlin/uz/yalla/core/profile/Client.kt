@@ -1,5 +1,8 @@
 package uz.yalla.core.profile
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * User profile data returned from the API.
  *
@@ -17,12 +20,13 @@ package uz.yalla.core.profile
  * @see uz.yalla.core.contract.preferences.UserPreferences
  * @since 0.0.1
  */
+@Serializable
 data class Client(
-    val phone: String,
-    val name: String,
-    val surname: String,
-    val image: String,
-    val birthday: String,
-    val balance: Long,
-    val gender: String
+    @SerialName("phone") val phone: String,
+    @SerialName("name") val name: String,
+    @SerialName("surname") val surname: String,
+    @SerialName("image") val image: String,
+    @SerialName("birthday") val birthday: String,
+    @SerialName("balance") val balance: Long,
+    @SerialName("gender") val gender: String
 )

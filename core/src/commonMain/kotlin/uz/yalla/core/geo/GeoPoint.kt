@@ -1,5 +1,6 @@
 package uz.yalla.core.geo
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -31,8 +32,8 @@ private fun Double.toRadians(): Double = this * (PI / 180.0)
  */
 @Serializable
 data class GeoPoint(
-    val lat: Double,
-    val lng: Double
+    @SerialName("lat") val lat: Double,
+    @SerialName("lng") val lng: Double
 ) {
     init {
         require(lat in -90.0..90.0) { "Latitude must be in [-90, 90], was $lat" }

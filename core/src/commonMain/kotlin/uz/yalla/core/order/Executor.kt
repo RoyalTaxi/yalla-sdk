@@ -1,5 +1,8 @@
 package uz.yalla.core.order
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * Lightweight executor location data for real-time map tracking.
  *
@@ -13,10 +16,11 @@ package uz.yalla.core.order
  * @property distance Distance to pickup point in meters
  * @since 0.0.1
  */
+@Serializable
 data class Executor(
-    val id: Int,
-    val lat: Double,
-    val lng: Double,
-    val heading: Double,
-    val distance: Double
+    @SerialName("id") val id: Int,
+    @SerialName("lat") val lat: Double,
+    @SerialName("lng") val lng: Double,
+    @SerialName("heading") val heading: Double,
+    @SerialName("distance") val distance: Double
 )
