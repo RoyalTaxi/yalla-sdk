@@ -47,3 +47,17 @@ Any regressions during Phase 2 must be measured against this baseline.
 - `:data:ktlintCheck` + `:data:detekt` + `:data:apiCheck`: green
 - Status: done
 
+### Task 4 — @Serializable + @SerialName pass
+- Commit: 6b8d26a
+- Models touched: 17
+  - Newly `@Serializable`: `Address`, `AddressOption`, `PointRequest`, `Route` (+ `Route.Point`), `SavedAddress` (+ `SavedAddress.Parent`), `PointKind`, `Executor`, `ExtraService`, `ServiceBrand`, `PaymentCard`, `Client` (Profile)
+  - Already `@Serializable`, `@SerialName` added on properties/variants: `GeoPoint`, `PlaceKind`, `GenderKind`, `LocaleKind`, `MapKind`, `ThemeKind`
+- Wire names pinned to current Kotlin property names for data classes; enum variants pinned to the documented `id`/`code`/`wireValue` (matches the `.from(...)` factory contract)
+- Round-trip tests: 17 new in `core/src/commonTest/.../SerializationRoundTripTest.kt` (no prior serialization tests in `core`); each verifies round-trip equality + asserts the on-the-wire property names
+- `:core:iosSimulatorArm64Test`: green (17/17 new + all pre-existing)
+- apiCheck post-pass: green (baselines regenerated — diff is purely additive `$serializer` + `Companion.serializer()` factories, 165 net-added lines in `core/api/core.klib.api`)
+- ktlint + detekt: green
+- Deferred (spawn-task-flagged, need custom KSerializers): `order/OrderStatus`, `payment/PaymentKind`, `order/Order`. Rationale: default polymorphic serialization would emit a `type`-discriminator JSON object that doesn't match the existing string-id wire contract (`"new"`, `"cash"`, etc.). Preserving that contract requires hand-written `KSerializer`s + an ADR.
+- Wire contract frozen on current Kotlin property names
+- Status: done
+
