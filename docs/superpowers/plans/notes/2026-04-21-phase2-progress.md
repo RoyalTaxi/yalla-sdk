@@ -35,3 +35,15 @@ Any regressions during Phase 2 must be measured against this baseline.
 - YallaClient :androidApp:assembleDebug: BUILD SUCCESSFUL
 - Status: SDK-side done; YallaClient holds pending SDK 0.0.9-alpha01 publish.
 
+### Task 3 — preference-impl unit tests
+- Commit: 4024d91
+- Test files created: 6 (one per impl) + `InMemoryDataStore` harness
+- Test count: 60 (Session 12, User 10, Config 9, Interface 12, Position 6, Static 11)
+- Harness: `InMemoryDataStore` (MutableStateFlow-backed `DataStore<Preferences>`) + `com.russhwolf.settings.MapSettings` from the new `multiplatform-settings-test` commonTest dependency
+- Dispatcher: `runTest(UnconfinedTestDispatcher())` — each `scope.launch { dataStore.edit {...} }` settles before the next test line
+- Dual-write coverage: Session's `setGuestMode`/`setDeviceRegistered`/`clearSession` cross-write to `StaticPreferences`; Interface's `setLocaleType`/`setOnboardingStage` cross-write; Static shares state across two instances over the same `Settings`.
+- Additive: no public API delta (internal harness only)
+- `:data:iosSimulatorArm64Test`: green (100/100 tests pass, 60 new)
+- `:data:ktlintCheck` + `:data:detekt` + `:data:apiCheck`: green
+- Status: done
+
