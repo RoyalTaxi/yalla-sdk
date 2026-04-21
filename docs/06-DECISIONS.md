@@ -138,3 +138,15 @@ Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.
 **Consequence**: Breaking change for YallaClient — its Koin `single<HttpClient>(...)` calls must supply a scope. YallaClient's `chore/sdk-phase2-either-flip` branch absorbs this alongside the Either flip (or a second scratch branch if separation is cleaner). After this ADR, long-running tests can construct and tear down an `HttpClient` inside a `runTest { ... }` block without leaking coroutines.
 
 Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.
+
+---
+
+## ADR-012: HTTP 3xx responses map to `DataError.Network.Client`
+
+**Decision**: 3xx HTTP status codes that reach `safeApiCall` map to `DataError.Network.Client`. Rationale: Ktor's `HttpClient` follows redirects automatically when `Location` is present; a 3xx surfacing from `safeApiCall` means the server returned an unfollowable redirect (missing/invalid `Location`), which is a client-facing protocol issue (caller's request triggered an unreachable redirect) rather than a server error.
+
+**Why**: Option considered and rejected: a dedicated `DataError.Network.Redirect` type. That would be semantically cleaner but introduces a sealed-hierarchy addition that breaks exhaustive `when` at every caller. Under full-risk pre-1.0 mode we could accept the break, but the marginal benefit of a redirect-specific type doesn't justify touching every downstream `when`.
+
+**Consequence**: Non-breaking. KDoc on the mapping documents the rationale so future readers don't re-litigate.
+
+Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.

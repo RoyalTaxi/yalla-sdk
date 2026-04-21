@@ -62,6 +62,12 @@ suspend inline fun <reified T> safeApiCall(
                     Either.Success(response.body())
                 }
             }
+            // 3xx mapping rationale (ADR-012):
+            // Ktor's HttpClient follows redirects automatically when a valid Location
+            // header is present. A 3xx surfacing here means the server returned an
+            // unfollowable redirect (missing/invalid Location) -- a client-facing
+            // protocol issue, not a server error. Callers can differentiate via
+            // the underlying HttpResponse status if they need finer handling.
             in 300..399 -> Either.Failure(DataError.Network.Client)
             in 400..499 -> {
                 val message =
