@@ -89,3 +89,38 @@ Any regressions during Phase 2 must be measured against this baseline.
 - Non-breaking
 - Status: done
 
+### Task 7 — HttpClient integration tests
+- Commit: c65b5f2
+- New tests: 6 in `data/src/commonTest/.../HttpClientFactoryIntegrationTest.kt`
+  (401 + UnauthorizedSessionEvents emit; retry + backoff on IOException for
+  idempotent calls; guest mode blocks non-whitelisted endpoint; connection
+  error → `DataError.Network.Connection`; socket timeout →
+  `DataError.Network.Timeout`; scope cancellation stops preference observers)
+- Harness: `HttpClient(MockEngine) { ... }` mirrors `createHttpClient`'s plugin
+  install stack (HttpCallValidator, HttpTimeout, GuestModeGuard, defaultRequest,
+  ContentNegotiation, DynamicHeaders). Keep-in-sync caveat documented in the
+  class KDoc. `createHttpClient` itself can't be called with MockEngine because
+  `createHttpEngine()` is an `expect` and the engine parameter is not hoisted.
+- Fakes: `FakeSessionPreferences`, `FakeInterfacePreferences`,
+  `FakePositionPreferences` — thin `MutableStateFlow`-backed doubles exposing
+  only the fields `createHttpClient` observes. Reuses the existing
+  `InMemoryDataStore` pattern's spirit, not the class itself (the test needs
+  direct flow control, not DataStore semantics).
+- Additive core API: `UnauthorizedSessionEvents.drainPendingEventIfExists()` —
+  a single new method on the global object, allows tests (and consumers) to
+  drain any pending CONFLATED event. KDoc inline. apiCheck diff is one-line
+  additive in `core/api/core.klib.api`.
+- Known-gap documented inline in the timeout test: Ktor 3.x's
+  `HttpRequestTimeoutException` surfaces as `DataError.Network.Connection`
+  because it extends `kotlinx.io.IOException` and `safeApiCall` catches
+  `IOException` before any more-specific check. The timeout test therefore
+  throws `SocketTimeoutException` directly (matching the contract exercised by
+  `SafeApiCallTest.shouldReturnTimeoutErrorOnSocketTimeoutException`). Tracking
+  the proper `HttpRequestTimeoutException → Timeout` fix in `safeApiCall` as a
+  separate follow-up — scoped outside Task 7.
+- `:data:iosSimulatorArm64Test`: green (111/111 total, 6 new)
+- `:data:ktlintCheck` + `:data:detekt` + `:core:ktlintCheck` + `:core:detekt`
+  + `apiCheck`: green
+- Additive
+- Status: done
+
