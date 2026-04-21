@@ -77,14 +77,22 @@ No changes to `bom/` — the BOM reads `yalla.sdk.version` at configuration time
 
 Running the full build catches mis-typed properties and signal-tests the BOM still resolves.
 
-### 7. Public API Check (Optional)
+### 7. Public API Check
 
-The binary-compatibility-validator plugin is **not currently wired up** in this repo, so
-`./gradlew apiCheck` does not exist. If Islom asks to verify API compatibility, invoke the
-`audit-api` skill — it knows how to handle the "no validator yet" state and can do a manual
-diff of `commonMain` public declarations.
+`./gradlew apiCheck` is wired as of commit `9031d23` (`binary-compatibility-validator` 0.18.1,
+experimental Klib mode). Run it before every bump — it covers Native (iosArm64, iosSimulatorArm64)
+plus everything in `commonMain` that compiles into those targets:
 
-For a routine alpha increment, skip this. For a breaking bump, invoke `audit-api` first.
+```bash
+./gradlew apiCheck
+```
+
+If the diff since the last release touches `**/src/androidMain/**`, also invoke the `audit-api`
+skill — it is the manual gate for androidMain-only additions until BCV 0.18.1's AGP 9.0 gap
+closes upstream.
+
+For a breaking bump (patch-segment bump with alpha01 reset), invoke `audit-api` regardless so
+the PR body documents the full public-surface delta.
 
 ### 8. Commit
 

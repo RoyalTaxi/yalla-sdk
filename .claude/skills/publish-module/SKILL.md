@@ -27,7 +27,7 @@ Stop and tell Islom if any fail:
 4. **Last commit is a version bump**: `git log -1 --oneline` looks like `chore: bump SDK version to ...`
 5. **Full build passed locally**: run `./gradlew build` before pushing
 6. **Tests pass locally**: `./gradlew test`
-7. **Public API audited**: invoke the `audit-api` skill first — apiCheck is not wired up, so the audit is manual
+7. **Public API audited**: run `./gradlew apiCheck` (wired as of commit `9031d23` via `binary-compatibility-validator` 0.18.1 in experimental Klib mode; covers Native + commonMain). If the PR touches `**/src/androidMain/**`, also invoke the `audit-api` skill — it is the manual gate for androidMain-only additions until BCV 0.18.1's AGP 9.0 gap closes upstream.
 
 ## Normal Publish Flow
 
