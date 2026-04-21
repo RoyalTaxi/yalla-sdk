@@ -61,3 +61,10 @@ Any regressions during Phase 2 must be measured against this baseline.
 - Wire contract frozen on current Kotlin property names
 - Status: done
 
+### Task 5 — 3xx redirect mapping decision
+- Commit: a8a4d95
+- Decision: Option A (keep mapping + KDoc + ADR-012)
+- Alternatives rejected: dedicated Redirect type (breaks exhaustive when)
+- Non-breaking
+- Status: done
+
