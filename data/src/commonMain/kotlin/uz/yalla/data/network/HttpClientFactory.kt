@@ -15,7 +15,6 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -25,7 +24,6 @@ import uz.yalla.core.contract.preferences.PositionPreferences
 import uz.yalla.core.contract.preferences.SessionPreferences
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.session.UnauthorizedSessionEvents
-import uz.yalla.data.util.ioDispatcher
 import uz.yalla.data.util.platformName
 
 private const val BEARER_PREFIX = "Bearer "
@@ -46,10 +44,22 @@ private const val SOCKET_TIMEOUT_MS = 15_000L
  * instances and updated reactively, ensuring headers always reflect current state
  * without blocking the request path.
  *
+ * ### Scope ownership
+ *
+ * The caller owns [scope]. Every preference-observation coroutine launched here
+ * runs on that scope. Cancelling [scope] stops those coroutines cleanly; the
+ * returned [HttpClient] should be [HttpClient.close]d in lockstep. Do not pass
+ * a process-lifetime scope for short-lived clients — the background header
+ * observers will outlive the [HttpClient] otherwise. See ADR-011 in
+ * `docs/06-DECISIONS.md` for the rationale.
+ *
  * @param config network configuration (base URL, brand, secret)
  * @param sessionPrefs session state (token, guest mode)
  * @param interfacePrefs interface state (locale)
  * @param positionPrefs position state (last known location)
+ * @param scope caller-owned [CoroutineScope] that hosts the preference-observation
+ *   coroutines; cancelling it stops header/guest-mode observers. Must outlive
+ *   every request issued through the returned client.
  * @param inspektifySetup optional debug inspector plugin setup (e.g. Inspektify)
  * @return configured [HttpClient] instance ready for use with [safeApiCall]
  * @see NetworkConfig
@@ -63,9 +73,9 @@ fun createHttpClient(
     sessionPrefs: SessionPreferences,
     interfacePrefs: InterfacePreferences,
     positionPrefs: PositionPreferences,
+    scope: CoroutineScope,
     inspektifySetup: (HttpClientConfig<*>.() -> Unit)? = null,
 ): HttpClient {
-    val scope = CoroutineScope(ioDispatcher + SupervisorJob())
     val localeCache = MutableStateFlow("")
     val accessTokenCache = MutableStateFlow("")
     val guestModeCache = MutableStateFlow(false)

@@ -126,3 +126,15 @@ Decided: 2026-04-21. Part of Phase 1 of the v1.0 launch.
 **Consequence**: Every call-site in `core`, `data`, and YallaClient flips. Cumulative breaking: `0.0.8-alpha04` → `0.0.9-alpha01`. YallaClient's scratch branch `chore/sdk-phase2-either-flip` merges to YallaClient's `dev` branch in lockstep with this SDK PR.
 
 Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.
+
+---
+
+## ADR-011: `createHttpClient` scope ownership moves to caller
+
+**Decision**: `createHttpClient` now takes a `CoroutineScope` parameter. The SDK does not internally construct a `CoroutineScope(ioDispatcher + SupervisorJob())`. Caller owns lifecycle; when the caller cancels the scope, the client's background flows (header polling, 401 reaction) stop cleanly.
+
+**Why**: The previous signature leaked an unmanaged scope for the process lifetime. `HttpClient.close()` does not cancel that scope, because the scope is unreachable from the returned `HttpClient`. This ADR inverts ownership: caller scope → SDK uses it → caller cancels it → SDK cleans up.
+
+**Consequence**: Breaking change for YallaClient — its Koin `single<HttpClient>(...)` calls must supply a scope. YallaClient's `chore/sdk-phase2-either-flip` branch absorbs this alongside the Either flip (or a second scratch branch if separation is cleaner). After this ADR, long-running tests can construct and tear down an `HttpClient` inside a `runTest { ... }` block without leaking coroutines.
+
+Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.
