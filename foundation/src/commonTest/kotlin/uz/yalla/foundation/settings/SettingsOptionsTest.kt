@@ -55,16 +55,6 @@ class SettingsOptionsTest {
     }
 
     @Test
-    fun shouldMapLocaleKindUzCyrillicToUzbekCyrillic() {
-        assertEquals(LanguageOption.UzbekCyrillic, LanguageOption.from(LocaleKind.UzCyrillic))
-    }
-
-    @Test
-    fun shouldMapLocaleKindEnToEnglish() {
-        assertEquals(LanguageOption.English, LanguageOption.from(LocaleKind.En))
-    }
-
-    @Test
     fun shouldContainAllLanguageOptions() {
         val all = LanguageOption.all
         assertEquals(2, all.size)

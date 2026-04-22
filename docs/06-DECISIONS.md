@@ -181,3 +181,45 @@ val locationModule = module {
 YallaClient's `chore/sdk-phase3-bridge` branch carries the call-site migration in lockstep.
 
 Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.
+
+---
+
+## ADR-014: `LanguageOption` and `LocaleKind` narrowed to production-ready locales
+
+**Decision**: Remove `LanguageOption.UzbekCyrillic` and `LanguageOption.English` from the sealed hierarchy. Remove `LocaleKind.UzCyrillic` and `LocaleKind.En` from the enum. `LanguageOption.from(kind)` is now exhaustive over the two remaining cases (`Uz`, `Ru`). iOS `getCurrentLanguage()` falls back to `"uz"` instead of `"en"` when the system doesn't expose one.
+
+Resulting state:
+
+```kotlin
+// core/settings/LocaleKind.kt
+@Serializable
+enum class LocaleKind(val code: String) {
+    @SerialName("uz") Uz("uz"),
+    @SerialName("ru") Ru("ru"),
+}
+
+// foundation/settings/LanguageOption.kt
+sealed class LanguageOption(...) : Selectable {
+    data object Uzbek : LanguageOption(...)
+    data object Russian : LanguageOption(...)
+    companion object {
+        val all = listOf(Uzbek, Russian)
+        fun from(kind: LocaleKind): LanguageOption = when (kind) {
+            LocaleKind.Uz -> Uzbek
+            LocaleKind.Ru -> Russian
+        }
+    }
+}
+```
+
+**Why**: `UzbekCyrillic` and `English` were labelled "not production-ready" but still exposed. They were stable API surface implying support that didn't exist. Under full-risk pre-1.0 mode we delete rather than deprecate.
+
+String resources: `values-en/strings.xml` stays on disk as a fallback asset — it is not tied to `LocaleKind.En` on the API side. `values-be/` is renamed to `values-uz-Cyrl/` by this Phase's Task 8 because the directory contains Uzbek Cyrillic text, but that's a resource-bundle filename correction, not a `LocaleKind.UzCyrillic` restoration.
+
+**Consequence**: Breaking on two planes:
+1. API — any YallaClient call to `LanguageOption.English`, `LanguageOption.UzbekCyrillic`, `LocaleKind.En`, or `LocaleKind.UzCyrillic` fails to compile.
+2. Persistence — stored `InterfacePreferences.localeType` values of `"en"` or `"uz-Cyrl"` fall through `LocaleKind.from(code)` to `LocaleKind.Uz` silently. Acceptable: no user in YallaClient prod has persisted those (neither was in the picker's `all` list).
+
+YallaClient's `chore/sdk-phase3-bridge` branch drops any dead references.
+
+Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.

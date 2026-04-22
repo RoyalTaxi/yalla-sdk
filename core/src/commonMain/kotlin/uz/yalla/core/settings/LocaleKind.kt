@@ -8,9 +8,12 @@ import uz.yalla.core.util.normalizedLocaleCode
  * Supported app locales for string resource selection.
  *
  * Determines which language and script variant is used throughout the app.
- * The [code] follows BCP 47 conventions (e.g., "uz-Cyrl" for Uzbek in Cyrillic script).
+ * The [code] follows BCP 47 conventions (e.g. `"uz"`, `"ru"`).
  *
- * @property code BCP 47 locale code used for resource lookup
+ * Narrowed in Phase 3 (ADR-014) to production-ready locales only; `En` and
+ * `UzCyrillic` cases were removed. Unknown codes fall back to [Uz] via [from].
+ *
+ * @property code BCP 47 locale code used for resource lookup.
  * @see uz.yalla.core.contract.preferences.InterfacePreferences.localeType
  * @since 0.0.1
  */
@@ -20,28 +23,20 @@ enum class LocaleKind(val code: String) {
     @SerialName("uz")
     Uz("uz"),
 
-    /** Uzbek (Cyrillic script). */
-    @SerialName("uz-Cyrl")
-    UzCyrillic("uz-Cyrl"),
-
     /** Russian. */
     @SerialName("ru")
-    Ru("ru"),
-
-    /** English. */
-    @SerialName("en")
-    En("en");
+    Ru("ru");
 
     companion object {
         /**
-         * Parses a locale code string into the corresponding [LocaleKind].
+         * Parses a locale code into the corresponding [LocaleKind].
          *
          * Normalizes input by trimming, lowercasing, and replacing underscores
-         * with hyphens (e.g., "uz_Cyrl" becomes "uz-cyrl").
-         * Returns [Uz] for `null` or unrecognized codes.
+         * with hyphens. Returns [Uz] for `null`, unrecognized, or removed codes
+         * (e.g. stored `"en"` or `"uz-Cyrl"` from before ADR-014 fall through here).
          *
-         * @param code BCP 47 locale code, or `null`
-         * @return The matching [LocaleKind], defaulting to [Uz]
+         * @param code BCP 47 locale code, or `null`.
+         * @return Matching [LocaleKind], defaulting to [Uz].
          */
         fun from(code: String?): LocaleKind {
             val normalizedCode = code.normalizedLocaleCode()

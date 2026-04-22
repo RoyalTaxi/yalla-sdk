@@ -26,4 +26,4 @@ actual fun changeLanguage(languageCode: String) {
  * @return ISO 639-1 language code
  * @since 0.0.1
  */
-actual fun getCurrentLanguage(): String = NSLocale.currentLocale.languageCode ?: "en"
+actual fun getCurrentLanguage(): String = NSLocale.currentLocale.languageCode ?: "uz"

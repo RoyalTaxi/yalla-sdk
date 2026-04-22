@@ -66,10 +66,8 @@ final enum class uz.yalla.core.profile/GenderKind : kotlin/Enum<uz.yalla.core.pr
 }
 
 final enum class uz.yalla.core.settings/LocaleKind : kotlin/Enum<uz.yalla.core.settings/LocaleKind> { // uz.yalla.core.settings/LocaleKind|null[0]
-    enum entry En // uz.yalla.core.settings/LocaleKind.En|null[0]
     enum entry Ru // uz.yalla.core.settings/LocaleKind.Ru|null[0]
     enum entry Uz // uz.yalla.core.settings/LocaleKind.Uz|null[0]
-    enum entry UzCyrillic // uz.yalla.core.settings/LocaleKind.UzCyrillic|null[0]
 
     final val code // uz.yalla.core.settings/LocaleKind.code|{}code[0]
         final fun <get-code>(): kotlin/String // uz.yalla.core.settings/LocaleKind.code.<get-code>|<get-code>(){}[0]

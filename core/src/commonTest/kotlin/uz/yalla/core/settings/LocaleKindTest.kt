@@ -12,17 +12,17 @@ class LocaleKindTest {
     }
 
     @Test
-    fun shouldNormalizeLocaleCodeWhenContainsUppercaseAndUnderscore() {
-        val locale = LocaleKind.from("  UZ_CYRL  ")
+    fun shouldReturnLocaleWhenCodeHasDifferentCase() {
+        val locale = LocaleKind.from("UZ")
 
-        assertEquals(LocaleKind.UzCyrillic, locale)
+        assertEquals(LocaleKind.Uz, locale)
     }
 
     @Test
-    fun shouldReturnLocaleWhenCodeHasDifferentCase() {
-        val locale = LocaleKind.from("EN")
-
-        assertEquals(LocaleKind.En, locale)
+    fun shouldFallBackToUzWhenRemovedCodePersistedFromBeforeAdr014() {
+        // ADR-014 dropped "en" and "uz-Cyrl". Persisted values fall through to Uz.
+        assertEquals(LocaleKind.Uz, LocaleKind.from("en"))
+        assertEquals(LocaleKind.Uz, LocaleKind.from("uz-Cyrl"))
     }
 
     @Test
