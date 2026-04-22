@@ -19,6 +19,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -123,20 +124,24 @@ object AddressItemDefaults {
 /**
  * Single-address item rendered as a [Button][androidx.compose.material3.Button].
  *
- * Displays a single address text with optional leading and trailing content.
+ * Displays a single address with optional leading and trailing content.
  * Use for simple address display where only one location is shown.
+ *
+ * The default text style and color for [text] are injected via
+ * [ProvideTextStyle][androidx.compose.material3.ProvideTextStyle]; a plain
+ * [Text][androidx.compose.material3.Text] in the slot inherits them automatically.
  *
  * ## Usage
  *
  * ```kotlin
  * AddressItem(
- *     text = "123 Main Street",
+ *     text = { Text("123 Main Street") },
  *     onClick = { openMap() },
  *     leadingContent = { AddressDot(color = System.color.icon.brand) },
  * )
  * ```
  *
- * @param text Address text to display.
+ * @param text Address content slot; receives [System.font.body.base.bold] style by default.
  * @param onClick Called when the item is clicked.
  * @param modifier Applied to the root button.
  * @param leadingContent Optional composable before the text (e.g., [AddressDot]).
@@ -150,7 +155,7 @@ object AddressItemDefaults {
  */
 @Composable
 fun AddressItem(
-    text: String,
+    text: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     leadingContent: (@Composable () -> Unit)? = null,
@@ -178,12 +183,14 @@ fun AddressItem(
         ) {
             leadingContent?.invoke()
 
-            Text(
-                text = text,
-                color = colors.location,
-                style = System.font.body.base.bold,
-                modifier = Modifier.weight(1f),
-            )
+            ProvideTextStyle(
+                System.font.body.base.bold
+                    .copy(color = colors.location)
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    text()
+                }
+            }
 
             trailingContent?.invoke()
         }
@@ -193,23 +200,27 @@ fun AddressItem(
 /**
  * Multi-location address item rendered as a [Card][androidx.compose.material3.Card].
  *
- * When [locations] is empty, shows the [placeholder] text. When populated,
+ * When [locations] is empty, shows the [placeholder] slot content. When populated,
  * displays locations in a [FlowRow][androidx.compose.foundation.layout.FlowRow]
- * separated by forward arrows.
+ * separated by forward arrows. [locations] is raw data and is not slotted.
+ *
+ * The default text style and color for [placeholder] are injected via
+ * [ProvideTextStyle][androidx.compose.material3.ProvideTextStyle]; a plain
+ * [Text][androidx.compose.material3.Text] in the slot inherits them automatically.
  *
  * ## Usage
  *
  * ```kotlin
  * AddressItem(
  *     locations = listOf("Home", "Work"),
- *     placeholder = "Where to?",
+ *     placeholder = { Text("Where to?") },
  *     onClick = { openSearchSheet() },
  *     leadingContent = { AddressDot(color = System.color.icon.brand) },
  * )
  * ```
  *
  * @param locations List of location names to display. Empty shows [placeholder].
- * @param placeholder Text shown when [locations] is empty.
+ * @param placeholder Content shown when [locations] is empty; receives [System.font.body.base.bold] style.
  * @param onClick Called when the item is clicked.
  * @param modifier Applied to the root card.
  * @param leadingContent Optional composable before the locations.
@@ -224,7 +235,7 @@ fun AddressItem(
 @Composable
 fun AddressItem(
     locations: List<String>,
-    placeholder: String,
+    placeholder: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     leadingContent: (@Composable () -> Unit)? = null,
@@ -252,12 +263,14 @@ fun AddressItem(
             leadingContent?.invoke()
 
             if (locations.isEmpty()) {
-                Text(
-                    text = placeholder,
-                    color = colors.placeholder,
-                    style = System.font.body.base.bold,
-                    modifier = Modifier.weight(1f),
-                )
+                ProvideTextStyle(
+                    System.font.body.base.bold
+                        .copy(color = colors.placeholder)
+                ) {
+                    Box(modifier = Modifier.weight(1f)) {
+                        placeholder()
+                    }
+                }
             } else {
                 FlowRow(
                     modifier = Modifier.weight(1f),

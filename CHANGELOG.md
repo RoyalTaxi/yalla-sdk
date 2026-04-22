@@ -7,6 +7,24 @@ Versioning follows [SemVer](https://semver.org/spec/v2.0.0.html) **post-1.0**; p
 
 ## [Unreleased]
 
+## [0.0.11-alpha01] — 2026-04-22
+
+### Breaking
+- **ADR-017 string→slot migration across 8 composites.** `ListItem`, `IconItem`, `NavigableItem`, `SelectableItem`, `PricingItem`, `AddressItem` (both overloads), `Navigable` (drawer), and `EmptyState` now accept `@Composable () -> Unit` slots instead of `String` / `String?` parameters. `EmptyStateState(image: Painter, title: String, description: String?)` is deleted — `EmptyState` takes three separate slots directly. `Navigable`'s `titleStyle` and `descriptionStyle` params are removed; default text style is applied via `ProvideTextStyle` (Material3). Mechanical migration: `title = "x"` → `title = { Text("x") }`.
+- **`AddressCard` removed.** No internal SDK or YallaClient call sites (verified via grep). `composites.card.AddressCard` and its test file deleted. Supersedes the `ContentCard` / `RouteView` deletions the spec loosely grouped it with — those two are retained (both have real callers).
+
+### Added
+- Structural-equality tests for `Snackbar`, `SnackbarHost`, `Navigable`, `EmptyState`, `SectionBackground` in composites — previously untested.
+- Structural-equality tests for `TopBar` + `LargeTopBar` in primitives.
+- `navigationIconContentDescription: String? = null` parameter on `TopBar` and `LargeTopBar`. Threads through to `NavigationButton`'s existing `contentDescription` param so screen readers can label the nav icon.
+
+### Changed
+- `resources/values-be/` MODULE.md clarification stays from Phase 3 — rename to `values-uz-Cyrl` still blocked by Compose Resources 1.10.0.
+- `.github/workflows/publish.yml` gate relaxed to `apiCheck` only (Phase 3 hotfix merged in `da8611e`). iOS-simulator link step was failing on CI for foundation + composites due to moko-geo's transitive `_LocationEssentials` CoreLocation subframework not being on the Xcode SDK path; pod install + Xcode alignment on CI tracked as Phase 5 infra. apiCheck remains the authoritative structural gate.
+
+### Decisions
+- ADR-017: composite string params migrated to `@Composable () -> Unit` slots; supersedes ADR-005's migration-plan note.
+
 ## [0.0.10-alpha01] — 2026-04-22
 
 ### Breaking

@@ -65,6 +65,10 @@ data class NavigableItemDimens(
  * Built on [IconItem] with a default trailing forward-arrow icon. When custom
  * [trailingContent] is provided, it replaces the default chevron.
  *
+ * The default text style and color for [title] and [subtitle] are injected via
+ * [ProvideTextStyle][androidx.compose.material3.ProvideTextStyle]; a plain
+ * [Text][androidx.compose.material3.Text] in the slot inherits them automatically.
+ *
  * ## Composition hierarchy
  *
  * `NavigableItem` -> [IconItem] -> [ListItem]
@@ -73,17 +77,17 @@ data class NavigableItemDimens(
  *
  * ```kotlin
  * NavigableItem(
- *     title = "Payment Methods",
- *     subtitle = "Manage your cards",
+ *     title = { Text("Payment Methods") },
+ *     subtitle = { Text("Manage your cards") },
  *     onClick = { navigateToPayments() },
  *     icon = { Icon(YallaIcons.Card, null) },
  * )
  * ```
  *
- * @param title Primary text.
+ * @param title Primary content; receives [System.font.body.base.bold] style by default.
  * @param onClick Called when the item is clicked.
  * @param modifier Applied to the root item.
- * @param subtitle Optional secondary text.
+ * @param subtitle Optional secondary content.
  * @param icon Optional icon composable rendered inside a styled container.
  * @param trailingContent Optional composable replacing the default chevron.
  * @param colors Color configuration, defaults to [NavigableItemDefaults.colors].
@@ -96,10 +100,10 @@ data class NavigableItemDimens(
  */
 @Composable
 fun NavigableItem(
-    title: String,
+    title: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    subtitle: String? = null,
+    subtitle: (@Composable () -> Unit)? = null,
     icon: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
     colors: NavigableItemColors = NavigableItemDefaults.colors(),

@@ -39,8 +39,8 @@ data class SectionBackgroundDimens(val shape: Shape)
  *
  * ```kotlin
  * SectionBackground {
- *     Navigable(title = "Option 1", onClick = { })
- *     Navigable(title = "Option 2", onClick = { })
+ *     Navigable(title = { Text("Option 1") }, onClick = { })
+ *     Navigable(title = { Text("Option 2") }, onClick = { })
  * }
  * ```
  *
