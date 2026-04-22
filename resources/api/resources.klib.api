@@ -522,6 +522,8 @@ final val uz.yalla.resources/inter_regular // uz.yalla.resources/inter_regular|@
     final fun (uz.yalla.resources/Res.font).<get-inter_regular>(): org.jetbrains.compose.resources/FontResource // uz.yalla.resources/inter_regular.<get-inter_regular>|<get-inter_regular>@uz.yalla.resources.Res.font(){}[0]
 final val uz.yalla.resources/inter_semi_bold // uz.yalla.resources/inter_semi_bold|@uz.yalla.resources.Res.font{}inter_semi_bold[0]
     final fun (uz.yalla.resources/Res.font).<get-inter_semi_bold>(): org.jetbrains.compose.resources/FontResource // uz.yalla.resources/inter_semi_bold.<get-inter_semi_bold>|<get-inter_semi_bold>@uz.yalla.resources.Res.font(){}[0]
+final val uz.yalla.resources/intro_language_subtitle // uz.yalla.resources/intro_language_subtitle|@uz.yalla.resources.Res.string{}intro_language_subtitle[0]
+    final fun (uz.yalla.resources/Res.string).<get-intro_language_subtitle>(): org.jetbrains.compose.resources/StringResource // uz.yalla.resources/intro_language_subtitle.<get-intro_language_subtitle>|<get-intro_language_subtitle>@uz.yalla.resources.Res.string(){}[0]
 final val uz.yalla.resources/intro_language_title // uz.yalla.resources/intro_language_title|@uz.yalla.resources.Res.string{}intro_language_title[0]
     final fun (uz.yalla.resources/Res.string).<get-intro_language_title>(): org.jetbrains.compose.resources/StringResource // uz.yalla.resources/intro_language_title.<get-intro_language_title>|<get-intro_language_title>@uz.yalla.resources.Res.string(){}[0]
 final val uz.yalla.resources/intro_location_description // uz.yalla.resources/intro_location_description|@uz.yalla.resources.Res.string{}intro_location_description[0]
