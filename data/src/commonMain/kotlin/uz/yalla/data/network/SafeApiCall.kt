@@ -32,7 +32,7 @@ private const val RETRY_BACKOFF_FACTOR = 2.0
  * |-----------|--------|
  * | 200-299 | [Either.Success] with parsed body |
  * | 300-399 | [DataError.Network.Client] |
- * | 400-499 | [DataError.Network.ClientWithMessage] when body contains a message, otherwise [DataError.Network.Client] |
+ * | 400-499 | [DataError.Network.ClientWithMessage] when body has a message, else [DataError.Network.Client] |
  * | 500-599 | [DataError.Network.Server] |
  * | [SocketTimeoutException] | [DataError.Network.Timeout] |
  * | [IOException] | [DataError.Network.Connection] |
@@ -156,7 +156,10 @@ internal suspend fun <T> retryWithBackoff(
     repeat(times - 1) {
         try {
             return block()
-        } catch (e: Exception) {
+        } catch (
+            @Suppress("TooGenericExceptionCaught") e: Exception
+        ) {
+            @Suppress("InstanceOfCheckForException") // classify Ktor transport errors for retry decision
             val retryable = isIdempotent && (e is IOException || e is SocketTimeoutException)
             if (!retryable) throw e
         }

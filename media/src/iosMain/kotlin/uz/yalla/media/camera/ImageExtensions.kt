@@ -69,6 +69,7 @@ internal fun NSData.toByteArray(): ByteArray {
  * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
+@Suppress("UnusedParameter") // compressionQuality wired in Phase 5 media-module pass; kept for call-site stability
 internal fun UIImage.resizeAndCompress(
     maxDimension: Double = 1024.0,
     compressionQuality: Double = 0.7

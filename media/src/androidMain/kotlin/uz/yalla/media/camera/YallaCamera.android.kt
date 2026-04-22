@@ -181,6 +181,7 @@ private fun CameraWithGrantedPermission(
         cameraProvider?.let { provider ->
             state.onCameraReady()
             provider.unbindAll()
+            @Suppress("SpreadOperator") // CameraX bindToLifecycle vararg UseCase interop
             provider.bindToLifecycle(
                 lifecycleOwner,
                 cameraSelector,

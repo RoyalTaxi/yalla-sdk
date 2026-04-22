@@ -79,7 +79,11 @@ actual fun <C : Route> NativeNavHost(
  *
  * @since 0.0.6
  */
-@Suppress("ObjectPropertyName", "ktlint:standard:backing-property-naming")
+@Suppress(
+    "ObjectPropertyName",
+    "TopLevelPropertyNaming",
+    "ktlint:standard:backing-property-naming",
+)
 var _iosNavigator: Navigator? = null
     internal set
 

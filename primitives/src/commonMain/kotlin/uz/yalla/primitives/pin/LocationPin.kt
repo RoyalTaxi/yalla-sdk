@@ -1,3 +1,12 @@
+// LongMethod: LocationPin is one composite with multiple state branches.
+// DestructuringDeclarationWithTooManyEntries: ConstraintLayout createRefs() returns 4 refs.
+// UnusedParameter: loading is reserved for Phase 4 animation wiring.
+@file:Suppress(
+    "LongMethod",
+    "DestructuringDeclarationWithTooManyEntries",
+    "UnusedParameter",
+)
+
 package uz.yalla.primitives.pin
 
 import androidx.compose.animation.animateContentSize

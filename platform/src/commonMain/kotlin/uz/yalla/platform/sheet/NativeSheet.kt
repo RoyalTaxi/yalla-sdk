@@ -31,7 +31,12 @@ import androidx.compose.ui.graphics.Shape
  * @param isDark Forces dark/light appearance on the sheet. `null` follows the system theme.
  * @param skipPartiallyExpanded On Android, skips the partially-expanded state and goes directly
  *   to full expansion. Ignored on iOS (uses detent-based sizing). Default `false`.
- * @param onFullyExpanded Called when the sheet reaches its fully-expanded detent.
+ * @param onFullyExpanded Called once when the sheet has settled at its fully-expanded detent.
+ *   Fires after the settle animation completes — not during the animation itself.
+ *   On Android: fires when `SheetValue.Expanded == currentValue == targetValue` (both the
+ *   current and target states are `Expanded`, meaning the animation has completed and the
+ *   sheet is at rest). On iOS: fires when the `UISheetPresentationController` presentation
+ *   animation completes and the sheet is at the largest configured detent.
  * @param content Composable content rendered inside the sheet.
  * @since 0.0.1
  */

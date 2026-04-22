@@ -6,6 +6,12 @@ import uz.yalla.platform.navigation.NavigationBarAppearance
 
 /**
  * iOS platform configuration containing native component factories.
+ *
+ * Three factories are required because UIKit components cannot be driven from Kotlin/Compose
+ * alone: sheet presentation requires a `UISheetPresentationController` adapter, and icon buttons
+ * require a `UIView`-backed Swift renderer. Android has no analogous requirements because
+ * Compose Material3 supplies all needed primitives natively. See ADR-015d.
+ *
  * Use [Builder] to construct, then pass to [YallaPlatform.install].
  *
  * ## Usage
@@ -19,11 +25,14 @@ import uz.yalla.platform.navigation.NavigationBarAppearance
  * )
  * ```
  *
- * @param sheetPresenter Factory for presenting and managing native bottom sheets.
- * @param circleButton Factory for creating circle-shaped native icon buttons.
- * @param squircleButton Factory for creating squircle-shaped native icon buttons.
- * @param themeProvider Optional Compose theme wrapper for sheets outside the main tree. `null` to skip.
- * @param navigationBarAppearance Optional global navigation bar appearance. `null` for system defaults.
+ * @param sheetPresenter Factory for presenting and managing native bottom sheets via
+ *   `UISheetPresentationController`. Required: iOS sheet presentation is UIKit-driven.
+ * @param circleButton Factory for creating circle-shaped native icon buttons backed by UIKit.
+ * @param squircleButton Factory for creating squircle-shaped native icon buttons backed by UIKit.
+ * @param themeProvider Optional Compose theme wrapper for sheets presented outside the Compose
+ *   tree. `null` to skip theme injection.
+ * @param navigationBarAppearance Optional global navigation bar appearance applied at
+ *   [NativeNavHost] creation. `null` to use system defaults.
  * @since 0.0.1
  */
 class IosPlatformConfig private constructor(
@@ -37,8 +46,13 @@ class IosPlatformConfig private constructor(
     /**
      * Builder for constructing an [IosPlatformConfig].
      *
-     * Required properties: [sheetPresenter], [circleButton], [squircleButton].
-     * Optional properties: [themeProvider], [navigationBarAppearance].
+     * Three factories are required because UIKit interop for sheets and icon buttons requires
+     * Swift-side adapters that the Kotlin/Compose layer cannot instantiate directly. Android
+     * has no analogous [Builder] because Compose Material3 covers all platform primitives there
+     * — hence [AndroidPlatformConfig] is a marker class with no factories. See ADR-015d.
+     *
+     * Required: [sheetPresenter], [circleButton], [squircleButton].
+     * Optional: [themeProvider], [navigationBarAppearance].
      *
      * @since 0.0.1
      */

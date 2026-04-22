@@ -43,6 +43,7 @@ import uz.yalla.maps.provider.google.toLatLng
  * @since 0.0.1
  */
 @Composable
+@Suppress("UnusedParameter") // arrival/duration retained for API parity with MapLibre provider (Phase 5)
 fun LocationsLayer(
     arrival: Int?,
     duration: Int?,

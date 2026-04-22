@@ -45,11 +45,11 @@ class InterfacePreferencesImplTest {
         val staticPrefs = StaticPreferencesImpl(MapSettings())
         val impl = newImpl(this, staticPreferences = staticPrefs)
 
-        impl.setLocaleType(LocaleKind.En)
+        impl.setLocaleType(LocaleKind.Ru)
 
         // StaticPreferences writes are synchronous: the code is readable even
         // before the DataStore write dispatches.
-        assertEquals(LocaleKind.En.code, staticPrefs.localeCode)
+        assertEquals(LocaleKind.Ru.code, staticPrefs.localeCode)
     }
 
     @Test

@@ -7,7 +7,8 @@ package uz.yalla.platform.navigation
  * use ARGB [Long] encoding (e.g., `0xFF_1A1A1A` for an opaque dark color). A value of `0L`
  * means "use the system default" for that property.
  *
- * Pass an instance via [IosPlatformConfig.Builder.navigationBarAppearance][uz.yalla.platform.config.IosPlatformConfig.Builder].
+ * Pass an instance via
+ * [IosPlatformConfig.Builder.navigationBarAppearance][uz.yalla.platform.config.IosPlatformConfig.Builder].
  *
  * @param tintColor Tint color for bar button items (back arrow, action icons). `0L` for system default.
  * @param titleColor Color for both the standard title and large title text. `0L` for system default.

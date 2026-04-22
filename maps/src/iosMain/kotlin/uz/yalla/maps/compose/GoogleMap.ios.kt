@@ -1,3 +1,7 @@
+@file:Suppress(
+    "DestructuringDeclarationWithTooManyEntries", // 4-tuple padding destructure reads clearer than index access
+)
+
 package uz.yalla.maps.compose
 
 import androidx.compose.foundation.layout.PaddingValues

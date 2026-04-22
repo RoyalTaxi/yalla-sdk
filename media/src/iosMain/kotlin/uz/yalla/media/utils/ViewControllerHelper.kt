@@ -19,6 +19,7 @@ import platform.UIKit.UIWindowScene
  * @return The topmost presentable [UIViewController], or `null` if none is available.
  * @since 0.0.1
  */
+@Suppress("LoopWithTooManyJumpStatements") // walk up presentedViewController chain; each jump is a bounded step
 internal fun getRootViewController(): UIViewController? {
     // UIApplication.keyWindow is deprecated in iOS 13 but retained as a fallback when no UIWindowScene is active.
     @Suppress("DEPRECATION")

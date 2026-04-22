@@ -111,6 +111,7 @@ object SelectionSheetDefaults {
  * @since 0.0.5-alpha12
  */
 @Composable
+@Suppress("UnusedParameter") // onSelect wired by itemContent; ADR-005 slot migration in Phase 4
 fun <T> SelectionSheet(
     isVisible: Boolean,
     onDismissRequest: () -> Unit,

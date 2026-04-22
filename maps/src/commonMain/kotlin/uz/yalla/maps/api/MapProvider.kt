@@ -9,8 +9,9 @@ import uz.yalla.maps.api.model.MapStyle
  *
  * Each implementation (Google, Libre) exposes its capabilities, style configuration,
  * and factory methods for the three map tiers: lite, extended, and static.
- * The host application typically consumes this through [SwitchingMapProvider][uz.yalla.maps.provider.SwitchingMapProvider],
- * which delegates to the appropriate backend at runtime.
+ * The host application typically consumes this through
+ * [SwitchingMapProvider][uz.yalla.maps.provider.SwitchingMapProvider], which delegates
+ * to the appropriate backend at runtime.
  *
  * ## Usage
  *

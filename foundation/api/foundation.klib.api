@@ -189,7 +189,7 @@ final class uz.yalla.foundation.location/Location { // uz.yalla.foundation.locat
 }
 
 final class uz.yalla.foundation.location/LocationManager : uz.yalla.core.contract.location/LocationProvider { // uz.yalla.foundation.location/LocationManager|null[0]
-    constructor <init>(dev.icerock.moko.geo/LocationTracker, uz.yalla.core.geo/GeoPoint = ...) // uz.yalla.foundation.location/LocationManager.<init>|<init>(dev.icerock.moko.geo.LocationTracker;uz.yalla.core.geo.GeoPoint){}[0]
+    constructor <init>(dev.icerock.moko.geo/LocationTracker, kotlinx.coroutines/CoroutineScope, uz.yalla.core.geo/GeoPoint = ...) // uz.yalla.foundation.location/LocationManager.<init>|<init>(dev.icerock.moko.geo.LocationTracker;kotlinx.coroutines.CoroutineScope;uz.yalla.core.geo.GeoPoint){}[0]
 
     final val currentLocation // uz.yalla.foundation.location/LocationManager.currentLocation|{}currentLocation[0]
         final fun <get-currentLocation>(): kotlinx.coroutines.flow/Flow<uz.yalla.core.geo/GeoPoint?> // uz.yalla.foundation.location/LocationManager.currentLocation.<get-currentLocation>|<get-currentLocation>(){}[0]
@@ -202,7 +202,6 @@ final class uz.yalla.foundation.location/LocationManager : uz.yalla.core.contrac
     final val permissionState // uz.yalla.foundation.location/LocationManager.permissionState|{}permissionState[0]
         final fun <get-permissionState>(): kotlinx.coroutines.flow/StateFlow<uz.yalla.foundation.location/LocationPermissionState?> // uz.yalla.foundation.location/LocationManager.permissionState.<get-permissionState>|<get-permissionState>(){}[0]
 
-    final fun close() // uz.yalla.foundation.location/LocationManager.close|close(){}[0]
     final fun getCurrentLocation(): uz.yalla.core.geo/GeoPoint? // uz.yalla.foundation.location/LocationManager.getCurrentLocation|getCurrentLocation(){}[0]
     final fun getCurrentLocationOrDefault(): uz.yalla.core.geo/GeoPoint // uz.yalla.foundation.location/LocationManager.getCurrentLocationOrDefault|getCurrentLocationOrDefault(){}[0]
     final fun startTracking() // uz.yalla.foundation.location/LocationManager.startTracking|startTracking(){}[0]
@@ -230,12 +229,6 @@ sealed class uz.yalla.foundation.settings/LanguageOption : uz.yalla.foundation.s
         final fun from(uz.yalla.core.settings/LocaleKind): uz.yalla.foundation.settings/LanguageOption // uz.yalla.foundation.settings/LanguageOption.Companion.from|from(uz.yalla.core.settings.LocaleKind){}[0]
     }
 
-    final object English : uz.yalla.foundation.settings/LanguageOption { // uz.yalla.foundation.settings/LanguageOption.English|null[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.foundation.settings/LanguageOption.English.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // uz.yalla.foundation.settings/LanguageOption.English.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // uz.yalla.foundation.settings/LanguageOption.English.toString|toString(){}[0]
-    }
-
     final object Russian : uz.yalla.foundation.settings/LanguageOption { // uz.yalla.foundation.settings/LanguageOption.Russian|null[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.foundation.settings/LanguageOption.Russian.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // uz.yalla.foundation.settings/LanguageOption.Russian.hashCode|hashCode(){}[0]
@@ -246,12 +239,6 @@ sealed class uz.yalla.foundation.settings/LanguageOption : uz.yalla.foundation.s
         final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.foundation.settings/LanguageOption.Uzbek.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // uz.yalla.foundation.settings/LanguageOption.Uzbek.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // uz.yalla.foundation.settings/LanguageOption.Uzbek.toString|toString(){}[0]
-    }
-
-    final object UzbekCyrillic : uz.yalla.foundation.settings/LanguageOption { // uz.yalla.foundation.settings/LanguageOption.UzbekCyrillic|null[0]
-        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.foundation.settings/LanguageOption.UzbekCyrillic.equals|equals(kotlin.Any?){}[0]
-        final fun hashCode(): kotlin/Int // uz.yalla.foundation.settings/LanguageOption.UzbekCyrillic.hashCode|hashCode(){}[0]
-        final fun toString(): kotlin/String // uz.yalla.foundation.settings/LanguageOption.UzbekCyrillic.toString|toString(){}[0]
     }
 }
 
@@ -328,10 +315,8 @@ final val uz.yalla.foundation.location/uz_yalla_foundation_location_FoundLocatio
 final val uz.yalla.foundation.location/uz_yalla_foundation_location_Location$stableprop // uz.yalla.foundation.location/uz_yalla_foundation_location_Location$stableprop|#static{}uz_yalla_foundation_location_Location$stableprop[0]
 final val uz.yalla.foundation.location/uz_yalla_foundation_location_LocationManager$stableprop // uz.yalla.foundation.location/uz_yalla_foundation_location_LocationManager$stableprop|#static{}uz_yalla_foundation_location_LocationManager$stableprop[0]
 final val uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption$stableprop // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption$stableprop|#static{}uz_yalla_foundation_settings_LanguageOption$stableprop[0]
-final val uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_English$stableprop // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_English$stableprop|#static{}uz_yalla_foundation_settings_LanguageOption_English$stableprop[0]
 final val uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_Russian$stableprop // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_Russian$stableprop|#static{}uz_yalla_foundation_settings_LanguageOption_Russian$stableprop[0]
 final val uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_Uzbek$stableprop // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_Uzbek$stableprop|#static{}uz_yalla_foundation_settings_LanguageOption_Uzbek$stableprop[0]
-final val uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_UzbekCyrillic$stableprop // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_UzbekCyrillic$stableprop|#static{}uz_yalla_foundation_settings_LanguageOption_UzbekCyrillic$stableprop[0]
 final val uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption$stableprop // uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption$stableprop|#static{}uz_yalla_foundation_settings_MapOption$stableprop[0]
 final val uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption_Google$stableprop // uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption_Google$stableprop|#static{}uz_yalla_foundation_settings_MapOption_Google$stableprop[0]
 final val uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption_Libre$stableprop // uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption_Libre$stableprop|#static{}uz_yalla_foundation_settings_MapOption_Libre$stableprop[0]
@@ -374,10 +359,8 @@ final fun uz.yalla.foundation.location/uz_yalla_foundation_location_FoundLocatio
 final fun uz.yalla.foundation.location/uz_yalla_foundation_location_Location$stableprop_getter(): kotlin/Int // uz.yalla.foundation.location/uz_yalla_foundation_location_Location$stableprop_getter|uz_yalla_foundation_location_Location$stableprop_getter(){}[0]
 final fun uz.yalla.foundation.location/uz_yalla_foundation_location_LocationManager$stableprop_getter(): kotlin/Int // uz.yalla.foundation.location/uz_yalla_foundation_location_LocationManager$stableprop_getter|uz_yalla_foundation_location_LocationManager$stableprop_getter(){}[0]
 final fun uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption$stableprop_getter(): kotlin/Int // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption$stableprop_getter|uz_yalla_foundation_settings_LanguageOption$stableprop_getter(){}[0]
-final fun uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_English$stableprop_getter(): kotlin/Int // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_English$stableprop_getter|uz_yalla_foundation_settings_LanguageOption_English$stableprop_getter(){}[0]
 final fun uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_Russian$stableprop_getter(): kotlin/Int // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_Russian$stableprop_getter|uz_yalla_foundation_settings_LanguageOption_Russian$stableprop_getter(){}[0]
 final fun uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_Uzbek$stableprop_getter(): kotlin/Int // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_Uzbek$stableprop_getter|uz_yalla_foundation_settings_LanguageOption_Uzbek$stableprop_getter(){}[0]
-final fun uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_UzbekCyrillic$stableprop_getter(): kotlin/Int // uz.yalla.foundation.settings/uz_yalla_foundation_settings_LanguageOption_UzbekCyrillic$stableprop_getter|uz_yalla_foundation_settings_LanguageOption_UzbekCyrillic$stableprop_getter(){}[0]
 final fun uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption$stableprop_getter(): kotlin/Int // uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption$stableprop_getter|uz_yalla_foundation_settings_MapOption$stableprop_getter(){}[0]
 final fun uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption_Google$stableprop_getter(): kotlin/Int // uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption_Google$stableprop_getter|uz_yalla_foundation_settings_MapOption_Google$stableprop_getter(){}[0]
 final fun uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption_Libre$stableprop_getter(): kotlin/Int // uz.yalla.foundation.settings/uz_yalla_foundation_settings_MapOption_Libre$stableprop_getter|uz_yalla_foundation_settings_MapOption_Libre$stableprop_getter(){}[0]

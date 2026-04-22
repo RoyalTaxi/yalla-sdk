@@ -10,8 +10,34 @@ permissions:
   packages: write
 
 jobs:
-  publish:
+  verify:
+    name: Verify
     runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: apiCheck (BCV Klib)
+        run: ./gradlew apiCheck
+      - name: allTests
+        # Excluded iOS-sim test targets for `firebase` (needs FirebaseCore.xcframework)
+        # and `maps` (needs MapLibre/GoogleMaps frameworks). Those require a full
+        # Xcode+CocoaPods host-app setup that isn't available in CI. Phase 5 will
+        # wire a proper iOS test harness via `iosTests/` (swift-snapshot-testing).
+        run: >
+          ./gradlew allTests
+          -x :firebase:iosSimulatorArm64Test
+          -x :maps:iosSimulatorArm64Test
+
+  publish:
+    name: Publish
+    needs: verify
+    runs-on: macos-latest
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4

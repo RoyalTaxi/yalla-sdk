@@ -60,7 +60,8 @@ import androidx.compose.ui.unit.dp
  * @param colors Color configuration delegated to [Sheet], defaults to [SheetDefaults.colors].
  * @param snackbarHost Optional snackbar host rendered as a popup overlay inside the sheet.
  * @param onFullyExpanded Called when the sheet reaches its fully-expanded state.
- * @param action Optional bottom-anchored composable (typically a [PrimaryButton][uz.yalla.primitives.button.PrimaryButton]).
+ * @param action Optional bottom-anchored composable (typically a
+ *   [PrimaryButton][uz.yalla.primitives.button.PrimaryButton]).
  * @param content Scrollable body content rendered between the header and the action.
  *
  * @see Sheet for the underlying bottom sheet primitive

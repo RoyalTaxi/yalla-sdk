@@ -183,6 +183,7 @@ private suspend fun launchPHPicker(): ByteArray? =
  *
  * @return The topmost presentable controller, or `null` if none is available.
  */
+@Suppress("LoopWithTooManyJumpStatements") // walk up presentedViewController chain; each jump is a bounded step
 private fun getRootViewController(): UIViewController? {
     // UIApplication.keyWindow is deprecated in iOS 13 but retained as a fallback when no UIWindowScene is active.
     @Suppress("DEPRECATION")

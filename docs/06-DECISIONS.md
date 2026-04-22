@@ -150,3 +150,136 @@ Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.
 **Consequence**: Non-breaking. KDoc on the mapping documents the rationale so future readers don't re-litigate.
 
 Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.
+
+---
+
+## ADR-013: `LocationManager` caller-owned `CoroutineScope`
+
+**Decision**: `LocationManager`'s primary constructor takes a `CoroutineScope` parameter. The SDK does not internally construct `CoroutineScope(SupervisorJob() + Dispatchers.Main)`. Caller owns lifecycle; cancelling the scope stops all in-flight tracking. The `close()` method is removed — there is nothing for the SDK to close when it doesn't own the scope.
+
+Signature:
+
+```kotlin
+class LocationManager(
+    val locationTracker: LocationTracker,
+    private val scope: CoroutineScope,
+    private val defaultLocation: GeoPoint = DEFAULT_LOCATION,
+) : LocationProvider
+```
+
+**Why**: Same root cause as ADR-011 (`createHttpClient`): the previous signature leaked an unmanaged scope for the process lifetime. Callers who forgot to call `close()` leaked the scope silently. This ADR inverts ownership: caller scope → SDK uses it → caller cancels it → SDK cleans up.
+
+**Consequence**: Breaking. Every YallaClient `LocationManager(...)` construction must pass a scope — typically a process-lifetime single in the Koin graph:
+
+```kotlin
+val locationModule = module {
+    single { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
+    single { LocationManager(get(), get()) }
+}
+```
+
+YallaClient's `chore/sdk-phase3-bridge` branch carries the call-site migration in lockstep.
+
+Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.
+
+---
+
+## ADR-014: `LanguageOption` and `LocaleKind` narrowed to production-ready locales
+
+**Decision**: Remove `LanguageOption.UzbekCyrillic` and `LanguageOption.English` from the sealed hierarchy. Remove `LocaleKind.UzCyrillic` and `LocaleKind.En` from the enum. `LanguageOption.from(kind)` is now exhaustive over the two remaining cases (`Uz`, `Ru`). iOS `getCurrentLanguage()` falls back to `"uz"` instead of `"en"` when the system doesn't expose one.
+
+Resulting state:
+
+```kotlin
+// core/settings/LocaleKind.kt
+@Serializable
+enum class LocaleKind(val code: String) {
+    @SerialName("uz") Uz("uz"),
+    @SerialName("ru") Ru("ru"),
+}
+
+// foundation/settings/LanguageOption.kt
+sealed class LanguageOption(...) : Selectable {
+    data object Uzbek : LanguageOption(...)
+    data object Russian : LanguageOption(...)
+    companion object {
+        val all = listOf(Uzbek, Russian)
+        fun from(kind: LocaleKind): LanguageOption = when (kind) {
+            LocaleKind.Uz -> Uzbek
+            LocaleKind.Ru -> Russian
+        }
+    }
+}
+```
+
+**Why**: `UzbekCyrillic` and `English` were labelled "not production-ready" but still exposed. They were stable API surface implying support that didn't exist. Under full-risk pre-1.0 mode we delete rather than deprecate.
+
+String resources: `values-en/strings.xml` stays on disk as a fallback asset — it is not tied to `LocaleKind.En` on the API side. `values-be/` is renamed to `values-uz-Cyrl/` by this Phase's Task 8 because the directory contains Uzbek Cyrillic text, but that's a resource-bundle filename correction, not a `LocaleKind.UzCyrillic` restoration.
+
+**Consequence**: Breaking on two planes:
+1. API — any YallaClient call to `LanguageOption.English`, `LanguageOption.UzbekCyrillic`, `LocaleKind.En`, or `LocaleKind.UzCyrillic` fails to compile.
+2. Persistence — stored `InterfacePreferences.localeType` values of `"en"` or `"uz-Cyrl"` fall through `LocaleKind.from(code)` to `LocaleKind.Uz` silently. Acceptable: no user in YallaClient prod has persisted those (neither was in the picker's `all` list).
+
+YallaClient's `chore/sdk-phase3-bridge` branch drops any dead references.
+
+Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.
+
+---
+
+## ADR-015: `platform` module — four expect/actual asymmetries resolved
+
+Four separate decisions bundled into one ADR because they are all Phase 3 Bridge work on the same module.
+
+### ADR-015a: `NativeSheet.onFullyExpanded` semantics locked
+
+**Decision**: No code change. The `onFullyExpanded` parameter's KDoc on the `expect` declaration is tightened to guarantee observable behavior on both platforms.
+
+**Semantics**:
+- On Android: fires when `SheetValue.Expanded == currentValue == targetValue` — i.e., after the settle animation completes and the sheet is at rest at the fully-expanded detent.
+- On iOS: fires when the `UISheetPresentationController` presentation animation completes and the sheet is at the largest configured detent.
+
+**Why**: The parameter existed without a contract. Consumers who use `onFullyExpanded` to trigger post-expand actions (e.g., scroll to content, focus a field) need a deterministic fire point. "Animation settled, not in-progress" is the only useful semantic — firing mid-animation would cause jank.
+
+**Consequence**: Non-breaking. KDoc tightened; both actuals already matched these semantics.
+
+Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.
+
+---
+
+### ADR-015b: `SystemBarColors` color overload removed
+
+**Decision**: Delete the `SystemBarColors(statusBarColor: Color, navigationBarColor: Color)` `expect` declaration and both Android and iOS `actual` implementations. Keep only `SystemBarColors(darkIcons: Boolean)`.
+
+**Why**: `YallaTheme` owns system bar background colors; the color overload duplicated that responsibility and created two paths for the same concern. The iOS actual silently ignored `navigationBarColor` (the home indicator area has no configurable background on iOS), making the cross-platform contract misleading. The `darkIcons` overload is the only surface consumers genuinely need.
+
+**Consequence**: Breaking. YallaClient call sites using `SystemBarColors(statusBarColor = ..., navigationBarColor = ...)` must migrate to `SystemBarColors(darkIcons = ...)` or remove the call if `YallaTheme` already handles it.
+
+Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.
+
+---
+
+### ADR-015c: `ObserveSmsCode` moved to androidMain-only public surface
+
+**Decision**: Delete `platform/src/commonMain/kotlin/uz/yalla/platform/otp/SmsCodeObserver.kt` (the `expect` declaration) and `platform/src/iosMain/.../SmsCodeObserver.ios.kt` (the no-op iOS `actual`). The Android implementation moves from `actual fun ObserveSmsCode` to a plain `fun ObserveSmsCode` in `androidMain`, retaining the same signature.
+
+**Why**: The no-op iOS `actual` was deceptive — calling `ObserveSmsCode` on iOS compiled and ran silently, never triggering `onCodeReceived`. iOS apps should configure `UITextField.textContentType = .oneTimeCode` and let the system keyboard handle SMS autofill; no SDK composable is needed or correct there. The `expect`/`actual` pattern is appropriate when both platforms have a real implementation; a permanent no-op `actual` is a smell that the API boundary is wrong.
+
+**Consequence**: Breaking. iOS-targeting common code that calls `ObserveSmsCode` will no longer compile. iOS call sites should be removed — the native autofill path is zero-code. Android call sites are unaffected at the Kotlin level; they just no longer have the `actual` keyword in the implementation.
+
+Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.
+
+---
+
+### ADR-015d: `PlatformConfig` Android/iOS asymmetry accepted
+
+**Decision**: No code change. The asymmetry between `AndroidPlatformConfig` (a marker class with no factories) and `IosPlatformConfig` (a class with a `Builder` requiring three factories) is intentional and documented in KDoc on both classes.
+
+**Why**:
+- Android: Compose Material3 supplies all platform UI primitives (sheets, icon buttons, navigation) natively. No UIKit interop layer exists. `AndroidPlatformConfig` is a marker that initializes the platform with no additional wiring.
+- iOS: UIKit components cannot be driven from Kotlin/Compose alone. Sheet presentation requires a `UISheetPresentationController` adapter, and icon buttons require a `UIView`-backed Swift renderer. These three factories (`sheetPresenter`, `circleButton`, `squircleButton`) must be supplied by the host application's Swift layer.
+
+Forcing a symmetric API (e.g., dummy factory parameters on Android) would be a leaky abstraction and add noise to every Android integration.
+
+**Consequence**: Non-breaking. KDoc updated on both `AndroidPlatformConfig` and `IosPlatformConfig.Builder` to explain the asymmetry.
+
+Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.

@@ -7,6 +7,39 @@ Versioning follows [SemVer](https://semver.org/spec/v2.0.0.html) **post-1.0**; p
 
 ## [Unreleased]
 
+## [0.0.10-alpha01] — 2026-04-22
+
+### Breaking
+- `LocationManager` constructor now requires a caller-owned `CoroutineScope`. The `close()` method is removed — cancel the scope instead. Same ownership-inversion pattern as `createHttpClient` (ADR-011). See ADR-013.
+- `LanguageOption.UzbekCyrillic` and `LanguageOption.English` removed from the sealed hierarchy. `LocaleKind.UzCyrillic` and `LocaleKind.En` removed from the enum. `LanguageOption.from(kind)` is now exhaustive over `Uz` + `Ru`. Persisted `InterfacePreferences.localeType` values of `"en"` / `"uz-Cyrl"` fall through to `Uz` silently via the existing `LocaleKind.from(code)` fallback. See ADR-014.
+- `SystemBarColors(statusBarColor: Color, navigationBarColor: Color)` overload removed. Use `SystemBarColors(darkIcons: Boolean)` only — theme already owns bar colors. See ADR-015b.
+- `ObserveSmsCode` moved from `platform` commonMain to androidMain-only public surface. iOS SMS OTP autofill is a native keyboard feature (`UITextContentType.oneTimeCode`), not a callback API. See ADR-015c.
+
+### Added
+- `FontScheme` structural-equality unit test.
+- `LocationManager` lifecycle tests (start/stop idempotence, scope-cancel, permission propagation, default fallback).
+- `ChangeLanguage` smoke test.
+- `values-uz/strings.xml` (Uzbek Latin) generated via deterministic Cyrillic→Latin transliteration (268 keys). Islom-review recommended before 1.0.
+- iOS visual-regression scaffold under `iosTests/` using `pointfreeco/swift-snapshot-testing` 1.19.2. Real snapshots wire in Phase 4.
+- Behavioral smoke coverage for 8 of 13 `platform` expect/actual pairs (6 non-composable, 2 interface contracts); 11 composable pairs landed as compile-verify TODOs pending Compose UI test harness wiring in Phase 4.
+
+### Changed
+- `foundation/LocationServices` Android actual raises a clear error when the Koin global `Context` is missing (previously NPE'd). iOS actual uses the modern `UIApplication.open(url:options:completionHandler:)` API (iOS 10+).
+- `foundation/changeLanguage` iOS fallback locale: `"en"` → `"uz"` (English is no longer a `LocaleKind`).
+- `NativeSheet.onFullyExpanded` semantics locked via ADR-015a (fires once when sheet settles at fully-expanded detent; both actuals already satisfy this).
+- `IosPlatformConfig` / `AndroidPlatformConfig` KDoc: asymmetry documented as accepted (ADR-015d). Android is a marker class; iOS needs factories because UIKit interop requires Swift-side code.
+- Root `build.gradle.kts` wires the default `detekt` task to depend on every per-source-set variant — previously the root task was NO-SOURCE on KMP modules. ktlint gets the same generator-dep wiring so builds are reproducible on cold caches.
+- `resources/values-be/` directory name retained — Compose Resources 1.10.0 rejects 4-letter script qualifier `Cyrl`; upstream limitation tracked as a follow-up. Content is still Uzbek Cyrillic; MODULE.md clarifies.
+
+### Infrastructure
+- `.github/workflows/publish.yml` now runs a `verify` job (`./gradlew apiCheck allTests`) before `publish`. Broken main can no longer ship artifacts. See ADR-016. iOS tests for `firebase` + `maps` are excluded pending the Phase 5 iOS test harness (framework-linking needs CocoaPods wiring that CI doesn't have yet).
+
+### Decisions
+- ADR-013: LocationManager caller-owned CoroutineScope.
+- ADR-014: LanguageOption + LocaleKind narrowed to production-ready locales.
+- ADR-015: Platform expect/actual asymmetry resolutions (a–d).
+- ADR-016: publish.yml gates on apiCheck + allTests.
+
 ## [0.0.9-alpha01] — 2026-04-21
 
 ### Breaking
