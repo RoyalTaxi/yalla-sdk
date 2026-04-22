@@ -64,37 +64,70 @@ object YallaFirebase {
      */
     val isInitialized: Boolean get() = _isInitialized
 
+    private val _analytics: YallaAnalytics by lazy { YallaAnalytics() }
+
     /**
-     * Lazy-initialized [YallaAnalytics] service.
+     * Firebase Analytics service.
      *
-     * Instantiated on first access. Requires Firebase to be initialized beforehand.
+     * Accessing this property before [initialize] has been called throws [IllegalStateException]
+     * with a clear message. This guard replaces the previously silent crash that the underlying
+     * Firebase SDK would produce for uninitialized access.
      *
+     * @throws IllegalStateException if [initialize] has not been called.
      * @see YallaAnalytics
      * @see AnalyticsEvent
      * @since 0.0.1
      */
-    val analytics: YallaAnalytics by lazy { YallaAnalytics() }
+    val analytics: YallaAnalytics
+        get() {
+            check(isInitialized) {
+                "YallaFirebase.initialize() must be called before accessing `analytics`."
+            }
+            return _analytics
+        }
+
+    private val _crashlytics: YallaCrashlytics by lazy { YallaCrashlytics() }
 
     /**
-     * Lazy-initialized [YallaCrashlytics] service.
+     * Firebase Crashlytics service.
      *
-     * Instantiated on first access. Requires Firebase to be initialized beforehand.
+     * Accessing this property before [initialize] has been called throws [IllegalStateException]
+     * with a clear message. This guard replaces the previously silent crash that the underlying
+     * Firebase SDK would produce for uninitialized access.
      *
+     * @throws IllegalStateException if [initialize] has not been called.
      * @see YallaCrashlytics
      * @since 0.0.1
      */
-    val crashlytics: YallaCrashlytics by lazy { YallaCrashlytics() }
+    val crashlytics: YallaCrashlytics
+        get() {
+            check(isInitialized) {
+                "YallaFirebase.initialize() must be called before accessing `crashlytics`."
+            }
+            return _crashlytics
+        }
+
+    private val _messaging: YallaMessaging by lazy { YallaMessaging() }
 
     /**
-     * Lazy-initialized [YallaMessaging] service.
+     * Firebase Cloud Messaging service.
      *
-     * Instantiated on first access. Requires Firebase to be initialized beforehand.
+     * Accessing this property before [initialize] has been called throws [IllegalStateException]
+     * with a clear message. This guard replaces the previously silent crash that the underlying
+     * Firebase SDK would produce for uninitialized access.
      *
+     * @throws IllegalStateException if [initialize] has not been called.
      * @see YallaMessaging
      * @see MessagingDelegate
      * @since 0.0.1
      */
-    val messaging: YallaMessaging by lazy { YallaMessaging() }
+    val messaging: YallaMessaging
+        get() {
+            check(isInitialized) {
+                "YallaFirebase.initialize() must be called before accessing `messaging`."
+            }
+            return _messaging
+        }
 
     /**
      * Initializes Firebase for the current platform.

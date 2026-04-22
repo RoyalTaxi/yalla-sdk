@@ -6,9 +6,6 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import uz.yalla.core.contract.preferences.InterfacePreferences
@@ -25,11 +22,9 @@ import uz.yalla.maps.api.model.MapStyle
 import uz.yalla.maps.api.model.MarkerState
 import uz.yalla.maps.provider.google.GoogleExtendedMap
 import uz.yalla.maps.provider.google.GoogleLiteMap
-import uz.yalla.maps.provider.google.GoogleMapProvider
 import uz.yalla.maps.provider.google.GoogleStaticMap
 import uz.yalla.maps.provider.libre.LibreExtendedMap
 import uz.yalla.maps.provider.libre.LibreLiteMap
-import uz.yalla.maps.provider.libre.LibreMapProvider
 import uz.yalla.maps.provider.libre.LibreStaticMap
 
 /**
@@ -40,22 +35,29 @@ import uz.yalla.maps.provider.libre.LibreStaticMap
  *
  * ## Lifecycle
  *
- * This provider creates an internal [CoroutineScope] to observe preference changes.
- * Callers **must** call [close] when the provider is no longer needed to cancel the
- * observation scope and prevent coroutine leaks. After [close] is called, the provider
- * continues to delegate to the last-known backend but will no longer react to preference
- * changes.
+ * The provider does not own its coroutine scope. Pass a [CoroutineScope] whose lifetime
+ * matches the desired observation window (typically a process-lifetime scope in the Koin
+ * graph). When that scope is cancelled the preference observation stops automatically.
+ * No explicit cleanup call is required on the provider itself.
  *
+ * Controllers created via [createController] inherit the same scope so their
+ * internal preference observation is also tied to the caller-managed lifetime.
+ *
+ * @param googleProvider Concrete Google Maps backend.
+ * @param libreProvider Concrete MapLibre backend.
  * @param interfacePreferences Source of the user's map provider preference.
+ * @param scope Caller-owned scope that governs the lifetime of preference observation
+ *   inside this provider and any controllers it creates. Cancelling this scope stops
+ *   all coroutines launched by this provider.
  * @since 0.0.1
  * @see SwitchingMapController
  */
 class SwitchingMapProvider(
-    private val interfacePreferences: InterfacePreferences
+    private val googleProvider: MapProvider,
+    private val libreProvider: MapProvider,
+    private val interfacePreferences: InterfacePreferences,
+    private val scope: CoroutineScope,
 ) : MapProvider {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
-    private val googleProvider by lazy { GoogleMapProvider() }
-    private val libreProvider by lazy { LibreMapProvider() }
     private var userSelectedProvider: MapProvider? = null
     private val currentProvider: MapProvider get() = userSelectedProvider ?: googleProvider
 
@@ -84,20 +86,7 @@ class SwitchingMapProvider(
 
     override fun createStaticMap(): StaticMap = SwitchingStaticMap(interfacePreferences)
 
-    override fun createController(): MapController = SwitchingMapController(interfacePreferences)
-
-    /**
-     * Cancels the internal coroutine scope that observes [InterfacePreferences.mapKind].
-     *
-     * After this call the provider still delegates to the last-known backend but will
-     * no longer switch when the user changes their map preference. Safe to call multiple
-     * times.
-     *
-     * @since 0.0.1
-     */
-    fun close() {
-        scope.cancel()
-    }
+    override fun createController(): MapController = SwitchingMapController(interfacePreferences, scope)
 }
 
 private class SwitchingLiteMap(

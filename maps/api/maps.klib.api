@@ -142,6 +142,8 @@ abstract interface uz.yalla.maps.di/MapDependencies { // uz.yalla.maps.di/MapDep
         abstract fun <get-interfacePreferences>(): uz.yalla.core.contract.preferences/InterfacePreferences // uz.yalla.maps.di/MapDependencies.interfacePreferences.<get-interfacePreferences>|<get-interfacePreferences>(){}[0]
     abstract val locationProvider // uz.yalla.maps.di/MapDependencies.locationProvider|{}locationProvider[0]
         abstract fun <get-locationProvider>(): uz.yalla.core.contract.location/LocationProvider // uz.yalla.maps.di/MapDependencies.locationProvider.<get-locationProvider>|<get-locationProvider>(){}[0]
+    abstract val scope // uz.yalla.maps.di/MapDependencies.scope|{}scope[0]
+        abstract fun <get-scope>(): kotlinx.coroutines/CoroutineScope // uz.yalla.maps.di/MapDependencies.scope.<get-scope>|<get-scope>(){}[0]
 }
 
 final class uz.yalla.maps.api.model/CameraPosition { // uz.yalla.maps.api.model/CameraPosition|null[0]
@@ -580,7 +582,7 @@ final class uz.yalla.maps.provider.libre/LibreStaticMap : uz.yalla.maps.api/Stat
 }
 
 final class uz.yalla.maps.provider/SwitchingMapController : uz.yalla.maps.api/MapController { // uz.yalla.maps.provider/SwitchingMapController|null[0]
-    constructor <init>(uz.yalla.core.contract.preferences/InterfacePreferences) // uz.yalla.maps.provider/SwitchingMapController.<init>|<init>(uz.yalla.core.contract.preferences.InterfacePreferences){}[0]
+    constructor <init>(uz.yalla.core.contract.preferences/InterfacePreferences, kotlinx.coroutines/CoroutineScope) // uz.yalla.maps.provider/SwitchingMapController.<init>|<init>(uz.yalla.core.contract.preferences.InterfacePreferences;kotlinx.coroutines.CoroutineScope){}[0]
 
     final val cameraPosition // uz.yalla.maps.provider/SwitchingMapController.cameraPosition|{}cameraPosition[0]
         final fun <get-cameraPosition>(): kotlinx.coroutines.flow/StateFlow<uz.yalla.maps.api.model/CameraPosition> // uz.yalla.maps.provider/SwitchingMapController.cameraPosition.<get-cameraPosition>|<get-cameraPosition>(){}[0]
@@ -619,7 +621,7 @@ final class uz.yalla.maps.provider/SwitchingMapController : uz.yalla.maps.api/Ma
 }
 
 final class uz.yalla.maps.provider/SwitchingMapProvider : uz.yalla.maps.api/MapProvider { // uz.yalla.maps.provider/SwitchingMapProvider|null[0]
-    constructor <init>(uz.yalla.core.contract.preferences/InterfacePreferences) // uz.yalla.maps.provider/SwitchingMapProvider.<init>|<init>(uz.yalla.core.contract.preferences.InterfacePreferences){}[0]
+    constructor <init>(uz.yalla.maps.api/MapProvider, uz.yalla.maps.api/MapProvider, uz.yalla.core.contract.preferences/InterfacePreferences, kotlinx.coroutines/CoroutineScope) // uz.yalla.maps.provider/SwitchingMapProvider.<init>|<init>(uz.yalla.maps.api.MapProvider;uz.yalla.maps.api.MapProvider;uz.yalla.core.contract.preferences.InterfacePreferences;kotlinx.coroutines.CoroutineScope){}[0]
 
     final val capabilities // uz.yalla.maps.provider/SwitchingMapProvider.capabilities|{}capabilities[0]
         final fun <get-capabilities>(): uz.yalla.maps.api.model/MapCapabilities // uz.yalla.maps.provider/SwitchingMapProvider.capabilities.<get-capabilities>|<get-capabilities>(){}[0]
@@ -628,7 +630,6 @@ final class uz.yalla.maps.provider/SwitchingMapProvider : uz.yalla.maps.api/MapP
     final val type // uz.yalla.maps.provider/SwitchingMapProvider.type|{}type[0]
         final fun <get-type>(): uz.yalla.core.settings/MapKind // uz.yalla.maps.provider/SwitchingMapProvider.type.<get-type>|<get-type>(){}[0]
 
-    final fun close() // uz.yalla.maps.provider/SwitchingMapProvider.close|close(){}[0]
     final fun createController(): uz.yalla.maps.api/MapController // uz.yalla.maps.provider/SwitchingMapProvider.createController|createController(){}[0]
     final fun createExtendedMap(): uz.yalla.maps.api/ExtendedMap // uz.yalla.maps.provider/SwitchingMapProvider.createExtendedMap|createExtendedMap(){}[0]
     final fun createLiteMap(): uz.yalla.maps.api/LiteMap // uz.yalla.maps.provider/SwitchingMapProvider.createLiteMap|createLiteMap(){}[0]
