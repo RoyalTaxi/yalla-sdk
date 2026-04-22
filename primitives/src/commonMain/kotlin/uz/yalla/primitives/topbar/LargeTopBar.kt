@@ -76,6 +76,10 @@ data class LargeTopBarDimens(
  * @param title Screen title slot.
  * @param modifier Applied to top bar.
  * @param onNavigationClick If provided, shows back button.
+ * @param navigationIconContentDescription Accessibility label for the navigation icon.
+ *   When `null` (default) the icon is treated as decorative and screen readers skip it.
+ *   Provide a localized string (e.g. `"Navigate back"`) so that screen readers can announce
+ *   the tappable navigation icon to users who rely on accessibility services.
  * @param colors Color configuration, defaults to [LargeTopBarDefaults.colors].
  * @param dimens Dimension configuration, defaults to [LargeTopBarDefaults.dimens].
  * @param actions Optional action buttons.
@@ -89,6 +93,7 @@ fun LargeTopBar(
     title: @Composable (() -> Unit)?,
     modifier: Modifier = Modifier,
     onNavigationClick: (() -> Unit)? = null,
+    navigationIconContentDescription: String? = null,
     colors: LargeTopBarColors = LargeTopBarDefaults.colors(),
     dimens: LargeTopBarDimens = LargeTopBarDefaults.dimens(),
     actions: @Composable (() -> Unit)? = null,
@@ -107,7 +112,10 @@ fun LargeTopBar(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             if (onNavigationClick != null) {
-                NavigationButton(onClick = onNavigationClick)
+                NavigationButton(
+                    onClick = onNavigationClick,
+                    contentDescription = navigationIconContentDescription,
+                )
             } else {
                 Spacer(Modifier.width(dimens.navigationButtonSize))
             }
