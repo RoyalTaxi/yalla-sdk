@@ -9,8 +9,18 @@ import platform.UIKit.UIApplicationOpenSettingsURLString
 actual fun isLocationServicesEnabled(): Boolean =
     CLLocationManager.locationServicesEnabled()
 
-/** @see openLocationSettings */
+/**
+ * @see openLocationSettings
+ *
+ * iOS does not allow deep-linking to the system Location Services page, so this
+ * opens the app's settings page via `UIApplicationOpenSettingsURLString`. Uses the
+ * modern `open(url:options:completionHandler:)` API (iOS 10+).
+ */
 actual fun openLocationSettings() {
-    val url = NSURL(string = UIApplicationOpenSettingsURLString) ?: return
-    UIApplication.sharedApplication.openURL(url)
+    val url = NSURL(string = UIApplicationOpenSettingsURLString)
+    UIApplication.sharedApplication.openURL(
+        url = url,
+        options = emptyMap<Any?, Any>(),
+        completionHandler = null,
+    )
 }
