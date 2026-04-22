@@ -283,3 +283,36 @@ Forcing a symmetric API (e.g., dummy factory parameters on Android) would be a l
 **Consequence**: Non-breaking. KDoc updated on both `AndroidPlatformConfig` and `IosPlatformConfig.Builder` to explain the asymmetry.
 
 Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.
+
+---
+
+## ADR-017: String parameters migrated to `@Composable () -> Unit` slots in 8 composites
+
+**Status**: Accepted. Supersedes the "slot migration planned" note in ADR-005.
+
+**Decision**: All 8 composites that previously accepted `String` (or `String?`) text parameters now accept `@Composable () -> Unit` slots instead. `EmptyStateState` is deleted entirely — `EmptyState` takes three separate slots. Default text style and color are delivered to each slot via `ProvideTextStyle` (Material3), so a bare `Text("…")` in the slot inherits them automatically. Style-override params (`titleStyle`, `descriptionStyle`) on `Navigable` and `EmptyState` are removed; callers that need a custom style pass a styled `Text` inside their slot.
+
+**Migrated surfaces**:
+
+1. `composites/src/.../item/ListItem.kt` — `title: String`, `subtitle: String?` → slots
+2. `composites/src/.../item/IconItem.kt` — `title: String`, `subtitle: String?` → slots
+3. `composites/src/.../item/NavigableItem.kt` — `title: String`, `subtitle: String?` → slots
+4. `composites/src/.../item/SelectableItem.kt` — `title: String` → slot
+5. `composites/src/.../item/PricingItem.kt` — `name: String`, `price: String` → slots
+6. `composites/src/.../item/AddressItem.kt` (both overloads) — `text: String` → slot (overload 1); `placeholder: String` → slot (overload 2). `locations: List<String>` stays as data.
+7. `composites/src/.../drawer/Navigable.kt` — `title: String`, `description: String?` → slots. `titleStyle` and `descriptionStyle` params removed; default style delivered via `ProvideTextStyle`.
+8. `composites/src/.../view/EmptyState.kt` — `EmptyStateState(image, title, description)` data class deleted. `EmptyState` takes `image: @Composable () -> Unit`, `title: @Composable () -> Unit`, `description: (@Composable () -> Unit)? = null`.
+
+**Why**: String parameters bundle content with implicit style decisions baked into the component. A slot gives the caller full control: annotated strings, inline icons alongside text, per-call `Modifier`, or anything else that composes. The Material3 framework convention (`Button`, `Card`, `Text`) already uses slots throughout; keeping String params in the SDK made our API feel foreign and required consumers to work around limitations (e.g., annotated strings, accessibility annotations). `ProvideTextStyle` carries the default so simple callers pay zero extra cost — `Text("x")` in a slot is as terse as the old `"x"` string argument.
+
+`EmptyStateState` is deleted rather than deprecated because it is a pre-1.0 breaking window and the data class provided no value that three direct parameters don't provide more clearly.
+
+**Consequence**: Breaking at every call site. Mechanical translation at each usage:
+- `title = "x"` → `title = { Text("x") }`
+- `subtitle = "y"` → `subtitle = { Text("y") }`
+- `subtitle = null` → `subtitle = null` (unchanged — slot is nullable)
+- `state = EmptyStateState(image = p, title = "t", description = "d")` → `image = { Image(p, null) }, title = { Text("t") }, description = { Text("d") }`
+
+YallaClient will rewrite 16+ `Navigable` call sites and every `ListItem`/`IconItem`/`NavigableItem`/`SelectableItem`/`PricingItem`/`AddressItem`/`EmptyState` call site. That migration lands in a separate YallaClient PR (`chore/sdk-phase4-ui-bridge`).
+
+Decided: 2026-04-22. Phase 4 of the v1.0 launch.

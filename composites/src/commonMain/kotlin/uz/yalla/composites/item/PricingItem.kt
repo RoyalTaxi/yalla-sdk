@@ -9,14 +9,13 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
@@ -120,20 +119,24 @@ object PricingItemDefaults {
  * Displays a service name, price, and optional vehicle image. When [selected], shows
  * a gradient border and a different background color.
  *
+ * The default text style and color for [name] and [price] are injected via
+ * [ProvideTextStyle][androidx.compose.material3.ProvideTextStyle]; a plain
+ * [Text][androidx.compose.material3.Text] in the slot inherits them automatically.
+ *
  * ## Usage
  *
  * ```kotlin
  * PricingItem(
- *     name = "Standard",
- *     price = "25,000 sum",
+ *     name = { Text("Standard") },
+ *     price = { Text("25,000 sum") },
  *     selected = selectedService == "standard",
  *     onClick = { selectService("standard") },
  *     image = { Image(painterResource(Res.drawable.img_sedan), null) },
  * )
  * ```
  *
- * @param name Service name (e.g., "Standard", "Comfort").
- * @param price Formatted price text.
+ * @param name Service name slot (e.g., "Standard", "Comfort"); receives [System.font.body.base.bold] style.
+ * @param price Formatted price slot; receives [System.font.body.base.bold] style.
  * @param selected Whether this item is currently selected.
  * @param onClick Called when the item is clicked.
  * @param modifier Applied to the root card.
@@ -146,8 +149,8 @@ object PricingItemDefaults {
  */
 @Composable
 fun PricingItem(
-    name: String,
-    price: String,
+    name: @Composable () -> Unit,
+    price: @Composable () -> Unit,
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -182,23 +185,15 @@ fun PricingItem(
             },
     ) {
         Column(modifier = Modifier.padding(dimens.contentPadding)) {
-            Text(
-                text = name,
-                color = colors.name,
-                style = System.font.body.base.bold,
-                maxLines = dimens.textMaxLines,
-                overflow = TextOverflow.Ellipsis,
-            )
+            ProvideTextStyle(System.font.body.base.bold.copy(color = colors.name)) {
+                name()
+            }
 
             Spacer(Modifier.height(dimens.namePriceSpacing))
 
-            Text(
-                text = price,
-                color = colors.price,
-                style = System.font.body.base.bold,
-                maxLines = dimens.textMaxLines,
-                overflow = TextOverflow.Ellipsis,
-            )
+            ProvideTextStyle(System.font.body.base.bold.copy(color = colors.price)) {
+                price()
+            }
 
             if (image != null) {
                 Spacer(Modifier.height(dimens.priceImageSpacing))

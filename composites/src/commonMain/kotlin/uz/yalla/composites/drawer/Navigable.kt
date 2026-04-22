@@ -11,14 +11,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForwardIos
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
@@ -64,20 +63,25 @@ data class NavigableDimens(
  *
  * Used inside [SectionBackground] for building grouped navigation menus in drawer screens.
  *
+ * The default text style and color for [title] and [description] are injected via
+ * [ProvideTextStyle][androidx.compose.material3.ProvideTextStyle]; a plain
+ * [Text][androidx.compose.material3.Text] in the slot inherits them automatically.
+ * Callers that need a custom style should pass a styled [Text] inside the slot.
+ *
  * ## Usage
  *
  * ```kotlin
  * SectionBackground {
  *     Navigable(
- *         title = "Settings",
- *         description = "Language, theme, notifications",
+ *         title = { Text("Settings") },
+ *         description = { Text("Language, theme, notifications") },
  *         onClick = { navigateToSettings() },
  *         leadingIcon = {
  *             DrawerItemIcon(painter = painterResource(Res.drawable.ic_settings))
  *         },
  *     )
  *     Navigable(
- *         title = "About",
+ *         title = { Text("About") },
  *         onClick = { navigateToAbout() },
  *         leadingIcon = {
  *             DrawerItemIcon(painter = painterResource(Res.drawable.ic_info))
@@ -86,14 +90,12 @@ data class NavigableDimens(
  * }
  * ```
  *
- * @param title Primary text.
+ * @param title Primary content; receives [System.font.body.large.medium] style by default.
  * @param onClick Invoked when the item is clicked.
  * @param modifier Applied to the root surface.
- * @param description Optional secondary text below the title.
+ * @param description Optional secondary content below the title; receives [System.font.body.caption] style.
  * @param leadingIcon Optional leading icon slot (e.g., [DrawerItemIcon]).
  * @param trailingView Optional trailing content rendered before the chevron.
- * @param titleStyle Text style for the title.
- * @param descriptionStyle Text style for the description.
  * @param colors Color configuration, defaults to [NavigableDefaults.colors].
  * @param dimens Dimension configuration, defaults to [NavigableDefaults.dimens].
  *
@@ -104,14 +106,12 @@ data class NavigableDimens(
  */
 @Composable
 fun Navigable(
-    title: String,
+    title: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    description: String? = null,
+    description: (@Composable () -> Unit)? = null,
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingView: (@Composable () -> Unit)? = null,
-    titleStyle: TextStyle = System.font.body.large.medium,
-    descriptionStyle: TextStyle = System.font.body.caption,
     colors: NavigableColors = NavigableDefaults.colors(),
     dimens: NavigableDimens = NavigableDefaults.dimens(),
 ) {
@@ -132,18 +132,14 @@ fun Navigable(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(dimens.descriptionSpacing),
             ) {
-                Text(
-                    text = title,
-                    style = titleStyle,
-                    color = colors.title,
-                )
+                ProvideTextStyle(System.font.body.large.medium.copy(color = colors.title)) {
+                    title()
+                }
 
-                description?.let {
-                    Text(
-                        text = it,
-                        style = descriptionStyle,
-                        color = colors.description,
-                    )
+                if (description != null) {
+                    ProvideTextStyle(System.font.body.caption.copy(color = colors.description)) {
+                        description()
+                    }
                 }
             }
 

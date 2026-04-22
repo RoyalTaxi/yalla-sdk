@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
@@ -103,20 +103,24 @@ object SelectableItemDefaults {
  * and a trailing check icon when selected. The border disappears and the background changes
  * to indicate selection.
  *
+ * The default text style and color for [title] are injected via
+ * [ProvideTextStyle][androidx.compose.material3.ProvideTextStyle]; a plain
+ * [Text][androidx.compose.material3.Text] in the slot inherits them automatically.
+ *
  * Designed for use inside [SelectionSheet] or any single-choice list.
  *
  * ## Usage
  *
  * ```kotlin
  * SelectableItem(
- *     title = "English",
+ *     title = { Text("English") },
  *     isSelected = currentLanguage == "en",
  *     onSelect = { selectLanguage("en") },
  *     icon = { Icon(YallaIcons.Globe, null) },
  * )
  * ```
  *
- * @param title Primary text.
+ * @param title Primary content; receives [System.font.body.small.medium] style by default.
  * @param isSelected Whether this item is currently selected.
  * @param onSelect Called when the item is tapped.
  * @param modifier Applied to the root surface.
@@ -130,7 +134,7 @@ object SelectableItemDefaults {
  */
 @Composable
 fun SelectableItem(
-    title: String,
+    title: @Composable () -> Unit,
     isSelected: Boolean,
     onSelect: () -> Unit,
     modifier: Modifier = Modifier,
@@ -158,11 +162,9 @@ fun SelectableItem(
                 Spacer(modifier = Modifier.width(dimens.iconSpacing))
             }
 
-            Text(
-                text = title,
-                color = colors.text,
-                style = System.font.body.small.medium,
-            )
+            ProvideTextStyle(System.font.body.small.medium.copy(color = colors.text)) {
+                title()
+            }
 
             Spacer(modifier = Modifier.weight(1f))
 

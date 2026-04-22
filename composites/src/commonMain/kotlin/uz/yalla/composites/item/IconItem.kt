@@ -63,22 +63,26 @@ data class IconItemDimens(
  * Built on [ListItem]. Wraps the caller-provided [icon] composable in a sized, shaped,
  * and background-colored container before passing it as [ListItem]'s leading content.
  *
+ * The default text style and color for [title] and [subtitle] are injected via
+ * [ProvideTextStyle][androidx.compose.material3.ProvideTextStyle]; a plain
+ * [Text][androidx.compose.material3.Text] in the slot inherits them automatically.
+ *
  * ## Usage
  *
  * ```kotlin
  * IconItem(
- *     title = "Language",
- *     subtitle = "English",
+ *     title = { Text("Language") },
+ *     subtitle = { Text("English") },
  *     onClick = { openLanguagePicker() },
  *     icon = { Icon(YallaIcons.Globe, null) },
  *     trailingContent = { Text("EN") },
  * )
  * ```
  *
- * @param title Primary text.
+ * @param title Primary content; receives [System.font.body.base.bold] style by default.
  * @param onClick Called when the item is clicked.
  * @param modifier Applied to the root item.
- * @param subtitle Optional secondary text.
+ * @param subtitle Optional secondary content.
  * @param enabled Whether the item responds to clicks.
  * @param icon Optional icon composable rendered inside a styled container.
  * @param trailingContent Optional composable rendered at the end of the row.
@@ -92,10 +96,10 @@ data class IconItemDimens(
  */
 @Composable
 fun IconItem(
-    title: String,
+    title: @Composable () -> Unit,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    subtitle: String? = null,
+    subtitle: (@Composable () -> Unit)? = null,
     enabled: Boolean = true,
     icon: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,

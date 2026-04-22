@@ -86,9 +86,9 @@ object SelectionSheetDefaults {
  *     itemKey = { it.code },
  * ) { language, isSelected ->
  *     SelectableItem(
- *         title = language.name,
+ *         title = { Text(language.name) },
  *         isSelected = isSelected,
- *         onClick = { viewModel.selectLanguage(language) },
+ *         onSelect = { viewModel.selectLanguage(language) },
  *     )
  * }
  * ```
