@@ -384,3 +384,32 @@ Decided: 2026-04-22. Phase 5 of the v1.0 launch.
 **Consequence**: Breaking. YallaClient call sites either switch to the narrow signature (cross-platform single-image pick) or migrate Android-only rich screens to `YallaGalleryPagingGrid`. `@OptIn(ExperimentalYallaGalleryApi::class)` removed everywhere.
 
 Decided: 2026-04-22. Phase 5 of the v1.0 launch.
+
+---
+
+## ADR-020: Spacing and corner-radius tokens graduate into the design system
+
+**Status**: Accepted.
+
+**Decision**: Introduce two new token families alongside the existing `System.color.*` and `System.font.*`:
+
+- `System.space.*` — semantic spacing aliases (`screenEdge`, `sheetEdge`, `contentEdge`, `itemGap`, `sectionGap`, `heroGap`, `inlineGap`) plus an escape-hatch `scale` (`xxs…massive`).
+- `System.radius.*` — flat t-shirt radius scale (`xs`, `s`, `m`, `l`, `xl`, `sheet`).
+
+Both are additive to `YallaTheme` (new parameters `spaceScheme`, `radiusScheme`, both with default factories) and resolve via `CompositionLocal` with a sensible default so previews still work outside a theme.
+
+**Why**: An audit of YallaClient's `feature/**` screens surfaced eight distinct horizontal-padding values (4, 8, 10, 12, 16, 20, 24, 32, 36) across 15 modules, with multiple screens (`DetailsSheet`, `LoginScreen`, `CancelSheet`) mixing three or more within a single file. The bug class is structural, not stylistic: when the API is *"pick a number,"* consumers pick inconsistently. When the API becomes *"pick a semantic name,"* the 30-vs-20 bug fixed today on `LanguageScreen` stops being typable.
+
+`System.color.*` and `System.font.*` already prove the pattern works. Spacing and radius are the two remaining primitive dimensions every composable reaches for. Typography (`font.*`) and colors (`color.*`) are intentionally not expanded in this change — they cover their ground.
+
+**Structure choices**:
+
+1. **Two-layer spacing** (semantic flat + nested `scale`) instead of a single t-shirt scale. Semantic names (`screenEdge`) win on ergonomics so correct usage is the shortest to type; the scale remains accessible but requires an extra `.scale.` hop, making it the conscious choice. This is the same discipline Tailwind and Material 3 enforce, scaled down to our surface.
+2. **Flat radius scale** — radii don't split into categories the way colors do (`text`/`background`/`border`). Size carries intent.
+3. **Single `standardSpaceScheme()` / `standardRadiusScheme()` factory** (no dark/light variant) — unlike colors, spacing doesn't depend on theme mode. Override via `YallaTheme` params for white-labeling.
+
+**Consequence**: Non-breaking and purely additive on the public API (`apiCheck` passes after `apiDump` regenerates the baseline for `YallaTheme`'s new signature and the two new schemes). Pre-1.0 full-risk mode applies: no `@Deprecated` cycle needed for future tuning of values since no consumer is migrating from a prior shape.
+
+**YallaClient follow-up** (not bundled with this SDK release): screen-by-screen sweep to replace raw `.dp` padding/radius values with `System.space.*` / `System.radius.*`. Prioritized by audit severity (`DetailsSheet`, `LoginScreen`, `CancelSheet` first). A detekt rule flagging raw `.dp` inside `padding()` / `RoundedCornerShape(...)` calls is a follow-up to preserve discipline after the sweep lands.
+
+Decided: 2026-04-22.

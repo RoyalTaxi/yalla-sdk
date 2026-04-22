@@ -17,6 +17,12 @@ import uz.yalla.design.color.light
 import uz.yalla.design.font.FontScheme
 import uz.yalla.design.font.LocalFontScheme
 import uz.yalla.design.font.rememberFontScheme
+import uz.yalla.design.radius.LocalRadiusScheme
+import uz.yalla.design.radius.RadiusScheme
+import uz.yalla.design.radius.standardRadiusScheme
+import uz.yalla.design.space.LocalSpaceScheme
+import uz.yalla.design.space.SpaceScheme
+import uz.yalla.design.space.standardSpaceScheme
 import androidx.compose.material3.darkColorScheme as materialDarkColorScheme
 import androidx.compose.material3.lightColorScheme as materialLightColorScheme
 
@@ -52,6 +58,8 @@ private val LocalIsDark = staticCompositionLocalOf { false }
  * @param isDark Whether to use dark color scheme. Defaults to system setting.
  * @param colorScheme Color tokens to apply. Defaults to [light] or [dark] based on [isDark].
  * @param fontScheme Typography tokens to apply. Defaults to [rememberFontScheme].
+ * @param spaceScheme Spacing tokens to apply. Defaults to [standardSpaceScheme].
+ * @param radiusScheme Corner-radius tokens to apply. Defaults to [standardRadiusScheme].
  * @param content Composable content wrapped by the theme.
  * @since 0.0.1
  */
@@ -61,6 +69,8 @@ fun YallaTheme(
     isDark: Boolean = isSystemInDarkTheme(),
     colorScheme: ColorScheme = if (isDark) dark() else light(),
     fontScheme: FontScheme = rememberFontScheme(),
+    spaceScheme: SpaceScheme = standardSpaceScheme(),
+    radiusScheme: RadiusScheme = standardRadiusScheme(),
     content: @Composable () -> Unit
 ) {
     val rippleConfiguration =
@@ -106,6 +116,8 @@ fun YallaTheme(
         LocalIsDark provides isDark,
         LocalColorScheme provides colorScheme,
         LocalFontScheme provides fontScheme,
+        LocalSpaceScheme provides spaceScheme,
+        LocalRadiusScheme provides radiusScheme,
         LocalRippleConfiguration provides rippleConfiguration
     ) {
         MaterialTheme(
@@ -141,6 +153,16 @@ object System {
     val font: FontScheme
         @Composable
         get() = LocalFontScheme.current
+
+    /** Current [SpaceScheme] provided by the nearest [YallaTheme]. */
+    val space: SpaceScheme
+        @Composable
+        get() = LocalSpaceScheme.current
+
+    /** Current [RadiusScheme] provided by the nearest [YallaTheme]. */
+    val radius: RadiusScheme
+        @Composable
+        get() = LocalRadiusScheme.current
 
     /** Whether the current theme is dark mode. */
     val isDark: Boolean

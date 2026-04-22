@@ -7,6 +7,17 @@ Versioning follows [SemVer](https://semver.org/spec/v2.0.0.html) **post-1.0**; p
 
 ## [Unreleased]
 
+## [0.0.13-alpha01] — 2026-04-22
+
+### Added
+- **`System.space.*` spacing tokens** (design module). Semantic aliases `screenEdge`, `sheetEdge`, `contentEdge`, `itemGap`, `sectionGap`, `heroGap`, `inlineGap` plus an escape-hatch `scale` (`xxs…massive`). Resolves a consumer-side audit finding of eight distinct raw `.dp` horizontal-padding values across YallaClient's 15 feature modules.
+- **`System.radius.*` corner-radius tokens** (design module). Flat t-shirt scale `xs` / `s` / `m` / `l` / `xl` / `sheet` covering inputs → bottom-sheet top corners.
+- `YallaTheme` accepts optional `spaceScheme` and `radiusScheme` parameters; defaults are `standardSpaceScheme()` / `standardRadiusScheme()`. Both `LocalSpaceScheme` and `LocalRadiusScheme` fall back to the standard factory outside a theme so previews resolve sensibly.
+- `SpaceSchemeTest`, `RadiusSchemeTest` — value + structural-equality coverage.
+
+### Decisions
+- ADR-020: Spacing and corner-radius tokens graduate into the design system. Non-breaking, additive to `YallaTheme`; YallaClient sweep of raw `.dp` values is a separate follow-up (not bundled here).
+
 ## [0.0.12-alpha01] — 2026-04-22
 
 ### Breaking
