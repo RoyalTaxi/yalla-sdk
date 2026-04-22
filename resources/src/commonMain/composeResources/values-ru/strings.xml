@@ -124,6 +124,7 @@
 
     <!-- Language Selection -->
     <string name="intro_language_title">Выберите язык приложения</string>
+    <string name="intro_language_subtitle">Вы сможете изменить это позже в настройках</string>
 
     <!-- Location Permission -->
     <string name="intro_location_title">Местоположение</string>

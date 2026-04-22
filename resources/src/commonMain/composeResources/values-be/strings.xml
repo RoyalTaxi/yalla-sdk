@@ -122,6 +122,7 @@
 
     <!-- Language Selection -->
     <string name="intro_language_title">Илова тилини танланг</string>
+    <string name="intro_language_subtitle">Кейинроқ Созламаларда ўзгартиришингиз мумкин</string>
 
     <!-- Location Permission -->
     <string name="intro_location_title">Жойлашув</string>

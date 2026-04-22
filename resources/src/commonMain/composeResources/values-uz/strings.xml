@@ -122,6 +122,7 @@
 
     <!-- Language Selection -->
     <string name="intro_language_title">Ilova tilini tanlang</string>
+    <string name="intro_language_subtitle">Keyinroq Sozlamalarda oʻzgartirishingiz mumkin</string>
 
     <!-- Location Permission -->
     <string name="intro_location_title">Joylashuv</string>

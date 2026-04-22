@@ -124,6 +124,7 @@
 
     <!-- Language Selection -->
     <string name="intro_language_title">Select app language</string>
+    <string name="intro_language_subtitle">You can change this later in Settings</string>
 
     <!-- Location Permission -->
     <string name="intro_location_title">Location</string>

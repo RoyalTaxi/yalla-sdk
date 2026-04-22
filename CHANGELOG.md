@@ -7,6 +7,11 @@ Versioning follows [SemVer](https://semver.org/spec/v2.0.0.html) **post-1.0**; p
 
 ## [Unreleased]
 
+## [0.0.14-alpha01] — 2026-04-22
+
+### Added
+- `intro_language_subtitle` string resource in all five locales (uz-Latin, uz-Cyrillic, ru, en, default). Enables consumer screens to add a contextual subtitle under the language-selection title.
+
 ## [0.0.13-alpha01] — 2026-04-22
 
 ### Added
