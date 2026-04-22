@@ -5,7 +5,7 @@
 ## What's here
 
 - **Icons** — 70+ SVG files under `src/commonMain/valkyrieResources/`, compiled to a `YallaIcons` object via the Valkyrie plugin.
-- **String resources** — translations under `src/commonMain/composeResources/values*/strings.xml`. Current locales: `values` (default), `values-en` (English), `values-ru` (Russian), `values-uz-Cyrl` (Uzbek Cyrillic). Uzbek Latin (`values-uz`) is added during Phase 1.
+- **String resources** — translations under `src/commonMain/composeResources/values*/strings.xml`. Current locales: `values` (default), `values-en` (English), `values-ru` (Russian), `values-uz` (Uzbek Latin), `values-be` (Uzbek Cyrillic — held under BCP 47 tag `be` because Compose Resources 1.10.0 does not support 4-letter script subtags; rename to `values-uz-Cyrl` is blocked until upstream support lands).
 - **Fonts** — Inter, Roboto, SFPro, Nummernschild under `src/commonMain/composeResources/font/`.
 - **Drawables** — PNG assets under `src/commonMain/composeResources/drawable/`.
 
