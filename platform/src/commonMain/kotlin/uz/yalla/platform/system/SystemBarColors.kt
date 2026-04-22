@@ -1,29 +1,18 @@
 package uz.yalla.platform.system
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
-
-/**
- * Sets the status bar and navigation bar background colors.
- *
- * On Android, applies the colors to the system window decor.
- * On iOS, configures the `UINavigationBar` and status bar appearance.
- *
- * @param statusBarColor Color applied to the status bar area.
- * @param navigationBarColor Color applied to the system navigation bar. Defaults to [statusBarColor].
- * @since 0.0.1
- */
-@Composable
-expect fun SystemBarColors(
-    statusBarColor: Color,
-    navigationBarColor: Color = statusBarColor
-)
 
 /**
  * Controls system bar icon contrast (light vs dark icons).
  *
- * Use this overload when you only need to toggle icon style without specifying
- * explicit bar colors (e.g., transparent bars over a map).
+ * `YallaTheme` owns status bar and navigation bar background colors; consumers should not
+ * set raw colors through this function. Use this overload to toggle icon style only
+ * (e.g., switching to light icons over a full-bleed map, or dark icons over a white sheet).
+ *
+ * On Android: uses `WindowCompat.getInsetsController` to set `isAppearanceLightStatusBars`
+ * and `isAppearanceLightNavigationBars`. No-ops if the context is not an `Activity`.
+ * On iOS: uses `UIApplication.setStatusBarStyle` (deprecated API; the per-ViewController
+ * alternative requires a Swift-side UIViewController subclass not feasible from Kotlin/Compose).
  *
  * @param darkIcons `true` for dark icons on a light background, `false` for light icons on dark.
  * @since 0.0.1

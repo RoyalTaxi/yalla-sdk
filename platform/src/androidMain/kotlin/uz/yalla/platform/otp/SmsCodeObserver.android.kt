@@ -14,17 +14,25 @@ import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
 
 /**
- * Android actual for [ObserveSmsCode].
+ * Observes incoming SMS messages for OTP codes using the Google SMS Retriever API.
  *
- * Starts the SMS Retriever API client and registers a [BroadcastReceiver] for
- * [SmsRetriever.SMS_RETRIEVED_ACTION]. When an SMS matching the app's hash is
- * received, the raw message body is forwarded to [onCodeReceived].
+ * Starts the SMS Retriever client and registers a [BroadcastReceiver] for
+ * [SmsRetriever.SMS_RETRIEVED_ACTION]. When an SMS matching the app's hash is received,
+ * the raw message body is forwarded to [onCodeReceived]. The caller is responsible for
+ * extracting the numeric code from the message.
+ *
+ * This composable is **Android-only**. On iOS, SMS autofill is handled natively by the
+ * system keyboard when a `UITextField` has `textContentType = .oneTimeCode` — no SDK
+ * composable is needed. See ADR-015c.
  *
  * The receiver is registered with [ContextCompat.RECEIVER_EXPORTED] and unregistered
  * in the `onDispose` callback to avoid leaks.
+ *
+ * @param onCodeReceived Called with the raw SMS message body when an OTP SMS is received.
+ * @since 0.0.6-alpha05
  */
 @Composable
-actual fun ObserveSmsCode(onCodeReceived: (String) -> Unit) {
+fun ObserveSmsCode(onCodeReceived: (String) -> Unit) {
     val context = LocalContext.current
     val currentCallback = rememberUpdatedState(onCodeReceived)
 

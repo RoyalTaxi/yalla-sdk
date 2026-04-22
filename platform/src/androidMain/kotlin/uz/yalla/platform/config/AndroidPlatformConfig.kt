@@ -6,9 +6,14 @@ import uz.yalla.platform.YallaPlatform
 /**
  * Android [PlatformConfig] implementation.
  *
- * Unlike [IosPlatformConfig][uz.yalla.platform.config.IosPlatformConfig], Android requires no
- * native component factories because all platform components are implemented with Compose
- * Material3 directly. This class exists solely to satisfy the [PlatformConfig] contract.
+ * No factories are required on Android because all platform UI components (sheets, icon buttons,
+ * navigation) are implemented with Compose Material3 directly — no UIKit interop layer exists.
+ * This is a marker class: it exists solely to satisfy the [PlatformConfig] contract and signal
+ * that [YallaPlatform] has been initialized for the Android target. See ADR-015d.
+ *
+ * Contrast with [IosPlatformConfig][uz.yalla.platform.config.IosPlatformConfig], which requires
+ * three factories because UIKit components (sheet presentation, circle and squircle icon buttons)
+ * cannot be driven from Kotlin/Compose without a Swift-side adapter.
  *
  * @see YallaPlatform.install
  * @see installAndroid
