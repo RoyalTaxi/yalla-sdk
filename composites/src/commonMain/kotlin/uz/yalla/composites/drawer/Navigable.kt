@@ -132,12 +132,18 @@ fun Navigable(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(dimens.descriptionSpacing),
             ) {
-                ProvideTextStyle(System.font.body.large.medium.copy(color = colors.title)) {
+                ProvideTextStyle(
+                    System.font.body.large.medium
+                        .copy(color = colors.title)
+                ) {
                     title()
                 }
 
                 if (description != null) {
-                    ProvideTextStyle(System.font.body.caption.copy(color = colors.description)) {
+                    ProvideTextStyle(
+                        System.font.body.caption
+                            .copy(color = colors.description)
+                    ) {
                         description()
                     }
                 }

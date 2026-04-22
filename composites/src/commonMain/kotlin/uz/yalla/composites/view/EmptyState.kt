@@ -107,14 +107,20 @@ fun EmptyState(
 
         Spacer(Modifier.height(dimens.imageTitleSpacing))
 
-        ProvideTextStyle(System.font.title.base.copy(color = colors.title)) {
+        ProvideTextStyle(
+            System.font.title.base
+                .copy(color = colors.title)
+        ) {
             title()
         }
 
         if (description != null) {
             Spacer(Modifier.height(dimens.titleDescriptionSpacing))
 
-            ProvideTextStyle(System.font.body.base.medium.copy(color = colors.description)) {
+            ProvideTextStyle(
+                System.font.body.base.medium
+                    .copy(color = colors.description)
+            ) {
                 description()
             }
         }

@@ -162,7 +162,10 @@ fun SelectableItem(
                 Spacer(modifier = Modifier.width(dimens.iconSpacing))
             }
 
-            ProvideTextStyle(System.font.body.small.medium.copy(color = colors.text)) {
+            ProvideTextStyle(
+                System.font.body.small.medium
+                    .copy(color = colors.text)
+            ) {
                 title()
             }
 

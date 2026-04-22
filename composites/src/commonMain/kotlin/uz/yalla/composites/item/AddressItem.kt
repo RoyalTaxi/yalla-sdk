@@ -183,7 +183,10 @@ fun AddressItem(
         ) {
             leadingContent?.invoke()
 
-            ProvideTextStyle(System.font.body.base.bold.copy(color = colors.location)) {
+            ProvideTextStyle(
+                System.font.body.base.bold
+                    .copy(color = colors.location)
+            ) {
                 Box(modifier = Modifier.weight(1f)) {
                     text()
                 }
@@ -260,7 +263,10 @@ fun AddressItem(
             leadingContent?.invoke()
 
             if (locations.isEmpty()) {
-                ProvideTextStyle(System.font.body.base.bold.copy(color = colors.placeholder)) {
+                ProvideTextStyle(
+                    System.font.body.base.bold
+                        .copy(color = colors.placeholder)
+                ) {
                     Box(modifier = Modifier.weight(1f)) {
                         placeholder()
                     }

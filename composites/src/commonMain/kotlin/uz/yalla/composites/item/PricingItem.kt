@@ -185,13 +185,19 @@ fun PricingItem(
             },
     ) {
         Column(modifier = Modifier.padding(dimens.contentPadding)) {
-            ProvideTextStyle(System.font.body.base.bold.copy(color = colors.name)) {
+            ProvideTextStyle(
+                System.font.body.base.bold
+                    .copy(color = colors.name)
+            ) {
                 name()
             }
 
             Spacer(Modifier.height(dimens.namePriceSpacing))
 
-            ProvideTextStyle(System.font.body.base.bold.copy(color = colors.price)) {
+            ProvideTextStyle(
+                System.font.body.base.bold
+                    .copy(color = colors.price)
+            ) {
                 price()
             }
 
