@@ -1,3 +1,7 @@
+@file:Suppress(
+    "EmptyFunctionBlock", // MapApplier overrides use move/remove/etc.; insertTopDown is intentionally a no-op
+)
+
 package uz.yalla.maps.compose
 
 import androidx.compose.runtime.AbstractApplier

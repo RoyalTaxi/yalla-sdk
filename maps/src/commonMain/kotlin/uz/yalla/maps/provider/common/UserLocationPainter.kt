@@ -12,7 +12,8 @@ import androidx.compose.ui.graphics.painter.Painter
  *
  * Draws a filled circle with a vertical gradient from `#3400FF` (top) to `#886BFF` (bottom)
  * and a 2 px border with the reversed gradient. Replaces the former `ic_user_location.svg`
- * which used `<circle>` elements that Valkyrie could not convert to [ImageVector][androidx.compose.ui.graphics.vector.ImageVector].
+ * which used `<circle>` elements that Valkyrie could not convert to
+ * [ImageVector][androidx.compose.ui.graphics.vector.ImageVector].
  *
  * The intrinsic size is 48 x 48 px, but the painter scales to any [DrawScope] size.
  *

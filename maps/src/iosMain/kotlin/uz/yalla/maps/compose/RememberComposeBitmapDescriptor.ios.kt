@@ -1,3 +1,8 @@
+@file:Suppress(
+    "TooGenericExceptionCaught", // bitmap capture legitimately catches any interop error to fall back
+    "SwallowedException", // fallback path intentionally swallows non-cancellation exceptions
+)
+
 package uz.yalla.maps.compose
 
 import androidx.compose.foundation.layout.Box

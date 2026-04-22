@@ -66,6 +66,55 @@ subprojects {
         config.setFrom(files("$rootDir/config/detekt/detekt.yml"))
     }
 
+    // Make the default `detekt` task actually scan KMP source sets. Without this
+    // it reports NO-SOURCE because the Kotlin plugin registers per-source-set
+    // variants (detektMetadataCommonMain, detektAndroidMain, detektIosArm64Main, …)
+    // and the bare `detekt` task has no inputs of its own.
+    afterEvaluate {
+        tasks.matching { it.name == "detekt" }.configureEach {
+            dependsOn(
+                tasks.matching { t ->
+                    t != this &&
+                        t.name.startsWith("detekt") &&
+                        !t.name.startsWith("detektBaseline") &&
+                        !t.name.startsWith("detektGenerateConfig") &&
+                        (
+                            t.name.endsWith("Main") ||
+                                t.name.endsWith("Test")
+                            )
+                },
+            )
+        }
+
+        // Detekt and ktlint read generated sources (Valkyrie, Compose Resources)
+        // but don't declare a build-graph dependency on the generators. Wire it
+        // explicitly so the task graph is correct even on cold caches.
+        val generators = tasks.matching { g ->
+            g.name.startsWith("generateValkyrie") ||
+                g.name.startsWith("generateResourceAccessors") ||
+                g.name.startsWith("generateExpectResourceCollectors") ||
+                g.name.startsWith("generateActualResourceCollectors") ||
+                g.name.startsWith("generateComposeResClass")
+        }
+
+        tasks.matching { t ->
+            t.name.startsWith("detekt") &&
+                !t.name.startsWith("detektBaseline") &&
+                !t.name.startsWith("detektGenerateConfig") &&
+                (t.name.endsWith("Main") || t.name.endsWith("Test"))
+        }.configureEach {
+            dependsOn(generators)
+            (this as io.gitlab.arturbosch.detekt.Detekt).exclude("**/build/generated/**")
+        }
+
+        tasks.matching { t ->
+            t.name.startsWith("runKtlintCheckOver") ||
+                t.name.startsWith("runKtlintFormatOver")
+        }.configureEach {
+            dependsOn(generators)
+        }
+    }
+
     configure<KtlintExtension> {
         version.set(ktlintVersion)
         android.set(false)

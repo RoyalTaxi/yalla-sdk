@@ -12,4 +12,5 @@ import kotlinx.coroutines.Dispatchers
  * @see ioDispatcher
  * @since 0.0.1
  */
+@Suppress("InjectDispatcher") // this IS the injection point the rule wants callers to use
 actual val ioDispatcher: CoroutineDispatcher = Dispatchers.IO

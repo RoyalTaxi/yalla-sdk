@@ -5,9 +5,10 @@ import uz.yalla.platform.model.IconType
 /**
  * Maps an [IconType] to its iOS asset catalog image name.
  *
- * Used by the native icon button factories ([CircleIconButtonFactory][uz.yalla.platform.config.CircleIconButtonFactory],
- * [SquircleIconButtonFactory][uz.yalla.platform.config.SquircleIconButtonFactory]) to load
- * the correct image from the Xcode asset catalog.
+ * Used by the native icon button factories
+ * ([CircleIconButtonFactory][uz.yalla.platform.config.CircleIconButtonFactory],
+ * [SquircleIconButtonFactory][uz.yalla.platform.config.SquircleIconButtonFactory])
+ * to load the correct image from the Xcode asset catalog.
  *
  * @return The asset catalog image name string (e.g., `"ic_menu"`, `"ic_close"`).
  * @see toImageVector

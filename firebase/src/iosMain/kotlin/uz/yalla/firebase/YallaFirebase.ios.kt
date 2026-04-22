@@ -27,6 +27,7 @@ import dev.gitlive.firebase.app
 internal actual fun initializePlatform() {
     // On iOS, FirebaseApp.configure() must be called in Swift before this
     // This ensures the Kotlin SDK can access the configured Firebase instance
+    @Suppress("TooGenericExceptionCaught") // Firebase iOS SDK throws a variety of NSException/-Swift-bridged
     try {
         Firebase.app
         YallaFirebase.markInitialized()
