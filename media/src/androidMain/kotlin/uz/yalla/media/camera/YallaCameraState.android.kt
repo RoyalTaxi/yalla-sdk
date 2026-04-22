@@ -7,6 +7,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 /**
  * Android implementation of [YallaCameraState].
@@ -25,6 +27,16 @@ actual class YallaCameraState(
     internal var onFrame: ((frame: ByteArray) -> Unit)?,
     internal var onCapture: (ByteArray?) -> Unit
 ) {
+    /**
+     * Single-thread executor for CameraX image capture callbacks.
+     *
+     * Owned by this state instance; shutdown via `DisposableEffect` inside [YallaCamera].
+     * Each camera screen gets its own executor rather than sharing a module-global singleton.
+     *
+     * @since 0.0.1
+     */
+    internal val executor: ExecutorService = Executors.newSingleThreadExecutor()
+
     /** @since 0.0.1 */
     actual var isCameraReady: Boolean by mutableStateOf(false)
 
