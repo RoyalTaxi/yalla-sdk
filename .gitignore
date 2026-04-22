@@ -38,3 +38,9 @@ kotlin-js-store/
 
 # Maven publish
 repo/
+
+# Code Graph MCP cache
+.code-graph/
+
+# Claude Code scheduled-task locks
+.claude/scheduled_tasks.lock
