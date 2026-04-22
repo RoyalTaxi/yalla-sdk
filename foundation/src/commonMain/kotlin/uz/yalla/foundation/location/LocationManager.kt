@@ -3,9 +3,6 @@ package uz.yalla.foundation.location
 import co.touchlab.kermit.Logger
 import dev.icerock.moko.geo.LocationTracker
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,68 +16,62 @@ import uz.yalla.core.geo.GeoPoint
 /**
  * Manages device location tracking and permission state.
  *
- * Implements [LocationProvider] so it can be used directly by the maps module
- * without requiring a wrapper/adapter class.
+ * Implements [LocationProvider] so it can be injected directly into the maps module.
  *
- * Provides reactive location updates with extended metadata (accuracy, speed, bearing)
- * and handles permission state tracking. Uses [SupervisorJob] for independent lifecycle management.
+ * ## Scope ownership (ADR-013)
+ *
+ * `LocationManager` does **not** own its [CoroutineScope]. The caller constructs and
+ * cancels the scope — typically a process-lifetime `SupervisorJob` held in the DI
+ * container. When that scope is cancelled, all in-flight tracking operations stop.
+ *
+ * There is no `close()` method: the scope's lifecycle *is* the lifecycle.
  *
  * ## Usage
  *
  * ```kotlin
- * val locationManager = LocationManager(locationTracker)
+ * val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+ * val lm = LocationManager(locationTracker, scope)
  *
- * // Start tracking
- * locationManager.startTracking()
+ * lm.startTracking()
+ * lm.currentLocation.collect { point -> /* ... */ }
  *
- * // Observe location updates (as GeoPoint for maps)
- * locationManager.currentLocation.collect { point ->
- *     point?.let { updateMap(it) }
- * }
- *
- * // Or observe extended location data
- * locationManager.extendedLocation.collect { location ->
- *     location?.let { updateUI(it.accuracy, it.speed) }
- * }
- *
- * // Stop when done
- * locationManager.stopTracking()
- *
- * // Clean up when no longer needed
- * locationManager.close()
+ * // On teardown:
+ * scope.cancel()
  * ```
  *
- * @param locationTracker Platform-specific location tracker from moko-geo
- * @param defaultLocation Fallback location when user location is unavailable
- * @since 0.0.1
+ * @param locationTracker Platform-specific tracker from moko-geo.
+ * @param scope Caller-owned scope; cancel to stop all in-flight tracking work.
+ * @param defaultLocation Fallback when user location is unavailable.
+ * @since 0.0.10
  */
 class LocationManager(
     val locationTracker: LocationTracker,
+    private val scope: CoroutineScope,
     private val defaultLocation: GeoPoint = DEFAULT_LOCATION,
 ) : LocationProvider {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     private val _extendedLocation = MutableStateFlow<ExtendedLocation?>(null)
 
     /**
-     * Current device location with extended metadata. Null if location unavailable or tracking stopped.
+     * Current device location with extended metadata, or `null` if tracking is off
+     * or no fix has arrived yet.
      *
      * @since 0.0.1
      */
     val extendedLocation: StateFlow<ExtendedLocation?> = _extendedLocation.asStateFlow()
 
     /**
-     * Current location as [GeoPoint]. Emits null if location unavailable.
+     * Current location as [GeoPoint]; emits `null` if no fix.
      *
      * @since 0.0.1
      */
-    override val currentLocation: Flow<GeoPoint?> =
-        _extendedLocation.map { it?.toGeoPoint() }
+    override val currentLocation: Flow<GeoPoint?> = _extendedLocation.map { it?.toGeoPoint() }
 
     private val _isTracking = MutableStateFlow(false)
 
     /**
-     * Whether location tracking is currently active.
+     * `true` while tracking is active (between [startTracking] and [stopTracking] or
+     * scope cancellation).
      *
      * @since 0.0.1
      */
@@ -89,7 +80,7 @@ class LocationManager(
     private val _permissionState = MutableStateFlow<LocationPermissionState?>(null)
 
     /**
-     * Current location permission state. Null if not yet checked.
+     * Last-observed permission state; `null` until the first [updatePermissionState] call.
      *
      * @since 0.0.1
      */
@@ -98,30 +89,29 @@ class LocationManager(
     /**
      * Starts location tracking. Requires location permission.
      *
+     * Idempotent — calling while already tracking is a no-op.
+     *
      * @since 0.0.1
      */
     override fun startTracking() {
         if (_isTracking.value) return
-
         scope.launch {
             runCatching {
                 locationTracker.startTracking()
                 _isTracking.value = true
-
                 locationTracker
                     .getExtendedLocationsFlow()
                     .distinctUntilChanged()
                     .collect { extLoc ->
-                        _extendedLocation.value =
-                            ExtendedLocation(
-                                latitude = extLoc.location.coordinates.latitude,
-                                longitude = extLoc.location.coordinates.longitude,
-                                accuracy = extLoc.location.coordinatesAccuracyMeters.toFloat(),
-                                altitude = extLoc.altitude.altitudeMeters,
-                                speed = extLoc.speed.speedMps.toFloat(),
-                                bearing = extLoc.azimuth.azimuthDegrees.toFloat(),
-                                timestamp = extLoc.timestampMs,
-                            )
+                        _extendedLocation.value = ExtendedLocation(
+                            latitude = extLoc.location.coordinates.latitude,
+                            longitude = extLoc.location.coordinates.longitude,
+                            accuracy = extLoc.location.coordinatesAccuracyMeters.toFloat(),
+                            altitude = extLoc.altitude.altitudeMeters,
+                            speed = extLoc.speed.speedMps.toFloat(),
+                            bearing = extLoc.azimuth.azimuthDegrees.toFloat(),
+                            timestamp = extLoc.timestampMs,
+                        )
                     }
             }.onFailure { e ->
                 _isTracking.value = false
@@ -131,13 +121,12 @@ class LocationManager(
     }
 
     /**
-     * Stops location tracking.
+     * Stops location tracking. Idempotent — no-op when not tracking.
      *
      * @since 0.0.1
      */
     override fun stopTracking() {
         if (!_isTracking.value) return
-
         scope.launch {
             runCatching {
                 locationTracker.stopTracking()
@@ -149,9 +138,9 @@ class LocationManager(
     }
 
     /**
-     * Updates the permission state.
+     * Updates the externally-observed permission state.
      *
-     * @param state New permission state, or null if unknown
+     * @param state New permission state, or `null` if unknown.
      * @since 0.0.1
      */
     fun updatePermissionState(state: LocationPermissionState?) {
@@ -159,9 +148,8 @@ class LocationManager(
     }
 
     /**
-     * Returns current location as [GeoPoint], or null if unavailable.
+     * Returns current location as [GeoPoint], or `null` if unavailable.
      *
-     * @return Current [GeoPoint] or `null` if location has not been received yet.
      * @since 0.0.1
      */
     override fun getCurrentLocation(): GeoPoint? = _extendedLocation.value?.toGeoPoint()
@@ -169,19 +157,9 @@ class LocationManager(
     /**
      * Returns current location as [GeoPoint], or [defaultLocation] if unavailable.
      *
-     * @return Current [GeoPoint] or [DEFAULT_LOCATION] (Tashkent) as fallback.
      * @since 0.0.1
      */
     override fun getCurrentLocationOrDefault(): GeoPoint = getCurrentLocation() ?: defaultLocation
-
-    /**
-     * Cancels the internal coroutine scope. Call when this manager is no longer needed.
-     *
-     * @since 0.0.1
-     */
-    fun close() {
-        scope.cancel()
-    }
 
     companion object {
         /**

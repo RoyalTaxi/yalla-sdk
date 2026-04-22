@@ -189,7 +189,7 @@ final class uz.yalla.foundation.location/Location { // uz.yalla.foundation.locat
 }
 
 final class uz.yalla.foundation.location/LocationManager : uz.yalla.core.contract.location/LocationProvider { // uz.yalla.foundation.location/LocationManager|null[0]
-    constructor <init>(dev.icerock.moko.geo/LocationTracker, uz.yalla.core.geo/GeoPoint = ...) // uz.yalla.foundation.location/LocationManager.<init>|<init>(dev.icerock.moko.geo.LocationTracker;uz.yalla.core.geo.GeoPoint){}[0]
+    constructor <init>(dev.icerock.moko.geo/LocationTracker, kotlinx.coroutines/CoroutineScope, uz.yalla.core.geo/GeoPoint = ...) // uz.yalla.foundation.location/LocationManager.<init>|<init>(dev.icerock.moko.geo.LocationTracker;kotlinx.coroutines.CoroutineScope;uz.yalla.core.geo.GeoPoint){}[0]
 
     final val currentLocation // uz.yalla.foundation.location/LocationManager.currentLocation|{}currentLocation[0]
         final fun <get-currentLocation>(): kotlinx.coroutines.flow/Flow<uz.yalla.core.geo/GeoPoint?> // uz.yalla.foundation.location/LocationManager.currentLocation.<get-currentLocation>|<get-currentLocation>(){}[0]
@@ -202,7 +202,6 @@ final class uz.yalla.foundation.location/LocationManager : uz.yalla.core.contrac
     final val permissionState // uz.yalla.foundation.location/LocationManager.permissionState|{}permissionState[0]
         final fun <get-permissionState>(): kotlinx.coroutines.flow/StateFlow<uz.yalla.foundation.location/LocationPermissionState?> // uz.yalla.foundation.location/LocationManager.permissionState.<get-permissionState>|<get-permissionState>(){}[0]
 
-    final fun close() // uz.yalla.foundation.location/LocationManager.close|close(){}[0]
     final fun getCurrentLocation(): uz.yalla.core.geo/GeoPoint? // uz.yalla.foundation.location/LocationManager.getCurrentLocation|getCurrentLocation(){}[0]
     final fun getCurrentLocationOrDefault(): uz.yalla.core.geo/GeoPoint // uz.yalla.foundation.location/LocationManager.getCurrentLocationOrDefault|getCurrentLocationOrDefault(){}[0]
     final fun startTracking() // uz.yalla.foundation.location/LocationManager.startTracking|startTracking(){}[0]

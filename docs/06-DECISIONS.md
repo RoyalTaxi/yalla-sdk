@@ -150,3 +150,34 @@ Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.
 **Consequence**: Non-breaking. KDoc on the mapping documents the rationale so future readers don't re-litigate.
 
 Decided: 2026-04-21. Part of Phase 2 of the v1.0 launch.
+
+---
+
+## ADR-013: `LocationManager` caller-owned `CoroutineScope`
+
+**Decision**: `LocationManager`'s primary constructor takes a `CoroutineScope` parameter. The SDK does not internally construct `CoroutineScope(SupervisorJob() + Dispatchers.Main)`. Caller owns lifecycle; cancelling the scope stops all in-flight tracking. The `close()` method is removed — there is nothing for the SDK to close when it doesn't own the scope.
+
+Signature:
+
+```kotlin
+class LocationManager(
+    val locationTracker: LocationTracker,
+    private val scope: CoroutineScope,
+    private val defaultLocation: GeoPoint = DEFAULT_LOCATION,
+) : LocationProvider
+```
+
+**Why**: Same root cause as ADR-011 (`createHttpClient`): the previous signature leaked an unmanaged scope for the process lifetime. Callers who forgot to call `close()` leaked the scope silently. This ADR inverts ownership: caller scope → SDK uses it → caller cancels it → SDK cleans up.
+
+**Consequence**: Breaking. Every YallaClient `LocationManager(...)` construction must pass a scope — typically a process-lifetime single in the Koin graph:
+
+```kotlin
+val locationModule = module {
+    single { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
+    single { LocationManager(get(), get()) }
+}
+```
+
+YallaClient's `chore/sdk-phase3-bridge` branch carries the call-site migration in lockstep.
+
+Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.
