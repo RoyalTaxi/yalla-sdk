@@ -1,8 +1,5 @@
 package uz.yalla.media.gallery
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -10,15 +7,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.refTo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import platform.Photos.PHAuthorizationStatusAuthorized
-import platform.Photos.PHAuthorizationStatusNotDetermined
-import platform.Photos.PHPhotoLibrary
 import platform.PhotosUI.PHPickerConfiguration
 import platform.PhotosUI.PHPickerConfigurationSelectionOrdered
 import platform.PhotosUI.PHPickerFilter
@@ -39,62 +32,25 @@ import kotlin.coroutines.resume
 /**
  * iOS implementation of [YallaGallery].
  *
- * Requests photo library access and presents a `PHPickerViewController` for single-image
- * selection. The selected image is returned as JPEG bytes.
+ * Presents a `PHPickerViewController` for single-image selection.
+ * The selected image is returned as JPEG bytes via [onImageSelected].
+ * `PHPicker` handles photo-library permission natively — no explicit permission
+ * request is made before presenting the picker.
  *
  * @since 0.0.1
  */
-@ExperimentalYallaGalleryApi
 @Composable
 actual fun YallaGallery(
     modifier: Modifier,
-    state: GalleryPickerState,
-    lazyGridState: LazyGridState,
-    backgroundColor: Color,
-    header: @Composable () -> Unit,
-    progressIndicator: @Composable () -> Unit,
-    permissionDeniedContent: @Composable () -> Unit,
     onImageSelected: (ByteArray?) -> Unit,
 ) {
-    var isAuthorized by remember { mutableStateOf<Boolean?>(null) }
     var hasLaunched by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        isAuthorized = checkOrRequestPhotoLibraryAccess()
-    }
-
-    Box(modifier = modifier.background(backgroundColor)) {
-        when (isAuthorized) {
-            null -> progressIndicator()
-            false -> permissionDeniedContent()
-            true -> {
-                header()
-
-                if (!hasLaunched) {
-                    hasLaunched = true
-                    LaunchedEffect(Unit) {
-                        val result = launchPHPicker()
-                        onImageSelected(result)
-                    }
-                }
-            }
-        }
-    }
-}
-
-/**
- * Checks the current photo library authorization status and, if undetermined, requests access.
- *
- * @return `true` if authorized, `false` if denied or restricted.
- */
-private suspend fun checkOrRequestPhotoLibraryAccess(): Boolean {
-    val currentStatus = PHPhotoLibrary.authorizationStatus()
-    if (currentStatus == PHAuthorizationStatusAuthorized) return true
-    if (currentStatus != PHAuthorizationStatusNotDetermined) return false
-
-    return suspendCancellableCoroutine { continuation ->
-        PHPhotoLibrary.requestAuthorization { newStatus ->
-            continuation.resume(newStatus == PHAuthorizationStatusAuthorized)
+    if (!hasLaunched) {
+        hasLaunched = true
+        LaunchedEffect(Unit) {
+            val result = launchPHPicker()
+            onImageSelected(result)
         }
     }
 }

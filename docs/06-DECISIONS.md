@@ -370,3 +370,17 @@ Any call to `switchingMapProvider.close()` at YallaClient call sites must be rem
 YallaClient's `chore/sdk-phase5-bridge` branch carries the call-site migration in lockstep.
 
 Decided: 2026-04-22. Phase 5 of the v1.0 launch.
+
+---
+
+## ADR-019: YallaGallery common surface narrowed to PHPicker-equivalent; Paging3 grid becomes Android-only
+
+**Status**: Accepted.
+
+**Decision**: `YallaGallery` common `expect` signature narrows to `(modifier, onImageSelected)` — the intersection of what Android's `PickVisualMedia` and iOS's `PHPickerViewController` deliver identically. The rich Paging3-backed grid moves to a new Android-only `YallaGalleryPagingGrid` composable with the full previous parameter set. `@ExperimentalYallaGalleryApi` is retired; both public composables are plain stable API.
+
+**Why**: Pre-Phase-5 common surface promised a richness that iOS couldn't deliver — `lazyGridState`, `backgroundColor`, `header`, `progressIndicator`, `permissionDeniedContent` were all Android-only in practice. Callers passing these params for iOS got silent no-ops. Honest API: common surface = what both platforms actually do.
+
+**Consequence**: Breaking. YallaClient call sites either switch to the narrow signature (cross-platform single-image pick) or migrate Android-only rich screens to `YallaGalleryPagingGrid`. `@OptIn(ExperimentalYallaGalleryApi::class)` removed everywhere.
+
+Decided: 2026-04-22. Phase 5 of the v1.0 launch.
