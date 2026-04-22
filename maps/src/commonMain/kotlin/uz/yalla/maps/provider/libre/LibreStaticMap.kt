@@ -102,8 +102,6 @@ class LibreStaticMap : StaticMap {
 
             if (!locations.isNullOrEmpty()) {
                 LocationsLayer(
-                    arrival = null,
-                    duration = null,
                     locations = locations,
                     startLabel = startLabel,
                     endLabel = endLabel

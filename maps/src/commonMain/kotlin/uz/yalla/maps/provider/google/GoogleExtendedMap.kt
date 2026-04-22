@@ -232,8 +232,6 @@ private fun MapContent(
 
             if (locations.size >= 2) {
                 LocationsLayer(
-                    arrival = null,
-                    duration = null,
                     locations = locations,
                     startLabel = if (showMarkerLabels) startMarkerLabel else null,
                     endLabel = if (showMarkerLabels) endMarkerLabel else null
