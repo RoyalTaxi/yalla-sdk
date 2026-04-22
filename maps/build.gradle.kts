@@ -47,5 +47,9 @@ kotlin {
             implementation(libs.google.maps.compose)
             implementation(libs.play.services.maps)
         }
+
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
 }
