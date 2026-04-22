@@ -2,7 +2,6 @@ package uz.yalla.maps.provider
 
 import androidx.compose.foundation.layout.PaddingValues
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
@@ -50,11 +49,15 @@ import uz.yalla.maps.util.hasSameValues
  *
  * ## Lifecycle
  *
- * Call [close] when the controller is no longer needed to cancel the internal coroutine scope
- * and release both backend controllers. After [close] is called, calling any other method is
- * a no-op; [isClosed] returns `true`.
+ * The controller does not own its coroutine scope. A supervised child scope is derived
+ * from [scope] so that cancelling [scope] automatically stops all internal coroutines.
+ * Call [close] when the controller is permanently discarded to cancel the child scope and
+ * release both backend controllers early. After [close] is called, calling any other method
+ * is a no-op; [isClosed] returns `true`.
  *
  * @param interfacePreferences Source of the user's map provider preference.
+ * @param scope Caller-owned parent scope. The controller derives a supervised child from
+ *   this scope; cancelling [scope] propagates to the controller automatically.
  * @since 0.0.1
  * @see SwitchingMapProvider
  * @see GoogleMapController
@@ -62,6 +65,7 @@ import uz.yalla.maps.util.hasSameValues
  */
 class SwitchingMapController(
     interfacePreferences: InterfacePreferences,
+    scope: CoroutineScope,
 ) : MapController {
     private val _googleController = lazy { GoogleMapController() }
     private val _libreController = lazy { LibreMapController() }
@@ -80,7 +84,7 @@ class SwitchingMapController(
      */
     val libreController by _libreController
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    private val scope = CoroutineScope(scope.coroutineContext + SupervisorJob())
     private var activeController: MapController? = null
     private val currentController: MapController get() = activeController ?: googleController
     private var collectorJob: Job? = null

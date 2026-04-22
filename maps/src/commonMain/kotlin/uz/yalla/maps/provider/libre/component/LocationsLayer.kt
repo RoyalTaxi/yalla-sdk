@@ -35,18 +35,16 @@ import uz.yalla.maps.provider.common.MapDimens
  * Each marker is a colored circle with an optional text badge (label). Markers are
  * rendered as symbol layers using a custom [Painter] for pixel-perfect control.
  *
- * @param arrival Arrival time hint (currently unused, reserved for future badge content).
- * @param duration Duration hint (currently unused, reserved for future badge content).
+ * The shared parameter contract is defined by
+ * [uz.yalla.maps.api.overlay.LocationsOverlayConfig].
+ *
  * @param locations Ordered list of geographic coordinates for the markers.
  * @param startLabel Optional text label for the first (start) marker.
  * @param endLabel Optional text label for the last (finish) marker.
  * @since 0.0.1
  */
 @Composable
-@Suppress("UnusedParameter") // arrival/duration retained for API parity with Google provider (Phase 5)
 fun LocationsLayer(
-    arrival: Int?,
-    duration: Int?,
     locations: List<GeoPoint>,
     startLabel: String? = null,
     endLabel: String? = null

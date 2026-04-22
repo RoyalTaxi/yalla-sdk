@@ -7,6 +7,35 @@ Versioning follows [SemVer](https://semver.org/spec/v2.0.0.html) **post-1.0**; p
 
 ## [Unreleased]
 
+## [0.0.12-alpha01] — 2026-04-22
+
+### Breaking
+- **ADR-018: `SwitchingMapProvider` caller-owned `CoroutineScope`.** Constructor now takes explicit `googleProvider`, `libreProvider`, `interfacePreferences`, and `scope` parameters; `close()` removed. Closes the scope-leak trifecta started by ADR-011 (HttpClient) and ADR-013 (LocationManager). `MapDependencies` exposes the scope for Koin wiring.
+- **ADR-019: `YallaGallery` common surface narrowed.** `@Composable expect fun YallaGallery(modifier, onImageSelected)` — the intersection of Android's `PickVisualMedia` and iOS's `PHPickerViewController`. Rich Paging3-backed grid moved to a new Android-only `YallaGalleryPagingGrid` composable with the full prior parameter set.
+- **`@ExperimentalYallaGalleryApi` retired.** The marker annotation is deleted; both public composables are plain stable API. YallaClient call sites drop any `@OptIn(ExperimentalYallaGalleryApi::class)` usages.
+- **`LocationsLayer(arrival, duration, …)` parameters removed** from both Google and Libre provider packages — both impls ignored them. Callers drop the two named args.
+- **`OrderStatus` / `PaymentKind` now `@Serializable(with = …)`** via custom `KSerializer`s. Sealed hierarchies serialize as plain String IDs, preserving the wire contract. Round-trip uses `Companion.from(id)` semantics for unknown values (falls back to the pre-existing fallback subtype rather than throwing).
+- **`PointKind` enum gains a `Companion.from(wireValue)` fallback + custom serializer.** Unknown wire values deserialize to `POINT` instead of throwing — forward-compatibility.
+
+### Added
+- **`MapController` + `SwitchingMapController` test coverage.** 37 test cases in `MapControllerFakeProviderTest` against a recording fake; covers all 14+ public operations, state-flow behavior, provider-switch handoff, close idempotency.
+- **`maps.api.overlay`** new `RouteOverlayConfig`, `LocationsOverlayConfig`, `LocationIndicatorConfig` data classes — shared parameter contract for the three overlay composables. Google + Libre impls conform.
+- **`firebase` hardening:**
+  - Android `initializePlatform()` fails loudly with a diagnostic error when `google-services.json` is missing or `FirebaseApp.getInstance()` throws.
+  - `analytics` / `crashlytics` / `messaging` property getters assert `isInitialized` before returning. Pre-init access throws `IllegalStateException` with a clear "call initialize() first" message instead of a cryptic Firebase SDK error.
+  - New `YallaFirebasePreInitTest`, `YallaAnalyticsTest`, `YallaCrashlyticsTest`, `YallaMessagingTest` smoke coverage.
+- **Media:**
+  - Per-instance CameraX `ExecutorService` owned by `YallaCameraState` (previously module-global singleton).
+  - `calculateInSampleSize` pure-math tests (11 cases); `GalleryPickerState` layout-config tests (13 cases).
+- **Serialization round-trip tests** for `OrderStatus`, `PaymentKind`, `PointKind` including fallback paths.
+
+### Changed
+- `.claude/rules/library-api.md` — "no unmanaged scopes" is now the actual enforced pattern across HttpClient (Phase 2), LocationManager (Phase 3), and SwitchingMapProvider (Phase 5). The carve-out in that rule collapses.
+
+### Decisions
+- ADR-018: SwitchingMapProvider caller-owned CoroutineScope; scope-leak trifecta closed.
+- ADR-019: YallaGallery common surface narrowed to PHPicker-equivalent; Paging3 grid Android-only.
+
 ## [0.0.11-alpha01] — 2026-04-22
 
 ### Breaking

@@ -142,6 +142,8 @@ abstract interface uz.yalla.maps.di/MapDependencies { // uz.yalla.maps.di/MapDep
         abstract fun <get-interfacePreferences>(): uz.yalla.core.contract.preferences/InterfacePreferences // uz.yalla.maps.di/MapDependencies.interfacePreferences.<get-interfacePreferences>|<get-interfacePreferences>(){}[0]
     abstract val locationProvider // uz.yalla.maps.di/MapDependencies.locationProvider|{}locationProvider[0]
         abstract fun <get-locationProvider>(): uz.yalla.core.contract.location/LocationProvider // uz.yalla.maps.di/MapDependencies.locationProvider.<get-locationProvider>|<get-locationProvider>(){}[0]
+    abstract val scope // uz.yalla.maps.di/MapDependencies.scope|{}scope[0]
+        abstract fun <get-scope>(): kotlinx.coroutines/CoroutineScope // uz.yalla.maps.di/MapDependencies.scope.<get-scope>|<get-scope>(){}[0]
 }
 
 final class uz.yalla.maps.api.model/CameraPosition { // uz.yalla.maps.api.model/CameraPosition|null[0]
@@ -263,6 +265,59 @@ final class uz.yalla.maps.api.model/MarkerState { // uz.yalla.maps.api.model/Mar
         final val INITIAL // uz.yalla.maps.api.model/MarkerState.Companion.INITIAL|{}INITIAL[0]
             final fun <get-INITIAL>(): uz.yalla.maps.api.model/MarkerState // uz.yalla.maps.api.model/MarkerState.Companion.INITIAL.<get-INITIAL>|<get-INITIAL>(){}[0]
     }
+}
+
+final class uz.yalla.maps.api.overlay/LocationIndicatorConfig { // uz.yalla.maps.api.overlay/LocationIndicatorConfig|null[0]
+    constructor <init>(uz.yalla.core.geo/GeoPoint?, kotlin/Double = ...) // uz.yalla.maps.api.overlay/LocationIndicatorConfig.<init>|<init>(uz.yalla.core.geo.GeoPoint?;kotlin.Double){}[0]
+
+    final val accuracyMeters // uz.yalla.maps.api.overlay/LocationIndicatorConfig.accuracyMeters|{}accuracyMeters[0]
+        final fun <get-accuracyMeters>(): kotlin/Double // uz.yalla.maps.api.overlay/LocationIndicatorConfig.accuracyMeters.<get-accuracyMeters>|<get-accuracyMeters>(){}[0]
+    final val location // uz.yalla.maps.api.overlay/LocationIndicatorConfig.location|{}location[0]
+        final fun <get-location>(): uz.yalla.core.geo/GeoPoint? // uz.yalla.maps.api.overlay/LocationIndicatorConfig.location.<get-location>|<get-location>(){}[0]
+
+    final fun component1(): uz.yalla.core.geo/GeoPoint? // uz.yalla.maps.api.overlay/LocationIndicatorConfig.component1|component1(){}[0]
+    final fun component2(): kotlin/Double // uz.yalla.maps.api.overlay/LocationIndicatorConfig.component2|component2(){}[0]
+    final fun copy(uz.yalla.core.geo/GeoPoint? = ..., kotlin/Double = ...): uz.yalla.maps.api.overlay/LocationIndicatorConfig // uz.yalla.maps.api.overlay/LocationIndicatorConfig.copy|copy(uz.yalla.core.geo.GeoPoint?;kotlin.Double){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.maps.api.overlay/LocationIndicatorConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // uz.yalla.maps.api.overlay/LocationIndicatorConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // uz.yalla.maps.api.overlay/LocationIndicatorConfig.toString|toString(){}[0]
+
+    final object Companion { // uz.yalla.maps.api.overlay/LocationIndicatorConfig.Companion|null[0]
+        final const val DEFAULT_ACCURACY_METERS // uz.yalla.maps.api.overlay/LocationIndicatorConfig.Companion.DEFAULT_ACCURACY_METERS|{}DEFAULT_ACCURACY_METERS[0]
+            final fun <get-DEFAULT_ACCURACY_METERS>(): kotlin/Double // uz.yalla.maps.api.overlay/LocationIndicatorConfig.Companion.DEFAULT_ACCURACY_METERS.<get-DEFAULT_ACCURACY_METERS>|<get-DEFAULT_ACCURACY_METERS>(){}[0]
+    }
+}
+
+final class uz.yalla.maps.api.overlay/LocationsOverlayConfig { // uz.yalla.maps.api.overlay/LocationsOverlayConfig|null[0]
+    constructor <init>(kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/String? = ..., kotlin/String? = ...) // uz.yalla.maps.api.overlay/LocationsOverlayConfig.<init>|<init>(kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.String?;kotlin.String?){}[0]
+
+    final val endLabel // uz.yalla.maps.api.overlay/LocationsOverlayConfig.endLabel|{}endLabel[0]
+        final fun <get-endLabel>(): kotlin/String? // uz.yalla.maps.api.overlay/LocationsOverlayConfig.endLabel.<get-endLabel>|<get-endLabel>(){}[0]
+    final val locations // uz.yalla.maps.api.overlay/LocationsOverlayConfig.locations|{}locations[0]
+        final fun <get-locations>(): kotlin.collections/List<uz.yalla.core.geo/GeoPoint> // uz.yalla.maps.api.overlay/LocationsOverlayConfig.locations.<get-locations>|<get-locations>(){}[0]
+    final val startLabel // uz.yalla.maps.api.overlay/LocationsOverlayConfig.startLabel|{}startLabel[0]
+        final fun <get-startLabel>(): kotlin/String? // uz.yalla.maps.api.overlay/LocationsOverlayConfig.startLabel.<get-startLabel>|<get-startLabel>(){}[0]
+
+    final fun component1(): kotlin.collections/List<uz.yalla.core.geo/GeoPoint> // uz.yalla.maps.api.overlay/LocationsOverlayConfig.component1|component1(){}[0]
+    final fun component2(): kotlin/String? // uz.yalla.maps.api.overlay/LocationsOverlayConfig.component2|component2(){}[0]
+    final fun component3(): kotlin/String? // uz.yalla.maps.api.overlay/LocationsOverlayConfig.component3|component3(){}[0]
+    final fun copy(kotlin.collections/List<uz.yalla.core.geo/GeoPoint> = ..., kotlin/String? = ..., kotlin/String? = ...): uz.yalla.maps.api.overlay/LocationsOverlayConfig // uz.yalla.maps.api.overlay/LocationsOverlayConfig.copy|copy(kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.String?;kotlin.String?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.maps.api.overlay/LocationsOverlayConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // uz.yalla.maps.api.overlay/LocationsOverlayConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // uz.yalla.maps.api.overlay/LocationsOverlayConfig.toString|toString(){}[0]
+}
+
+final class uz.yalla.maps.api.overlay/RouteOverlayConfig { // uz.yalla.maps.api.overlay/RouteOverlayConfig|null[0]
+    constructor <init>(kotlin.collections/List<uz.yalla.core.geo/GeoPoint>) // uz.yalla.maps.api.overlay/RouteOverlayConfig.<init>|<init>(kotlin.collections.List<uz.yalla.core.geo.GeoPoint>){}[0]
+
+    final val route // uz.yalla.maps.api.overlay/RouteOverlayConfig.route|{}route[0]
+        final fun <get-route>(): kotlin.collections/List<uz.yalla.core.geo/GeoPoint> // uz.yalla.maps.api.overlay/RouteOverlayConfig.route.<get-route>|<get-route>(){}[0]
+
+    final fun component1(): kotlin.collections/List<uz.yalla.core.geo/GeoPoint> // uz.yalla.maps.api.overlay/RouteOverlayConfig.component1|component1(){}[0]
+    final fun copy(kotlin.collections/List<uz.yalla.core.geo/GeoPoint> = ...): uz.yalla.maps.api.overlay/RouteOverlayConfig // uz.yalla.maps.api.overlay/RouteOverlayConfig.copy|copy(kotlin.collections.List<uz.yalla.core.geo.GeoPoint>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.maps.api.overlay/RouteOverlayConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // uz.yalla.maps.api.overlay/RouteOverlayConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // uz.yalla.maps.api.overlay/RouteOverlayConfig.toString|toString(){}[0]
 }
 
 final class uz.yalla.maps.compose/BitmapDescriptor { // uz.yalla.maps.compose/BitmapDescriptor|null[0]
@@ -580,7 +635,7 @@ final class uz.yalla.maps.provider.libre/LibreStaticMap : uz.yalla.maps.api/Stat
 }
 
 final class uz.yalla.maps.provider/SwitchingMapController : uz.yalla.maps.api/MapController { // uz.yalla.maps.provider/SwitchingMapController|null[0]
-    constructor <init>(uz.yalla.core.contract.preferences/InterfacePreferences) // uz.yalla.maps.provider/SwitchingMapController.<init>|<init>(uz.yalla.core.contract.preferences.InterfacePreferences){}[0]
+    constructor <init>(uz.yalla.core.contract.preferences/InterfacePreferences, kotlinx.coroutines/CoroutineScope) // uz.yalla.maps.provider/SwitchingMapController.<init>|<init>(uz.yalla.core.contract.preferences.InterfacePreferences;kotlinx.coroutines.CoroutineScope){}[0]
 
     final val cameraPosition // uz.yalla.maps.provider/SwitchingMapController.cameraPosition|{}cameraPosition[0]
         final fun <get-cameraPosition>(): kotlinx.coroutines.flow/StateFlow<uz.yalla.maps.api.model/CameraPosition> // uz.yalla.maps.provider/SwitchingMapController.cameraPosition.<get-cameraPosition>|<get-cameraPosition>(){}[0]
@@ -619,7 +674,7 @@ final class uz.yalla.maps.provider/SwitchingMapController : uz.yalla.maps.api/Ma
 }
 
 final class uz.yalla.maps.provider/SwitchingMapProvider : uz.yalla.maps.api/MapProvider { // uz.yalla.maps.provider/SwitchingMapProvider|null[0]
-    constructor <init>(uz.yalla.core.contract.preferences/InterfacePreferences) // uz.yalla.maps.provider/SwitchingMapProvider.<init>|<init>(uz.yalla.core.contract.preferences.InterfacePreferences){}[0]
+    constructor <init>(uz.yalla.maps.api/MapProvider, uz.yalla.maps.api/MapProvider, uz.yalla.core.contract.preferences/InterfacePreferences, kotlinx.coroutines/CoroutineScope) // uz.yalla.maps.provider/SwitchingMapProvider.<init>|<init>(uz.yalla.maps.api.MapProvider;uz.yalla.maps.api.MapProvider;uz.yalla.core.contract.preferences.InterfacePreferences;kotlinx.coroutines.CoroutineScope){}[0]
 
     final val capabilities // uz.yalla.maps.provider/SwitchingMapProvider.capabilities|{}capabilities[0]
         final fun <get-capabilities>(): uz.yalla.maps.api.model/MapCapabilities // uz.yalla.maps.provider/SwitchingMapProvider.capabilities.<get-capabilities>|<get-capabilities>(){}[0]
@@ -628,7 +683,6 @@ final class uz.yalla.maps.provider/SwitchingMapProvider : uz.yalla.maps.api/MapP
     final val type // uz.yalla.maps.provider/SwitchingMapProvider.type|{}type[0]
         final fun <get-type>(): uz.yalla.core.settings/MapKind // uz.yalla.maps.provider/SwitchingMapProvider.type.<get-type>|<get-type>(){}[0]
 
-    final fun close() // uz.yalla.maps.provider/SwitchingMapProvider.close|close(){}[0]
     final fun createController(): uz.yalla.maps.api/MapController // uz.yalla.maps.provider/SwitchingMapProvider.createController|createController(){}[0]
     final fun createExtendedMap(): uz.yalla.maps.api/ExtendedMap // uz.yalla.maps.provider/SwitchingMapProvider.createExtendedMap|createExtendedMap(){}[0]
     final fun createLiteMap(): uz.yalla.maps.api/LiteMap // uz.yalla.maps.provider/SwitchingMapProvider.createLiteMap|createLiteMap(){}[0]
@@ -730,6 +784,9 @@ final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_CameraPosition$stablep
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapCapabilities$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapCapabilities$stableprop|#static{}uz_yalla_maps_api_model_MapCapabilities$stableprop[0]
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapStyle$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapStyle$stableprop|#static{}uz_yalla_maps_api_model_MapStyle$stableprop[0]
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MarkerState$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MarkerState$stableprop|#static{}uz_yalla_maps_api_model_MarkerState$stableprop[0]
+final val uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_LocationIndicatorConfig$stableprop // uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_LocationIndicatorConfig$stableprop|#static{}uz_yalla_maps_api_overlay_LocationIndicatorConfig$stableprop[0]
+final val uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_LocationsOverlayConfig$stableprop // uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_LocationsOverlayConfig$stableprop|#static{}uz_yalla_maps_api_overlay_LocationsOverlayConfig$stableprop[0]
+final val uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_RouteOverlayConfig$stableprop // uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_RouteOverlayConfig$stableprop|#static{}uz_yalla_maps_api_overlay_RouteOverlayConfig$stableprop[0]
 final val uz.yalla.maps.compose/uz_yalla_maps_compose_BitmapDescriptor$stableprop // uz.yalla.maps.compose/uz_yalla_maps_compose_BitmapDescriptor$stableprop|#static{}uz_yalla_maps_compose_BitmapDescriptor$stableprop[0]
 final val uz.yalla.maps.compose/uz_yalla_maps_compose_BitmapDescriptorFactory$stableprop // uz.yalla.maps.compose/uz_yalla_maps_compose_BitmapDescriptorFactory$stableprop|#static{}uz_yalla_maps_compose_BitmapDescriptorFactory$stableprop[0]
 final val uz.yalla.maps.compose/uz_yalla_maps_compose_CameraAnimationRequest_ToBounds$stableprop // uz.yalla.maps.compose/uz_yalla_maps_compose_CameraAnimationRequest_ToBounds$stableprop|#static{}uz_yalla_maps_compose_CameraAnimationRequest_ToBounds$stableprop[0]
@@ -786,6 +843,9 @@ final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_CameraPosition$stablep
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapCapabilities$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapCapabilities$stableprop_getter|uz_yalla_maps_api_model_MapCapabilities$stableprop_getter(){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapStyle$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapStyle$stableprop_getter|uz_yalla_maps_api_model_MapStyle$stableprop_getter(){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MarkerState$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MarkerState$stableprop_getter|uz_yalla_maps_api_model_MarkerState$stableprop_getter(){}[0]
+final fun uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_LocationIndicatorConfig$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_LocationIndicatorConfig$stableprop_getter|uz_yalla_maps_api_overlay_LocationIndicatorConfig$stableprop_getter(){}[0]
+final fun uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_LocationsOverlayConfig$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_LocationsOverlayConfig$stableprop_getter|uz_yalla_maps_api_overlay_LocationsOverlayConfig$stableprop_getter(){}[0]
+final fun uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_RouteOverlayConfig$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.overlay/uz_yalla_maps_api_overlay_RouteOverlayConfig$stableprop_getter|uz_yalla_maps_api_overlay_RouteOverlayConfig$stableprop_getter(){}[0]
 final fun uz.yalla.maps.compose/Circle(uz.yalla.maps.model/LatLng, kotlin/Double, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, kotlin/Float, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.compose/Circle|Circle(uz.yalla.maps.model.LatLng;kotlin.Double;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;kotlin.Float;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun uz.yalla.maps.compose/GoogleMap(androidx.compose.ui/Modifier?, uz.yalla.maps.compose/CameraPositionState?, uz.yalla.maps.model/MapProperties?, uz.yalla.maps.model/MapUiSettings?, uz.yalla.core.settings/ThemeKind?, androidx.compose.foundation.layout/PaddingValues?, kotlin/Function0<kotlin/Unit>?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.compose/GoogleMap|GoogleMap(androidx.compose.ui.Modifier?;uz.yalla.maps.compose.CameraPositionState?;uz.yalla.maps.model.MapProperties?;uz.yalla.maps.model.MapUiSettings?;uz.yalla.core.settings.ThemeKind?;androidx.compose.foundation.layout.PaddingValues?;kotlin.Function0<kotlin.Unit>?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun uz.yalla.maps.compose/Marker(uz.yalla.maps.compose/MarkerState?, uz.yalla.maps.compose/BitmapDescriptor?, androidx.compose.ui.geometry/Offset, kotlin/Boolean, kotlin/Float, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.compose/Marker|Marker(uz.yalla.maps.compose.MarkerState?;uz.yalla.maps.compose.BitmapDescriptor?;androidx.compose.ui.geometry.Offset;kotlin.Boolean;kotlin.Float;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
@@ -820,7 +880,7 @@ final fun uz.yalla.maps.model/uz_yalla_maps_model_MapUiSettings$stableprop_gette
 final fun uz.yalla.maps.provider.common/uz_yalla_maps_provider_common_MapColors$stableprop_getter(): kotlin/Int // uz.yalla.maps.provider.common/uz_yalla_maps_provider_common_MapColors$stableprop_getter|uz_yalla_maps_provider_common_MapColors$stableprop_getter(){}[0]
 final fun uz.yalla.maps.provider.common/uz_yalla_maps_provider_common_MapDimens$stableprop_getter(): kotlin/Int // uz.yalla.maps.provider.common/uz_yalla_maps_provider_common_MapDimens$stableprop_getter|uz_yalla_maps_provider_common_MapDimens$stableprop_getter(){}[0]
 final fun uz.yalla.maps.provider.google.component/LocationIndicator(uz.yalla.core.geo/GeoPoint?, kotlin/Double, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.provider.google.component/LocationIndicator|LocationIndicator(uz.yalla.core.geo.GeoPoint?;kotlin.Double;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
-final fun uz.yalla.maps.provider.google.component/LocationsLayer(kotlin/Int?, kotlin/Int?, kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/String?, kotlin/String?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.provider.google.component/LocationsLayer|LocationsLayer(kotlin.Int?;kotlin.Int?;kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.String?;kotlin.String?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.maps.provider.google.component/LocationsLayer(kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/String?, kotlin/String?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.provider.google.component/LocationsLayer|LocationsLayer(kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.String?;kotlin.String?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun uz.yalla.maps.provider.google.component/RouteLayer(kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.maps.provider.google.component/RouteLayer|RouteLayer(kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun uz.yalla.maps.provider.google/BaseMapContent(uz.yalla.maps.compose/CameraPositionState, uz.yalla.core.settings/ThemeKind, androidx.compose.ui/Modifier?, kotlin/Boolean, androidx.compose.foundation.layout/PaddingValues, kotlin/Function1<androidx.compose.ui.unit/IntSize, kotlin/Unit>?, kotlin/Function0<kotlin/Unit>?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.provider.google/BaseMapContent|BaseMapContent(uz.yalla.maps.compose.CameraPositionState;uz.yalla.core.settings.ThemeKind;androidx.compose.ui.Modifier?;kotlin.Boolean;androidx.compose.foundation.layout.PaddingValues;kotlin.Function1<androidx.compose.ui.unit.IntSize,kotlin.Unit>?;kotlin.Function0<kotlin.Unit>?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun uz.yalla.maps.provider.google/CameraTrackingEffect(uz.yalla.maps.compose/CameraPositionState, uz.yalla.maps.provider.google/GoogleMapController, kotlin/Function1<uz.yalla.maps.api.model/MarkerState, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.maps.provider.google/CameraTrackingEffect|CameraTrackingEffect(uz.yalla.maps.compose.CameraPositionState;uz.yalla.maps.provider.google.GoogleMapController;kotlin.Function1<uz.yalla.maps.api.model.MarkerState,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
@@ -830,7 +890,7 @@ final fun uz.yalla.maps.provider.google/uz_yalla_maps_provider_google_GoogleMapC
 final fun uz.yalla.maps.provider.google/uz_yalla_maps_provider_google_GoogleMapProvider$stableprop_getter(): kotlin/Int // uz.yalla.maps.provider.google/uz_yalla_maps_provider_google_GoogleMapProvider$stableprop_getter|uz_yalla_maps_provider_google_GoogleMapProvider$stableprop_getter(){}[0]
 final fun uz.yalla.maps.provider.google/uz_yalla_maps_provider_google_GoogleStaticMap$stableprop_getter(): kotlin/Int // uz.yalla.maps.provider.google/uz_yalla_maps_provider_google_GoogleStaticMap$stableprop_getter|uz_yalla_maps_provider_google_GoogleStaticMap$stableprop_getter(){}[0]
 final fun uz.yalla.maps.provider.libre.component/LocationIndicator(uz.yalla.core.geo/GeoPoint?, org.maplibre.compose.camera/CameraState, kotlin/Double, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.provider.libre.component/LocationIndicator|LocationIndicator(uz.yalla.core.geo.GeoPoint?;org.maplibre.compose.camera.CameraState;kotlin.Double;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
-final fun uz.yalla.maps.provider.libre.component/LocationsLayer(kotlin/Int?, kotlin/Int?, kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/String?, kotlin/String?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.provider.libre.component/LocationsLayer|LocationsLayer(kotlin.Int?;kotlin.Int?;kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.String?;kotlin.String?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun uz.yalla.maps.provider.libre.component/LocationsLayer(kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/String?, kotlin/String?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.provider.libre.component/LocationsLayer|LocationsLayer(kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.String?;kotlin.String?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun uz.yalla.maps.provider.libre.component/RouteLayer(kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.maps.provider.libre.component/RouteLayer|RouteLayer(kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun uz.yalla.maps.provider.libre/BaseMapContent(org.maplibre.compose.camera/CameraState, uz.yalla.core.settings/ThemeKind, androidx.compose.ui/Modifier?, kotlin/Boolean, kotlin/Function0<kotlin/Unit>?, kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // uz.yalla.maps.provider.libre/BaseMapContent|BaseMapContent(org.maplibre.compose.camera.CameraState;uz.yalla.core.settings.ThemeKind;androidx.compose.ui.Modifier?;kotlin.Boolean;kotlin.Function0<kotlin.Unit>?;kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun uz.yalla.maps.provider.libre/CameraTrackingEffect(org.maplibre.compose.camera/CameraState, uz.yalla.maps.provider.libre/LibreMapController, kotlin/Function1<uz.yalla.maps.api.model/MarkerState, kotlin/Unit>?, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.maps.provider.libre/CameraTrackingEffect|CameraTrackingEffect(org.maplibre.compose.camera.CameraState;uz.yalla.maps.provider.libre.LibreMapController;kotlin.Function1<uz.yalla.maps.api.model.MarkerState,kotlin.Unit>?;androidx.compose.runtime.Composer?;kotlin.Int){}[0]

@@ -316,3 +316,71 @@ Decided: 2026-04-22. Part of Phase 3 of the v1.0 launch.
 YallaClient will rewrite 16+ `Navigable` call sites and every `ListItem`/`IconItem`/`NavigableItem`/`SelectableItem`/`PricingItem`/`AddressItem`/`EmptyState` call site. That migration lands in a separate YallaClient PR (`chore/sdk-phase4-ui-bridge`).
 
 Decided: 2026-04-22. Phase 4 of the v1.0 launch.
+
+---
+
+## ADR-018: `SwitchingMapProvider` and `SwitchingMapController` caller-owned `CoroutineScope`
+
+**Status**: Accepted. Closes the scope-leak trifecta (ADR-011 HttpClient, ADR-013 LocationManager, ADR-018 SwitchingMapProvider/Controller).
+
+**Decision**: `SwitchingMapProvider`'s primary constructor takes a `CoroutineScope` parameter alongside `googleProvider`, `libreProvider`, and `interfacePreferences`. The SDK no longer internally creates `CoroutineScope(SupervisorJob() + Dispatchers.Main)`. `SwitchingMapProvider.close()` is removed entirely — there is nothing for the SDK to close when it does not own the scope.
+
+`SwitchingMapController` follows the same pattern: its constructor takes the `CoroutineScope` passed by `SwitchingMapProvider.createController(...)`. The controller derives a supervised child scope (`CoroutineScope(scope.coroutineContext + SupervisorJob())`) so that cancelling the parent propagates automatically. The `close()` override on `SwitchingMapController` is retained (it is part of the `MapController` interface contract) and now cancels the child scope only.
+
+Resulting `SwitchingMapProvider` signature:
+
+```kotlin
+class SwitchingMapProvider(
+    private val googleProvider: MapProvider,
+    private val libreProvider: MapProvider,
+    private val interfacePreferences: InterfacePreferences,
+    private val scope: CoroutineScope,
+) : MapProvider
+```
+
+**Why**: Same root cause as ADR-011 and ADR-013. The previous implementation created an unmanaged `CoroutineScope` at construction time. Callers who forgot to call `close()` leaked the scope and its preference-observation coroutine for the process lifetime, with no compile-time or runtime warning. Inverting ownership to the caller eliminates the silent leak: caller scope cancelled → observation stopped → no leak. The trifecta (HttpClient, LocationManager, SwitchingMapProvider) is now uniform: every long-running coroutine in the SDK runs inside a caller-supplied scope.
+
+**Consequence**: Breaking. The old single-argument constructor `SwitchingMapProvider(interfacePreferences)` is gone. YallaClient's Koin module must be updated to supply four arguments and a scope — typically the same process-lifetime scope already established for `LocationManager`:
+
+Before:
+
+```kotlin
+single<MapProvider> {
+    SwitchingMapProvider(interfacePreferences = get())
+}
+```
+
+After:
+
+```kotlin
+val mapScope = single { CoroutineScope(SupervisorJob() + Dispatchers.Main) }
+
+single<MapProvider> {
+    SwitchingMapProvider(
+        googleProvider = GoogleMapProvider(),
+        libreProvider = LibreMapProvider(),
+        interfacePreferences = get(),
+        scope = get(),
+    )
+}
+```
+
+Any call to `switchingMapProvider.close()` at YallaClient call sites must be removed — the method no longer exists. Lifetime is managed entirely by cancelling the scope.
+
+YallaClient's `chore/sdk-phase5-bridge` branch carries the call-site migration in lockstep.
+
+Decided: 2026-04-22. Phase 5 of the v1.0 launch.
+
+---
+
+## ADR-019: YallaGallery common surface narrowed to PHPicker-equivalent; Paging3 grid becomes Android-only
+
+**Status**: Accepted.
+
+**Decision**: `YallaGallery` common `expect` signature narrows to `(modifier, onImageSelected)` — the intersection of what Android's `PickVisualMedia` and iOS's `PHPickerViewController` deliver identically. The rich Paging3-backed grid moves to a new Android-only `YallaGalleryPagingGrid` composable with the full previous parameter set. `@ExperimentalYallaGalleryApi` is retired; both public composables are plain stable API.
+
+**Why**: Pre-Phase-5 common surface promised a richness that iOS couldn't deliver — `lazyGridState`, `backgroundColor`, `header`, `progressIndicator`, `permissionDeniedContent` were all Android-only in practice. Callers passing these params for iOS got silent no-ops. Honest API: common surface = what both platforms actually do.
+
+**Consequence**: Breaking. YallaClient call sites either switch to the narrow signature (cross-platform single-image pick) or migrate Android-only rich screens to `YallaGalleryPagingGrid`. `@OptIn(ExperimentalYallaGalleryApi::class)` removed everywhere.
+
+Decided: 2026-04-22. Phase 5 of the v1.0 launch.

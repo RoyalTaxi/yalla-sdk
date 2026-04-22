@@ -26,10 +26,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import kotlinx.coroutines.CoroutineScope
-import java.util.concurrent.Executors
-
-/** Single-thread executor shared by all camera capture callbacks. */
-private val executor = Executors.newSingleThreadExecutor()
 
 /**
  * Android implementation of the full-featured [YallaCamera] with CameraX live preview.
@@ -168,13 +164,15 @@ private fun CameraWithGrantedPermission(
     val preview = Preview.Builder().build()
     val previewView = remember { PreviewView(context) }
     val imageCapture = remember { ImageCapture.Builder().build() }
-    val backgroundExecutor = remember { Executors.newSingleThreadExecutor() }
 
-    val imageAnalyzer = rememberImageAnalyzer(state, backgroundExecutor)
+    val imageAnalyzer = rememberImageAnalyzer(state, state.executor)
     val cameraSelector = rememberCameraSelector(state.cameraMode)
 
     DisposableEffect(Unit) {
-        onDispose { cameraProvider?.unbindAll() }
+        onDispose {
+            cameraProvider?.unbindAll()
+            state.executor.shutdown()
+        }
     }
 
     LaunchedEffect(state.cameraMode, cameraProvider, imageAnalyzer) {
@@ -193,7 +191,10 @@ private fun CameraWithGrantedPermission(
 
     SideEffect {
         state.triggerCaptureAnchor = {
-            imageCapture.takePicture(executor, ImageCaptureCallback(state::onCapture, state::stopCapturing))
+            imageCapture.takePicture(
+                state.executor,
+                ImageCaptureCallback(state::onCapture, state::stopCapturing)
+            )
         }
     }
 

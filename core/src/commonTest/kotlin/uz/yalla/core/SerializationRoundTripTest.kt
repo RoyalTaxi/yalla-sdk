@@ -12,8 +12,10 @@ import uz.yalla.core.location.Route
 import uz.yalla.core.location.SavedAddress
 import uz.yalla.core.order.Executor
 import uz.yalla.core.order.ExtraService
+import uz.yalla.core.order.OrderStatus
 import uz.yalla.core.order.ServiceBrand
 import uz.yalla.core.payment.PaymentCard
+import uz.yalla.core.payment.PaymentKind
 import uz.yalla.core.profile.Client
 import uz.yalla.core.profile.GenderKind
 import uz.yalla.core.settings.LocaleKind
@@ -21,6 +23,7 @@ import uz.yalla.core.settings.MapKind
 import uz.yalla.core.settings.ThemeKind
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
 /**
@@ -98,7 +101,7 @@ class SerializationRoundTripTest {
         val encoded = json.encodeToString(value)
 
         assertEquals(value, json.decodeFromString<PointRequest>(encoded))
-        // PointKind.START uses @SerialName("start") — wire form is lowercased
+        // PointKind.START has wireValue "start" — confirmed by PointKindSerializer
         assertTrue(encoded.contains("\"kind\":\"start\""))
     }
 
@@ -244,5 +247,102 @@ class SerializationRoundTripTest {
             assertEquals(kind, json.decodeFromString(ThemeKind.serializer(), encoded))
             assertEquals("\"${kind.id}\"", encoded)
         }
+    }
+
+    // -------------------------------------------------------------------------
+    // OrderStatus — Task 11
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun orderStatus_roundTrip_allKnownSubtypes() {
+        val knownSubtypes = listOf(
+            OrderStatus.New,
+            OrderStatus.Sending,
+            OrderStatus.UserSending,
+            OrderStatus.NonStopSending,
+            OrderStatus.Appointed,
+            OrderStatus.AtAddress,
+            OrderStatus.InProgress,
+            OrderStatus.Completed,
+            OrderStatus.Canceled
+        )
+        knownSubtypes.forEach { status ->
+            val encoded = json.encodeToString(OrderStatus.serializer(), status)
+            val decoded = json.decodeFromString(OrderStatus.serializer(), encoded)
+            assertEquals("\"${status.id}\"", encoded)
+            assertEquals(status, decoded)
+        }
+    }
+
+    @Test
+    fun orderStatus_deserializesUnknownWireValueViaFrom() {
+        val result = json.decodeFromString(OrderStatus.serializer(), "\"some-unknown-id\"")
+        val unknown = assertIs<OrderStatus.Unknown>(result)
+        assertEquals("some-unknown-id", unknown.originalId)
+    }
+
+    @Test
+    fun orderStatus_unknownRoundTripPreservesOriginalId() {
+        // Unknown serializes as "unknown" (its id), not the originalId.
+        // That is the correct wire contract — the receiver sees "unknown" and
+        // creates Unknown("unknown") on deserialization.
+        val original = OrderStatus.Unknown("mystery-status")
+        val encoded = json.encodeToString(OrderStatus.serializer(), original)
+        assertEquals("\"unknown\"", encoded)
+        val decoded = json.decodeFromString(OrderStatus.serializer(), encoded)
+        val roundTripped = assertIs<OrderStatus.Unknown>(decoded)
+        assertEquals("unknown", roundTripped.originalId)
+    }
+
+    // -------------------------------------------------------------------------
+    // PaymentKind — Task 11
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun paymentKind_roundTrip_cash() {
+        val encoded = json.encodeToString(PaymentKind.serializer(), PaymentKind.Cash)
+        assertEquals("\"cash\"", encoded)
+        assertEquals(PaymentKind.Cash, json.decodeFromString(PaymentKind.serializer(), encoded))
+    }
+
+    @Test
+    fun paymentKind_cardSerializesAsTag() {
+        // Card serializes as "card" (its id). On deserialization from("card") returns Cash
+        // because no cardId is available in the single-token wire format — documented trade-off.
+        val card = PaymentKind.Card(cardId = "abc-123", maskedNumber = "**** 4321")
+        val encoded = json.encodeToString(PaymentKind.serializer(), card)
+        assertEquals("\"card\"", encoded)
+    }
+
+    @Test
+    fun paymentKind_deserializesUnknownWireValueViaFrom() {
+        // from() falls back to Cash for unknown values.
+        val result = json.decodeFromString(PaymentKind.serializer(), "\"bonus\"")
+        assertEquals(PaymentKind.Cash, result)
+    }
+
+    // -------------------------------------------------------------------------
+    // PointKind — Task 12
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun pointKind_roundTrip_allKnownEntries() {
+        PointKind.entries.forEach { kind ->
+            val encoded = json.encodeToString(PointKind.serializer(), kind)
+            val decoded = json.decodeFromString(PointKind.serializer(), encoded)
+            assertEquals("\"${kind.wireValue}\"", encoded)
+            assertEquals(kind, decoded)
+        }
+    }
+
+    @Test
+    fun pointKind_deserializesUnknownWireValueToPoint() {
+        val result = json.decodeFromString(PointKind.serializer(), "\"waypoint\"")
+        assertEquals(PointKind.POINT, result)
+    }
+
+    @Test
+    fun pointKind_fromNullFallsBackToPoint() {
+        assertEquals(PointKind.POINT, PointKind.from(null))
     }
 }
