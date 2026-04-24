@@ -469,66 +469,76 @@ Decided: 2026-04-24. Execution tracked as Chunk 0.C in the YallaClient refactor 
 
 ---
 
-## ADR-022: `DomainError` sealed hierarchy graduates into `core`
+## ADR-022: Semantic top-level variants graduate into `DataError`
 
 **Status**: Accepted.
 
-**Decision**: Promote the per-repository `Failure` types that exist today into a single canonical `DomainError` sealed interface hierarchy published from the `core` module. `Either<DomainError, T>` becomes the one-and-only error shape a domain or data function can return.
+> **Naming note**: earlier drafts of this ADR called the hierarchy
+> `DomainError`. On implementation audit, the existing core type was already
+> named `DataError` (dates to 0.0.1, 8 consumer files). Renaming would churn
+> every consumer for marginal naming clarity. Kept the existing name.
+> This ADR is about **extending `DataError` with semantic top-level
+> variants** — the hierarchy shape described below is the one actually
+> implemented in core, published under that name. If a rename ever
+> becomes worth the churn, it gets its own ADR.
+
+**Decision**: Extend the existing `sealed class DataError` in `core` with five semantic top-level variants (siblings to `Network`) so feature code pattern-matches on "what happened from the domain's perspective" rather than reconstructing meaning from HTTP status codes inside `Network.ClientWithMessage`. `Either<DataError, T>` remains the one-and-only error shape a domain or data function can return.
 
 **Hierarchy** (all `commonMain`, published from `uz.yalla.sdk:core`):
 
 ```kotlin
-sealed interface DomainError {
-
-    /** Transport-level failure — request never produced a usable response. */
-    sealed interface Network : DomainError {
-        data object NoConnection : Network
-        data object Timeout : Network
-        data class ServerError(val statusCode: Int, val bodyPreview: String?) : Network
-    }
+sealed class DataError {
 
     /** Authentication missing or invalid. Caller should surface a login prompt. */
-    data object Unauthorized : DomainError
+    data object Unauthorized : DataError()
 
     /** Authentication present but insufficient for the requested action. */
-    data class Forbidden(val reason: String?) : DomainError
+    data class Forbidden(val reason: String?) : DataError()
 
     /** Request can't be satisfied in the current server state (409). */
-    data class Conflict(val reason: String?) : DomainError
+    data class Conflict(val reason: String?) : DataError()
 
     /** Request-shape problem surfaced by the server. `fields` maps field name → message. */
-    data class Validation(val fields: Map<String, String>) : DomainError
+    data class Validation(val fields: Map<String, String>) : DataError()
 
-    /** Addressed resource doesn't exist. */
-    data object NotFound : DomainError
+    /** Addressed resource doesn't exist (semantic 404 with typed server payload). */
+    data object NotFound : DataError()
 
-    /** Escape hatch. `cause` is preserved for Sentry + analytics; UI should never branch on it. */
-    data class Unknown(val cause: Throwable?) : DomainError
+    /** Pre-existing transport-level hierarchy. Unchanged in this ADR. */
+    sealed class Network : DataError() {
+        data object Connection : Network()
+        data object Timeout : Network()
+        data object Server : Network()
+        data object Client : Network()
+        data class ClientWithMessage(val code: Int, val message: String) : Network()
+        data object Serialization : Network()
+        data object Guest : Network()
+        data object Unknown : Network()
+    }
 }
 ```
 
-**How it reaches feature layers**: `data` module's `SafeApiCall` maps HTTP status codes + `IOException` subtypes to `DomainError` variants. Feature view models pattern-match on the `DomainError` hierarchy and translate to a UI-layer `SideEffect.ShowError(kind)` — the UI layer never sees a `Throwable`, and a new `DomainError` variant is a compile error at every `when { ... }` site that hasn't handled it.
+**How it reaches feature layers**: `data` module's `SafeApiCall` maps HTTP status codes + `IOException` subtypes to `DataError` variants. Feature view models pattern-match on the `DataError` hierarchy and translate to a UI-layer `SideEffect.ShowError(kind)` — the UI layer never sees a `Throwable`. Adding new sibling variants (like the five shipped by this ADR) **is a compile-break at exhaustive `when` call sites** — consumers must add the new branches or an `else`. This is documented in the Consequence section.
 
 **Why this shape**:
 
-1. **Sealed interface, not enum**, because variants carry payloads (`statusCode`, `fields`, `reason`). Sealed interface keeps the exhaustive-`when` safety while letting constants like `NoConnection` be `data object` for zero-allocation pattern matching.
-2. **`Network` is nested sealed, not flat**, because "something went wrong at the network layer" is a meaningful branching point in the UI ("show the offline banner + retry") that's strictly coarser than per-subtype handling. Flattening into top-level `NoConnection` / `Timeout` / `ServerError` would force every consumer to re-aggregate.
-3. **`Unknown.cause: Throwable?`** — the only place a raw `Throwable` crosses the error API. Preserved for Sentry breadcrumb attachment (Chunk 0.F) and for local debugging; business logic pattern-matching on `cause.javaClass` is a code-review red flag (the existence of `Unknown` means you don't recognize the failure — categorize it properly upstream if the pattern repeats).
-4. **No HTTP-specific `4xx`/`5xx` leak at the domain edge.** The business code only ever sees `Conflict`, `Validation`, `Forbidden`, etc. The status-code detail is preserved inside `Network.ServerError.statusCode` for observability, but feature code branches on semantic variants.
+1. **Sealed class, not enum**, because variants carry payloads (`fields`, `reason`). Sealed class (pre-existing choice) keeps the exhaustive-`when` safety while letting constants like `Unauthorized` be `data object` for zero-allocation pattern matching.
+2. **`Network` stays nested sealed, not flat**, because "something went wrong at the network layer" is a meaningful branching point in the UI ("show the offline banner + retry") that's strictly coarser than per-subtype handling. Flattening would force every consumer to re-aggregate.
+3. **Semantic variants are siblings of `Network`, not nested under it**, because `Unauthorized`, `Forbidden`, `Conflict`, `Validation`, `NotFound` describe the business meaning of a failure regardless of which transport delivered it. Nesting them under `Network` would falsely imply "only HTTP requests can be unauthorized" — but the same variants may show up from disk-side auth checks, cache expiry, etc.
+4. **No HTTP-specific `4xx`/`5xx` leak at the domain edge** for semantic variants. Business code only ever sees `Conflict`, `Validation`, `Forbidden`, etc. The status-code detail is preserved inside `Network.ClientWithMessage.code` when callers need it for observability.
 5. **No `Retryable` flag.** Whether a failure is retryable is context-sensitive (network vs business), and putting a bool on the hierarchy would lie as often as it told the truth. The `data` layer's retry policy lives in its own `RetryPolicy` type, not on the error.
 
 **Consequence**:
 
-- Existing per-feature `Failure` types (e.g. `RideFailure`, `PaymentFailure`) get deprecated with `typealias` shims pointing at the new hierarchy; deprecation period is one alpha cycle, then removed.
-- `SafeApiCall` in `data` module is rewritten to return `Either<DomainError, T>` instead of the current `Either<Failure, T>`. This is the largest non-test change in this ADR's execution.
-- YallaClient's feature view models match on `DomainError` variants in their `intent { ... }` blocks and post `SideEffect.ShowError(kind)` where `kind` is a UI-layer enum (separate from `DomainError` — UI cares about "which banner copy," not about what HTTP status caused it).
-- BCV baseline regen: new sealed hierarchy published stable, no `@RequiresOptIn` gate. All variants ship committed.
-- Feature modules that previously exposed their own `Failure` types to YallaClient gain **smaller** public surface (the types disappear), which is a rare positive-breaking change — consumers get a simpler API and less to import.
+- Every exhaustive `when (error: DataError)` site at every consumer of `core` breaks at compile time on bump to the version that ships these variants. Consumers add missing branches or an `else`. This is a **minor-breaking change** per the library-api rules — treated as an additive version bump with alpha reset (`0.0.15-alphaNN` → `0.0.16-alpha01`) because we're pre-1.0 and exhaustive-`when`-break is acceptable in that posture. YallaClient's bump PR must include the branch additions; not free.
+- `SafeApiCall` in `data` module gains mapping rules for the new variants (HTTP 401 → `Unauthorized`, 403 → `Forbidden`, 409 → `Conflict`, 422 → `Validation`, typed 404 bodies → `NotFound`). Tracked as a follow-up PR once YallaClient's consumer sites are caught up.
+- BCV baseline regen: new sealed variants published stable, no `@RequiresOptIn` gate. All variants ship committed.
 
 **Non-goals**:
 
-- Not shipping a `Result<T>` wrapper. `Either<DomainError, T>` is already our result type (per ADR-001); this ADR narrows the error side of that, nothing more.
+- Not shipping a `Result<T>` wrapper. `Either<DataError, T>` is already our result type (per ADR-001); this ADR narrows the error side of that, nothing more.
 - Not shipping localized error messages. `Validation.fields` contains server-provided messages; feature code maps to locale-resolved strings via the existing `stringResource` mechanism. The SDK doesn't guess users' languages.
-- Not shipping a crash-reporting SDK integration. Sentry hookup is Chunk 0.F in YallaClient — this ADR just ensures `Unknown.cause` carries the raw exception where breadcrumbs can pick it up.
+- Not shipping a crash-reporting SDK integration. Sentry hookup is Chunk 0.F in YallaClient.
+- Not renaming `DataError` → `DomainError`. Discussed above in the Naming note.
 
-Decided: 2026-04-24. Execution tracked as Chunk 0.D in the YallaClient refactor plan. Depends on ADR-001 (`Either`).
+Decided: 2026-04-24. Execution tracked as Chunk 0.D in the YallaClient refactor plan. Depends on ADR-001 (`Either`). Implemented in yalla-sdk 0.0.16-alpha01.
