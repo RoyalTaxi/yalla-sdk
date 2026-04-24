@@ -74,16 +74,11 @@ actual fun <C : Route> NativeNavHost(
  * imperatively outside of Compose.
  *
  * The leading-underscore name is the published public contract read by Swift entry points;
- * `ObjectPropertyName` and `backing-property-naming` are suppressed because a rename would
- * break consumers.
+ * a rename would break consumers.
  *
  * @since 0.0.6
  */
-@Suppress(
-    "ObjectPropertyName",
-    "TopLevelPropertyNaming",
-    "ktlint:standard:backing-property-naming",
-)
+@Suppress("ObjectPropertyName", "TopLevelPropertyNaming")
 var _iosNavigator: Navigator? = null
     internal set
 
