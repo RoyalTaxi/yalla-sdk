@@ -2,5 +2,42 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "schedule": [
+    "every weekend"
+  ],
+  "labels": [
+    "dependencies"
+  ],
+  "prHourlyLimit": 2,
+  "prConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "description": "Library repo — majors are never auto-opened. Review manually, BCV diff, alpha reset.",
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "description": "Group Kotlin / KSP / Compose toolchain — they move in lockstep.",
+      "matchPackageNames": [
+        "org.jetbrains.kotlin{/,}**",
+        "com.google.devtools.ksp{/,}**",
+        "org.jetbrains.compose{/,}**",
+        "androidx.compose{/,}**"
+      ],
+      "groupName": "kotlin + compose toolchain"
+    },
+    {
+      "description": "Group Firebase BOM children — bump atomically or not at all.",
+      "matchPackageNames": [
+        "com.google.firebase{/,}**"
+      ],
+      "groupName": "firebase"
+    },
+    {
+      "description": "No automerge for minors either — every bump regenerates klib baselines in a library.",
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": false
+    }
   ]
 }
