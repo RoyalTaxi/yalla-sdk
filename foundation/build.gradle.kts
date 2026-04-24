@@ -2,12 +2,6 @@ plugins {
     id("yalla.sdk.kmp.compose")
 }
 
-dokka {
-    dokkaSourceSets.configureEach {
-        includes.from("MODULE.md")
-    }
-}
-
 kotlin {
     sourceSets {
         commonMain.dependencies {

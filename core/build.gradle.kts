@@ -17,9 +17,3 @@ kotlin {
         }
     }
 }
-
-dokka {
-    dokkaSourceSets.configureEach {
-        includes.from("MODULE.md")
-    }
-}
