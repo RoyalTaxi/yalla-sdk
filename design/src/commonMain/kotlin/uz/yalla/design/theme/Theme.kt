@@ -17,6 +17,9 @@ import uz.yalla.design.color.light
 import uz.yalla.design.font.FontScheme
 import uz.yalla.design.font.LocalFontScheme
 import uz.yalla.design.font.rememberFontScheme
+import uz.yalla.design.motion.LocalMotionScheme
+import uz.yalla.design.motion.MotionScheme
+import uz.yalla.design.motion.standardMotionScheme
 import uz.yalla.design.radius.LocalRadiusScheme
 import uz.yalla.design.radius.RadiusScheme
 import uz.yalla.design.radius.standardRadiusScheme
@@ -71,6 +74,7 @@ fun YallaTheme(
     fontScheme: FontScheme = rememberFontScheme(),
     spaceScheme: SpaceScheme = standardSpaceScheme(),
     radiusScheme: RadiusScheme = standardRadiusScheme(),
+    motionScheme: MotionScheme = standardMotionScheme(),
     content: @Composable () -> Unit
 ) {
     val rippleConfiguration =
@@ -118,6 +122,7 @@ fun YallaTheme(
         LocalFontScheme provides fontScheme,
         LocalSpaceScheme provides spaceScheme,
         LocalRadiusScheme provides radiusScheme,
+        LocalMotionScheme provides motionScheme,
         LocalRippleConfiguration provides rippleConfiguration
     ) {
         MaterialTheme(
@@ -163,6 +168,11 @@ object System {
     val radius: RadiusScheme
         @Composable
         get() = LocalRadiusScheme.current
+
+    /** Current [MotionScheme] provided by the nearest [YallaTheme]. */
+    val motion: MotionScheme
+        @Composable
+        get() = LocalMotionScheme.current
 
     /** Whether the current theme is dark mode. */
     val isDark: Boolean
