@@ -565,6 +565,8 @@ final val uz.yalla.design.font/mediumFont // uz.yalla.design.font/mediumFont|{}m
     final fun <get-mediumFont>(): org.jetbrains.compose.resources/FontResource // uz.yalla.design.font/mediumFont.<get-mediumFont>|<get-mediumFont>(){}[0]
 final val uz.yalla.design.font/normalFont // uz.yalla.design.font/normalFont|{}normalFont[0]
     final fun <get-normalFont>(): org.jetbrains.compose.resources/FontResource // uz.yalla.design.font/normalFont.<get-normalFont>|<get-normalFont>(){}[0]
+final val uz.yalla.design.font/numeric // uz.yalla.design.font/numeric|@uz.yalla.design.font.FontScheme.Body{}numeric[0]
+    final fun (uz.yalla.design.font/FontScheme.Body).<get-numeric>(): androidx.compose.ui.text/TextStyle // uz.yalla.design.font/numeric.<get-numeric>|<get-numeric>@uz.yalla.design.font.FontScheme.Body(){}[0]
 final val uz.yalla.design.font/uz_yalla_design_font_FontScheme$stableprop // uz.yalla.design.font/uz_yalla_design_font_FontScheme$stableprop|#static{}uz_yalla_design_font_FontScheme$stableprop[0]
 final val uz.yalla.design.font/uz_yalla_design_font_FontScheme_Body$stableprop // uz.yalla.design.font/uz_yalla_design_font_FontScheme_Body$stableprop|#static{}uz_yalla_design_font_FontScheme_Body$stableprop[0]
 final val uz.yalla.design.font/uz_yalla_design_font_FontScheme_Body_Weighty$stableprop // uz.yalla.design.font/uz_yalla_design_font_FontScheme_Body_Weighty$stableprop|#static{}uz_yalla_design_font_FontScheme_Body_Weighty$stableprop[0]
