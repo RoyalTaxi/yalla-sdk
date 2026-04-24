@@ -1,87 +1,47 @@
-name: Publish SDK
+name: Publish
 
 on:
-  # Run on any push to main so `verify` still gates every merge, but
-  # only actually `publish` when gradle.properties changed in the last
-  # commit (i.e. version bump or BOM constraint change). Docs-only or
-  # config-only merges shouldn't retry the same version against
-  # GitHub Packages — GHPackages is immutable and rejects with 409.
   push:
     branches: [main]
-  workflow_dispatch:
 
 permissions:
   contents: read
   packages: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
 
 jobs:
-  verify:
-    name: Verify
-    runs-on: macos-latest
-    timeout-minutes: 30
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          # Need at least depth 2 so the "did gradle.properties change"
-          # detection below can diff HEAD against HEAD^.
-          fetch-depth: 2
-      - uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-      - uses: gradle/actions/setup-gradle@v4
-      # apiCheck is the authoritative structural gate. BCV Klib mode validates
-      # every public declaration across commonMain + Native targets. If this
-      # passes, the public API surface is compile-clean across iosArm64 and
-      # iosSimulatorArm64 — no consumer will hit missing-symbol errors.
-      #
-      # allTests is NOT run in CI: the iOS simulator test link step requires
-      # CocoaPods-resolved frameworks (FirebaseCore, MapLibre/GoogleMaps) plus
-      # moko-geo's `_LocationEssentials` private framework which needs exact
-      # Xcode SDK alignment. Wiring pod install + Xcode 26.3+ matrix on CI is
-      # tracked as a Phase 5 infra task. Until then tests run on the developer
-      # Mac during the phase work; this publish gate stays structural-only.
-      - name: apiCheck (BCV Klib)
-        run: ./gradlew apiCheck
-
   publish:
-    name: Publish
-    needs: verify
     runs-on: macos-latest
     timeout-minutes: 90
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-      # Skip publish entirely if gradle.properties didn't change in
-      # this commit. Docs-only merges, workflow tweaks, and Renovate
-      # config bumps don't bump the version — re-publishing the same
-      # version to GitHub Packages fails with 409 Conflict (immutable).
-      # workflow_dispatch triggers bypass the guard and always publish.
-      - name: Check for version bump
-        id: version_check
-        run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo "should_publish=true" >> "$GITHUB_OUTPUT"
-            echo "Manual dispatch — forcing publish."
-          elif git diff --name-only HEAD^ HEAD | grep -qx 'gradle.properties'; then
-            echo "should_publish=true" >> "$GITHUB_OUTPUT"
-            echo "gradle.properties changed — version bump detected, publishing."
-          else
-            echo "should_publish=false" >> "$GITHUB_OUTPUT"
-            echo "gradle.properties unchanged — skipping publish. (GitHub Packages is immutable; re-publishing same version would 409.)"
-          fi
+
       - uses: actions/setup-java@v4
-        if: steps.version_check.outputs.should_publish == 'true'
         with:
           java-version: '21'
           distribution: 'temurin'
-      - name: Setup Gradle
-        if: steps.version_check.outputs.should_publish == 'true'
-        uses: gradle/actions/setup-gradle@v4
-      - name: Publish all modules
-        if: steps.version_check.outputs.should_publish == 'true'
-        run: ./gradlew publish
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - run: ./gradlew podInstall
+      - run: ./gradlew build
+      - run: ./gradlew dokkaGenerate
+      - run: ./gradlew publish
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/dokka
+
+      - id: pages
+        uses: actions/deploy-pages@v4
