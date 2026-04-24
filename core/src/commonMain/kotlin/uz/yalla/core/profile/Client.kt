@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * User profile data returned from the API.
  *
  * Represents the complete client profile as received from the backend.
- * Locally-cached fields are stored in [uz.yalla.core.contract.preferences.UserPreferences].
+ * Locally-cached fields are stored in [uz.yalla.core.preferences.UserPreferences].
  *
  * @property phone Phone number (primary identifier, formatted with country code)
  * @property name First name
@@ -17,7 +17,7 @@ import kotlinx.serialization.Serializable
  * @property balance Account bonus balance in smallest currency unit
  * @property gender Gender identifier string, parseable by [GenderKind.from]
  * @see GenderKind
- * @see uz.yalla.core.contract.preferences.UserPreferences
+ * @see uz.yalla.core.preferences.UserPreferences
  * @since 0.0.1
  */
 @Serializable

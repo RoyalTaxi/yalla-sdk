@@ -11,7 +11,7 @@ import uz.yalla.core.util.normalizedId
  * [Light] and [Dark] override it with a fixed appearance.
  *
  * @property id Wire-format identifier used in persistence
- * @see uz.yalla.core.contract.preferences.InterfacePreferences.themeType
+ * @see uz.yalla.core.preferences.InterfacePreferences.themeType
  * @since 0.0.1
  */
 @Serializable

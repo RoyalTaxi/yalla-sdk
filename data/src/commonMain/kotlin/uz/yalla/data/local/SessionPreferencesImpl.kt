@@ -7,8 +7,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.yalla.core.contract.preferences.SessionPreferences
-import uz.yalla.core.contract.preferences.StaticPreferences
+import uz.yalla.core.preferences.SessionPreferences
+import uz.yalla.core.preferences.StaticPreferences
 import uz.yalla.core.util.orFalse
 
 /**

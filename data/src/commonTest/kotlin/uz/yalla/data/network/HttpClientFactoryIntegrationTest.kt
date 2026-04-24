@@ -33,9 +33,9 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withTimeout
 import kotlinx.io.IOException
 import kotlinx.serialization.json.Json
-import uz.yalla.core.contract.preferences.InterfacePreferences
-import uz.yalla.core.contract.preferences.PositionPreferences
-import uz.yalla.core.contract.preferences.SessionPreferences
+import uz.yalla.core.preferences.InterfacePreferences
+import uz.yalla.core.preferences.PositionPreferences
+import uz.yalla.core.preferences.SessionPreferences
 import uz.yalla.core.error.DataError
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.result.Either

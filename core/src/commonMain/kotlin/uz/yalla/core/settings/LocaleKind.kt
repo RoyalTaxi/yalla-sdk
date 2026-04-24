@@ -14,7 +14,7 @@ import uz.yalla.core.util.normalizedLocaleCode
  * `UzCyrillic` cases were removed. Unknown codes fall back to [Uz] via [from].
  *
  * @property code BCP 47 locale code used for resource lookup.
- * @see uz.yalla.core.contract.preferences.InterfacePreferences.localeType
+ * @see uz.yalla.core.preferences.InterfacePreferences.localeType
  * @since 0.0.1
  */
 @Serializable

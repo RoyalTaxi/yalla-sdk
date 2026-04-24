@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.yalla.core.contract.preferences.UserPreferences
+import uz.yalla.core.preferences.UserPreferences
 import uz.yalla.core.payment.PaymentKind
 
 /**

@@ -1,4 +1,4 @@
-package uz.yalla.core.contract.preferences
+package uz.yalla.core.preferences
 
 import kotlinx.coroutines.flow.Flow
 import uz.yalla.core.settings.LocaleKind

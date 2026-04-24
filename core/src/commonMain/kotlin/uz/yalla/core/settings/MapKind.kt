@@ -12,7 +12,7 @@ import uz.yalla.core.util.normalizedId
  * the open-source MapLibre GL Native library.
  *
  * @property id Wire-format identifier used in API communication and persistence
- * @see uz.yalla.core.contract.preferences.InterfacePreferences.mapKind
+ * @see uz.yalla.core.preferences.InterfacePreferences.mapKind
  * @since 0.0.1
  */
 @Serializable

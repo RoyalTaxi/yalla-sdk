@@ -1,4 +1,4 @@
-package uz.yalla.core.contract.preferences
+package uz.yalla.core.preferences
 
 /**
  * Synchronous key-value store for values that must be readable
