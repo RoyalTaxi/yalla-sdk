@@ -104,3 +104,47 @@ val LocalFontScheme =
     staticCompositionLocalOf<FontScheme> {
         error("No FontScheme provided. Wrap your content with YallaTheme or provide a FontScheme via LocalFontScheme.")
     }
+
+/**
+ * Tabular-numerals variant of [FontScheme.Body.base] medium.
+ *
+ * Enables the OpenType `tnum` feature so digit glyphs render at equal width,
+ * regardless of actual glyph width in the font. Use wherever numbers animate
+ * or tick up/down — price displays during ride-cost changes, timer readouts,
+ * distance meters — so digit-width jitter doesn't yank the surrounding
+ * layout on every frame.
+ *
+ * Implementation is a derived property, not a constructor slot on
+ * [FontScheme.Body]: keeping it out of the data class preserves binary
+ * compatibility (no `copy()` or constructor signature churn) while giving
+ * consumers the same `System.font.body.numeric` ergonomics they get on
+ * existing slots.
+ *
+ * ## Usage
+ *
+ * ```kotlin
+ * AnimatedVisibility(visible = tripInProgress) {
+ *     Text(
+ *         text = "${formattedCost} UZS",
+ *         style = System.font.body.numeric,
+ *     )
+ * }
+ * ```
+ *
+ * Works with any font in [FontScheme] whose file includes the `tnum`
+ * OpenType feature — Inter, Roboto, and SF Pro (the three families this
+ * module ships) all include it.
+ *
+ * @since 0.0.15
+ */
+val FontScheme.Body.numeric: TextStyle
+    get() = base.medium.copy(fontFeatureSettings = FONT_FEATURE_TABULAR_NUMERALS)
+
+/**
+ * OpenType feature string for tabular numerals.
+ *
+ * Kept as a named constant so the string literal doesn't scatter across
+ * consumer code the moment they need to compose it with other features
+ * (e.g. `"tnum, ss01"` for tabular numerals with a stylistic set).
+ */
+internal const val FONT_FEATURE_TABULAR_NUMERALS = "tnum"
