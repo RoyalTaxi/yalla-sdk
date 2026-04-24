@@ -58,7 +58,7 @@ sealed class DataError {
      * SafeApiCall emits this on 401 when the token is absent, expired, or
      * the server explicitly invalidated it.
      *
-     * @since 0.0.15
+     * @since 0.0.16
      */
     data object Unauthorized : DataError()
 
@@ -68,7 +68,7 @@ sealed class DataError {
      * the server rejects this account.
      *
      * @property reason Optional server-provided reason, suitable for UI display.
-     * @since 0.0.15
+     * @since 0.0.16
      */
     data class Forbidden(
         val reason: String?
@@ -80,7 +80,7 @@ sealed class DataError {
      * under you" (optimistic-locking rejection, duplicate create).
      *
      * @property reason Optional server-provided reason, suitable for UI display.
-     * @since 0.0.15
+     * @since 0.0.16
      */
     data class Conflict(
         val reason: String?
@@ -95,7 +95,7 @@ sealed class DataError {
      * locale-specific strings; the SDK does not guess users' languages.
      *
      * @property fields Per-field error messages from the server.
-     * @since 0.0.15
+     * @since 0.0.16
      */
     data class Validation(
         val fields: Map<String, String>
@@ -110,7 +110,7 @@ sealed class DataError {
      * response body: a typed `{ "error": "not_found" }` payload routes
      * here; an empty or server-framework 404 page routes to Network.Client.
      *
-     * @since 0.0.15
+     * @since 0.0.16
      */
     data object NotFound : DataError()
 
