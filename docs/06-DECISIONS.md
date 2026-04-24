@@ -420,17 +420,25 @@ Decided: 2026-04-22.
 
 **Status**: Accepted.
 
-**Decision**: Add a `motion` sub-namespace under the existing `design` module rather than standing up a separate `uz.yalla.sdk:motion` artifact. The full token catalog is published under `System.motion.*` and (for tactile patterns) `System.haptic.*`, accessible anywhere `YallaTheme` is already in scope.
+**Decision**: Add a `motion` sub-namespace under the existing `design` module rather than standing up a separate `uz.yalla.sdk:motion` artifact. The token catalog is published under `System.motion.*`, accessible anywhere `YallaTheme` is already in scope. Tactile patterns (`System.haptic.*`) ship in a follow-up ADR/PR — see **Scope** below.
 
-**Namespaces shipped**:
+**Scope of this ADR**:
+
+- **Ships in 0.0.17-alpha01** (PR #13): the `System.motion.*` catalog — `duration`, `easing`, `spring`, `stagger`.
+- **Deferred to a focused follow-up** (separate PR, tracked as Chunk 0.C.haptic): `System.haptic.*` + `HapticController` `expect`/`actual`. Kept in this ADR so the architectural decision ("haptic co-locates with motion inside `design`") is captured alongside the motion decision — implementation lands incrementally because haptic forces `design` to gain its first `androidMain`/`iosMain` source sets, which is a higher-risk change than the pure-commonMain motion catalog.
+
+**Namespaces shipped in 0.0.17-alpha01**:
 
 - `System.motion.duration.*` — `instant (100ms)`, `quick (200ms)`, `standard (350ms)`, `slow (500ms)`, `contemplative (800ms)`. Returned as `Duration` (`kotlin.time`), not raw `Long`, so `animateFloatAsState(tween(duration.standard.inWholeMilliseconds.toInt()))` reads correctly but `delay(duration.quick)` also works.
 - `System.motion.easing.*` — `standard`, `emphasized`, `entrance`, `exit` as `Easing` (Compose `CubicBezierEasing`). Material 3's curves are the baseline — we override only where the reference frames (Linear/Arc/Raycast) ship measurably different feel.
 - `System.motion.spring.*` — `bouncy`, `gentle`, `snappy`, `stiff` as `SpringSpec<Float>`. Damping-ratio + stiffness tuned to the catalog in `YallaClient/docs/MOTION.md`.
 - `System.motion.stagger.*` — `list (30ms)`, `grid (50ms)`, `cards (75ms)` as `Duration`. Consumed by a `Modifier.staggerReveal(visible, index)` helper also published from `design`.
+
+**Namespaces deferred (architectural shape captured, implementation follows)**:
+
 - `System.haptic.*` — `selection`, `confirm`, `warn`, `error`, `hero` as `HapticKind` enum values.
 
-**Haptic bridging** (new `expect`/`actual`):
+**Haptic bridging** (deferred — `expect`/`actual` shape for reference):
 
 ```kotlin
 // commonMain
@@ -454,7 +462,7 @@ This is the first `expect`/`actual` surface in `design`. Previously `design` was
 
 **Consequence**:
 
-- `design` module gains its first `androidMain`/`iosMain` source sets. Existing commonMain API is unchanged; BCV baseline regen needed for the new `System.motion.*` / `System.haptic.*` public surface plus the `HapticController` expect class.
+- `design` module stays commonMain-only in 0.0.17-alpha01 (motion catalog is pure Compose types). The haptic follow-up adds `design`'s first `androidMain`/`iosMain` source sets — BCV baseline regen needed at that point for `System.haptic.*` + the `HapticController` `expect` class. The motion token publish also regens the `design` baseline (new `System.motion.*` surface), done in PR #13.
 - `foundation` module gains no new deps — the haptic pattern `HapticPattern` (enum-ish) lives in `design` because it's a token, not infrastructure.
 - YallaClient consumers import exactly like the existing tokens: `uz.yalla.design.theme.System` — no new imports, just new properties.
 - Pre-1.0 posture: public from day one, no `@RequiresOptIn`. If a token value needs retuning after shipping, we change the value (ABI-safe); if the *shape* of a token changes (e.g., `Duration` → `Long`), that's a breaking change and triggers the patch-bump-plus-alpha-reset rule.
