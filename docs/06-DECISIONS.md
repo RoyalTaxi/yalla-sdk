@@ -413,3 +413,122 @@ Both are additive to `YallaTheme` (new parameters `spaceScheme`, `radiusScheme`,
 **YallaClient follow-up** (not bundled with this SDK release): screen-by-screen sweep to replace raw `.dp` padding/radius values with `System.space.*` / `System.radius.*`. Prioritized by audit severity (`DetailsSheet`, `LoginScreen`, `CancelSheet` first). A detekt rule flagging raw `.dp` inside `padding()` / `RoundedCornerShape(...)` calls is a follow-up to preserve discipline after the sweep lands.
 
 Decided: 2026-04-22.
+
+---
+
+## ADR-021: Motion tokens live inside `design`, not a standalone `motion` module
+
+**Status**: Accepted.
+
+**Decision**: Add a `motion` sub-namespace under the existing `design` module rather than standing up a separate `uz.yalla.sdk:motion` artifact. The full token catalog is published under `System.motion.*` and (for tactile patterns) `System.haptic.*`, accessible anywhere `YallaTheme` is already in scope.
+
+**Namespaces shipped**:
+
+- `System.motion.duration.*` — `instant (100ms)`, `quick (200ms)`, `standard (350ms)`, `slow (500ms)`, `contemplative (800ms)`. Returned as `Duration` (`kotlin.time`), not raw `Long`, so `animateFloatAsState(tween(duration.standard.inWholeMilliseconds.toInt()))` reads correctly but `delay(duration.quick)` also works.
+- `System.motion.easing.*` — `standard`, `emphasized`, `entrance`, `exit` as `Easing` (Compose `CubicBezierEasing`). Material 3's curves are the baseline — we override only where the reference frames (Linear/Arc/Raycast) ship measurably different feel.
+- `System.motion.spring.*` — `bouncy`, `gentle`, `snappy`, `stiff` as `SpringSpec<Float>`. Damping-ratio + stiffness tuned to the catalog in `YallaClient/docs/MOTION.md`.
+- `System.motion.stagger.*` — `list (30ms)`, `grid (50ms)`, `cards (75ms)` as `Duration`. Consumed by a `Modifier.staggerReveal(visible, index)` helper also published from `design`.
+- `System.haptic.*` — `selection`, `confirm`, `warn`, `error`, `hero` as `HapticKind` enum values.
+
+**Haptic bridging** (new `expect`/`actual`):
+
+```kotlin
+// commonMain
+@Immutable interface HapticController { fun perform(kind: HapticKind) }
+@Composable expect fun rememberHapticController(): HapticController
+
+// androidMain: HapticFeedbackConstants + VibrationEffect.Composition (API 30+),
+//              graceful fallback to HapticFeedbackConstants below.
+// iosMain:    UIImpactFeedbackGenerator for selection/confirm/warn/error;
+//              CHHapticEngine composition for `hero` (iOS 13+, falls back to
+//              heavyImpact on older).
+```
+
+This is the first `expect`/`actual` surface in `design`. Previously `design` was platform-agnostic by construction; the motion catalog forces the split because haptic feedback has no cross-platform abstraction in Compose Multiplatform.
+
+**Why a sub-namespace, not a module**:
+
+1. Motion **is** design. Splitting it out would mirror Material's `material3-motion` misstep — consumers always pull it anyway, the extra artifact adds resolution + publish cost for zero isolation benefit.
+2. BOM complexity is already non-trivial (12 artifacts). Adding a 13th for something that ships next to tokens we already publish is taxation without representation.
+3. Haptic `expect`/`actual` forcing the module to go multiplatform is fine — `design` is already KMP; adding `androidMain`/`iosMain` source sets is a source-set addition, not a module structure change.
+
+**Consequence**:
+
+- `design` module gains its first `androidMain`/`iosMain` source sets. Existing commonMain API is unchanged; BCV baseline regen needed for the new `System.motion.*` / `System.haptic.*` public surface plus the `HapticController` expect class.
+- `foundation` module gains no new deps — the haptic pattern `HapticPattern` (enum-ish) lives in `design` because it's a token, not infrastructure.
+- YallaClient consumers import exactly like the existing tokens: `uz.yalla.design.theme.System` — no new imports, just new properties.
+- Pre-1.0 posture: public from day one, no `@RequiresOptIn`. If a token value needs retuning after shipping, we change the value (ABI-safe); if the *shape* of a token changes (e.g., `Duration` → `Long`), that's a breaking change and triggers the patch-bump-plus-alpha-reset rule.
+
+**Non-goals**:
+
+- **Not** shipping a "motion builder DSL." Components take `SpringSpec` / `Easing` / `Duration` directly from the tokens. No wrapper types that add indirection.
+- **Not** shipping shared-element transition helpers in this ADR. That depends on Compose Multiplatform reaching parity on `SharedTransitionLayout` across Android + iOS, tracked separately.
+- **Not** bundling platform-specific sound/vibration packs. Haptics stay abstract; concrete `CHHapticEngine` composition files are a follow-up for Phase ∞ polish.
+
+Decided: 2026-04-24. Execution tracked as Chunk 0.C in the YallaClient refactor plan (`YallaClient/docs/superpowers/plans/2026-04-23-yalla-client-refactor.md`).
+
+---
+
+## ADR-022: `DomainError` sealed hierarchy graduates into `core`
+
+**Status**: Accepted.
+
+**Decision**: Promote the per-repository `Failure` types that exist today into a single canonical `DomainError` sealed interface hierarchy published from the `core` module. `Either<DomainError, T>` becomes the one-and-only error shape a domain or data function can return.
+
+**Hierarchy** (all `commonMain`, published from `uz.yalla.sdk:core`):
+
+```kotlin
+sealed interface DomainError {
+
+    /** Transport-level failure — request never produced a usable response. */
+    sealed interface Network : DomainError {
+        data object NoConnection : Network
+        data object Timeout : Network
+        data class ServerError(val statusCode: Int, val bodyPreview: String?) : Network
+    }
+
+    /** Authentication missing or invalid. Caller should surface a login prompt. */
+    data object Unauthorized : DomainError
+
+    /** Authentication present but insufficient for the requested action. */
+    data class Forbidden(val reason: String?) : DomainError
+
+    /** Request can't be satisfied in the current server state (409). */
+    data class Conflict(val reason: String?) : DomainError
+
+    /** Request-shape problem surfaced by the server. `fields` maps field name → message. */
+    data class Validation(val fields: Map<String, String>) : DomainError
+
+    /** Addressed resource doesn't exist. */
+    data object NotFound : DomainError
+
+    /** Escape hatch. `cause` is preserved for Sentry + analytics; UI should never branch on it. */
+    data class Unknown(val cause: Throwable?) : DomainError
+}
+```
+
+**How it reaches feature layers**: `data` module's `SafeApiCall` maps HTTP status codes + `IOException` subtypes to `DomainError` variants. Feature view models pattern-match on the `DomainError` hierarchy and translate to a UI-layer `SideEffect.ShowError(kind)` — the UI layer never sees a `Throwable`, and a new `DomainError` variant is a compile error at every `when { ... }` site that hasn't handled it.
+
+**Why this shape**:
+
+1. **Sealed interface, not enum**, because variants carry payloads (`statusCode`, `fields`, `reason`). Sealed interface keeps the exhaustive-`when` safety while letting constants like `NoConnection` be `data object` for zero-allocation pattern matching.
+2. **`Network` is nested sealed, not flat**, because "something went wrong at the network layer" is a meaningful branching point in the UI ("show the offline banner + retry") that's strictly coarser than per-subtype handling. Flattening into top-level `NoConnection` / `Timeout` / `ServerError` would force every consumer to re-aggregate.
+3. **`Unknown.cause: Throwable?`** — the only place a raw `Throwable` crosses the error API. Preserved for Sentry breadcrumb attachment (Chunk 0.F) and for local debugging; business logic pattern-matching on `cause.javaClass` is a code-review red flag (the existence of `Unknown` means you don't recognize the failure — categorize it properly upstream if the pattern repeats).
+4. **No HTTP-specific `4xx`/`5xx` leak at the domain edge.** The business code only ever sees `Conflict`, `Validation`, `Forbidden`, etc. The status-code detail is preserved inside `Network.ServerError.statusCode` for observability, but feature code branches on semantic variants.
+5. **No `Retryable` flag.** Whether a failure is retryable is context-sensitive (network vs business), and putting a bool on the hierarchy would lie as often as it told the truth. The `data` layer's retry policy lives in its own `RetryPolicy` type, not on the error.
+
+**Consequence**:
+
+- Existing per-feature `Failure` types (e.g. `RideFailure`, `PaymentFailure`) get deprecated with `typealias` shims pointing at the new hierarchy; deprecation period is one alpha cycle, then removed.
+- `SafeApiCall` in `data` module is rewritten to return `Either<DomainError, T>` instead of the current `Either<Failure, T>`. This is the largest non-test change in this ADR's execution.
+- YallaClient's feature view models match on `DomainError` variants in their `intent { ... }` blocks and post `SideEffect.ShowError(kind)` where `kind` is a UI-layer enum (separate from `DomainError` — UI cares about "which banner copy," not about what HTTP status caused it).
+- BCV baseline regen: new sealed hierarchy published stable, no `@RequiresOptIn` gate. All variants ship committed.
+- Feature modules that previously exposed their own `Failure` types to YallaClient gain **smaller** public surface (the types disappear), which is a rare positive-breaking change — consumers get a simpler API and less to import.
+
+**Non-goals**:
+
+- Not shipping a `Result<T>` wrapper. `Either<DomainError, T>` is already our result type (per ADR-001); this ADR narrows the error side of that, nothing more.
+- Not shipping localized error messages. `Validation.fields` contains server-provided messages; feature code maps to locale-resolved strings via the existing `stringResource` mechanism. The SDK doesn't guess users' languages.
+- Not shipping a crash-reporting SDK integration. Sentry hookup is Chunk 0.F in YallaClient — this ADR just ensures `Unknown.cause` carries the raw exception where breadcrumbs can pick it up.
+
+Decided: 2026-04-24. Execution tracked as Chunk 0.D in the YallaClient refactor plan. Depends on ADR-001 (`Either`).
