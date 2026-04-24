@@ -413,3 +413,140 @@ Both are additive to `YallaTheme` (new parameters `spaceScheme`, `radiusScheme`,
 **YallaClient follow-up** (not bundled with this SDK release): screen-by-screen sweep to replace raw `.dp` padding/radius values with `System.space.*` / `System.radius.*`. Prioritized by audit severity (`DetailsSheet`, `LoginScreen`, `CancelSheet` first). A detekt rule flagging raw `.dp` inside `padding()` / `RoundedCornerShape(...)` calls is a follow-up to preserve discipline after the sweep lands.
 
 Decided: 2026-04-22.
+
+---
+
+## ADR-021: Motion tokens live inside `design`, not a standalone `motion` module
+
+**Status**: Accepted.
+
+**Decision**: Add a `motion` sub-namespace under the existing `design` module rather than standing up a separate `uz.yalla.sdk:motion` artifact. The token catalog is published under `System.motion.*`, accessible anywhere `YallaTheme` is already in scope. Tactile patterns (`System.haptic.*`) ship in a follow-up ADR/PR — see **Scope** below.
+
+**Scope of this ADR**:
+
+- **Ships in 0.0.17-alpha01** (PR #13): the `System.motion.*` catalog — `duration`, `easing`, `spring`, `stagger`.
+- **Deferred to a focused follow-up** (separate PR, tracked as Chunk 0.C.haptic): `System.haptic.*` + `HapticController` `expect`/`actual`. Kept in this ADR so the architectural decision ("haptic co-locates with motion inside `design`") is captured alongside the motion decision — implementation lands incrementally because haptic forces `design` to gain its first `androidMain`/`iosMain` source sets, which is a higher-risk change than the pure-commonMain motion catalog.
+
+**Namespaces shipped in 0.0.17-alpha01**:
+
+- `System.motion.duration.*` — `instant (100ms)`, `quick (200ms)`, `standard (350ms)`, `slow (500ms)`, `contemplative (800ms)`. Returned as `Duration` (`kotlin.time`), not raw `Long`, so `animateFloatAsState(tween(duration.standard.inWholeMilliseconds.toInt()))` reads correctly but `delay(duration.quick)` also works.
+- `System.motion.easing.*` — `standard`, `emphasized`, `entrance`, `exit` as `Easing` (Compose `CubicBezierEasing`). Material 3's curves are the baseline — we override only where the reference frames (Linear/Arc/Raycast) ship measurably different feel.
+- `System.motion.spring.*` — `bouncy`, `gentle`, `snappy`, `stiff` as `SpringSpec<Float>`. Damping-ratio + stiffness tuned to the catalog in `YallaClient/docs/MOTION.md`.
+- `System.motion.stagger.*` — `list (30ms)`, `grid (50ms)`, `cards (75ms)` as `Duration`. Consumed by a `Modifier.staggerReveal(visible, index)` helper also published from `design`.
+
+**Namespaces deferred (architectural shape captured, implementation follows)**:
+
+- `System.haptic.*` — `selection`, `confirm`, `warn`, `error`, `hero` as `HapticKind` enum values.
+
+**Haptic bridging** (deferred — `expect`/`actual` shape for reference):
+
+```kotlin
+// commonMain
+@Immutable interface HapticController { fun perform(kind: HapticKind) }
+@Composable expect fun rememberHapticController(): HapticController
+
+// androidMain: HapticFeedbackConstants + VibrationEffect.Composition (API 30+),
+//              graceful fallback to HapticFeedbackConstants below.
+// iosMain:    UIImpactFeedbackGenerator for selection/confirm/warn/error;
+//              CHHapticEngine composition for `hero` (iOS 13+, falls back to
+//              heavyImpact on older).
+```
+
+This is the first `expect`/`actual` surface in `design`. Previously `design` was platform-agnostic by construction; the motion catalog forces the split because haptic feedback has no cross-platform abstraction in Compose Multiplatform.
+
+**Why a sub-namespace, not a module**:
+
+1. Motion **is** design. Splitting it out would mirror Material's `material3-motion` misstep — consumers always pull it anyway, the extra artifact adds resolution + publish cost for zero isolation benefit.
+2. BOM complexity is already non-trivial (12 artifacts). Adding a 13th for something that ships next to tokens we already publish is taxation without representation.
+3. Haptic `expect`/`actual` forcing the module to go multiplatform is fine — `design` is already KMP; adding `androidMain`/`iosMain` source sets is a source-set addition, not a module structure change.
+
+**Consequence**:
+
+- `design` module stays commonMain-only in 0.0.17-alpha01 (motion catalog is pure Compose types). The haptic follow-up adds `design`'s first `androidMain`/`iosMain` source sets — BCV baseline regen needed at that point for `System.haptic.*` + the `HapticController` `expect` class. The motion token publish also regens the `design` baseline (new `System.motion.*` surface), done in PR #13.
+- `foundation` module gains no new deps — the haptic pattern `HapticPattern` (enum-ish) lives in `design` because it's a token, not infrastructure.
+- YallaClient consumers import exactly like the existing tokens: `uz.yalla.design.theme.System` — no new imports, just new properties.
+- Pre-1.0 posture: public from day one, no `@RequiresOptIn`. If a token value needs retuning after shipping, we change the value (ABI-safe); if the *shape* of a token changes (e.g., `Duration` → `Long`), that's a breaking change and triggers the patch-bump-plus-alpha-reset rule.
+
+**Non-goals**:
+
+- **Not** shipping a "motion builder DSL." Components take `SpringSpec` / `Easing` / `Duration` directly from the tokens. No wrapper types that add indirection.
+- **Not** shipping shared-element transition helpers in this ADR. That depends on Compose Multiplatform reaching parity on `SharedTransitionLayout` across Android + iOS, tracked separately.
+- **Not** bundling platform-specific sound/vibration packs. Haptics stay abstract; concrete `CHHapticEngine` composition files are a follow-up for Phase ∞ polish.
+
+Decided: 2026-04-24. Execution tracked as Chunk 0.C in the YallaClient refactor plan (`YallaClient/docs/superpowers/plans/2026-04-23-yalla-client-refactor.md`).
+
+---
+
+## ADR-022: Semantic top-level variants graduate into `DataError`
+
+**Status**: Accepted.
+
+> **Naming note**: earlier drafts of this ADR called the hierarchy
+> `DomainError`. On implementation audit, the existing core type was already
+> named `DataError` (dates to 0.0.1, 8 consumer files). Renaming would churn
+> every consumer for marginal naming clarity. Kept the existing name.
+> This ADR is about **extending `DataError` with semantic top-level
+> variants** — the hierarchy shape described below is the one actually
+> implemented in core, published under that name. If a rename ever
+> becomes worth the churn, it gets its own ADR.
+
+**Decision**: Extend the existing `sealed class DataError` in `core` with five semantic top-level variants (siblings to `Network`) so feature code pattern-matches on "what happened from the domain's perspective" rather than reconstructing meaning from HTTP status codes inside `Network.ClientWithMessage`. `Either<DataError, T>` remains the one-and-only error shape a domain or data function can return.
+
+**Hierarchy** (all `commonMain`, published from `uz.yalla.sdk:core`):
+
+```kotlin
+sealed class DataError {
+
+    /** Authentication missing or invalid. Caller should surface a login prompt. */
+    data object Unauthorized : DataError()
+
+    /** Authentication present but insufficient for the requested action. */
+    data class Forbidden(val reason: String?) : DataError()
+
+    /** Request can't be satisfied in the current server state (409). */
+    data class Conflict(val reason: String?) : DataError()
+
+    /** Request-shape problem surfaced by the server. `fields` maps field name → message. */
+    data class Validation(val fields: Map<String, String>) : DataError()
+
+    /** Addressed resource doesn't exist (semantic 404 with typed server payload). */
+    data object NotFound : DataError()
+
+    /** Pre-existing transport-level hierarchy. Unchanged in this ADR. */
+    sealed class Network : DataError() {
+        data object Connection : Network()
+        data object Timeout : Network()
+        data object Server : Network()
+        data object Client : Network()
+        data class ClientWithMessage(val code: Int, val message: String) : Network()
+        data object Serialization : Network()
+        data object Guest : Network()
+        data object Unknown : Network()
+    }
+}
+```
+
+**How it reaches feature layers**: `data` module's `SafeApiCall` maps HTTP status codes + `IOException` subtypes to `DataError` variants. Feature view models pattern-match on the `DataError` hierarchy and translate to a UI-layer `SideEffect.ShowError(kind)` — the UI layer never sees a `Throwable`. Adding new sibling variants (like the five shipped by this ADR) **is a compile-break at exhaustive `when` call sites** — consumers must add the new branches or an `else`. This is documented in the Consequence section.
+
+**Why this shape**:
+
+1. **Sealed class, not enum**, because variants carry payloads (`fields`, `reason`). Sealed class (pre-existing choice) keeps the exhaustive-`when` safety while letting constants like `Unauthorized` be `data object` for zero-allocation pattern matching.
+2. **`Network` stays nested sealed, not flat**, because "something went wrong at the network layer" is a meaningful branching point in the UI ("show the offline banner + retry") that's strictly coarser than per-subtype handling. Flattening would force every consumer to re-aggregate.
+3. **Semantic variants are siblings of `Network`, not nested under it**, because `Unauthorized`, `Forbidden`, `Conflict`, `Validation`, `NotFound` describe the business meaning of a failure regardless of which transport delivered it. Nesting them under `Network` would falsely imply "only HTTP requests can be unauthorized" — but the same variants may show up from disk-side auth checks, cache expiry, etc.
+4. **No HTTP-specific `4xx`/`5xx` leak at the domain edge** for semantic variants. Business code only ever sees `Conflict`, `Validation`, `Forbidden`, etc. The status-code detail is preserved inside `Network.ClientWithMessage.code` when callers need it for observability.
+5. **No `Retryable` flag.** Whether a failure is retryable is context-sensitive (network vs business), and putting a bool on the hierarchy would lie as often as it told the truth. The `data` layer's retry policy lives in its own `RetryPolicy` type, not on the error.
+
+**Consequence**:
+
+- Every exhaustive `when (error: DataError)` site at every consumer of `core` breaks at compile time on bump to the version that ships these variants. Consumers add missing branches or an `else`. This is a **minor-breaking change** per the library-api rules — treated as an additive version bump with alpha reset (`0.0.15-alphaNN` → `0.0.16-alpha01`) because we're pre-1.0 and exhaustive-`when`-break is acceptable in that posture. YallaClient's bump PR must include the branch additions; not free.
+- `SafeApiCall` in `data` module gains mapping rules for the new variants (HTTP 401 → `Unauthorized`, 403 → `Forbidden`, 409 → `Conflict`, 422 → `Validation`, typed 404 bodies → `NotFound`). Tracked as a follow-up PR once YallaClient's consumer sites are caught up.
+- BCV baseline regen: new sealed variants published stable, no `@RequiresOptIn` gate. All variants ship committed.
+
+**Non-goals**:
+
+- Not shipping a `Result<T>` wrapper. `Either<DataError, T>` is already our result type (per ADR-001); this ADR narrows the error side of that, nothing more.
+- Not shipping localized error messages. `Validation.fields` contains server-provided messages; feature code maps to locale-resolved strings via the existing `stringResource` mechanism. The SDK doesn't guess users' languages.
+- Not shipping a crash-reporting SDK integration. Sentry hookup is Chunk 0.F in YallaClient.
+- Not renaming `DataError` → `DomainError`. Discussed above in the Naming note.
+
+Decided: 2026-04-24. Execution tracked as Chunk 0.D in the YallaClient refactor plan. Depends on ADR-001 (`Either`). Implemented in yalla-sdk 0.0.16-alpha01.
