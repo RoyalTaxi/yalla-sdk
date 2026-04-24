@@ -9,6 +9,7 @@ import uz.yalla.resources.error_data_format
 import uz.yalla.resources.error_network_unexpected
 import uz.yalla.resources.error_no_internet
 import uz.yalla.resources.error_server_busy
+import uz.yalla.resources.error_session_expired
 
 /**
  * Default implementation mapping [DataError] subtypes to localized string resources.
@@ -27,6 +28,14 @@ class DefaultDataErrorMapper : DataErrorMapper {
      */
     override fun map(error: DataError): StringResource =
         when (error) {
+            // Semantic top-level variants (ADR-022, added in 0.0.16).
+            DataError.Unauthorized -> Res.string.error_session_expired
+            is DataError.Forbidden -> Res.string.error_client_request
+            is DataError.Conflict -> Res.string.error_client_request
+            is DataError.Validation -> Res.string.error_client_request
+            DataError.NotFound -> Res.string.error_client_request
+
+            // Network branch — unchanged.
             DataError.Network.Connection -> Res.string.error_no_internet
             DataError.Network.Timeout -> Res.string.error_connection_timeout
             DataError.Network.Client -> Res.string.error_client_request

@@ -983,6 +983,45 @@ final class uz.yalla.core.profile/Client { // uz.yalla.core.profile/Client|null[
 }
 
 sealed class uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError|null[0]
+    final class Conflict : uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError.Conflict|null[0]
+        constructor <init>(kotlin/String?) // uz.yalla.core.error/DataError.Conflict.<init>|<init>(kotlin.String?){}[0]
+
+        final val reason // uz.yalla.core.error/DataError.Conflict.reason|{}reason[0]
+            final fun <get-reason>(): kotlin/String? // uz.yalla.core.error/DataError.Conflict.reason.<get-reason>|<get-reason>(){}[0]
+
+        final fun component1(): kotlin/String? // uz.yalla.core.error/DataError.Conflict.component1|component1(){}[0]
+        final fun copy(kotlin/String? = ...): uz.yalla.core.error/DataError.Conflict // uz.yalla.core.error/DataError.Conflict.copy|copy(kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.error/DataError.Conflict.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.error/DataError.Conflict.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.error/DataError.Conflict.toString|toString(){}[0]
+    }
+
+    final class Forbidden : uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError.Forbidden|null[0]
+        constructor <init>(kotlin/String?) // uz.yalla.core.error/DataError.Forbidden.<init>|<init>(kotlin.String?){}[0]
+
+        final val reason // uz.yalla.core.error/DataError.Forbidden.reason|{}reason[0]
+            final fun <get-reason>(): kotlin/String? // uz.yalla.core.error/DataError.Forbidden.reason.<get-reason>|<get-reason>(){}[0]
+
+        final fun component1(): kotlin/String? // uz.yalla.core.error/DataError.Forbidden.component1|component1(){}[0]
+        final fun copy(kotlin/String? = ...): uz.yalla.core.error/DataError.Forbidden // uz.yalla.core.error/DataError.Forbidden.copy|copy(kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.error/DataError.Forbidden.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.error/DataError.Forbidden.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.error/DataError.Forbidden.toString|toString(){}[0]
+    }
+
+    final class Validation : uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError.Validation|null[0]
+        constructor <init>(kotlin.collections/Map<kotlin/String, kotlin/String>) // uz.yalla.core.error/DataError.Validation.<init>|<init>(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+        final val fields // uz.yalla.core.error/DataError.Validation.fields|{}fields[0]
+            final fun <get-fields>(): kotlin.collections/Map<kotlin/String, kotlin/String> // uz.yalla.core.error/DataError.Validation.fields.<get-fields>|<get-fields>(){}[0]
+
+        final fun component1(): kotlin.collections/Map<kotlin/String, kotlin/String> // uz.yalla.core.error/DataError.Validation.component1|component1(){}[0]
+        final fun copy(kotlin.collections/Map<kotlin/String, kotlin/String> = ...): uz.yalla.core.error/DataError.Validation // uz.yalla.core.error/DataError.Validation.copy|copy(kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.error/DataError.Validation.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.error/DataError.Validation.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.error/DataError.Validation.toString|toString(){}[0]
+    }
+
     sealed class Network : uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError.Network|null[0]
         final class ClientWithMessage : uz.yalla.core.error/DataError.Network { // uz.yalla.core.error/DataError.Network.ClientWithMessage|null[0]
             constructor <init>(kotlin/Int, kotlin/String) // uz.yalla.core.error/DataError.Network.ClientWithMessage.<init>|<init>(kotlin.Int;kotlin.String){}[0]
@@ -1041,6 +1080,18 @@ sealed class uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError|nu
             final fun hashCode(): kotlin/Int // uz.yalla.core.error/DataError.Network.Unknown.hashCode|hashCode(){}[0]
             final fun toString(): kotlin/String // uz.yalla.core.error/DataError.Network.Unknown.toString|toString(){}[0]
         }
+    }
+
+    final object NotFound : uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError.NotFound|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.error/DataError.NotFound.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.error/DataError.NotFound.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.error/DataError.NotFound.toString|toString(){}[0]
+    }
+
+    final object Unauthorized : uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError.Unauthorized|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.error/DataError.Unauthorized.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.error/DataError.Unauthorized.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.error/DataError.Unauthorized.toString|toString(){}[0]
     }
 }
 
