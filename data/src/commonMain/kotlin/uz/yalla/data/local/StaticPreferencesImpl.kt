@@ -3,7 +3,7 @@ package uz.yalla.data.local
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.get
 import com.russhwolf.settings.set
-import uz.yalla.core.contract.preferences.StaticPreferences
+import uz.yalla.core.preferences.StaticPreferences
 import uz.yalla.core.settings.LocaleKind
 
 /**

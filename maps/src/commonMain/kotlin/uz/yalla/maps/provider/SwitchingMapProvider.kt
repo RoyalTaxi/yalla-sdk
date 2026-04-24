@@ -8,7 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import uz.yalla.core.contract.preferences.InterfacePreferences
+import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.settings.MapKind
 import uz.yalla.maps.api.ExtendedMap

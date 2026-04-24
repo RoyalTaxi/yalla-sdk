@@ -1,15 +1,11 @@
-# Gradle
+# Build
 build/
 .gradle/
-gradle-app.setting
-!gradle-wrapper.jar
+.kotlin/
 
-# IDE
+# IntelliJ
 .idea/
 *.iml
-*.ipr
-*.iws
-.vscode/
 
 # Android
 local.properties
@@ -18,29 +14,17 @@ local.properties
 
 # iOS
 Pods/
+DerivedData/
 *.xcworkspace
 *.xcuserdata/
-DerivedData/
 iosTests/.build/
 iosTests/.swiftpm/
 
 # macOS
 .DS_Store
-*.swp
-*~
 
-# Worktrees
+# Git worktrees
 .worktrees/
 
-# Kotlin
-.kotlin/
-kotlin-js-store/
-
-# Maven publish
-repo/
-
-# Code Graph MCP cache
+# Local tool caches
 .code-graph/
-
-# Claude Code scheduled-task locks
-.claude/scheduled_tasks.lock

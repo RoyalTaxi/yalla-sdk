@@ -27,5 +27,10 @@ gradlePlugin {
             id = "yalla.sdk.kmp.compose"
             implementationClass = "KmpComposeConventionPlugin"
         }
+
+        register("bom") {
+            id = "yalla.sdk.bom"
+            implementationClass = "BomConventionPlugin"
+        }
     }
 }

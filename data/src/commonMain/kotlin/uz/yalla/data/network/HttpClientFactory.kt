@@ -19,9 +19,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
-import uz.yalla.core.contract.preferences.InterfacePreferences
-import uz.yalla.core.contract.preferences.PositionPreferences
-import uz.yalla.core.contract.preferences.SessionPreferences
+import uz.yalla.core.preferences.InterfacePreferences
+import uz.yalla.core.preferences.PositionPreferences
+import uz.yalla.core.preferences.SessionPreferences
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.session.UnauthorizedSessionEvents
 import uz.yalla.data.util.platformName

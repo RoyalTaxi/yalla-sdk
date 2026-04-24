@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import uz.yalla.core.contract.preferences.InterfacePreferences
+import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.settings.LocaleKind
 import uz.yalla.core.settings.MapKind

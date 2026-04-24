@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.yalla.core.contract.preferences.ConfigPreferences
+import uz.yalla.core.preferences.ConfigPreferences
 import uz.yalla.core.util.or0
 import uz.yalla.core.util.orFalse
 

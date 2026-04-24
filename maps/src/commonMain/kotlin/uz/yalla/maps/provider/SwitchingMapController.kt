@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
-import uz.yalla.core.contract.preferences.InterfacePreferences
+import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.settings.MapKind
 import uz.yalla.maps.api.MapController

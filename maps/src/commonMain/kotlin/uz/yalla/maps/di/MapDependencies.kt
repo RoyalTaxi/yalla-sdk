@@ -2,7 +2,7 @@ package uz.yalla.maps.di
 
 import kotlinx.coroutines.CoroutineScope
 import uz.yalla.core.contract.location.LocationProvider
-import uz.yalla.core.contract.preferences.InterfacePreferences
+import uz.yalla.core.preferences.InterfacePreferences
 
 /**
  * External dependencies required by the maps module.
