@@ -1,5 +1,7 @@
 package uz.yalla.core.order
 
+import uz.yalla.core.identity.ExecutorId
+import uz.yalla.core.identity.OrderId
 import uz.yalla.core.payment.PaymentKind
 
 /**
@@ -14,7 +16,7 @@ data class Order(
     val comment: String,
     val dateTime: Long,
     val executor: Executor,
-    val id: Int,
+    val id: OrderId,
     val paymentType: PaymentKind,
     val service: String,
     val status: OrderStatus,
@@ -36,7 +38,7 @@ data class Order(
         val vehicle: Vehicle,
         val fatherName: String,
         val givenNames: String,
-        val id: Int,
+        val id: ExecutorId,
         val phone: String,
         val photo: String,
         val rating: Double,

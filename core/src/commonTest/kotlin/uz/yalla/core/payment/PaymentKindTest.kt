@@ -1,5 +1,6 @@
 package uz.yalla.core.payment
 
+import uz.yalla.core.identity.CardId
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -17,12 +18,12 @@ class PaymentKindTest {
         val paymentKind =
             PaymentKind.from(
                 id = "  CARD  ",
-                cardId = "  card-123  ",
+                cardId = CardId("  card-123  "),
                 maskedNumber = "  8600 **** 1234  "
             )
 
         val card = assertIs<PaymentKind.Card>(paymentKind)
-        assertEquals("card-123", card.cardId)
+        assertEquals(CardId("card-123"), card.cardId)
         assertEquals("8600 **** 1234", card.maskedNumber)
     }
 
@@ -31,7 +32,7 @@ class PaymentKindTest {
         val paymentKind =
             PaymentKind.from(
                 id = "card",
-                cardId = "   ",
+                cardId = CardId("   "),
                 maskedNumber = "8600 **** 1234"
             )
 

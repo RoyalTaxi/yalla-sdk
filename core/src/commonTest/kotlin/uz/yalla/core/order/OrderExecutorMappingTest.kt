@@ -1,5 +1,6 @@
 package uz.yalla.core.order
 
+import uz.yalla.core.identity.ExecutorId
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -29,7 +30,7 @@ class OrderExecutorMappingTest {
                     ),
                 fatherName = "Father",
                 givenNames = "Driver",
-                id = 10,
+                id = ExecutorId(10),
                 phone = "+998900000000",
                 photo = "photo.png",
                 rating = 5.0,
@@ -38,7 +39,7 @@ class OrderExecutorMappingTest {
 
         val mapped = orderExecutor.toExecutor()
 
-        assertEquals(10, mapped.id)
+        assertEquals(ExecutorId(10), mapped.id)
         assertEquals(41.3111, mapped.lat)
         assertEquals(69.2797, mapped.lng)
         assertEquals(90.0, mapped.heading)

@@ -2,6 +2,7 @@ package uz.yalla.core.location
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import uz.yalla.core.identity.AddressOptionId
 
 /**
  * Address search result or autocomplete suggestion.
@@ -15,7 +16,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class AddressOption(
-    @SerialName("id") val id: Int,
+    @SerialName("id") val id: AddressOptionId,
     @SerialName("title") val title: String,
     @SerialName("address") val address: String,
     @SerialName("distance") val distance: Double,

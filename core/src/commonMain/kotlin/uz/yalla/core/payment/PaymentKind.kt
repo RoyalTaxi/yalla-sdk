@@ -7,6 +7,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import uz.yalla.core.identity.CardId
 import uz.yalla.core.util.normalizedId
 
 /**
@@ -57,7 +58,7 @@ sealed class PaymentKind(val id: String) {
      * @property maskedNumber Masked card PAN for display (e.g., "**** 1234")
      */
     data class Card(
-        val cardId: String,
+        val cardId: CardId,
         val maskedNumber: String
     ) : PaymentKind("card")
 
@@ -71,18 +72,18 @@ sealed class PaymentKind(val id: String) {
          */
         fun from(
             id: String?,
-            cardId: String? = null,
+            cardId: CardId? = null,
             maskedNumber: String? = null
         ): PaymentKind =
             when (id.normalizedId()) {
                 "cash" -> Cash
                 "card" -> {
-                    val normalizedCardId = cardId?.trim().orEmpty()
-                    if (normalizedCardId.isBlank()) {
+                    val normalizedRaw = cardId?.raw?.trim().orEmpty()
+                    if (normalizedRaw.isBlank()) {
                         Cash
                     } else {
                         Card(
-                            cardId = normalizedCardId,
+                            cardId = CardId(normalizedRaw),
                             maskedNumber = maskedNumber?.trim().orEmpty()
                         )
                     }

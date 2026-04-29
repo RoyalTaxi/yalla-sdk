@@ -15,7 +15,7 @@ import uz.yalla.core.order.Order
  */
 fun AddressOption.toFoundLocation() =
     FoundLocation(
-        id = id,
+        id = id.raw,
         name = title,
         address = address,
         point = GeoPoint(lat, lng),
@@ -48,7 +48,7 @@ fun SavedAddress.toFoundLocation() =
  */
 fun Address.toLocation(point: GeoPoint = GeoPoint(lat = lat, lng = lng)) =
     Location(
-        id = id,
+        id = id?.raw,
         name = name,
         point = point
     )

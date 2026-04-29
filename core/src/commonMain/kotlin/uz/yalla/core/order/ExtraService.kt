@@ -2,6 +2,7 @@ package uz.yalla.core.order
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import uz.yalla.core.identity.ExtraServiceId
 
 /**
  * Optional extra service that can be added to an order.
@@ -24,7 +25,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ExtraService(
-    @SerialName("id") val id: Int,
+    @SerialName("id") val id: ExtraServiceId,
     @SerialName("cost") val cost: Int,
     @SerialName("name") val name: String,
     @SerialName("costType") val costType: CostType

@@ -3,6 +3,12 @@ package uz.yalla.core
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.identity.AddressId
+import uz.yalla.core.identity.AddressOptionId
+import uz.yalla.core.identity.CardId
+import uz.yalla.core.identity.ExtraServiceId
+import uz.yalla.core.identity.ExecutorId
+import uz.yalla.core.identity.ServiceBrandId
 import uz.yalla.core.location.Address
 import uz.yalla.core.location.AddressOption
 import uz.yalla.core.location.PlaceKind
@@ -53,7 +59,7 @@ class SerializationRoundTripTest {
     fun shouldRoundTripAddress() {
         val value =
             Address(
-                id = 7,
+                id = AddressId(7),
                 name = "Amir Temur ko'chasi 1",
                 lat = 41.31,
                 lng = 69.28,
@@ -83,7 +89,7 @@ class SerializationRoundTripTest {
     fun shouldRoundTripAddressOption() {
         val value =
             AddressOption(
-                id = 1,
+                id = AddressOptionId(1),
                 title = "Main",
                 address = "Tashkent",
                 distance = 123.5,
@@ -162,14 +168,14 @@ class SerializationRoundTripTest {
 
     @Test
     fun shouldRoundTripExecutor() {
-        val value = Executor(id = 9, lat = 41.31, lng = 69.28, heading = 90.0, distance = 5.0)
+        val value = Executor(id = ExecutorId(9), lat = 41.31, lng = 69.28, heading = 90.0, distance = 5.0)
 
         assertEquals(value, json.decodeFromString<Executor>(json.encodeToString(value)))
     }
 
     @Test
     fun shouldRoundTripExtraService() {
-        val value = ExtraService(id = 2, cost = 5000, name = "Child seat", costType = ExtraService.CostType.Fixed)
+        val value = ExtraService(id = ExtraServiceId(2), cost = 5000, name = "Child seat", costType = ExtraService.CostType.Fixed)
         val encoded = json.encodeToString(value)
 
         assertEquals(value, json.decodeFromString<ExtraService>(encoded))
@@ -178,14 +184,14 @@ class SerializationRoundTripTest {
 
     @Test
     fun shouldRoundTripServiceBrand() {
-        val value = ServiceBrand(id = 1, name = "Yalla", photo = "https://cdn.example.com/brand.png")
+        val value = ServiceBrand(id = ServiceBrandId(1), name = "Yalla", photo = "https://cdn.example.com/brand.png")
 
         assertEquals(value, json.decodeFromString<ServiceBrand>(json.encodeToString(value)))
     }
 
     @Test
     fun shouldRoundTripPaymentCard() {
-        val value = PaymentCard(cardId = "abc-123", maskedPan = "**** 1234")
+        val value = PaymentCard(cardId = CardId("abc-123"), maskedPan = "**** 1234")
         val encoded = json.encodeToString(value)
 
         assertEquals(value, json.decodeFromString<PaymentCard>(encoded))
@@ -309,7 +315,7 @@ class SerializationRoundTripTest {
     fun paymentKind_cardSerializesAsTag() {
         // Card serializes as "card" (its id). On deserialization from("card") returns Cash
         // because no cardId is available in the single-token wire format — documented trade-off.
-        val card = PaymentKind.Card(cardId = "abc-123", maskedNumber = "**** 4321")
+        val card = PaymentKind.Card(cardId = CardId("abc-123"), maskedNumber = "**** 4321")
         val encoded = json.encodeToString(PaymentKind.serializer(), card)
         assertEquals("\"card\"", encoded)
     }

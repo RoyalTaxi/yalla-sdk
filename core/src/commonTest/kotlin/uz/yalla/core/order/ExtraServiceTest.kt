@@ -1,6 +1,7 @@
 package uz.yalla.core.order
 
 import kotlinx.serialization.json.Json
+import uz.yalla.core.identity.ExtraServiceId
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -9,7 +10,7 @@ class ExtraServiceTest {
 
     @Test
     fun shouldSerializeFixedCostTypeAsCost() {
-        val service = ExtraService(id = 1, cost = 5000, name = "Child seat", costType = ExtraService.CostType.Fixed)
+        val service = ExtraService(id = ExtraServiceId(1), cost = 5000, name = "Child seat", costType = ExtraService.CostType.Fixed)
 
         val encoded = json.encodeToString(service)
 
@@ -18,7 +19,7 @@ class ExtraServiceTest {
 
     @Test
     fun shouldSerializePercentCostTypeAsPercent() {
-        val service = ExtraService(id = 2, cost = 10, name = "Pet fee", costType = ExtraService.CostType.Percent)
+        val service = ExtraService(id = ExtraServiceId(2), cost = 10, name = "Pet fee", costType = ExtraService.CostType.Percent)
 
         val encoded = json.encodeToString(service)
 

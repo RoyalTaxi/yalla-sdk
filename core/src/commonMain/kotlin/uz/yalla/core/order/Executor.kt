@@ -2,6 +2,7 @@ package uz.yalla.core.order
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import uz.yalla.core.identity.ExecutorId
 
 /**
  * Lightweight executor location data for real-time map tracking.
@@ -14,7 +15,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class Executor(
-    @SerialName("id") val id: Int,
+    @SerialName("id") val id: ExecutorId,
     @SerialName("lat") val lat: Double,
     @SerialName("lng") val lng: Double,
     @SerialName("heading") val heading: Double,

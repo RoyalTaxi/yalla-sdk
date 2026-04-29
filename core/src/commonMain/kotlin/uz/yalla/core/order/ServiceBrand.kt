@@ -2,6 +2,7 @@ package uz.yalla.core.order
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import uz.yalla.core.identity.ServiceBrandId
 
 /**
  * A taxi service tier offered on the platform (economy, comfort, business, etc.).
@@ -11,7 +12,7 @@ import kotlinx.serialization.Serializable
  */
 @Serializable
 data class ServiceBrand(
-    @SerialName("id") val id: Int,
+    @SerialName("id") val id: ServiceBrandId,
     @SerialName("name") val name: String,
     @SerialName("photo") val photo: String
 )

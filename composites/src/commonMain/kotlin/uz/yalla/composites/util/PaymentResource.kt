@@ -29,7 +29,7 @@ fun PaymentKind.toPainter(): Painter =
         PaymentKind.Cash -> painterResource(Res.drawable.img_cash)
 
         is PaymentKind.Card -> {
-            if (cardId.length == 16) {
+            if (cardId.raw.length == 16) {
                 rememberVectorPainter(YallaIcons.Humo)
             } else {
                 rememberVectorPainter(YallaIcons.Uzcard)
@@ -49,7 +49,7 @@ fun PaymentKind.getStringResource(): StringResource =
         PaymentKind.Cash -> Res.string.payment_type_cash
 
         is PaymentKind.Card -> {
-            if (cardId.length == 16) {
+            if (cardId.raw.length == 16) {
                 Res.string.payment_card_humo_format
             } else {
                 Res.string.payment_card_uzcard_format

@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import uz.yalla.core.identity.CardId
 import uz.yalla.core.payment.PaymentKind
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -79,18 +80,18 @@ class UserPreferencesImplTest {
     fun shouldPersistCardPaymentWithIdentifiers() = runTest(UnconfinedTestDispatcher()) {
         val impl = newImpl(this)
 
-        impl.setPaymentType(PaymentKind.Card(cardId = "card-42", maskedNumber = "**** 1234"))
+        impl.setPaymentType(PaymentKind.Card(cardId = CardId("card-42"), maskedNumber = "**** 1234"))
 
         val readBack = impl.paymentType.first()
         val card = assertIs<PaymentKind.Card>(readBack)
-        assertEquals("card-42", card.cardId)
+        assertEquals(CardId("card-42"), card.cardId)
         assertEquals("**** 1234", card.maskedNumber)
     }
 
     @Test
     fun shouldRemoveCardFieldsWhenSwitchingBackToCash() = runTest(UnconfinedTestDispatcher()) {
         val impl = newImpl(this)
-        impl.setPaymentType(PaymentKind.Card(cardId = "card-42", maskedNumber = "**** 1234"))
+        impl.setPaymentType(PaymentKind.Card(cardId = CardId("card-42"), maskedNumber = "**** 1234"))
 
         impl.setPaymentType(PaymentKind.Cash)
 
@@ -100,12 +101,12 @@ class UserPreferencesImplTest {
     @Test
     fun shouldOverwritePreviousCardOnSuccessiveSets() = runTest(UnconfinedTestDispatcher()) {
         val impl = newImpl(this)
-        impl.setPaymentType(PaymentKind.Card(cardId = "old", maskedNumber = "**** 0000"))
+        impl.setPaymentType(PaymentKind.Card(cardId = CardId("old"), maskedNumber = "**** 0000"))
 
-        impl.setPaymentType(PaymentKind.Card(cardId = "new", maskedNumber = "**** 9999"))
+        impl.setPaymentType(PaymentKind.Card(cardId = CardId("new"), maskedNumber = "**** 9999"))
 
         val card = assertIs<PaymentKind.Card>(impl.paymentType.first())
-        assertEquals("new", card.cardId)
+        assertEquals(CardId("new"), card.cardId)
         assertEquals("**** 9999", card.maskedNumber)
     }
 

@@ -7,8 +7,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.yalla.core.preferences.UserPreferences
+import uz.yalla.core.identity.CardId
 import uz.yalla.core.payment.PaymentKind
+import uz.yalla.core.preferences.UserPreferences
 
 /**
  * [DataStore]-backed implementation of [UserPreferences].
@@ -50,7 +51,7 @@ internal class UserPreferencesImpl(
         dataStore.data.map { prefs ->
             PaymentKind.from(
                 id = prefs[PreferenceKeys.PAYMENT_TYPE],
-                cardId = prefs[PreferenceKeys.CARD_ID],
+                cardId = prefs[PreferenceKeys.CARD_ID]?.let { CardId(it) },
                 maskedNumber = prefs[PreferenceKeys.CARD_NUMBER],
             )
         }
@@ -60,7 +61,7 @@ internal class UserPreferencesImpl(
             dataStore.edit { prefs ->
                 prefs[PreferenceKeys.PAYMENT_TYPE] = value.id
                 if (value is PaymentKind.Card) {
-                    prefs[PreferenceKeys.CARD_ID] = value.cardId
+                    prefs[PreferenceKeys.CARD_ID] = value.cardId.raw
                     prefs[PreferenceKeys.CARD_NUMBER] = value.maskedNumber
                 } else {
                     prefs.remove(PreferenceKeys.CARD_ID)

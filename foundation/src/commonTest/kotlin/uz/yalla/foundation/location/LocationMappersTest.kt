@@ -1,6 +1,10 @@
 package uz.yalla.foundation.location
 
 import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.identity.AddressId
+import uz.yalla.core.identity.AddressOptionId
+import uz.yalla.core.identity.ExecutorId
+import uz.yalla.core.identity.OrderId
 import uz.yalla.core.location.Address
 import uz.yalla.core.location.AddressOption
 import uz.yalla.core.location.PlaceKind
@@ -17,7 +21,7 @@ class LocationMappersTest {
     @Test
     fun shouldMapAddressOptionToFoundLocation() {
         val option = AddressOption(
-            id = 42, title = "Office", address = "123 Main St",
+            id = AddressOptionId(42), title = "Office", address = "123 Main St",
             distance = 1.5, lat = 41.3, lng = 69.2, isFromDatabase = false
         )
 
@@ -49,7 +53,7 @@ class LocationMappersTest {
 
     @Test
     fun shouldMapAddressToLocation() {
-        val address = Address(id = 7, name = "Tashkent", lat = 41.3, lng = 69.2, isFromDatabase = true)
+        val address = Address(id = AddressId(7), name = "Tashkent", lat = 41.3, lng = 69.2, isFromDatabase = true)
 
         val result = address.toLocation()
 
@@ -60,7 +64,7 @@ class LocationMappersTest {
 
     @Test
     fun shouldMapAddressToLocationWithCustomPoint() {
-        val address = Address(id = 7, name = "Tashkent", lat = 41.3, lng = 69.2, isFromDatabase = true)
+        val address = Address(id = AddressId(7), name = "Tashkent", lat = 41.3, lng = 69.2, isFromDatabase = true)
         val custom = GeoPoint(lat = 40.0, lng = 70.0)
 
         val result = address.toLocation(point = custom)
@@ -130,9 +134,9 @@ class LocationMappersTest {
                 callsign = "", color = Order.Executor.Vehicle.Color("", ""),
                 id = 0, mark = "", model = "", stateNumber = ""
             ),
-            fatherName = "", givenNames = "", id = 0, phone = "", photo = "", rating = 0.0, surName = ""
+            fatherName = "", givenNames = "", id = ExecutorId(0), phone = "", photo = "", rating = 0.0, surName = ""
         ),
-        id = 1,
+        id = OrderId(1),
         paymentType = PaymentKind.Cash,
         service = "",
         status = OrderStatus.New,
