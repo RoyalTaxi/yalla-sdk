@@ -62,9 +62,80 @@ commit on `cleanup/phase-2-3-4`.
 
 ---
 
+---
+
+## Phase 2 — `data` additions (and the `core` value-class rollout it pulled in)
+
+### Promotions / demotions surfaced
+
+*From phase 2 `data`:* none. Per `DATA_AUDIT.md` §5: zero promotions, zero unambiguous demotions. Three borderlines (`NetworkConfig.deviceType`/`deviceMode` defaults, `DEFAULT_GUEST_ALLOWED_SEGMENTS`) explicitly KEPT — speculative-but-cheap defaults for a future Driver/Operator app that may legitimately parameterize them.
+
+### Breaking changes shipped
+
+*From phase 2 `data`:*
+
+- `3e165bd1a refactor(data): tighten api/implementation split, drop unused deps`
+  Demoted three `api()` declarations to `implementation()`:
+  `ktor-client-content-negotiation`, `ktor-serialization-kotlinx-json`,
+  `ktor-client-logging`. Dropped unused androidMain `koin-android`. Action:
+  YallaClient must declare any direct usage of these libs explicitly in its
+  own `build.gradle.kts` — it can no longer rely on data's transitive `api()`
+  resolution. (Most likely YallaClient already declares these for its own
+  HttpClient instances; verify during migration.)
+
+- `de64475c0 refactor!(data): migrate HttpClientFactory to Ktor Auth plugin`
+  `createHttpClient`'s 401 handling moved from a hand-rolled `HttpCallValidator`
+  + `extractBearerToken` parser to Ktor's `Auth { bearer { … } }` plugin.
+  End-state behavior preserved (401 clears the session and publishes
+  `UnauthorizedSessionEvents`), but with one subtle delta: the bearer token
+  is no longer re-read from `sessionPrefs.accessToken` on every request — it
+  is loaded lazily by Auth's `loadTokens` and cached internally until cleared
+  via `refreshTokens`. Logout now requires one extra request that uses the
+  stale token, gets 401, triggers a no-op refresh, then subsequent requests
+  carry no token. Action: YallaClient typically does not rely on the
+  per-request token-fresh-read; if it does (e.g., custom token-rotation
+  flows that don't 401), wire `clearToken()` on the `BearerAuthProvider` at
+  rotation points.
+  Test seam added: `createHttpClient(... engine: HttpClientEngine? = null)` —
+  YallaClient's signature compatible (defaulted parameter).
+
+- `7bd4125a6 refactor!(core): introduce typed identifiers (OrderId, CardId, …)`
+  Picks up the deferred core-G3. Eight value classes added in
+  `core/identity/Ids.kt`:
+    - `OrderId(val raw: Int)` — `Order.id`
+    - `ExecutorId(val raw: Int)` — `Order.Executor.id`, `Executor.id`
+    - `ExtraServiceId(val raw: Int)` — `ExtraService.id`
+    - `ServiceBrandId(val raw: Int)` — `ServiceBrand.id`
+    - `AddressId(val raw: Int)` — `Address.id` (NULLABLE on the wire)
+    - `AddressOptionId(val raw: Int)` — `AddressOption.id`
+    - `CardId(val raw: String)` — `PaymentCard.cardId`,
+      `PaymentKind.Card.cardId`, `PaymentKind.from(... cardId: CardId? ...)`
+  Wire format byte-for-byte unchanged (verified by
+  `SerializationRoundTripTest`'s `encoded.contains(...)` assertions).
+  Action: YallaClient call sites that touch these IDs must wrap on
+  ingress (`OrderId(rawIntFromSomewhere)`) or unwrap on egress
+  (`order.id.raw`). The compile errors are systematic and mechanical;
+  estimate ~80-150 lines of touch-up across YallaClient's
+  `data/ride/`, `data/user/`, `data/payment/`, `data/geo/`, plus any UI
+  formatter that displays an ID directly. **The `composites` SDK module
+  already has its `cardId.raw.length` unwrap at the issuer-detection
+  branch** — the YallaClient migration follows the same pattern.
+
+### Bug fixes shipped (non-breaking)
+
+- `3dccad345 fix(data): map JsonConvertException + HttpRequestTimeoutException`
+  - `safeApiCall` now catches Ktor 3.x's `JsonConvertException` (via the
+    `ContentConvertException` parent) and maps to
+    `DataError.Network.Serialization`. Previously escaped unmapped.
+  - `safeApiCall` now catches `HttpRequestTimeoutException` BEFORE the
+    `IOException` branch and maps to `DataError.Network.Timeout`.
+    Previously routed to `Connection`. Behavioral fix, no migration needed.
+
+---
+
 ## Phase status
 
-- Phase 2 `core` — items above. Plan: [PHASE_2_CORE_PLAN.md](PHASE_2_CORE_PLAN.md). Audit: [CORE_AUDIT.md](CORE_AUDIT.md).
-- Phase 2 `data` — TODO (separate plan after core lands).
+- Phase 2 `core` — done. Plan: [PHASE_2_CORE_PLAN.md](PHASE_2_CORE_PLAN.md). Audit: [CORE_AUDIT.md](CORE_AUDIT.md).
+- Phase 2 `data` — done. Plan: [PHASE_2_DATA_PLAN.md](PHASE_2_DATA_PLAN.md). Audit: [DATA_AUDIT.md](DATA_AUDIT.md).
 - Phase 3 `design`, `foundation`, `primitives`, `composites` — TODO.
 - Phase 4 `firebase`, `maps`, `media`, `platform` — TODO.
