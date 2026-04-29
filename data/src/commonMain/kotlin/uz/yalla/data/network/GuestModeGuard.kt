@@ -28,7 +28,9 @@ internal class GuestBlockedException : RuntimeException()
  * set from [NetworkConfig.guestAllowedSegments] instead, letting integrators
  * override the whitelist per environment without touching this plugin.
  *
- * @param isGuestMode reactive guest mode state
+ * @param isGuestMode reactive guest mode state; `.value` is sampled
+ *   synchronously on each request — no flow subscription is held by
+ *   the plugin
  * @param allowedSegments URL segments permitted in guest mode, defaults to the
  *   legacy six-endpoint whitelist
  * @return Ktor client plugin instance

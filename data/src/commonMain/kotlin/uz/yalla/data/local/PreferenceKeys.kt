@@ -39,6 +39,7 @@ internal object PreferenceKeys {
     /** Whether the user is browsing in guest (unauthenticated) mode. */
     val IS_GUEST_MODE = booleanPreferencesKey("isGuestModeEnable")
 
+    /** Whether the device has been registered with the backend device registry (distinct from FCM token upload). */
     val IS_DEVICE_REGISTERED = booleanPreferencesKey("isDeviceRegistered")
 
     // endregion
@@ -55,6 +56,7 @@ internal object PreferenceKeys {
     /** Selected payment method identifier (e.g. `"cash"`, `"card"`). */
     val PAYMENT_TYPE = stringPreferencesKey("paymentType")
 
+    /** Stored card identifier (raw `CardId.raw`); blank or absent makes [PaymentKind.from] resolve to `Cash`. */
     val CARD_ID = stringPreferencesKey("cardId")
 
     /** Masked card number displayed in the UI (e.g. `"**** 1234"`). */
@@ -143,6 +145,7 @@ internal object PreferenceKeys {
     /** Active map provider identifier (e.g. `"google"`, `"maplibre"`). */
     val MAP_TYPE = stringPreferencesKey("mapType")
 
+    /** When `true`, the onboarding flow is bypassed entirely regardless of [ONBOARDING_STAGE]. */
     val SKIP_ONBOARDING = booleanPreferencesKey("skipOnboarding")
 
     /** Current onboarding stage identifier (default [DEFAULT_ONBOARDING_STAGE]). */
