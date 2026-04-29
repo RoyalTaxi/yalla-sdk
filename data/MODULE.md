@@ -20,3 +20,18 @@ HTTP client factory, safe API call wrapper, and request plugins.
 # Package uz.yalla.data.util
 
 Platform expect/actual declarations for IO dispatcher and platform name.
+
+## Depends on
+
+- `core` (api)
+- `kotlinx.coroutines.core` (api)
+- `kotlinx.serialization.json` (api)
+- `ktor-client-core` (api)
+- `koin-core` (api)
+- `datastore-preferences` (api)
+- `multiplatform-settings` (api)
+- `ktor-client-content-negotiation`, `ktor-serialization-kotlinx-json`,
+  `ktor-client-logging` (implementation — internal Ktor plugins)
+- `ktor-client-android` (androidMain implementation)
+- `ktor-client-darwin` (iosMain implementation)
+- No SDK-internal dep beyond `core`.
