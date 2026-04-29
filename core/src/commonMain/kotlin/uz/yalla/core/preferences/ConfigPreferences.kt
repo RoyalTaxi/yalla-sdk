@@ -22,17 +22,23 @@ import kotlinx.coroutines.flow.Flow
  */
 interface ConfigPreferences {
 
+    // Support contact channels — shown on the "Help" screen, writable by support staff.
+
     val supportNumber: Flow<String>
     fun setSupportNumber(value: String)
 
     val supportTelegram: Flow<String>
     fun setSupportTelegram(value: String)
 
+    // Public marketing channels — shown on the "About" screen.
+
     val infoInstagram: Flow<String>
     fun setInfoInstagram(value: String)
 
     val infoTelegram: Flow<String>
     fun setInfoTelegram(value: String)
+
+    // Privacy policy URLs, one per supported locale.
 
     val privacyPolicyRu: Flow<String>
     fun setPrivacyPolicyRu(value: String)

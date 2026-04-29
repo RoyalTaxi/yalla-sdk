@@ -85,7 +85,9 @@ data class Order(
      * Records when the order transitioned to a specific status.
      *
      * @property status Status identifier string matching [OrderStatus.id]
-     * @property time Epoch timestamp (seconds or milliseconds) of the transition
+     * @property time Epoch timestamp **in seconds** as returned by the backend.
+     *   Use [uz.yalla.core.util.toLocalFormattedDate] / [uz.yalla.core.util.toLocalFormattedTime]
+     *   for display — those handle the second/millisecond detection.
      * @see OrderStatus
      */
     data class StatusTime(
@@ -96,12 +98,17 @@ data class Order(
     /**
      * Route, pricing, and tariff details for the taxi order.
      *
+     * @property bonusAmount Bonus points applied as a discount, in smallest currency
+     *   unit. Already deducted from [totalPrice] to produce [clientTotalPrice].
      * @property clientTotalPrice Final price visible to the client (after discounts)
      * @property distance Total route distance in meters
      * @property fixedPrice Whether the price was fixed at order creation (not metered)
      * @property routes Ordered list of waypoints (pickup, intermediate stops, destination)
      * @property services Extra services added to this order (e.g., child seat, luggage)
      * @property startPrice Base/starting fare in smallest currency unit
+     * @property tariff Human-readable tariff name for display ("Economy", "Comfort"…)
+     * @property tariffId Server-side tariff identifier; use this when re-ordering
+     *   or filtering, not the display string.
      * @property totalPrice Total fare before bonus/discount in smallest currency unit
      * @property waitingTime Accumulated waiting time in seconds
      * @see ExtraService

@@ -1,5 +1,12 @@
 package uz.yalla.core.util
 
+/**
+ * Null-coalescing extensions returning a sensible zero-value default.
+ *
+ * Prefer these over inline `?: 0` / `?: false` in DTO-to-domain mapping for a
+ * single shared default convention across the SDK. Each numeric type returns
+ * the appropriate typed zero (`0`, `0L`, `0f`, `0.0`).
+ */
 fun Int?.or0() = this ?: 0
 
 fun Long?.or0() = this ?: 0L
