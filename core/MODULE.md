@@ -1,60 +1,84 @@
 # Module core
 
-Core types, error hierarchy, and contracts for the yalla-sdk.
+> Logic atoms — `Either`, `DataError`, domain enums, preference contracts, util.
 
-This module provides the foundational building blocks used across all other SDK modules.
+## What this is
 
-# Package uz.yalla.core.error
+- `Either<E, D>` and the `DataError.Network.*` sealed hierarchy: the SDK-wide
+  result and error types. Every repository / use-case returns
+  `Either<DataError, T>`; pattern-match in features.
+- Domain models: `Order` (with `Executor`, `Taxi`, `Route`, `StatusTime`),
+  `OrderStatus`, `ExtraService`, `ServiceBrand`, `Address`, `AddressOption`,
+  `SavedAddress`, `Route`, `PointRequest`, `GeoPoint`, `PaymentKind`,
+  `PaymentCard`, `Client`.
+- Domain enums: `LocaleKind`, `MapKind`, `ThemeKind`, `GenderKind`,
+  `PlaceKind`, `PointKind`. Each has a tolerant `from(code: String?)`
+  factory that normalizes input and falls back to a documented default.
+- Preference *contracts* (interfaces only): `ConfigPreferences`,
+  `InterfacePreferences`, `PositionPreferences`, `SessionPreferences`,
+  `StaticPreferences`, `UserPreferences`. Implementations live in `data`.
+- Location *contract* (interface only): `LocationProvider`. Implementation
+  lives in `foundation`.
+- Session events: `UnauthorizedSessionEvents` — conflated `Channel<Unit>`
+  signal for token-refresh failure handling; producers and consumers
+  defined here, wiring lives in `data`.
+- Utilities: `formatMoney`, `formatArgs`, `or0`/`orFalse` null defaults,
+  `toLocalFormattedDate` / `toLocalFormattedTime`, `normalizedId`.
 
-Sealed error hierarchy (`DataError`) for typed error handling.
+## What this is NOT
 
-# Package uz.yalla.core.result
+- **Not** a networking module — no `Service`, no `safeApiCall`, no DTOs.
+  Those live in `data`.
+- **Not** a UI module — no Compose code, no string resources, no themes.
+  Those live in `design` / `primitives` / `composites` / `resources`.
+- **Not** a platform module — no Android- or iOS-specific types. Those
+  live in `platform`.
+- **Not** a mapper layer — DTO ↔ domain mapping happens in `data`'s
+  `internal object` mappers; `core` only holds the domain side.
 
-`Either<D, E>` result type for functional error handling.
+## Usage
 
-# Package uz.yalla.core.order
+```kotlin
+implementation("uz.yalla.sdk:core")
+```
 
-Order domain models and status state machine.
+```kotlin
+suspend fun loadOrder(id: Int): Either<DataError, Order> = orderRepository.getOrder(id)
 
-# Package uz.yalla.core.location
+loadOrder(orderId)
+    .onSuccess { order -> updateUi(order) }
+    .onFailure { error ->
+        when (error) {
+            is DataError.Network.ClientWithMessage -> showError(error.message)
+            is DataError.Network                   -> showGenericNetworkError(error)
+        }
+    }
+```
 
-Address, route, and geographic point types.
+```kotlin
+val locale = LocaleKind.from(persistedCode) // tolerant, falls back to Uz
+```
 
-# Package uz.yalla.core.geo
+## Notes
 
-`GeoPoint` with Haversine distance calculation.
-
-# Package uz.yalla.core.payment
-
-Payment types (`Cash`, `Card`) and card models.
-
-# Package uz.yalla.core.profile
-
-User profile models.
-
-# Package uz.yalla.core.settings
-
-App settings enums (locale, theme, map provider).
-
-# Package uz.yalla.core.session
-
-Session event bus for unauthorized state handling.
-
-# Package uz.yalla.core.contract.preferences
-
-Reactive preference contracts (Flow-based).
-
-# Package uz.yalla.core.contract.location
-
-Location tracking contract.
-
-# Package uz.yalla.core.util
-
-Formatting, normalization, and extension utilities.
+- **`OrderStatus.in_fetters` alias** is a product-specific deserialization
+  workaround — Ildam's older API spelled the in-progress status as
+  `"in_fetters"` instead of `"in_progress"`. The alias maps both spellings
+  to the same `OrderStatus.InProgress` value so consumers don't need to
+  per-status-normalize. If a future PBX migration removes the legacy form,
+  the alias can be deleted (safe — `from()` keeps the new spelling working).
+- **`LocaleKind` has only `Uz` and `Ru`** by deliberate ADR-014 narrowing
+  in phase 3 of the wider Ildam product; persisted `"en"` or `"uz-Cyrl"`
+  values from earlier installs fall back to `Uz` via `from()`.
+- **Generic-parameter order on `Either<E, D>`** is error-first, success-second.
+  Matches Arrow's `Either<Left, Right>` and Rust's `Result<T, E>` (dual).
+- **`UnauthorizedSessionEvents`** plays the `SessionExpiredSignal` role
+  recommended by `CLAUDE.md` — conflated channel, idempotent consumer.
+  Different name, same shape; rename is a future cosmetic refactor.
 
 ## Depends on
 
-- kotlinx.coroutines.core
-- kotlinx.serialization.json
-- kotlinx.datetime
-- No SDK-internal deps.
+- `kotlinx.coroutines.core`
+- `kotlinx.serialization.json`
+- `kotlinx.datetime`
+- No SDK-internal deps. `core` is a leaf in the brick stack.
