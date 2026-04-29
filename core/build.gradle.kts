@@ -7,8 +7,7 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization.json)
-            api(libs.kotlinx.datetime)
-            api(libs.kermit)
+            implementation(libs.kotlinx.datetime)
         }
 
         commonTest.dependencies {

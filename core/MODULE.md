@@ -51,3 +51,10 @@ Location tracking contract.
 # Package uz.yalla.core.util
 
 Formatting, normalization, and extension utilities.
+
+## Depends on
+
+- kotlinx.coroutines.core
+- kotlinx.serialization.json
+- kotlinx.datetime
+- No SDK-internal deps.
