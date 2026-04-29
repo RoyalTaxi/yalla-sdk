@@ -699,3 +699,34 @@ Total wave-10 effort: full rewrite of `data/MODULE.md` from scratch on phase-1 f
 - **Longest single rewrite candidate:** **value-class identifiers rollout — ~200-300 lines** across `core/` (12 new value-class declarations + ~30-40 line touches), `data/local/UserPreferencesImpl.kt` (~6 line touches), and YallaClient repository/feature layer (~80-150 line touches). **CROSSES THE 100-LINE GATE — NEEDS APPROVAL.** Picks up deferred CORE_AUDIT.md G3.
 - **Second-longest rewrite candidate:** Ktor `Auth` plugin migration in `HttpClientFactory.kt`. ~50 lines net (60-80 deleted, 15-20 added). Sub-100, but architecturally significant — **gate-recommended even though under threshold** because behavioral preservation is non-trivial and the existing integration test doesn't directly cover `createHttpClient`.
 - **Blocking issues:** none. Audit is fully derivable from the source.
+
+---
+
+## 9. Approval (Islom, 2026-04-29)
+
+Decisions locked for waves 2-10. Default position: agree with subagent + assistant recommendations.
+
+### Gate items
+
+- **G7 — Ktor `Auth` plugin migration:** **APPROVED with defensive sequencing.** Wave 4 first writes a NEW integration test that imports `createHttpClient` directly (filling the regression-net gap the existing `HttpClientFactoryIntegrationTest` left open), THEN applies the `Auth { bearer { loadTokens; refreshTokens } }` rewrite that deletes the hand-rolled 401 handler + `extractBearerToken` helper + bearer-string parsing. `refactor!:` prefix; ~50 lines net removed; ~3-4h including the new test seam.
+- **G8 — Value-class identifier rollout:** **APPROVED with nullable-verification first.** Wave 4 first writes a tiny round-trip test for `@Serializable @JvmInline value class` over a nullable site (`Address.id: Int?`) to verify kotlinx-serialization composes cleanly. If it does, mass-apply 12 value classes grouped under a single `core/identity/Ids.kt` + ~30-40 line touches in core + ~6 line touches in data (`UserPreferencesImpl`). If the nullable round-trip is broken, leave `Address.id` raw and apply wrappers only to non-null sites (partial rollout). YallaClient migration (~80-150 lines) is its own follow-up project per criterion 1; appended to `MIGRATION_LIST.md` in wave 6. `refactor!:` prefix; SDK side ~30-40 lines net.
+
+### Quick approvals (subagent + me agree)
+
+- **A1.** Drop unused `koin-android` androidMain dep — wave 3.
+- **A2.** Demote 3 ktor `api()` → `implementation()`: `content-negotiation`, `serialization-kotlinx-json`, `client-logging` — wave 3.
+- **A3.** Sweep ~30 `@since` tags across data — wave 2.
+- **A4.** Sweep ~80-100 lines paraphrase KDoc per audit §1 — wave 2.
+- **A5.** Drop ~30 redundant property-name comments in `PreferenceKeys.kt` — wave 2.
+- **A6.** Extract `tryReadErrorMessage` in `SafeApiCall` (~10 lines saved) — wave 4.
+- **A7.** Catch `JsonConvertException` in `safeApiCall` — bug fix, wave 4.
+- **A8.** Catch `HttpRequestTimeoutException` distinctly so it routes to `DataError.Network.Timeout` — bug fix, wave 4.
+- **A9.** Test backfill (~50 min) — wave 8: Koin `dataModule` smoke test, `getLongSafe` ClassCastException fallback test, `safeApiCall` Serialization mapping (paired with A7).
+- **A10.** Full MODULE.md rewrite to phase-1 form — wave 10.
+- **A11.** No god-file splits, no `local/preferences/` sub-package, no `cacheFlow`/`persist` helper extractions. Explicit > clever.
+
+### Out of scope (kept / rejected)
+
+- `NetworkConfig.deviceType` / `deviceMode` defaults — KEPT. Speculative-but-cheap; legitimate parameterization point if Driver/Operator app lands.
+- `DEFAULT_GUEST_ALLOWED_SEGMENTS` demotion — REJECTED. No second consumer means demotion is `refactor!:` churn for zero current gain.
+- Class-level KDoc trim across 6 `*PreferencesImpl` — included in wave 2's A4 sweep.
