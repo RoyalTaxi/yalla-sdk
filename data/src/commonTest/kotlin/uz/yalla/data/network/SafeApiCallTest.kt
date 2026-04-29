@@ -19,7 +19,6 @@ import uz.yalla.core.error.DataError
 import uz.yalla.core.result.Either
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 
 @Serializable
@@ -148,11 +147,9 @@ class SafeApiCallTest {
     }
 
     @Test
-    fun shouldThrowJsonConvertExceptionOnMalformedJson() = runTest {
-        // NOTE: In Ktor 3.x, malformed JSON throws JsonConvertException
-        // (extends ContentConvertException), which is NOT caught by the
-        // SerializationException catch in safeApiCall. This documents
-        // current behavior — a gap that should be fixed in production code.
+    fun shouldReturnSerializationErrorOnMalformedJson() = runTest {
+        // Ktor 3.x's JsonConvertException extends ContentConvertException, which
+        // safeApiCall maps explicitly to DataError.Network.Serialization.
         val client = HttpClient(MockEngine) {
             expectSuccess = false
             install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
@@ -161,9 +158,30 @@ class SafeApiCallTest {
             }
         }
 
-        assertFailsWith<io.ktor.serialization.JsonConvertException> {
-            safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+        assertIs<Either.Failure<DataError.Network>>(result)
+        assertEquals(DataError.Network.Serialization, result.error)
+    }
+
+    @Test
+    fun shouldReturnTimeoutOnHttpRequestTimeoutException() = runTest {
+        // HttpRequestTimeoutException extends IOException; safeApiCall must
+        // catch it before the IOException branch so it maps to Timeout
+        // instead of Connection.
+        val client = HttpClient(MockEngine) {
+            engine {
+                addHandler {
+                    throw io.ktor.client.plugins
+                        .HttpRequestTimeoutException(url = "/timeout", timeoutMillis = 100L)
+                }
+            }
         }
+
+        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/timeout") }
+
+        assertIs<Either.Failure<DataError.Network>>(result)
+        assertEquals(DataError.Network.Timeout, result.error)
     }
 
     // --- Exception path ---

@@ -176,11 +176,8 @@ class HttpClientFactoryIntegrationTest {
         // under virtual time. Instead, throw the concrete socket-timeout that
         // safeApiCall maps to DataError.Network.Timeout — the same path
         // exercised by SafeApiCallTest.shouldReturnTimeoutErrorOnSocketTimeoutException.
-        //
-        // Note: Ktor 3.x's HttpRequestTimeoutException currently surfaces as
-        // DataError.Network.Connection because it extends kotlinx.io.IOException
-        // and safeApiCall catches IOException before any more specific check.
-        // That's a known gap tracked separately — see the follow-up spawn task.
+        // The HttpRequestTimeoutException → Timeout mapping is verified directly in
+        // SafeApiCallTest.shouldReturnTimeoutOnHttpRequestTimeoutException.
         val client = buildTestClient(testScope = this) {
             addHandler {
                 throw io.ktor.client.network.sockets

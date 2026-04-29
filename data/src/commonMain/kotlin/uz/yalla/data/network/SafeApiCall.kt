@@ -3,10 +3,12 @@ package uz.yalla.data.network
 import io.ktor.client.call.body
 import io.ktor.client.network.sockets.SocketTimeoutException
 import io.ktor.client.plugins.ClientRequestException
+import io.ktor.client.plugins.HttpRequestTimeoutException
 import io.ktor.client.plugins.RedirectResponseException
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.statement.HttpResponse
+import io.ktor.serialization.ContentConvertException
 import kotlinx.coroutines.delay
 import kotlinx.io.IOException
 import kotlinx.serialization.SerializationException
@@ -34,9 +36,9 @@ private const val RETRY_BACKOFF_FACTOR = 2.0
  * | 300-399 | [DataError.Network.Client] |
  * | 400-499 | [DataError.Network.ClientWithMessage] when body has a message, else [DataError.Network.Client] |
  * | 500-599 | [DataError.Network.Server] |
- * | [SocketTimeoutException] | [DataError.Network.Timeout] |
- * | [IOException] | [DataError.Network.Connection] |
- * | [SerializationException] | [DataError.Network.Serialization] |
+ * | [HttpRequestTimeoutException], [SocketTimeoutException] | [DataError.Network.Timeout] |
+ * | [IOException] (other than the timeouts above) | [DataError.Network.Connection] |
+ * | [SerializationException], [ContentConvertException] | [DataError.Network.Serialization] |
  * | [GuestBlockedException] | [DataError.Network.Guest] |
  *
  * @param T the expected success response type; use [Unit] for fire-and-forget calls
@@ -68,58 +70,53 @@ suspend inline fun <reified T> safeApiCall(
             // protocol issue, not a server error. Callers can differentiate via
             // the underlying HttpResponse status if they need finer handling.
             in 300..399 -> Either.Failure(DataError.Network.Client)
-            in 400..499 -> {
-                val message =
-                    try {
-                        response.body<ApiErrorResponse>().message
-                    } catch (_: Exception) {
-                        null
-                    }
-                if (!message.isNullOrBlank()) {
-                    Either.Failure(
-                        DataError.Network.ClientWithMessage(
-                            code = response.status.value,
-                            message = message,
-                        )
-                    )
-                } else {
-                    Either.Failure(DataError.Network.Client)
-                }
-            }
+            in 400..499 -> response.toClientFailure()
             in 500..599 -> Either.Failure(DataError.Network.Server)
             else -> Either.Failure(DataError.Network.Unknown)
         }
     } catch (_: ServerResponseException) {
         Either.Failure(DataError.Network.Server)
     } catch (e: ClientRequestException) {
-        val message =
-            try {
-                e.response.body<ApiErrorResponse>().message
-            } catch (_: Exception) {
-                null
-            }
-        if (!message.isNullOrBlank()) {
-            Either.Failure(
-                DataError.Network.ClientWithMessage(
-                    code = e.response.status.value,
-                    message = message,
-                )
-            )
-        } else {
-            Either.Failure(DataError.Network.Client)
-        }
+        e.response.toClientFailure()
     } catch (_: RedirectResponseException) {
         Either.Failure(DataError.Network.Client)
+    } catch (_: HttpRequestTimeoutException) {
+        // HttpRequestTimeoutException extends IOException — must come before the IOException
+        // catch so request-timeout maps to Timeout instead of Connection.
+        Either.Failure(DataError.Network.Timeout)
     } catch (_: SocketTimeoutException) {
         Either.Failure(DataError.Network.Timeout)
     } catch (_: IOException) {
         Either.Failure(DataError.Network.Connection)
+    } catch (_: ContentConvertException) {
+        // Ktor 3.x's JsonConvertException (and any other content-conversion failure)
+        // — body deserialization broke. Distinct from kotlinx.serialization's
+        // SerializationException, which is thrown directly by encoder/decoder code.
+        Either.Failure(DataError.Network.Serialization)
     } catch (_: SerializationException) {
         Either.Failure(DataError.Network.Serialization)
     } catch (_: ResponseException) {
         Either.Failure(DataError.Network.Unknown)
     } catch (_: GuestBlockedException) {
         Either.Failure(DataError.Network.Guest)
+    }
+
+@PublishedApi
+internal suspend fun HttpResponse.toClientFailure(): Either.Failure<DataError.Network> {
+    val message = tryReadErrorMessage()
+    return if (!message.isNullOrBlank()) {
+        Either.Failure(DataError.Network.ClientWithMessage(code = status.value, message = message))
+    } else {
+        Either.Failure(DataError.Network.Client)
+    }
+}
+
+@PublishedApi
+internal suspend fun HttpResponse.tryReadErrorMessage(): String? =
+    try {
+        body<ApiErrorResponse>().message
+    } catch (_: Exception) {
+        null
     }
 
 /**
