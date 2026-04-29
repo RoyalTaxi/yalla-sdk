@@ -20,10 +20,8 @@ import kotlinx.serialization.Serializable
  * }
  * ```
  *
- * @property id Service identifier
  * @property cost Cost value (interpreted based on [costType]): fixed amount in smallest
  *   currency unit, or percentage (0-100) of the base fare
- * @property name Display name shown to the user
  * @property costType Either [COST_TYPE_COST] for fixed amount or [COST_TYPE_PERCENT] for percentage
  * @see Order.Taxi.services
  */

@@ -26,11 +26,7 @@ interface SessionPreferences {
      */
     val accessToken: Flow<String>
 
-    /**
-     * Persists the authentication access token.
-     *
-     * @param value Bearer token from the auth API, or empty string to clear
-     */
+    /** Persists the authentication access token; pass empty string to clear. */
     fun setAccessToken(value: String)
 
     /**
@@ -40,11 +36,6 @@ interface SessionPreferences {
      */
     val firebaseToken: Flow<String>
 
-    /**
-     * Persists the FCM registration token.
-     *
-     * @param value The FCM token string
-     */
     fun setFirebaseToken(value: String)
 
     /**
@@ -54,11 +45,6 @@ interface SessionPreferences {
      */
     val isGuestMode: Flow<Boolean>
 
-    /**
-     * Persists the guest mode flag.
-     *
-     * @param value `true` if the user is in guest mode
-     */
     fun setGuestMode(value: Boolean)
 
     /**
@@ -69,11 +55,6 @@ interface SessionPreferences {
      */
     val isDeviceRegistered: Flow<Boolean>
 
-    /**
-     * Persists the device registration flag.
-     *
-     * @param value `true` if the device has been registered
-     */
     fun setDeviceRegistered(value: Boolean)
 
     /**

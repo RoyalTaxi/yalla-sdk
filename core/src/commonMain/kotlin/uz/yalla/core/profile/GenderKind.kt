@@ -10,16 +10,13 @@ import uz.yalla.core.util.normalizedId
  * Used in the profile editing screen and sent to the backend
  * during profile updates.
  *
- * @property id Wire-format identifier used in API communication
  * @see Client
  */
 @Serializable
 enum class GenderKind(val id: String) {
-    /** Male gender. */
     @SerialName("male")
     Male("male"),
 
-    /** Female gender. */
     @SerialName("female")
     Female("female"),
 
@@ -34,7 +31,6 @@ enum class GenderKind(val id: String) {
          * Performs case-insensitive matching after trimming whitespace.
          * Returns [NotSelected] for `null` or unrecognized values.
          *
-         * @param id Wire-format identifier from the API, or `null`
          * @return The matching [GenderKind], defaulting to [NotSelected]
          */
         fun from(id: String?): GenderKind {

@@ -20,12 +20,6 @@ data class Route(
     @SerialName("duration") val duration: Double,
     @SerialName("points") val points: List<Point>
 ) {
-    /**
-     * A single coordinate in the route polyline.
-     *
-     * @property lat Latitude in degrees
-     * @property lng Longitude in degrees
-     */
     @Serializable
     data class Point(
         @SerialName("lat") val lat: Double,

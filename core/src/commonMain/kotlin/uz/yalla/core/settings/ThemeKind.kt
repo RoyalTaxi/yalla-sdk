@@ -10,7 +10,6 @@ import uz.yalla.core.util.normalizedId
  * [System] follows the device's system-wide dark mode setting.
  * [Light] and [Dark] override it with a fixed appearance.
  *
- * @property id Wire-format identifier used in persistence
  * @see uz.yalla.core.preferences.InterfacePreferences.themeType
  */
 @Serializable
@@ -34,7 +33,6 @@ enum class ThemeKind(val id: String) {
          * Performs case-insensitive matching after trimming whitespace.
          * Returns [System] for `null` or unrecognized values.
          *
-         * @param id Wire-format identifier, or `null`
          * @return The matching [ThemeKind], defaulting to [System]
          */
         fun from(id: String?): ThemeKind {

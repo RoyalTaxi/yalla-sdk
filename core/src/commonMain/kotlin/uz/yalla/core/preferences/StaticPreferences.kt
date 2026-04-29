@@ -52,31 +52,8 @@ interface StaticPreferences {
      */
     val onboardingStage: String
 
-    /**
-     * Persists the locale code synchronously.
-     *
-     * @param value Locale code string (e.g., "uz", "ru", "en")
-     */
     fun setLocaleCode(value: String)
-
-    /**
-     * Persists the device registration flag synchronously.
-     *
-     * @param value `true` if the device has been registered
-     */
     fun setDeviceRegistered(value: Boolean)
-
-    /**
-     * Persists the guest mode flag synchronously.
-     *
-     * @param value `true` if the user is in guest mode
-     */
     fun setGuestMode(value: Boolean)
-
-    /**
-     * Persists the onboarding stage synchronously.
-     *
-     * @param value Stage identifier string
-     */
     fun setOnboardingStage(value: String)
 }

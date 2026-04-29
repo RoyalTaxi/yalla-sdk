@@ -34,8 +34,6 @@ interface LocationProvider {
      * Returns the last known location or `null` if unavailable.
      *
      * This is a one-shot synchronous read; it does **not** request a fresh fix.
-     *
-     * @return The last known [GeoPoint], or `null` if no location has been received
      */
     fun getCurrentLocation(): GeoPoint?
 
@@ -44,7 +42,6 @@ interface LocationProvider {
      *
      * Convenience overload that guarantees a non-null result.
      *
-     * @return The last known [GeoPoint], or [GeoPoint.Zero] as fallback
      * @see getCurrentLocation
      */
     fun getCurrentLocationOrDefault(): GeoPoint

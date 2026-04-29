@@ -3,18 +3,6 @@ package uz.yalla.core.location
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-/**
- * User's saved/favorite address with navigation metrics.
- *
- * @property distance Distance from current location in meters
- * @property duration Estimated travel time in seconds
- * @property lat Latitude
- * @property lng Longitude
- * @property address Full address string
- * @property title User-assigned label
- * @property kind Place category (home, work, other)
- * @property parent Parent location info (e.g., city name)
- */
 @Serializable
 data class SavedAddress(
     @SerialName("distance") val distance: Double,
@@ -26,11 +14,6 @@ data class SavedAddress(
     @SerialName("kind") val kind: PlaceKind,
     @SerialName("parent") val parent: Parent
 ) {
-    /**
-     * Parent location for hierarchical address display (e.g., city or district name).
-     *
-     * @property name Parent location name, or `null` if not available
-     */
     @Serializable
     data class Parent(
         @SerialName("name") val name: String?

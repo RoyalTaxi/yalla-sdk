@@ -22,11 +22,6 @@ interface PositionPreferences {
      */
     val lastMapPosition: Flow<GeoPoint>
 
-    /**
-     * Persists the current map camera center position.
-     *
-     * @param value The [GeoPoint] representing the map center
-     */
     fun setLastMapPosition(value: GeoPoint)
 
     /**
@@ -36,10 +31,5 @@ interface PositionPreferences {
      */
     val lastGpsPosition: Flow<GeoPoint>
 
-    /**
-     * Persists the latest GPS position.
-     *
-     * @param value The [GeoPoint] from the location provider
-     */
     fun setLastGpsPosition(value: GeoPoint)
 }

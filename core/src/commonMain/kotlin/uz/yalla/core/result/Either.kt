@@ -25,20 +25,8 @@ package uz.yalla.core.result
  * @see onFailure
  */
 sealed interface Either<out E, out D> {
-    /**
-     * Failed result containing [error].
-     *
-     * @param E The error type
-     * @property error The failure reason
-     */
     data class Failure<E>(val error: E) : Either<E, Nothing>
 
-    /**
-     * Successful result containing [data].
-     *
-     * @param D The success data type
-     * @property data The successful result value
-     */
     data class Success<D>(val data: D) : Either<Nothing, D>
 }
 

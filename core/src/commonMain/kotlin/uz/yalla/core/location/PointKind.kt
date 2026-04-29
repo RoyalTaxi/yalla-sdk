@@ -36,18 +36,14 @@ object PointKindSerializer : KSerializer<PointKind> {
  * Serializes as a plain JSON string via [PointKindSerializer]; unknown wire values
  * degrade gracefully to [POINT] (the "unspecified intermediate" default).
  *
- * @property wireValue API wire-format identifier
  * @see PointRequest
  */
 @Serializable(with = PointKindSerializer::class)
 enum class PointKind(val wireValue: String) {
-    /** Pickup point / route origin. */
     START("start"),
 
-    /** Intermediate waypoint (e.g., an extra stop). */
     POINT("point"),
 
-    /** Final destination / route end. */
     STOP("stop");
 
     companion object {
@@ -57,7 +53,6 @@ enum class PointKind(val wireValue: String) {
          * Falls back to [POINT] for `null` or unrecognized values; [POINT] is the safest
          * default as it represents an unspecified intermediate waypoint.
          *
-         * @param wireValue API wire-format string, or `null`
          * @return The matching [PointKind], or [POINT] for unknown values
          */
         fun from(wireValue: String?): PointKind =

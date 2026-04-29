@@ -8,15 +8,7 @@ import uz.yalla.core.payment.PaymentKind
  * This is the primary domain model returned from order-related API calls.
  * Contains nested types for executor info, vehicle details, route, and pricing.
  *
- * @property comment Passenger's note to the driver
  * @property dateTime Order creation timestamp (epoch millis)
- * @property executor Assigned driver details
- * @property id Unique order identifier
- * @property paymentType Selected payment method
- * @property service Service/tariff name
- * @property status Current order lifecycle state
- * @property statusTime History of status transitions with timestamps
- * @property taxi Route, pricing, and tariff details
  */
 data class Order(
     val comment: String,
@@ -35,15 +27,8 @@ data class Order(
      * This is the full executor model embedded within an [Order]. For lightweight
      * map tracking, convert to [uz.yalla.core.order.Executor] via [toExecutor].
      *
-     * @property coords Real-time driver coordinates and heading
-     * @property vehicle Driver's vehicle information
      * @property fatherName Driver's patronymic name
-     * @property givenNames Driver's given/first names
-     * @property id Unique driver identifier
-     * @property phone Driver's contact phone number
-     * @property photo URL to the driver's profile photo
      * @property rating Driver's average rating (0.0-5.0)
-     * @property surName Driver's surname/family name
      * @see toExecutor
      */
     data class Executor(
@@ -61,8 +46,6 @@ data class Order(
          * Real-time driver coordinates and heading.
          *
          * @property heading Vehicle heading in degrees (0-360, clockwise from north)
-         * @property lat Current latitude
-         * @property lng Current longitude
          */
         data class Coords(
             val heading: Double,
@@ -73,9 +56,6 @@ data class Order(
         /**
          * Driver's vehicle information for display in the order card.
          *
-         * @property callsign Dispatch callsign/identifier
-         * @property color Vehicle color details
-         * @property id Unique vehicle identifier
          * @property mark Vehicle manufacturer/make (e.g., "Chevrolet")
          * @property model Vehicle model name (e.g., "Cobalt")
          * @property stateNumber License plate number
@@ -116,15 +96,12 @@ data class Order(
     /**
      * Route, pricing, and tariff details for the taxi order.
      *
-     * @property bonusAmount Bonus amount applied to this order
      * @property clientTotalPrice Final price visible to the client (after discounts)
      * @property distance Total route distance in meters
      * @property fixedPrice Whether the price was fixed at order creation (not metered)
      * @property routes Ordered list of waypoints (pickup, intermediate stops, destination)
      * @property services Extra services added to this order (e.g., child seat, luggage)
      * @property startPrice Base/starting fare in smallest currency unit
-     * @property tariff Display name of the selected tariff
-     * @property tariffId Unique tariff identifier
      * @property totalPrice Total fare before bonus/discount in smallest currency unit
      * @property waitingTime Accumulated waiting time in seconds
      * @see ExtraService
@@ -145,8 +122,6 @@ data class Order(
         /**
          * A waypoint in the order's route.
          *
-         * @property coords Geographic coordinates of the waypoint
-         * @property fullAddress Human-readable address string
          * @property index Zero-based position in the route (0 = pickup, last = destination)
          */
         data class Route(
@@ -154,12 +129,6 @@ data class Order(
             val fullAddress: String,
             val index: Int
         ) {
-            /**
-             * Geographic coordinates of a route waypoint.
-             *
-             * @property lat Latitude
-             * @property lng Longitude
-             */
             data class Coords(
                 val lat: Double,
                 val lng: Double

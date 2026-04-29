@@ -25,8 +25,6 @@ private fun Double.toRadians(): Double = this * (PI / 180.0)
  * val distance = tashkent.distanceTo(samarkand) // ~263 km
  * ```
  *
- * @property lat Latitude in degrees, must be in [-90, 90]
- * @property lng Longitude in degrees, must be in [-180, 180]
  * @see uz.yalla.core.contract.location.LocationProvider
  */
 @Serializable
@@ -53,7 +51,6 @@ data class GeoPoint(
      *
      * The result is accurate for any two points on Earth, including antipodal points.
      *
-     * @param other The target geographic point
      * @return Distance in meters
      */
     fun distanceTo(other: GeoPoint): Double {

@@ -24,44 +24,15 @@ interface InterfacePreferences {
     /** Current app locale. Drives string resource selection and RTL layout. */
     val localeType: Flow<LocaleKind>
 
-    /**
-     * Persists the selected app locale.
-     *
-     * @param value The locale to apply
-     * @see LocaleKind
-     */
     fun setLocaleType(value: LocaleKind)
 
-    /** Current app theme (light, dark, or system). */
     val themeType: Flow<ThemeKind>
-
-    /**
-     * Persists the selected app theme.
-     *
-     * @param value The theme to apply
-     * @see ThemeKind
-     */
     fun setThemeType(value: ThemeKind)
 
-    /** Current map rendering provider (Google Maps or MapLibre). */
     val mapKind: Flow<MapKind>
-
-    /**
-     * Persists the selected map provider.
-     *
-     * @param value The map provider to use
-     * @see MapKind
-     */
     fun setMapKind(value: MapKind)
 
-    /** Whether to bypass the onboarding flow entirely. */
     val skipOnboarding: Flow<Boolean>
-
-    /**
-     * Persists the onboarding skip preference.
-     *
-     * @param value `true` to skip onboarding on next app launch
-     */
     fun setSkipOnboarding(value: Boolean)
 
     /**
@@ -71,10 +42,5 @@ interface InterfacePreferences {
      */
     val onboardingStage: Flow<String>
 
-    /**
-     * Persists the onboarding progress stage.
-     *
-     * @param value Stage identifier string
-     */
     fun setOnboardingStage(value: String)
 }

@@ -11,7 +11,6 @@ import uz.yalla.core.util.normalizedId
  * [Google] uses Google Maps SDK (requires API key), while [Libre] uses
  * the open-source MapLibre GL Native library.
  *
- * @property id Wire-format identifier used in API communication and persistence
  * @see uz.yalla.core.preferences.InterfacePreferences.mapKind
  */
 @Serializable
@@ -31,7 +30,6 @@ enum class MapKind(val id: String) {
          * Performs case-insensitive matching after trimming whitespace.
          * Returns [Google] for `null` or unrecognized values.
          *
-         * @param id Wire-format identifier, or `null`
          * @return The matching [MapKind], defaulting to [Google]
          */
         fun from(id: String?): MapKind {

@@ -45,7 +45,6 @@ object OrderStatusSerializer : KSerializer<OrderStatus> {
  *                                                                                 → Canceled
  * ```
  *
- * @property id Wire-format identifier used in API communication
  */
 @Serializable(with = OrderStatusSerializer::class)
 sealed class OrderStatus(val id: String) {
@@ -78,7 +77,6 @@ sealed class OrderStatus(val id: String) {
          * The `"in_fetters"` alias is mapped to [InProgress] for legacy API compatibility.
          * Returns [Unknown] for `null` or unrecognized values.
          *
-         * @param id Wire-format status identifier from the API, or `null`
          * @return The matching [OrderStatus], or [Unknown] with the original value preserved
          */
         fun from(id: String?): OrderStatus =

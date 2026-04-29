@@ -9,9 +9,6 @@ import kotlinx.serialization.Serializable
  * Sent to the routing API to compute distance, duration, and polyline
  * between multiple points.
  *
- * @property kind Role of this point in the route (start, intermediate, stop)
- * @property lng Longitude in degrees
- * @property lat Latitude in degrees
  * @see PointKind
  * @see Route
  */

@@ -1,48 +1,13 @@
 package uz.yalla.core.util
 
-/**
- * Returns this value or `0` if `null`.
- *
- * Convenience extension for safely unwrapping nullable API response fields.
- *
- * @return The receiver value, or `0`
- */
 fun Int?.or0() = this ?: 0
 
-/**
- * Returns this value or `0L` if `null`.
- *
- * Convenience extension for safely unwrapping nullable API response fields.
- *
- * @return The receiver value, or `0L`
- */
 fun Long?.or0() = this ?: 0L
 
-/**
- * Returns this value or `0f` if `null`.
- *
- * Convenience extension for safely unwrapping nullable API response fields.
- *
- * @return The receiver value, or `0f`
- */
 fun Float?.or0() = this ?: 0f
 
-/**
- * Returns this value or `0.0` if `null`.
- *
- * Convenience extension for safely unwrapping nullable API response fields.
- *
- * @return The receiver value, or `0.0`
- */
 fun Double?.or0() = this ?: 0.0
 
-/**
- * Returns this value or `false` if `null`.
- *
- * Convenience extension for safely unwrapping nullable API response fields.
- *
- * @return The receiver value, or `false`
- */
 fun Boolean?.orFalse() = this ?: false
 
 /**
@@ -78,7 +43,6 @@ fun Long.formatMoney(): String {
 /**
  * Formats a nullable [Long] as a money amount, treating `null` as `0`.
  *
- * @return Formatted money string, or `"0"` if the receiver is `null`
  * @see formatMoney
  */
 fun Long?.formatMoney(): String = (this ?: 0L).formatMoney()

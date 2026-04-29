@@ -22,7 +22,6 @@ enum class LocaleKind(val code: String) {
     @SerialName("uz")
     Uz("uz"),
 
-    /** Russian. */
     @SerialName("ru")
     Ru("ru");
 
@@ -34,7 +33,6 @@ enum class LocaleKind(val code: String) {
          * with hyphens. Returns [Uz] for `null`, unrecognized, or removed codes
          * (e.g. stored `"en"` or `"uz-Cyrl"` from before ADR-014 fall through here).
          *
-         * @param code BCP 47 locale code, or `null`.
          * @return Matching [LocaleKind], defaulting to [Uz].
          */
         fun from(code: String?): LocaleKind {

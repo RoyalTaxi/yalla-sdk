@@ -113,16 +113,12 @@ sealed class DataError {
      * Used by `safeApiCall` in the data layer to classify HTTP and I/O exceptions.
      */
     sealed class Network : DataError() {
-        /** Device has no internet connection. */
         data object Connection : Network()
 
-        /** Request timed out before server responded. */
         data object Timeout : Network()
 
-        /** Server returned 5xx error. */
         data object Server : Network()
 
-        /** Server returned 4xx error without message body. */
         data object Client : Network()
 
         /**
@@ -136,13 +132,10 @@ sealed class DataError {
             val message: String
         ) : Network()
 
-        /** Response body could not be deserialized. */
         data object Serialization : Network()
 
-        /** User is in guest mode and attempted an authenticated action. */
         data object Guest : Network()
 
-        /** Unclassified network error. */
         data object Unknown : Network()
     }
 }

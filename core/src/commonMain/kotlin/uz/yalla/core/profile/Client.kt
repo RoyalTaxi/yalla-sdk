@@ -10,8 +10,6 @@ import kotlinx.serialization.Serializable
  * Locally-cached fields are stored in [uz.yalla.core.preferences.UserPreferences].
  *
  * @property phone Phone number (primary identifier, formatted with country code)
- * @property name First name
- * @property surname Last name
  * @property image Profile photo URL (may be empty if not set)
  * @property birthday Date of birth string in `yyyy-MM-dd` format (may be empty)
  * @property balance Account bonus balance in smallest currency unit
