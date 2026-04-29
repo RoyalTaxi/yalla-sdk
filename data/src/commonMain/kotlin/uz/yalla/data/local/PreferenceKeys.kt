@@ -39,17 +39,14 @@ internal object PreferenceKeys {
     /** Whether the user is browsing in guest (unauthenticated) mode. */
     val IS_GUEST_MODE = booleanPreferencesKey("isGuestModeEnable")
 
-    /** Whether the device has been registered with the backend. */
     val IS_DEVICE_REGISTERED = booleanPreferencesKey("isDeviceRegistered")
 
     // endregion
 
     // region User
 
-    /** User's first name as returned by the backend. */
     val FIRST_NAME = stringPreferencesKey("firstName")
 
-    /** User's last name as returned by the backend. */
     val LAST_NAME = stringPreferencesKey("lastName")
 
     /** User's phone number in international format. */
@@ -58,7 +55,6 @@ internal object PreferenceKeys {
     /** Selected payment method identifier (e.g. `"cash"`, `"card"`). */
     val PAYMENT_TYPE = stringPreferencesKey("paymentType")
 
-    /** Backend identifier of the user's saved card. */
     val CARD_ID = stringPreferencesKey("cardId")
 
     /** Masked card number displayed in the UI (e.g. `"**** 1234"`). */
@@ -68,13 +64,11 @@ internal object PreferenceKeys {
 
     // region Config
 
-    /** Customer support phone number. */
     val SUPPORT_NUMBER = stringPreferencesKey("supportNumber")
 
     /** Customer support Telegram deep-link or username. */
     val SUPPORT_TELEGRAM = stringPreferencesKey("supportTelegram")
 
-    /** Brand Instagram profile URL. */
     val INFO_INSTAGRAM = stringPreferencesKey("infoInstagram")
 
     /** Brand Telegram channel URL. */
@@ -92,7 +86,6 @@ internal object PreferenceKeys {
     /** Minimum bonus amount required to apply bonuses to an order. */
     val MIN_BONUS = longPreferencesKey("minBonus")
 
-    /** Current bonus balance of the user. */
     val BALANCE = longPreferencesKey("balance")
 
     /** Whether the bonus payment option is enabled by the backend. */
@@ -150,7 +143,6 @@ internal object PreferenceKeys {
     /** Active map provider identifier (e.g. `"google"`, `"maplibre"`). */
     val MAP_TYPE = stringPreferencesKey("mapType")
 
-    /** Whether the onboarding flow should be skipped. */
     val SKIP_ONBOARDING = booleanPreferencesKey("skipOnboarding")
 
     /** Current onboarding stage identifier (default [DEFAULT_ONBOARDING_STAGE]). */

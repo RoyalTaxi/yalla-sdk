@@ -19,8 +19,6 @@ import uz.yalla.core.payment.PaymentKind
  * The [paymentType] property deserializes stored identifiers and optional card
  * details into [PaymentKind] sealed instances via [PaymentKind.from].
  *
- * @param dataStore shared preferences store
- * @param scope coroutine scope for write operations
  * @see SessionPreferencesImpl
  */
 internal class UserPreferencesImpl(

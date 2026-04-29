@@ -17,9 +17,6 @@ private const val DATASTORE_FILE = "prefs.preferences_pb"
  * Stores preferences in the app's documents directory
  * ([NSDocumentDirectory]) as a Protocol Buffers file named
  * [DATASTORE_FILE].
- *
- * @return [DataStore] backed by a file in the iOS documents directory
- * @see createDataStore
  */
 @OptIn(ExperimentalForeignApi::class)
 actual fun createDataStore(): DataStore<Preferences> =

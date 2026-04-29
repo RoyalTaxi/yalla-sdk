@@ -22,12 +22,7 @@ import uz.yalla.core.util.orFalse
  * to ensure these values are available synchronously at startup before
  * [DataStore] finishes loading.
  *
- * @param dataStore shared preferences store
- * @param scope coroutine scope for write operations
- * @param staticPreferences synchronous store for startup-critical values
  * @see StaticPreferencesImpl
- * @see UserPreferencesImpl
- * @see ConfigPreferencesImpl
  */
 internal class SessionPreferencesImpl(
     private val dataStore: DataStore<Preferences>,

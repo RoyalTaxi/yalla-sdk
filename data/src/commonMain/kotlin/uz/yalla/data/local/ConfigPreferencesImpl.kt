@@ -21,8 +21,6 @@ import uz.yalla.core.util.orFalse
  * Long values (bonus limits, balance) are read via [getLongSafe] to handle
  * legacy entries that may have been stored as [Int] by an older app version.
  *
- * @param dataStore shared preferences store
- * @param scope coroutine scope for write operations
  * @see SessionPreferencesImpl
  */
 internal class ConfigPreferencesImpl(

@@ -14,10 +14,5 @@ import androidx.datastore.preferences.core.Preferences
  *
  * @return platform-specific [DataStore] for reading and writing preferences
  * @see uz.yalla.data.di.dataModule
- * @see SessionPreferencesImpl
- * @see UserPreferencesImpl
- * @see ConfigPreferencesImpl
- * @see InterfacePreferencesImpl
- * @see PositionPreferencesImpl
  */
 expect fun createDataStore(): DataStore<Preferences>

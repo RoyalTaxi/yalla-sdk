@@ -17,9 +17,6 @@ private const val DATASTORE_FILE = "prefs.preferences_pb"
  * Stores preferences in the app's internal files directory
  * (`Context.filesDir`) as a Protocol Buffers file named
  * [DATASTORE_FILE]. The [Context] is resolved from Koin.
- *
- * @return [DataStore] backed by a file in the app's internal storage
- * @see createDataStore
  */
 actual fun createDataStore(): DataStore<Preferences> =
     object : KoinComponent {

@@ -53,10 +53,6 @@ private const val SOCKET_TIMEOUT_MS = 15_000L
  * observers will outlive the [HttpClient] otherwise. See ADR-011 in
  * `docs/06-DECISIONS.md` for the rationale.
  *
- * @param config network configuration (base URL, brand, secret)
- * @param sessionPrefs session state (token, guest mode)
- * @param interfacePrefs interface state (locale)
- * @param positionPrefs position state (last known location)
  * @param scope caller-owned [CoroutineScope] that hosts the preference-observation
  *   coroutines; cancelling it stops header/guest-mode observers. Must outlive
  *   every request issued through the returned client.

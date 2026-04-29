@@ -11,8 +11,5 @@ import kotlinx.coroutines.CoroutineDispatcher
  *
  * Used by [createHttpClient][uz.yalla.data.network.createHttpClient] and
  * all preferences implementations for background writes.
- *
- * @see uz.yalla.data.network.createHttpClient
- * @see uz.yalla.data.di.dataModule
  */
 expect val ioDispatcher: CoroutineDispatcher

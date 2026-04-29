@@ -19,10 +19,7 @@ import uz.yalla.core.geo.GeoPoint
  * These values survive session clear (logout) -- they are **not** removed by
  * [SessionPreferencesImpl.clearSession].
  *
- * @param dataStore shared preferences store
- * @param scope coroutine scope for write operations
  * @see parseGeoPoint
- * @see SessionPreferencesImpl
  */
 internal class PositionPreferencesImpl(
     private val dataStore: DataStore<Preferences>,

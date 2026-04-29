@@ -23,12 +23,6 @@ import uz.yalla.core.util.orFalse
  *
  * Dual-writes locale and onboarding stage to [StaticPreferences] to ensure
  * these values are available synchronously at startup before [DataStore] finishes loading.
- *
- * @param dataStore shared preferences store
- * @param scope coroutine scope for write operations
- * @param staticPreferences synchronous store for startup-critical values
- * @see StaticPreferencesImpl
- * @see SessionPreferencesImpl
  */
 internal class InterfacePreferencesImpl(
     private val dataStore: DataStore<Preferences>,
