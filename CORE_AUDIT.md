@@ -524,3 +524,36 @@ Total wave-10 effort: full rewrite of MODULE.md from scratch on phase-1 form. ~2
 - **Section 7 findings:** 1 full MODULE.md rewrite + 11 stale package blurbs to drop.
 - **Longest single rewrite candidate:** `DataError.kt` semantic-variant deletion at **~70 lines deleted from `core/error/DataError.kt:47-115`**, plus ~10 lines of consumer-side cleanup in `foundation/.../DefaultDataErrorMapper.kt:32-36` and its test. **Crosses the 100-line gate when consumer + tests are counted**. **NEEDS GATE.**
 - **Blocking issues:** none. Audit is fully derivable from the source; no questions block wave-2.
+
+---
+
+## 9. Approval (Islom, 2026-04-29)
+
+Decisions locked for waves 2-10. Default position: agree with subagent + assistant recommendations.
+
+### Gate items
+
+- **G1 — DataError semantic variants:** **DELETE.** Lines 47-115 of `core/error/DataError.kt` (`Unauthorized`, `Forbidden(reason)`, `Conflict(reason)`, `Validation(fields)`, `NotFound`). Zero producers SDK-wide. Wave 2 commit gets `refactor!:` prefix; consumer cleanup in `foundation/DefaultDataErrorMapper.kt:32-36` lands in the same wave. Tests for the deleted variants don't get written in wave 8 (don't exist yet).
+- **G2 — `ServiceBrand`, `PaymentCard`, `Client`:** **KEEP.** Round-trip-tested, look like planned public surface. Not deleted in wave 2.
+- **G3 — Identifier value classes:** **DEFER to phase-2 `data` plan.** Don't apply in this phase. Rationale: DTO seam is the right place for the value-class boundary; landing in core alone would force a half-applied boundary.
+- **G4 — `UnauthorizedSessionEvents` rename:** **LEAVE ALONE.** Structurally aligned with criterion 11; only the name differs. Cosmetic-only rename not worth the churn.
+- **G5 — `@since 0.0.x` tags:** **DROP ALL.** ~26 tags across the module. Wave 2 sweep.
+- **G6 — `Normalization.normalizedLocaleCode` inline:** **INLINE** into `LocaleKind.from`. Wave 2 (single-use abstraction, bucket 2-3).
+
+### Quick approvals (no objection raised)
+
+- **A1.** Drop `kermit` dep — wave 3.
+- **A2.** `kotlinx.datetime` `api` → `implementation` — wave 3.
+- **A3.** Delete `core/util/Mapper.kt` — wave 2.
+- **A4.** Flatten `contract/location/` → `location/` — wave 4.
+- **A5.** Sweep paraphrase KDoc per audit §1 — wave 2.
+- **A6.** Document `OrderStatus.in_fetters` alias in MODULE.md notes — wave 10.
+- **A7.** Backfill tests for `error/`, `preferences/`, `location/` — wave 8.
+- **A8.** No god-file splits, no serializer rewrites.
+
+### Out of scope (deferred or rejected)
+
+- Value-class identifiers — deferred to data.
+- `UnauthorizedSessionEvents` rename — rejected for now.
+- Optional `Order` equality regression test — rejected (data class equality is implicit contract).
+- Antipodal-distance assertion in `GeoPointTest` — rejected (low value).
