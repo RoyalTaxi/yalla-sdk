@@ -3,21 +3,21 @@ package uz.yalla.data.network
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.plugins.ClientRequestException
-import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.api.createClientPlugin
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
-import io.ktor.http.HttpHeaders
-import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import uz.yalla.core.preferences.InterfacePreferences
@@ -27,7 +27,6 @@ import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.session.UnauthorizedSessionEvents
 import uz.yalla.data.util.platformName
 
-private const val BEARER_PREFIX = "Bearer "
 private const val REQUEST_TIMEOUT_MS = 15_000L
 private const val CONNECT_TIMEOUT_MS = 10_000L
 private const val SOCKET_TIMEOUT_MS = 15_000L
@@ -36,14 +35,19 @@ private const val SOCKET_TIMEOUT_MS = 15_000L
  * Creates a fully configured [HttpClient] for API communication.
  *
  * Sets up content negotiation (lenient JSON), request/connect/socket timeouts,
- * automatic 401 handling (clears session and publishes
- * [UnauthorizedSessionEvents]), [guest mode guard][createGuestModeGuardPlugin],
- * and dynamic headers (locale, position, brand, platform).
+ * Ktor's [Auth] plugin for bearer-token attachment + 401-driven session clear,
+ * the [guest mode guard][createGuestModeGuardPlugin], and dynamic headers
+ * (locale, position, brand, platform).
  *
  * The platform-specific engine is resolved via [createHttpEngine].
- * Preference values are cached in [StateFlow][kotlinx.coroutines.flow.StateFlow]
- * instances and updated reactively, ensuring headers always reflect current state
- * without blocking the request path.
+ * Locale, guest-mode and position values are cached in
+ * [StateFlow][kotlinx.coroutines.flow.StateFlow] instances and updated
+ * reactively, ensuring headers always reflect current state without blocking
+ * the request path. The bearer token is read from [SessionPreferences] by the
+ * Auth plugin's `loadTokens` lambda; on 401 the plugin's `refreshTokens`
+ * clears the session and publishes [UnauthorizedSessionEvents] (no refresh
+ * endpoint exists in this codebase, so refreshing reduces to logging the user
+ * out and surfacing the signal).
  *
  * ### Scope ownership
  *
@@ -51,8 +55,7 @@ private const val SOCKET_TIMEOUT_MS = 15_000L
  * runs on that scope. Cancelling [scope] stops those coroutines cleanly; the
  * returned [HttpClient] should be [HttpClient.close]d in lockstep. Do not pass
  * a process-lifetime scope for short-lived clients — the background header
- * observers will outlive the [HttpClient] otherwise. See ADR-011 in
- * `docs/06-DECISIONS.md` for the rationale.
+ * observers will outlive the [HttpClient] otherwise.
  *
  * @param scope caller-owned [CoroutineScope] that hosts the preference-observation
  *   coroutines; cancelling it stops header/guest-mode observers. Must outlive
@@ -77,15 +80,11 @@ fun createHttpClient(
     engine: HttpClientEngine? = null,
 ): HttpClient {
     val localeCache = MutableStateFlow("")
-    val accessTokenCache = MutableStateFlow("")
     val guestModeCache = MutableStateFlow(false)
     val positionCache = MutableStateFlow(GeoPoint.Zero)
 
     scope.launch {
         interfacePrefs.localeType.collectLatest { localeCache.value = it.code }
-    }
-    scope.launch {
-        sessionPrefs.accessToken.collectLatest { accessTokenCache.value = it }
     }
     scope.launch {
         sessionPrefs.isGuestMode.collectLatest { guestModeCache.value = it }
@@ -101,26 +100,22 @@ fun createHttpClient(
             level = LogLevel.NONE
         }
 
-        install(HttpCallValidator) {
-            validateResponse { response ->
-                if (response.status == HttpStatusCode.Unauthorized) {
-                    val requestToken =
-                        response.call.request
-                            .headers[HttpHeaders.Authorization]
-                            .extractBearerToken()
-                    handleUnauthorized(sessionPrefs, accessTokenCache, requestToken)
+        install(Auth) {
+            bearer {
+                loadTokens {
+                    val token = sessionPrefs.accessToken.first()
+                    if (token.isEmpty()) null else BearerTokens(accessToken = token, refreshToken = "")
                 }
-            }
-            handleResponseExceptionWithRequest { cause, request ->
-                if (
-                    cause is ClientRequestException &&
-                    cause.response.status == HttpStatusCode.Unauthorized
-                ) {
-                    val requestToken =
-                        request.headers[HttpHeaders.Authorization]
-                            .extractBearerToken()
-                    handleUnauthorized(sessionPrefs, accessTokenCache, requestToken)
+                refreshTokens {
+                    // No refresh endpoint exists in this codebase. A 401 means the
+                    // session is invalid; clear it and surface the signal so the UI
+                    // can navigate to login. Returning null tells the Auth plugin
+                    // not to retry, which lets the original request fail with 401.
+                    sessionPrefs.clearSession()
+                    UnauthorizedSessionEvents.publish()
+                    null
                 }
+                sendWithoutRequest { true }
             }
         }
 
@@ -141,7 +136,6 @@ fun createHttpClient(
             header("Device-Mode", config.deviceMode)
             header("Device", config.deviceType)
             header("secret-key", config.secretKey)
-            header("Authorization", BEARER_PREFIX + accessTokenCache.value)
         }
 
         install(ContentNegotiation) {
@@ -164,26 +158,4 @@ fun createHttpClient(
             }
         )
     }
-}
-
-private fun handleUnauthorized(
-    sessionPrefs: SessionPreferences,
-    accessTokenCache: MutableStateFlow<String>,
-    requestToken: String?,
-) {
-    val currentToken = accessTokenCache.value
-    if (currentToken.isEmpty()) return
-    if (requestToken.isNullOrEmpty()) return
-    if (requestToken != currentToken) return
-    if (!accessTokenCache.compareAndSet(currentToken, "")) return
-
-    sessionPrefs.clearSession()
-    UnauthorizedSessionEvents.publish()
-}
-
-private fun String?.extractBearerToken(): String? {
-    val value = this?.trim().orEmpty()
-    if (!value.startsWith(BEARER_PREFIX, ignoreCase = true)) return null
-    if (value.length <= BEARER_PREFIX.length) return null
-    return value.substring(BEARER_PREFIX.length).trim().ifEmpty { null }
 }
