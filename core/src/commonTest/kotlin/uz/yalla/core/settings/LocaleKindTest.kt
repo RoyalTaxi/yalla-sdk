@@ -26,6 +26,15 @@ class LocaleKindTest {
     }
 
     @Test
+    fun shouldNormalizeUnderscoreToHyphenInLocaleCode() {
+        // Underscore-separated locale codes (e.g. Java Locale toString output)
+        // are normalized to hyphens before matching, so they fall into the
+        // unknown-locale bucket and resolve to Uz.
+        assertEquals(LocaleKind.Uz, LocaleKind.from("uz_Cyrl"))
+        assertEquals(LocaleKind.Uz, LocaleKind.from("  RU_RU  "))
+    }
+
+    @Test
     fun shouldReturnUzWhenCodeIsUnknownOrNull() {
         assertEquals(LocaleKind.Uz, LocaleKind.from("unknown"))
         assertEquals(LocaleKind.Uz, LocaleKind.from(null))

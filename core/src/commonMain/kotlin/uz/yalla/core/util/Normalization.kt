@@ -9,19 +9,3 @@ package uz.yalla.core.util
  * @return Normalized identifier string, or empty string if `null`
  */
 internal fun String?.normalizedId(): String = this?.trim()?.lowercase().orEmpty()
-
-/**
- * Normalizes a locale code for comparison.
- *
- * Trims whitespace, replaces underscores with hyphens (e.g., "uz_Cyrl" becomes "uz-cyrl"),
- * and lowercases the result. Returns empty string if `null`.
- *
- * @return Normalized BCP 47-style locale code, or empty string if `null`
- * @see LocaleKind.from
- */
-internal fun String?.normalizedLocaleCode(): String =
-    this
-        ?.trim()
-        ?.replace('_', '-')
-        ?.lowercase()
-        .orEmpty()

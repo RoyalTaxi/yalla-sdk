@@ -2,7 +2,6 @@ package uz.yalla.core.settings
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import uz.yalla.core.util.normalizedLocaleCode
 
 /**
  * Supported app locales for string resource selection.
@@ -36,8 +35,8 @@ enum class LocaleKind(val code: String) {
          * @return Matching [LocaleKind], defaulting to [Uz].
          */
         fun from(code: String?): LocaleKind {
-            val normalizedCode = code.normalizedLocaleCode()
-            return entries.find { it.code.lowercase() == normalizedCode } ?: Uz
+            val normalized = code?.trim()?.replace('_', '-')?.lowercase().orEmpty()
+            return entries.find { it.code.lowercase() == normalized } ?: Uz
         }
     }
 }
