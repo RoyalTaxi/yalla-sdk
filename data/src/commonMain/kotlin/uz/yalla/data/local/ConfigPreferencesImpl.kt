@@ -118,6 +118,12 @@ internal class ConfigPreferencesImpl(
  *
  * Returns `0L` when the key is absent or the stored type does not match.
  *
+ * Note: only the JVM (Android) target throws [ClassCastException] for the
+ * Int-stored-under-Long-key shape. Kotlin/Native (iOS) silently casts the
+ * boxed value through, so the catch isn't exercised on iOS. The shim is
+ * defensive for the Android upgrade flow only; not unit-testable in
+ * `commonTest` against the iOS test target.
+ *
  * @param key the [Long] preference key to read
  * @return stored value, or `0L` on absence or type mismatch
  */
