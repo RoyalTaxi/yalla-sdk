@@ -24,7 +24,6 @@ import uz.yalla.core.util.orFalse
  * @param dataStore shared preferences store
  * @param scope coroutine scope for write operations
  * @see SessionPreferencesImpl
- * @since 0.0.1
  */
 internal class ConfigPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
@@ -123,7 +122,6 @@ internal class ConfigPreferencesImpl(
  *
  * @param key the [Long] preference key to read
  * @return stored value, or `0L` on absence or type mismatch
- * @since 0.0.1
  */
 private fun Preferences.getLongSafe(key: Preferences.Key<Long>): Long =
     try {

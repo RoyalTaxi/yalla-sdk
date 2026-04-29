@@ -14,6 +14,5 @@ import kotlinx.coroutines.CoroutineDispatcher
  *
  * @see uz.yalla.data.network.createHttpClient
  * @see uz.yalla.data.di.dataModule
- * @since 0.0.1
  */
 expect val ioDispatcher: CoroutineDispatcher

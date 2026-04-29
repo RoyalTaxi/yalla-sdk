@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
  *
  * @see createGuestModeGuardPlugin
  * @see safeApiCall
- * @since 0.0.1
  */
 internal class GuestBlockedException : RuntimeException()
 
@@ -36,7 +35,6 @@ internal class GuestBlockedException : RuntimeException()
  * @throws GuestBlockedException when a request is blocked in guest mode
  * @see safeApiCall
  * @see NetworkConfig.guestAllowedSegments
- * @since 0.0.1
  */
 fun createGuestModeGuardPlugin(
     isGuestMode: StateFlow<Boolean>,

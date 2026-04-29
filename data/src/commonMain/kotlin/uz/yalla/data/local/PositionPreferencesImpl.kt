@@ -23,7 +23,6 @@ import uz.yalla.core.geo.GeoPoint
  * @param scope coroutine scope for write operations
  * @see parseGeoPoint
  * @see SessionPreferencesImpl
- * @since 0.0.1
  */
 internal class PositionPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
@@ -63,7 +62,6 @@ internal class PositionPreferencesImpl(
  * @param fallbackRaw secondary string used when [raw] is `null` or blank
  * @return parsed [GeoPoint], or `GeoPoint(0.0, 0.0)` on failure
  * @see PositionPreferencesImpl
- * @since 0.0.1
  */
 internal fun parseGeoPoint(
     raw: String?,

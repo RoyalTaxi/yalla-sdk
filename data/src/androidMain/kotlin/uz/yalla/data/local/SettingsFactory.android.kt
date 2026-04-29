@@ -16,7 +16,6 @@ private const val SETTINGS_NAME = "yalla_startup"
  *
  * @return [Settings] backed by Android SharedPreferences
  * @see createSettings
- * @since 0.0.7
  */
 actual fun createSettings(): Settings =
     object : KoinComponent {

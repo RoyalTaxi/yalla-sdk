@@ -12,6 +12,5 @@ import io.ktor.client.engine.HttpClientEngine
  *
  * @return platform-specific [HttpClientEngine] instance
  * @see createHttpClient
- * @since 0.0.5
  */
 expect fun createHttpEngine(): HttpClientEngine

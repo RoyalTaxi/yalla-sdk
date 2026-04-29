@@ -28,7 +28,6 @@ import uz.yalla.core.util.orFalse
  * @see StaticPreferencesImpl
  * @see UserPreferencesImpl
  * @see ConfigPreferencesImpl
- * @since 0.0.1
  */
 internal class SessionPreferencesImpl(
     private val dataStore: DataStore<Preferences>,

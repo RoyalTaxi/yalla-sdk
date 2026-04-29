@@ -19,6 +19,5 @@ import androidx.datastore.preferences.core.Preferences
  * @see ConfigPreferencesImpl
  * @see InterfacePreferencesImpl
  * @see PositionPreferencesImpl
- * @since 0.0.1
  */
 expect fun createDataStore(): DataStore<Preferences>

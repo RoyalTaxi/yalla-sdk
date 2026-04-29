@@ -11,6 +11,5 @@ import kotlinx.coroutines.Dispatchers
  * non-blocking DataStore and Ktor operations used in the data layer.
  *
  * @see ioDispatcher
- * @since 0.0.1
  */
 actual val ioDispatcher: CoroutineDispatcher = Dispatchers.Default

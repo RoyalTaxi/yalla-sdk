@@ -10,6 +10,5 @@ import io.ktor.client.engine.android.Android
  *
  * @return [HttpClientEngine] configured for Android
  * @see createHttpEngine
- * @since 0.0.5
  */
 actual fun createHttpEngine(): HttpClientEngine = Android.create()

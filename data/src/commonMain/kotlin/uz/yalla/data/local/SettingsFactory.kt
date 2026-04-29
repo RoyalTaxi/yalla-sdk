@@ -12,6 +12,5 @@ import com.russhwolf.settings.Settings
  * @return platform-specific [Settings] for synchronous key-value access
  * @see StaticPreferencesImpl
  * @see uz.yalla.data.di.dataModule
- * @since 0.0.7
  */
 expect fun createSettings(): Settings

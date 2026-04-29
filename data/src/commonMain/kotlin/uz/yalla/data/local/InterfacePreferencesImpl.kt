@@ -29,7 +29,6 @@ import uz.yalla.core.util.orFalse
  * @param staticPreferences synchronous store for startup-critical values
  * @see StaticPreferencesImpl
  * @see SessionPreferencesImpl
- * @since 0.0.1
  */
 internal class InterfacePreferencesImpl(
     private val dataStore: DataStore<Preferences>,

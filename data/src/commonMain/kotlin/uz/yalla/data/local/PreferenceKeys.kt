@@ -25,7 +25,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
  * @see ConfigPreferencesImpl
  * @see InterfacePreferencesImpl
  * @see PositionPreferencesImpl
- * @since 0.0.1
  */
 internal object PreferenceKeys {
 

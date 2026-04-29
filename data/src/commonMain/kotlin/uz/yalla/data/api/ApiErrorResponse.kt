@@ -13,7 +13,6 @@ import kotlinx.serialization.Serializable
  * @property message human-readable error description, or `null`
  * @see uz.yalla.data.network.safeApiCall
  * @see ApiResponse
- * @since 0.0.1
  */
 @Serializable
 data class ApiErrorResponse(val message: String? = null)

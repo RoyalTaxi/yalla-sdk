@@ -22,7 +22,6 @@ import uz.yalla.core.payment.PaymentKind
  * @param dataStore shared preferences store
  * @param scope coroutine scope for write operations
  * @see SessionPreferencesImpl
- * @since 0.0.1
  */
 internal class UserPreferencesImpl(
     private val dataStore: DataStore<Preferences>,

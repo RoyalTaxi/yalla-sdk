@@ -18,7 +18,6 @@ import kotlinx.serialization.Serializable
  * @property list the response items, or `null` if absent
  * @see ApiResponse
  * @see ApiErrorResponse
- * @since 0.0.1
  */
 @Serializable
 data class ApiListResponse<T>(val list: List<T>? = null)

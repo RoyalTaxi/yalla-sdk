@@ -20,7 +20,6 @@ private const val DATASTORE_FILE = "prefs.preferences_pb"
  *
  * @return [DataStore] backed by a file in the app's internal storage
  * @see createDataStore
- * @since 0.0.1
  */
 actual fun createDataStore(): DataStore<Preferences> =
     object : KoinComponent {

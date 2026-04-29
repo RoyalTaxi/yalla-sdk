@@ -66,7 +66,6 @@ private const val SOCKET_TIMEOUT_MS = 15_000L
  * @see createHttpEngine
  * @see createGuestModeGuardPlugin
  * @see safeApiCall
- * @since 0.0.5
  */
 fun createHttpClient(
     config: NetworkConfig,

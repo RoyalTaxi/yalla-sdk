@@ -21,7 +21,6 @@ package uz.yalla.data.network
  *   `cost`. See [createGuestModeGuardPlugin] for matching semantics.
  * @see createHttpClient
  * @see createGuestModeGuardPlugin
- * @since 0.0.1
  */
 data class NetworkConfig(
     val baseUrl: String,
@@ -39,8 +38,6 @@ data class NetworkConfig(
  * this whitelist became configurable. Kept as an ordered list so the default
  * is deterministic and diff-friendly; [createGuestModeGuardPlugin] converts to
  * a `Set` internally for O(1) membership checks.
- *
- * @since 0.0.9
  */
 val DEFAULT_GUEST_ALLOWED_SEGMENTS: List<String> = listOf(
     "client",

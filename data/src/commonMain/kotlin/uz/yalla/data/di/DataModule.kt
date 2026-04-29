@@ -48,7 +48,6 @@ import uz.yalla.data.util.ioDispatcher
  *
  * @see uz.yalla.data.local.createDataStore
  * @see uz.yalla.data.local.createSettings
- * @since 0.0.4
  */
 val dataModule = module {
     single { createDataStore() }

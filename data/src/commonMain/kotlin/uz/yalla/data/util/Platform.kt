@@ -7,6 +7,5 @@ package uz.yalla.data.util
  * Sent as the `User-Agent-OS` header by [createHttpClient][uz.yalla.data.network.createHttpClient].
  *
  * @see uz.yalla.data.network.createHttpClient
- * @since 0.0.5
  */
 expect val platformName: String

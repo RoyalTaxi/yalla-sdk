@@ -23,7 +23,6 @@ import uz.yalla.core.settings.LocaleKind
  * @see SessionPreferencesImpl
  * @see InterfacePreferencesImpl
  * @see createSettings
- * @since 0.0.7
  */
 internal class StaticPreferencesImpl(
     private val settings: Settings,

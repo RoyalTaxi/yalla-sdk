@@ -10,6 +10,5 @@ import io.ktor.client.engine.darwin.Darwin
  *
  * @return [HttpClientEngine] configured for iOS
  * @see createHttpEngine
- * @since 0.0.5
  */
 actual fun createHttpEngine(): HttpClientEngine = Darwin.create()

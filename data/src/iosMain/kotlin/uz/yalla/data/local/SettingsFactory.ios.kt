@@ -12,7 +12,6 @@ import platform.Foundation.NSUserDefaults
  *
  * @return [Settings] backed by NSUserDefaults
  * @see createSettings
- * @since 0.0.7
  */
 actual fun createSettings(): Settings =
     NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)

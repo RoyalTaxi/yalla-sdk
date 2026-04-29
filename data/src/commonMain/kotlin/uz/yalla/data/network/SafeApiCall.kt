@@ -46,7 +46,6 @@ private const val RETRY_BACKOFF_FACTOR = 2.0
  * @see retryWithBackoff
  * @see ApiErrorResponse
  * @see GuestBlockedException
- * @since 0.0.1
  */
 suspend inline fun <reified T> safeApiCall(
     isIdempotent: Boolean = false,
@@ -141,7 +140,6 @@ suspend inline fun <reified T> safeApiCall(
  * @return the result of [block] on a successful attempt
  * @throws Exception any non-retryable exception thrown by [block]
  * @see safeApiCall
- * @since 0.0.1
  */
 @PublishedApi
 internal suspend fun <T> retryWithBackoff(
