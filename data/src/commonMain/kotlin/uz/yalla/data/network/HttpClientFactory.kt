@@ -2,6 +2,7 @@ package uz.yalla.data.network
 
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.HttpCallValidator
 import io.ktor.client.plugins.HttpTimeout
@@ -57,6 +58,9 @@ private const val SOCKET_TIMEOUT_MS = 15_000L
  *   coroutines; cancelling it stops header/guest-mode observers. Must outlive
  *   every request issued through the returned client.
  * @param inspektifySetup optional debug inspector plugin setup (e.g. Inspektify)
+ * @param engine test seam — when non-null, the provided engine is used instead
+ *   of the platform-resolved one from [createHttpEngine]. Production calls
+ *   omit this parameter; tests inject `MockEngine` here.
  * @return configured [HttpClient] instance ready for use with [safeApiCall]
  * @see NetworkConfig
  * @see createHttpEngine
@@ -70,6 +74,7 @@ fun createHttpClient(
     positionPrefs: PositionPreferences,
     scope: CoroutineScope,
     inspektifySetup: (HttpClientConfig<*>.() -> Unit)? = null,
+    engine: HttpClientEngine? = null,
 ): HttpClient {
     val localeCache = MutableStateFlow("")
     val accessTokenCache = MutableStateFlow("")
@@ -89,7 +94,7 @@ fun createHttpClient(
         positionPrefs.lastMapPosition.collectLatest { positionCache.value = it }
     }
 
-    return HttpClient(createHttpEngine()) {
+    return HttpClient(engine ?: createHttpEngine()) {
         inspektifySetup?.invoke(this)
 
         install(Logging) {

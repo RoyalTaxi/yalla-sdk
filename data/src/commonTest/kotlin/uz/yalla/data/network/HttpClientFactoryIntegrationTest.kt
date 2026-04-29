@@ -236,6 +236,99 @@ class HttpClientFactoryIntegrationTest {
         client.close()
     }
 
+    // --- Direct createHttpClient tests (via the engine= test seam) ---
+    //
+    // These tests exercise the production createHttpClient function, injecting
+    // MockEngine through the engine: HttpClientEngine? parameter rather than
+    // mirroring the plugin stack via buildTestClient. They form the regression
+    // net for the upcoming Ktor Auth plugin migration: any change in
+    // createHttpClient that breaks these assertions surfaces here directly.
+
+    @Test
+    fun directBearerTokenAttachedWhenSessionHasToken() = runTest(UnconfinedTestDispatcher()) {
+        val sessionPrefs = FakeSessionPreferences(initialAccessToken = TEST_TOKEN)
+        val capturedAuth = CompletableDeferred<String?>()
+        val mockEngine = MockEngine { request ->
+            capturedAuth.complete(request.headers[HttpHeaders.Authorization])
+            respond("ok", HttpStatusCode.OK)
+        }
+
+        val client = createHttpClient(
+            config = defaultNetworkConfig(),
+            sessionPrefs = sessionPrefs,
+            interfacePrefs = FakeInterfacePreferences(),
+            positionPrefs = FakePositionPreferences(),
+            scope = backgroundScope,
+            engine = mockEngine,
+        )
+
+        client.get("/whoami")
+
+        val auth = withTimeout(EVENT_TIMEOUT_MS) { capturedAuth.await() }
+        assertEquals("Bearer $TEST_TOKEN", auth)
+        client.close()
+    }
+
+    @Test
+    fun directRespondsWith401ClearsSessionAndPublishesEvent() =
+        runTest(UnconfinedTestDispatcher()) {
+            val sessionPrefs = FakeSessionPreferences(initialAccessToken = TEST_TOKEN)
+            val eventReceived = CompletableDeferred<Unit>()
+            backgroundScope.launch {
+                UnauthorizedSessionEvents.events.collectLatest {
+                    eventReceived.complete(Unit)
+                }
+            }
+            val mockEngine = MockEngine { respond("", HttpStatusCode.Unauthorized) }
+
+            val client = createHttpClient(
+                config = defaultNetworkConfig(),
+                sessionPrefs = sessionPrefs,
+                interfacePrefs = FakeInterfacePreferences(),
+                positionPrefs = FakePositionPreferences(),
+                scope = backgroundScope,
+                engine = mockEngine,
+            )
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/needs-auth") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            withTimeout(EVENT_TIMEOUT_MS) { eventReceived.await() }
+            assertEquals("", sessionPrefs.accessToken.value, "session must be cleared after 401")
+            client.close()
+        }
+
+    @Test
+    fun directDynamicHeadersReflectPreferences() = runTest(UnconfinedTestDispatcher()) {
+        val interfacePrefs = FakeInterfacePreferences(initialLocale = LocaleKind.Ru)
+        val positionPrefs = FakePositionPreferences().apply {
+            setLastMapPosition(GeoPoint(lat = 41.31, lng = 69.28))
+        }
+        val captured = CompletableDeferred<Pair<String?, String?>>()
+        val mockEngine = MockEngine { request ->
+            captured.complete(
+                request.headers[LANG_HEADER] to request.headers["x-position"]
+            )
+            respond("ok", HttpStatusCode.OK)
+        }
+
+        val client = createHttpClient(
+            config = defaultNetworkConfig(),
+            sessionPrefs = FakeSessionPreferences(),
+            interfacePrefs = interfacePrefs,
+            positionPrefs = positionPrefs,
+            scope = backgroundScope,
+            engine = mockEngine,
+        )
+
+        client.get("/headers-check")
+
+        val (lang, position) = withTimeout(EVENT_TIMEOUT_MS) { captured.await() }
+        assertEquals("ru", lang)
+        assertEquals("41.31 69.28", position)
+        client.close()
+    }
+
     /**
      * Builds an [HttpClient] whose plugin stack mirrors [createHttpClient] but
      * uses [MockEngine] so the caller can script request handlers. The only
