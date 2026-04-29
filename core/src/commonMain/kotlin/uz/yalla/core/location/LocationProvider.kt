@@ -1,4 +1,4 @@
-package uz.yalla.core.contract.location
+package uz.yalla.core.location
 
 import kotlinx.coroutines.flow.Flow
 import uz.yalla.core.geo.GeoPoint

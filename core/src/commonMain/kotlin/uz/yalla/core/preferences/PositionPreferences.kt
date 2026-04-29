@@ -11,7 +11,7 @@ import uz.yalla.core.geo.GeoPoint
  *
  * Defaults to [GeoPoint.Zero] when no position has been stored yet.
  *
- * @see uz.yalla.core.contract.location.LocationProvider
+ * @see uz.yalla.core.location.LocationProvider
  */
 interface PositionPreferences {
 

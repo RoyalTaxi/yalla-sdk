@@ -25,7 +25,7 @@ private fun Double.toRadians(): Double = this * (PI / 180.0)
  * val distance = tashkent.distanceTo(samarkand) // ~263 km
  * ```
  *
- * @see uz.yalla.core.contract.location.LocationProvider
+ * @see uz.yalla.core.location.LocationProvider
  */
 @Serializable
 data class GeoPoint(

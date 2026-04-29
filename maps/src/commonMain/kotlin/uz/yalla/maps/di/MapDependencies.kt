@@ -1,7 +1,7 @@
 package uz.yalla.maps.di
 
 import kotlinx.coroutines.CoroutineScope
-import uz.yalla.core.contract.location.LocationProvider
+import uz.yalla.core.location.LocationProvider
 import uz.yalla.core.preferences.InterfacePreferences
 
 /**
