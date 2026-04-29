@@ -12,7 +12,6 @@ import uz.yalla.core.util.normalizedId
  *
  * @property id Wire-format identifier used in persistence
  * @see uz.yalla.core.preferences.InterfacePreferences.themeType
- * @since 0.0.1
  */
 @Serializable
 enum class ThemeKind(val id: String) {

@@ -17,7 +17,6 @@ import uz.yalla.core.payment.PaymentKind
  * @property status Current order lifecycle state
  * @property statusTime History of status transitions with timestamps
  * @property taxi Route, pricing, and tariff details
- * @since 0.0.1
  */
 data class Order(
     val comment: String,
@@ -46,7 +45,6 @@ data class Order(
      * @property rating Driver's average rating (0.0-5.0)
      * @property surName Driver's surname/family name
      * @see toExecutor
-     * @since 0.0.1
      */
     data class Executor(
         val coords: Coords,
@@ -65,7 +63,6 @@ data class Order(
          * @property heading Vehicle heading in degrees (0-360, clockwise from north)
          * @property lat Current latitude
          * @property lng Current longitude
-         * @since 0.0.1
          */
         data class Coords(
             val heading: Double,
@@ -82,7 +79,6 @@ data class Order(
          * @property mark Vehicle manufacturer/make (e.g., "Chevrolet")
          * @property model Vehicle model name (e.g., "Cobalt")
          * @property stateNumber License plate number
-         * @since 0.0.1
          */
         data class Vehicle(
             val callsign: String,
@@ -97,7 +93,6 @@ data class Order(
              *
              * @property color Hex color string (e.g., "#FFFFFF")
              * @property name Localized color name for display (e.g., "White")
-             * @since 0.0.1
              */
             data class Color(
                 val color: String,
@@ -112,7 +107,6 @@ data class Order(
      * @property status Status identifier string matching [OrderStatus.id]
      * @property time Epoch timestamp (seconds or milliseconds) of the transition
      * @see OrderStatus
-     * @since 0.0.1
      */
     data class StatusTime(
         val status: String,
@@ -134,7 +128,6 @@ data class Order(
      * @property totalPrice Total fare before bonus/discount in smallest currency unit
      * @property waitingTime Accumulated waiting time in seconds
      * @see ExtraService
-     * @since 0.0.1
      */
     data class Taxi(
         val bonusAmount: Int,
@@ -155,7 +148,6 @@ data class Order(
          * @property coords Geographic coordinates of the waypoint
          * @property fullAddress Human-readable address string
          * @property index Zero-based position in the route (0 = pickup, last = destination)
-         * @since 0.0.1
          */
         data class Route(
             val coords: Coords,
@@ -167,7 +159,6 @@ data class Order(
              *
              * @property lat Latitude
              * @property lng Longitude
-             * @since 0.0.1
              */
             data class Coords(
                 val lat: Double,
@@ -185,7 +176,6 @@ data class Order(
  *
  * @return A lightweight [Executor] with position and heading data
  * @see Executor
- * @since 0.0.1
  */
 fun Order.Executor.toExecutor() =
     Executor(

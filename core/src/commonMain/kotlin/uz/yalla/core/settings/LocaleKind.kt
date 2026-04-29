@@ -15,7 +15,6 @@ import uz.yalla.core.util.normalizedLocaleCode
  *
  * @property code BCP 47 locale code used for resource lookup.
  * @see uz.yalla.core.preferences.InterfacePreferences.localeType
- * @since 0.0.1
  */
 @Serializable
 enum class LocaleKind(val code: String) {

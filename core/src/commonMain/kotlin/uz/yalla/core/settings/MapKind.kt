@@ -13,7 +13,6 @@ import uz.yalla.core.util.normalizedId
  *
  * @property id Wire-format identifier used in API communication and persistence
  * @see uz.yalla.core.preferences.InterfacePreferences.mapKind
- * @since 0.0.1
  */
 @Serializable
 enum class MapKind(val id: String) {

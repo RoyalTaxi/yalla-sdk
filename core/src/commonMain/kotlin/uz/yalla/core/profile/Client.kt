@@ -18,7 +18,6 @@ import kotlinx.serialization.Serializable
  * @property gender Gender identifier string, parseable by [GenderKind.from]
  * @see GenderKind
  * @see uz.yalla.core.preferences.UserPreferences
- * @since 0.0.1
  */
 @Serializable
 data class Client(

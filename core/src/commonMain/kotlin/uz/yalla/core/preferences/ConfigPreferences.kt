@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.Flow
  *
  * @see SessionPreferences
  * @see UserPreferences
- * @since 0.0.1
  */
 interface ConfigPreferences {
 

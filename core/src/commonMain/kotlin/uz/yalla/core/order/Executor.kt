@@ -14,7 +14,6 @@ import kotlinx.serialization.Serializable
  * @property lng Current longitude
  * @property heading Vehicle heading in degrees (0-360)
  * @property distance Distance to pickup point in meters
- * @since 0.0.1
  */
 @Serializable
 data class Executor(

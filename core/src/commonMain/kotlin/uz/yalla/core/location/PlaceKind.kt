@@ -12,7 +12,6 @@ import uz.yalla.core.util.normalizedId
  *
  * @property id Wire-format identifier used in API communication
  * @see SavedAddress
- * @since 0.0.1
  */
 @Serializable
 enum class PlaceKind(val id: String) {

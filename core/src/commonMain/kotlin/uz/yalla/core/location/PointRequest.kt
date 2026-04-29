@@ -14,7 +14,6 @@ import kotlinx.serialization.Serializable
  * @property lat Latitude in degrees
  * @see PointKind
  * @see Route
- * @since 0.0.1
  */
 @Serializable
 data class PointRequest(

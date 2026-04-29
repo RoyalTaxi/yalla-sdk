@@ -22,8 +22,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
  * // Collecting (in root navigator):
  * UnauthorizedSessionEvents.events.collect { navigateToLogin() }
  * ```
- *
- * @since 0.0.1
  */
 object UnauthorizedSessionEvents {
     private val eventsChannel = Channel<Unit>(capacity = Channel.CONFLATED)
@@ -44,8 +42,6 @@ object UnauthorizedSessionEvents {
      *
      * Safe to call at any time: non-suspending, returns immediately when the
      * channel is already empty.
-     *
-     * @since 0.0.9
      */
     fun drainPendingEventIfExists() {
         eventsChannel.tryReceive()

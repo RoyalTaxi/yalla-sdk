@@ -21,7 +21,6 @@ package uz.yalla.core.preferences
  *
  * @see SessionPreferences for the reactive (Flow-based) equivalent
  * @see InterfacePreferences for the reactive locale/onboarding equivalent
- * @since 0.0.7
  */
 interface StaticPreferences {
 

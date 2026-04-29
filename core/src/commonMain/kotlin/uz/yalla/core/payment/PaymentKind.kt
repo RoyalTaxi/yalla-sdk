@@ -21,8 +21,6 @@ import uz.yalla.core.util.normalizedId
  * needs to persist. Full card details are sourced separately from the payment provider.
  *
  * Wire format: a single JSON string (e.g. `"cash"`, `"card"`).
- *
- * @since 0.0.8
  */
 object PaymentKindSerializer : KSerializer<PaymentKind> {
     override val descriptor: SerialDescriptor =
@@ -47,7 +45,6 @@ object PaymentKindSerializer : KSerializer<PaymentKind> {
  * documented trade-off.
  *
  * @property id Wire-format identifier ("cash" or "card")
- * @since 0.0.1
  */
 @Serializable(with = PaymentKindSerializer::class)
 sealed class PaymentKind(val id: String) {

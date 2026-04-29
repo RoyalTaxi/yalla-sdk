@@ -16,8 +16,6 @@ import kotlinx.serialization.encoding.Encoder
  * semantics for unrecognized wire values.
  *
  * Wire format: a single JSON string (e.g. `"in_progress"`, `"completed"`).
- *
- * @since 0.0.8
  */
 object OrderStatusSerializer : KSerializer<OrderStatus> {
     override val descriptor: SerialDescriptor =
@@ -48,7 +46,6 @@ object OrderStatusSerializer : KSerializer<OrderStatus> {
  * ```
  *
  * @property id Wire-format identifier used in API communication
- * @since 0.0.1
  */
 @Serializable(with = OrderStatusSerializer::class)
 sealed class OrderStatus(val id: String) {

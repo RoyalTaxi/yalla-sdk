@@ -15,8 +15,6 @@ import uz.yalla.core.geo.GeoPoint
  *     .filterNotNull()
  *     .collect { point -> updateMapCamera(point) }
  * ```
- *
- * @since 0.0.1
  */
 interface LocationProvider {
 

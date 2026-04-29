@@ -28,7 +28,6 @@ private fun Double.toRadians(): Double = this * (PI / 180.0)
  * @property lat Latitude in degrees, must be in [-90, 90]
  * @property lng Longitude in degrees, must be in [-180, 180]
  * @see uz.yalla.core.contract.location.LocationProvider
- * @since 0.0.1
  */
 @Serializable
 data class GeoPoint(

@@ -26,7 +26,6 @@ import kotlinx.serialization.Serializable
  * @property name Display name shown to the user
  * @property costType Either [COST_TYPE_COST] for fixed amount or [COST_TYPE_PERCENT] for percentage
  * @see Order.Taxi.services
- * @since 0.0.1
  */
 @Serializable
 data class ExtraService(

@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.Flow
  *
  * @see StaticPreferences for synchronous access to guest mode and device registration
  * @see uz.yalla.core.session.UnauthorizedSessionEvents
- * @since 0.0.1
  */
 interface SessionPreferences {
 

@@ -9,7 +9,6 @@ import kotlinx.serialization.Serializable
  * @property id Unique brand identifier
  * @property name Display name of the service
  * @property photo URL of the brand logo
- * @since 0.0.1
  */
 @Serializable
 data class ServiceBrand(

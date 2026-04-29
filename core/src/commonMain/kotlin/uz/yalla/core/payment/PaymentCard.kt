@@ -8,7 +8,6 @@ import kotlinx.serialization.Serializable
  *
  * @property cardId Unique card identifier from payment provider
  * @property maskedPan Masked card number for display
- * @since 0.0.1
  */
 @Serializable
 data class PaymentCard(

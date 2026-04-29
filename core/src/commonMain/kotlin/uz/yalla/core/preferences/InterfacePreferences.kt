@@ -18,7 +18,6 @@ import uz.yalla.core.settings.ThemeKind
  * @see LocaleKind
  * @see ThemeKind
  * @see MapKind
- * @since 0.0.1
  */
 interface InterfacePreferences {
 

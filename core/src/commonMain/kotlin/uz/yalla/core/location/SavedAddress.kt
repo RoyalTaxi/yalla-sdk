@@ -14,7 +14,6 @@ import kotlinx.serialization.Serializable
  * @property title User-assigned label
  * @property kind Place category (home, work, other)
  * @property parent Parent location info (e.g., city name)
- * @since 0.0.1
  */
 @Serializable
 data class SavedAddress(
@@ -31,7 +30,6 @@ data class SavedAddress(
      * Parent location for hierarchical address display (e.g., city or district name).
      *
      * @property name Parent location name, or `null` if not available
-     * @since 0.0.1
      */
     @Serializable
     data class Parent(

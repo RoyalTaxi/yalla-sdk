@@ -16,8 +16,6 @@ import kotlinx.serialization.encoding.Encoder
  * wire values instead of throwing.
  *
  * Wire format: a single JSON string (e.g. `"start"`, `"point"`, `"stop"`).
- *
- * @since 0.0.8
  */
 object PointKindSerializer : KSerializer<PointKind> {
     override val descriptor: SerialDescriptor =
@@ -40,7 +38,6 @@ object PointKindSerializer : KSerializer<PointKind> {
  *
  * @property wireValue API wire-format identifier
  * @see PointRequest
- * @since 0.0.1
  */
 @Serializable(with = PointKindSerializer::class)
 enum class PointKind(val wireValue: String) {

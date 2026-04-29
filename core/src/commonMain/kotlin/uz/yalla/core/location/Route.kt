@@ -13,7 +13,6 @@ import kotlinx.serialization.Serializable
  * @property duration Estimated travel time in seconds
  * @property points Ordered list of coordinates forming the route polyline
  * @see PointRequest
- * @since 0.0.1
  */
 @Serializable
 data class Route(
@@ -26,7 +25,6 @@ data class Route(
      *
      * @property lat Latitude in degrees
      * @property lng Longitude in degrees
-     * @since 0.0.1
      */
     @Serializable
     data class Point(

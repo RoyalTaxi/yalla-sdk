@@ -22,7 +22,6 @@ import kotlin.time.Instant
  *
  * @return Formatted date string, or empty string if `null` or non-positive
  * @see toLocalFormattedTime
- * @since 0.0.1
  */
 fun Long?.toLocalFormattedDate(): String {
     val localDateTime = this.toLocalDateTimeOrNull() ?: return ""
@@ -50,7 +49,6 @@ fun Long?.toLocalFormattedDate(): String {
  *
  * @return Formatted time string, or empty string if `null` or non-positive
  * @see toLocalFormattedDate
- * @since 0.0.1
  */
 fun Long?.toLocalFormattedTime(): String {
     val localDateTime = this.toLocalDateTimeOrNull() ?: return ""

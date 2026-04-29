@@ -16,7 +16,6 @@ import kotlinx.serialization.Serializable
  * @property isFromDatabase `true` if this address was loaded from local history
  * @see AddressOption
  * @see SavedAddress
- * @since 0.0.1
  */
 @Serializable
 data class Address(

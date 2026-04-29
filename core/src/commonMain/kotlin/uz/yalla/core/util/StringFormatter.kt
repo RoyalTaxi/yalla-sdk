@@ -15,7 +15,6 @@ package uz.yalla.core.util
  *
  * @param args Arguments to replace placeholders; each arg's [Any.toString] is used
  * @return Formatted string with all matching placeholders replaced
- * @since 0.0.1
  */
 fun String.formatArgs(vararg args: Any) =
     args.foldIndexed(this) { index, string, arg ->

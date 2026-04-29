@@ -13,7 +13,6 @@ import uz.yalla.core.payment.PaymentKind
  *
  * @see uz.yalla.core.profile.Client for the full API profile model
  * @see SessionPreferences.clearSession
- * @since 0.0.1
  */
 interface UserPreferences {
 

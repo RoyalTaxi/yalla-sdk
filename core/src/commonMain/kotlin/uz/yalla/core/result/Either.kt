@@ -23,7 +23,6 @@ package uz.yalla.core.result
  * @param D The success data type
  * @see onSuccess
  * @see onFailure
- * @since 0.0.1
  */
 sealed interface Either<out E, out D> {
     /**
@@ -31,7 +30,6 @@ sealed interface Either<out E, out D> {
      *
      * @param E The error type
      * @property error The failure reason
-     * @since 0.0.1
      */
     data class Failure<E>(val error: E) : Either<E, Nothing>
 
@@ -40,7 +38,6 @@ sealed interface Either<out E, out D> {
      *
      * @param D The success data type
      * @property data The successful result value
-     * @since 0.0.1
      */
     data class Success<D>(val data: D) : Either<Nothing, D>
 }
@@ -105,8 +102,6 @@ inline fun <E, D, R> Either<E, D>.mapFailure(transform: (E) -> R): Either<R, D> 
 
 /**
  * Returns the success data if this is [Either.Success], or `null` otherwise.
- *
- * @since 0.0.9
  */
 inline fun <E, D> Either<E, D>.getOrNull(): D? =
     when (this) {
@@ -119,7 +114,6 @@ inline fun <E, D> Either<E, D>.getOrNull(): D? =
  * Caller owns the exception-translation policy.
  *
  * @throws IllegalStateException if this is [Either.Failure]. Message includes the error.
- * @since 0.0.9
  */
 inline fun <E, D> Either<E, D>.getOrThrow(): D =
     when (this) {
@@ -132,8 +126,6 @@ inline fun <E, D> Either<E, D>.getOrThrow(): D =
  * or [ifSuccess] applied to the data when this is [Either.Success].
  *
  * Typical use: collapse an Either to a single value for UI rendering.
- *
- * @since 0.0.9
  */
 inline fun <E, D, R> Either<E, D>.fold(
     ifFailure: (E) -> R,

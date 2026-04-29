@@ -18,7 +18,6 @@ import kotlinx.serialization.Serializable
  * @property lng Longitude in degrees
  * @property isFromDatabase `true` if from local search history rather than the search API
  * @see Address
- * @since 0.0.1
  */
 @Serializable
 data class AddressOption(
