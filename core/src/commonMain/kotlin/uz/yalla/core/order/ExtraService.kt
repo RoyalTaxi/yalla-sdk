@@ -7,22 +7,19 @@ import kotlinx.serialization.Serializable
  * Optional extra service that can be added to an order.
  *
  * Cost can be either a fixed amount or a percentage of the base fare,
- * determined by [costType]. Use [isPercentCost] to check the cost type
- * without string comparison.
+ * determined by [costType].
  *
  * ## Usage
  * ```kotlin
- * val service = ExtraService(id = 1, cost = 5000, name = "Child seat", costType = "cost")
- * if (service.isPercentCost) {
- *     val surcharge = basePrice * service.cost / 100
- * } else {
- *     val surcharge = service.cost
+ * val service = ExtraService(id = 1, cost = 5000, name = "Child seat", costType = ExtraService.CostType.Fixed)
+ * val surcharge = when (service.costType) {
+ *     ExtraService.CostType.Fixed   -> service.cost
+ *     ExtraService.CostType.Percent -> basePrice * service.cost / 100
  * }
  * ```
  *
- * @property cost Cost value (interpreted based on [costType]): fixed amount in smallest
- *   currency unit, or percentage (0-100) of the base fare
- * @property costType Either [COST_TYPE_COST] for fixed amount or [COST_TYPE_PERCENT] for percentage
+ * @property cost Cost value (interpreted based on [costType]): fixed amount in
+ *   smallest currency unit, or percentage (0-100) of the base fare
  * @see Order.Taxi.services
  */
 @Serializable
@@ -30,21 +27,11 @@ data class ExtraService(
     @SerialName("id") val id: Int,
     @SerialName("cost") val cost: Int,
     @SerialName("name") val name: String,
-    @SerialName("costType") val costType: String
+    @SerialName("costType") val costType: CostType
 ) {
-    companion object {
-        /** Cost type indicating a fixed monetary amount. */
-        const val COST_TYPE_COST = "cost"
-
-        /** Cost type indicating a percentage of the base fare. */
-        const val COST_TYPE_PERCENT = "percent"
+    @Serializable
+    enum class CostType {
+        @SerialName("cost") Fixed,
+        @SerialName("percent") Percent
     }
-
-    /**
-     * Returns `true` if this service's cost is a percentage of the base fare.
-     *
-     * Performs case-insensitive comparison against [COST_TYPE_PERCENT].
-     */
-    val isPercentCost: Boolean
-        get() = costType.equals(COST_TYPE_PERCENT, ignoreCase = true)
 }

@@ -169,7 +169,7 @@ class SerializationRoundTripTest {
 
     @Test
     fun shouldRoundTripExtraService() {
-        val value = ExtraService(id = 2, cost = 5000, name = "Child seat", costType = "cost")
+        val value = ExtraService(id = 2, cost = 5000, name = "Child seat", costType = ExtraService.CostType.Fixed)
         val encoded = json.encodeToString(value)
 
         assertEquals(value, json.decodeFromString<ExtraService>(encoded))
