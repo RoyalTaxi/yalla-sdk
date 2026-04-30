@@ -1,39 +1,23 @@
 package uz.yalla.primitives.pin
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseInOut
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -43,19 +27,11 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
-import uz.yalla.core.util.or0
 import uz.yalla.design.theme.System
-import uz.yalla.resources.Res
-import uz.yalla.resources.common_status_loading
-import uz.yalla.resources.format_time_min_short
 import uz.yalla.resources.icons.FocusOrigin
 import uz.yalla.resources.icons.PinShadow
 import uz.yalla.resources.icons.YallaIcons
-import uz.yalla.resources.img_spinner
 
 /**
  * Color configuration for [LocationPin].
@@ -99,8 +75,8 @@ data class LocationPinDimens(
     val headerBottomOffset: Dp,
 )
 
-private const val SHADOW_SHRINK_DURATION_MS = 400
-private const val JUMP_CYCLE_DURATION_MS = 700
+internal const val SHADOW_SHRINK_DURATION_MS = 400
+internal const val JUMP_CYCLE_DURATION_MS = 700
 
 /**
  * Animated map location pin with address tooltip and timeout display.
@@ -290,153 +266,6 @@ fun LocationPin(
                     },
             )
         }
-    }
-}
-
-@Composable
-private fun PinContent(
-    timeout: Int?,
-    jumping: Boolean,
-    icon: @Composable () -> Unit,
-    timeoutStyle: TextStyle,
-    timeoutLabelStyle: TextStyle,
-    colors: LocationPinColors,
-    dimens: LocationPinDimens,
-    modifier: Modifier = Modifier,
-) {
-    val infiniteTransition = rememberInfiniteTransition(label = "loader")
-    val rotation by infiniteTransition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        label = "rotation",
-        animationSpec =
-            infiniteRepeatable(
-                repeatMode = RepeatMode.Restart,
-                animation =
-                    tween(
-                        easing = FastOutSlowInEasing,
-                        durationMillis = JUMP_CYCLE_DURATION_MS * 2,
-                    ),
-            ),
-    )
-
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier =
-            modifier
-                .size(dimens.contentSize)
-                .aspectRatio(1f)
-                .background(
-                    shape = dimens.contentShape,
-                    color = colors.background,
-                ).border(
-                    width = dimens.borderWidth,
-                    shape = dimens.contentShape,
-                    brush = colors.border,
-                ),
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            when {
-                jumping -> {
-                    Image(
-                        painter = painterResource(Res.drawable.img_spinner),
-                        contentDescription = null,
-                        modifier =
-                            Modifier
-                                .size(18.dp)
-                                .graphicsLayer { rotationZ = rotation },
-                    )
-                }
-                timeout == null -> {
-                    icon()
-                }
-                else -> {
-                    Text(
-                        text = timeout.or0().coerceAtLeast(1).toString(),
-                        color = colors.text,
-                        style = timeoutStyle,
-                    )
-                    Text(
-                        text = stringResource(Res.string.format_time_min_short),
-                        color = colors.text,
-                        style =
-                            timeoutLabelStyle.copy(
-                                fontSize = 9.sp,
-                                lineHeight = 8.sp,
-                            ),
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun PinStick(
-    clipHeight: Dp,
-    colors: LocationPinColors,
-    dimens: LocationPinDimens,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        contentAlignment = Alignment.TopCenter,
-        modifier =
-            modifier
-                .width(dimens.stickWidth)
-                .height(dimens.stickHeight),
-    ) {
-        Box(
-            modifier =
-                Modifier
-                    .width(dimens.stickWidth)
-                    .height(clipHeight)
-                    .clipToBounds()
-                    .background(
-                        shape = CircleShape,
-                        color = colors.stick,
-                    ).border(
-                        width = 1.dp,
-                        shape = CircleShape,
-                        color = colors.stickBorder,
-                    ),
-        )
-    }
-}
-
-@Composable
-private fun PinHeader(
-    address: String,
-    headerStyle: TextStyle,
-    colors: LocationPinColors,
-    dimens: LocationPinDimens,
-    modifier: Modifier = Modifier,
-) {
-    Surface(
-        shape = dimens.headerShape,
-        color = colors.header,
-        modifier = modifier,
-    ) {
-        Text(
-            text =
-                address.takeIf { it.isNotBlank() }
-                    ?: stringResource(Res.string.common_status_loading),
-            color = colors.headerText,
-            style = headerStyle,
-            maxLines = 1,
-            modifier =
-                Modifier
-                    .animateContentSize(
-                        alignment = Alignment.Center,
-                        animationSpec =
-                            spring(
-                                dampingRatio = Spring.DampingRatioNoBouncy,
-                                stiffness = Spring.StiffnessMedium,
-                            ),
-                    ).padding(
-                        vertical = dimens.headerVerticalPadding,
-                        horizontal = dimens.headerHorizontalPadding,
-                    ),
-        )
     }
 }
 
