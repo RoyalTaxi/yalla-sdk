@@ -44,6 +44,11 @@ fun Order.Taxi.Route.toLocation() =
         point = GeoPoint(lat = coords.lat, lng = coords.lng)
     )
 
+/**
+ * Returns all route stops of this order as [Location] objects, sorted ascending
+ * by `Order.Taxi.Route.index`. Convenience for map/navigation features that
+ * need an ordered waypoint list without reaching into the raw `Route` shape.
+ */
 fun Order.sortedRouteLocations(): List<Location> {
     return taxi.routes
         .sortedBy { route -> route.index }

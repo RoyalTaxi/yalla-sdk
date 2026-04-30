@@ -109,7 +109,16 @@ class LoadingController(
         }
 
     companion object {
+        /**
+         * Operations completing faster than 400 ms never show a spinner —
+         * avoids flash for typical fast-path responses.
+         */
         val DEFAULT_SHOW_AFTER: Duration = 400.milliseconds
+
+        /**
+         * Once the spinner appears, it stays at least 300 ms — prevents
+         * a jarring sub-frame dismissal.
+         */
         val DEFAULT_MIN_DISPLAY_TIME: Duration = 300.milliseconds
     }
 }

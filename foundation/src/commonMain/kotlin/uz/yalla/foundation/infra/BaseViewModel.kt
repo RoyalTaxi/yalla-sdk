@@ -76,18 +76,41 @@ abstract class BaseViewModel : ViewModel() {
      */
     val safeScope: CoroutineScope = viewModelScope + handler
 
+    /**
+     * Surfaces an unexpected [Throwable] as an error dialog.
+     *
+     * Use for exceptions that escape typed [DataError] handling (e.g. unchecked
+     * runtime failures). For domain-typed errors, prefer [handleDataError].
+     * Coroutines launched in [safeScope] get this automatically via the
+     * [CoroutineExceptionHandler]; call this explicitly only from `catch`
+     * blocks where the throwable is already in hand.
+     */
     fun handleException(throwable: Throwable) {
         val messageId = mapThrowableToUserMessage(throwable)
         _currentErrorMessageId.tryEmit(messageId)
         _showErrorDialog.tryEmit(true)
     }
 
+    /**
+     * Surfaces a [DataError] as an error dialog using [mapDataErrorToUserMessage].
+     *
+     * Prefer over [handleException] whenever the error comes from a typed
+     * `Either<DataError, T>` result. Override [mapDataErrorToUserMessage] in
+     * the subclass to remap specific variants (e.g. `ClientWithMessage`) to a
+     * server-supplied string.
+     */
     fun handleDataError(error: DataError) {
         val messageId = mapDataErrorToUserMessage(error)
         _currentErrorMessageId.tryEmit(messageId)
         _showErrorDialog.tryEmit(true)
     }
 
+    /**
+     * Hides the error dialog and clears [currentErrorMessageId].
+     *
+     * Wire to the dialog's dismiss / confirm callback. Safe to call when no
+     * dialog is showing — both flows are set atomically via `tryEmit`.
+     */
     fun dismissErrorDialog() {
         _showErrorDialog.tryEmit(false)
         _currentErrorMessageId.tryEmit(null)
@@ -106,6 +129,14 @@ abstract class BaseViewModel : ViewModel() {
         loadingController.withLoading(showAfter, minDisplayTime, block)
     }
 
+    /**
+     * Launches a coroutine in this scope with the shared [CoroutineExceptionHandler].
+     *
+     * Errors surface as an error dialog (same path as [safeScope]). Unlike
+     * [launchWithLoading], no loading indicator is shown — use this for
+     * background work that must not affect the loading state (analytics,
+     * fire-and-forget writes).
+     */
     fun CoroutineScope.launchSafe(block: suspend () -> Unit) =
         launch(handler) {
             block()

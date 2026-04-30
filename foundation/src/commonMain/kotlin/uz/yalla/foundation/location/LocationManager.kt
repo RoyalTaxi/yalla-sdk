@@ -122,12 +122,29 @@ class LocationManager(
         }
     }
 
+    /**
+     * Pushes the current platform permission state into this manager.
+     *
+     * Write sink, **not** a request trigger. The composable layer observes the
+     * moko-permissions controller and calls this whenever the state changes
+     * (granted, denied, denied-permanently). [permissionState] reflects the
+     * last pushed value; `null` until the first call.
+     */
     fun updatePermissionState(state: LocationPermissionState?) {
         _permissionState.value = state
     }
 
+    /**
+     * Last known location as a synchronous snapshot, or `null` if tracking
+     * has not produced a fix yet. For continuous updates collect [currentLocation].
+     */
     override fun getCurrentLocation(): GeoPoint? = _extendedLocation.value?.toGeoPoint()
 
+    /**
+     * Snapshot variant of [getCurrentLocation] that falls back to [defaultLocation]
+     * (Tashkent center by default) when no fix is available — guaranteeing a
+     * non-null result for map-camera initialization paths.
+     */
     override fun getCurrentLocationOrDefault(): GeoPoint = getCurrentLocation() ?: defaultLocation
 
     companion object {
