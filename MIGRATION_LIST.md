@@ -221,11 +221,52 @@ The foundation/core `LocationProvider` collision question (raised in the audit p
 
 ---
 
+---
+
+## Phase 3 — `primitives` additions
+
+### Promotions / demotions surfaced
+
+*From phase 3 `primitives`:* none. Per `PRIMITIVES_AUDIT.md` §5: zero promotions, zero demotions. Three borderline default-copy flags neutralized (see breaking changes below).
+
+### Pending consumers (audit decision G20 deferred)
+
+- **`System.space.*` / `System.radius.*` token adoption** — primitives currently uses literal `dp` / `RoundedCornerShape(N.dp)` in every `*Defaults.dimens()` factory instead of reading from the design theme. ~150 substitutions across 30 components. Deferred per G20 to avoid visual regressions; revisit when the brand-spacing values are settled. Documented in `primitives/MODULE.md` notes.
+
+### Breaking changes shipped
+
+*From phase 3 `primitives`:*
+
+- `f9ce149e4 refactor!(primitives): delete unused PhoneVisualTransformation + NumberVisualTransformation`
+  Removed: `uz.yalla.primitives.transformation.PhoneVisualTransformation` and `uz.yalla.primitives.transformation.NumberVisualTransformation` (both classes). Zero callers SDK-wide. Same shape as core G1 / design G9 / foundation G14. Action: YallaClient's private `CardNumberVisualTransformation` (the historical migration target) keeps its private impl; if a future caller needs the public transformation surface, recreate from scratch with a real producer. `NumberField`'s private `PhoneVisualTransformation` object continues to provide the actual phone-input formatting.
+- `9e063e724 refactor!(primitives): drop dead helpers, suppressions, and unused params`
+  - `LocationPin` lost its unused `loading: Boolean = false` parameter. Action: drop the `loading = ...` argument at any call site.
+  - `LoadingIndicatorDimens` constructor lost `smallStrokeWidth`/`mediumStrokeWidth`/`largeStrokeWidth` (3 fields) and the `strokeWidth(size)` method. `LoadingIndicatorDefaults.dimens(...)` factory likewise dropped 3 params. Action: remove any `smallStrokeWidth = ...` / `dimens.strokeWidth(...)` references; the component renders via `NativeLoadingIndicator` which doesn't take stroke width.
+  - `uz.yalla.primitives.navigation.{ToolbarAction, ToolbarIcon}` typealiases removed. Action: import from `uz.yalla.platform.navigation.*` directly (the typealias targets).
+  - `MaskFormatter` narrowed: `countPlaceholders(mask, maskChar)` and `extractRaw(formatted, mask, maskChar)` deleted; only `format()` remains. Zero callers anywhere.
+- `fb4bdab66 refactor!(primitives): tighten api/implementation split, swap ArrowBack to YallaIcons`
+  - **Deps changes (pom.xml).** `compose.runtime`, `compose.ui`, `compose.foundation`, `compose.material3`, `projects.design`, `projects.resources` all promoted to `api()`. Consumers that already declare these directly are unaffected; consumers relying on transitive `compose.materialIconsExtended` from primitives lose it (composites and platform still declare it independently).
+  - **`NavigationButton.icon` default** changed from `Icons.AutoMirrored.Filled.ArrowBack` (Material Icons) to `YallaIcons.ArrowLeft` (from `:resources`). Visual-equivalent left-pointing arrow; same UX.
+  - **`NavigationButton.contentDescription` default** dropped the `"Navigate back"` literal English string; default is now `null`. Callers must pass a localized string via `stringResource(...)` or accept `null` = decorative. Aligns with `TopBar.navigationIconContentDescription`'s existing posture.
+- `d045a8568 refactor!(primitives): neutralize default copy + simplify squareSize`
+  - **`SensitiveButton.confirmText` and `SensitiveButton.countdownText` are now REQUIRED `String` params** (was `String? = null` with order-specific `stringResource` fallback). Callers must pass localized strings. The component is "sensitive button," not "cancel order button"; defaults that referenced `Res.string.order_cancel_action_yes` / `Res.string.order_cancel_countdown` were leaking feature-specific copy into the SDK. Action: update every `SensitiveButton(...)` call site to pass `confirmText` and `countdownText` explicitly.
+  - **`SplashOverlay.message` default** changed from `stringResource(Res.string.location_gps_subtitle)` (location-specific) to `""` (empty = no message slot rendered). Callers pass a localized string only when they need one.
+
+### Architectural patterns documented (no code change)
+
+- **Colors + Dimens + Defaults convention.** Each primitive component carries `{Component}Colors` (`@Immutable data class`) + `{Component}Dimens` (`@Immutable data class`) + `{Component}Defaults` (object with `colors()` / `dimens()` factories that read theme tokens via `System.color.*`, `System.font.*`). Documented in `primitives/MODULE.md` notes since the deleted `COMPONENT_STANDARD.md` no longer carries it.
+- **`@Preview` annotations in commonMain** — accepted; ship into the published artifact but R8-shrinkable consumer-side.
+- **`runComposeUiTest` behavioral test bar** — deferred post-alpha. Current `commonTest` is data-class equality only; behavioral coverage for the 14 untested components arrives with the runComposeUiTest infrastructure decision later.
+- **`LocationPin.DEFAULT_LOCATION`-style product defaults** — kept; product-specific defaults are acceptable when parameterizable (consumer can override).
+
+---
+
 ## Phase status
 
 - Phase 2 `core` — done. Plan: [PHASE_2_CORE_PLAN.md](PHASE_2_CORE_PLAN.md). Audit: [CORE_AUDIT.md](CORE_AUDIT.md).
 - Phase 2 `data` — done. Plan: [PHASE_2_DATA_PLAN.md](PHASE_2_DATA_PLAN.md). Audit: [DATA_AUDIT.md](DATA_AUDIT.md).
 - Phase 3 `design` — done. Plan: [PHASE_3_DESIGN_PLAN.md](PHASE_3_DESIGN_PLAN.md). Audit: [DESIGN_AUDIT.md](DESIGN_AUDIT.md).
 - Phase 3 `foundation` — done. Plan: [PHASE_3_FOUNDATION_PLAN.md](PHASE_3_FOUNDATION_PLAN.md). Audit: [FOUNDATION_AUDIT.md](FOUNDATION_AUDIT.md).
-- Phase 3 `primitives`, `composites` — TODO.
+- Phase 3 `primitives` — done. Plan: [PHASE_3_PRIMITIVES_PLAN.md](PHASE_3_PRIMITIVES_PLAN.md). Audit: [PRIMITIVES_AUDIT.md](PRIMITIVES_AUDIT.md).
+- Phase 3 `composites` — TODO.
 - Phase 4 `firebase`, `maps`, `media`, `platform` — TODO.
