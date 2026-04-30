@@ -1,5 +1,6 @@
 package uz.yalla.foundation.settings
 
+import androidx.compose.runtime.Immutable
 import org.jetbrains.compose.resources.StringResource
 import uz.yalla.core.settings.MapKind
 import uz.yalla.resources.Res
@@ -13,6 +14,7 @@ import uz.yalla.resources.settings_map_libre
  * Has no icon — only a localized name.
  *
  */
+@Immutable
 sealed class MapOption(
     override val name: StringResource,
     val kind: MapKind

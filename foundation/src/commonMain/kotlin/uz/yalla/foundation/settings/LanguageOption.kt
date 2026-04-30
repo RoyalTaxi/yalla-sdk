@@ -1,5 +1,6 @@
 package uz.yalla.foundation.settings
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import org.jetbrains.compose.resources.StringResource
 import uz.yalla.core.settings.LocaleKind
@@ -17,6 +18,7 @@ import uz.yalla.resources.language_uzbek_latin
  * in Phase 3 (ADR-014) to the production-ready locales: [Uzbek] and [Russian].
  *
  */
+@Immutable
 sealed class LanguageOption(
     override val icon: ImageVector,
     override val name: StringResource,

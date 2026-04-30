@@ -50,9 +50,10 @@ class LocationManager(
 
     /**
      * Current device location with extended metadata, or `null` if tracking is off
-     * or no fix has arrived yet.
+     * or no fix has arrived yet. Internal — consumers read [currentLocation] for
+     * the [GeoPoint]-shaped public surface.
      */
-    val extendedLocation: StateFlow<ExtendedLocation?> = _extendedLocation.asStateFlow()
+    internal val extendedLocation: StateFlow<ExtendedLocation?> = _extendedLocation.asStateFlow()
 
     /**
      * Current location as [GeoPoint]; emits `null` if no fix.

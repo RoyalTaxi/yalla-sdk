@@ -1,5 +1,6 @@
 package uz.yalla.foundation.settings
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -16,6 +17,7 @@ import org.jetbrains.compose.resources.stringResource
  * @property name Localized display name
  * @property icon Optional icon; null when the option has no visual indicator
  */
+@Immutable
 interface Selectable {
     val name: StringResource
     val icon: ImageVector? get() = null

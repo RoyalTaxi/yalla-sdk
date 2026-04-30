@@ -1,5 +1,6 @@
 package uz.yalla.foundation.settings
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import org.jetbrains.compose.resources.StringResource
 import uz.yalla.core.settings.ThemeKind
@@ -18,6 +19,7 @@ import uz.yalla.resources.settings_theme_system
  * Sealed hierarchy mapping [ThemeKind] to display properties.
  *
  */
+@Immutable
 sealed class ThemeOption(
     override val icon: ImageVector,
     override val name: StringResource,

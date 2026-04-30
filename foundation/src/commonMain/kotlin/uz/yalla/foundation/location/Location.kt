@@ -1,7 +1,10 @@
 package uz.yalla.foundation.location
 
+import androidx.compose.runtime.Immutable
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.location.PlaceKind
+
+@Immutable
 
 data class Location(
     val id: Int? = null,
@@ -10,6 +13,7 @@ data class Location(
 )
 
 /** A found location from search results. */
+@Immutable
 data class FoundLocation(
     val id: Int? = null,
     val name: String? = null,

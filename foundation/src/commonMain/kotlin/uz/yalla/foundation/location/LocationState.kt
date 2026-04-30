@@ -2,7 +2,7 @@ package uz.yalla.foundation.location
 
 import uz.yalla.core.geo.GeoPoint
 
-data class ExtendedLocation(
+internal data class ExtendedLocation(
     val latitude: Double,
     val longitude: Double,
     val accuracy: Float? = null,
