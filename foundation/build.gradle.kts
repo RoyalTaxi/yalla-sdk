@@ -7,41 +7,30 @@ kotlin {
         commonMain.dependencies {
             // Yalla libraries
             api(projects.core)
-            implementation(projects.design)
-            implementation(projects.resources)
+            api(projects.resources)
 
-            // Compose
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
+            // Compose — public types: @Composable + ProvidableCompositionLocal
+            // (compose.runtime), Modifier on Modifier.staggerReveal (compose.ui)
+            api(compose.runtime)
+            api(compose.ui)
+            implementation(compose.animation)
             implementation(compose.components.resources)
+
+            // Architecture — public types (BaseViewModel : ViewModel,
+            // Lifecycle.State in ObserveAsEvents, StateFlow/CoroutineScope
+            // in LocationManager)
+            api(libs.androidx.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.runtime.compose)
+            api(libs.kotlinx.coroutines.core)
 
             // DI
             implementation(libs.koin.core)
-            implementation(libs.koin.compose.viewmodel)
-
-            // Architecture
-            implementation(libs.orbit.core)
-            implementation(libs.orbit.viewmodel)
-            implementation(libs.orbit.compose)
-
-            // Coroutines & Serialization
-            implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.serialization.json)
 
             // Logging
             implementation(libs.kermit)
 
-            // Lifecycle
-            implementation(libs.androidx.lifecycle.viewmodel.compose)
-            implementation(libs.androidx.lifecycle.runtime.compose)
-
-            // Location
-            implementation(libs.geo)
-            implementation(libs.geo.compose)
-
-            // Connectivity
-            implementation(libs.connectivity.device)
+            // Location — moko-geo's LocationTracker is a public ctor param
+            api(libs.geo)
         }
 
         commonTest.dependencies {

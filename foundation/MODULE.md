@@ -22,3 +22,17 @@ App language management with platform-specific implementations and CompositionLo
 
 # Package uz.yalla.foundation.settings
 Settings option models (theme, language, map provider) with shared [Selectable] contract and selection list support.
+
+## Depends on
+
+- `core` (api)
+- `resources` (api)
+- `compose.runtime` (api — `@Composable` + `ProvidableCompositionLocal`)
+- `compose.ui` (api — `Modifier` on `Modifier.staggerReveal`)
+- `androidx.lifecycle.viewmodel` (api — `BaseViewModel : ViewModel`)
+- `androidx.lifecycle.runtime.compose` (api — `Lifecycle.State` in `ObserveAsEvents`)
+- `kotlinx.coroutines.core` (api — `StateFlow`/`CoroutineScope` in `LocationManager`)
+- `geo` (api — moko-geo `LocationTracker` is a public ctor param)
+- `compose.animation`, `compose.components.resources`, `koin.core`, `kermit` (implementation — used internally only)
+- `androidx.core.ktx`, `koin.android` (androidMain implementation)
+- No SDK-internal dep beyond `core` and `resources`.
