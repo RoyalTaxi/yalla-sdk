@@ -11,21 +11,12 @@ import kotlin.math.max
 import kotlin.math.min
 
 /**
- * Modifier that constrains content to a square based on available space.
+ * Constrains the content to a square whose side is `min(maxWidth, maxHeight)` of the
+ * incoming constraints. If `minWidth > maxHeight` or `minHeight > maxWidth` (an
+ * overconstrained layout), the modifier falls back to measuring without modification.
  *
- * ## Usage
- *
- * ```kotlin
- * Box(
- *     modifier = Modifier
- *         .fillMaxWidth()
- *         .squareSize()
- * ) {
- *     // Content will be square
- * }
- * ```
- *
- * @param position Alignment position within the square (0.0 = start, 0.5 = center, 1.0 = end).
+ * [position] controls where the content is placed within the square when it is smaller
+ * than the resolved size: 0.0 = start/top, 0.5 = centered (default), 1.0 = end/bottom.
  */
 @Stable
 fun Modifier.squareSize(position: Float = 0.5f): Modifier =

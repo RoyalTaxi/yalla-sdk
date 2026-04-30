@@ -19,7 +19,15 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.platform.indicator.NativeLoadingIndicator
 
-/** Color configuration for [LoadingDialog]. */
+/**
+ * Color configuration for [LoadingDialog].
+ *
+ * Unlike other primitive color configs, [container] defaults to the literal `Color.White`
+ * rather than a [System] token — override it when the app uses a dark or custom dialog
+ * background. [indicator] uses [System.color.background.brand] and is theme-aware.
+ *
+ * Use [LoadingDialogDefaults.colors] to create with these defaults.
+ */
 @Immutable
 data class LoadingDialogColors(
     val container: Color,

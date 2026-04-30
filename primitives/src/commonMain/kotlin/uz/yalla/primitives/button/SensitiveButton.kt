@@ -170,6 +170,7 @@ fun SensitiveButton(
  * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
  */
 object SensitiveButtonDefaults {
+    /** Default button height in dp. Matches [PrimaryButton] and [SecondaryButton] heights for layout consistency. */
     val Height = 60.dp
     val Shape: Shape = RoundedCornerShape(16.dp)
 

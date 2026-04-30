@@ -25,7 +25,15 @@ import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_logo_splash
 
-/** Color configuration for [SplashOverlay]. */
+/**
+ * Color configuration for [SplashOverlay].
+ *
+ * [background] is a [Brush] rather than a plain [Color], allowing gradient fills;
+ * the default is [System.color.gradient.splash]. [indicatorTrack] is derived from
+ * [indicator] at 50% alpha so the ring gap stays visually consistent.
+ *
+ * Use [SplashOverlayDefaults.colors] to create with theme-aware defaults.
+ */
 @Immutable
 data class SplashOverlayColors(
     val background: Brush,
@@ -34,7 +42,16 @@ data class SplashOverlayColors(
     val text: Color,
 )
 
-/** Dimension configuration for [SplashOverlay]. */
+/**
+ * Dimension configuration for [SplashOverlay].
+ *
+ * [indicatorStrokeWidth] and [indicatorGapSize] are forwarded verbatim to
+ * [androidx.compose.material3.CircularProgressIndicator]; both are in dp units.
+ * [bottomPadding] offsets the indicator + message column from the screen bottom edge
+ * (not from the navigation bar — apply [statusBarsPadding] in the parent if needed).
+ *
+ * Use [SplashOverlayDefaults.dimens] to create with standard values.
+ */
 @Immutable
 data class SplashOverlayDimens(
     val contentSpacing: Dp,

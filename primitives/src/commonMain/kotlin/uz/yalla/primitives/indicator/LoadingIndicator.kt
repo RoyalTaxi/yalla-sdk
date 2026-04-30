@@ -16,7 +16,14 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.platform.indicator.NativeLoadingIndicator
 
-/** Color configuration for [LoadingIndicator]. */
+/**
+ * Color configuration for [LoadingIndicator].
+ *
+ * [indicator] sets the spinning arc color. [track] is reserved for future use —
+ * the current [NativeLoadingIndicator] implementation does not render a background track.
+ *
+ * Use [LoadingIndicatorDefaults.colors] to create with theme-aware defaults.
+ */
 @Immutable
 data class LoadingIndicatorColors(
     val indicator: Color,

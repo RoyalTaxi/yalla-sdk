@@ -22,14 +22,29 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
-/** Color configuration for [DotsIndicator]. */
+/**
+ * Color configuration for [DotsIndicator].
+ *
+ * [selected] is applied to the dot whose index matches [DotsIndicator.currentPage];
+ * all other dots use [unselected]. Both colors are constant — there is no pressed/hover state.
+ *
+ * Use [DotsIndicatorDefaults.colors] to create with theme-aware defaults.
+ */
 @Immutable
 data class DotsIndicatorColors(
     val selected: Color,
     val unselected: Color,
 )
 
-/** Dimension configuration for [DotsIndicator]. */
+/**
+ * Dimension configuration for [DotsIndicator].
+ *
+ * [dotSize] sets both the height and the width of unselected dots (they are square).
+ * [selectedWidth] is the expanded width of the current-page dot; height stays [dotSize].
+ * [animationDurationMillis] controls the speed of the width transition between states.
+ *
+ * Use [DotsIndicatorDefaults.dimens] to create with standard values.
+ */
 @Immutable
 data class DotsIndicatorDimens(
     val dotSize: Dp,

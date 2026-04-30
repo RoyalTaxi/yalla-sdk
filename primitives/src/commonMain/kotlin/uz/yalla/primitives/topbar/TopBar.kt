@@ -24,7 +24,15 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.primitives.button.NavigationButton
 
-/** Color configuration for [TopBar]. */
+/**
+ * Color configuration for [TopBar].
+ *
+ * Note: [container] is part of the configuration API for forward-compatibility but is not
+ * currently applied as a background in the default layout — set a background via [Modifier]
+ * on the call site if a filled bar is needed.
+ *
+ * Use [TopBarDefaults.colors] to create with theme-aware defaults.
+ */
 @Immutable
 data class TopBarColors(
     val container: Color,

@@ -31,7 +31,15 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import kotlin.math.hypot
 
-/** Color configuration for [StripedProgressBar]. */
+/**
+ * Color configuration for [StripedProgressBar].
+ *
+ * [indicator] is a [Brush] so it supports gradient fills over the filled portion;
+ * the default is [System.color.gradient.sunsetNight]. [stripe] is a semi-transparent
+ * overlay painted on top of [indicator] — keep alpha low (e.g. 0.2f) to preserve the gradient.
+ *
+ * Use [StripedProgressBarDefaults.colors] to create with theme-aware defaults.
+ */
 @Immutable
 data class StripedProgressBarColors(
     val track: Color,
@@ -39,7 +47,16 @@ data class StripedProgressBarColors(
     val stripe: Color,
 )
 
-/** Dimension configuration for [StripedProgressBar]. */
+/**
+ * Dimension configuration for [StripedProgressBar].
+ *
+ * [stripeWidth] and [stripeGap] together define one stripe period; the pattern repeats
+ * across the full width. [stripeAngle] is in degrees clockwise — 30f produces a typical
+ * diagonal chevron. [animationDurationMs] is the time for one full period shift (one stripe
+ * width + gap moves past a fixed point), so smaller values produce faster-moving stripes.
+ *
+ * Use [StripedProgressBarDefaults.dimens] to create with standard values.
+ */
 @Immutable
 data class StripedProgressBarDimens(
     val shape: Shape,

@@ -19,7 +19,16 @@ import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import uz.yalla.resources.Res
 
-/** Dimension configuration for [SearchPin]. */
+/**
+ * Dimension configuration for [SearchPin].
+ *
+ * [lottieResourcePath] is a Compose Multiplatform resource path passed to
+ * `Res.readBytes(…)`. The path is relative to the `files/` directory declared
+ * in the module's resource set — use the `files/` prefix (e.g. `"files/my_anim.json"`).
+ * Override this only to swap the Lottie animation; [size] controls the rendered square size in dp.
+ *
+ * Use [SearchPinDefaults.dimens] to create with standard values.
+ */
 @Immutable
 data class SearchPinDimens(
     val size: Dp,
