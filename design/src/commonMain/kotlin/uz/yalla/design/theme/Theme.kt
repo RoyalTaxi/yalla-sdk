@@ -64,7 +64,6 @@ private val LocalIsDark = staticCompositionLocalOf { false }
  * @param spaceScheme Spacing tokens to apply. Defaults to [standardSpaceScheme].
  * @param radiusScheme Corner-radius tokens to apply. Defaults to [standardRadiusScheme].
  * @param content Composable content wrapped by the theme.
- * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -145,8 +144,6 @@ fun YallaTheme(
  * val bodyStyle = System.font.body.base.medium
  * val isDarkMode = System.isDark
  * ```
- *
- * @since 0.0.1
  */
 object System {
     /** Current [ColorScheme] provided by the nearest [YallaTheme]. */

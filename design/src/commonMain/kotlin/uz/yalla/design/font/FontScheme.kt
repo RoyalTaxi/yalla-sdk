@@ -27,7 +27,6 @@ import androidx.compose.ui.text.TextStyle
  * @property title Title/heading text styles.
  * @property body Body text styles with weight variants.
  * @property custom Special-purpose text styles.
- * @since 0.0.1
  */
 data class FontScheme(
     val title: Title,
@@ -40,7 +39,6 @@ data class FontScheme(
      * @property xLarge Extra-large title — 30sp, splash headers.
      * @property large Large title — 22sp, screen headers.
      * @property base Base title — 20sp, section headers.
-     * @since 0.0.1
      */
     data class Title(
         val xLarge: TextStyle,
@@ -55,7 +53,6 @@ data class FontScheme(
      * @property large Large body — 18sp with [Weighty] variants.
      * @property base Base body — 16sp with [Weighty] variants. Default for paragraphs.
      * @property small Small body — 14sp with [Weighty] variants. Secondary text.
-     * @since 0.0.1
      */
     data class Body(
         val caption: TextStyle,
@@ -72,7 +69,6 @@ data class FontScheme(
          * @property regular Normal weight — everyday paragraph text.
          * @property medium Medium weight — subtly emphasized text, form labels.
          * @property bold Bold weight — strongly emphasized text, key values.
-         * @since 0.0.1
          */
         data class Weighty(
             val regular: TextStyle,
@@ -85,7 +81,6 @@ data class FontScheme(
      * Special-purpose text styles outside the standard title/body hierarchy.
      *
      * @property carNumber License plate style — 12sp, Nummernschild font.
-     * @since 0.0.1
      */
     data class Custom(
         val carNumber: TextStyle
@@ -97,8 +92,6 @@ data class FontScheme(
  *
  * Has no default value — throws if accessed outside a [YallaTheme][uz.yalla.design.theme.YallaTheme].
  * This is intentional: font loading requires a composable context, so a static default is not feasible.
- *
- * @since 0.0.1
  */
 val LocalFontScheme =
     staticCompositionLocalOf<FontScheme> {
@@ -134,8 +127,6 @@ val LocalFontScheme =
  * Works with any font in [FontScheme] whose file includes the `tnum`
  * OpenType feature — Inter, Roboto, and SF Pro (the three families this
  * module ships) all include it.
- *
- * @since 0.0.15
  */
 val FontScheme.Body.numeric: TextStyle
     get() = base.medium.copy(fontFeatureSettings = FONT_FEATURE_TABULAR_NUMERALS)

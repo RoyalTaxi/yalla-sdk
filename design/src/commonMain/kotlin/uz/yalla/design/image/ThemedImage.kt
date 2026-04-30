@@ -45,7 +45,6 @@ import uz.yalla.resources.img_light_trash_can
  *
  * @property light Drawable resource for light mode.
  * @property dark Drawable resource for dark mode.
- * @since 0.0.1
  */
 enum class ThemedImage(
     val light: DrawableResource,

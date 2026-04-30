@@ -56,7 +56,6 @@ import kotlin.time.Duration.Companion.milliseconds
  * @property spring Named [SpringSpec] presets keyed by feel.
  * @property stagger Named stagger delays as [Duration], for cascading item
  * reveals in lists and grids.
- * @since 0.0.17
  */
 @Immutable
 data class MotionScheme(
@@ -78,7 +77,6 @@ data class MotionScheme(
      * @property standard 350ms — default screen transitions, sheet reveals.
      * @property slow 500ms — large enter/exit, hero transitions.
      * @property contemplative 800ms — signature moments only.
-     * @since 0.0.17
      */
     @Immutable
     data class Duration(
@@ -100,7 +98,6 @@ data class MotionScheme(
      * @property emphasized Entries that need to feel confident. Material 3 emphasized.
      * @property entrance Items arriving on screen. Fast-start, soft-land.
      * @property exit Items leaving screen. Soft-start, fast-finish.
-     * @since 0.0.17
      */
     @Immutable
     data class Easing(
@@ -121,7 +118,6 @@ data class MotionScheme(
      * @property gentle Calm snap without overshoot. Default for most springs.
      * @property snappy Fast settle for drag-release.
      * @property stiff Instant settle. Use for large elements that should feel anchored.
-     * @since 0.0.17
      */
     @Immutable
     data class Spring(
@@ -146,7 +142,6 @@ data class MotionScheme(
      * @property list 30ms — default for lists entering on first render.
      * @property grid 50ms — grid tiles revealing.
      * @property cards 75ms — stacked card entries, hero carousels.
-     * @since 0.0.17
      */
     @Immutable
     data class Stagger(
@@ -162,8 +157,6 @@ data class MotionScheme(
  * Values match the catalog in the YallaClient refactor spec (section 9) and
  * ADR-021. Consumers override individual tokens by passing a modified
  * [MotionScheme.copy] into `YallaTheme(motionScheme = ...)`.
- *
- * @since 0.0.17
  */
 fun standardMotionScheme(): MotionScheme = MotionScheme(
     duration = MotionScheme.Duration(
@@ -202,7 +195,5 @@ fun standardMotionScheme(): MotionScheme = MotionScheme(
  * Defaults to [standardMotionScheme] so composables that render outside a
  * [YallaTheme][uz.yalla.design.theme.YallaTheme] (e.g. IDE previews) still
  * get usable motion tokens.
- *
- * @since 0.0.17
  */
 val LocalMotionScheme = staticCompositionLocalOf { standardMotionScheme() }

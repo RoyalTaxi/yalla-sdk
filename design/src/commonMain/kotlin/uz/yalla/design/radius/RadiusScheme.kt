@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.dp
  * @property l 16.dp — buttons, selectable items (the de-facto standard).
  * @property xl 24.dp — large feature cards.
  * @property sheet 40.dp — bottom-sheet top corner.
- * @since 0.0.13
  */
 data class RadiusScheme(
     val xs: Dp,
@@ -52,8 +51,6 @@ data class RadiusScheme(
  *
  * Override at the theme level when white-labeling or experimenting with a
  * sharper/softer aesthetic.
- *
- * @since 0.0.13
  */
 fun standardRadiusScheme(): RadiusScheme = RadiusScheme(
     xs = 4.dp,
@@ -70,7 +67,5 @@ fun standardRadiusScheme(): RadiusScheme = RadiusScheme(
  *
  * Defaults to [standardRadiusScheme] so tokens resolve even outside a
  * [YallaTheme][uz.yalla.design.theme.YallaTheme].
- *
- * @since 0.0.13
  */
 val LocalRadiusScheme = staticCompositionLocalOf { standardRadiusScheme() }

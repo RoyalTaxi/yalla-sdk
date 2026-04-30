@@ -34,7 +34,6 @@ import androidx.compose.ui.graphics.Color
  * @property icon Icon tint color tokens.
  * @property accent Decorative accent color tokens.
  * @property gradient Brush-based gradient tokens.
- * @since 0.0.1
  */
 data class ColorScheme(
     val text: Text,
@@ -53,7 +52,6 @@ data class ColorScheme(
      * @property link Hyperlink and interactive text color.
      * @property red Error and destructive action text color.
      * @property white Text on dark/brand surfaces.
-     * @since 0.0.1
      */
     data class Text(
         val base: Color,
@@ -70,7 +68,6 @@ data class ColorScheme(
      * @property brand Brand-colored background (e.g. promotional banners).
      * @property secondary Slightly tinted background for visual separation.
      * @property tertiary Third-level background for nested containers.
-     * @since 0.0.1
      */
     data class Background(
         val base: Color,
@@ -86,7 +83,6 @@ data class ColorScheme(
      * @property filled Border for focused/filled inputs.
      * @property white White border for overlays on dark surfaces.
      * @property error Border color indicating validation errors.
-     * @since 0.0.1
      */
     data class Border(
         val disabled: Color,
@@ -103,7 +99,6 @@ data class ColorScheme(
      * @property secondary Secondary/outlined button fill.
      * @property tertiary Tertiary/text button fill.
      * @property disabledTertiary Disabled tertiary button fill.
-     * @since 0.0.1
      */
     data class Button(
         val active: Color,
@@ -122,7 +117,6 @@ data class ColorScheme(
      * @property disabled Disabled/inactive icon color.
      * @property red Error/destructive icon color.
      * @property subtle Muted icon color for secondary indicators.
-     * @since 0.0.1
      */
     data class Icon(
         val white: Color,
@@ -142,7 +136,6 @@ data class ColorScheme(
      * @property color3 Warm amber accent.
      * @property color4 Aqua/teal accent.
      * @property color5 Soft purple accent.
-     * @since 0.0.1
      */
     data class Accent(
         val pinkSun: Color,
@@ -158,7 +151,6 @@ data class ColorScheme(
      *
      * @property splash Vertical purple gradient for splash/loading screens.
      * @property sunsetNight Diagonal pink-to-purple gradient for promotional elements.
-     * @since 0.0.1
      */
     data class Gradient(
         val splash: Brush,
@@ -173,7 +165,6 @@ data class ColorScheme(
  * semantic [ColorScheme] structure. Accent and gradient tokens are shared across themes.
  *
  * @return Light-mode [ColorScheme] instance.
- * @since 0.0.1
  */
 fun light() = ColorScheme(
     text = ColorScheme.Text(
@@ -231,7 +222,6 @@ fun light() = ColorScheme(
  * semantic [ColorScheme] structure. Accent and gradient tokens are shared across themes.
  *
  * @return Dark-mode [ColorScheme] instance.
- * @since 0.0.1
  */
 fun dark() = ColorScheme(
     text = ColorScheme.Text(
@@ -287,7 +277,5 @@ fun dark() = ColorScheme(
  *
  * Defaults to [light] theme. Overridden by [YallaTheme][uz.yalla.design.theme.YallaTheme]
  * to supply the appropriate color scheme based on the current dark/light mode.
- *
- * @since 0.0.1
  */
 val LocalColorScheme = staticCompositionLocalOf { light() }

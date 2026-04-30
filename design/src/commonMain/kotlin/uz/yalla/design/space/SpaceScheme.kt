@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
  * @property heroGap Gap between a hero title/image and surrounding content.
  * @property inlineGap Tight gap between inline elements (icon+text, chip+chip).
  * @property scale Primitive t-shirt scale; used when a semantic alias doesn't fit.
- * @since 0.0.13
  */
 data class SpaceScheme(
     val screenEdge: Dp,
@@ -68,7 +67,6 @@ data class SpaceScheme(
      * @property huge 32.dp — inter-section gap.
      * @property section 40.dp — bottom-sheet top corner, large sections.
      * @property massive 56.dp — hero titles, splash gaps.
-     * @since 0.0.13
      */
     data class Scale(
         val xxs: Dp,
@@ -92,8 +90,6 @@ data class SpaceScheme(
  * - `itemGap` = 12.dp, `sectionGap` = 32.dp, `heroGap` = 56.dp, `inlineGap` = 8.dp
  *
  * Override at the theme level when white-labeling.
- *
- * @since 0.0.13
  */
 fun standardSpaceScheme(): SpaceScheme = SpaceScheme(
     screenEdge = 20.dp,
@@ -124,7 +120,5 @@ fun standardSpaceScheme(): SpaceScheme = SpaceScheme(
  * Defaults to [standardSpaceScheme] so tokens are accessible even outside a
  * [YallaTheme][uz.yalla.design.theme.YallaTheme] — previews and isolated
  * composables still resolve sensible values.
- *
- * @since 0.0.13
  */
 val LocalSpaceScheme = staticCompositionLocalOf { standardSpaceScheme() }

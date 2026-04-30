@@ -20,7 +20,6 @@ import uz.yalla.design.theme.System
  *
  * @param image The themed image entry to resolve.
  * @return [Painter] for the theme-appropriate drawable resource.
- * @since 0.0.1
  */
 @Composable
 fun themedPainter(image: ThemedImage): Painter {

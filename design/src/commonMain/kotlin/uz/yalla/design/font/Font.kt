@@ -14,8 +14,6 @@ import uz.yalla.resources.nummernschild
  *
  * Each platform (Android / iOS) provides the actual font file.
  * Used by [FontScheme.Title] styles and [FontScheme.Body.Weighty.bold].
- *
- * @since 0.0.1
  */
 expect val boldFont: FontResource
 
@@ -24,8 +22,6 @@ expect val boldFont: FontResource
  *
  * Each platform provides the actual font file.
  * Used by [FontScheme.Body.caption] and [FontScheme.Body.Weighty.medium].
- *
- * @since 0.0.1
  */
 expect val mediumFont: FontResource
 
@@ -34,8 +30,6 @@ expect val mediumFont: FontResource
  *
  * Each platform provides the actual font file.
  * Used by [FontScheme.Body.Weighty.regular].
- *
- * @since 0.0.1
  */
 expect val normalFont: FontResource
 
@@ -49,7 +43,6 @@ expect val normalFont: FontResource
  * is provided via [LocalFontScheme]. Callers generally do not need to invoke this directly.
  *
  * @return Fully configured [FontScheme] instance.
- * @since 0.0.1
  */
 @Composable
 fun rememberFontScheme(): FontScheme {
