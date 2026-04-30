@@ -31,3 +31,13 @@ Bridges Yalla's design system with Material3 for interoperability.
 # Package uz.yalla.design.image
 
 Theme-aware image resources with automatic light/dark variant selection via [ThemedImage] and [themedPainter].
+
+## Depends on
+
+- `resources` (api)
+- `compose.runtime` (api)
+- `compose.ui` (api)
+- `compose.foundation` (implementation)
+- `compose.material3` (implementation — Material3 bridge in YallaTheme)
+- `compose.components.resources` (implementation — resource loading)
+- No SDK-internal dep beyond `resources`.

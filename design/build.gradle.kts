@@ -6,10 +6,10 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(projects.resources)
-            implementation(compose.runtime)
+            api(compose.runtime)
+            api(compose.ui)
             implementation(compose.foundation)
             implementation(compose.material3)
-            implementation(compose.ui)
             implementation(compose.components.resources)
         }
 
@@ -17,11 +17,6 @@ kotlin {
             implementation(kotlin("test"))
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
-        }
-
-        androidMain.dependencies {
-            implementation(compose.uiTooling)
-            implementation(libs.androidx.core.ktx)
         }
     }
 }
