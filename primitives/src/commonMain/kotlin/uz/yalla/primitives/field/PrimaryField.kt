@@ -33,7 +33,6 @@ import uz.yalla.design.theme.System
  * @param cursorColor Cursor color.
  * @param selectionColors Text selection handle and highlight colors.
  * @param placeholderColor Placeholder text color.
- * @since 0.0.1
  */
 @Immutable
 data class PrimaryFieldColors(
@@ -52,7 +51,6 @@ data class PrimaryFieldColors(
  * Use [PrimaryFieldDefaults.dimens] to create with standard values.
  *
  * @param shape Corner shape of the outlined field.
- * @since 0.0.1
  */
 @Immutable
 data class PrimaryFieldDimens(
@@ -63,7 +61,6 @@ data class PrimaryFieldDimens(
  * Default configuration values for [PrimaryField].
  *
  * Provides theme-aware defaults for [colors], [textStyle], and [dimens].
- * @since 0.0.1
  */
 object PrimaryFieldDefaults {
 
@@ -156,7 +153,6 @@ object PrimaryFieldDefaults {
  * @see NumberField for phone number input variant
  * @see SearchField for search input variant
  * @see PrimaryFieldDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun PrimaryField(

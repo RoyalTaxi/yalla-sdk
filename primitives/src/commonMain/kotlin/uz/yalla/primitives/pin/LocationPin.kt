@@ -81,7 +81,6 @@ import uz.yalla.resources.img_spinner
  * @param headerText Text color inside the address header tooltip.
  * @param icon Tint color for the default focus-origin icon inside the pin body.
  * @param text Color for timeout text displayed inside the pin body.
- * @since 0.0.1
  */
 @Immutable
 data class LocationPinColors(
@@ -114,7 +113,6 @@ data class LocationPinColors(
  * @param headerHorizontalPadding Horizontal padding inside the header tooltip.
  * @param contentBottomOffset Offset from the shadow center to the pin body bottom.
  * @param headerBottomOffset Offset from the pin body top to the header tooltip bottom.
- * @since 0.0.1
  */
 @Immutable
 data class LocationPinDimens(
@@ -184,7 +182,6 @@ private const val JUMP_CYCLE_DURATION_MS = 700
  *
  * @see SearchPin for the animated search-in-progress indicator
  * @see LocationPinDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun LocationPin(
@@ -481,7 +478,6 @@ private fun PinHeader(
  *
  * Provides theme-aware defaults for [colors] and standard [dimens]
  * that can be individually overridden.
- * @since 0.0.1
  */
 object LocationPinDefaults {
 

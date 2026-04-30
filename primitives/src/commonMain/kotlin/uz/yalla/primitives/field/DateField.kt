@@ -35,7 +35,6 @@ import uz.yalla.resources.icons.YallaIcons
  * @param textColor Color of the selected date text.
  * @param placeholderColor Color of the placeholder text.
  * @param iconColor Color of the calendar icon.
- * @since 0.0.1
  */
 @Immutable
 data class DateFieldColors(
@@ -52,7 +51,6 @@ data class DateFieldColors(
  *
  * @param shape Corner shape of the field.
  * @param contentPadding Padding inside the field container.
- * @since 0.0.1
  */
 @Immutable
 data class DateFieldDimens(
@@ -64,7 +62,6 @@ data class DateFieldDimens(
  * Default configuration values for [DateField].
  *
  * Provides theme-aware defaults for [colors], [textStyle], and [dimens].
- * @since 0.0.1
  */
 object DateFieldDefaults {
 
@@ -139,7 +136,6 @@ object DateFieldDefaults {
  *
  * @see PrimaryField for general text input
  * @see DateFieldDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun DateField(

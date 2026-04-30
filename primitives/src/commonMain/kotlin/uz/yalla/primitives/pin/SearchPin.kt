@@ -24,7 +24,6 @@ import uz.yalla.resources.Res
  *
  * @param size Size of the search pin animation.
  * @param lottieResourcePath Resource path for the Lottie animation.
- * @since 0.0.1
  */
 @Immutable
 data class SearchPinDimens(
@@ -55,7 +54,6 @@ data class SearchPinDimens(
  * @param dimens Dimension configuration, defaults to [SearchPinDefaults.dimens].
  *
  * @see SearchPinDefaults for default values
- * @since 0.0.1
  */
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -90,7 +88,6 @@ fun SearchPin(
  * Default configuration values for [SearchPin].
  *
  * Provides defaults for [dimens] that can be overridden.
- * @since 0.0.1
  */
 object SearchPinDefaults {
     /** Creates dimension configuration for [SearchPin]. */

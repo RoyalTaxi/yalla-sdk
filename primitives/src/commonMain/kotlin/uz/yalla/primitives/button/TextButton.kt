@@ -28,7 +28,6 @@ import uz.yalla.design.theme.YallaTheme
  * @param contentColor Text and icon color when enabled.
  * @param disabledContainerColor Background color when disabled or loading.
  * @param disabledContentColor Text and icon color when disabled or loading.
- * @since 0.0.1
  */
 @Immutable
 data class TextButtonColors(
@@ -55,7 +54,6 @@ data class TextButtonColors(
  * @param contentPadding Padding between container and content.
  * @param shape Container shape.
  * @param iconSpacing Space between icon slots and content.
- * @since 0.0.1
  */
 @Immutable
 data class TextButtonDimens(
@@ -114,7 +112,6 @@ data class TextButtonDimens(
  * @see PrimaryButton
  * @see SecondaryButton
  * @see TextButtonDefaults
- * @since 0.0.1
  */
 @Composable
 fun TextButton(
@@ -150,7 +147,6 @@ fun TextButton(
  * Default configuration values for [TextButton].
  *
  * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
- * @since 0.0.1
  */
 object TextButtonDefaults {
     /** Default minimum button height. */

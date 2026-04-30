@@ -37,7 +37,6 @@ import kotlin.math.hypot
  * @param track Background track color.
  * @param indicator Progress indicator brush (gradient).
  * @param stripe Stripe overlay color (semi-transparent).
- * @since 0.0.1
  */
 @Immutable
 data class StripedProgressBarColors(
@@ -55,7 +54,6 @@ data class StripedProgressBarColors(
  * @param stripeGap Gap between stripes.
  * @param stripeAngle Angle of stripes in degrees.
  * @param animationDurationMs Animation duration for one stripe cycle.
- * @since 0.0.1
  */
 @Immutable
 data class StripedProgressBarDimens(
@@ -96,7 +94,6 @@ data class StripedProgressBarDimens(
  *
  * @see DotsIndicator for page position indicator
  * @see StripedProgressBarDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun StripedProgressBar(
@@ -174,7 +171,6 @@ fun StripedProgressBar(
  * Default values for [StripedProgressBar].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object StripedProgressBarDefaults {
     /** Creates color configuration for [StripedProgressBar]. */

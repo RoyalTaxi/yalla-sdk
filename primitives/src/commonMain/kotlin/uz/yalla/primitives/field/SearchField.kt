@@ -39,7 +39,6 @@ import uz.yalla.design.theme.System
  * @param container Background color of the search field card.
  * @param text Color of the input text.
  * @param placeholder Color of the placeholder text shown when the field is empty.
- * @since 0.0.1
  */
 @Immutable
 data class SearchFieldColors(
@@ -58,7 +57,6 @@ data class SearchFieldColors(
  * @param contentPadding Padding inside the card between the container edge and content row.
  * @param iconSpacing Horizontal space between leading/trailing icons and the text input.
  * @param minHeight Minimum height of the search field for touch target compliance.
- * @since 0.0.1
  */
 @Immutable
 data class SearchFieldDimens(
@@ -72,7 +70,6 @@ data class SearchFieldDimens(
  * Default configuration values for [SearchField].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be individually overridden.
- * @since 0.0.1
  */
 object SearchFieldDefaults {
 
@@ -164,7 +161,6 @@ object SearchFieldDefaults {
  *
  * @see PrimaryField for outlined text input variant
  * @see SearchFieldDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun SearchField(

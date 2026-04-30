@@ -16,7 +16,6 @@ package uz.yalla.primitives.transformation
  *
  * @see PhoneVisualTransformation for phone number formatting
  * @see NumberVisualTransformation for generic number formatting
- * @since 0.0.1
  */
 object MaskFormatter {
     /**
@@ -26,7 +25,6 @@ object MaskFormatter {
      * @param mask Pattern with placeholder characters
      * @param maskChar Character in mask that should be replaced by input
      * @return Formatted text with mask applied.
-     * @since 0.0.1
      */
     fun format(
         text: String,
@@ -59,7 +57,6 @@ object MaskFormatter {
      * @param mask Pattern to analyze
      * @param maskChar Placeholder character
      * @return Number of input positions available.
-     * @since 0.0.1
      */
     fun countPlaceholders(
         mask: String,
@@ -73,7 +70,6 @@ object MaskFormatter {
      * @param mask Pattern used for formatting
      * @param maskChar Placeholder character
      * @return Raw input without mask characters.
-     * @since 0.0.1
      */
     fun extractRaw(
         formatted: String,

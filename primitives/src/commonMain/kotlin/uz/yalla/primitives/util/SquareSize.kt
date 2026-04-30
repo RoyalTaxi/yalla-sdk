@@ -26,7 +26,6 @@ import kotlin.math.min
  * ```
  *
  * @param position Alignment position within the square (0.0 = start, 0.5 = center, 1.0 = end).
- * @since 0.0.1
  */
 @Stable
 fun Modifier.squareSize(position: Float = 0.5f): Modifier =

@@ -24,7 +24,6 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
  *
  * @param container Background color.
  * @param indicator Spinner color.
- * @since 0.0.1
  */
 @Immutable
 data class LoadingDialogColors(
@@ -37,7 +36,6 @@ data class LoadingDialogColors(
  *
  * @param contentPadding Padding inside dialog.
  * @param shape Dialog shape.
- * @since 0.0.1
  */
 @Immutable
 data class LoadingDialogDimens(
@@ -67,7 +65,6 @@ data class LoadingDialogDimens(
  *
  * @see uz.yalla.primitives.indicator.LoadingIndicator for inline loading indicator
  * @see LoadingDialogDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun LoadingDialog(
@@ -108,7 +105,6 @@ fun LoadingDialog(
  * Default configuration values for [LoadingDialog].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object LoadingDialogDefaults {
     /** Creates color configuration for [LoadingDialog]. */

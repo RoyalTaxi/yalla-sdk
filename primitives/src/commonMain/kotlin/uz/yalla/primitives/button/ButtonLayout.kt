@@ -50,7 +50,6 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
  * @param leadingIcon Optional composable rendered before main content.
  * @param trailingIcon Optional composable rendered after main content.
  * @param content Main button content, typically Text.
- * @since 0.0.1
  */
 @Composable
 internal fun ButtonLayout(

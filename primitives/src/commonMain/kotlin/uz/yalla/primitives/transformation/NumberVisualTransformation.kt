@@ -32,7 +32,6 @@ import androidx.compose.ui.text.input.VisualTransformation
  *
  * @see PhoneVisualTransformation for phone-specific formatting
  * @see MaskFormatter for the underlying formatting utility
- * @since 0.0.1
  */
 class NumberVisualTransformation(
     private val mask: String,

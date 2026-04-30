@@ -43,7 +43,6 @@ import uz.yalla.design.theme.System
  * @param filledBorderColor Border color for filled digit boxes.
  * @param emptyBorderColor Border color for empty digit boxes.
  * @param errorBorderColor Border color when in error state.
- * @since 0.0.1
  */
 @Immutable
 data class PinRowColors(
@@ -62,7 +61,6 @@ data class PinRowColors(
  * @param shape Shape of individual digit boxes.
  * @param spacing Horizontal spacing between digit boxes.
  * @param borderWidth Border width of digit boxes.
- * @since 0.0.1
  */
 @Immutable
 data class PinRowDimens(
@@ -75,7 +73,6 @@ data class PinRowDimens(
  * Default configuration values for [PinRow].
  *
  * Provides theme-aware defaults for [colors], [digitStyle], and [dimens].
- * @since 0.0.1
  */
 object PinRowDefaults {
 
@@ -143,7 +140,6 @@ object PinRowDefaults {
  * @param dimens Dimension configuration, defaults to [PinRowDefaults.dimens].
  *
  * @see PinRowDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun PinRow(

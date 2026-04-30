@@ -29,7 +29,6 @@ import uz.yalla.primitives.button.NavigationButton
  *
  * @param container Background color.
  * @param title Title text color.
- * @since 0.0.1
  */
 @Immutable
 data class TopBarColors(
@@ -42,7 +41,6 @@ data class TopBarColors(
  *
  * @param contentPadding Padding around content.
  * @param navigationButtonSize Size of navigation button placeholder.
- * @since 0.0.1
  */
 @Immutable
 data class TopBarDimens(
@@ -101,7 +99,6 @@ data class TopBarDimens(
  *
  * @see LargeTopBar for large title variant
  * @see TopBarDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun TopBar(
@@ -160,7 +157,6 @@ fun TopBar(
  * Default configuration values for [TopBar].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object TopBarDefaults {
     /** Creates color configuration for [TopBar]. */

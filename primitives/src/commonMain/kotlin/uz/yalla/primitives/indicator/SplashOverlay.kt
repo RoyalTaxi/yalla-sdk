@@ -34,7 +34,6 @@ import uz.yalla.resources.location_gps_subtitle
  * @param indicator Progress indicator color.
  * @param indicatorTrack Progress indicator track color.
  * @param text Loading message text color.
- * @since 0.0.1
  */
 @Immutable
 data class SplashOverlayColors(
@@ -51,7 +50,6 @@ data class SplashOverlayColors(
  * @param bottomPadding Bottom padding for the loading section.
  * @param indicatorStrokeWidth Stroke width of the progress indicator.
  * @param indicatorGapSize Gap size in the progress indicator.
- * @since 0.0.1
  */
 @Immutable
 data class SplashOverlayDimens(
@@ -91,7 +89,6 @@ data class SplashOverlayDimens(
  *
  * @see LoadingIndicator for inline loading indicator
  * @see SplashOverlayDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun SplashOverlay(
@@ -149,7 +146,6 @@ fun SplashOverlay(
  * Default values for [SplashOverlay].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object SplashOverlayDefaults {
     /** Creates color configuration for [SplashOverlay]. */

@@ -27,7 +27,6 @@ import uz.yalla.design.theme.YallaTheme
  *
  * @param selected Color of the selected dot.
  * @param unselected Color of unselected dots.
- * @since 0.0.1
  */
 @Immutable
 data class DotsIndicatorColors(
@@ -42,7 +41,6 @@ data class DotsIndicatorColors(
  * @param selectedWidth Width of the selected dot.
  * @param dotSpacing Spacing between dots.
  * @param animationDurationMillis Duration of the dot width animation.
- * @since 0.0.1
  */
 @Immutable
 data class DotsIndicatorDimens(
@@ -74,7 +72,6 @@ data class DotsIndicatorDimens(
  *
  * @see StripedProgressBar for linear progress indicator
  * @see DotsIndicatorDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun DotsIndicator(
@@ -112,7 +109,6 @@ fun DotsIndicator(
  * Default configuration values for [DotsIndicator].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object DotsIndicatorDefaults {
     /** Creates color configuration for [DotsIndicator]. */

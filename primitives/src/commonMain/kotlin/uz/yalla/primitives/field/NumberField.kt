@@ -57,7 +57,6 @@ private const val MAX_PHONE_DIGITS = 9
  * @param unfocusedBorderColor Border color when not focused.
  * @param cursorColor Cursor color.
  * @param selectionColors Text selection handle and highlight colors.
- * @since 0.0.1
  */
 @Immutable
 data class NumberFieldColors(
@@ -80,7 +79,6 @@ data class NumberFieldColors(
  * @param shape Corner shape of the container.
  * @param borderWidth Border width.
  * @param dividerThickness Thickness of the vertical divider.
- * @since 0.0.1
  */
 @Immutable
 data class NumberFieldDimens(
@@ -93,7 +91,6 @@ data class NumberFieldDimens(
  * Default configuration values for [NumberField].
  *
  * Provides theme-aware defaults for [colors], [textStyle], and [dimens].
- * @since 0.0.1
  */
 object NumberFieldDefaults {
 
@@ -189,7 +186,6 @@ object NumberFieldDefaults {
  *
  * @see PrimaryField for general text input
  * @see NumberFieldDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun NumberField(

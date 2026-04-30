@@ -28,7 +28,6 @@ import uz.yalla.resources.icons.YallaIcons
  *
  * @param filled Tint color applied to stars at or below the current rating.
  * @param empty Tint color applied to stars above the current rating.
- * @since 0.0.1
  */
 @Immutable
 data class RatingRowColors(
@@ -46,7 +45,6 @@ data class RatingRowColors(
  * @param starPadding Internal padding inside each star's clickable surface.
  * @param starSpacing Horizontal spacing between adjacent stars.
  * @param starCount Total number of stars displayed in the row.
- * @since 0.0.1
  */
 @Immutable
 data class RatingRowDimens(
@@ -60,7 +58,6 @@ data class RatingRowDimens(
  * Default configuration values for [RatingRow].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be individually overridden.
- * @since 0.0.1
  */
 object RatingRowDefaults {
 
@@ -137,7 +134,6 @@ object RatingRowDefaults {
  *   See [RatingRowDefaults.dimens].
  *
  * @see RatingRowDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun RatingRow(

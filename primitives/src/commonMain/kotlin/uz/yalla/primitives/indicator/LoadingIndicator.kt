@@ -21,7 +21,6 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
  *
  * @param indicator Spinner color.
  * @param track Track color behind spinner.
- * @since 0.0.1
  */
 @Immutable
 data class LoadingIndicatorColors(
@@ -38,7 +37,6 @@ data class LoadingIndicatorColors(
  * @param smallStrokeWidth Stroke width for small variant.
  * @param mediumStrokeWidth Stroke width for medium variant.
  * @param largeStrokeWidth Stroke width for large variant.
- * @since 0.0.1
  */
 @Immutable
 data class LoadingIndicatorDimens(
@@ -84,7 +82,6 @@ data class LoadingIndicatorDimens(
  *
  * @see SplashOverlay for full-screen loading overlay
  * @see LoadingIndicatorDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun LoadingIndicator(
@@ -101,8 +98,6 @@ fun LoadingIndicator(
 
 /**
  * Size variants for [LoadingIndicator].
- *
- * @since 0.0.1
  */
 enum class LoadingIndicatorSize {
     Small,
@@ -114,7 +109,6 @@ enum class LoadingIndicatorSize {
  * Default configuration values for [LoadingIndicator].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object LoadingIndicatorDefaults {
     /** Creates color configuration for [LoadingIndicator]. */
