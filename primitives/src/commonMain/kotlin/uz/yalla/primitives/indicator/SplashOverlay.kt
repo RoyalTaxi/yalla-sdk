@@ -21,11 +21,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_logo_splash
-import uz.yalla.resources.location_gps_subtitle
 
 /** Color configuration for [SplashOverlay]. */
 @Immutable
@@ -69,7 +67,9 @@ data class SplashOverlayDimens(
  * ```
  *
  * @param modifier Modifier for the overlay container.
- * @param message Loading message displayed below the indicator.
+ * @param message Loading message displayed below the indicator. Empty string
+ *   hides the message slot. Pass a localized string via `stringResource(...)`;
+ *   the component carries no default so feature copy stays in the consumer.
  * @param colors Color configuration, defaults to [SplashOverlayDefaults.colors].
  * @param dimens Dimension configuration, defaults to [SplashOverlayDefaults.dimens].
  *
@@ -79,7 +79,7 @@ data class SplashOverlayDimens(
 @Composable
 fun SplashOverlay(
     modifier: Modifier = Modifier,
-    message: String = stringResource(Res.string.location_gps_subtitle),
+    message: String = "",
     colors: SplashOverlayColors = SplashOverlayDefaults.colors(),
     dimens: SplashOverlayDimens = SplashOverlayDefaults.dimens(),
 ) {

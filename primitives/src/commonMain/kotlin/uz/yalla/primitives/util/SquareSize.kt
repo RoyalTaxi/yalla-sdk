@@ -29,12 +29,7 @@ import kotlin.math.min
  */
 @Stable
 fun Modifier.squareSize(position: Float = 0.5f): Modifier =
-    this.then(
-        when {
-            position == 0.5f -> this.createSquareSizeModifier(0.5f)
-            else -> this.createSquareSizeModifier(position)
-        }
-    )
+    this.then(SquareSize(position = position))
 
 private class SquareSize(
     private val position: Float
@@ -77,4 +72,3 @@ private class SquareSize(
     override fun hashCode(): Int = position.hashCode()
 }
 
-private fun Modifier.createSquareSizeModifier(position: Float): Modifier = then(SquareSize(position = position))

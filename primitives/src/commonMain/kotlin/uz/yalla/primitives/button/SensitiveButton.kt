@@ -32,7 +32,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
 import uz.yalla.core.util.formatArgs
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
@@ -40,8 +39,6 @@ import uz.yalla.primitives.button.SensitiveButtonDefaults.colors
 import uz.yalla.primitives.button.SensitiveButtonDefaults.dimens
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_sensitive_background
-import uz.yalla.resources.order_cancel_action_yes
-import uz.yalla.resources.order_cancel_countdown
 import kotlin.math.ceil
 
 /**
@@ -91,11 +88,14 @@ data class SensitiveButtonDimens(
  * ```
  *
  * @param onClick Called when the countdown completes and the user clicks. Not called during countdown.
+ * @param confirmText Text shown when the countdown completes. Pass a localized
+ *   string via `stringResource(...)` — the component carries no default so
+ *   feature copy stays in the consumer.
+ * @param countdownText Text shown during the countdown. Use `%s` (or `%d`) as
+ *   a `formatArgs` placeholder for the remaining seconds. Pass a localized
+ *   string via `stringResource(...)`.
  * @param modifier [Modifier] applied to the root container.
  * @param countdownSeconds Duration of the countdown in seconds.
- * @param confirmText Text shown when countdown completes. Defaults to localized "Yes" string.
- * @param countdownText Text shown during countdown with `%s` placeholder for remaining seconds.
- *   Defaults to localized countdown string.
  * @param colors [SensitiveButtonColors] for progress and text colors.
  *   See [SensitiveButtonDefaults.colors].
  * @param dimens [SensitiveButtonDimens] for dimensions and shape.
@@ -106,16 +106,14 @@ data class SensitiveButtonDimens(
 @Composable
 fun SensitiveButton(
     onClick: () -> Unit,
+    confirmText: String,
+    countdownText: String,
     modifier: Modifier = Modifier,
     countdownSeconds: Int = 3,
-    confirmText: String? = null,
-    countdownText: String? = null,
     textStyle: TextStyle = System.font.body.large.bold,
     colors: SensitiveButtonColors = SensitiveButtonDefaults.colors(),
     dimens: SensitiveButtonDimens = SensitiveButtonDefaults.dimens(),
 ) {
-    val resolvedConfirmText = confirmText ?: stringResource(Res.string.order_cancel_action_yes)
-    val resolvedCountdownText = countdownText ?: stringResource(Res.string.order_cancel_countdown)
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val progress = remember { Animatable(0f) }
@@ -156,8 +154,8 @@ fun SensitiveButton(
 
             Text(
                 text = when {
-                    isEnabled -> resolvedConfirmText
-                    else -> resolvedCountdownText.formatArgs(countdown)
+                    isEnabled -> confirmText
+                    else -> countdownText.formatArgs(countdown)
                 },
                 color = colors.textColor,
                 style = textStyle,
