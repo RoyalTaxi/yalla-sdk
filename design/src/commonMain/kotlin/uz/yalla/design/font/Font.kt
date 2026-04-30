@@ -34,13 +34,17 @@ expect val mediumFont: FontResource
 expect val normalFont: FontResource
 
 /**
- * Creates and remembers the complete [FontScheme] for the Yalla design system.
+ * Creates the complete [FontScheme] for the Yalla design system.
  *
  * Builds all title, body, and custom text styles using the platform-specific font resources
  * ([boldFont], [mediumFont], [normalFont]) and the bundled Nummernschild font for license plates.
  *
- * This composable is called by [YallaTheme][uz.yalla.design.theme.YallaTheme] and its result
- * is provided via [LocalFontScheme]. Callers generally do not need to invoke this directly.
+ * Despite the `remember` prefix, this function does **not** call `remember { … }` internally —
+ * each invocation allocates new [TextStyle] and [FontFamily] instances. [YallaTheme]
+ * [uz.yalla.design.theme.YallaTheme] calls it once per composition and stabilizes the
+ * result via `CompositionLocalProvider`, so reallocation only happens on theme recomposition
+ * in practice. If you call this outside [YallaTheme], wrap it in
+ * `remember { rememberFontScheme() }` yourself to avoid per-frame allocation.
  *
  * @return Fully configured [FontScheme] instance.
  */

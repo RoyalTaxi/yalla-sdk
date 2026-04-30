@@ -151,7 +151,14 @@ object System {
         @Composable
         get() = LocalColorScheme.current
 
-    /** Current [FontScheme] provided by the nearest [YallaTheme]. */
+    /**
+     * Current [FontScheme] provided by the nearest [YallaTheme].
+     *
+     * Throws [IllegalStateException] if read outside a [YallaTheme] composition —
+     * unlike [color]/[space]/[radius]/[motion]/[isDark], `font` has no static
+     * default because font loading needs a composable context. Wrap previews in
+     * [YallaTheme] or provide via `LocalFontScheme` explicitly.
+     */
     val font: FontScheme
         @Composable
         get() = LocalFontScheme.current

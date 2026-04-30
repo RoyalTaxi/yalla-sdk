@@ -83,6 +83,14 @@ data class ColorScheme(
         val subtle: Color,
     )
 
+    /**
+     * Accent palette — brand-adjacent colors for data viz, badges, and decorative elements.
+     *
+     * `pinkSun` is the primary action-accent (error-adjacent pink); prefer it for destructive
+     * or alert accents. `color1`–`color5` are palette slots without semantic names by design:
+     * meaning is context-assigned (driver-status badges, map-pin categories, etc.). Don't
+     * hardcode assumptions about which slot maps to which meaning across screens.
+     */
     @Immutable
     data class Accent(
         val pinkSun: Color,
@@ -100,6 +108,14 @@ data class ColorScheme(
     )
 }
 
+/**
+ * Returns the built-in light [ColorScheme].
+ *
+ * Accent + gradient tokens are theme-invariant — they're identical to [dark]'s. Only
+ * `text`, `background`, `border`, `button`, and `icon` differ between themes. Pass
+ * the result to `YallaTheme(colorScheme = light())` to force light mode, or `light().copy(...)`
+ * for white-labeling without rebuilding every group.
+ */
 fun light() = ColorScheme(
     text = ColorScheme.Text(
         base = LightTextBase,
@@ -149,6 +165,13 @@ fun light() = ColorScheme(
     ),
 )
 
+/**
+ * Returns the built-in dark [ColorScheme].
+ *
+ * Mirrors [light] in shape; differs in `text` (inverted), `background` (near-black surfaces),
+ * and `button`/`icon` disabled states (opacity achieved with dark fills, not lightened tints).
+ * Accent and gradient tokens are identical to [light] — they are theme-invariant by design.
+ */
 fun dark() = ColorScheme(
     text = ColorScheme.Text(
         base = DarkTextBase,

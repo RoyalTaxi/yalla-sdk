@@ -7,7 +7,13 @@ import uz.yalla.design.theme.System
 
 /**
  * Returns a [Painter] for the given [ThemedImage], automatically selecting the
- * light or dark drawable variant based on the current theme.
+ * light or dark drawable variant based on [System.isDark].
+ *
+ * Recomposes when the theme toggles because [System.isDark] reads
+ * [LocalIsDark][uz.yalla.design.theme.LocalIsDark], a snapshot value provided by
+ * [YallaTheme][uz.yalla.design.theme.YallaTheme]. Prefer this over calling
+ * `painterResource(image.light)` or `painterResource(image.dark)` directly —
+ * those calls hardcode a variant and won't react to runtime theme changes.
  *
  * ## Usage
  *
