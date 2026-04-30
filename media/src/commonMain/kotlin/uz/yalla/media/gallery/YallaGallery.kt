@@ -26,9 +26,7 @@ import androidx.compose.ui.Modifier
  * }
  * ```
  *
- * @param modifier Layout modifier applied to the gallery container.
  * @param onImageSelected Callback invoked with the selected image bytes, or `null` on cancellation.
- * @since 0.0.1
  */
 @Composable
 expect fun YallaGallery(

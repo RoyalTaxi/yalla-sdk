@@ -8,7 +8,5 @@ import uz.yalla.sdk.media.R
  *
  * Declared in the Android manifest so that temporary camera image URIs can be created
  * via `FileProvider.getUriForFile`. The provider paths are defined in `res/xml/file_paths.xml`.
- *
- * @since 0.0.1
  */
 class ImageViewerFileProvider : FileProvider(R.xml.file_paths)

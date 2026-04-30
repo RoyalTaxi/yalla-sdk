@@ -56,16 +56,6 @@ import uz.yalla.media.gallery.viewmodel.YallaGalleryViewModel
  *
  * This composable is **Android-only**. For a cross-platform single-image picker use
  * [YallaGallery] instead.
- *
- * @param modifier Layout modifier applied to the gallery container.
- * @param state Grid layout configuration (padding, spacing, columns, corner radius).
- * @param lazyGridState Scroll state for the underlying [LazyVerticalGrid].
- * @param backgroundColor Background color behind the grid.
- * @param header Optional composable rendered above the grid.
- * @param progressIndicator Composable shown while the initial page loads.
- * @param permissionDeniedContent Composable shown when storage permission is denied.
- * @param onImageSelected Callback invoked with the selected image bytes, or `null` on failure.
- * @since 0.0.1
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable

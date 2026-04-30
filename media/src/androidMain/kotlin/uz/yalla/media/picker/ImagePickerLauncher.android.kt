@@ -15,8 +15,6 @@ import uz.yalla.media.picker.SelectionMode.Companion.INFINITY
  * Delegates to [ActivityResultContracts.PickVisualMedia] for single-image selection and
  * [ActivityResultContracts.PickMultipleVisualMedia] for multi-image selection. Selected
  * images are resized and filtered via [YallaImageResizer] before being delivered.
- *
- * @since 0.0.1
  */
 @Composable
 actual fun rememberImagePickerLauncher(
@@ -145,10 +143,6 @@ private fun processMultipleImages(
  * Android implementation of [ImagePickerLauncher].
  *
  * Guards against double-launch by tracking an internal active flag.
- *
- * @param selectionMode Single or multiple selection mode.
- * @param onLaunch Action that launches the `PickVisualMedia` activity result contract.
- * @since 0.0.1
  */
 actual class ImagePickerLauncher actual constructor(
     selectionMode: SelectionMode,
@@ -160,8 +154,6 @@ actual class ImagePickerLauncher actual constructor(
      * Resets the active flag so the picker can be launched again.
      *
      * Called automatically after the picker result is received.
-     *
-     * @since 0.0.1
      */
     fun markPhotoPickerInactive() {
         isPhotoPickerActive = false

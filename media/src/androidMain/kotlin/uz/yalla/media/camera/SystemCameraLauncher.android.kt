@@ -24,8 +24,6 @@ import java.io.File
  * Creates a temporary file URI via [FileProvider], registers an
  * `ActivityResultContracts.TakePicture` launcher, and reads the captured bytes back
  * on [Dispatchers.IO] before delivering them to [onResult] on the main thread.
- *
- * @since 0.0.1
  */
 @Composable
 actual fun rememberSystemCameraLauncher(
@@ -80,9 +78,7 @@ actual fun rememberSystemCameraLauncher(
  * Previous temporary files in the `share_images` directory are deleted to prevent unbounded
  * disk growth.
  *
- * @param context Android context for file system and package name access.
  * @return Content URI suitable for `TakePicture`, or `null` on failure.
- * @since 0.0.1
  */
 private fun createCameraImageUri(context: Context): Uri? {
     val imagesDir = File(context.filesDir, "share_images").apply { mkdirs() }
@@ -96,9 +92,6 @@ private fun createCameraImageUri(context: Context): Uri? {
  * Android implementation of [SystemCameraLauncher].
  *
  * Guards against double-launch by tracking an internal active flag.
- *
- * @param onLaunch Action that creates a temp URI and launches `TakePicture` contract.
- * @since 0.0.1
  */
 actual class SystemCameraLauncher actual constructor(private val onLaunch: () -> Unit) {
     private var isCameraActive = false
@@ -107,8 +100,6 @@ actual class SystemCameraLauncher actual constructor(private val onLaunch: () ->
      * Resets the active flag so the launcher can be used again.
      *
      * Called automatically after the camera result is received.
-     *
-     * @since 0.0.1
      */
     fun markCameraInactive() {
         isCameraActive = false

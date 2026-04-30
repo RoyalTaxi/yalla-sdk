@@ -49,9 +49,7 @@ private val deviceTypes =
  *
  * Uses a discovery session with the [deviceTypes] list filtered by front or back position.
  *
- * @param cameraMode Desired lens (front or back).
  * @return The first matching capture device, or `null` on simulator / no camera hardware.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun discoverCamera(cameraMode: CameraMode): AVCaptureDevice? {
@@ -76,12 +74,8 @@ internal fun discoverCamera(cameraMode: CameraMode): AVCaptureDevice? {
  * `AVCaptureSessionPresetPhoto`) and video frames are delivered in `32BGRA` format
  * on a dedicated serial dispatch queue.
  *
- * @param camera        Hardware camera device to use as input.
- * @param photoOutput   Output for still-image capture.
- * @param videoOutput   Optional output for real-time video frames; `null` to skip.
  * @param frameAnalyzer Delegate receiving video frames; required when [videoOutput] is non-null.
  * @return A configured (but not yet running) [AVCaptureSession].
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun createCaptureSession(
@@ -138,10 +132,6 @@ internal fun createCaptureSession(
  * [onReady] on the main queue once the session is running.
  *
  * Uses `dispatch_group` to coordinate the background start with the main-queue callback.
- *
- * @param session The capture session to start.
- * @param onReady Callback fired on the main thread when the session begins running.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun startSession(
@@ -170,9 +160,6 @@ internal fun startSession(
  * Stops the given [AVCaptureSession] on a high-priority background queue.
  *
  * Safe to call even if the session is already stopped.
- *
- * @param session The capture session to stop.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun stopSession(session: AVCaptureSession) {
@@ -191,11 +178,6 @@ internal fun stopSession(session: AVCaptureSession) {
  * Removes all existing inputs, discovers the new camera device, adds a fresh input, and
  * commits the configuration — all on a high-priority background queue. [onReady] is
  * dispatched on the main queue after the switch completes.
- *
- * @param session The running capture session whose input is replaced.
- * @param newMode Target camera lens (front or back).
- * @param onReady Callback fired on the main thread once the new input is active.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun switchCameraInput(

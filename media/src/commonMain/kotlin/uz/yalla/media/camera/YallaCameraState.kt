@@ -7,10 +7,7 @@ import androidx.compose.runtime.Stable
  * Creates and remembers a [YallaCameraState] that survives configuration changes.
  *
  * @param initialCameraMode Lens to activate on first composition. Defaults to [CameraMode.Back].
- * @param onFrame Optional per-frame callback for real-time analysis.
- * @param onCapture Callback invoked with captured JPEG bytes, or `null` on failure.
  * @return A saveable [YallaCameraState] instance.
- * @since 0.0.1
  */
 @Composable
 expect fun rememberYallaCameraState(
@@ -37,8 +34,6 @@ expect fun rememberYallaCameraState(
  * Button(onClick = { cameraState.capture() }) { Text("Snap") }
  * Button(onClick = { cameraState.toggleCamera() }) { Text("Flip") }
  * ```
- *
- * @since 0.0.1
  */
 @Stable
 expect class YallaCameraState {
@@ -56,16 +51,12 @@ expect class YallaCameraState {
 
     /**
      * Switches between [CameraMode.Front] and [CameraMode.Back].
-     *
-     * @since 0.0.1
      */
     fun toggleCamera()
 
     /**
      * Initiates a photo capture. The result is delivered via the `onCapture` callback
      * provided to [rememberYallaCameraState].
-     *
-     * @since 0.0.1
      */
     fun capture()
 }

@@ -32,8 +32,6 @@ import kotlinx.coroutines.CoroutineScope
  *
  * Composes a [YallaCameraState]-driven camera view together with an overlay that renders
  * the caller-supplied capture, switch, and progress slots.
- *
- * @since 0.0.1
  */
 @Composable
 actual fun YallaCamera(
@@ -73,8 +71,6 @@ private fun CompatOverlay(
  *
  * Requests the `CAMERA` permission via Accompanist and, once granted, binds CameraX
  * use-cases (preview, capture, optional analysis) to the lifecycle owner.
- *
- * @since 0.0.1
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -102,8 +98,6 @@ actual fun YallaCamera(
  *
  * Requests the `CAMERA` permission, then delegates to [rememberSystemCameraLauncher] which
  * opens the device's built-in camera app via `ActivityResultContracts.TakePicture`.
- *
- * @since 0.0.1
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -239,10 +233,6 @@ private fun rememberCameraSelector(cameraMode: CameraMode) =
 /**
  * CameraX callback that converts the captured [ImageProxy] to a JPEG byte array
  * and signals capture completion.
- *
- * @param onCapture Callback receiving the JPEG bytes.
- * @param stopCapturing Action invoked after the capture result is delivered.
- * @since 0.0.1
  */
 internal class ImageCaptureCallback(
     private val onCapture: (byteArray: ByteArray?) -> Unit,

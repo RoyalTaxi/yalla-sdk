@@ -15,10 +15,7 @@ import platform.UIKit.UIImage
  * Returns the original [image] unchanged when [FilterOptions.Default] is specified or
  * when the Core Image pipeline fails (e.g. filter not found, CGImage unavailable).
  *
- * @param image         Source [UIImage] to filter.
- * @param filterOptions Desired color filter to apply.
  * @return A new filtered [UIImage], or the original [image] when no filter is needed.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun applyFilterToUIImage(

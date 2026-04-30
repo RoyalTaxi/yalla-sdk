@@ -15,15 +15,10 @@ import uz.yalla.media.gallery.repository.YallaGalleryRepository
  *
  * Pages are 50 items each, cached in [viewModelScope] so that configuration changes
  * (e.g., screen rotation) do not trigger a reload.
- *
- * @param yallaGalleryRepository Repository providing the [PagingSource] for gallery images.
- * @since 0.0.1
  */
 internal class YallaGalleryViewModel(private val yallaGalleryRepository: YallaGalleryRepository) : ViewModel() {
     /**
      * Flow of paginated gallery image data, cached in [viewModelScope].
-     *
-     * @since 0.0.1
      */
     val images: Flow<PagingData<YallaMediaImage>> =
         Pager(

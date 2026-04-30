@@ -17,9 +17,7 @@ import android.graphics.Paint
  * [originalBitmap] because the caller may still reference it (e.g. for undo).
  *
  * @param originalBitmap Source bitmap to filter. Must not be recycled.
- * @param filterOptions  Desired color filter to apply.
  * @return A new filtered [Bitmap], or [originalBitmap] itself when no filter is needed.
- * @since 0.0.1
  */
 internal fun applyFilter(
     originalBitmap: Bitmap,
@@ -46,7 +44,6 @@ internal fun applyFilter(
  * Creates a [ColorMatrix] that produces a sepia tone effect.
  *
  * @return Sepia-toned color matrix.
- * @since 0.0.1
  */
 private fun createSepiaMatrix() =
     ColorMatrix().apply {
@@ -58,7 +55,6 @@ private fun createSepiaMatrix() =
  * Creates a [ColorMatrix] that inverts all color channels.
  *
  * @return Inverted color matrix.
- * @since 0.0.1
  */
 private fun createInvertMatrix() =
     ColorMatrix(

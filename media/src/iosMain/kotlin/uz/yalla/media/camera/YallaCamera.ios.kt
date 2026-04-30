@@ -43,8 +43,6 @@ import platform.UIKit.UIView
  * Checks camera authorization via [checkCameraPermission], discovers the hardware camera
  * with [discoverCamera], and renders an `AVCaptureVideoPreviewLayer` inside a `UIKitView`.
  * Falls back to a "camera unavailable" message on simulator.
- *
- * @since 0.0.1
  */
 @Composable
 actual fun YallaCamera(
@@ -80,8 +78,6 @@ actual fun YallaCamera(
  *
  * Composes a [YallaCameraState]-driven camera view together with an overlay that renders
  * the caller-supplied capture, switch, and progress slots.
- *
- * @since 0.0.1
  */
 @Composable
 actual fun YallaCamera(
@@ -106,8 +102,6 @@ actual fun YallaCamera(
  *
  * Checks camera authorization, then delegates to [rememberSystemCameraLauncher] which
  * presents a `UIImagePickerController` with camera source type.
- *
- * @since 0.0.1
  */
 @Composable
 actual fun YallaCamera(

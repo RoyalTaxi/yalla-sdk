@@ -10,9 +10,7 @@ import uz.yalla.media.gallery.model.YallaMediaImage
  * Each page is fetched via the [onFetch] lambda which receives a `limit` and `offset`
  * and returns a list of [YallaMediaImage] items for that page.
  *
- * @param onFetch Lambda that loads a page of images given `(limit, offset)`.
  * @see YallaGalleryRepositoryImpl
- * @since 0.0.1
  */
 internal class YallaGalleryDataSource(private val onFetch: (limit: Int, offset: Int) -> List<YallaMediaImage>) :
     PagingSource<Int, YallaMediaImage>() {

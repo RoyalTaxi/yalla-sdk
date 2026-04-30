@@ -10,14 +10,10 @@ import java.io.ByteArrayOutputStream
  * The cache size is 12.5 % of the JVM maximum heap (at least 4 MB) and is keyed by a
  * composite string that encodes the source URI, target dimensions, and filter options.
  * This avoids redundant decodes and resizes when the same image is selected repeatedly.
- *
- * @since 0.0.1
  */
 internal object YallaBitmapCache {
     /**
      * Lazily-initialized [LruCache] whose entries are sized by their pixel byte count (in KB).
-     *
-     * @since 0.0.1
      */
     internal val instance: LruCache<String, Bitmap> by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         object : LruCache<String, Bitmap>(calculateMemoryCacheSize()) {
@@ -32,7 +28,6 @@ internal object YallaBitmapCache {
      * Computes the LRU cache size as 12.5 % of the maximum heap, with a 4 MB floor.
      *
      * @return Cache capacity in KB.
-     * @since 0.0.1
      */
     private fun calculateMemoryCacheSize(): Int {
         val maxMemory = Runtime.getRuntime().maxMemory() / 1024
@@ -43,9 +38,7 @@ internal object YallaBitmapCache {
     /**
      * Encodes [bitmap] to a JPEG byte array at maximum quality (100).
      *
-     * @param bitmap Bitmap to encode.
      * @return JPEG-encoded bytes.
-     * @since 0.0.1
      */
     internal fun bitmapToByteArray(bitmap: Bitmap): ByteArray {
         ByteArrayOutputStream().use { stream ->
@@ -56,8 +49,6 @@ internal object YallaBitmapCache {
 
     /**
      * Evicts all entries from the cache, freeing memory.
-     *
-     * @since 0.0.1
      */
     fun clear() {
         instance.evictAll()

@@ -11,8 +11,6 @@ import kotlin.math.min
  *
  * Uses [BitmapFactory] for decoding, [Matrix] for scaling, and JPEG [Bitmap.compress]
  * with binary-search quality reduction.
- *
- * @since 0.0.1
  */
 actual fun compressImage(
     imageBytes: ByteArray,
@@ -130,10 +128,7 @@ actual fun compressImage(
  * at or above the requested size.
  *
  * @param options  [BitmapFactory.Options] with `outWidth`/`outHeight` already populated.
- * @param reqWidth  Desired minimum width in pixels.
- * @param reqHeight Desired minimum height in pixels.
  * @return A power-of-two sample size (1, 2, 4, ...).
- * @since 0.0.1
  */
 private fun calculateInSampleSize(
     options: BitmapFactory.Options,

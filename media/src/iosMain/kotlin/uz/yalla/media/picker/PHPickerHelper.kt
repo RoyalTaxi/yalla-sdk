@@ -13,10 +13,7 @@ import platform.PhotosUI.PHPickerViewControllerDelegateProtocol
  * the limit is taken from [SelectionMode.Multiple.maxSelection]; for [SelectionMode.Single]
  * the limit is hard-coded to 1.
  *
- * @param delegate  Delegate receiving the picker results.
- * @param selection Single or multiple image selection mode.
  * @return A configured [PHPickerViewController] ready for presentation.
- * @since 0.0.1
  */
 internal fun createPHPickerViewController(
     delegate: PHPickerViewControllerDelegateProtocol,

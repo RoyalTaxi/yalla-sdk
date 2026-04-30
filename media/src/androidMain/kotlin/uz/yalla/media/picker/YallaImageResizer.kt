@@ -18,24 +18,13 @@ import java.io.ByteArrayOutputStream
  *
  * Intermediate results (resized and filtered bitmaps) are cached in [YallaBitmapCache]
  * to avoid redundant work when the same URI is processed again.
- *
- * @since 0.0.1
  */
 internal object YallaImageResizer {
     /**
      * Reads the image at [uri], resizes it when larger than [resizeThresholdBytes], applies
      * the [filterOptions] filter, and delivers the JPEG bytes to [onResult] on the main thread.
      *
-     * @param context              Android context for content resolver access.
-     * @param coroutineScope       Scope used to launch the background work.
-     * @param uri                  Content URI pointing to the source image.
-     * @param width                Maximum output width in pixels.
-     * @param height               Maximum output height in pixels.
-     * @param resizeThresholdBytes Byte-size threshold below which resizing is skipped.
      * @param compressionQuality   JPEG compression quality (0.0 .. 1.0).
-     * @param filterOptions        Color filter to apply to the image.
-     * @param onResult             Callback with the processed JPEG bytes, or `null` on failure.
-     * @since 0.0.1
      */
     internal fun resizeImageAsync(
         context: Context,

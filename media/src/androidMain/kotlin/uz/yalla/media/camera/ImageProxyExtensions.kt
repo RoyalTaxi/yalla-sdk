@@ -12,7 +12,6 @@ import java.io.ByteArrayOutputStream
  * The proxy is **closed** after conversion, so callers must not reference it afterwards.
  *
  * @return JPEG bytes with the correct orientation baked in.
- * @since 0.0.1
  */
 internal fun ImageProxy.toByteArray(): ByteArray {
     val bitmap = toBitmap()
@@ -30,7 +29,6 @@ internal fun ImageProxy.toByteArray(): ByteArray {
  * Encodes this [Bitmap] to a JPEG byte array at maximum quality (100).
  *
  * @return JPEG-encoded bytes.
- * @since 0.0.1
  */
 internal fun Bitmap.toByteArray(): ByteArray {
     val stream = ByteArrayOutputStream()
@@ -43,7 +41,6 @@ internal fun Bitmap.toByteArray(): ByteArray {
  *
  * @param degrees Clockwise rotation in degrees (e.g., 90, 180, 270).
  * @return JPEG-encoded bytes of the rotated image.
- * @since 0.0.1
  */
 internal fun Bitmap.rotate(degrees: Int): ByteArray {
     val matrix = Matrix().apply { postRotate(degrees.toFloat()) }

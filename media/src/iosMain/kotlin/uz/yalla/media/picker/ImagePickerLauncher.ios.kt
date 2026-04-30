@@ -25,13 +25,7 @@ import kotlin.coroutines.resume
  * [getRootViewController]. Selected images are resized and filtered according to the
  * provided options before being delivered as byte arrays.
  *
- * @param selectionMode Single or multiple image selection.
- * @param scope         Coroutine scope for async image processing.
- * @param resizeOptions Target dimensions and compression quality.
- * @param filterOptions Color filter to apply to selected images.
- * @param onResult      Callback receiving the list of processed JPEG byte arrays.
  * @return An [ImagePickerLauncher] instance remembered across recompositions.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 @Composable
@@ -119,10 +113,6 @@ private fun processPickerResults(
  * iOS implementation of [ImagePickerLauncher].
  *
  * Directly delegates to the `onLaunch` closure which presents a `PHPickerViewController`.
- *
- * @param selectionMode Single or multiple selection mode.
- * @param onLaunch Action that presents the PHPicker.
- * @since 0.0.1
  */
 actual class ImagePickerLauncher actual constructor(
     selectionMode: SelectionMode,

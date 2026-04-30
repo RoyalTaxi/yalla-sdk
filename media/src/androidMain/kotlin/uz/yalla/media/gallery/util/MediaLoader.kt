@@ -28,10 +28,7 @@ private val projection =
  * On API 29+ uses `ContentResolver.query` with a [bundleOf]-based arguments bundle;
  * on older APIs falls back to a raw SQL `ORDER BY ... LIMIT ... OFFSET ...` clause.
  *
- * @param limit  Maximum number of rows to return.
- * @param offset Number of rows to skip before the first result.
  * @return A cursor positioned before the first row, or `null` on failure.
- * @since 0.0.1
  */
 internal fun Context.createCursor(
     limit: Int,
@@ -68,10 +65,7 @@ internal fun Context.createCursor(
  * Opens a [Cursor] via [createCursor], iterates over the rows, and maps each one to a
  * [YallaMediaImage] containing the row ID, content URI, and display name.
  *
- * @param limit  Maximum number of images to return.
- * @param offset Number of images to skip (for pagination).
  * @return List of [YallaMediaImage] items; empty if the cursor is `null` or yields no rows.
- * @since 0.0.1
  */
 internal fun Context.fetchPagePicture(
     limit: Int,

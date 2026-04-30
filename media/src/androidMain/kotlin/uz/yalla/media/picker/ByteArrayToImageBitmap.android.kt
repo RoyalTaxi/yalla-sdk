@@ -9,7 +9,5 @@ import androidx.compose.ui.graphics.asImageBitmap
  *
  * Decodes raw image bytes via [BitmapFactory.decodeByteArray] and wraps the resulting
  * Android [android.graphics.Bitmap] as a Compose [ImageBitmap].
- *
- * @since 0.0.1
  */
 actual fun ByteArray.toImageBitmap(): ImageBitmap = BitmapFactory.decodeByteArray(this, 0, size).asImageBitmap()

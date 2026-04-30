@@ -10,6 +10,5 @@ import androidx.compose.ui.graphics.ImageBitmap
  *
  * @receiver Raw image bytes (JPEG, PNG, or any platform-decodable format).
  * @return Decoded [ImageBitmap] ready for use with `Image` composables.
- * @since 0.0.1
  */
 expect fun ByteArray.toImageBitmap(): ImageBitmap

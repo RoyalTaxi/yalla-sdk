@@ -9,10 +9,7 @@ import kotlinx.coroutines.CoroutineScope
  * On Android this uses `ActivityResultContracts.TakePicture`; on iOS it presents a
  * `UIImagePickerController` with camera source.
  *
- * @param scope Coroutine scope for asynchronous result processing.
- * @param onResult Callback with captured JPEG bytes, or `null` on cancellation/failure.
  * @return A remembered [SystemCameraLauncher] instance.
- * @since 0.0.1
  */
 @Composable
 expect fun rememberSystemCameraLauncher(
@@ -25,16 +22,11 @@ expect fun rememberSystemCameraLauncher(
  *
  * Obtain an instance via [rememberSystemCameraLauncher]. Call [launch] to open the camera;
  * the result is delivered through the callback provided at creation time.
- *
- * @param onLaunch Platform-specific action executed when [launch] is called.
- * @since 0.0.1
  */
 expect class SystemCameraLauncher(onLaunch: () -> Unit) {
     /**
      * Opens the system camera. On Android, guards against double-launch; on iOS, presents
      * the picker immediately.
-     *
-     * @since 0.0.1
      */
     fun launch()
 }

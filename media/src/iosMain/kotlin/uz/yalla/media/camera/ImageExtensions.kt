@@ -23,7 +23,6 @@ import platform.posix.memcpy
  * If the image is already `.up`, the receiver is returned unchanged (no copy).
  *
  * @return A new [UIImage] with `UIImageOrientationUp`, or the same instance when already upright.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun UIImage.normalizeOrientation(): UIImage {
@@ -42,7 +41,6 @@ internal fun UIImage.normalizeOrientation(): UIImage {
  * Uses `memcpy` for a single bulk copy. Returns an empty array when [length] is zero.
  *
  * @return A newly-allocated byte array containing the data's bytes.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun NSData.toByteArray(): ByteArray {
@@ -64,9 +62,7 @@ internal fun NSData.toByteArray(): ByteArray {
  * If the image already fits within the requested bounds it is returned unchanged.
  *
  * @param maxDimension      Maximum width or height in points. Defaults to 1024.
- * @param compressionQuality Unused in the resize step but kept for API symmetry.
  * @return A resized [UIImage], or the receiver if no scaling is needed.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 @Suppress("UnusedParameter") // compressionQuality wired in Phase 5 media-module pass; kept for call-site stability

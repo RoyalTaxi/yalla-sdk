@@ -22,15 +22,10 @@ import kotlinx.coroutines.CoroutineScope
  * )
  * ```
  *
- * @param modifier Layout modifier for the camera preview.
  * @param cameraMode Initial lens selection. Defaults to [CameraMode.Back].
  * @param captureIcon Composable slot for the shutter button; invoke [onClick] to trigger capture.
  * @param convertIcon Composable slot for the camera-switch button; invoke [onClick] to toggle lens.
- * @param progressIndicator Composable shown while a capture is in progress.
- * @param onCapture Callback with captured JPEG bytes, or `null` on failure.
  * @param onFrame Optional per-frame callback for real-time analysis (e.g., barcode scanning).
- * @param permissionDeniedContent Composable shown when camera permission is denied.
- * @since 0.0.1
  */
 @Composable
 expect fun YallaCamera(
@@ -50,11 +45,6 @@ expect fun YallaCamera(
  * Use [rememberYallaCameraState] to create the [state], then call [YallaCameraState.capture]
  * and [YallaCameraState.toggleCamera] programmatically. The composable renders only the live
  * preview; overlay UI (buttons, indicators) is the caller's responsibility.
- *
- * @param state Camera state holder controlling capture and lens switching.
- * @param modifier Layout modifier for the camera preview.
- * @param permissionDeniedContent Composable shown when camera permission is denied.
- * @since 0.0.1
  */
 @Composable
 expect fun YallaCamera(
@@ -70,14 +60,8 @@ expect fun YallaCamera(
  * application via [SystemCameraLauncher]. Useful when a full preview is not needed or when
  * targeting devices with limited CameraX support.
  *
- * @param modifier Layout modifier for the container.
- * @param scope Coroutine scope for asynchronous camera result handling.
  * @param captureIcon Composable slot for the launch button; invoke [onClick] to open the camera.
- * @param progressIndicator Composable shown while waiting for the camera result.
- * @param onCapture Callback with captured JPEG bytes, or `null` on cancellation.
- * @param permissionDeniedContent Composable shown when camera permission is denied.
  * @param autoLaunch When `true`, the system camera launches automatically on first composition.
- * @since 0.0.1
  */
 @Composable
 expect fun YallaCamera(

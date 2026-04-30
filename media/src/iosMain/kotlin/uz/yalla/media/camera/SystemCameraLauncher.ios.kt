@@ -27,7 +27,6 @@ import uz.yalla.media.utils.getRootViewController
  * @param scope    Coroutine scope used for launching the presentation and delivering results.
  * @param onResult Callback receiving the captured JPEG bytes, or `null` on cancellation/failure.
  * @return A [SystemCameraLauncher] instance remembered across recompositions.
- * @since 0.0.1
  */
 @Composable
 actual fun rememberSystemCameraLauncher(
@@ -63,9 +62,6 @@ actual fun rememberSystemCameraLauncher(
  *
  * Directly delegates to the `onLaunch` closure without double-launch guarding
  * (the iOS UIKit presentation handles this natively).
- *
- * @param onLaunch Action that presents `UIImagePickerController`.
- * @since 0.0.1
  */
 actual class SystemCameraLauncher actual constructor(private val onLaunch: () -> Unit) {
     /** @since 0.0.1 */
@@ -103,7 +99,6 @@ private class SystemCameraDelegate(
  * Converts this [UIImage] to a JPEG-encoded [ByteArray] at full quality.
  *
  * @return JPEG bytes, or `null` when [UIImageJPEGRepresentation] fails (e.g. invalid image).
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 private fun UIImage.toByteArray(): ByteArray? {

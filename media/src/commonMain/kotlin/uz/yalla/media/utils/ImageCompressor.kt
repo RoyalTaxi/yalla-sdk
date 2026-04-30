@@ -18,10 +18,8 @@ package uz.yalla.media.utils
  * uploadAvatar(compressed)
  * ```
  *
- * @param imageBytes Raw image bytes (JPEG, PNG, or any format decodable by the platform).
  * @param config Compression constraints. Defaults to [CompressionConfig.Default].
  * @return Compressed JPEG bytes that satisfy [config], or the original bytes if decoding fails.
- * @since 0.0.1
  */
 expect fun compressImage(
     imageBytes: ByteArray,

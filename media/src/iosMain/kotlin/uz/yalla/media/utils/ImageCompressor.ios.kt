@@ -36,11 +36,9 @@ private const val MIN_QUALITY_INT = 10
  * 3. **Dimension-reduction fallback** — if the minimum quality still exceeds the size limit,
  *    dimensions are halved and the image is re-encoded at minimum quality.
  *
- * @param imageBytes Raw image bytes (JPEG, PNG, or any format decodable by [UIImage]).
  * @param config     Compression constraints; defaults to [CompressionConfig.Default].
  * @return Compressed JPEG bytes satisfying [config], or the original [imageBytes] when
  *         decoding fails or JPEG conversion returns `null`.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 actual fun compressImage(
@@ -129,7 +127,6 @@ actual fun compressImage(
  * preventing an invalid `memcpy` call.
  *
  * @return The byte array representation, or `null` if the data is empty.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 private fun NSData.toByteArraySafe(): ByteArray? {

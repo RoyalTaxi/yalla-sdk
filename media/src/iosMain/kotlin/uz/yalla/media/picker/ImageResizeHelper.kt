@@ -18,7 +18,6 @@ import platform.posix.memcpy
  *
  * @param compressionQuality JPEG quality in the 0.0 .. 1.0 range (clamped internally).
  * @return JPEG-encoded byte array.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun UIImage.toByteArray(compressionQuality: Double): ByteArray {
@@ -36,13 +35,8 @@ internal fun UIImage.toByteArray(compressionQuality: Double): ByteArray {
  * The image is resized only if its JPEG representation (at [compressionQuality]) exceeds
  * [resizeThresholdBytes]. Otherwise only the filter is applied.
  *
- * @param maxWidth            Maximum output width in pixels.
- * @param maxHeight           Maximum output height in pixels.
- * @param resizeThresholdBytes Byte-size threshold below which resizing is skipped.
  * @param compressionQuality  JPEG quality used to check the current file size (0.0 .. 1.0).
- * @param filterOptions       Color filter to apply after optional resizing.
  * @return A (possibly resized and filtered) [UIImage].
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun UIImage.fitInto(
@@ -66,8 +60,6 @@ internal fun UIImage.fitInto(
  * Computes a proportionally scaled [CGSize] that fits this image within
  * [maxWidth] x [maxHeight] while preserving the original aspect ratio.
  *
- * @param maxWidth  Maximum output width in pixels.
- * @param maxHeight Maximum output height in pixels.
  * @return A [CGSize] whose dimensions respect the aspect ratio constraint.
  */
 @OptIn(ExperimentalForeignApi::class)
@@ -92,9 +84,7 @@ private fun UIImage.calculateNewSize(
 /**
  * Resizes this [UIImage] to exactly [targetSize] using [UIGraphicsImageRenderer].
  *
- * @param targetSize Desired output dimensions.
  * @return A new [UIImage] at the requested size.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 internal fun UIImage.resize(targetSize: CValue<CGSize>): UIImage {

@@ -15,9 +15,6 @@ import platform.AVFoundation.requestAccessForMediaType
  * If the status is [AVAuthorizationStatusNotDetermined], a permission request dialog is
  * presented to the user. The callback fires on whichever thread the OS delivers the result
  * (typically the main thread for the undetermined case).
- *
- * @param onResult Callback receiving the resolved [CameraAccess] state.
- * @since 0.0.1
  */
 internal fun checkCameraPermission(onResult: (CameraAccess) -> Unit) {
     when (AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)) {

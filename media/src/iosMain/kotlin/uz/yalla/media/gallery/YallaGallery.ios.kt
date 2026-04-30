@@ -36,8 +36,6 @@ import kotlin.coroutines.resume
  * The selected image is returned as JPEG bytes via [onImageSelected].
  * `PHPicker` handles photo-library permission natively — no explicit permission
  * request is made before presenting the picker.
- *
- * @since 0.0.1
  */
 @Composable
 actual fun YallaGallery(

@@ -29,11 +29,12 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(compose.runtime)
+            // Compose — YallaCamera / YallaGallery are @Composable + Modifier-
+            // taking expect declarations; consumers need both transitively.
+            api(compose.runtime)
+            api(compose.ui)
             implementation(compose.foundation)
             implementation(compose.material3)
-            implementation(libs.paging.common)
-            implementation(libs.paging.compose.common)
         }
 
         androidMain.dependencies {
@@ -46,6 +47,12 @@ kotlin {
             implementation(libs.camera.lifecycle)
             implementation(libs.camera.view)
             implementation(libs.kotlinx.coroutines.guava)
+            // Paging — Android-only feature surface (YallaGalleryPagingGrid,
+            // YallaGalleryDataSource, YallaGalleryViewModel). The cross-
+            // platform YallaGallery composable in commonMain returns
+            // ByteArray?, no paging types.
+            implementation(libs.paging.common)
+            implementation(libs.paging.compose.common)
         }
     }
 }

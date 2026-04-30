@@ -12,7 +12,6 @@ import android.provider.MediaStore
  * R Extensions SDK version is at least 2.
  *
  * @return `true` if the system Photo Picker can be used, `false` otherwise.
- * @since 0.0.1
  */
 internal fun isSystemPickerAvailable(): Boolean =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -32,7 +31,6 @@ internal fun isSystemPickerAvailable(): Boolean =
  * guarded at runtime by [isSystemPickerAvailable].
  *
  * @return Maximum selectable item count.
- * @since 0.0.1
  */
 @SuppressLint("NewApi", "ClassVerificationFailure")
 internal fun getMaxItems() =

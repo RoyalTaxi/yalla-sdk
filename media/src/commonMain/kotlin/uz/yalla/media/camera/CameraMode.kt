@@ -6,8 +6,6 @@ package uz.yalla.media.camera
  * Pass an instance to [YallaCamera] or [rememberYallaCameraState] to select which
  * device camera is active. Use [Front] for selfie/face-facing and [Back] for the
  * rear/world-facing lens.
- *
- * @since 0.0.1
  */
 sealed class CameraMode {
     /** Front-facing (selfie) camera. @since 0.0.1 */
@@ -21,7 +19,6 @@ sealed class CameraMode {
  * Returns the opposite camera lens.
  *
  * @return [CameraMode.Front] when the receiver is [CameraMode.Back] and vice-versa.
- * @since 0.0.1
  */
 internal fun CameraMode.inverse(): CameraMode =
     when (this) {
@@ -34,7 +31,6 @@ internal fun CameraMode.inverse(): CameraMode =
  *
  * @return [BACK_CAMERA_ID] for [CameraMode.Back], [FRONT_CAMERA_ID] for [CameraMode.Front].
  * @see cameraModeFromId
- * @since 0.0.1
  */
 internal fun CameraMode.toId(): Int =
     when (this) {
@@ -49,7 +45,6 @@ internal fun CameraMode.toId(): Int =
  * @return Corresponding [CameraMode].
  * @throws IllegalArgumentException If [id] does not match a known camera mode.
  * @see CameraMode.toId
- * @since 0.0.1
  */
 internal fun cameraModeFromId(id: Int): CameraMode =
     when (id) {

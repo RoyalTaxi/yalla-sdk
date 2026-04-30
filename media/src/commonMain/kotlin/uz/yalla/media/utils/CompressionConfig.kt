@@ -22,10 +22,7 @@ package uz.yalla.media.utils
  * val compressed = compressImage(rawBytes, custom)
  * ```
  *
- * @property maxFileSize Maximum allowed output size in bytes.
- * @property maxDimension Maximum width or height in pixels; the image is scaled proportionally.
  * @property quality Upper bound for JPEG quality (1-100); the compressor searches downward from this value.
- * @since 0.0.1
  */
 data class CompressionConfig(
     val maxFileSize: Int,
@@ -35,8 +32,6 @@ data class CompressionConfig(
     companion object {
         /**
          * General-purpose preset: 1 MB max, 1024 px max dimension, quality 80.
-         *
-         * @since 0.0.1
          */
         val Default =
             CompressionConfig(
@@ -47,8 +42,6 @@ data class CompressionConfig(
 
         /**
          * Preset optimized for profile photos: 512 KB max, 512 px max dimension, quality 85.
-         *
-         * @since 0.0.1
          */
         val ProfilePhoto =
             CompressionConfig(
@@ -59,8 +52,6 @@ data class CompressionConfig(
 
         /**
          * Preset for chat/message images: 2 MB max, 1920 px max dimension, quality 75.
-         *
-         * @since 0.0.1
          */
         val ChatImage =
             CompressionConfig(

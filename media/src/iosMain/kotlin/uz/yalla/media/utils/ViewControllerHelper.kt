@@ -17,7 +17,6 @@ import platform.UIKit.UIWindowScene
  *    mid-dismissal.
  *
  * @return The topmost presentable [UIViewController], or `null` if none is available.
- * @since 0.0.1
  */
 @Suppress("LoopWithTooManyJumpStatements") // walk up presentedViewController chain; each jump is a bounded step
 internal fun getRootViewController(): UIViewController? {

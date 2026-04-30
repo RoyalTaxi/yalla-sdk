@@ -23,8 +23,6 @@ import kotlinx.coroutines.withContext
  * permission is requested at runtime. The selected image is returned as JPEG bytes.
  *
  * For a rich in-app Paging 3 grid, use [YallaGalleryPagingGrid] (Android-only).
- *
- * @since 0.0.1
  */
 @Composable
 actual fun YallaGallery(

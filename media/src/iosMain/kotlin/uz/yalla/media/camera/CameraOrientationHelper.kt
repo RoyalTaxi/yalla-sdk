@@ -20,11 +20,6 @@ import platform.darwin.NSObject
  *
  * Registered for `UIDeviceOrientationDidChangeNotification` and updates the preview layer,
  * photo output, and video data output connections whenever the device is rotated.
- *
- * @param cameraPreviewLayer Preview layer whose connection orientation is updated.
- * @param capturePhotoOutput Photo output whose video connection orientation is updated.
- * @param videoOutput        Video data output whose connection orientation is updated.
- * @since 0.0.1
  */
 internal class OrientationListener(
     private val cameraPreviewLayer: AVCaptureVideoPreviewLayer,
@@ -36,9 +31,6 @@ internal class OrientationListener(
      *
      * Maps the current [UIDeviceOrientation] to the corresponding
      * `AVCaptureVideoOrientation` and applies it to all capture connections.
-     *
-     * @param arg The orientation-change notification (unused).
-     * @since 0.0.1
      */
     @OptIn(BetaInteropApi::class)
     // @ObjCAction notification handler: NSNotification parameter is required by the ObjC selector even if unused here.

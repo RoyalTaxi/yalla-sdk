@@ -15,11 +15,6 @@ import java.util.concurrent.Executors
  *
  * Wraps CameraX lifecycle and provides observable Compose state for camera readiness,
  * capture progress, and active lens. Uses `mutableStateOf` for Compose recomposition.
- *
- * @param cameraMode Initial camera lens.
- * @param onFrame Optional per-frame callback for real-time analysis.
- * @param onCapture Callback with captured JPEG bytes or `null`.
- * @since 0.0.1
  */
 @Stable
 actual class YallaCameraState(
@@ -32,8 +27,6 @@ actual class YallaCameraState(
      *
      * Owned by this state instance; shutdown via `DisposableEffect` inside [YallaCamera].
      * Each camera screen gets its own executor rather than sharing a module-global singleton.
-     *
-     * @since 0.0.1
      */
     internal val executor: ExecutorService = Executors.newSingleThreadExecutor()
 
@@ -50,8 +43,6 @@ actual class YallaCameraState(
      * Anchor closure set by the composable to trigger CameraX image capture.
      *
      * `null` when no camera preview is composed; non-null when a CameraX session is bound.
-     *
-     * @since 0.0.1
      */
     internal var triggerCaptureAnchor: (() -> Unit)? = null
 
@@ -68,8 +59,6 @@ actual class YallaCameraState(
 
     /**
      * Resets the capturing flag after a capture completes or fails.
-     *
-     * @since 0.0.1
      */
     internal fun stopCapturing() {
         isCapturing = false
@@ -77,9 +66,6 @@ actual class YallaCameraState(
 
     /**
      * Forwards captured image bytes to the user-provided callback.
-     *
-     * @param image JPEG bytes, or `null` on failure.
-     * @since 0.0.1
      */
     internal fun onCapture(image: ByteArray?) {
         onCapture.invoke(image)
@@ -89,8 +75,6 @@ actual class YallaCameraState(
      * Marks the camera session as ready and the preview as visible.
      *
      * Called internally once the CameraX provider is bound to the lifecycle.
-     *
-     * @since 0.0.1
      */
     internal fun onCameraReady() {
         isCameraReady = true
@@ -100,10 +84,7 @@ actual class YallaCameraState(
         /**
          * Creates a [Saver] for [YallaCameraState] that persists the active [CameraMode].
          *
-         * @param onFrame Per-frame callback restored on recreation.
-         * @param onCapture Capture callback restored on recreation.
          * @return Saver mapping state to an integer camera-mode ID.
-         * @since 0.0.1
          */
         fun saver(
             onFrame: ((frame: ByteArray) -> Unit)?,
@@ -130,8 +111,6 @@ actual class YallaCameraState(
  * Uses [rememberSaveable] with a custom [Saver] that persists the active [CameraMode]
  * across configuration changes. The [onFrame] and [onCapture] callbacks are re-applied
  * after restoration since they cannot be serialized.
- *
- * @since 0.0.1
  */
 @Composable
 actual fun rememberYallaCameraState(
