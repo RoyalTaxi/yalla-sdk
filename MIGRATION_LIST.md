@@ -1,12 +1,18 @@
 # MIGRATION_LIST.md
 
-Working document for SDK ↔ YallaClient relocations surfaced during the
-`cleanup/phase-2-3-4` branch. Per `CLEANUP_CRITERIA.md` criterion 1
-(lego test) and criterion 8 (single alpha bump at end of phase 4).
+SDK ↔ YallaClient relocation register surfaced during the cleanup
+branch (phase 2 `core`+`data`, phase 3 `design`+`foundation`+`primitives`+`composites`,
+phase 4 `platform`+`firebase`+`media`+`maps`). Single alpha bump
+`1.0.0-alpha01` ships every breaking change at end of phase 4.
 
-This file is consumed by YallaClient migration once the cleanup branch
-publishes its single alpha tag. Deleted at the end of phase 4 alongside
-`CLEANUP_CRITERIA.md`, `CORE_AUDIT.md`, `PHASE_2_*_PLAN.md`.
+This file is consumed by YallaClient migration. Delete after the
+YallaClient catch-up PR lands.
+
+The per-module `*_AUDIT.md` and `PHASE_*_PLAN.md` work-trail docs
+were deleted post-merge; in-narrative references below name them
+historically (e.g. "per `DATA_AUDIT.md` §5") for traceability of
+which decisions came from which audit, but the files themselves no
+longer live in the tree.
 
 ---
 
@@ -361,10 +367,15 @@ Compressed format (no separate audit/decision-gate per module — patterns estab
 
 ## Phase status
 
-- Phase 2 `core` — done. Plan: [PHASE_2_CORE_PLAN.md](PHASE_2_CORE_PLAN.md). Audit: [CORE_AUDIT.md](CORE_AUDIT.md).
-- Phase 2 `data` — done. Plan: [PHASE_2_DATA_PLAN.md](PHASE_2_DATA_PLAN.md). Audit: [DATA_AUDIT.md](DATA_AUDIT.md).
-- Phase 3 `design` — done. Plan: [PHASE_3_DESIGN_PLAN.md](PHASE_3_DESIGN_PLAN.md). Audit: [DESIGN_AUDIT.md](DESIGN_AUDIT.md).
-- Phase 3 `foundation` — done. Plan: [PHASE_3_FOUNDATION_PLAN.md](PHASE_3_FOUNDATION_PLAN.md). Audit: [FOUNDATION_AUDIT.md](FOUNDATION_AUDIT.md).
-- Phase 3 `primitives` — done. Plan: [PHASE_3_PRIMITIVES_PLAN.md](PHASE_3_PRIMITIVES_PLAN.md). Audit: [PRIMITIVES_AUDIT.md](PRIMITIVES_AUDIT.md).
-- Phase 3 `composites` — done. Plan: [PHASE_3_COMPOSITES_PLAN.md](PHASE_3_COMPOSITES_PLAN.md). Audit: [COMPOSITES_AUDIT.md](COMPOSITES_AUDIT.md).
-- Phase 4 `platform`, `firebase`, `media`, `maps` — done. Plan: [PHASE_4_PLAN.md](PHASE_4_PLAN.md). Compressed format — no separate per-module audit file.
+All phases complete; alpha shipped as `1.0.0-alpha01`.
+
+- Phase 2 `core`, `data` — done.
+- Phase 3 `design`, `foundation`, `primitives`, `composites` — done.
+- Phase 4 `platform`, `firebase`, `media`, `maps` — done (compressed format).
+
+Plan + audit files were deleted at end of phase 4. Each module's
+post-cleanup state is documented in its own `MODULE.md`:
+`core/MODULE.md`, `data/MODULE.md`, `design/MODULE.md`,
+`foundation/MODULE.md`, `primitives/MODULE.md`,
+`composites/MODULE.md`, `platform/MODULE.md`, `firebase/MODULE.md`,
+`media/MODULE.md`, `maps/MODULE.md`.
