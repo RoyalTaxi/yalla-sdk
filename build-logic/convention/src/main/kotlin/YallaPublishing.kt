@@ -29,9 +29,9 @@ fun Project.configureYallaPublishing() {
                 }
                 developers {
                     developer {
-                        id.set("isloms")
-                        name.set("Islom Sheraliyev")
-                        email.set("i.sheraliyev@royaltaxi.uz")
+                        id.set("royaltaxi")
+                        name.set("RoyalTaxi Engineering")
+                        email.set("oss@royaltaxi.uz")
                     }
                 }
             }

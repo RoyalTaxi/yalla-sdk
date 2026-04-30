@@ -42,9 +42,9 @@ class ConfigPreferencesImplTest {
     fun shouldPropagateSupportNumberToFlow() = runTest(UnconfinedTestDispatcher()) {
         val impl = newImpl(this)
 
-        impl.setSupportNumber("+998 71 200 00 00")
+        impl.setSupportNumber("+998 90 123 45 67")
 
-        assertEquals("+998 71 200 00 00", impl.supportNumber.first())
+        assertEquals("+998 90 123 45 67", impl.supportNumber.first())
     }
 
     @Test
