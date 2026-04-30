@@ -18,7 +18,6 @@ import uz.yalla.resources.settings_theme_system
  * Sealed hierarchy mapping [ThemeKind] to display properties.
  *
  * @property kind Corresponding [ThemeKind] for persistence
- * @since 0.0.1
  */
 sealed class ThemeOption(
     override val icon: ImageVector,
@@ -56,7 +55,6 @@ sealed class ThemeOption(
          *
          * @param kind The persisted theme kind to resolve.
          * @return Corresponding [ThemeOption] instance.
-         * @since 0.0.1
          */
         fun from(kind: ThemeKind): ThemeOption =
             when (kind) {

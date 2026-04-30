@@ -13,7 +13,6 @@ import uz.yalla.resources.settings_map_libre
  * Has no icon — only a localized name.
  *
  * @property kind Corresponding [MapKind] for persistence
- * @since 0.0.1
  */
 sealed class MapOption(
     override val name: StringResource,
@@ -41,7 +40,6 @@ sealed class MapOption(
          *
          * @param kind The persisted map kind to resolve.
          * @return Corresponding [MapOption] instance.
-         * @since 0.0.1
          */
         fun from(kind: MapKind): MapOption =
             when (kind) {

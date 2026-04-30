@@ -9,6 +9,5 @@ import dev.icerock.moko.geo.LocationTracker
  * - **iOS:** Creates PermissionsController directly (no DI needed).
  *
  * @return Configured [LocationTracker] for the current platform
- * @since 0.0.1
  */
 expect fun createLocationTracker(): LocationTracker

@@ -8,8 +8,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
  * CompositionLocal providing access to [LocationManager].
  *
  * Must be provided at a parent composable level for child components to access.
- *
- * @since 0.0.1
  */
 val LocalLocationManager =
     staticCompositionLocalOf<LocationManager> {
@@ -30,7 +28,6 @@ val LocalLocationManager =
  *
  * @param locationManager The location manager instance to provide
  * @param content Composable content that can access the location manager
- * @since 0.0.1
  */
 @Composable
 fun LocationProvider(
@@ -48,7 +45,6 @@ fun LocationProvider(
  *
  * @return [LocationManager] provided by the nearest [LocationProvider].
  * @throws IllegalStateException If called outside a [LocationProvider].
- * @since 0.0.1
  * @see LocationProvider
  */
 @Composable

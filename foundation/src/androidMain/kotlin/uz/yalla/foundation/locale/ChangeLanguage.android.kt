@@ -10,7 +10,6 @@ import java.util.Locale
  * This function alone does NOT update visible UI.
  *
  * @param languageCode ISO 639-1 language code
- * @since 0.0.1
  */
 actual fun changeLanguage(languageCode: String) {
     val locale = Locale(languageCode)
@@ -21,6 +20,5 @@ actual fun changeLanguage(languageCode: String) {
  * Gets current system language on Android.
  *
  * @return ISO 639-1 language code
- * @since 0.0.1
  */
 actual fun getCurrentLanguage(): String = Locale.getDefault().language

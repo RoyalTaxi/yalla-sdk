@@ -42,7 +42,6 @@ import uz.yalla.core.geo.GeoPoint
  * @param locationTracker Platform-specific tracker from moko-geo.
  * @param scope Caller-owned scope; cancel to stop all in-flight tracking work.
  * @param defaultLocation Fallback when user location is unavailable.
- * @since 0.0.10
  */
 class LocationManager(
     val locationTracker: LocationTracker,
@@ -55,15 +54,11 @@ class LocationManager(
     /**
      * Current device location with extended metadata, or `null` if tracking is off
      * or no fix has arrived yet.
-     *
-     * @since 0.0.1
      */
     val extendedLocation: StateFlow<ExtendedLocation?> = _extendedLocation.asStateFlow()
 
     /**
      * Current location as [GeoPoint]; emits `null` if no fix.
-     *
-     * @since 0.0.1
      */
     override val currentLocation: Flow<GeoPoint?> = _extendedLocation.map { it?.toGeoPoint() }
 
@@ -72,8 +67,6 @@ class LocationManager(
     /**
      * `true` while tracking is active (between [startTracking] and [stopTracking] or
      * scope cancellation).
-     *
-     * @since 0.0.1
      */
     val isTracking: StateFlow<Boolean> = _isTracking.asStateFlow()
 
@@ -81,8 +74,6 @@ class LocationManager(
 
     /**
      * Last-observed permission state; `null` until the first [updatePermissionState] call.
-     *
-     * @since 0.0.1
      */
     val permissionState: StateFlow<LocationPermissionState?> = _permissionState.asStateFlow()
 
@@ -90,8 +81,6 @@ class LocationManager(
      * Starts location tracking. Requires location permission.
      *
      * Idempotent — calling while already tracking is a no-op.
-     *
-     * @since 0.0.1
      */
     override fun startTracking() {
         if (_isTracking.value) return
@@ -122,8 +111,6 @@ class LocationManager(
 
     /**
      * Stops location tracking. Idempotent — no-op when not tracking.
-     *
-     * @since 0.0.1
      */
     override fun stopTracking() {
         if (!_isTracking.value) return
@@ -141,7 +128,6 @@ class LocationManager(
      * Updates the externally-observed permission state.
      *
      * @param state New permission state, or `null` if unknown.
-     * @since 0.0.1
      */
     fun updatePermissionState(state: LocationPermissionState?) {
         _permissionState.value = state
@@ -149,23 +135,17 @@ class LocationManager(
 
     /**
      * Returns current location as [GeoPoint], or `null` if unavailable.
-     *
-     * @since 0.0.1
      */
     override fun getCurrentLocation(): GeoPoint? = _extendedLocation.value?.toGeoPoint()
 
     /**
      * Returns current location as [GeoPoint], or [defaultLocation] if unavailable.
-     *
-     * @since 0.0.1
      */
     override fun getCurrentLocationOrDefault(): GeoPoint = getCurrentLocation() ?: defaultLocation
 
     companion object {
         /**
          * Default fallback location: Tashkent, Uzbekistan.
-         *
-         * @since 0.0.1
          */
         val DEFAULT_LOCATION = GeoPoint(41.2995, 69.2401)
     }

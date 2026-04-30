@@ -9,7 +9,6 @@ import uz.yalla.core.location.PlaceKind
  * @property id Optional location identifier
  * @property name Optional human-readable location name
  * @property point Optional geographic coordinates
- * @since 0.0.1
  */
 data class Location(
     val id: Int? = null,
@@ -25,7 +24,6 @@ data class Location(
  * @property address Optional formatted address string
  * @property point Optional geographic coordinates
  * @property placeKind Optional place type classification
- * @since 0.0.1
  */
 data class FoundLocation(
     val id: Int? = null,
@@ -38,7 +36,6 @@ data class FoundLocation(
      * Converts this [FoundLocation] to a [Location], dropping the [address] field.
      *
      * @return [Location] with [id], [name], and [point] carried over.
-     * @since 0.0.1
      * @see Location
      */
     fun toLocation() =

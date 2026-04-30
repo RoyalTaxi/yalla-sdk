@@ -10,7 +10,6 @@ package uz.yalla.foundation.location
  * - **iOS:** Calls [CLLocationManager.locationServicesEnabled].
  *
  * @return `true` if at least one location provider is active
- * @since 0.0.8
  */
 expect fun isLocationServicesEnabled(): Boolean
 
@@ -23,7 +22,5 @@ expect fun isLocationServicesEnabled(): Boolean
  * - **Android:** Opens [Settings.ACTION_LOCATION_SOURCE_SETTINGS].
  * - **iOS:** Opens the app's settings page via [UIApplicationOpenSettingsURLString]
  *   (iOS does not allow deep-linking to system Location Services settings).
- *
- * @since 0.0.8
  */
 expect fun openLocationSettings()

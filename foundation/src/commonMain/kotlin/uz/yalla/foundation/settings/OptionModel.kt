@@ -11,7 +11,6 @@ import androidx.compose.ui.graphics.painter.Painter
  * @property title Display title
  * @property icon Item icon painter
  * @property iconColor Icon tint color
- * @since 0.0.1
  */
 data class OptionModel<T>(
     val item: T,

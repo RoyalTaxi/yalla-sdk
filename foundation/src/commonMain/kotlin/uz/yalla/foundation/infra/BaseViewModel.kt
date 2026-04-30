@@ -42,7 +42,6 @@ import kotlin.time.Duration
  * ```
  *
  * @see LoadingController for loading state management details
- * @since 0.0.1
  */
 abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = DefaultDataErrorMapper()) : ViewModel() {
     private val loadingController = LoadingController()
@@ -71,8 +70,6 @@ abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = Defa
      * Safe coroutine scope with automatic exception handling.
      *
      * Exceptions thrown in this scope are caught and mapped to user-friendly messages.
-     *
-     * @since 0.0.1
      */
     val safeScope: CoroutineScope = viewModelScope + handler
 
@@ -80,7 +77,6 @@ abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = Defa
      * Handles exception by showing error dialog with mapped message.
      *
      * @param throwable The exception that occurred
-     * @since 0.0.1
      */
     fun handleException(throwable: Throwable) {
         val messageId = mapThrowableToUserMessage(throwable)
@@ -92,7 +88,6 @@ abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = Defa
      * Handles [DataError] by showing error dialog with mapped message.
      *
      * @param error The data error that occurred
-     * @since 0.0.1
      */
     fun handleDataError(error: DataError) {
         val messageId = mapDataErrorToUserMessage(error)
@@ -114,7 +109,6 @@ abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = Defa
      * @param showAfter Delay before showing loading. Defaults to controller's configured value.
      * @param minDisplayTime Minimum display time once shown. Defaults to controller's configured value.
      * @param block Suspending operation to execute
-     * @since 0.0.1
      */
     fun CoroutineScope.launchWithLoading(
         showAfter: Duration = LoadingController.DEFAULT_SHOW_AFTER,
@@ -128,7 +122,6 @@ abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = Defa
      * Launches coroutine with automatic exception handling.
      *
      * @param block Suspending operation to execute
-     * @since 0.0.1
      */
     fun CoroutineScope.launchSafe(block: suspend () -> Unit) =
         launch(handler) {
@@ -142,7 +135,6 @@ abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = Defa
      *
      * @param error The data error to map
      * @return StringResource for the error message
-     * @since 0.0.1
      */
     protected open fun mapDataErrorToUserMessage(error: DataError): StringResource = dataErrorMapper.map(error)
 
@@ -153,7 +145,6 @@ abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = Defa
      *
      * @param throwable The exception to map
      * @return StringResource for the error message
-     * @since 0.0.1
      */
     protected open fun mapThrowableToUserMessage(throwable: Throwable): StringResource = Res.string.error_unexpected
 }

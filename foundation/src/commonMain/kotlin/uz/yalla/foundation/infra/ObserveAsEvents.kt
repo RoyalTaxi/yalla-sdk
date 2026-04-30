@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.Flow
  * @param key Optional recomposition key forwarded to [LaunchedEffect]. Defaults to [Unit].
  * @param onEvent Callback invoked for each emitted event
  * @see ObserveAsEvents overload accepting [Lifecycle.State] for custom minimum state
- * @since 0.0.1
  */
 @Composable
 fun <T> ObserveAsEvents(
@@ -68,7 +67,6 @@ fun <T> ObserveAsEvents(
  * @param key Optional recomposition key forwarded to [LaunchedEffect]. Defaults to [Unit].
  * @param onEvent Callback invoked for each emitted event
  * @see ObserveAsEvents default overload that uses [Lifecycle.State.STARTED]
- * @since 0.0.1
  */
 @Composable
 fun <T> ObserveAsEvents(

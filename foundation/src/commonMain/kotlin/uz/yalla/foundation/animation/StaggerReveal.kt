@@ -41,7 +41,6 @@ private const val DEFAULT_SLIDE_PX = 40f
  * @param durationMs Animation duration in milliseconds per item.
  * @param slidePx Vertical slide distance in pixels.
  * @return [Modifier] with stagger-reveal animation applied via [graphicsLayer].
- * @since 0.0.1
  * @see graphicsLayer
  */
 @Composable

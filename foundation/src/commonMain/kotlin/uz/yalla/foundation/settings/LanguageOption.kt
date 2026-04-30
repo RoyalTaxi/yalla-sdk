@@ -17,7 +17,6 @@ import uz.yalla.resources.language_uzbek_latin
  * in Phase 3 (ADR-014) to the production-ready locales: [Uzbek] and [Russian].
  *
  * @property kind Corresponding [LocaleKind] for persistence.
- * @since 0.0.1
  */
 sealed class LanguageOption(
     override val icon: ImageVector,
@@ -48,7 +47,6 @@ sealed class LanguageOption(
          *
          * @param kind The persisted locale kind.
          * @return The corresponding [LanguageOption] — exhaustive over current `LocaleKind` cases.
-         * @since 0.0.1
          */
         fun from(kind: LocaleKind): LanguageOption = when (kind) {
             LocaleKind.Uz -> Uzbek

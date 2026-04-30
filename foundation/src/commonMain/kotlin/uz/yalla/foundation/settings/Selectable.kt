@@ -15,7 +15,6 @@ import org.jetbrains.compose.resources.stringResource
  *
  * @property name Localized display name
  * @property icon Optional icon; null when the option has no visual indicator
- * @since 0.0.1
  */
 interface Selectable {
     val name: StringResource
@@ -31,7 +30,6 @@ interface Selectable {
  * @param T The concrete [Selectable] type.
  * @param iconColor Tint applied to the icon. Use [Color.Unspecified] for multi-color icons (e.g. flags).
  * @return [OptionModel] ready for display in a selection list.
- * @since 0.0.1
  * @see OptionModel
  */
 @Composable

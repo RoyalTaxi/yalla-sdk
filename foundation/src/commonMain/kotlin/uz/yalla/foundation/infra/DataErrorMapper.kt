@@ -9,7 +9,6 @@ import uz.yalla.core.error.DataError
  * Implement this interface to customize error message mapping per app or feature.
  *
  * @see DefaultDataErrorMapper for the default implementation
- * @since 0.0.1
  */
 fun interface DataErrorMapper {
     /**
@@ -17,7 +16,6 @@ fun interface DataErrorMapper {
      *
      * @param error The data error to map
      * @return Localized message resource for the error
-     * @since 0.0.1
      */
     fun map(error: DataError): StringResource
 }
