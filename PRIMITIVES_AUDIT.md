@@ -966,3 +966,44 @@ Total wave-10 effort: full rewrite of MODULE.md from scratch on phase-1 form. **
   4. **`SensitiveButton` / `SplashOverlay` default copy** — neutralize (force callers to provide localized strings) or keep order-shaped defaults? **Recommend: keep, document.**
   5. **`runComposeUiTest` infrastructure** — add to wave-8 scope, or stay at the data-class equality bar and rely on `showcase` for behavior verification? **Recommend: stay at data-class bar for the alpha cleanup window; add `runComposeUiTest` post-alpha.**
   6. **`@Preview` annotations in commonMain** — accepted (they ship into the published artifact but are typically R8-shrunk on consumer side), or move to a separate `androidUnitTest` / dev-only source set? **Recommend: accept, document.**
+
+---
+
+## 9. Approval (Islom, 2026-04-30)
+
+Decisions locked for waves 2-10. All gate items approved per my + subagent recommendations (with G19 leaning delete over subagent's keep + plan).
+
+### Gate items
+
+- **G19 — `transformation/PhoneVisualTransformation.kt` + `NumberVisualTransformation.kt`:** **DELETE.** Zero callers SDK-wide; same shape as core G1 / design G9 / foundation G14. Name collision with the private `PhoneVisualTransformation` inside `NumberField.kt` makes "keep" actively confusing. Cheap to recreate when an actual producer ships. Frees up the canonical name for the private object. ~200 lines removed. `refactor!:`.
+- **G20 — `System.space.*` / `System.radius.*` adoption sweep:** **DEFER.** Document the gap in MODULE.md notes — primitives currently uses literal `dp` / `RoundedCornerShape(N.dp)` instead of theme tokens. Sweep risks visual regression if `standardSpaceScheme()` / `standardRadiusScheme()` values diverge from current literals. Future project.
+- **G21 — `LocationPin.kt` (564 lines) split:** **APPROVED.** Move-only into 4 files: `LocationPin.kt` (public composable + Defaults) + 3 private files (`LocationPinContent.kt`, `LocationPinStick.kt`, `LocationPinHeader.kt`). ~140 lines moved. No behavior change.
+- **G22 — `compose.materialIconsExtended` swap + drop:** **APPROVED.** Replace `Icons.AutoMirrored.Filled.ArrowBack` with `YallaIcons.ArrowBack` from `:resources` (verify SVG exists; add if missing). Drop the dep.
+- **G23 — Default copy neutralization:** **APPROVED.** Three changes:
+  - `SensitiveButton.confirmText` default → neutral key (e.g., `Res.string.common_action_yes`).
+  - `SensitiveButton.countdownText` default → neutral countdown format key.
+  - `SplashOverlay.message` default → neutral overlay-message key (or `null`-default).
+  - `NavigationButton.contentDescription = "Navigate back"` → drop the literal default; require callers to localize via `stringResource(...)` or pass `null`.
+
+### Quick approvals
+
+- **A1.** Sweep 101 `@since` tags — wave 2.
+- **A2.** Paraphrase KDoc sweep + drop COMPONENT_STANDARD.md cross-references — wave 2.
+- **A3.** Drop `@file:Suppress` block in `LocationPin.kt:1-8` — wave 2.
+- **A4.** Drop unused `LoadingIndicatorDimens.strokeWidth(size)` helper — wave 2.
+- **A5.** Drop unused `LocationPin.loading` param — wave 2.
+- **A6.** Drop dead `navigation/ToolbarAction.kt` — wave 2.
+- **A7.** Simplify `Modifier.squareSize` redundant `when` — wave 5.
+- **A8.** Reuse the canonical `PhoneVisualTransformation` name for the private NumberField object after G19 deletes the public class.
+- **A9.** Promote `compose.runtime`, `compose.foundation`, `compose.ui` to `api()` — wave 3.
+- **A10.** `@Immutable` posture already universal — no work.
+- **A11.** Full MODULE.md rewrite with COMPONENT_STANDARD pattern fold-in — wave 10.
+
+### Out of scope (kept / deferred)
+
+- runComposeUiTest behavioral test bar — defer post-alpha; current data-class equality bar acceptable.
+- `@Preview` annotations in commonMain — accept; document.
+- Behavioral coverage for the 14 untested components — defer post-alpha.
+- `DateField.placeholder = "DD.MM.YYYY"` — ASCII format-string, acceptable.
+- `NumberField`'s Uzbekistan phone formatting — country-coded by the `+998` resource, acceptable.
+- `LoadingIndicator.iconSize` derivation refactor — defer.
