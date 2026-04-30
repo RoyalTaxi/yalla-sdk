@@ -1,16 +1,10 @@
 package uz.yalla.composites.sheet
 
-import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.AnchoredDraggableDefaults
-import androidx.compose.foundation.gestures.AnchoredDraggableState
-import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.anchoredDraggable
-import androidx.compose.foundation.gestures.animateTo
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,12 +17,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -36,22 +24,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import kotlin.math.roundToInt
-
-/**
- * Values for headerable sheet state.
- */
-enum class HeaderableSheetValue {
-    /** Sheet body is hidden; only header and footer are visible. */
-    Collapsed,
-
-    /** Sheet body is fully visible between header and footer. */
-    Expanded,
-}
 
 /**
  * Color configuration for [HeaderableSheet].
@@ -80,9 +56,6 @@ data class HeaderableSheetDimens(
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
  */
 object HeaderableSheetDefaults {
-    /**
-     * Creates theme-aware default colors.
-     */
     @Composable
     fun colors(
         container: Color = System.color.background.base,
@@ -92,9 +65,6 @@ object HeaderableSheetDefaults {
         dragHandle = dragHandle
     )
 
-    /**
-     * Creates default dimensions.
-     */
     fun dimens(
         cornerRadius: Dp = 38.dp,
         shape: Shape = RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius),
@@ -107,136 +77,6 @@ object HeaderableSheetDefaults {
         dragHandleWidth = dragHandleWidth,
         dragHandleHeight = dragHandleHeight,
         dragHandleContainerHeight = dragHandleContainerHeight
-    )
-}
-
-/**
- * State for [HeaderableSheet].
- */
-@OptIn(ExperimentalFoundationApi::class)
-@Stable
-class HeaderableSheetState internal constructor(
-    initialValue: HeaderableSheetValue,
-    internal val snapAnimationSpec: AnimationSpec<Float>,
-    internal val density: Density,
-    internal val positionalThreshold: (totalDistance: Float) -> Float = { it * 0.5f },
-    internal val velocityThreshold: () -> Float = { with(density) { 125.dp.toPx() } }
-) {
-    internal var headerHeightPx by mutableFloatStateOf(0f)
-    internal var bodyHeightPx by mutableFloatStateOf(0f)
-    internal var footerHeightPx by mutableFloatStateOf(0f)
-
-    private val maxOffsetPx: Float
-        get() = bodyHeightPx.coerceAtLeast(0f)
-
-    private val hasOffset: Boolean
-        get() = maxOffsetPx > 0f
-
-    internal val anchoredDraggableState = AnchoredDraggableState<HeaderableSheetValue>(initialValue)
-
-    val headerHeight: Dp get() = with(density) { headerHeightPx.toDp() }
-    val bodyHeight: Dp get() = with(density) { bodyHeightPx.toDp() }
-    val footerHeight: Dp get() = with(density) { footerHeightPx.toDp() }
-    val collapsedSheetHeight: Dp get() = headerHeight + footerHeight
-
-    val currentValue: HeaderableSheetValue get() = anchoredDraggableState.currentValue
-    val targetValue: HeaderableSheetValue get() = anchoredDraggableState.targetValue
-
-    val fraction: Float by derivedStateOf {
-        if (!hasOffset) return@derivedStateOf 0f
-        val offset = anchoredDraggableState.offset
-        when {
-            offset.isNaN() -> if (currentValue == HeaderableSheetValue.Expanded) 1f else 0f
-            else -> (1f - (offset / maxOffsetPx)).coerceIn(0f, 1f)
-        }
-    }
-
-    val bodyAlpha: Float by derivedStateOf {
-        val t = fraction
-        if (t < 0.5f) {
-            4f * t * t * t
-        } else {
-            1f - (-2f * t + 2f).let { it * it * it } / 2f
-        }
-    }
-
-    internal val visibleBodyHeightPx: Float by derivedStateOf {
-        if (!hasOffset) return@derivedStateOf 0f
-        val offset = anchoredDraggableState.offset
-        when {
-            offset.isNaN() -> if (currentValue == HeaderableSheetValue.Expanded) bodyHeightPx else 0f
-            else -> (bodyHeightPx - offset).coerceAtLeast(0f)
-        }
-    }
-
-    val visibleBodyHeight: Dp by derivedStateOf { with(density) { visibleBodyHeightPx.toDp() } }
-    val totalSheetHeight: Dp by derivedStateOf { headerHeight + visibleBodyHeight + footerHeight }
-
-    val isAnimating: Boolean get() = anchoredDraggableState.isAnimationRunning
-    val isExpanded: Boolean get() = currentValue == HeaderableSheetValue.Expanded
-    val isCollapsed: Boolean get() = currentValue == HeaderableSheetValue.Collapsed
-
-    suspend fun expand() {
-        if (hasOffset) anchoredDraggableState.animateTo(HeaderableSheetValue.Expanded)
-    }
-
-    suspend fun collapse() {
-        if (hasOffset) anchoredDraggableState.animateTo(HeaderableSheetValue.Collapsed)
-    }
-
-    suspend fun toggle() = if (isCollapsed) expand() else collapse()
-
-    internal fun updateHeights(
-        headerHeightPx: Int,
-        bodyHeightPx: Int,
-        footerHeightPx: Int
-    ) {
-        this.headerHeightPx = headerHeightPx.toFloat()
-        this.bodyHeightPx = bodyHeightPx.toFloat()
-        this.footerHeightPx = footerHeightPx.toFloat()
-
-        val newMaxOffset = this.bodyHeightPx.coerceAtLeast(0f)
-        if (newMaxOffset > 0f) {
-            val anchors =
-                DraggableAnchors {
-                    HeaderableSheetValue.Expanded at 0f
-                    HeaderableSheetValue.Collapsed at newMaxOffset
-                }
-            anchoredDraggableState.updateAnchors(anchors, currentValue)
-        }
-    }
-
-    internal suspend fun settle(velocity: Float) {
-        val target =
-            when {
-                velocity < -500f -> HeaderableSheetValue.Expanded
-                velocity > 500f -> HeaderableSheetValue.Collapsed
-                fraction > 0.5f -> HeaderableSheetValue.Expanded
-                else -> HeaderableSheetValue.Collapsed
-            }
-        anchoredDraggableState.animateTo(target)
-    }
-}
-
-/**
- * Remember a [HeaderableSheetState].
- *
- * @return Remembered sheet state.
- */
-@Composable
-fun rememberHeaderableSheetState(
-    initialValue: HeaderableSheetValue = HeaderableSheetValue.Collapsed,
-    snapAnimationSpec: AnimationSpec<Float> =
-        spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessMedium
-        ),
-    density: Density = LocalDensity.current
-) = remember {
-    HeaderableSheetState(
-        initialValue = initialValue,
-        snapAnimationSpec = snapAnimationSpec,
-        density = density
     )
 }
 
@@ -260,6 +100,9 @@ fun rememberHeaderableSheetState(
  *
  * @param colors Color configuration, defaults to [HeaderableSheetDefaults.colors].
  * @param dimens Dimension configuration, defaults to [HeaderableSheetDefaults.dimens].
+ *
+ * @see HeaderableSheetState
+ * @see rememberHeaderableSheetState
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
