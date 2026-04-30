@@ -305,6 +305,60 @@ The foundation/core `LocationProvider` collision question (raised in the audit p
 
 ---
 
+## Phase 4 — `platform`, `firebase`, `media`, `maps` additions
+
+Compressed format (no separate audit/decision-gate per module — patterns established by phase 2-3).
+
+### Promotions / demotions surfaced
+
+*From phase 4:* none cross-module. Within each module:
+- **platform**: `materialIconsExtended` dropped (single use-site swapped to `YallaIcons.ArrowLeft`); `datetime-wheel-picker` demoted from common to androidMain.
+- **firebase**: `kotlinx.serialization.json` dropped (zero `@Serializable` types).
+- **media**: `paging-common` + `paging-compose-common` demoted from common to androidMain (the cross-platform `YallaGallery` returns `ByteArray?`, no paging types).
+- **maps**: `projects.design` + `projects.resources` dropped entirely (zero `uz.yalla.design.*` / `uz.yalla.resources.*` imports anywhere in maps source).
+
+### Breaking changes shipped
+
+*From phase 4 `platform`:*
+- `b487d269b refactor!(platform): cleanup phase-4 wave A` —
+  - 55 `@since` tags + paraphrase KDoc stripped.
+  - Promoted to `api()`: `compose.runtime`, `compose.ui`, `compose.foundation`, `compose.material3` (every `Native*` exposes `@Composable` + `Modifier` + `Color/Shape/Dp` in its public signature).
+  - Dropped `materialIconsExtended` (after the ArrowBack swap).
+  - `NativeNavHost.android.kt` BackButton: swapped `Icons.AutoMirrored.Filled.ArrowBack` to `YallaIcons.ArrowLeft`; `contentDescription` dropped (was the literal English "Back").
+  - Action: zero migration impact for YallaClient — back button still renders identically; consumers that read the `contentDescription` need to provide their own localized string if they require accessibility text.
+
+*From phase 4 `firebase`:*
+- `5d07de310 refactor!(firebase): cleanup phase-4 wave B` —
+  - 40 `@since` tags + paraphrase KDoc stripped.
+  - Dropped unused `libs.kotlinx.serialization.json`.
+  - Public surface unchanged — gitlive Firebase types remain `api()`. Action: none for consumers.
+
+*From phase 4 `media`:*
+- `886ab5f04 refactor!(media): cleanup phase-4 wave C` —
+  - 155 `@since` tags + paraphrase KDoc stripped (camera/gallery/picker implementations).
+  - Promoted to commonMain `api()`: `compose.runtime`, `compose.ui` — every `YallaCamera`/`YallaGallery` is `@Composable` + `Modifier`-taking.
+  - Demoted `paging-common`, `paging-compose-common` from commonMain to androidMain (paging types do not appear in any commonMain expect signature).
+  - Action: YallaClient consumers using the cross-platform `YallaGallery(modifier, onImageSelected)` are unaffected. Consumers using Android-only `YallaGalleryPagingGrid` continue to work — paging deps still resolve in androidMain.
+
+*From phase 4 `maps`:*
+- `6283cc05b refactor!(maps): cleanup phase-4 wave D` —
+  - **237 `@since` tags** + paraphrase KDoc stripped (most of any phase-4 module — 86 files touched).
+  - Promoted to `api()`: `compose.ui`, `kotlinx.coroutines.core`, `libs.geo`. The `MapController` exposes `StateFlow<CameraPosition>`/`<MarkerState>`/`<Boolean>`; consumers transitively need `StateFlow`.
+  - Dropped unused `projects.design` and `projects.resources` from maps. Map composables don't read theme tokens directly — caller-supplied marker images / polyline colors come through the API surface.
+  - **God-files kept**: `LibreMapController.kt` (455), `GoogleMapController.kt` (418), `MapControllerFakeProviderTest.kt` (616), `GeoUtilTest.kt` (365). All cohesive single-class / single-test responsibilities; size is the natural shape, splitting would just push complexity around. Documented in `maps/MODULE.md`.
+  - Action: YallaClient consumers that depended on transitive `compose.ui`/`coroutines.core` from maps already pull these directly; promotion is zero-impact. Consumers that pulled `design`/`resources` transitively from maps must declare them directly (likely already do).
+
+### Architectural patterns documented (no code change, MODULE.md notes)
+
+- **`expect/actual` is the platform contract.** Every public composable in `platform/commonMain` is `expect`-typed; tests against the contract belong in `commonTest`.
+- **`runCatching` carve-outs (firebase, media).** Same posture foundation took with moko-geo: system-API boundary failures (Firebase token expiry, camera bind failure) MUST NOT crash the host app. Sanctioned, documented per-module.
+- **`paging-common` is androidMain-only (media).** Compose-Paging on iOS would require its own surface; deferred until product needs it. Documented in `media/MODULE.md`.
+- **Maps god-files are intentional.** Provider implementations naturally land at 400-500 lines (full camera/marker/animation API surface). Splitting would push complexity around without yielding focus. Documented.
+- **iOS test link broken on `:maps` (pre-existing).** Cocoapods symbol resolution for `GoogleMaps`. Verified pre-existing on main; out of scope for cleanup. Tests on iOS unrunnable until cocoapods linker config is fixed.
+- **`composites` G1 still deferred.** `materialIconsExtended` swap in composites depends on `:resources` adding chevron-right vector. Phase 4 didn't touch `:resources` (out of scope — resources is phase-1 finished); G1 remains pending.
+
+---
+
 ## Phase status
 
 - Phase 2 `core` — done. Plan: [PHASE_2_CORE_PLAN.md](PHASE_2_CORE_PLAN.md). Audit: [CORE_AUDIT.md](CORE_AUDIT.md).
@@ -313,4 +367,4 @@ The foundation/core `LocationProvider` collision question (raised in the audit p
 - Phase 3 `foundation` — done. Plan: [PHASE_3_FOUNDATION_PLAN.md](PHASE_3_FOUNDATION_PLAN.md). Audit: [FOUNDATION_AUDIT.md](FOUNDATION_AUDIT.md).
 - Phase 3 `primitives` — done. Plan: [PHASE_3_PRIMITIVES_PLAN.md](PHASE_3_PRIMITIVES_PLAN.md). Audit: [PRIMITIVES_AUDIT.md](PRIMITIVES_AUDIT.md).
 - Phase 3 `composites` — done. Plan: [PHASE_3_COMPOSITES_PLAN.md](PHASE_3_COMPOSITES_PLAN.md). Audit: [COMPOSITES_AUDIT.md](COMPOSITES_AUDIT.md).
-- Phase 4 `firebase`, `maps`, `media`, `platform` — TODO.
+- Phase 4 `platform`, `firebase`, `media`, `maps` — done. Plan: [PHASE_4_PLAN.md](PHASE_4_PLAN.md). Compressed format — no separate per-module audit file.
