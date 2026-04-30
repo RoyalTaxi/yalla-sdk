@@ -28,12 +28,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Single action item for [ActionPickerSheet].
- *
- * @param title Action text.
- * @param icon Icon painter.
- * @param onClick Called when action tapped.
- * @param isDestructive Whether this is a destructive action (shows icon in red).
- * @since 0.0.1
  */
 data class ActionPickerItem(
     val title: String,
@@ -44,14 +38,6 @@ data class ActionPickerItem(
 
 /**
  * Color configuration for [ActionPickerSheet].
- *
- * @param container Background color.
- * @param title Title text color.
- * @param itemBackground Item background color.
- * @param itemIcon Item icon tint.
- * @param itemText Item text color.
- * @param destructiveItemIcon Icon tint for destructive actions.
- * @since 0.0.1
  */
 @Immutable
 data class ActionPickerColors(
@@ -65,15 +51,6 @@ data class ActionPickerColors(
 
 /**
  * Dimension configuration for [ActionPickerSheet].
- *
- * @param shape Sheet corner shape.
- * @param contentPadding Content padding.
- * @param titleItemsSpacing Spacing between title and items.
- * @param itemSpacing Spacing between items.
- * @param itemShape Item button shape.
- * @param itemPadding Item button padding.
- * @param itemIconTextSpacing Spacing between icon and text in item.
- * @since 0.0.1
  */
 @Immutable
 data class ActionPickerDimens(
@@ -90,13 +67,10 @@ data class ActionPickerDimens(
  * Default values for [ActionPickerSheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object ActionPickerDefaults {
     /**
      * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
      */
     @Composable
     fun colors(
@@ -118,8 +92,6 @@ object ActionPickerDefaults {
 
     /**
      * Creates default dimensions.
-     *
-     * @since 0.0.1
      */
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
@@ -169,16 +141,10 @@ object ActionPickerDefaults {
  * )
  * ```
  *
- * @param isVisible Whether sheet is visible.
- * @param onDismissRequest Called when sheet is dismissed.
- * @param title Sheet header title.
- * @param items List of selectable actions.
- * @param modifier Applied to sheet.
  * @param colors Color configuration, defaults to [ActionPickerDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ActionPickerDefaults.dimens].
  *
  * @see ActionPickerDefaults for default values
- * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

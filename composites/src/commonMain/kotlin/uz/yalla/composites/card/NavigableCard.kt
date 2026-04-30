@@ -23,14 +23,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [NavigableCard].
- *
- * @param container Card background color.
- * @param border Border color when enabled.
- * @param arrow Arrow icon tint when enabled.
- * @param disabledContainer Background when disabled.
- * @param disabledBorder Border color when disabled.
- * @param disabledArrow Arrow tint when disabled.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class NavigableCardColors(
@@ -44,13 +36,6 @@ data class NavigableCardColors(
 
 /**
  * Dimension configuration for [NavigableCard].
- *
- * @param shape Card corner shape.
- * @param borderWidth Border stroke width.
- * @param arrowSize Arrow icon size.
- * @param iconSpacing Spacing between leading icon and content, and content and arrow.
- * @param contentPadding Padding inside the card.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class NavigableCardDimens(
@@ -63,8 +48,6 @@ data class NavigableCardDimens(
 
 /**
  * Default configuration values for [NavigableCard].
- *
- * @since 0.0.1
  */
 object NavigableCardDefaults {
 
@@ -131,17 +114,12 @@ object NavigableCardDefaults {
  * }
  * ```
  *
- * @param onClick Called when the card is clicked.
- * @param modifier Applied to the root card.
- * @param enabled Whether the card responds to clicks.
  * @param colors Color configuration, defaults to [NavigableCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [NavigableCardDefaults.dimens].
- * @param leadingIcon Optional icon before content.
  * @param content Card content. Receives a [Modifier] with `weight(1f)` for proper sizing.
  *
  * @see ContentCard
  * @see NavigableCardDefaults
- * @since 0.0.1
  */
 @Composable
 fun NavigableCard(

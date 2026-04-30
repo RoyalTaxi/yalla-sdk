@@ -41,7 +41,6 @@ import uz.yalla.resources.img_flag_uz_square
  *
  * @property code Region code portion of the license plate (e.g., "01").
  * @property number Number segments of the license plate (e.g., ["A", "123", "BC"]).
- * @since 0.0.1
  */
 data class CarNumberState(
     val code: String,
@@ -50,12 +49,6 @@ data class CarNumberState(
 
 /**
  * Color configuration for [CarNumber].
- *
- * @param container Plate background color.
- * @param border Plate border color.
- * @param text Text and dot color.
- * @param countryCode Country code text color below the flag.
- * @since 0.0.1
  */
 @Immutable
 data class CarNumberColors(
@@ -71,10 +64,6 @@ data class CarNumberColors(
  * All dimensions scale proportionally based on [height] relative to the [CarNumberDefaults.BASE_HEIGHT].
  *
  * @param height Overall plate height. Controls scaling of all internal dimensions.
- * @param cornerRadius Corner radius of the plate card.
- * @param borderWidth Border stroke width.
- * @param dotSize Diameter of the decorative dots at plate edges.
- * @since 0.0.1
  */
 @Immutable
 data class CarNumberDimens(
@@ -102,15 +91,12 @@ data class CarNumberDimens(
  * )
  * ```
  *
- * @param state License plate data containing code and number segments.
- * @param modifier Applied to the root card.
  * @param numberStyle Text style for plate characters, defaults to a custom monospaced car number font.
  * @param colors Color configuration, defaults to [CarNumberDefaults.colors].
  * @param dimens Dimension configuration, defaults to [CarNumberDefaults.dimens].
  *
  * @see CarNumberState
  * @see CarNumberDefaults
- * @since 0.0.1
  */
 @Composable
 fun CarNumber(
@@ -211,8 +197,6 @@ fun CarNumber(
 
 /**
  * Default configuration values for [CarNumber].
- *
- * @since 0.0.1
  */
 object CarNumberDefaults {
     internal const val BASE_HEIGHT: Float = 24f

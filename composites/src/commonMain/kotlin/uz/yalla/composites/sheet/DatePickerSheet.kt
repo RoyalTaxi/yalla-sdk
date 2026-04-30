@@ -5,11 +5,6 @@ import kotlinx.datetime.LocalDate
 
 /**
  * State for [DatePickerSheet].
- *
- * @property isVisible Whether sheet is visible.
- * @property startDate Initial selected date.
- * @property maxDate Maximum selectable date.
- * @since 0.0.1
  */
 data class DatePickerSheetState(
     val isVisible: Boolean,
@@ -19,7 +14,6 @@ data class DatePickerSheetState(
 
 /**
  * Effects emitted by [DatePickerSheet].
- * @since 0.0.1
  */
 sealed interface DatePickerSheetEffect {
     /** User dismissed the sheet. */
@@ -33,10 +27,6 @@ sealed interface DatePickerSheetEffect {
  * Platform-specific date picker presented as a bottom sheet.
  *
  * On Android this uses a wheel-style picker; on iOS it uses `UIDatePicker`.
- *
- * @param state Sheet state with visibility and date bounds.
- * @param onEffect Callback for dismiss and date selection effects.
- * @since 0.0.1
  */
 @Composable
 // Kotlin compiler flags PascalCase for non-class functions; Composables use PascalCase by convention.

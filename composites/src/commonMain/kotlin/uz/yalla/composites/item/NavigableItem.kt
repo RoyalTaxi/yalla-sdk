@@ -17,14 +17,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [NavigableItem].
- *
- * @param container Item background color.
- * @param iconBackground Background color of the icon container.
- * @param icon Icon tint color.
- * @param title Title text color.
- * @param subtitle Subtitle text color.
- * @param arrow Trailing chevron tint color.
- * @since 0.0.1
  */
 @Immutable
 data class NavigableItemColors(
@@ -38,15 +30,6 @@ data class NavigableItemColors(
 
 /**
  * Dimension configuration for [NavigableItem].
- *
- * @param height Item row height.
- * @param contentPadding Padding around item content.
- * @param contentSpacing Spacing between icon, text column, and trailing content.
- * @param iconContainerSize Size of the icon container box.
- * @param iconContainerShape Shape of the icon container background.
- * @param iconPadding Padding inside the icon container.
- * @param arrowSize Size of the trailing chevron icon.
- * @since 0.0.1
  */
 @Immutable
 data class NavigableItemDimens(
@@ -85,18 +68,12 @@ data class NavigableItemDimens(
  * ```
  *
  * @param title Primary content; receives [System.font.body.base.bold] style by default.
- * @param onClick Called when the item is clicked.
- * @param modifier Applied to the root item.
- * @param subtitle Optional secondary content.
- * @param icon Optional icon composable rendered inside a styled container.
- * @param trailingContent Optional composable replacing the default chevron.
  * @param colors Color configuration, defaults to [NavigableItemDefaults.colors].
  * @param dimens Dimension configuration, defaults to [NavigableItemDefaults.dimens].
  *
  * @see IconItem
  * @see ListItem
  * @see NavigableItemDefaults
- * @since 0.0.1
  */
 @Composable
 fun NavigableItem(
@@ -141,8 +118,6 @@ fun NavigableItem(
 
 /**
  * Default configuration values for [NavigableItem].
- *
- * @since 0.0.1
  */
 object NavigableItemDefaults {
 

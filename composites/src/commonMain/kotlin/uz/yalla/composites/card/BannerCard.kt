@@ -22,9 +22,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [BannerCard].
- *
- * @param contentColor Default content color provided to children via [LocalContentColor].
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class BannerCardColors(
@@ -33,11 +30,6 @@ data class BannerCardColors(
 
 /**
  * Dimension configuration for [BannerCard].
- *
- * @param shape Card corner shape.
- * @param height Fixed card height.
- * @param contentPadding Padding around the content overlay.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class BannerCardDimens(
@@ -48,8 +40,6 @@ data class BannerCardDimens(
 
 /**
  * Default configuration values for [BannerCard].
- *
- * @since 0.0.5-alpha11
  */
 object BannerCardDefaults {
 
@@ -95,16 +85,12 @@ object BannerCardDefaults {
  * }
  * ```
  *
- * @param background Background image painter.
- * @param modifier Applied to the root card.
- * @param onClick Optional click handler.
  * @param colors Color configuration, defaults to [BannerCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [BannerCardDefaults.dimens].
  * @param content Overlay content — text color defaults to [BannerCardColors.contentColor].
  *
  * @see ContentCard
  * @see BannerCardDefaults
- * @since 0.0.5-alpha11
  */
 @Composable
 fun BannerCard(

@@ -29,19 +29,12 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [BottomSheetCard].
- *
- * @param container Card background color.
- * @since 0.0.1
  */
 @Immutable
 data class BottomSheetCardColors(val container: Color)
 
 /**
  * Dimension configuration for [BottomSheetCard].
- *
- * @param shape Card shape.
- * @param cornerRadius Corner radius of the card.
- * @since 0.0.1
  */
 @Immutable
 data class BottomSheetCardDimens(
@@ -51,10 +44,6 @@ data class BottomSheetCardDimens(
 
 /**
  * Animation configuration for [BottomSheetCard].
- *
- * @param durationMillis Animation duration in milliseconds.
- * @param collapsedFraction Fraction of height to offset when collapsed.
- * @since 0.0.1
  */
 @Immutable
 data class BottomSheetCardAnimation(
@@ -66,13 +55,10 @@ data class BottomSheetCardAnimation(
  * Default configuration values for [BottomSheetCard].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object BottomSheetCardDefaults {
     /**
      * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
      */
     @Composable
     fun colors(container: Color = System.color.background.base) =
@@ -82,8 +68,6 @@ object BottomSheetCardDefaults {
 
     /**
      * Creates default dimensions.
-     *
-     * @since 0.0.1
      */
     fun dimens(
         cornerRadius: Dp = 38.dp,
@@ -95,8 +79,6 @@ object BottomSheetCardDefaults {
 
     /**
      * Creates default animation configuration.
-     *
-     * @since 0.0.1
      */
     fun animation(
         durationMillis: Int = 250,
@@ -123,13 +105,8 @@ object BottomSheetCardDefaults {
  * }
  * ```
  *
- * @param offset Vertical offset for animation.
- * @param onHeightChanged Called when sheet height changes.
- * @param modifier Applied to card.
  * @param colors Color configuration, defaults to [BottomSheetCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [BottomSheetCardDefaults.dimens].
- * @param content Card content.
- * @since 0.0.1
  */
 @Composable
 fun BottomSheetCard(
@@ -154,11 +131,8 @@ fun BottomSheetCard(
 /**
  * Animates sheet offset based on collapsed state.
  *
- * @param isCollapsed Whether sheet is collapsed.
- * @param sheetHeight Current sheet height in pixels.
  * @param animation Animation configuration, defaults to [BottomSheetCardDefaults.animation].
  * @return Animated offset state.
- * @since 0.0.1
  */
 @Composable
 fun animateSheetOffset(
@@ -178,11 +152,6 @@ fun animateSheetOffset(
 
 /**
  * Effect that updates padding based on sheet height changes.
- *
- * @param sheetHeight Mutable sheet height state.
- * @param enabled Whether effect is enabled.
- * @param onPaddingChanged Called with new padding values.
- * @since 0.0.1
  */
 @OptIn(FlowPreview::class)
 @Composable

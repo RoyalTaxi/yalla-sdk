@@ -22,14 +22,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [ListItem].
- *
- * @param container Background color when enabled.
- * @param title Title text color when enabled.
- * @param subtitle Subtitle text color when enabled.
- * @param disabledContainer Background color when disabled.
- * @param disabledTitle Title text color when disabled.
- * @param disabledSubtitle Subtitle text color when disabled.
- * @since 0.0.1
  */
 @Immutable
 data class ListItemColors(
@@ -44,13 +36,7 @@ data class ListItemColors(
 /**
  * Dimension configuration for [ListItem].
  *
- * @param shape Card corner shape.
- * @param contentPadding Padding around the row content.
  * @param contentSpacing Horizontal spacing between leading content, text column, and trailing content.
- * @param titleSubtitleSpacing Vertical spacing between title and subtitle.
- * @param titleMaxLines Maximum lines for the title text.
- * @param subtitleMaxLines Maximum lines for the subtitle text.
- * @since 0.0.1
  */
 @Immutable
 data class ListItemDimens(
@@ -88,19 +74,14 @@ data class ListItemDimens(
  * ```
  *
  * @param title Primary content displayed in bold; receives [System.font.body.base.bold] style by default.
- * @param modifier Applied to the root card.
- * @param subtitle Optional secondary content displayed below the title.
  * @param enabled Whether the item responds to clicks (only relevant when [onClick] is set).
  * @param onClick Optional click handler. When null, the item is non-clickable.
- * @param leadingContent Optional composable rendered before the text column.
- * @param trailingContent Optional composable rendered after the text column.
  * @param colors Color configuration, defaults to [ListItemDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ListItemDefaults.dimens].
  *
  * @see ListItemDefaults
  * @see IconItem
  * @see NavigableItem
- * @since 0.0.1
  */
 @Composable
 fun ListItem(
@@ -165,8 +146,6 @@ fun ListItem(
 
 /**
  * Default configuration values for [ListItem].
- *
- * @since 0.0.1
  */
 object ListItemDefaults {
 

@@ -28,10 +28,6 @@ import uz.yalla.resources.img_coin
 
 /**
  * Color configuration for [ClickableValueItem] and [ValueItemView].
- *
- * @param background Gradient brush for the item background.
- * @param text Text color for the bonus value.
- * @since 0.0.1
  */
 @Immutable
 data class ValueItemColors(
@@ -41,13 +37,6 @@ data class ValueItemColors(
 
 /**
  * Dimension configuration for [ClickableValueItem] and [ValueItemView].
- *
- * @param shape Item shape (pill by default).
- * @param contentPadding Padding inside the item.
- * @param iconSize Size of the coin icon.
- * @param iconSpacing Spacing between coin icon and text.
- * @param trailingSpacing Trailing spacer width after the text.
- * @since 0.0.1
  */
 @Immutable
 data class ValueItemDimens(
@@ -60,8 +49,6 @@ data class ValueItemDimens(
 
 /**
  * Default configuration values for [ClickableValueItem] and [ValueItemView].
- *
- * @since 0.0.1
  */
 object ValueItemDefaults {
 
@@ -110,15 +97,11 @@ object ValueItemDefaults {
  * )
  * ```
  *
- * @param bonus Numeric bonus value to display.
- * @param onClick Called when the item is clicked.
- * @param modifier Applied to the root surface.
  * @param colors Color configuration, defaults to [ValueItemDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ValueItemDefaults.dimens].
  *
  * @see ValueItemView
  * @see ValueItemDefaults
- * @since 0.0.1
  */
 @Composable
 fun ClickableValueItem(
@@ -151,14 +134,11 @@ fun ClickableValueItem(
  * ValueItemView(bonus = order.bonusEarned)
  * ```
  *
- * @param bonus Numeric bonus value to display.
- * @param modifier Applied to the root card.
  * @param colors Color configuration, defaults to [ValueItemDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ValueItemDefaults.dimens].
  *
  * @see ClickableValueItem
  * @see ValueItemDefaults
- * @since 0.0.1
  */
 @Composable
 fun ValueItemView(

@@ -29,12 +29,6 @@ import uz.yalla.primitives.button.SecondaryButton
 
 /**
  * Color configuration for [ActionSheet].
- *
- * @param container Background color.
- * @param title Title text color.
- * @param message Message text color.
- * @param divider Divider color.
- * @since 0.0.1
  */
 @Immutable
 data class ActionSheetColors(
@@ -46,17 +40,6 @@ data class ActionSheetColors(
 
 /**
  * Dimension configuration for [ActionSheet].
- *
- * @param shape Sheet corner shape.
- * @param contentPadding Padding around content.
- * @param topSpacing Top spacing.
- * @param titleMessageSpacing Spacing between title and message.
- * @param contentButtonsSpacing Spacing between content and divider.
- * @param dividerButtonSpacing Spacing between divider and buttons.
- * @param buttonSpacing Spacing between buttons.
- * @param bottomSpacing Bottom spacing.
- * @param dividerThickness Divider thickness.
- * @since 0.0.1
  */
 @Immutable
 data class ActionSheetDimens(
@@ -75,13 +58,10 @@ data class ActionSheetDimens(
  * Default configuration values for [ActionSheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object ActionSheetDefaults {
     /**
      * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
      */
     @Composable
     fun colors(
@@ -99,8 +79,6 @@ object ActionSheetDefaults {
 
     /**
      * Creates default dimensions.
-     *
-     * @since 0.0.1
      */
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
@@ -146,20 +124,10 @@ object ActionSheetDefaults {
  * )
  * ```
  *
- * @param isVisible Whether the sheet is visible.
- * @param onDismissRequest Called when sheet is dismissed.
- * @param title Sheet title.
- * @param primaryAction Primary button text.
- * @param onPrimaryAction Called when primary button is tapped.
- * @param modifier Applied to sheet.
- * @param message Optional description text.
- * @param secondaryAction Optional secondary button text.
- * @param onSecondaryAction Called when secondary button is tapped.
  * @param colors Color configuration, defaults to [ActionSheetDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ActionSheetDefaults.dimens].
  *
  * @see ActionSheetDefaults for default values
- * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

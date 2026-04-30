@@ -17,10 +17,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [ContentCard].
- *
- * @param container Background color when enabled.
- * @param disabledContainer Background color when disabled.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class ContentCardColors(
@@ -30,10 +26,6 @@ data class ContentCardColors(
 
 /**
  * Dimension configuration for [ContentCard].
- *
- * @param shape Card corner shape.
- * @param contentPadding Padding inside the card.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class ContentCardDimens(
@@ -43,8 +35,6 @@ data class ContentCardDimens(
 
 /**
  * Default configuration values for [ContentCard].
- *
- * @since 0.0.1
  */
 object ContentCardDefaults {
 
@@ -95,16 +85,13 @@ object ContentCardDefaults {
  * }
  * ```
  *
- * @param modifier Applied to the root card.
  * @param onClick Optional click handler. When null, the card is not clickable.
  * @param enabled Whether the card responds to clicks (only relevant when [onClick] is set).
- * @param border Optional border stroke.
  * @param colors Color configuration, defaults to [ContentCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ContentCardDefaults.dimens].
  * @param content Card content — caller decides the layout (Row, Column, Box, etc.).
  *
  * @see ContentCardDefaults
- * @since 0.0.1
  */
 @Composable
 fun ContentCard(

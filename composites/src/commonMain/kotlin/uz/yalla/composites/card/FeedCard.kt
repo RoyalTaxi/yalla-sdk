@@ -22,10 +22,7 @@ import uz.yalla.design.theme.System
 /**
  * Color configuration for [FeedCard].
  *
- * @param container Card background color.
- * @param border Border color.
  * @param indicator Highlight indicator color (shown when [FeedCard.isHighlighted] is true).
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class FeedCardColors(
@@ -36,14 +33,6 @@ data class FeedCardColors(
 
 /**
  * Dimension configuration for [FeedCard].
- *
- * @param shape Card corner shape.
- * @param borderWidth Border stroke width.
- * @param contentPadding Padding around content.
- * @param indicatorHeight Height of the highlight indicator bar.
- * @param indicatorWidth Width of the highlight indicator bar.
- * @param indicatorRadius Corner radius of the indicator bar.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class FeedCardDimens(
@@ -57,8 +46,6 @@ data class FeedCardDimens(
 
 /**
  * Default configuration values for [FeedCard].
- *
- * @since 0.0.5-alpha11
  */
 object FeedCardDefaults {
 
@@ -119,16 +106,11 @@ object FeedCardDefaults {
  * }
  * ```
  *
- * @param onClick Called when the card is clicked.
- * @param modifier Applied to the root card.
- * @param isHighlighted Whether to show the highlight indicator bar.
  * @param colors Color configuration, defaults to [FeedCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [FeedCardDefaults.dimens].
- * @param content Card content — caller controls the layout.
  *
  * @see ContentCard
  * @see FeedCardDefaults
- * @since 0.0.5-alpha11
  */
 @Composable
 fun FeedCard(

@@ -52,21 +52,12 @@ import androidx.compose.ui.unit.dp
  * }
  * ```
  *
- * @param isVisible Whether the sheet is visible.
- * @param onDismissRequest Called when the sheet is dismissed (swipe or close button).
- * @param modifier Applied to the underlying [Sheet].
- * @param title Optional centered title displayed in the [SheetHeader].
- * @param sheetState Material3 sheet state for controlling expand/collapse behavior.
  * @param colors Color configuration delegated to [Sheet], defaults to [SheetDefaults.colors].
- * @param snackbarHost Optional snackbar host rendered as a popup overlay inside the sheet.
- * @param onFullyExpanded Called when the sheet reaches its fully-expanded state.
  * @param action Optional bottom-anchored composable (typically a
  *   [PrimaryButton][uz.yalla.primitives.button.PrimaryButton]).
- * @param content Scrollable body content rendered between the header and the action.
  *
  * @see Sheet for the underlying bottom sheet primitive
  * @see SheetHeader for the header component
- * @since 0.0.5-alpha12
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

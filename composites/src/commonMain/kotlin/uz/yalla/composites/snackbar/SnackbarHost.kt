@@ -20,10 +20,6 @@ import androidx.compose.material3.SnackbarHost as M3SnackbarHost
 
 /**
  * Data for snackbar display.
- *
- * @param message Message text.
- * @param isSuccess Whether this is a success or error message.
- * @since 0.0.1
  */
 data class SnackbarData(
     val message: String,
@@ -32,10 +28,6 @@ data class SnackbarData(
 
 /**
  * Dimension configuration for [SnackbarHost].
- *
- * @param topPadding Top padding below status bar.
- * @param horizontalPadding Horizontal padding.
- * @since 0.0.1
  */
 @Immutable
 data class SnackbarHostDimens(
@@ -68,17 +60,9 @@ data class SnackbarHostDimens(
  * }
  * ```
  *
- * @param data Current snackbar data to display.
- * @param successIcon Icon shown for success variant.
- * @param errorIcon Icon shown for error variant.
- * @param dismissIcon Icon for dismiss button.
- * @param hostState Material snackbar host state.
- * @param onDismiss Called when dismiss clicked.
- * @param modifier Applied to host.
  * @param dimens Dimension configuration, defaults to [SnackbarHostDefaults.dimens].
  *
  * @see SnackbarHostDefaults for default values
- * @since 0.0.1
  */
 @Composable
 fun SnackbarHost(
@@ -116,14 +100,10 @@ fun SnackbarHost(
 
 /**
  * Default values for [SnackbarHost].
- *
- * @since 0.0.1
  */
 object SnackbarHostDefaults {
     /**
      * Creates default dimensions.
-     *
-     * @since 0.0.1
      */
     fun dimens(
         topPadding: Dp = 8.dp,

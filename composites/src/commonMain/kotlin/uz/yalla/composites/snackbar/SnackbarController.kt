@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.receiveAsFlow
  * One-shot event for snackbar display.
  *
  * @see SnackbarController
- * @since 0.0.1
  */
 sealed interface SnackbarEvent {
     /** Show a snackbar with the given data. */
@@ -41,7 +40,6 @@ sealed interface SnackbarEvent {
  *
  * @see SnackbarData
  * @see SnackbarHost
- * @since 0.0.1
  */
 object SnackbarController {
     private val channel = Channel<SnackbarEvent>(Channel.BUFFERED)
@@ -51,9 +49,6 @@ object SnackbarController {
 
     /**
      * Shows a snackbar with the given data.
-     *
-     * @param data Snackbar content and style.
-     * @since 0.0.1
      */
     fun show(data: SnackbarData) {
         channel.trySend(SnackbarEvent.Show(data))
@@ -61,7 +56,6 @@ object SnackbarController {
 
     /**
      * Dismisses the current snackbar.
-     * @since 0.0.1
      */
     fun dismiss() {
         channel.trySend(SnackbarEvent.Dismiss)
@@ -69,9 +63,6 @@ object SnackbarController {
 
     /**
      * Sets snackbar data directly.
-     *
-     * @param event Snackbar data, null to dismiss.
-     * @since 0.0.1
      */
     fun sendData(event: SnackbarData?) {
         if (event != null) {

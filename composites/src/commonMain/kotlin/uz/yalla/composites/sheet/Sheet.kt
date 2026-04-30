@@ -44,10 +44,6 @@ import uz.yalla.design.theme.YallaTheme
 
 /**
  * Color configuration for [Sheet].
- *
- * @param container Background color.
- * @param scrim Scrim overlay color.
- * @since 0.0.5-alpha12
  */
 @Immutable
 data class SheetColors(
@@ -57,14 +53,6 @@ data class SheetColors(
 
 /**
  * Dimension configuration for [Sheet].
- *
- * @param shape Sheet corner shape.
- * @param maxWidth Maximum sheet width.
- * @param dragHandleWidth Drag handle width.
- * @param dragHandleHeight Drag handle height.
- * @param dragHandleContainerWidth Drag handle container width.
- * @param dragHandleContainerHeight Drag handle container height.
- * @since 0.0.5-alpha12
  */
 @Immutable
 data class SheetDimens(
@@ -80,14 +68,11 @@ data class SheetDimens(
  * Default values for [Sheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 object SheetDefaults {
     /**
      * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
      */
     @Composable
     fun colors(
@@ -101,8 +86,6 @@ object SheetDefaults {
 
     /**
      * Creates default dimensions.
-     *
-     * @since 0.0.5-alpha12
      */
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
@@ -140,21 +123,10 @@ object SheetDefaults {
  * }
  * ```
  *
- * @param isVisible Whether sheet is visible.
- * @param onDismissRequest Called when sheet is dismissed.
- * @param modifier Applied to sheet.
- * @param sheetState State for sheet behavior.
  * @param colors Color configuration, defaults to [SheetDefaults.colors].
  * @param dimens Dimension configuration, defaults to [SheetDefaults.dimens].
- * @param dragHandle Optional drag handle composable.
- * @param contentWindowInsets Window insets for content.
- * @param properties Sheet properties.
- * @param snackbarHost Optional snackbar host rendered as a Popup overlay inside the sheet.
- * @param onFullyExpanded Called when sheet fully expands.
- * @param content Sheet content.
  *
  * @see SheetDefaults for default values
- * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -224,11 +196,6 @@ fun Sheet(
 
 /**
  * Standard drag handle for sheets.
- *
- * @param modifier Applied to drag handle.
- * @param dimens Dimension configuration.
- * @param color Handle color.
- * @since 0.0.1
  */
 @Composable
 fun SheetDragHandle(

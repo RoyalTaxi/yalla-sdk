@@ -19,9 +19,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [InfoCard].
- *
- * @param container Card background color.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class InfoCardColors(
@@ -30,11 +27,6 @@ data class InfoCardColors(
 
 /**
  * Dimension configuration for [InfoCard].
- *
- * @param shape Card corner shape.
- * @param height Fixed card height.
- * @param contentPadding Padding inside the card.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class InfoCardDimens(
@@ -45,8 +37,6 @@ data class InfoCardDimens(
 
 /**
  * Default configuration values for [InfoCard].
- *
- * @since 0.0.5-alpha11
  */
 object InfoCardDefaults {
 
@@ -103,17 +93,13 @@ object InfoCardDefaults {
  * }
  * ```
  *
- * @param onClick Called when the card is clicked.
- * @param modifier Applied to the root card.
  * @param colors Color configuration, defaults to [InfoCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [InfoCardDefaults.dimens].
- * @param trailingIcon Optional icon displayed at the top-right corner.
  * @param description Optional bottom content (e.g., address text or hint).
  * @param content Top-left content (e.g., place name).
  *
  * @see ContentCard
  * @see InfoCardDefaults
- * @since 0.0.5-alpha11
  */
 @Composable
 fun InfoCard(

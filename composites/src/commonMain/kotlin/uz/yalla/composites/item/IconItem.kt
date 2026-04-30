@@ -19,12 +19,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [IconItem].
- *
- * @param container Item background color.
- * @param iconBackground Background color of the icon container.
- * @param title Title text color.
- * @param subtitle Subtitle text color.
- * @since 0.0.1
  */
 @Immutable
 data class IconItemColors(
@@ -36,15 +30,6 @@ data class IconItemColors(
 
 /**
  * Dimension configuration for [IconItem].
- *
- * @param shape Item card shape.
- * @param contentPadding Padding around item content.
- * @param contentSpacing Spacing between icon, text column, and trailing content.
- * @param iconContainerSize Size of the icon container box.
- * @param iconContainerShape Shape of the icon container background.
- * @param iconPadding Padding inside the icon container.
- * @param titleSubtitleSpacing Vertical spacing between title and subtitle.
- * @since 0.0.1
  */
 @Immutable
 data class IconItemDimens(
@@ -80,19 +65,12 @@ data class IconItemDimens(
  * ```
  *
  * @param title Primary content; receives [System.font.body.base.bold] style by default.
- * @param onClick Called when the item is clicked.
- * @param modifier Applied to the root item.
- * @param subtitle Optional secondary content.
- * @param enabled Whether the item responds to clicks.
- * @param icon Optional icon composable rendered inside a styled container.
- * @param trailingContent Optional composable rendered at the end of the row.
  * @param colors Color configuration, defaults to [IconItemDefaults.colors].
  * @param dimens Dimension configuration, defaults to [IconItemDefaults.dimens].
  *
  * @see ListItem
  * @see IconItemDefaults
  * @see NavigableItem
- * @since 0.0.1
  */
 @Composable
 fun IconItem(
@@ -142,8 +120,6 @@ fun IconItem(
 
 /**
  * Default configuration values for [IconItem].
- *
- * @since 0.0.1
  */
 object IconItemDefaults {
 

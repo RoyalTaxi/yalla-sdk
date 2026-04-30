@@ -24,12 +24,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [Navigable].
- *
- * @param container Surface background color.
- * @param title Title text color.
- * @param description Description text color.
- * @param chevron Trailing chevron icon tint.
- * @since 0.0.1
  */
 @Immutable
 data class NavigableColors(
@@ -41,13 +35,6 @@ data class NavigableColors(
 
 /**
  * Dimension configuration for [Navigable].
- *
- * @param contentPadding Padding around the entire row.
- * @param iconSpacing Spacing between leading icon and text column.
- * @param descriptionSpacing Vertical spacing between title and description.
- * @param trailingSpacing Spacing between trailing view and chevron.
- * @param chevronSize Size of the trailing chevron icon.
- * @since 0.0.1
  */
 @Immutable
 data class NavigableDimens(
@@ -91,18 +78,14 @@ data class NavigableDimens(
  * ```
  *
  * @param title Primary content; receives [System.font.body.large.medium] style by default.
- * @param onClick Invoked when the item is clicked.
- * @param modifier Applied to the root surface.
  * @param description Optional secondary content below the title; receives [System.font.body.caption] style.
  * @param leadingIcon Optional leading icon slot (e.g., [DrawerItemIcon]).
- * @param trailingView Optional trailing content rendered before the chevron.
  * @param colors Color configuration, defaults to [NavigableDefaults.colors].
  * @param dimens Dimension configuration, defaults to [NavigableDefaults.dimens].
  *
  * @see SectionBackground
  * @see DrawerItemIcon
  * @see NavigableDefaults
- * @since 0.0.1
  */
 @Composable
 fun Navigable(
@@ -168,7 +151,6 @@ fun Navigable(
  * Default configuration values for [Navigable].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object NavigableDefaults {
     /**

@@ -19,10 +19,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [EmptyState].
- *
- * @param title Title text color.
- * @param description Description text color.
- * @since 0.0.1
  */
 @Immutable
 data class EmptyStateColors(
@@ -32,13 +28,6 @@ data class EmptyStateColors(
 
 /**
  * Dimension configuration for [EmptyState].
- *
- * @param contentPadding Padding around the entire empty state layout.
- * @param imageHeight Fixed height reserved for the illustration slot.
- * @param imageTitleSpacing Spacing between image and title.
- * @param titleDescriptionSpacing Spacing between title and description.
- * @param descriptionActionSpacing Spacing between description and action button.
- * @since 0.0.1
  */
 @Immutable
 data class EmptyStateDimens(
@@ -74,16 +63,12 @@ data class EmptyStateDimens(
  * )
  * ```
  *
- * @param image Illustration slot rendered at the top.
  * @param title Primary title slot; receives [System.font.title.base] style by default.
- * @param modifier Applied to the root column.
  * @param description Optional secondary description slot; receives [System.font.body.base.medium] style.
- * @param action Optional action composable rendered below the description.
  * @param colors Color configuration, defaults to [EmptyStateDefaults.colors].
  * @param dimens Dimension configuration, defaults to [EmptyStateDefaults.dimens].
  *
  * @see EmptyStateDefaults
- * @since 0.0.1
  */
 @Composable
 fun EmptyState(
@@ -134,8 +119,6 @@ fun EmptyState(
 
 /**
  * Default configuration values for [EmptyState].
- *
- * @since 0.0.1
  */
 object EmptyStateDefaults {
     /**

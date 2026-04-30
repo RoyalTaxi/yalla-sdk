@@ -19,10 +19,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [PlaceButton].
- *
- * @param container Button background color.
- * @param text Text color.
- * @since 0.0.1
  */
 @Immutable
 data class PlaceButtonColors(
@@ -32,11 +28,6 @@ data class PlaceButtonColors(
 
 /**
  * Dimension configuration for [PlaceButton].
- *
- * @param shape Button shape.
- * @param contentPadding Padding inside the button.
- * @param iconSpacing Spacing between icons and text.
- * @since 0.0.1
  */
 @Immutable
 data class PlaceButtonDimens(
@@ -47,8 +38,6 @@ data class PlaceButtonDimens(
 
 /**
  * Default configuration values for [PlaceButton].
- *
- * @since 0.0.1
  */
 object PlaceButtonDefaults {
 
@@ -95,16 +84,10 @@ object PlaceButtonDefaults {
  * )
  * ```
  *
- * @param text Button text.
- * @param onClick Called when the button is clicked.
- * @param modifier Applied to the root button.
- * @param leadingIcon Optional icon before the text.
- * @param trailingIcon Optional icon after the text.
  * @param colors Color configuration, defaults to [PlaceButtonDefaults.colors].
  * @param dimens Dimension configuration, defaults to [PlaceButtonDefaults.dimens].
  *
  * @see PlaceButtonDefaults
- * @since 0.0.1
  */
 @Composable
 fun PlaceButton(

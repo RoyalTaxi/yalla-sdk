@@ -16,18 +16,12 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [SectionBackground].
- *
- * @param background Background color of the section.
- * @since 0.0.1
  */
 @Immutable
 data class SectionBackgroundColors(val background: Color)
 
 /**
  * Dimension configuration for [SectionBackground].
- *
- * @param shape Shape of the section container.
- * @since 0.0.1
  */
 @Immutable
 data class SectionBackgroundDimens(val shape: Shape)
@@ -48,7 +42,6 @@ data class SectionBackgroundDimens(val shape: Shape)
  * @param colors Color configuration, defaults to [SectionBackgroundDefaults.colors]
  * @param dimens Dimension configuration, defaults to [SectionBackgroundDefaults.dimens]
  * @param content Column content
- * @since 0.0.1
  */
 @Composable
 fun SectionBackground(
@@ -71,7 +64,6 @@ fun SectionBackground(
  * Default configuration values for [SectionBackground].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object SectionBackgroundDefaults {
     /** Creates theme-aware default colors. */

@@ -27,10 +27,6 @@ import uz.yalla.resources.icons.YallaIcons
 
 /**
  * Color configuration for [SelectionCard].
- *
- * @param container Card background color.
- * @param iconBackground Background color of the leading icon container.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class SelectionCardColors(
@@ -40,14 +36,6 @@ data class SelectionCardColors(
 
 /**
  * Dimension configuration for [SelectionCard].
- *
- * @param contentPadding Padding inside the card.
- * @param iconSize Size of the leading icon container.
- * @param iconShape Shape of the leading icon background.
- * @param iconPadding Padding inside the icon container.
- * @param iconSpacing Spacing between icon and content.
- * @param trailingSpacing Spacing before the selection indicator.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class SelectionCardDimens(
@@ -61,8 +49,6 @@ data class SelectionCardDimens(
 
 /**
  * Default configuration values for [SelectionCard].
- *
- * @since 0.0.5-alpha11
  */
 object SelectionCardDefaults {
 
@@ -115,18 +101,12 @@ object SelectionCardDefaults {
  * }
  * ```
  *
- * @param selected Whether this card is currently selected.
- * @param onClick Called when the card is clicked.
- * @param modifier Applied to the root card.
- * @param enabled Whether the card responds to clicks.
  * @param colors Color configuration, defaults to [SelectionCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [SelectionCardDefaults.dimens].
- * @param leadingIcon Optional icon displayed in a styled container before content.
  * @param content Card content, typically a [Text][androidx.compose.material3.Text].
  *
  * @see ContentCard
  * @see SelectionCardDefaults
- * @since 0.0.5-alpha11
  */
 @Composable
 fun SelectionCard(

@@ -22,13 +22,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [PricingItem].
- *
- * @param container Background color when not selected.
- * @param selectedContainer Background color when selected.
- * @param name Text color for the service name.
- * @param price Text color for the price.
- * @param selectedBorder Gradient brush for the border when selected.
- * @since 0.0.1
  */
 @Immutable
 data class PricingItemColors(
@@ -41,16 +34,6 @@ data class PricingItemColors(
 
 /**
  * Dimension configuration for [PricingItem].
- *
- * @param shape Card shape.
- * @param height Fixed card height.
- * @param minWidth Minimum card width.
- * @param contentPadding Padding inside the card.
- * @param selectedBorderWidth Border width when selected.
- * @param namePriceSpacing Spacing between name and price texts.
- * @param priceImageSpacing Spacing between price text and image.
- * @param textMaxLines Maximum lines for name and price texts.
- * @since 0.0.1
  */
 @Immutable
 data class PricingItemDimens(
@@ -66,8 +49,6 @@ data class PricingItemDimens(
 
 /**
  * Default configuration values for [PricingItem].
- *
- * @since 0.0.1
  */
 object PricingItemDefaults {
 
@@ -137,15 +118,10 @@ object PricingItemDefaults {
  *
  * @param name Service name slot (e.g., "Standard", "Comfort"); receives [System.font.body.base.bold] style.
  * @param price Formatted price slot; receives [System.font.body.base.bold] style.
- * @param selected Whether this item is currently selected.
- * @param onClick Called when the item is clicked.
- * @param modifier Applied to the root card.
- * @param image Optional vehicle image rendered below the price.
  * @param colors Color configuration, defaults to [PricingItemDefaults.colors].
  * @param dimens Dimension configuration, defaults to [PricingItemDefaults.dimens].
  *
  * @see PricingItemDefaults
- * @since 0.0.1
  */
 @Composable
 fun PricingItem(

@@ -28,8 +28,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Visual variant for [Snackbar] styling.
- *
- * @since 0.0.1
  */
 enum class SnackbarVariant {
     /** Green success styling. */
@@ -41,12 +39,6 @@ enum class SnackbarVariant {
 
 /**
  * State for [Snackbar] display.
- *
- * @property message Message text to display.
- * @property variant Visual variant determining color scheme.
- * @property icon Leading icon painter.
- * @property dismissIcon Dismiss button icon painter.
- * @since 0.0.1
  */
 data class SnackbarState(
     val message: String,
@@ -57,13 +49,6 @@ data class SnackbarState(
 
 /**
  * Color configuration for [Snackbar].
- *
- * @param container Card background color.
- * @param iconBackground Background color of the leading icon circle.
- * @param icon Leading icon tint.
- * @param text Message text color.
- * @param dismissIcon Dismiss icon tint.
- * @since 0.0.1
  */
 @Immutable
 data class SnackbarColors(
@@ -76,17 +61,6 @@ data class SnackbarColors(
 
 /**
  * Dimension configuration for [Snackbar].
- *
- * @param shape Card shape.
- * @param contentSpacing Horizontal spacing between icon, message, and dismiss icon.
- * @param verticalPadding Vertical padding inside the card.
- * @param horizontalPadding Horizontal padding inside the card.
- * @param iconSize Leading icon size.
- * @param iconPadding Padding inside the icon background circle.
- * @param iconBackgroundRadius Corner radius of the icon background.
- * @param dismissIconSize Dismiss icon size.
- * @param messageMaxLines Maximum lines for the message text.
- * @since 0.0.1
  */
 @Immutable
 data class SnackbarDimens(
@@ -121,17 +95,12 @@ data class SnackbarDimens(
  * )
  * ```
  *
- * @param state Snackbar display state containing message, variant, and icons.
- * @param onDismiss Called when the dismiss icon is clicked.
- * @param modifier Applied to the root card.
- * @param messageStyle Text style for the message.
  * @param colors Color configuration, defaults to variant-based [SnackbarDefaults.colors].
  * @param dimens Dimension configuration, defaults to [SnackbarDefaults.dimens].
  *
  * @see SnackbarState
  * @see SnackbarHost
  * @see SnackbarDefaults
- * @since 0.0.1
  */
 @Composable
 fun Snackbar(
@@ -204,8 +173,6 @@ fun Snackbar(
 
 /**
  * Default configuration values for [Snackbar].
- *
- * @since 0.0.1
  */
 object SnackbarDefaults {
     /**

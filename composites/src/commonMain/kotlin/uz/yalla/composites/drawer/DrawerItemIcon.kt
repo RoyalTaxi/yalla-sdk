@@ -14,18 +14,12 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [DrawerItemIcon].
- *
- * @param tint Icon tint color.
- * @since 0.0.1
  */
 @Immutable
 data class DrawerItemIconColors(val tint: Color)
 
 /**
  * Dimension configuration for [DrawerItemIcon].
- *
- * @param padding Padding around the icon.
- * @since 0.0.1
  */
 @Immutable
 data class DrawerItemIconDimens(val padding: Dp)
@@ -46,7 +40,6 @@ data class DrawerItemIconDimens(val padding: Dp)
  * @param modifier Applied to icon
  * @param colors Color configuration, defaults to [DrawerItemIconDefaults.colors]
  * @param dimens Dimension configuration, defaults to [DrawerItemIconDefaults.dimens]
- * @since 0.0.1
  */
 @Composable
 fun DrawerItemIcon(
@@ -65,7 +58,6 @@ fun DrawerItemIcon(
  * Default configuration values for [DrawerItemIcon].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object DrawerItemIconDefaults {
     /** Creates theme-aware default colors. */

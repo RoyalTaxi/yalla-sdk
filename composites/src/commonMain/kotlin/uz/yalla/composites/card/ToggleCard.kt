@@ -23,10 +23,6 @@ import uz.yalla.platform.toggle.NativeSwitch
 
 /**
  * Color configuration for [ToggleCard].
- *
- * @param container Card background color.
- * @param iconBackground Background color of the leading icon container.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class ToggleCardColors(
@@ -36,14 +32,6 @@ data class ToggleCardColors(
 
 /**
  * Dimension configuration for [ToggleCard].
- *
- * @param contentPadding Padding inside the card.
- * @param iconSize Size of the leading icon container.
- * @param iconShape Shape of the leading icon background.
- * @param iconPadding Padding inside the icon container.
- * @param iconSpacing Spacing between icon and content.
- * @param trailingSpacing Spacing before the switch.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class ToggleCardDimens(
@@ -57,8 +45,6 @@ data class ToggleCardDimens(
 
 /**
  * Default configuration values for [ToggleCard].
- *
- * @since 0.0.5-alpha11
  */
 object ToggleCardDefaults {
 
@@ -114,18 +100,12 @@ object ToggleCardDefaults {
  * }
  * ```
  *
- * @param checked Whether the switch is on.
- * @param onCheckedChange Called when the switch is toggled.
- * @param modifier Applied to the root card.
- * @param enabled Whether the switch is interactive.
  * @param colors Color configuration, defaults to [ToggleCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ToggleCardDefaults.dimens].
- * @param leadingIcon Optional icon displayed in a styled container before content.
  * @param content Card content, typically title and subtitle [Text][androidx.compose.material3.Text].
  *
  * @see ContentCard
  * @see ToggleCardDefaults
- * @since 0.0.5-alpha11
  */
 @Composable
 fun ToggleCard(

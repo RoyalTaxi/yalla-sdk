@@ -28,11 +28,6 @@ import uz.yalla.primitives.button.PrimaryButton
 
 /**
  * Color configuration for [ConfirmationSheet].
- *
- * @param container Background color.
- * @param title Title text color.
- * @param description Description text color.
- * @since 0.0.1
  */
 @Immutable
 data class ConfirmationSheetColors(
@@ -43,19 +38,6 @@ data class ConfirmationSheetColors(
 
 /**
  * Dimension configuration for [ConfirmationSheet].
- *
- * @param shape Sheet corner shape.
- * @param headerTopPadding Top padding for header.
- * @param headerHorizontalPadding Horizontal padding for header.
- * @param contentTopPadding Top padding for content.
- * @param contentHorizontalPadding Horizontal padding for content.
- * @param imageWidthFraction Image width as fraction of parent.
- * @param imageBottomSpacing Spacing below image.
- * @param titleDescriptionSpacing Spacing between title and description.
- * @param actionTopSpacing Spacing above action button.
- * @param actionHorizontalPadding Horizontal padding for action button.
- * @param actionBottomSpacing Bottom spacing.
- * @since 0.0.1
  */
 @Immutable
 data class ConfirmationSheetDimens(
@@ -76,13 +58,10 @@ data class ConfirmationSheetDimens(
  * Default values for [ConfirmationSheet].
  *
  * Provides theme-aware defaults for [colors] and [dimens] that can be overridden.
- * @since 0.0.1
  */
 object ConfirmationSheetDefaults {
     /**
      * Creates theme-aware default colors.
-     *
-     * @since 0.0.1
      */
     @Composable
     fun colors(
@@ -98,8 +77,6 @@ object ConfirmationSheetDefaults {
 
     /**
      * Creates default dimensions.
-     *
-     * @since 0.0.1
      */
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
@@ -149,20 +126,10 @@ object ConfirmationSheetDefaults {
  * )
  * ```
  *
- * @param isVisible Whether sheet is visible.
- * @param onDismissRequest Called when sheet is dismissed.
- * @param image Illustration image.
- * @param title Main title text.
- * @param description Description text.
- * @param actionText Primary action button text.
- * @param onAction Called when action button is tapped.
- * @param modifier Applied to sheet.
- * @param sheetName Optional header title displayed at top.
  * @param colors Color configuration, defaults to [ConfirmationSheetDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ConfirmationSheetDefaults.dimens].
  *
  * @see ConfirmationSheetDefaults for default values
- * @since 0.0.1
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

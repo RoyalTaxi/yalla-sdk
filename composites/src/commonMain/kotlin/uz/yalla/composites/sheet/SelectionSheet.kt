@@ -20,12 +20,6 @@ import uz.yalla.platform.sheet.NativeSheet
 
 /**
  * Dimension configuration for [SelectionSheet].
- *
- * @param shape Corner shape for the native sheet container.
- * @param contentPadding Padding around the entire sheet content.
- * @param headerContentSpacing Vertical spacing between the header and the item list.
- * @param itemSpacing Vertical spacing between individual items.
- * @since 0.0.5-alpha12
  */
 @Immutable
 data class SelectionSheetDimens(
@@ -39,18 +33,11 @@ data class SelectionSheetDimens(
  * Default values for [SelectionSheet].
  *
  * Provides sensible defaults for [dimens] that can be overridden.
- * @since 0.0.5-alpha12
  */
 object SelectionSheetDefaults {
 
     /**
      * Creates default dimensions.
-     *
-     * @param shape Sheet corner shape.
-     * @param contentPadding Padding around the sheet content.
-     * @param headerContentSpacing Spacing between header and item list.
-     * @param itemSpacing Spacing between individual items.
-     * @since 0.0.5-alpha12
      */
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
@@ -94,21 +81,11 @@ object SelectionSheetDefaults {
  * ```
  *
  * @param T Item type. Must implement [equals] for selection comparison.
- * @param isVisible Whether the sheet is visible.
- * @param onDismissRequest Called when the sheet is dismissed.
- * @param title Header title text.
- * @param items List of selectable items.
- * @param selectedItem Currently selected item (compared via [equals]).
- * @param onSelect Called when the user selects an item.
- * @param modifier Applied to the content column inside the sheet.
  * @param dimens Dimension configuration, defaults to [SelectionSheetDefaults.dimens].
- * @param itemKey Optional stable key factory for [LazyColumn] items.
- * @param itemContent Composable rendering each item with its selection state.
  *
  * @see NativeSheet for the platform-native sheet primitive
  * @see SheetHeader for the header component
  * @see SelectionSheetDefaults for default values
- * @since 0.0.5-alpha12
  */
 @Composable
 @Suppress("UnusedParameter") // onSelect wired by itemContent; ADR-005 slot migration in Phase 4

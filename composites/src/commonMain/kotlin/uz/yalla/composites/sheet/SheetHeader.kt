@@ -18,9 +18,6 @@ import uz.yalla.platform.model.IconType
 
 /**
  * Color configuration for [SheetHeader].
- *
- * @param title Title text color.
- * @since 0.0.5-alpha12
  */
 @Immutable
 data class SheetHeaderColors(
@@ -29,9 +26,6 @@ data class SheetHeaderColors(
 
 /**
  * Dimension configuration for [SheetHeader].
- *
- * @param contentPadding Padding around header content.
- * @since 0.0.5-alpha12
  */
 @Immutable
 data class SheetHeaderDimens(
@@ -40,8 +34,6 @@ data class SheetHeaderDimens(
 
 /**
  * Default values for [SheetHeader].
- *
- * @since 0.0.5-alpha12
  */
 object SheetHeaderDefaults {
     /** Creates theme-aware default colors. */
@@ -87,16 +79,11 @@ object SheetHeaderDefaults {
  * )
  * ```
  *
- * @param onClose Called when close button is tapped.
- * @param modifier Applied to header.
- * @param title Optional centered title text.
  * @param colors Color configuration, defaults to [SheetHeaderDefaults.colors].
  * @param dimens Dimension configuration, defaults to [SheetHeaderDefaults.dimens].
- * @param closeButtonBorder Optional border for close button.
  * @param actions Optional trailing actions (e.g., done button).
  *
  * @see SheetHeaderDefaults for default values
- * @since 0.0.5-alpha12
  */
 @Composable
 fun SheetHeader(

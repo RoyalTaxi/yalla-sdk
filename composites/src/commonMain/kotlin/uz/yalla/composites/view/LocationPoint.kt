@@ -19,9 +19,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [LocationPoint].
- *
- * @param label Text color for the location label.
- * @since 0.0.1
  */
 @Immutable
 data class LocationPointColors(
@@ -30,10 +27,6 @@ data class LocationPointColors(
 
 /**
  * Dimension configuration for [LocationPoint].
- *
- * @param iconLabelSpacing Spacing between the icon and the label text.
- * @param labelMaxLines Maximum lines for the label text.
- * @since 0.0.1
  */
 @Immutable
 data class LocationPointDimens(
@@ -43,8 +36,6 @@ data class LocationPointDimens(
 
 /**
  * Default configuration values for [LocationPoint].
- *
- * @since 0.0.1
  */
 object LocationPointDefaults {
 
@@ -95,16 +86,11 @@ object LocationPointDefaults {
  * )
  * ```
  *
- * @param icon Location icon painter (origin or destination).
- * @param label Location name text.
- * @param modifier Applied to the root row.
- * @param labelStyle Text style for the label.
  * @param colors Color configuration, defaults to [LocationPointDefaults.colors].
  * @param dimens Dimension configuration, defaults to [LocationPointDefaults.dimens].
  *
  * @see RouteView
  * @see LocationPointDefaults
- * @since 0.0.1
  */
 @Composable
 fun LocationPoint(

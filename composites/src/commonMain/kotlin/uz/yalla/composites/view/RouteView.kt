@@ -13,10 +13,8 @@ import uz.yalla.design.theme.System
 /**
  * Single location within a route.
  *
- * @property name Display name of the location.
  * @property isOrigin Whether this is an origin point. The first item in the list
  *   is always treated as origin regardless of this flag.
- * @since 0.0.1
  */
 data class RouteLocation(
     val name: String,
@@ -25,9 +23,6 @@ data class RouteLocation(
 
 /**
  * Dimension configuration for [RouteView].
- *
- * @param itemSpacing Vertical spacing between [LocationPoint] items.
- * @since 0.0.1
  */
 @Immutable
 data class RouteViewDimens(
@@ -36,8 +31,6 @@ data class RouteViewDimens(
 
 /**
  * Default configuration values for [RouteView].
- *
- * @since 0.0.1
  */
 object RouteViewDefaults {
 
@@ -72,15 +65,11 @@ object RouteViewDefaults {
  * ```
  *
  * @param locations Ordered list of route locations. First item is treated as origin.
- * @param originIcon Icon painter for origin locations.
- * @param destinationIcon Icon painter for destination locations.
- * @param modifier Applied to the root column.
  * @param dimens Dimension configuration, defaults to [RouteViewDefaults.dimens].
  *
  * @see LocationPoint
  * @see RouteLocation
  * @see RouteViewDefaults
- * @since 0.0.1
  */
 @Composable
 fun RouteView(

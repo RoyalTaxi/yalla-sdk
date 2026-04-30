@@ -23,9 +23,6 @@ import uz.yalla.design.theme.System
 
 /**
  * Color configuration for [SummaryCard].
- *
- * @param container Card background color.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class SummaryCardColors(
@@ -34,12 +31,6 @@ data class SummaryCardColors(
 
 /**
  * Dimension configuration for [SummaryCard].
- *
- * @param shape Card corner shape.
- * @param contentPadding Padding inside the card.
- * @param headerSpacing Spacing between header and content.
- * @param trailingSpacing Spacing between main column and trailing column.
- * @since 0.0.5-alpha11
  */
 @Immutable
 data class SummaryCardDimens(
@@ -51,8 +42,6 @@ data class SummaryCardDimens(
 
 /**
  * Default configuration values for [SummaryCard].
- *
- * @since 0.0.5-alpha11
  */
 object SummaryCardDefaults {
 
@@ -107,8 +96,6 @@ object SummaryCardDefaults {
  * }
  * ```
  *
- * @param onClick Called when the card is clicked.
- * @param modifier Applied to the root card.
  * @param colors Color configuration, defaults to [SummaryCardDefaults.colors].
  * @param dimens Dimension configuration, defaults to [SummaryCardDefaults.dimens].
  * @param header Optional top content in the left column (e.g., route display).
@@ -117,7 +104,6 @@ object SummaryCardDefaults {
  *
  * @see ContentCard
  * @see SummaryCardDefaults
- * @since 0.0.5-alpha11
  */
 @Composable
 fun SummaryCard(

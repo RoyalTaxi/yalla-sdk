@@ -25,12 +25,6 @@ import uz.yalla.resources.icons.YallaIcons
 
 /**
  * Color configuration for [SelectableItem].
- *
- * @param selectedContainer Background color when selected.
- * @param unselectedContainer Background color when not selected.
- * @param border Border color when not selected.
- * @param text Text color for the title.
- * @since 0.0.1
  */
 @Immutable
 data class SelectableItemColors(
@@ -42,12 +36,6 @@ data class SelectableItemColors(
 
 /**
  * Dimension configuration for [SelectableItem].
- *
- * @param shape Item surface shape.
- * @param contentPadding Padding around item content.
- * @param iconSpacing Spacing between the optional icon and the title text.
- * @param borderWidth Border stroke width when not selected.
- * @since 0.0.1
  */
 @Immutable
 data class SelectableItemDimens(
@@ -59,8 +47,6 @@ data class SelectableItemDimens(
 
 /**
  * Default configuration values for [SelectableItem].
- *
- * @since 0.0.1
  */
 object SelectableItemDefaults {
 
@@ -121,16 +107,11 @@ object SelectableItemDefaults {
  * ```
  *
  * @param title Primary content; receives [System.font.body.small.medium] style by default.
- * @param isSelected Whether this item is currently selected.
- * @param onSelect Called when the item is tapped.
- * @param modifier Applied to the root surface.
- * @param icon Optional leading icon composable.
  * @param colors Color configuration, defaults to [SelectableItemDefaults.colors].
  * @param dimens Dimension configuration, defaults to [SelectableItemDefaults.dimens].
  *
  * @see SelectableItemDefaults
  * @see uz.yalla.composites.sheet.SelectionSheet
- * @since 0.0.1
  */
 @Composable
 fun SelectableItem(

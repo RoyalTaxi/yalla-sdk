@@ -22,10 +22,6 @@ import uz.yalla.primitives.otp.PinRow
 
 /**
  * Color configuration for [OtpSheet].
- *
- * @param headline Color for the headline text.
- * @param description Color for the description text.
- * @since 0.0.5-alpha12
  */
 @Immutable
 data class OtpSheetColors(
@@ -35,10 +31,6 @@ data class OtpSheetColors(
 
 /**
  * Dimension configuration for [OtpSheet].
- *
- * @param headlineDescriptionSpacing Vertical spacing between headline and description.
- * @param descriptionPinSpacing Vertical spacing between description and the PIN row.
- * @since 0.0.5-alpha12
  */
 @Immutable
 data class OtpSheetDimens(
@@ -50,7 +42,6 @@ data class OtpSheetDimens(
  * Default values for [OtpSheet].
  *
  * Provides theme-aware defaults for [colors] and layout [dimens] that can be overridden.
- * @since 0.0.5-alpha12
  */
 object OtpSheetDefaults {
 
@@ -59,7 +50,6 @@ object OtpSheetDefaults {
      *
      * @param headline Headline text color, defaults to [System.color.text.base].
      * @param description Description text color, defaults to [System.color.text.subtle].
-     * @since 0.0.5-alpha12
      */
     @Composable
     fun colors(
@@ -73,10 +63,6 @@ object OtpSheetDefaults {
 
     /**
      * Creates default dimensions.
-     *
-     * @param headlineDescriptionSpacing Spacing between headline and description.
-     * @param descriptionPinSpacing Spacing between description and the PIN row.
-     * @since 0.0.5-alpha12
      */
     fun dimens(
         headlineDescriptionSpacing: Dp = 10.dp,
@@ -122,29 +108,13 @@ object OtpSheetDefaults {
  * )
  * ```
  *
- * @param isVisible Whether the sheet is visible.
- * @param onDismissRequest Called when the sheet is dismissed.
- * @param code Current PIN digit string.
- * @param onCodeChange Invoked when the code value changes (filtered to digits).
- * @param codeLength Number of PIN digit boxes to display.
- * @param onCodeComplete Invoked with the complete code string when all digits are entered.
- * @param headline Primary headline text displayed above the description.
- * @param description Secondary description text displayed below the headline.
- * @param modifier Applied to the underlying [FormSheet].
- * @param title Optional centered title in the sheet header.
- * @param isError Whether to show the PIN row in error state.
- * @param focusRequester Optional focus requester for the PIN input field.
- * @param sheetState Material3 sheet state for controlling expand/collapse behavior.
- * @param onFullyExpanded Called when the sheet reaches its fully-expanded state.
  * @param colors Color configuration, defaults to [OtpSheetDefaults.colors].
  * @param dimens Dimension configuration, defaults to [OtpSheetDefaults.dimens].
- * @param resendButton Optional resend-code composable displayed below the PIN row.
  * @param confirmButton Optional bottom-anchored confirm button (passed as [FormSheet]'s action).
  *
  * @see FormSheet for the underlying form sheet layout
  * @see PinRow for the PIN input primitive
  * @see OtpSheetDefaults for default values
- * @since 0.0.5-alpha12
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
