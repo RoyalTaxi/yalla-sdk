@@ -39,8 +39,6 @@ import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
  *
  * Renders a full-featured MapLibre GL view with route polylines, location markers,
  * user-location indicator, and custom content support via [MapScope].
- *
- * @since 0.0.1
  */
 class LibreExtendedMap : ExtendedMap {
     @Composable

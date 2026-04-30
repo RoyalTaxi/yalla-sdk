@@ -41,10 +41,6 @@ import uz.yalla.maps.model.MapUiSettings
  *
  * Forwards `willMove`, `didChangeCameraPosition`, `idleAtCameraPosition`, and
  * `mapViewDidFinishTileRendering` callbacks to keep the Compose-side state in sync.
- *
- * @param cameraPositionState The cross-platform camera state to update on events.
- * @param onMapLoaded Callback invoked once when the map tiles finish rendering.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 private class GMSMapViewDelegate(

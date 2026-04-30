@@ -14,8 +14,6 @@ import uz.yalla.maps.api.model.MapStyle
  *
  * Exposes [MapCapabilities.GOOGLE] capabilities and creates Google-specific
  * map composables and controllers.
- *
- * @since 0.0.1
  */
 class GoogleMapProvider : MapProvider {
     override val type = MapKind.Google

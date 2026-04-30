@@ -9,10 +9,8 @@ import uz.yalla.core.geo.GeoPoint
  * Tracks the geographic position, whether the camera is currently in motion,
  * and whether the motion was triggered by a user gesture.
  *
- * @property point Geographic coordinate of the marker.
  * @property isMoving `true` while the camera (and thus the marker) is moving.
  * @property isByUser `true` when the current movement was initiated by a user gesture.
- * @since 0.0.1
  */
 @Immutable
 data class MarkerState(
@@ -23,8 +21,6 @@ data class MarkerState(
     companion object {
         /**
          * Default marker state at [GeoPoint.Zero], stationary, not user-initiated.
-         *
-         * @since 0.0.1
          */
         val INITIAL =
             MarkerState(

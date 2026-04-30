@@ -13,9 +13,7 @@ import org.jetbrains.compose.resources.imageResource
  * Loads the resource as an [ImageBitmap] and converts it to the platform bitmap handle.
  * The result is cached across recompositions as long as the underlying image is stable.
  *
- * @param resource The drawable resource to convert.
  * @return A remembered [BitmapDescriptor] suitable for use as a marker icon.
- * @since 0.0.1
  */
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -31,6 +29,5 @@ fun rememberBitmapDescriptor(resource: DrawableResource): BitmapDescriptor {
  * on iOS, encodes to PNG and creates a `UIImage` at the device screen scale.
  *
  * @return A [BitmapDescriptor] wrapping the converted image.
- * @since 0.0.1
  */
 internal expect fun ImageBitmap.toBitmapDescriptor(): BitmapDescriptor

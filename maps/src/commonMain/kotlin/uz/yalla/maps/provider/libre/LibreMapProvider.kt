@@ -14,8 +14,6 @@ import uz.yalla.maps.api.model.MapStyle
  *
  * Exposes [MapCapabilities.LIBRE] capabilities and creates MapLibre-specific
  * map composables and controllers. Uses CARTO tile styles by default.
- *
- * @since 0.0.1
  */
 class LibreMapProvider : MapProvider {
     override val type = MapKind.Libre

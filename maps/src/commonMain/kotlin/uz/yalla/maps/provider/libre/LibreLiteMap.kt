@@ -30,8 +30,6 @@ import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
  *
  * Renders a MapLibre GL view with a single user-location indicator and
  * automatic camera initialization to the user's location or a fallback point.
- *
- * @since 0.0.1
  */
 class LibreLiteMap : LiteMap {
     @Composable

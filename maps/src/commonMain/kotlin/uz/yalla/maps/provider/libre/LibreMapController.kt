@@ -55,7 +55,6 @@ import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
  * Both flags are cleared by [onUserGesture] and [reset] to ensure a clean state when
  * the user manually interacts with the map.
  *
- * @since 0.0.1
  * @see uz.yalla.maps.provider.SwitchingMapController
  * @see uz.yalla.maps.provider.google.GoogleMapController
  */
@@ -103,10 +102,6 @@ class LibreMapController : MapController {
 
     /**
      * Binds this controller to a live MapLibre camera state and coroutine scope.
-     *
-     * @param camera The MapLibre camera state to drive.
-     * @param scope Coroutine scope for launching animations.
-     * @since 0.0.1
      */
     fun bind(
         camera: CameraState,
@@ -124,9 +119,6 @@ class LibreMapController : MapController {
 
     /**
      * Syncs the API-layer camera position from the MapLibre camera position.
-     *
-     * @param position The current MapLibre camera position.
-     * @since 0.0.1
      */
     fun updateFromCamera(position: LibreCameraPosition) {
         appliedPadding = position.padding
@@ -142,8 +134,6 @@ class LibreMapController : MapController {
 
     /**
      * Called when the camera stops moving. Processes queued re-center requests and syncs state.
-     *
-     * @since 0.0.1
      */
     fun onCameraIdle() {
         val camera = cameraState ?: return
@@ -180,8 +170,6 @@ class LibreMapController : MapController {
 
     /**
      * Called when the user manually moves the map. Clears any programmatic target.
-     *
-     * @since 0.0.1
      */
     fun onUserGesture() {
         clearProgrammaticTarget()
@@ -193,10 +181,7 @@ class LibreMapController : MapController {
     /**
      * Returns whether the current marker sync should be suppressed (e.g., during padding-only changes).
      *
-     * @param isMoving Whether the camera is currently moving.
-     * @param isByUser Whether the movement was user-initiated.
      * @return `true` if the marker update should be suppressed.
-     * @since 0.0.1
      */
     fun shouldSuppressMarkerUpdate(
         isMoving: Boolean,
@@ -359,9 +344,6 @@ class LibreMapController : MapController {
 
     /**
      * Updates the desired padding without triggering a camera re-center or animation.
-     *
-     * @param padding The new padding value.
-     * @since 0.0.1
      */
     fun updatePaddingSilently(padding: PaddingValues) {
         if (targetPadding.hasSameValues(padding)) return

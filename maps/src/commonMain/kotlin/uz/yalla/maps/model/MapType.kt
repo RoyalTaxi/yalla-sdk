@@ -5,8 +5,6 @@ package uz.yalla.maps.model
  *
  * Maps to platform constants on Android (`com.google.android.gms.maps.GoogleMap.MAP_TYPE_*`)
  * and iOS (`kGMSType*`).
- *
- * @since 0.0.1
  */
 enum class MapType {
     /** No base map tiles. */

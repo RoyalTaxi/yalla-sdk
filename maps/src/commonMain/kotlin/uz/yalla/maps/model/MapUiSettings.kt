@@ -7,18 +7,6 @@ import androidx.compose.runtime.Stable
  *
  * This is intentionally a class (not a data class) for binary compatibility
  * on future changes. See: https://jakewharton.com/public-api-challenges-in-kotlin/
- *
- * @property compassEnabled Whether the compass is enabled.
- * @property indoorLevelPickerEnabled Whether the indoor level picker is enabled.
- * @property mapToolbarEnabled Whether the map toolbar is enabled (Android only).
- * @property myLocationButtonEnabled Whether the my-location button is enabled.
- * @property rotationGesturesEnabled Whether rotation gestures are enabled.
- * @property scrollGesturesEnabled Whether scroll gestures are enabled.
- * @property scrollGesturesEnabledDuringRotateOrZoom Whether scroll gestures are enabled during rotate or zoom.
- * @property tiltGesturesEnabled Whether tilt gestures are enabled.
- * @property zoomControlsEnabled Whether the zoom controls are enabled (Android only).
- * @property zoomGesturesEnabled Whether zoom gestures (pinch to zoom) are enabled.
- * @since 0.0.1
  */
 @Stable
 class MapUiSettings(
@@ -73,7 +61,6 @@ class MapUiSettings(
      * Returns a new [MapUiSettings] with selectively overridden properties.
      *
      * @return A copy with the specified properties changed.
-     * @since 0.0.1
      */
     fun copy(
         compassEnabled: Boolean = this.compassEnabled,

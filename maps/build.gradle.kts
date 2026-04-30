@@ -13,33 +13,34 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            // Compose
+            // Compose — every Yalla*Map composable is @Composable + Modifier-
+            // taking; CameraPosition / MarkerState are Color/Dp-shaped so
+            // compose.ui types end up in our public surface.
             api(compose.runtime)
+            api(compose.ui)
             api(compose.foundation)
             implementation(compose.material3)
             implementation(compose.components.resources)
 
-            // Core dependencies
+            // Core — GeoPoint and Address types appear in MapController
+            // signatures (cameraPosition, markerState, fitBounds).
             api(projects.core)
-            implementation(projects.design)
-            implementation(projects.resources)
 
-            // Lifecycle
-            implementation(libs.androidx.lifecycle.runtime.compose)
+            // Coroutines — StateFlow<CameraPosition> / <MarkerState> /
+            // <Boolean> on the MapController public surface.
+            api(libs.kotlinx.coroutines.core)
 
-            // Coroutines
-            implementation(libs.kotlinx.coroutines.core)
-
-            // DI
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-
-            // Geo
+            // Geo — moko-geo LatLng types appear in public params.
             api(libs.geo)
             implementation(libs.geo.compose)
 
-            // MapLibre
+            // MapLibre — LibreMapController exposes maplibre.compose
+            // CameraState directly via bind(). Public.
             api(libs.maplibre.compose)
+
+            implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.koin.core)
+            implementation(libs.koin.compose)
         }
 
         androidMain.dependencies {

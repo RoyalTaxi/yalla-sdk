@@ -29,8 +29,6 @@ import org.maplibre.compose.camera.CameraPosition as LibreCameraPosition
  *
  * Renders a non-interactive MapLibre GL view that auto-fits the camera
  * to display the provided route and location markers.
- *
- * @since 0.0.1
  */
 class LibreStaticMap : StaticMap {
     @Composable

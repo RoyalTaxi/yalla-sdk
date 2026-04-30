@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.painter.Painter
  *
  * The intrinsic size is 48 x 48 px, but the painter scales to any [DrawScope] size.
  *
- * @since 0.0.1
  * @see uz.yalla.maps.provider.common.MapDimens.UserLocationSize
  */
 internal object UserLocationPainter : Painter() {

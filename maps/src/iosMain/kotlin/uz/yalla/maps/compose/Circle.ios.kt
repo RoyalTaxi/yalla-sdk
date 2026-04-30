@@ -13,9 +13,6 @@ import uz.yalla.maps.model.LatLng
 
 /**
  * iOS implementation of [Circle] wrapping a Google Maps iOS SDK `GMSCircle`.
- *
- * @property gmsCircle The underlying iOS circle overlay.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 actual class Circle(

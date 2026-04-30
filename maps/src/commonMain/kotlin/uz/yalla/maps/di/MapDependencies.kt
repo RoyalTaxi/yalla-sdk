@@ -16,21 +16,15 @@ import uz.yalla.core.preferences.InterfacePreferences
  * `scope` follows the caller-owned lifecycle pattern established in ADR-011 and ADR-013.
  * Provide a process-lifetime [CoroutineScope] (e.g., `CoroutineScope(SupervisorJob())`).
  * When that scope is cancelled, all map preference-observation coroutines stop automatically.
- *
- * @since 0.0.1
  */
 interface MapDependencies {
     /**
      * User interface preferences including map provider choice and theme.
-     *
-     * @since 0.0.1
      */
     val interfacePreferences: InterfacePreferences
 
     /**
      * Location provider for user position tracking.
-     *
-     * @since 0.0.1
      */
     val locationProvider: LocationProvider
 
@@ -40,8 +34,6 @@ interface MapDependencies {
      * Cancelling this scope stops all coroutines inside [SwitchingMapProvider] and
      * any [SwitchingMapController] instances created by it. Mirrors the pattern used
      * by `LocationManager` (ADR-013) and `createHttpClient` (ADR-011).
-     *
-     * @since 0.0.1
      */
     val scope: CoroutineScope
 }

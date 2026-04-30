@@ -30,8 +30,6 @@ import uz.yalla.maps.util.toGeoPoint
  *
  * Renders a Google Maps view with a single user-location indicator and
  * automatic camera initialization to the user's location or a fallback point.
- *
- * @since 0.0.1
  */
 class GoogleLiteMap : LiteMap {
     @Composable

@@ -43,37 +43,26 @@ import uz.yalla.maps.config.MapConstants
  * }
  * ```
  *
- * @since 0.0.1
  * @see uz.yalla.maps.api.MapProvider
  */
 interface MapController {
     /**
      * Current camera position as a reactive flow.
-     *
-     * @since 0.0.1
      */
     val cameraPosition: StateFlow<CameraPosition>
 
     /**
      * Current center-screen marker state as a reactive flow.
-     *
-     * @since 0.0.1
      */
     val markerState: StateFlow<MarkerState>
 
     /**
      * Whether the underlying map view has finished loading.
-     *
-     * @since 0.0.1
      */
     val isReady: StateFlow<Boolean>
 
     /**
      * Instantly moves the camera to the given [point] without animation.
-     *
-     * @param point Target geographic coordinate.
-     * @param zoom Desired zoom level (clamped to provider limits).
-     * @since 0.0.1
      */
     suspend fun moveTo(
         point: GeoPoint,
@@ -82,11 +71,6 @@ interface MapController {
 
     /**
      * Smoothly animates the camera to the given [point].
-     *
-     * @param point Target geographic coordinate.
-     * @param zoom Desired zoom level (clamped to provider limits).
-     * @param durationMs Animation duration in milliseconds.
-     * @since 0.0.1
      */
     suspend fun animateTo(
         point: GeoPoint,
@@ -96,12 +80,6 @@ interface MapController {
 
     /**
      * Smoothly animates the camera to the given [point] with a specific [bearing].
-     *
-     * @param point Target geographic coordinate.
-     * @param bearing Direction the camera faces, in degrees clockwise from north.
-     * @param zoom Desired zoom level (clamped to provider limits).
-     * @param durationMs Animation duration in milliseconds.
-     * @since 0.0.1
      */
     suspend fun animateToWithBearing(
         point: GeoPoint,
@@ -112,11 +90,6 @@ interface MapController {
 
     /**
      * Adjusts the camera to fit all [points] within the visible viewport.
-     *
-     * @param points Geographic coordinates to include in the viewport.
-     * @param padding Extra padding around the bounds.
-     * @param animate Whether to animate the transition.
-     * @since 0.0.1
      */
     suspend fun fitBounds(
         points: List<GeoPoint>,
@@ -126,91 +99,62 @@ interface MapController {
 
     /**
      * Increases the zoom level by one step.
-     *
-     * @since 0.0.1
      */
     suspend fun zoomIn()
 
     /**
      * Decreases the zoom level by one step.
-     *
-     * @since 0.0.1
      */
     suspend fun zoomOut()
 
     /**
      * Sets the zoom level to an exact value.
-     *
-     * @param zoom Target zoom level (clamped to provider limits).
-     * @since 0.0.1
      */
     suspend fun setZoom(zoom: Float)
 
     /**
      * Sets the desired content padding without triggering a camera re-center.
-     *
-     * @param padding The desired padding around the map content area.
-     * @since 0.0.1
      */
     fun setDesiredPadding(padding: PaddingValues)
 
     /**
      * Updates the content padding and re-centers the camera if a programmatic target is active.
-     *
-     * @param padding The new padding to apply.
-     * @since 0.0.1
      */
     suspend fun updatePadding(padding: PaddingValues)
 
     /**
      * Replaces the current marker state with [state].
-     *
-     * @param state The new marker state.
-     * @since 0.0.1
      */
     fun updateMarkerState(state: MarkerState)
 
     /**
      * Updates only the marker position, preserving movement and user flags.
-     *
-     * @param point The new marker coordinate.
-     * @since 0.0.1
      */
     fun setMarkerPosition(point: GeoPoint)
 
     /**
      * Resets the marker to [MarkerState.INITIAL].
-     *
-     * @since 0.0.1
      */
     fun clearMarker()
 
     /**
      * Signals that the underlying map view has finished loading.
-     *
-     * @since 0.0.1
      */
     fun onMapReady()
 
     /**
      * Resets all controller state (camera, marker, padding, animations) to defaults.
-     *
-     * @since 0.0.1
      */
     fun reset()
 
     /**
      * Releases resources held by this controller. Called when the controller is no longer needed.
-     *
-     * @since 0.0.1
      */
     fun close() {}
 
     companion object {
         /**
          * Default animation duration in milliseconds for camera transitions.
-         *
-         * @since 0.0.1
          */
         const val ANIMATION_DURATION = 1000
     }

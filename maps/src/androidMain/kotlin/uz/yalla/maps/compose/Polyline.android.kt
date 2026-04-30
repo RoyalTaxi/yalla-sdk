@@ -11,9 +11,6 @@ import com.google.maps.android.compose.Polyline as AndroidPolyline
 
 /**
  * Android implementation of [Polyline] wrapping a Google Maps SDK `Polyline`.
- *
- * @property googlePolyline The underlying Google Maps polyline overlay.
- * @since 0.0.1
  */
 actual class Polyline(
     val googlePolyline: GooglePolyline

@@ -15,8 +15,6 @@ import uz.yalla.maps.model.LatLngBounds
  * Reason the map camera started moving.
  *
  * Used by [CameraPositionState] to distinguish user gestures from programmatic animations.
- *
- * @since 0.0.1
  */
 enum class CameraMoveStartedReason {
     /** Movement reason could not be determined. */
@@ -37,26 +35,17 @@ enum class CameraMoveStartedReason {
 
 /**
  * Default animation duration in milliseconds for [CameraPositionState.animate].
- *
- * @since 0.0.1
  */
 const val DEFAULT_ANIMATION_DURATION_MS: Int = 300
 
 /**
  * Internal request type emitted by [CameraPositionState] to platform-specific handlers.
- *
- * @property durationMs Animation duration in milliseconds.
- * @since 0.0.1
  */
 internal sealed class CameraAnimationRequest {
     abstract val durationMs: Int
 
     /**
      * Request to animate the camera to a specific [position].
-     *
-     * @property position Target camera position.
-     * @property durationMs Animation duration in milliseconds.
-     * @since 0.0.1
      */
     data class ToPosition(
         val position: CameraPosition,
@@ -65,11 +54,6 @@ internal sealed class CameraAnimationRequest {
 
     /**
      * Request to animate the camera to fit geographic [bounds] within the viewport.
-     *
-     * @property bounds Geographic bounding rectangle to fit.
-     * @property padding Pixel padding around the bounds.
-     * @property durationMs Animation duration in milliseconds.
-     * @since 0.0.1
      */
     data class ToBounds(
         val bounds: LatLngBounds,
@@ -84,9 +68,6 @@ internal sealed class CameraAnimationRequest {
  * Bridges the shared Kotlin layer and the platform map SDK by exposing reactive
  * [position], [isMoving], and [cameraMoveStartedReason] properties. Camera
  * changes can be applied via [animate], [animateToBounds], or [move].
- *
- * @param position Initial camera position.
- * @since 0.0.1
  */
 @Stable
 class CameraPositionState(
@@ -98,16 +79,12 @@ class CameraPositionState(
 ) {
     /**
      * Whether the camera is currently in motion (animating or being dragged).
-     *
-     * @since 0.0.1
      */
     var isMoving: Boolean by mutableStateOf(false)
         internal set
 
     /**
      * Reason the most recent camera movement started.
-     *
-     * @since 0.0.1
      */
     var cameraMoveStartedReason: CameraMoveStartedReason by mutableStateOf(
         CameraMoveStartedReason.NO_MOVEMENT_YET
@@ -117,8 +94,6 @@ class CameraPositionState(
     /**
      * Backing Compose state for the camera position, updated by both the cross-platform
      * API and the platform-specific synchronization layer.
-     *
-     * @since 0.0.1
      */
     internal var rawPosition: CameraPosition by mutableStateOf(position)
 
@@ -127,15 +102,11 @@ class CameraPositionState(
      *
      * When set, [position] setter delegates through this to move the platform camera
      * and update [rawPosition] atomically. When `null`, [rawPosition] is updated directly.
-     *
-     * @since 0.0.1
      */
     internal var positionUpdater: ((CameraPosition) -> Unit)? = null
 
     /**
      * The current camera position. Setting this triggers an immediate (non-animated) move.
-     *
-     * @since 0.0.1
      */
     var position: CameraPosition
         get() = rawPosition
@@ -145,24 +116,16 @@ class CameraPositionState(
 
     /**
      * Channel for queued animation requests, consumed by the platform synchronization layer.
-     *
-     * @since 0.0.1
      */
     internal val animationRequests = MutableSharedFlow<CameraAnimationRequest>(extraBufferCapacity = 1)
 
     /**
      * Channel for queued instant-move requests, consumed by the platform synchronization layer.
-     *
-     * @since 0.0.1
      */
     internal val moveRequests = MutableSharedFlow<CameraPosition>(extraBufferCapacity = 1)
 
     /**
      * Smoothly animates the camera to the given [position].
-     *
-     * @param position Target camera position.
-     * @param durationMs Animation duration in milliseconds.
-     * @since 0.0.1
      */
     suspend fun animate(
         position: CameraPosition,
@@ -173,11 +136,6 @@ class CameraPositionState(
 
     /**
      * Smoothly animates the camera to fit the given [bounds] within the viewport.
-     *
-     * @param bounds Geographic bounding rectangle to fit.
-     * @param padding Pixel padding around the bounds.
-     * @param durationMs Animation duration in milliseconds.
-     * @since 0.0.1
      */
     suspend fun animateToBounds(
         bounds: LatLngBounds,
@@ -189,9 +147,6 @@ class CameraPositionState(
 
     /**
      * Instantly moves the camera to the given [position] without animation.
-     *
-     * @param position Target camera position.
-     * @since 0.0.1
      */
     fun move(position: CameraPosition) {
         moveRequests.tryEmit(position)
@@ -201,10 +156,7 @@ class CameraPositionState(
 /**
  * Creates and remembers a [CameraPositionState], optionally applying an [init] block.
  *
- * @param key Optional key for state identity across recompositions.
- * @param init Configuration block applied to the new state before it is returned.
  * @return A remembered [CameraPositionState].
- * @since 0.0.1
  */
 @Composable
 fun rememberCameraPositionState(

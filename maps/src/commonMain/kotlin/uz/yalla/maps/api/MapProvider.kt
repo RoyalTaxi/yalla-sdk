@@ -20,28 +20,20 @@ import uz.yalla.maps.api.model.MapStyle
  * val controller = provider.createController()
  * provider.createLiteMap().Content(controller = controller)
  * ```
- *
- * @since 0.0.1
  */
 interface MapProvider {
     /**
      * The kind of map backend this provider represents (Google or Libre).
-     *
-     * @since 0.0.1
      */
     val type: MapKind
 
     /**
      * Feature capabilities of this map backend.
-     *
-     * @since 0.0.1
      */
     val capabilities: MapCapabilities
 
     /**
      * Light/dark style URLs for this map backend.
-     *
-     * @since 0.0.1
      */
     val style: MapStyle
 
@@ -49,7 +41,6 @@ interface MapProvider {
      * Creates a lite map composable suitable for simple pin-on-map use cases.
      *
      * @return A new [LiteMap] instance.
-     * @since 0.0.1
      */
     fun createLiteMap(): LiteMap
 
@@ -57,7 +48,6 @@ interface MapProvider {
      * Creates an extended map composable with route display, location markers, and custom content.
      *
      * @return A new [ExtendedMap] instance.
-     * @since 0.0.1
      */
     fun createExtendedMap(): ExtendedMap
 
@@ -65,7 +55,6 @@ interface MapProvider {
      * Creates a static (non-interactive) map composable for displaying routes and locations.
      *
      * @return A new [StaticMap] instance.
-     * @since 0.0.1
      */
     fun createStaticMap(): StaticMap
 
@@ -73,7 +62,6 @@ interface MapProvider {
      * Creates a controller for programmatic camera and marker manipulation.
      *
      * @return A new [MapController] instance.
-     * @since 0.0.1
      */
     fun createController(): MapController
 }

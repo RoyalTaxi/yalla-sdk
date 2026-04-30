@@ -6,21 +6,15 @@ import uz.yalla.maps.model.LatLng
 
 /**
  * Platform wrapper around a rendered circle overlay on the map.
- *
- * @since 0.0.1
  */
 expect class Circle {
     /**
      * Center coordinate of the circle.
-     *
-     * @since 0.0.1
      */
     val center: LatLng
 
     /**
      * Radius of the circle in meters.
-     *
-     * @since 0.0.1
      */
     val radius: Double
 }
@@ -30,13 +24,6 @@ expect class Circle {
  *
  * Must be called within a [GoogleMap] content lambda. On Android, delegates to
  * `com.google.maps.android.compose.Circle`; on iOS, creates a `GMSCircle`.
- *
- * @param center Geographic center of the circle.
- * @param radius Radius in meters.
- * @param fillColor Interior fill color.
- * @param strokeColor Border stroke color.
- * @param strokeWidth Border stroke width in pixels.
- * @since 0.0.1
  */
 @Composable
 @GoogleMapComposable

@@ -9,8 +9,6 @@ import org.maplibre.compose.map.OrnamentOptions
  * All ornaments (logo, attribution, compass, scale bar) are disabled by default
  * since the Yalla UI provides its own controls.
  *
- * @param padding Optional padding applied to ornament positioning.
  * @return Platform-specific [OrnamentOptions].
- * @since 0.0.1
  */
 expect fun getPlatformOrnamentOptions(padding: PaddingValues = PaddingValues()): OrnamentOptions

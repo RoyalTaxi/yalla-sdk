@@ -7,17 +7,6 @@ import androidx.compose.runtime.Immutable
  *
  * Use this to query whether a provider supports features like offline maps,
  * traffic layers, or custom styles before enabling them in the UI.
- *
- * @property supportsOffline Whether the provider supports offline map tiles.
- * @property supports3D Whether 3D building extrusion is available.
- * @property supportsTraffic Whether real-time traffic overlay is available.
- * @property supportsStreetView Whether street-level imagery is available.
- * @property supportsCustomStyles Whether custom map style JSON is supported.
- * @property supportsRotation Whether bearing/rotation gestures are supported.
- * @property supportsTilt Whether tilt/perspective gestures are supported.
- * @property maxZoom Maximum allowed zoom level.
- * @property minZoom Minimum allowed zoom level.
- * @since 0.0.1
  */
 @Immutable
 data class MapCapabilities(
@@ -34,8 +23,6 @@ data class MapCapabilities(
     companion object {
         /**
          * Capabilities for the MapLibre backend.
-         *
-         * @since 0.0.1
          */
         val LIBRE =
             MapCapabilities(
@@ -49,8 +36,6 @@ data class MapCapabilities(
 
         /**
          * Capabilities for the Google Maps backend.
-         *
-         * @since 0.0.1
          */
         val GOOGLE =
             MapCapabilities(

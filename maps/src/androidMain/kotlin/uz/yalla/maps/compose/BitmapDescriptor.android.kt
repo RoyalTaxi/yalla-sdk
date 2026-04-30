@@ -11,9 +11,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory as GoogleBitmap
  *
  * Wraps a Google Maps SDK `com.google.android.gms.maps.model.BitmapDescriptor`
  * for use as a map marker or overlay icon.
- *
- * @property googleBitmapDescriptor The underlying Google Maps bitmap descriptor.
- * @since 0.0.1
  */
 actual class BitmapDescriptor(
     val googleBitmapDescriptor: GoogleBitmapDescriptor
@@ -24,8 +21,6 @@ actual class BitmapDescriptor(
  *
  * Converts raw pixel data or encoded image bytes into Android [Bitmap][android.graphics.Bitmap]
  * instances and wraps them via `GoogleBitmapDescriptorFactory.fromBitmap`.
- *
- * @since 0.0.1
  */
 actual object BitmapDescriptorFactory {
     actual fun fromBytes(

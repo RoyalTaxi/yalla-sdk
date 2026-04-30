@@ -26,10 +26,8 @@ import uz.yalla.core.geo.GeoPoint
  * )
  * ```
  *
- * @property location Current user location, or `null` to hide the indicator.
  * @property accuracyMeters GPS accuracy radius in metres. Defaults to 50.0 m, matching
  *   the provider default used by both Google and MapLibre implementations.
- * @since 0.0.1
  */
 public data class LocationIndicatorConfig(
     val location: GeoPoint?,

@@ -6,7 +6,6 @@ package uz.yalla.maps.compose
  * Implementations detach their native overlay (marker, polyline, circle) from the
  * `GMSMapView` in [onRemoved] and [onCleared].
  *
- * @since 0.0.1
  * @see MapApplier
  */
 internal interface MapNode {
@@ -22,7 +21,5 @@ internal interface MapNode {
 
 /**
  * Sentinel root node for [MapApplier].
- *
- * @since 0.0.1
  */
 internal object MapNodeRoot : MapNode

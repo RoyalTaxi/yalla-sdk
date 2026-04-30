@@ -10,9 +10,7 @@ import androidx.compose.runtime.Composable
  * recomputed when any of the [keys] change.
  *
  * @param keys Cache invalidation keys; the descriptor is recaptured when keys change.
- * @param content The composable content to rasterize.
  * @return A [BitmapDescriptor] containing the rendered content.
- * @since 0.0.1
  */
 @Composable
 @GoogleMapComposable

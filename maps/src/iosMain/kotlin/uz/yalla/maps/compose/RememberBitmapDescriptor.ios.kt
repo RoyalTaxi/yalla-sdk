@@ -9,7 +9,6 @@ import androidx.compose.ui.graphics.ImageBitmap
  * proper device-screen scale.
  *
  * @return A [BitmapDescriptor] wrapping the converted `UIImage`.
- * @since 0.0.1
  */
 internal actual fun ImageBitmap.toBitmapDescriptor(): BitmapDescriptor {
     return BitmapDescriptor(this.toUIImage())

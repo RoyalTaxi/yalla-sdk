@@ -18,7 +18,6 @@ import uz.yalla.core.geo.GeoPoint
  *
  * @property route Ordered list of coordinates defining the route path. Must contain at
  *   least two points for the polyline to render; fewer points are silently ignored.
- * @since 0.0.1
  */
 public data class RouteOverlayConfig(
     val route: List<GeoPoint>,

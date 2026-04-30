@@ -16,9 +16,6 @@ import uz.yalla.maps.provider.google.toLatLng
  *
  * Renders a colored [Polyline] along the route path. No-ops when fewer
  * than two points are provided.
- *
- * @param route Ordered list of coordinates defining the route path.
- * @since 0.0.1
  */
 @Composable
 fun RouteLayer(route: List<GeoPoint>) {

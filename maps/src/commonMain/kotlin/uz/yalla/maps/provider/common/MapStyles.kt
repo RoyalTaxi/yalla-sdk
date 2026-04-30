@@ -12,8 +12,6 @@ import androidx.compose.ui.unit.dp
  * so design-system tokens would not propagate correctly.
  *
  * If the brand palette changes, update these values manually to stay in sync.
- *
- * @since 0.0.1
  */
 object MapColors {
     /** Primary brand purple (`#562DF8`) used for route polylines and start/origin markers. */
@@ -37,8 +35,6 @@ object MapColors {
 
 /**
  * Dimension tokens used by map overlay components.
- *
- * @since 0.0.1
  */
 object MapDimens {
     /** Outer diameter of location marker circles. */
@@ -68,8 +64,6 @@ object MapDimens {
 
 /**
  * Classification of a location marker within a route.
- *
- * @since 0.0.1
  */
 enum class LocationType {
     /** Origin/pickup point. */

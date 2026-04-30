@@ -37,11 +37,6 @@ import uz.yalla.maps.provider.common.MapDimens
  *
  * The shared parameter contract is defined by
  * [uz.yalla.maps.api.overlay.LocationsOverlayConfig].
- *
- * @param locations Ordered list of geographic coordinates for the markers.
- * @param startLabel Optional text label for the first (start) marker.
- * @param endLabel Optional text label for the last (finish) marker.
- * @since 0.0.1
  */
 @Composable
 fun LocationsLayer(

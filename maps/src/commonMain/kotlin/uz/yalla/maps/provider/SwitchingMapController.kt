@@ -55,10 +55,8 @@ import uz.yalla.maps.util.hasSameValues
  * release both backend controllers early. After [close] is called, calling any other method
  * is a no-op; [isClosed] returns `true`.
  *
- * @param interfacePreferences Source of the user's map provider preference.
  * @param scope Caller-owned parent scope. The controller derives a supervised child from
  *   this scope; cancelling [scope] propagates to the controller automatically.
- * @since 0.0.1
  * @see SwitchingMapProvider
  * @see GoogleMapController
  * @see LibreMapController
@@ -72,15 +70,11 @@ class SwitchingMapController(
 
     /**
      * Lazily initialized Google Maps controller, exposed for provider-specific access.
-     *
-     * @since 0.0.1
      */
     val googleController by _googleController
 
     /**
      * Lazily initialized MapLibre controller, exposed for provider-specific access.
-     *
-     * @since 0.0.1
      */
     val libreController by _libreController
 
@@ -94,8 +88,6 @@ class SwitchingMapController(
 
     /**
      * `true` after [close] has been called. Once closed, all mutating operations become no-ops.
-     *
-     * @since 0.0.1
      */
     var isClosed: Boolean = false
         private set
@@ -290,8 +282,6 @@ class SwitchingMapController(
          *
          * If the timeout elapses, the preserved camera position and marker state are applied
          * optimistically — the new backend will pick them up once it finishes loading.
-         *
-         * @since 0.0.1
          */
         const val PROVIDER_READY_TIMEOUT_MS = 5_000L
     }

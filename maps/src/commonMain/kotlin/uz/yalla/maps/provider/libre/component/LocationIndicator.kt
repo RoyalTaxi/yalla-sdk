@@ -32,11 +32,6 @@ import kotlin.math.pow
  *
  * Displays [UserLocationPainter] at the user's position and a translucent accuracy
  * ring whose apparent size scales with the camera zoom level.
- *
- * @param location Current user location, or `null` to hide the indicator.
- * @param cameraState MapLibre camera state used to scale the accuracy circle.
- * @param accuracyMeters GPS accuracy radius in meters.
- * @since 0.0.1
  */
 @Composable
 fun LocationIndicator(

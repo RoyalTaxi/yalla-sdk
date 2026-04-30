@@ -125,10 +125,8 @@ actual fun rememberComposeBitmapDescriptor(
  * Cancellation is handled carefully to avoid "coroutine scope left composition" errors
  * during rapid marker addition/removal.
  *
- * @param content The composable to render off-screen and capture.
  * @return A `UIImage` containing the rasterized content, scaled to the device screen density.
  * @throws IllegalStateException if the content fails to measure or the capture times out.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class, ExperimentalComposeUiApi::class)
 internal suspend fun captureComposableToUIImage(content: @Composable () -> Unit): UIImage {
@@ -266,7 +264,6 @@ internal suspend fun captureComposableToUIImage(content: @Composable () -> Unit)
  *
  * @return A `UIImage` at the device's native screen scale.
  * @throws IllegalArgumentException if the bitmap has non-positive dimensions.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class, kotlinx.cinterop.BetaInteropApi::class)
 internal fun ImageBitmap.toUIImage(): UIImage {
@@ -322,7 +319,6 @@ internal fun ImageBitmap.toUIImage(): UIImage {
  * Used as a fallback marker icon while the actual content capture is in progress.
  *
  * @return A transparent 1x1 `UIImage` at the device's screen scale.
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 private fun createTransparentPlaceholder(): UIImage {

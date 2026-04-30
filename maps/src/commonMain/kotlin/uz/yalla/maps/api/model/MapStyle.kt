@@ -7,10 +7,6 @@ import androidx.compose.runtime.Immutable
  *
  * MapLibre backends use vector-tile style JSON URLs; Google Maps uses
  * empty strings since styling is handled natively.
- *
- * @property lightStyleUrl URL to the light-mode map style JSON.
- * @property darkStyleUrl URL to the dark-mode map style JSON.
- * @since 0.0.1
  */
 @Immutable
 data class MapStyle(
@@ -20,8 +16,6 @@ data class MapStyle(
     companion object {
         /**
          * CARTO Positron (light) / Dark Matter (dark) tile styles for MapLibre.
-         *
-         * @since 0.0.1
          */
         val CARTO =
             MapStyle(
@@ -31,8 +25,6 @@ data class MapStyle(
 
         /**
          * Empty style for Google Maps (styling handled natively).
-         *
-         * @since 0.0.1
          */
         val GOOGLE =
             MapStyle(

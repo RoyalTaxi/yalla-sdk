@@ -20,8 +20,6 @@ import uz.yalla.maps.provider.libre.LibreMapProvider
  * The host application must register a [MapDependencies] implementation in the Koin
  * container before this module is loaded. [MapDependencies.scope] must be a
  * process-lifetime [kotlinx.coroutines.CoroutineScope] — see ADR-018.
- *
- * @since 0.0.1
  */
 val mapModule =
     module {

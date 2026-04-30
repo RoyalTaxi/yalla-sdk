@@ -5,10 +5,6 @@ package uz.yalla.maps.model
  *
  * Used by [CameraPositionState][uz.yalla.maps.compose.CameraPositionState] to animate
  * the camera to fit a set of coordinates within the viewport.
- *
- * @property southwest The south-west corner of the bounding box.
- * @property northeast The north-east corner of the bounding box.
- * @since 0.0.1
  */
 data class LatLngBounds(
     val southwest: LatLng,
@@ -16,8 +12,6 @@ data class LatLngBounds(
 ) {
     /**
      * The geographic midpoint of this bounding rectangle.
-     *
-     * @since 0.0.1
      */
     val center: LatLng
         get() =
@@ -28,8 +22,6 @@ data class LatLngBounds(
 
     /**
      * Incrementally builds a [LatLngBounds] by including geographic points.
-     *
-     * @since 0.0.1
      */
     class Builder {
         private var southWestLat = Double.MAX_VALUE
@@ -40,9 +32,7 @@ data class LatLngBounds(
         /**
          * Expands the bounds to include the given [point].
          *
-         * @param point The coordinate to include.
          * @return This builder for chaining.
-         * @since 0.0.1
          */
         fun include(point: LatLng): Builder {
             southWestLat = minOf(southWestLat, point.latitude)
@@ -57,7 +47,6 @@ data class LatLngBounds(
          *
          * @return The computed bounding rectangle.
          * @throws IllegalArgumentException if no points were included.
-         * @since 0.0.1
          */
         fun build(): LatLngBounds {
             require(southWestLat != Double.MAX_VALUE) { "No points included" }

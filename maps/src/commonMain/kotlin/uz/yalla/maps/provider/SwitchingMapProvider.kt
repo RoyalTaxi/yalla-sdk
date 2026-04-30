@@ -43,13 +43,9 @@ import uz.yalla.maps.provider.libre.LibreStaticMap
  * Controllers created via [createController] inherit the same scope so their
  * internal preference observation is also tied to the caller-managed lifetime.
  *
- * @param googleProvider Concrete Google Maps backend.
- * @param libreProvider Concrete MapLibre backend.
- * @param interfacePreferences Source of the user's map provider preference.
  * @param scope Caller-owned scope that governs the lifetime of preference observation
  *   inside this provider and any controllers it creates. Cancelling this scope stops
  *   all coroutines launched by this provider.
- * @since 0.0.1
  * @see SwitchingMapController
  */
 class SwitchingMapProvider(

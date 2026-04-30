@@ -7,8 +7,6 @@ import androidx.compose.runtime.ComposableTargetMarker
  *
  * Uses [ComposableTargetMarker] to restrict map overlay composables
  * to the Google Maps composition on iOS.
- *
- * @since 0.0.1
  */
 @Retention(AnnotationRetention.BINARY)
 @ComposableTargetMarker(description = "Google Map Composable")

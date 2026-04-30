@@ -27,11 +27,6 @@ import uz.yalla.core.geo.GeoPoint
  *     endLabel   = config.endLabel,
  * )
  * ```
- *
- * @property locations Ordered list of geographic coordinates for the markers.
- * @property startLabel Optional text badge displayed above the first marker.
- * @property endLabel Optional text badge displayed above the last marker.
- * @since 0.0.1
  */
 public data class LocationsOverlayConfig(
     val locations: List<GeoPoint>,

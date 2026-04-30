@@ -20,9 +20,6 @@ private const val ROUTE_LAYER_ID = "route-layer"
  *
  * Renders a colored line along the route path using a MapLibre [LineLayer].
  * No-ops when fewer than two points are provided.
- *
- * @param route Ordered list of coordinates defining the route path.
- * @since 0.0.1
  */
 @Composable
 fun RouteLayer(route: List<GeoPoint>) {

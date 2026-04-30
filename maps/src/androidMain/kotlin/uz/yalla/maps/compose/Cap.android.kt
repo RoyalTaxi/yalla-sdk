@@ -21,7 +21,6 @@ private val squareCap = SquareCap()
  * Converts this cross-platform [Cap] to its Google Maps SDK equivalent.
  *
  * @return A cached Google Maps `Cap` instance.
- * @since 0.0.1
  */
 internal fun Cap.toGoogleCap(): GoogleCap =
     when (this) {
@@ -34,7 +33,6 @@ internal fun Cap.toGoogleCap(): GoogleCap =
  * Converts this cross-platform [JointType] to its Google Maps SDK integer constant.
  *
  * @return One of `GoogleJointType.DEFAULT`, `BEVEL`, or `ROUND`.
- * @since 0.0.1
  */
 internal fun JointType.toGoogleJointType(): Int =
     when (this) {

@@ -40,8 +40,6 @@ import uz.yalla.maps.util.toGeoPoint
  *
  * Renders a full-featured Google Maps view with route polylines, location markers,
  * user-location indicator, and custom content support via [MapScope].
- *
- * @since 0.0.1
  */
 class GoogleExtendedMap : ExtendedMap {
     @Composable

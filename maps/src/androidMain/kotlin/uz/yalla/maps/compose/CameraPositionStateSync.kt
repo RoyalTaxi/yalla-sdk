@@ -29,10 +29,7 @@ import com.google.maps.android.compose.CameraPositionState as GoogleCameraPositi
  * cross-platform state to the Google Maps SDK state, while movement reason and
  * idle events flow in the reverse direction.
  *
- * @param cameraPositionState The cross-platform camera state to synchronize with.
- * @param contentPadding Current safe-area padding; triggers a position refresh on change.
  * @return A remembered [GoogleCameraPositionState] bound to the cross-platform state.
- * @since 0.0.1
  */
 @Composable
 internal fun rememberSyncedGoogleCameraPositionState(
@@ -125,7 +122,6 @@ internal fun rememberSyncedGoogleCameraPositionState(
  * Converts this cross-platform [CameraPosition] to a Google Maps SDK `CameraPosition`.
  *
  * @return A `GoogleCameraPosition` with matching target, zoom, tilt, and bearing.
- * @since 0.0.1
  */
 internal fun CameraPosition.toGoogleCameraPosition() =
     GoogleCameraPosition(
@@ -150,7 +146,6 @@ private fun GoogleCameraPosition.toCameraPosition() =
  * Converts this [LatLng] to a Google Maps SDK `LatLng`.
  *
  * @return A `com.google.android.gms.maps.model.LatLng` with matching coordinates.
- * @since 0.0.1
  */
 fun LatLng.toGoogleLatLng() = GoogleLatLng(latitude, longitude)
 

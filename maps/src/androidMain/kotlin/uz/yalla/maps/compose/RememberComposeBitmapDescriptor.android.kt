@@ -39,12 +39,8 @@ private val measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.U
  * Attaches a temporary [ComposeView] to [parent], measures, lays out, and draws it
  * into an Android [Bitmap][android.graphics.Bitmap], then detaches the view.
  *
- * @param parent The parent [ViewGroup] for the temporary compose view.
- * @param compositionContext The composition context for the temporary composition.
- * @param content The composable to render.
  * @return A [BitmapDescriptor] containing the rasterized content.
  * @throws IllegalArgumentException if the content measures to zero size.
- * @since 0.0.1
  */
 private fun renderComposableToBitmapDescriptor(
     parent: ViewGroup,

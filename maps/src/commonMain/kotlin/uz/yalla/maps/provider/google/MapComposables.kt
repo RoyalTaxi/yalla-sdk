@@ -63,16 +63,6 @@ private val DefaultProperties =
  * Wraps [GoogleMap] with standard Yalla UI settings (compass off, gestures configured)
  * and default map properties. Used internally by [GoogleLiteMap], [GoogleExtendedMap],
  * and [GoogleStaticMap].
- *
- * @param cameraState Camera position state driving the viewport.
- * @param theme Color scheme preference (light, dark, system).
- * @param modifier Compose [Modifier] applied to the map.
- * @param gesturesEnabled Whether scroll and zoom gestures are active.
- * @param contentPadding Safe-area padding for map controls.
- * @param onMapSizeChanged Optional callback receiving map viewport size changes.
- * @param onMapReady Callback invoked when tiles finish loading.
- * @param content Optional overlay composable content.
- * @since 0.0.1
  */
 @Composable
 fun BaseMapContent(
@@ -116,9 +106,7 @@ fun BaseMapContent(
  *
  * Each edge (start, end, top, bottom) is independently animated over [PADDING_ANIMATION_MS].
  *
- * @param target The desired padding to animate toward.
  * @return Animated [PaddingValues] that converge toward [target].
- * @since 0.0.1
  */
 @Composable
 internal fun rememberAnimatedPadding(target: PaddingValues): PaddingValues {
@@ -154,11 +142,6 @@ internal fun rememberAnimatedPadding(target: PaddingValues): PaddingValues {
  *
  * Observes [CameraPositionState.isMoving] and forwards idle/gesture events to
  * [GoogleMapController], keeping marker state and camera position in sync.
- *
- * @param cameraState The compose-layer camera state to observe.
- * @param controller The Google Maps controller to update.
- * @param onMarkerChanged Optional callback invoked on marker position changes.
- * @since 0.0.1
  */
 @Composable
 fun CameraTrackingEffect(
@@ -198,11 +181,6 @@ fun CameraTrackingEffect(
  *
  * Ensures the map opens at the correct location instead of briefly showing the default
  * position. Becomes a no-op once [isMapReady] is `true`.
- *
- * @param isMapReady Whether the map has finished loading.
- * @param target The desired initial camera center.
- * @param cameraState The compose-layer camera state to update.
- * @since 0.0.1
  */
 @Composable
 internal fun PreMapCameraPositionEffect(

@@ -11,7 +11,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory as GoogleBitmap
  * `GoogleBitmapDescriptorFactory.fromBitmap`.
  *
  * @return A [BitmapDescriptor] wrapping the converted bitmap.
- * @since 0.0.1
  */
 internal actual fun ImageBitmap.toBitmapDescriptor(): BitmapDescriptor =
     BitmapDescriptor(GoogleBitmapDescriptorFactory.fromBitmap(asAndroidBitmap()))

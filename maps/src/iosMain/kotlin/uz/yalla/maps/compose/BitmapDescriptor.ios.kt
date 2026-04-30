@@ -18,9 +18,6 @@ import platform.UIKit.UIImage
  * iOS implementation of [BitmapDescriptor].
  *
  * Wraps a [UIImage] that can be used for map marker or overlay icons.
- *
- * @property uiImage The underlying UIKit image.
- * @since 0.0.1
  */
 actual class BitmapDescriptor(
     val uiImage: UIImage
@@ -31,8 +28,6 @@ actual class BitmapDescriptor(
  *
  * Uses Core Graphics bitmap contexts and `NSData`-based `UIImage` constructors
  * to decode pixel data and encoded images into [BitmapDescriptor] instances.
- *
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class, kotlinx.cinterop.BetaInteropApi::class)
 actual object BitmapDescriptorFactory {
