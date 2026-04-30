@@ -1,6 +1,7 @@
 package uz.yalla.composites.sheet
 
 import dev.jordond.connectivity.Connectivity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -30,6 +31,7 @@ import kotlin.test.assertTrue
  * never completes). They run on `backgroundScope` so `runTest` doesn't
  * wait for them at the end of each test.
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 class DeviceConnectivityStateTest {
 
     private class FakeConnectivity : Connectivity {

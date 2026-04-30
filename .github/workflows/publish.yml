@@ -21,6 +21,11 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.pages.outputs.page_url }}
+    # macos-latest = 3 cores, ~14 GB RAM. Kotlin/Native iOS framework
+    # linking + Gradle daemon + Kotlin daemon all want several GB each.
+    # Cap parallelism so multiple linker subprocesses don't OOM the runner.
+    env:
+      GRADLE_OPTS: "-Dorg.gradle.workers.max=2 -Dorg.gradle.parallel=false"
     steps:
       - uses: actions/checkout@v4
 
@@ -31,13 +36,28 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - run: ./gradlew podInstall
-      - run: ./gradlew build
-      - run: ./gradlew dokkaGenerate
-      - run: ./gradlew publish
+      - name: CocoaPods install (maps + media native deps)
+        run: ./gradlew podInstall
+
+      # Tests — runs Android unit tests + iOS test executable links + tests.
+      # Sequential workers prevent the K/N linker memory storm that hung
+      # earlier runs at link*FrameworkIos* tasks.
+      - name: Tests
+        run: ./gradlew check --max-workers=2 --no-parallel
+
+      # Publish — only needs Kotlin compile (klib) + Android library
+      # (AAR), NOT the .framework binaries that `./gradlew build`
+      # triggered. Skipping framework linking cuts 4×N tasks (Debug/
+      # Release × Arm64/SimArm64 × every module) and the memory pressure
+      # that hung the runner indefinitely on prior runs.
+      - name: Publish to GitHub Packages
+        run: ./gradlew publish --max-workers=2 --no-parallel
         env:
           GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Dokka docs
+        run: ./gradlew dokkaGenerate --max-workers=2 --no-parallel
 
       - uses: actions/upload-pages-artifact@v3
         with:
