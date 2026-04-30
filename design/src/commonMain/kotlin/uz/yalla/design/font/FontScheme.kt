@@ -1,5 +1,6 @@
 package uz.yalla.design.font
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 
@@ -25,6 +26,7 @@ import androidx.compose.ui.text.TextStyle
  * ```
  *
  */
+@Immutable
 data class FontScheme(
     val title: Title,
     val body: Body,
@@ -37,6 +39,7 @@ data class FontScheme(
      * @property large Large title — 22sp, screen headers.
      * @property base Base title — 20sp, section headers.
      */
+    @Immutable
     data class Title(
         val xLarge: TextStyle,
         val large: TextStyle,
@@ -51,6 +54,7 @@ data class FontScheme(
      * @property base Base body — 16sp with [Weighty] variants. Default for paragraphs.
      * @property small Small body — 14sp with [Weighty] variants. Secondary text.
      */
+    @Immutable
     data class Body(
         val caption: TextStyle,
         val large: Weighty,
@@ -67,6 +71,7 @@ data class FontScheme(
          * @property medium Medium weight — subtly emphasized text, form labels.
          * @property bold Bold weight — strongly emphasized text, key values.
          */
+        @Immutable
         data class Weighty(
             val regular: TextStyle,
             val medium: TextStyle,
@@ -79,6 +84,7 @@ data class FontScheme(
      *
      * @property carNumber License plate style — 12sp, Nummernschild font.
      */
+    @Immutable
     data class Custom(
         val carNumber: TextStyle
     )

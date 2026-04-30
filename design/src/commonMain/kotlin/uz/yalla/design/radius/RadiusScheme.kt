@@ -1,5 +1,6 @@
 package uz.yalla.design.radius
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
  * @property xl 24.dp — large feature cards.
  * @property sheet 40.dp — bottom-sheet top corner.
  */
+@Immutable
 data class RadiusScheme(
     val xs: Dp,
     val s: Dp,

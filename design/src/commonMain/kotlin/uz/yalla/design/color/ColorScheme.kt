@@ -1,5 +1,6 @@
 package uz.yalla.design.color
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -28,6 +29,7 @@ import androidx.compose.ui.graphics.Color
  * ```
  *
  */
+@Immutable
 data class ColorScheme(
     val text: Text,
     val background: Background,
@@ -37,6 +39,7 @@ data class ColorScheme(
     val accent: Accent,
     val gradient: Gradient,
 ) {
+    @Immutable
     data class Text(
         val base: Color,
         val subtle: Color,
@@ -45,6 +48,7 @@ data class ColorScheme(
         val white: Color,
     )
 
+    @Immutable
     data class Background(
         val base: Color,
         val brand: Color,
@@ -52,6 +56,7 @@ data class ColorScheme(
         val tertiary: Color,
     )
 
+    @Immutable
     data class Border(
         val disabled: Color,
         val filled: Color,
@@ -59,6 +64,7 @@ data class ColorScheme(
         val error: Color,
     )
 
+    @Immutable
     data class Button(
         val active: Color,
         val disabled: Color,
@@ -67,6 +73,7 @@ data class ColorScheme(
         val disabledTertiary: Color,
     )
 
+    @Immutable
     data class Icon(
         val white: Color,
         val base: Color,
@@ -76,6 +83,7 @@ data class ColorScheme(
         val subtle: Color,
     )
 
+    @Immutable
     data class Accent(
         val pinkSun: Color,
         val color1: Color,
@@ -85,6 +93,7 @@ data class ColorScheme(
         val color5: Color,
     )
 
+    @Immutable
     data class Gradient(
         val splash: Brush,
         val sunsetNight: Brush,

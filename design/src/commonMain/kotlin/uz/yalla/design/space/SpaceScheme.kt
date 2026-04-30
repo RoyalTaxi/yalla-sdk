@@ -1,5 +1,6 @@
 package uz.yalla.design.space
 
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -40,6 +41,7 @@ import androidx.compose.ui.unit.dp
  * @property inlineGap Tight gap between inline elements (icon+text, chip+chip).
  * @property scale Primitive t-shirt scale; used when a semantic alias doesn't fit.
  */
+@Immutable
 data class SpaceScheme(
     val screenEdge: Dp,
     val sheetEdge: Dp,
@@ -68,6 +70,7 @@ data class SpaceScheme(
      * @property section 40.dp — bottom-sheet top corner, large sections.
      * @property massive 56.dp — hero titles, splash gaps.
      */
+    @Immutable
     data class Scale(
         val xxs: Dp,
         val xs: Dp,
