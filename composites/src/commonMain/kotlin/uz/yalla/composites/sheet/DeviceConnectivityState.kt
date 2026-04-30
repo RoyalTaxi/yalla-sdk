@@ -74,11 +74,10 @@ class DeviceConnectivityState(
 }
 
 /**
- * Remember a [DeviceConnectivityState] for monitoring network connectivity.
- *
- * @param connectivity Connectivity instance
- * @param scope Coroutine scope for collecting updates
- * @return Remembered connectivity state
+ * Remember a [DeviceConnectivityState] keyed on the supplied [connectivity]
+ * provider and [scope]. The scope's lifecycle owns the collection job —
+ * cancel it to stop monitoring. Default [scope] is the composable's own
+ * `rememberCoroutineScope()`, which dies with the composition.
  */
 @Composable
 fun rememberDeviceConnectivityState(

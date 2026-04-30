@@ -119,7 +119,7 @@ object AddressItemDefaults {
  * AddressItem(
  *     text = { Text("123 Main Street") },
  *     onClick = { openMap() },
- *     leadingContent = { AddressDot(color = System.color.icon.brand) },
+ *     leadingContent = { AddressDot(color = System.color.icon.base) },
  * )
  * ```
  *
@@ -193,7 +193,7 @@ fun AddressItem(
  *     locations = listOf("Home", "Work"),
  *     placeholder = { Text("Where to?") },
  *     onClick = { openSearchSheet() },
- *     leadingContent = { AddressDot(color = System.color.icon.brand) },
+ *     leadingContent = { AddressDot(color = System.color.icon.base) },
  * )
  * ```
  *
