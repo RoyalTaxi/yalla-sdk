@@ -24,9 +24,6 @@ import androidx.compose.ui.text.TextStyle
  * )
  * ```
  *
- * @property title Title/heading text styles.
- * @property body Body text styles with weight variants.
- * @property custom Special-purpose text styles.
  */
 data class FontScheme(
     val title: Title,
