@@ -12,6 +12,12 @@ import kotlinx.coroutines.plus
 import org.jetbrains.compose.resources.StringResource
 import uz.yalla.core.error.DataError
 import uz.yalla.resources.Res
+import uz.yalla.resources.error_client_request
+import uz.yalla.resources.error_connection_timeout
+import uz.yalla.resources.error_data_format
+import uz.yalla.resources.error_network_unexpected
+import uz.yalla.resources.error_no_internet
+import uz.yalla.resources.error_server_busy
 import uz.yalla.resources.error_unexpected
 import kotlin.time.Duration
 
@@ -43,7 +49,7 @@ import kotlin.time.Duration
  *
  * @see LoadingController for loading state management details
  */
-abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = DefaultDataErrorMapper()) : ViewModel() {
+abstract class BaseViewModel : ViewModel() {
     private val loadingController = LoadingController()
 
     val loading: StateFlow<Boolean> = loadingController.loading
@@ -107,8 +113,23 @@ abstract class BaseViewModel(private val dataErrorMapper: DataErrorMapper = Defa
 
     /**
      * Override to customize error mapping for app-specific error types.
+     *
+     * Default mapping covers every [DataError.Network] variant; override to
+     * narrow specific cases (e.g., `Network.ClientWithMessage` to a
+     * server-supplied message resource) or to handle custom DataError
+     * subtypes a feature module introduces.
      */
-    protected open fun mapDataErrorToUserMessage(error: DataError): StringResource = dataErrorMapper.map(error)
+    protected open fun mapDataErrorToUserMessage(error: DataError): StringResource =
+        when (error) {
+            DataError.Network.Connection -> Res.string.error_no_internet
+            DataError.Network.Timeout -> Res.string.error_connection_timeout
+            DataError.Network.Client -> Res.string.error_client_request
+            is DataError.Network.ClientWithMessage -> Res.string.error_client_request
+            DataError.Network.Server -> Res.string.error_server_busy
+            DataError.Network.Serialization -> Res.string.error_data_format
+            DataError.Network.Guest -> Res.string.error_client_request
+            DataError.Network.Unknown -> Res.string.error_network_unexpected
+        }
 
     /**
      * Only handles genuine exceptions (not DataError, which has its own handler).
