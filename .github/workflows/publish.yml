@@ -39,28 +39,36 @@ jobs:
       - name: CocoaPods install (maps + media native deps)
         run: ./gradlew podInstall
 
-      # Tests run on the 8 modules whose iOS test executables actually
-      # link cleanly. :firebase and :maps are skipped here because:
-      #   - :firebase has no cocoapods integration; gitlive Firebase
-      #     KMP wrappers cinterop to FirebaseCore.framework which isn't
-      #     available at link time on CI (`ld: framework 'FirebaseCore'
-      #     not found`).
-      #   - :maps' iOS test link similarly needs GoogleMaps/Apple Maps
-      #     pod symbols that aren't resolvable in the test target.
-      # We verify both modules COMPILE (klib + AAR) below; we just don't
-      # link their iOS test executables. Same posture used during
-      # phase-3 wave-9 verification locally.
-      - name: Tests (testable modules)
+      # Three modules need native iOS frameworks at test-executable link
+      # time that aren't on CI's linker search path:
+      #   - :firebase — gitlive KMP wrappers cinterop to
+      #     FirebaseCore.framework (no cocoapods integration in this
+      #     module).
+      #   - :foundation — moko-geo cinterops to _LocationEssentials.framework.
+      #   - :maps — GoogleMaps/Apple Maps cocoapod symbols.
+      # Strategy: run :allTests on the 7 modules whose iOS test executables
+      # link cleanly, plus run foundation's Android unit tests (it has
+      # ~56 valuable Android-side tests we don't want to lose). Verify
+      # firebase/maps/foundation iOS klib compiles, but skip the iOS
+      # test executable link.
+      - name: Tests (modules with clean iOS test link)
         run: |
           ./gradlew \
             :core:allTests \
             :data:allTests \
             :design:allTests \
-            :foundation:allTests \
             :primitives:allTests \
             :composites:allTests \
             :media:allTests \
             :platform:allTests \
+            --max-workers=2 --no-parallel
+
+      - name: Tests (foundation — Android only; iOS test link blocked by moko-geo)
+        run: |
+          ./gradlew \
+            :foundation:allTests \
+            -x :foundation:iosSimulatorArm64Test \
+            -x :foundation:linkDebugTestIosSimulatorArm64 \
             --max-workers=2 --no-parallel
 
       - name: Compile firebase + maps (no iOS test link)
