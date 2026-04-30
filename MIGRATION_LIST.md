@@ -180,10 +180,52 @@ commit on `cleanup/phase-2-3-4`.
 
 ---
 
+---
+
+## Phase 3 — `foundation` additions
+
+### Promotions / demotions surfaced
+
+*From phase 3 `foundation`:* none. Per `FOUNDATION_AUDIT.md` §5: zero promotions, zero demotions. Two borderline notes documented in MODULE.md:
+- `LocationManager.DEFAULT_LOCATION = GeoPoint(41.2995, 69.2401)` (Tashkent center) — kept; product-specific default that's parameterizable.
+- `LanguageOption` Phase-3 narrowing to Uzbek + Russian — kept; matches `core.settings.LocaleKind` shape.
+
+The foundation/core `LocationProvider` collision question (raised in the audit prompt) **resolved**: `core.location.LocationProvider` is the canonical interface (consumed by `:maps`); foundation's Composable wrapper was redundant and got deleted in the G14 sweep below.
+
+### Breaking changes shipped
+
+*From phase 3 `foundation`:*
+
+- `589c3b4ac refactor!(foundation): delete dead CompositionLocal sweep`
+  Three dead public surfaces removed (~134 lines net):
+    - `foundation.locale.LocaleProvider` + `LocaleState` + `LocalLocaleState` + `currentLocaleState()` — YallaClient defines its own `LocaleProvider` with Activity-recreation logic foundation's lacked, so YallaClient's is canonical.
+    - `foundation.locale.currentLocale` (`ObserveLocale.kt`) — Composable wrapper, zero callers.
+    - `foundation.location.LocationProvider` (Composable wrapper) + `LocalLocationManager` + `currentLocationManager()` — Koin DI is the actual injection seam. NOT to be confused with `core.location.LocationProvider` (the interface that `LocationManager` implements), which is canonical and stays.
+  Action: YallaClient already uses `getCurrentLanguage()`/`getCurrentLanguageState()` directly + Koin DI for `LocationManager`; no migration needed.
+
+- `121e5567e refactor!(foundation): inline DefaultDataErrorMapper into BaseViewModel`
+  `DataErrorMapper` interface and `DefaultDataErrorMapper` impl deleted. The 8-variant `DataError.Network` → `StringResource` mapping moved into `BaseViewModel.mapDataErrorToUserMessage`'s `protected open` default body. `BaseViewModel(...)` constructor is now no-arg. Action: any consumer constructing `BaseViewModel(customMapper)` must subclass and override `mapDataErrorToUserMessage` instead — same effect, Kotlin-idiomatic seam.
+
+- `395bf94bc refactor!(foundation): tighten api/implementation split, drop unused deps`
+  17 declared deps → 13. **Dropped 11 unused** (`projects.design`, `compose.foundation`, `compose.material3`, `koin.compose.viewmodel`, `orbit.core`/`viewmodel`/`compose`, `kotlinx.serialization.json`, `connectivity.device`, `geo.compose`, `androidx.lifecycle.viewmodel.compose`). **Promoted 5 to `api`** (`compose.runtime`, `androidx.lifecycle.runtime.compose`, `kotlinx.coroutines.core`, `projects.resources`, `geo`). **Added 2** (`androidx.lifecycle.viewmodel`, `compose.ui` — both expose types in foundation's public surface). Action: YallaClient consumers that already declare these explicitly are unaffected. Catalog gained `androidx-lifecycle-viewmodel` alias.
+
+- `743335bb2 refactor!(foundation): demote ExtendedLocation + apply @Immutable uniformly`
+  G16: `ExtendedLocation` data class and `LocationManager.extendedLocation` field demoted to `internal`. Public surface uses `LocationManager.currentLocation` (GeoPoint-shaped). G17: `@Immutable` applied to `Location`, `FoundLocation`, `OptionModel<T>`, `Selectable`, and the sealed `*Option` parents. Action: any consumer reading `extendedLocation.altitude`/`speed`/`bearing`/`timestamp` must now use a custom `LocationManager` subclass or the underlying moko-geo `LocationTracker`. Verified zero external consumers.
+
+### Architectural patterns documented (no code change, MODULE.md notes)
+
+- **`BaseViewModel` is NOT a custom-MVI violation.** YallaClient feature ViewModels do `class HomeViewModel : BaseViewModel(...), ContainerHost<HomeState, HomeEffect>` — dual-inheritance. Foundation's BaseViewModel is the cross-cutting infra layer (loading + error dialog); Orbit is layered on top in YallaClient.
+- **`LoadingController` `try { } finally { }`** — resource-cleanup idiom, no catch. Sanctioned pragmatic carve-out (not a criterion-11 violation).
+- **`LocationManager` `runCatching { … }.onFailure { … }`** — system-API boundary error handling at the moko-geo seam (permission-denied, GPS-off). Sanctioned pragmatic carve-out.
+- **`LocationMappers.kt`** — domain↔domain coercions (`core.*` types → foundation UI-ready types), NOT DTO mappers. Stays in foundation; doesn't move to `data/`.
+
+---
+
 ## Phase status
 
 - Phase 2 `core` — done. Plan: [PHASE_2_CORE_PLAN.md](PHASE_2_CORE_PLAN.md). Audit: [CORE_AUDIT.md](CORE_AUDIT.md).
 - Phase 2 `data` — done. Plan: [PHASE_2_DATA_PLAN.md](PHASE_2_DATA_PLAN.md). Audit: [DATA_AUDIT.md](DATA_AUDIT.md).
 - Phase 3 `design` — done. Plan: [PHASE_3_DESIGN_PLAN.md](PHASE_3_DESIGN_PLAN.md). Audit: [DESIGN_AUDIT.md](DESIGN_AUDIT.md).
-- Phase 3 `foundation`, `primitives`, `composites` — TODO.
+- Phase 3 `foundation` — done. Plan: [PHASE_3_FOUNDATION_PLAN.md](PHASE_3_FOUNDATION_PLAN.md). Audit: [FOUNDATION_AUDIT.md](FOUNDATION_AUDIT.md).
+- Phase 3 `primitives`, `composites` — TODO.
 - Phase 4 `firebase`, `maps`, `media`, `platform` — TODO.
