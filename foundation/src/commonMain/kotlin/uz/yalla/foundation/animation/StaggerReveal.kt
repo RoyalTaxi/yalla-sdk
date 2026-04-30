@@ -35,13 +35,6 @@ private const val DEFAULT_SLIDE_PX = 40f
  * }
  * ```
  *
- * @param visible Whether the content should be revealed.
- * @param index Stagger position — higher index = later reveal.
- * @param staggerMs Delay in milliseconds between consecutive items.
- * @param durationMs Animation duration in milliseconds per item.
- * @param slidePx Vertical slide distance in pixels.
- * @return [Modifier] with stagger-reveal animation applied via [graphicsLayer].
- * @see graphicsLayer
  */
 @Composable
 fun Modifier.staggerReveal(

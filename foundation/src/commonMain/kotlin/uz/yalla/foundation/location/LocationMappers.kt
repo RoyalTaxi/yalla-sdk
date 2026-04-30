@@ -6,12 +6,6 @@ import uz.yalla.core.location.AddressOption
 import uz.yalla.core.location.SavedAddress
 import uz.yalla.core.order.Order
 
-/**
- * Converts an [AddressOption] to a [FoundLocation] with coordinates and place metadata.
- *
- * @return [FoundLocation] populated from this address option's fields.
- * @see FoundLocation
- */
 fun AddressOption.toFoundLocation() =
     FoundLocation(
         id = id.raw,
@@ -21,12 +15,6 @@ fun AddressOption.toFoundLocation() =
         placeKind = null
     )
 
-/**
- * Converts a [SavedAddress] to a [FoundLocation] with address details and place kind.
- *
- * @return [FoundLocation] populated from this saved address's fields.
- * @see FoundLocation
- */
 fun SavedAddress.toFoundLocation() =
     FoundLocation(
         id = null,
@@ -36,13 +24,6 @@ fun SavedAddress.toFoundLocation() =
         placeKind = kind
     )
 
-/**
- * Converts a core [Address] to a foundation [Location].
- *
- * @param point Geographic coordinates to use. Defaults to the address's own lat/lng.
- * @return [Location] populated from this address's fields.
- * @see Location
- */
 fun Address.toLocation(point: GeoPoint = GeoPoint(lat = lat, lng = lng)) =
     Location(
         id = id?.raw,
@@ -55,9 +36,6 @@ fun Address.toLocation(point: GeoPoint = GeoPoint(lat = lat, lng = lng)) =
  *
  * Uses the route's [index][Order.Taxi.Route.index] as the location id and
  * [fullAddress][Order.Taxi.Route.fullAddress] as the name.
- *
- * @return [Location] populated from this route point's fields.
- * @see Location
  */
 fun Order.Taxi.Route.toLocation() =
     Location(
@@ -66,12 +44,6 @@ fun Order.Taxi.Route.toLocation() =
         point = GeoPoint(lat = coords.lat, lng = coords.lng)
     )
 
-/**
- * Returns all route locations from this order, sorted by [route index][Order.Taxi.Route.index].
- *
- * @return List of [Location] objects ordered by their route index.
- * @see Order.Taxi.Route.toLocation
- */
 fun Order.sortedRouteLocations(): List<Location> {
     return taxi.routes
         .sortedBy { route -> route.index }

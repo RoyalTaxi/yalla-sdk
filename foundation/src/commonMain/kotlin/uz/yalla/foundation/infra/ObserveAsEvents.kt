@@ -27,10 +27,6 @@ import kotlinx.coroutines.flow.Flow
  * }
  * ```
  *
- * @param T Event type
- * @param flow Flow of events to observe
- * @param key Optional recomposition key forwarded to [LaunchedEffect]. Defaults to [Unit].
- * @param onEvent Callback invoked for each emitted event
  * @see ObserveAsEvents overload accepting [Lifecycle.State] for custom minimum state
  */
 @Composable
@@ -61,11 +57,6 @@ fun <T> ObserveAsEvents(
  *
  * For the common case (STARTED), prefer the simpler overload without [minState].
  *
- * @param T Event type
- * @param flow Flow of events to observe
- * @param minState Minimum [Lifecycle.State] required for collection to be active
- * @param key Optional recomposition key forwarded to [LaunchedEffect]. Defaults to [Unit].
- * @param onEvent Callback invoked for each emitted event
  * @see ObserveAsEvents default overload that uses [Lifecycle.State.STARTED]
  */
 @Composable

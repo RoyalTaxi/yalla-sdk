@@ -39,9 +39,6 @@ import uz.yalla.core.geo.GeoPoint
  * scope.cancel()
  * ```
  *
- * @param locationTracker Platform-specific tracker from moko-geo.
- * @param scope Caller-owned scope; cancel to stop all in-flight tracking work.
- * @param defaultLocation Fallback when user location is unavailable.
  */
 class LocationManager(
     val locationTracker: LocationTracker,
@@ -124,23 +121,12 @@ class LocationManager(
         }
     }
 
-    /**
-     * Updates the externally-observed permission state.
-     *
-     * @param state New permission state, or `null` if unknown.
-     */
     fun updatePermissionState(state: LocationPermissionState?) {
         _permissionState.value = state
     }
 
-    /**
-     * Returns current location as [GeoPoint], or `null` if unavailable.
-     */
     override fun getCurrentLocation(): GeoPoint? = _extendedLocation.value?.toGeoPoint()
 
-    /**
-     * Returns current location as [GeoPoint], or [defaultLocation] if unavailable.
-     */
     override fun getCurrentLocationOrDefault(): GeoPoint = getCurrentLocation() ?: defaultLocation
 
     companion object {

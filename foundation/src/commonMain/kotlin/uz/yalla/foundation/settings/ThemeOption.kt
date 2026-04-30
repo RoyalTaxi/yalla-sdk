@@ -17,7 +17,6 @@ import uz.yalla.resources.settings_theme_system
  *
  * Sealed hierarchy mapping [ThemeKind] to display properties.
  *
- * @property kind Corresponding [ThemeKind] for persistence
  */
 sealed class ThemeOption(
     override val icon: ImageVector,
@@ -25,21 +24,21 @@ sealed class ThemeOption(
     val kind: ThemeKind
 ) : Selectable {
 
-    /** Light theme option — always uses light color scheme. @since 0.0.1 */
+    /** Always uses light color scheme. */
     data object Light : ThemeOption(
         icon = YallaIcons.ThemeLight,
         name = Res.string.settings_theme_light,
         kind = ThemeKind.Light
     )
 
-    /** Dark theme option — always uses dark color scheme. @since 0.0.1 */
+    /** Always uses dark color scheme. */
     data object Dark : ThemeOption(
         icon = YallaIcons.ThemeDark,
         name = Res.string.settings_theme_dark,
         kind = ThemeKind.Dark
     )
 
-    /** System theme option — follows the OS dark/light setting. @since 0.0.1 */
+    /** Follows the OS dark/light setting. */
     data object System : ThemeOption(
         icon = YallaIcons.ThemeSystem,
         name = Res.string.settings_theme_system,
@@ -47,15 +46,8 @@ sealed class ThemeOption(
     )
 
     companion object {
-        /** All available theme options. @since 0.0.1 */
         val all = listOf(Light, Dark, System)
 
-        /**
-         * Resolves a [ThemeOption] from the persisted [ThemeKind].
-         *
-         * @param kind The persisted theme kind to resolve.
-         * @return Corresponding [ThemeOption] instance.
-         */
         fun from(kind: ThemeKind): ThemeOption =
             when (kind) {
                 ThemeKind.Light -> Light
