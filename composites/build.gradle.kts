@@ -33,6 +33,11 @@ kotlin {
             implementation(libs.connectivity.device)
         }
 
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.turbine)
+        }
+
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)
             implementation(libs.datetime.wheel.picker)
