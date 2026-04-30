@@ -68,4 +68,37 @@ class YallaThemeTest {
         }
         assertEquals(true, capturedIsDark)
     }
+
+    @Test
+    fun shouldProvideSpaceSchemeViaSystem() = runComposeUiTest {
+        var captured: uz.yalla.design.space.SpaceScheme? = null
+        setContent {
+            YallaTheme(isDark = false) {
+                captured = System.space
+            }
+        }
+        assertNotNull(captured)
+    }
+
+    @Test
+    fun shouldProvideRadiusSchemeViaSystem() = runComposeUiTest {
+        var captured: uz.yalla.design.radius.RadiusScheme? = null
+        setContent {
+            YallaTheme(isDark = false) {
+                captured = System.radius
+            }
+        }
+        assertNotNull(captured)
+    }
+
+    @Test
+    fun shouldProvideMotionSchemeViaSystem() = runComposeUiTest {
+        var captured: uz.yalla.design.motion.MotionScheme? = null
+        setContent {
+            YallaTheme(isDark = false) {
+                captured = System.motion
+            }
+        }
+        assertNotNull(captured)
+    }
 }
