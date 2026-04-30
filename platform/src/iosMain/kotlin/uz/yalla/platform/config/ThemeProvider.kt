@@ -25,13 +25,10 @@ import androidx.compose.runtime.Composable
  * the Compose tree).
  *
  * @see IosPlatformConfig
- * @since 0.0.1
  */
 interface ThemeProvider {
     /**
      * Wraps the given [content] with the app's Compose theme.
-     *
-     * @param content The sheet content composable that needs theme context.
      */
     @Composable
     fun provide(content: @Composable () -> Unit)

@@ -10,7 +10,6 @@ import platform.UIKit.UIColor
  * default when no explicit color is provided.
  *
  * @return The equivalent [UIColor], or `null` if [Color.Unspecified].
- * @since 0.0.1
  */
 fun Color.toUIColor(): UIColor? {
     return if (this == Color.Unspecified) {

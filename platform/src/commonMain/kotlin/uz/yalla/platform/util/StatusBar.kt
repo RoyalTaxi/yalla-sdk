@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.Dp
  *
  * @return The status bar height in density-independent pixels.
  * @see uz.yalla.platform.navigation.ToolbarState.contentPadding
- * @since 0.0.1
  */
 @Composable
 expect fun statusBarHeight(): Dp

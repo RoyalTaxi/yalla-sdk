@@ -23,8 +23,6 @@ import uz.yalla.platform.config.requireIosConfig
  *
  * [NativeRootComponent] is used only to read the initial route. Decompose's
  * ChildStack subscription is NOT used — UINavigationController owns the stack.
- *
- * @since 0.0.6
  */
 @OptIn(ExperimentalForeignApi::class)
 @Composable
@@ -75,8 +73,6 @@ actual fun <C : Route> NativeNavHost(
  *
  * The leading-underscore name is the published public contract read by Swift entry points;
  * a rename would break consumers.
- *
- * @since 0.0.6
  */
 @Suppress("ObjectPropertyName", "TopLevelPropertyNaming")
 var _iosNavigator: Navigator? = null
@@ -132,9 +128,6 @@ private class ScreenContainerViewController(
  * The Compose child renders the screen content via [ScreenProvider.Content] and observes
  * [ToolbarState.actions] to synchronize native [UIBarButtonItem]s.
  *
- * @param route The route to render.
- * @param screenProvider Provides screen configuration and composable content.
- * @param navigator The [Navigator] provided to the screen via [LocalNavigator].
  * @return A fully configured [UIViewController] ready to be pushed onto the UINavigationController.
  */
 @OptIn(ExperimentalForeignApi::class)
@@ -185,7 +178,6 @@ private fun <C : Route> createViewController(
  * image-based items using SF Symbols. Empty actions clear the items entirely.
  *
  * @param vc The view controller whose `navigationItem.rightBarButtonItems` will be updated.
- * @param actions The current list of toolbar actions from [ToolbarState].
  */
 @OptIn(ExperimentalForeignApi::class)
 private fun syncToolbarActions(vc: UIViewController, actions: List<ToolbarAction>) {
@@ -224,7 +216,6 @@ private fun syncToolbarActions(vc: UIViewController, actions: List<ToolbarAction
 /**
  * Maps a [ToolbarIcon] to a UIKit [UIImage] using SF Symbols.
  *
- * @param icon The toolbar icon identifier.
  * @return The corresponding SF Symbol image, or `null` if the symbol is unavailable.
  */
 private fun toolbarIconImage(icon: ToolbarIcon): UIImage? = when (icon) {
@@ -243,9 +234,6 @@ private fun toolbarIconImage(icon: ToolbarIcon): UIImage? = when (icon) {
  *
  * Applies background color, title colors, custom fonts, separator visibility, translucency,
  * and tint color from [NavigationBarAppearance]. A color value of `0L` means "use system default".
- *
- * @param navController The navigation controller whose bar will be styled.
- * @param appearance The appearance configuration to apply.
  */
 private fun applyAppearance(
     navController: UINavigationController,

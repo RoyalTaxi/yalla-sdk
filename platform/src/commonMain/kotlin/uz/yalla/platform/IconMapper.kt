@@ -19,7 +19,6 @@ import uz.yalla.resources.icons.YallaIcons
  * for each abstract icon identifier.
  *
  * @return The [ImageVector] resource for this icon type.
- * @since 0.0.1
  */
 fun IconType.toImageVector(): ImageVector =
     when (this) {

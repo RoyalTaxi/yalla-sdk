@@ -10,8 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
  * push, pop, and replace routes. Access inside any screen via [LocalNavigator].
  *
  * All operations are synchronous and execute on the calling thread (main thread).
- *
- * @since 0.0.5
  */
 interface Navigator {
     /**
@@ -52,8 +50,6 @@ interface Navigator {
 /**
  * CompositionLocal providing the [Navigator] inside a [NativeNavHost].
  * Throws if accessed outside of [NativeNavHost].
- *
- * @since 0.0.5
  */
 val LocalNavigator = staticCompositionLocalOf<Navigator> {
     error("No Navigator provided. Ensure you are inside a NativeNavHost.")

@@ -12,7 +12,6 @@ import uz.yalla.platform.model.IconType
  *
  * @return The asset catalog image name string (e.g., `"ic_menu"`, `"ic_close"`).
  * @see toImageVector
- * @since 0.0.1
  */
 fun IconType.toAssetName(): String =
     when (this) {

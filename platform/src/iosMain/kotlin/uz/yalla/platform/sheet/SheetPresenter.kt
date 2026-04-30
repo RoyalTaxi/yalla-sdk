@@ -32,7 +32,6 @@ import kotlin.math.abs
  *   (swipe-down). Not called for programmatic [dismiss] calls.
  * @see NativeSheet
  * @see SheetPresenterFactory
- * @since 0.0.1
  */
 internal class SheetPresenter(
     private val factory: SheetPresenterFactory,
@@ -57,8 +56,6 @@ internal class SheetPresenter(
      * @param themeProvider Optional theme wrapper for the Compose content. `null` renders
      *   content without additional theming.
      * @param backgroundColor ARGB [Long] color for the sheet background. Default opaque white.
-     * @param onPresented Callback invoked after the sheet finishes its present animation.
-     * @param content Composable content to render inside the sheet.
      */
     fun present(
         parent: UIViewController,
@@ -116,8 +113,6 @@ internal class SheetPresenter(
 
     /**
      * Updates the sheet background color while the sheet is visible.
-     *
-     * @param backgroundColor New ARGB [Long] color value.
      */
     fun updateBackground(backgroundColor: Long) {
         controller?.let { factory.updateBackground(it, backgroundColor) }
@@ -128,9 +123,6 @@ internal class SheetPresenter(
      *
      * When [dismissEnabled] is `false`, swipe-down gestures are blocked and
      * [onDismissAttempt] is called instead, allowing the app to show a confirmation dialog.
-     *
-     * @param dismissEnabled Whether interactive dismiss is allowed.
-     * @param onDismissAttempt Callback when the user tries to dismiss while it is disabled.
      */
     fun updateDismissBehavior(
         dismissEnabled: Boolean,
@@ -164,8 +156,6 @@ internal class SheetPresenter(
      *
      * Only triggers a height update when the measured height changes by more than
      * [HEIGHT_CHANGE_THRESHOLD] points, preventing unnecessary layout thrashing.
-     *
-     * @param content The actual sheet content composable to measure and display.
      */
     @Composable
     private fun MeasuredContent(content: @Composable () -> Unit) {

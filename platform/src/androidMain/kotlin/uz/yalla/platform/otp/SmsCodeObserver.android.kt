@@ -27,9 +27,6 @@ import com.google.android.gms.common.api.Status
  *
  * The receiver is registered with [ContextCompat.RECEIVER_EXPORTED] and unregistered
  * in the `onDispose` callback to avoid leaks.
- *
- * @param onCodeReceived Called with the raw SMS message body when an OTP SMS is received.
- * @since 0.0.6-alpha05
  */
 @Composable
 fun ObserveSmsCode(onCodeReceived: (String) -> Unit) {

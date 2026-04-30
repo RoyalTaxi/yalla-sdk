@@ -20,8 +20,6 @@ import androidx.compose.runtime.setValue
  *     UpdateBanner(storeUrl = updateState.storeUrl)
  * }
  * ```
- *
- * @since 0.0.1
  */
 @Stable
 class AppUpdateState {

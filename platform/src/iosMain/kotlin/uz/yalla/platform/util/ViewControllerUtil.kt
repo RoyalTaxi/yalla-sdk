@@ -8,7 +8,6 @@ import platform.UIKit.UIWindowScene
 /**
  * Finds the topmost presented UIViewController from the key window.
  * Traverses the presentation chain to find the leaf controller.
- * @since 0.0.1
  */
 internal fun findRootViewController(): UIViewController? {
     val scenes = UIApplication.sharedApplication.connectedScenes

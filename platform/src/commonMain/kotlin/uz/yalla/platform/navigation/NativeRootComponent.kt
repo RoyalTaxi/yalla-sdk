@@ -23,12 +23,8 @@ import kotlinx.serialization.KSerializer
  * )
  * ```
  *
- * @param C Concrete route type (sealed class extending [Route]).
- * @param componentContext Decompose lifecycle context — obtain via `defaultComponentContext()`.
- * @param initialRoute First screen shown when the app starts.
  * @param serializer Kotlin serialization serializer for [C]. Enables state preservation.
  *   Pass `null` to disable.
- * @since 0.0.5
  */
 class NativeRootComponent<C : Route>(
     componentContext: ComponentContext,

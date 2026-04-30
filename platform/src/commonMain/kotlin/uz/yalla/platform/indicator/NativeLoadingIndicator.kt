@@ -19,10 +19,8 @@ import androidx.compose.ui.graphics.Color
  * }
  * ```
  *
- * @param modifier Modifier applied to the indicator container.
  * @param color Foreground spinner color. [Color.Unspecified] uses the platform default.
  * @param backgroundColor Background color behind the spinner. [Color.Unspecified] for transparent.
- * @since 0.0.1
  */
 @Composable
 expect fun NativeLoadingIndicator(

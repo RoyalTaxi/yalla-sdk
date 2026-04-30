@@ -33,7 +33,6 @@ actual fun NativeLoadingIndicator(
  * Conditionally applies a [Modifier] transformation.
  *
  * @param condition When `true`, [block] is invoked on this modifier; otherwise returns `this`.
- * @param block Modifier transformation to apply conditionally.
  * @return The original or transformed [Modifier].
  */
 private inline fun Modifier.applyIf(

@@ -25,9 +25,6 @@ import androidx.compose.runtime.Composable
  *     }
  * }
  * ```
- *
- * @param C Concrete route type (sealed class extending [Route]).
- * @since 0.0.5
  */
 interface ScreenProvider<C : Route> {
     /** Return the navigation bar configuration for [route]. */

@@ -15,7 +15,6 @@ import androidx.compose.runtime.Composable
  * alternative requires a Swift-side UIViewController subclass not feasible from Kotlin/Compose).
  *
  * @param darkIcons `true` for dark icons on a light background, `false` for light icons on dark.
- * @since 0.0.1
  */
 @Composable
 expect fun SystemBarColors(darkIcons: Boolean)

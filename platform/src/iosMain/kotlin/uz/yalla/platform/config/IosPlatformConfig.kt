@@ -33,7 +33,6 @@ import uz.yalla.platform.navigation.NavigationBarAppearance
  *   tree. `null` to skip theme injection.
  * @param navigationBarAppearance Optional global navigation bar appearance applied at
  *   [NativeNavHost] creation. `null` to use system defaults.
- * @since 0.0.1
  */
 class IosPlatformConfig private constructor(
     val sheetPresenter: SheetPresenterFactory,
@@ -53,8 +52,6 @@ class IosPlatformConfig private constructor(
      *
      * Required: [sheetPresenter], [circleButton], [squircleButton].
      * Optional: [themeProvider], [navigationBarAppearance].
-     *
-     * @since 0.0.1
      */
     class Builder {
         /** Factory for presenting native bottom sheets. Required. */
@@ -102,7 +99,6 @@ class IosPlatformConfig private constructor(
  *
  * @return The registered [IosPlatformConfig].
  * @throws IllegalStateException if [YallaPlatform.install] has not been called.
- * @since 0.0.1
  */
 internal fun requireIosConfig(): IosPlatformConfig =
     YallaPlatform.requireConfig<IosPlatformConfig>()

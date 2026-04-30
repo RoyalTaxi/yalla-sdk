@@ -5,8 +5,6 @@ package uz.yalla.platform.navigation
  *
  * On iOS, maps to `UIBarButtonItem` on `navigationItem.rightBarButtonItems`.
  * On Android, renders inside Material3 TopAppBar's `actions` slot.
- *
- * @since 0.0.5
  */
 sealed interface ToolbarAction {
     /** Callback invoked when the action is tapped. */
@@ -14,10 +12,6 @@ sealed interface ToolbarAction {
 
     /**
      * Text-labeled toolbar action (e.g., "Save", "Edit").
-     *
-     * @param label Display text for the action.
-     * @param onClick Callback invoked when tapped.
-     * @since 0.0.5
      */
     data class Text(
         val label: String,
@@ -26,10 +20,6 @@ sealed interface ToolbarAction {
 
     /**
      * Icon-based toolbar action using a named [ToolbarIcon].
-     *
-     * @param icon The icon to display.
-     * @param onClick Callback invoked when tapped.
-     * @since 0.0.5
      */
     data class Icon(
         val icon: ToolbarIcon,
@@ -41,8 +31,6 @@ sealed interface ToolbarAction {
  * Named icons available for [ToolbarAction.Icon].
  *
  * Platform implementations map these to native icons.
- *
- * @since 0.0.5
  */
 enum class ToolbarIcon {
     /** Pencil / edit icon. SF Symbol: `pencil`. */

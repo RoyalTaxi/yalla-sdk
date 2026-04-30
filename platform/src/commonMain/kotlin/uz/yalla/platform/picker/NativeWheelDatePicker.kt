@@ -19,12 +19,8 @@ import kotlinx.datetime.LocalDate
  * )
  * ```
  *
- * @param startDate Initial date shown in the picker.
- * @param modifier Modifier applied to the picker container.
  * @param minDate Earliest selectable date. `null` for no lower bound.
  * @param maxDate Latest selectable date. `null` for no upper bound.
- * @param onDateChanged Called when the user scrolls to a new date.
- * @since 0.0.1
  */
 @Composable
 expect fun NativeWheelDatePicker(

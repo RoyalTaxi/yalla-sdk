@@ -18,10 +18,8 @@ package uz.yalla.platform.navigation
  *   Set to `false` to remove the hairline divider.
  * @param largeTitleFontName PostScript name of the font for large titles (e.g., `"SFProDisplay-Bold"`).
  *   `null` uses the system font at 34 pt.
- * @param titleFontName PostScript name of the font for standard titles.
  *   `null` uses the system font at 17 pt.
  * @see NativeNavHost
- * @since 0.0.5
  */
 data class NavigationBarAppearance(
     val tintColor: Long = 0,

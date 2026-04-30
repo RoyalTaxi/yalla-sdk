@@ -17,7 +17,6 @@ import uz.yalla.platform.YallaPlatform
  *
  * @see YallaPlatform.install
  * @see installAndroid
- * @since 0.0.1
  */
 class AndroidPlatformConfig : PlatformConfig
 
@@ -33,7 +32,6 @@ class AndroidPlatformConfig : PlatformConfig
  *
  * @see YallaPlatform.install
  * @see AndroidPlatformConfig
- * @since 0.0.1
  */
 fun YallaPlatform.installAndroid() {
     install(AndroidPlatformConfig())

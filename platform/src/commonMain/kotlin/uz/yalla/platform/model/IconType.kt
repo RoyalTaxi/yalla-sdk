@@ -7,8 +7,6 @@ package uz.yalla.platform.model
  * allowing common code to specify icons without depending on platform-specific
  * drawable systems. The mapping to actual vectors happens in
  * [toImageVector][uz.yalla.platform.toImageVector].
- *
- * @since 0.0.1
  */
 enum class IconType {
     /** Hamburger menu icon. */

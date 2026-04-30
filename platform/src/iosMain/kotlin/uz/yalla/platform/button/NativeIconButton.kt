@@ -33,7 +33,6 @@ import uz.yalla.platform.toAssetName
  * @param alpha view alpha; only meaningful for circle buttons (default 1f)
  * @param useKey when true, wraps the UIKitViewController in `key(iconType)` to
  *   recreate it when the icon changes (circle buttons need this)
- * @since 0.0.1
  */
 @OptIn(ExperimentalForeignApi::class)
 @Composable

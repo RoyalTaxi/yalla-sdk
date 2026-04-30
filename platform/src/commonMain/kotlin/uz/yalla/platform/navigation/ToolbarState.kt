@@ -27,8 +27,6 @@ import androidx.compose.ui.unit.dp
  *     }
  * }
  * ```
- *
- * @since 0.0.5
  */
 @Stable
 class ToolbarState {

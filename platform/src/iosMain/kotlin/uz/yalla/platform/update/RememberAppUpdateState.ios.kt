@@ -56,8 +56,6 @@ actual fun rememberAppUpdateState(
 /**
  * Fetches the latest version and store URL from the iTunes Search API.
  *
- * @param bundleId The iOS bundle identifier to look up.
- * @param countryCode ISO 3166-1 alpha-2 country code for the store region.
  * @return A [Pair] of (version, trackViewUrl), or `null` if the lookup fails or yields no results.
  */
 @OptIn(ExperimentalForeignApi::class)

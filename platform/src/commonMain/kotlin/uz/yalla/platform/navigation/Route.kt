@@ -17,7 +17,6 @@ package uz.yalla.platform.navigation
  * @see Navigator
  * @see ScreenProvider
  * @see NativeRootComponent
- * @since 0.0.5
  */
 interface Route
 
@@ -26,12 +25,10 @@ interface Route
  *
  * Returned by [ScreenProvider.configFor] for each route.
  *
- * @param showsNavigationBar Whether the platform navigation bar is visible for this screen.
  *   On iOS, controls `UINavigationController.setNavigationBarHidden`.
  *   On Android, controls whether a `TopAppBar` is rendered inside the `Scaffold`.
  *   Default `true`.
  * @see ScreenProvider.configFor
- * @since 0.0.5
  */
 data class ScreenConfig(
     val showsNavigationBar: Boolean = true,

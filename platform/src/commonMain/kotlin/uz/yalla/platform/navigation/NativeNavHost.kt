@@ -22,12 +22,6 @@ import androidx.compose.ui.Modifier
  *     }
  * }
  * ```
- *
- * @param C Concrete route type.
- * @param rootComponent Decompose root component managing the navigation stack.
- * @param screenProvider Maps routes to screen config and content.
- * @param modifier Optional modifier applied to the host container.
- * @since 0.0.5
  */
 @Composable
 expect fun <C : Route> NativeNavHost(

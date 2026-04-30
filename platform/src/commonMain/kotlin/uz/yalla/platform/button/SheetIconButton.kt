@@ -34,13 +34,8 @@ import uz.yalla.platform.toImageVector
  * }
  * ```
  *
- * @param iconType The icon to display inside the button.
- * @param onClick Callback invoked when the button is tapped.
- * @param modifier Modifier applied to the button container.
- * @param border Optional border stroke.
  * @param containerColor Background fill color. Defaults to the secondary background.
  * @param contentColor Icon tint color. Defaults to the base icon color.
- * @since 0.0.1
  */
 @Composable
 fun SheetIconButton(

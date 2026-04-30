@@ -37,9 +37,7 @@ actual fun getAppSignature(): String? = null // Requires context, see below
  * On API 28+ uses `PackageManager.GET_SIGNING_CERTIFICATES`; on older APIs falls back
  * to the deprecated `GET_SIGNATURES`.
  *
- * @param context Android application or activity context.
  * @return The 11-character Base64 hash string, or `null` if computation fails.
- * @since 0.0.6-alpha05
  */
 fun getAppSignature(context: Context): String? {
     return runCatching {

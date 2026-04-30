@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.systemBars
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,6 +23,8 @@ import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
+import uz.yalla.resources.icons.ArrowLeft
+import uz.yalla.resources.icons.YallaIcons
 
 /**
  * Android actual for [NativeNavHost].
@@ -98,8 +98,8 @@ private fun BackButton(canGoBack: Boolean, navigator: Navigator) {
     if (canGoBack) {
         IconButton(onClick = { navigator.pop() }) {
             Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Back",
+                imageVector = YallaIcons.ArrowLeft,
+                contentDescription = null,
             )
         }
     }
@@ -109,8 +109,6 @@ private fun BackButton(canGoBack: Boolean, navigator: Navigator) {
  * Renders [ToolbarState.actions] inside the [TopAppBar] actions slot.
  *
  * [ToolbarAction.Text] renders as a [TextButton]; [ToolbarAction.Icon] renders as an [IconButton].
- *
- * @param toolbarState The observable toolbar state for the current screen.
  */
 @Composable
 private fun RowScope.ToolbarActions(toolbarState: ToolbarState) {

@@ -6,8 +6,6 @@ package uz.yalla.platform
  * Each platform provides its own implementation:
  * - iOS: `IosPlatformConfig` with native component factories
  * - Android: `AndroidPlatformConfig` (no factories needed)
- *
- * @since 0.0.1
  */
 interface PlatformConfig
 
@@ -15,8 +13,6 @@ interface PlatformConfig
  * Central entry point for platform module initialization.
  *
  * Call [install] once at app startup before using any native platform component.
- *
- * @since 0.0.1
  */
 object YallaPlatform {
     @PublishedApi
@@ -38,7 +34,6 @@ object YallaPlatform {
      * On iOS, build an [IosPlatformConfig][uz.yalla.platform.config.IosPlatformConfig]
      * and pass it here.
      *
-     * @param config The platform configuration to register.
      * @see PlatformConfig
      */
     fun install(config: PlatformConfig) {
@@ -48,7 +43,6 @@ object YallaPlatform {
     /**
      * Retrieves the registered config cast to [T], or throws with clear installation instructions.
      *
-     * @param T The expected platform config type.
      * @return The registered config cast to [T].
      * @throws IllegalStateException if [install] has not been called or the config is the wrong type.
      */

@@ -21,13 +21,8 @@ import uz.yalla.platform.model.IconType
  * )
  * ```
  *
- * @param iconType The icon to display inside the button.
- * @param onClick Callback invoked when the button is tapped.
- * @param modifier Modifier applied to the button container.
  * @param alpha Opacity of the entire button. Default `1f` (fully opaque).
- * @param border Optional border stroke drawn around the circle.
  * @param background Background fill color. [Color.Unspecified] uses the platform default.
- * @since 0.0.1
  */
 @Composable
 expect fun NativeCircleIconButton(
