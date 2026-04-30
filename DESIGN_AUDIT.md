@@ -553,3 +553,32 @@ Total wave-10 effort: full rewrite of `design/MODULE.md` from scratch on phase-1
 
 ---
 
+## 9. Approval (Islom, 2026-04-30)
+
+Decisions locked for waves 2-10. Context recovered from git: motion is Chunk 0.C of `YallaClient/docs/superpowers/plans/2026-04-23-yalla-client-refactor.md`. ADR-021 (in deleted `docs/06-DECISIONS.md` as of `353fb4d09`) was the design decision; haptic was deferred (`e90713c92`); YallaClient consumption never followed.
+
+### Gate items
+
+- **G9 — `motion/` package:** **KEEP.** The YallaClient motion-vocabulary migration that justified `MotionScheme` is real product intent (typed durations/easings/springs/stagger + future haptic via `HapticController` `expect`/`actual`). Deleting now would re-create the same surface later. Action: preserve the package, add `MotionScheme` equality + `standardMotionScheme()` identity tests in wave 8 (so it's properly covered, not just sitting there), and document the consumer-pending status in `MODULE.md` and `MIGRATION_LIST.md`. Revisit at the next phase boundary if YallaClient still hasn't consumed `System.motion.*`.
+- **G10 — `Color.kt` raw token demote to `internal`:** **APPROVED.** 47 raw color constants (`LightTextBase` etc.) → `internal`. Test refactor in `ColorSchemeTest.kt` and `YallaThemeTest.kt` to assert via the scheme accessor. `refactor!:` (sub-100 lines, public API change). ~60 min total.
+- **G11 — `FontScheme.Body.numeric` removal:** **APPROVED.** Zero callers, no attached YallaClient plan (unlike motion). Delete the extension property + `FONT_FEATURE_TABULAR_NUMERALS` const. Re-add when an actual numeric-display consumer ships. ~30 min.
+- **G12 — `@Immutable` consistency:** **APPROVED, applied uniformly.** Add `@Immutable` to `ColorScheme`, `FontScheme`, `SpaceScheme`, `RadiusScheme` and every nested data class. With G9 keeping motion, `MotionScheme`'s precedent becomes the canonical example everyone else matches. ~12 annotations, ~20 min.
+- **G13 — `compose.runtime` + `compose.ui` `implementation` → `api`:** **APPROVED.** Public types of `Local*Scheme`, `themedPainter`, `YallaTheme`, `System.*` accessors come from these libs. Promote for graph correctness. `refactor!:` (pom.xml changes). ~5 min.
+
+### Quick approvals (subagent + me agree)
+
+- **A1.** Sweep ~21 `@since` tags across design — wave 2.
+- **A2.** Sweep ~56 per-token KDocs in `Color.kt` + ~12 per-entry KDocs in `ThemedImage.kt` + brand-voice MODULE.md paragraph — wave 2.
+- **A3.** Drop 2 unused androidMain deps per audit §2 — wave 3.
+- **A4.** Backfill ~12-13 missing tests across 4 packages — wave 8 (now includes MotionScheme tests per G9).
+- **A5.** Full MODULE.md rewrite to phase-1 form, with a `## Notes` entry calling out motion's consumer-pending status — wave 10.
+
+### Out of scope (kept / deferred)
+
+- **M3 `darkColorScheme`/`lightColorScheme` bridge collapse** — kept (audit's pushback: current code is repetitive but explicit).
+- **`ColorScheme.kt` 293-line file split** — kept (forced split would invent boilerplate; file is a long-list, not a god class).
+- **Stale `System.color.<token>` doc references in `platform/`/`composites/`** — out of scope for design; flagged for the phase-3 `composites` and phase-4 `platform` audits.
+- **Haptic follow-up (`HapticController` `expect`/`actual`)** — out of scope. The deferred follow-up to ADR-021 will land as its own focused PR if/when YallaClient consumption restarts.
+
+---
+
