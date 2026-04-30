@@ -1,27 +1,91 @@
 # Module firebase
 
-Yalla SDK Firebase integration — Analytics, Crashlytics, Cloud Messaging, and pluggable logging.
+> Thin facade over gitlive Kotlin Firebase — Analytics, Crashlytics, Cloud Messaging. Consumer-friendly API surface with pluggable logging.
 
-All services are accessed through the [YallaFirebase][uz.yalla.firebase.YallaFirebase] singleton,
-which must be initialized before use. Operations are wrapped with error handling and logged
-via a pluggable [YallaFirebaseLogger][uz.yalla.firebase.logging.YallaFirebaseLogger].
+## What this is
 
-# Package uz.yalla.firebase
+- **`YallaFirebase`** — singleton entry point. `install(config)` once
+  at app startup; thereafter `YallaFirebase.analytics`,
+  `.crashlytics`, `.messaging` return live wrappers.
+- **`analytics/`** — `YallaAnalytics` wraps `gitlive.firebase.analytics`.
+  Predefined `AnalyticsEvent` sealed hierarchy (login, signup,
+  screen-view, custom) plus a `TrackEvent` low-level call.
+- **`crashlytics/`** — `YallaCrashlytics` wraps
+  `gitlive.firebase.crashlytics`. `recordException(throwable)`,
+  `setUserId`, `log(message)`. Wrapped in `runCatching` to keep
+  Crashlytics outages from killing the app.
+- **`messaging/`** — `YallaMessaging` wraps
+  `gitlive.firebase.messaging`. Token fetch, topic subscribe /
+  unsubscribe. `MessagingDelegate` is the consumer's hook for token
+  refresh + remote-message handling.
+- **`logging/`** — `YallaFirebaseLogger` interface (`d`, `i`, `w`,
+  `e`). Caller injects a real logger (Kermit, Timber, etc.); a
+  `NoopLogger` is the install-time default so the wrapper is
+  always callable.
 
-Main entry point ([YallaFirebase]) and platform initialization.
+## What this is NOT
 
-# Package uz.yalla.firebase.analytics
+- **Not** Firebase Analytics / Crashlytics directly. Use this module
+  for the gitlive-wrapped, KMP-portable surface; if you need the
+  raw Firebase SDK on a single platform, depend on the platform-
+  specific Firebase BOM yourself.
+- **Not** a remote-config wrapper. Remote Config lives in YallaClient
+  (per the prior phase analysis); not bundled here.
+- **Not** a logger. `YallaFirebaseLogger` is the *seam* the consumer
+  fills — a logger lives elsewhere (Kermit, etc.).
+- **Not** a typed-event registry. `AnalyticsEvent` is a sealed
+  hierarchy of events the consumer wants pre-registered; ad-hoc
+  events go through `TrackEvent`.
 
-Analytics event tracking with predefined ([AnalyticsEvent]) and custom events.
+## Usage
 
-# Package uz.yalla.firebase.crashlytics
+```kotlin
+implementation("uz.yalla.sdk:firebase")
+```
 
-Crash reporting and non-fatal exception recording via [YallaCrashlytics].
+```kotlin
+// One-time install in your Application / @main:
+YallaFirebase.install(
+    config = /* AndroidFirebaseConfig or IosFirebaseConfig */,
+    logger = MyKermitLogger(),
+)
 
-# Package uz.yalla.firebase.messaging
+// Anywhere thereafter:
+YallaFirebase.analytics.log(AnalyticsEvent.Login)
+YallaFirebase.crashlytics.recordException(throwable)
+YallaFirebase.messaging.subscribeToTopic("promotions")
+```
 
-Push notification token management, topic subscriptions, and [MessagingDelegate] for platform-specific handling.
+## Notes
 
-# Package uz.yalla.firebase.logging
+- **`runCatching` carve-outs.** `YallaCrashlytics`,
+  `YallaMessaging`, `YallaAnalytics` all wrap their underlying
+  gitlive-Firebase calls in `runCatching { ... }.onFailure { logger.e(...) }`.
+  Sanctioned pragmatic carve-out (same posture foundation took with
+  moko-geo) — Firebase SDKs frequently throw on missing
+  `google-services.json` / token expiry / network outages, and we
+  refuse to crash the host app over telemetry.
+- **`gitlive` API surface is `api()`.** Every gitlive-Firebase type
+  appears in our public signatures (`FirebaseAnalytics`,
+  `FirebaseMessaging`, etc.); consumers transitively need them.
+  This is intentional — `gitlive` is the contract, our wrappers
+  are convenience.
+- **Initialization order.** `YallaFirebase.install` MUST run before
+  any feature ViewModel calls a Yalla*Firebase service — otherwise
+  every accessor throws `IllegalStateException("YallaFirebase not
+  initialized")`. Document in YallaClient's app-startup checklist.
+- **`AnalyticsEvent` sealed hierarchy** is a starter kit, not the
+  full event registry. Add new variants as product requirements
+  surface; treat the sealed-when as the source of truth so the
+  compiler enforces handler exhaustiveness.
 
-Pluggable logging interface ([YallaFirebaseLogger]) for Firebase wrapper operations.
+## Depends on
+
+- `firebase-gitlive-app` (api)
+- `firebase-gitlive-analytics` (api)
+- `firebase-gitlive-crashlytics` (api)
+- `firebase-gitlive-messaging` (api)
+- `kotlinx.coroutines.core` (implementation — used internally for
+  `suspend fun` Firebase operations; no public types leak)
+- `firebase-bom`, `androidx.core.ktx` (androidMain — internal)
+- No SDK-internal dep.
