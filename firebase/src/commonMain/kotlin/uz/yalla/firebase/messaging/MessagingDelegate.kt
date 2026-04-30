@@ -25,7 +25,6 @@ package uz.yalla.firebase.messaging
  *
  * @see YallaMessaging
  * @see uz.yalla.firebase.YallaFirebase.messaging
- * @since 0.0.1
  */
 interface MessagingDelegate {
     /**
@@ -35,9 +34,7 @@ interface MessagingDelegate {
      * by Firebase, or when the user restores the app on a new device. The token must be
      * sent to your server to target push notifications to this device.
      *
-     * @param token The new FCM registration token.
      * @see YallaMessaging.getToken
-     * @since 0.0.1
      */
     fun onNewToken(token: String)
 
@@ -46,11 +43,6 @@ interface MessagingDelegate {
      *
      * Background and terminated-state delivery is handled by the OS and does not trigger
      * this callback. Use this to display a local notification or update the in-app UI.
-     *
-     * @param title The notification title, or `null` if not set by the sender.
-     * @param body The notification body text, or `null` if not set by the sender.
-     * @param data Key-value data payload attached to the message (may be empty).
-     * @since 0.0.1
      */
     fun onMessageReceived(
         title: String?,

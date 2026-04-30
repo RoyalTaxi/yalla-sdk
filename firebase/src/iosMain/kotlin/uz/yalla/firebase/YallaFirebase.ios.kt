@@ -22,7 +22,6 @@ import dev.gitlive.firebase.app
  * @throws IllegalStateException if `FirebaseApp.configure()` was not called in Swift first.
  * @see YallaFirebase.initialize
  * @see YallaFirebase.markInitialized
- * @since 0.0.1
  */
 internal actual fun initializePlatform() {
     // On iOS, FirebaseApp.configure() must be called in Swift before this

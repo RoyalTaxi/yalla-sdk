@@ -20,7 +20,6 @@ import com.google.firebase.FirebaseApp
  *   or `com.google.gms.google-services` plugin).
  * @see YallaFirebase.initialize
  * @see YallaFirebase.markInitialized
- * @since 0.0.1
  */
 internal actual fun initializePlatform() {
     val firebaseApp = try {

@@ -35,7 +35,6 @@ import uz.yalla.firebase.messaging.YallaMessaging
  * @see YallaCrashlytics
  * @see YallaMessaging
  * @see YallaFirebaseLogger
- * @since 0.0.1
  */
 object YallaFirebase {
     /**
@@ -47,7 +46,6 @@ object YallaFirebase {
      *
      * @see YallaFirebaseLogger
      * @see YallaFirebaseLogger.Noop
-     * @since 0.0.1
      */
     var logger: YallaFirebaseLogger = YallaFirebaseLogger.Noop
 
@@ -59,8 +57,6 @@ object YallaFirebase {
      * Check this before accessing any Firebase service if initialization is conditional.
      * Accessing [analytics], [crashlytics], or [messaging] without initialization
      * may throw an [IllegalStateException] (especially on iOS).
-     *
-     * @since 0.0.1
      */
     val isInitialized: Boolean get() = _isInitialized
 
@@ -76,7 +72,6 @@ object YallaFirebase {
      * @throws IllegalStateException if [initialize] has not been called.
      * @see YallaAnalytics
      * @see AnalyticsEvent
-     * @since 0.0.1
      */
     val analytics: YallaAnalytics
         get() {
@@ -97,7 +92,6 @@ object YallaFirebase {
      *
      * @throws IllegalStateException if [initialize] has not been called.
      * @see YallaCrashlytics
-     * @since 0.0.1
      */
     val crashlytics: YallaCrashlytics
         get() {
@@ -119,7 +113,6 @@ object YallaFirebase {
      * @throws IllegalStateException if [initialize] has not been called.
      * @see YallaMessaging
      * @see MessagingDelegate
-     * @since 0.0.1
      */
     val messaging: YallaMessaging
         get() {
@@ -141,7 +134,6 @@ object YallaFirebase {
      *   Throws [IllegalStateException] if `FirebaseApp.configure()` was not called.
      *
      * @see isInitialized
-     * @since 0.0.1
      */
     fun initialize() {
         initializePlatform()
@@ -150,8 +142,6 @@ object YallaFirebase {
     /**
      * Marks the SDK as initialized. Called internally by platform-specific implementations
      * once they have confirmed Firebase is ready.
-     *
-     * @since 0.0.1
      */
     internal fun markInitialized() {
         _isInitialized = true
@@ -170,6 +160,5 @@ object YallaFirebase {
  * invoked directly by consumers.
  *
  * @see YallaFirebase.initialize
- * @since 0.0.1
  */
 internal expect fun initializePlatform()

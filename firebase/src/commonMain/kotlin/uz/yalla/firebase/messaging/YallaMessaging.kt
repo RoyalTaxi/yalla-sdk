@@ -18,7 +18,6 @@ import uz.yalla.firebase.YallaFirebase
  *
  * @see YallaFirebase.messaging
  * @see MessagingDelegate
- * @since 0.0.1
  */
 class YallaMessaging {
     private val messaging: FirebaseMessaging by lazy { Firebase.messaging }
@@ -34,7 +33,6 @@ class YallaMessaging {
      *   via [YallaFirebase.logger]).
      * @see MessagingDelegate.onNewToken
      * @see deleteToken
-     * @since 0.0.1
      */
     suspend fun getToken(): String? {
         return try {
@@ -55,7 +53,6 @@ class YallaMessaging {
      * @param topic The topic name to subscribe to (alphanumeric, dashes, and underscores;
      *   max 900 chars).
      * @see unsubscribeFromTopic
-     * @since 0.0.1
      */
     suspend fun subscribeToTopic(topic: String) {
         try {
@@ -70,9 +67,7 @@ class YallaMessaging {
      *
      * After unsubscribing, the device will no longer receive messages sent to [topic].
      *
-     * @param topic The topic name to unsubscribe from.
      * @see subscribeToTopic
-     * @since 0.0.1
      */
     suspend fun unsubscribeFromTopic(topic: String) {
         try {
@@ -91,7 +86,6 @@ class YallaMessaging {
      *
      * @see getToken
      * @see MessagingDelegate.onNewToken
-     * @since 0.0.1
      */
     suspend fun deleteToken() {
         try {

@@ -15,15 +15,12 @@ package uz.yalla.firebase.logging
  * ```
  *
  * @see uz.yalla.firebase.YallaFirebase.logger
- * @since 0.0.1
  */
 fun interface YallaFirebaseLogger {
     /**
      * Receives a log message from the Firebase wrapper.
      *
      * @param tag The source component (e.g. `"Analytics"`, `"Crashlytics"`, `"Messaging"`).
-     * @param message A human-readable description of the event or error.
-     * @since 0.0.1
      */
     fun log(
         tag: String,
@@ -37,8 +34,6 @@ fun interface YallaFirebaseLogger {
          * Silently discards all log messages. Used as the default value for
          * [uz.yalla.firebase.YallaFirebase.logger] so that no logging infrastructure
          * is required unless the caller opts in.
-         *
-         * @since 0.0.1
          */
         val Noop = YallaFirebaseLogger { _, _ -> }
     }

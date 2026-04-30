@@ -18,7 +18,6 @@ import uz.yalla.firebase.crashlytics.YallaCrashlytics
  * @see YallaFirebase.analytics
  * @see AnalyticsEvent
  * @see trackEvent
- * @since 0.0.1
  */
 class YallaAnalytics {
     private val analytics: FirebaseAnalytics by lazy { Firebase.analytics }
@@ -36,7 +35,6 @@ class YallaAnalytics {
      *   `String`, `Long`, or `Double`). Pass `null` to send no parameters.
      * @see log
      * @see trackEvent
-     * @since 0.0.1
      */
     fun logEvent(
         name: String,
@@ -59,7 +57,6 @@ class YallaAnalytics {
      *   structured events or [AnalyticsEvent.Custom] for arbitrary events.
      * @see logEvent
      * @see AnalyticsEvent
-     * @since 0.0.1
      */
     fun log(event: AnalyticsEvent) {
         logEvent(event.name, event.params)
@@ -74,9 +71,7 @@ class YallaAnalytics {
      * This is a `suspend` function because the underlying GitLive Firebase SDK exposes
      * this operation as a coroutine.
      *
-     * @param userId The user identifier to associate with events, or `null` to clear it.
      * @see setUserProperty
-     * @since 0.0.1
      */
     suspend fun setUserId(userId: String?) {
         try {
@@ -95,10 +90,7 @@ class YallaAnalytics {
      * This is a `suspend` function because the underlying GitLive Firebase SDK exposes
      * this operation as a coroutine.
      *
-     * @param name The property name (max 24 chars, alphanumeric + underscores).
-     * @param value The property value (max 36 chars).
      * @see setUserId
-     * @since 0.0.1
      */
     suspend fun setUserProperty(
         name: String,
@@ -119,7 +111,6 @@ class YallaAnalytics {
      *
      * @param enabled `true` to enable data collection, `false` to disable it.
      * @see YallaCrashlytics.setCrashlyticsCollectionEnabled
-     * @since 0.0.1
      */
     fun setAnalyticsCollectionEnabled(enabled: Boolean) {
         try {

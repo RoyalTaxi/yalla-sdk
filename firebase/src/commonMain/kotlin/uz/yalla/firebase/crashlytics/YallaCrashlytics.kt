@@ -16,7 +16,6 @@ import uz.yalla.firebase.analytics.YallaAnalytics
  * Access this class via [YallaFirebase.crashlytics]; do not instantiate it directly.
  *
  * @see YallaFirebase.crashlytics
- * @since 0.0.1
  */
 class YallaCrashlytics {
     private val crashlytics: FirebaseCrashlytics by lazy { Firebase.crashlytics }
@@ -28,9 +27,7 @@ class YallaCrashlytics {
      * Crashlytics report alongside any subsequent fatal or non-fatal exception. Messages
      * are not sent to Crashlytics until a crash or [recordException] call occurs.
      *
-     * @param message The message to log.
      * @see recordException
-     * @since 0.0.1
      */
     fun log(message: String) {
         try {
@@ -47,10 +44,8 @@ class YallaCrashlytics {
      * the app (e.g. network errors in critical paths, unexpected server responses).
      * The exception appears under "Non-fatals" in the Firebase console.
      *
-     * @param throwable The exception to record.
      * @see log
      * @see setCustomKey
-     * @since 0.0.1
      */
     fun recordException(throwable: Throwable) {
         try {
@@ -67,10 +62,7 @@ class YallaCrashlytics {
      * to capture app state at the time of a crash (e.g. `"user_role"` to `"driver"`).
      * Firebase supports up to 64 custom key-value pairs per report.
      *
-     * @param key The custom key name (max 1024 chars).
-     * @param value The custom value (max 1024 chars).
      * @see recordException
-     * @since 0.0.1
      */
     fun setCustomKey(
         key: String,
@@ -89,9 +81,7 @@ class YallaCrashlytics {
      * Helps identify which users are affected by a crash. Use an opaque ID (not PII
      * like email or name) to comply with privacy regulations.
      *
-     * @param userId An opaque identifier for the current user.
      * @see setCustomKey
-     * @since 0.0.1
      */
     fun setUserId(userId: String) {
         try {
@@ -109,7 +99,6 @@ class YallaCrashlytics {
      *
      * @param enabled `true` to enable crash reporting, `false` to disable it.
      * @see YallaAnalytics.setAnalyticsCollectionEnabled
-     * @since 0.0.1
      */
     fun setCrashlyticsCollectionEnabled(enabled: Boolean) {
         try {

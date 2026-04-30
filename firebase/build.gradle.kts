@@ -14,12 +14,14 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
+            // gitlive Firebase wrappers — types appear in public signatures
+            // (FirebaseAnalytics, FirebaseCrashlytics, FirebaseMessaging),
+            // so api() exposes them transitively to consumers.
             api(libs.firebase.gitlive.app)
             api(libs.firebase.gitlive.analytics)
             api(libs.firebase.gitlive.crashlytics)
             api(libs.firebase.gitlive.messaging)
             implementation(libs.kotlinx.coroutines.core)
-            implementation(libs.kotlinx.serialization.json)
         }
 
         androidMain.dependencies {
