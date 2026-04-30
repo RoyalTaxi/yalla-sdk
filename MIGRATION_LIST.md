@@ -133,9 +133,57 @@ commit on `cleanup/phase-2-3-4`.
 
 ---
 
+---
+
+## Phase 3 — `design` additions
+
+### Promotions / demotions surfaced
+
+*From phase 3 `design`:* none. Per `DESIGN_AUDIT.md` §5: zero promotions, zero demotions, one borderline (`ThemedImage.OrderHistory`/`OrderSearch`/`TariffCard` enum entry naming — kept; visual brand is the product).
+
+### Pending consumers (audit decision G9)
+
+- **`uz.yalla.design.motion.*` — `MotionScheme` + `LocalMotionScheme` + `standardMotionScheme()`.**
+  Shipped in `0.0.17-alpha01` (commit `a9daf28a8`) as Chunk 0.C of the YallaClient refactor plan (`YallaClient/docs/superpowers/plans/2026-04-23-yalla-client-refactor.md`). Currently has zero callers anywhere in SDK or YallaClient. Decision G9: **keep** the surface. Action for the YallaClient migration: either consume `System.motion.duration.*` / `easing.*` / `spring.*` / `stagger.*` to replace ad-hoc `tween(durationMillis = ...)` calls, or surface a follow-up to delete and re-introduce when the haptic + motion pair actually ships together.
+
+### Breaking changes shipped
+
+*From phase 3 `design`:*
+
+- `4e9868f6c refactor!(design): remove unused FontScheme.Body.numeric extension`
+  Removed: `FontScheme.Body.numeric: TextStyle` extension property and the
+  `internal const val FONT_FEATURE_TABULAR_NUMERALS = "tnum"`. Zero callers
+  anywhere; KDoc claimed an animated-price use case but no consumer ever
+  shipped against it. Action: any future numeric-display consumer can
+  rebuild the extension in one line —
+  `style.copy(fontFeatureSettings = "tnum")`.
+
+- `6d0a271ac refactor!(design): tighten api/implementation split, drop unused deps`
+  - Dropped unused androidMain deps: `compose.uiTooling`, `androidx.core.ktx`.
+    Verified zero references in `design/src/androidMain`.
+  - Promoted `compose.runtime` and `compose.ui` from `implementation()` to
+    `api()`. Both are exposed in design's public types
+    (`@Composable`, `ProvidableCompositionLocal`, `Color`, `TextStyle`, `Dp`).
+  Action for YallaClient: typically no-op — consumers already declare
+  these via `KmpComposeConventionPlugin`. Verify the pom.xml change doesn't
+  surface a transitive resolution issue at consumer build time.
+
+- `18e0dc4c5 refactor!(design): demote raw color tokens to internal`
+  56 raw color constants in `design/color/Color.kt` (`LightTextBase`,
+  `DarkBackgroundBase`, accent + gradient tokens, etc.) are no longer part
+  of the public API. Verified zero external consumers SDK-wide. Action for
+  YallaClient: any direct import of `uz.yalla.design.color.Light*` /
+  `Dark*` / accent / gradient symbols must switch to `System.color.text.*`
+  / `System.color.background.*` / `System.color.accent.*` /
+  `System.color.gradient.*` — the canonical access path documented in
+  `design/MODULE.md`.
+
+---
+
 ## Phase status
 
 - Phase 2 `core` — done. Plan: [PHASE_2_CORE_PLAN.md](PHASE_2_CORE_PLAN.md). Audit: [CORE_AUDIT.md](CORE_AUDIT.md).
 - Phase 2 `data` — done. Plan: [PHASE_2_DATA_PLAN.md](PHASE_2_DATA_PLAN.md). Audit: [DATA_AUDIT.md](DATA_AUDIT.md).
-- Phase 3 `design`, `foundation`, `primitives`, `composites` — TODO.
+- Phase 3 `design` — done. Plan: [PHASE_3_DESIGN_PLAN.md](PHASE_3_DESIGN_PLAN.md). Audit: [DESIGN_AUDIT.md](DESIGN_AUDIT.md).
+- Phase 3 `foundation`, `primitives`, `composites` — TODO.
 - Phase 4 `firebase`, `maps`, `media`, `platform` — TODO.
