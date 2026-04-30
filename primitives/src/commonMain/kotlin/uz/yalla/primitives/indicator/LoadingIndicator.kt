@@ -29,9 +29,6 @@ data class LoadingIndicatorDimens(
     val smallSize: Dp,
     val mediumSize: Dp,
     val largeSize: Dp,
-    val smallStrokeWidth: Dp,
-    val mediumStrokeWidth: Dp,
-    val largeStrokeWidth: Dp,
 ) {
     /** Resolves the indicator diameter for the given [size] variant. */
     fun size(size: LoadingIndicatorSize): Dp =
@@ -39,14 +36,6 @@ data class LoadingIndicatorDimens(
             LoadingIndicatorSize.Small -> smallSize
             LoadingIndicatorSize.Medium -> mediumSize
             LoadingIndicatorSize.Large -> largeSize
-        }
-
-    /** Resolves the stroke width for the given [size] variant. */
-    fun strokeWidth(size: LoadingIndicatorSize): Dp =
-        when (size) {
-            LoadingIndicatorSize.Small -> smallStrokeWidth
-            LoadingIndicatorSize.Medium -> mediumStrokeWidth
-            LoadingIndicatorSize.Large -> largeStrokeWidth
         }
 }
 
@@ -112,16 +101,10 @@ object LoadingIndicatorDefaults {
         smallSize: Dp = 20.dp,
         mediumSize: Dp = 36.dp,
         largeSize: Dp = 48.dp,
-        smallStrokeWidth: Dp = 2.dp,
-        mediumStrokeWidth: Dp = 3.dp,
-        largeStrokeWidth: Dp = 4.dp,
     ) = LoadingIndicatorDimens(
         smallSize = smallSize,
         mediumSize = mediumSize,
         largeSize = largeSize,
-        smallStrokeWidth = smallStrokeWidth,
-        mediumStrokeWidth = mediumStrokeWidth,
-        largeStrokeWidth = largeStrokeWidth,
     )
 }
 

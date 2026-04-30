@@ -1,12 +1,3 @@
-// LongMethod: LocationPin is one composite with multiple state branches.
-// DestructuringDeclarationWithTooManyEntries: ConstraintLayout createRefs() returns 4 refs.
-// UnusedParameter: loading is reserved for Phase 4 animation wiring.
-@file:Suppress(
-    "LongMethod",
-    "DestructuringDeclarationWithTooManyEntries",
-    "UnusedParameter",
-)
-
 package uz.yalla.primitives.pin
 
 import androidx.compose.animation.animateContentSize
@@ -147,7 +138,6 @@ private const val JUMP_CYCLE_DURATION_MS = 700
  * @param timeout Estimated time in minutes to display inside the pin body.
  *   When `null` and not jumping, shows the [icon] instead.
  * @param jumping When `true`, animates the pin with a vertical bounce and shows a spinner.
- * @param loading Currently unused; reserved for future loading states.
  * @param icon Custom composable rendered inside the pin body when not jumping and no timeout.
  *   Defaults to a focus-origin icon.
  * @param timeoutStyle [TextStyle] for the timeout number.
@@ -167,7 +157,6 @@ fun LocationPin(
     address: String? = null,
     timeout: Int? = null,
     jumping: Boolean = false,
-    loading: Boolean = false,
     icon: @Composable (() -> Unit)? = null,
     timeoutStyle: TextStyle = System.font.body.base.bold,
     timeoutLabelStyle: TextStyle = System.font.body.small.bold,
