@@ -65,3 +65,16 @@ and [MaskFormatter] utility.
 # Package uz.yalla.primitives.util
 
 Utility extensions: [squareSize] layout modifier and [GenderKind.resource] string resource mapping.
+
+## Depends on
+
+- `design` (api — `System.color.*` / `System.font.*` token surface)
+- `resources` (api — `StringResource` + `YallaIcons` in public composables)
+- `compose.runtime` (api — `@Composable`)
+- `compose.ui` (api — `Modifier`, `ImageVector`, `Color`, `Shape`, `Dp`)
+- `compose.foundation` (api — layout primitives in public surfaces)
+- `compose.material3` (api — `Surface`, `Icon` in public composables)
+- `core` (implementation — domain enums for option types)
+- `platform` (implementation — `NativeLoadingIndicator` etc.)
+- `compose.components.resources`, `compose.ui.tooling.preview`, `compottie`, `compottie.resources`, `constraintlayout` (implementation — internal-only)
+- No SDK-internal dep beyond `core` / `design` / `resources` / `platform`.

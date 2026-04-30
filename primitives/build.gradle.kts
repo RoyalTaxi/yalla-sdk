@@ -6,16 +6,18 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             // Yalla libraries
+            api(projects.design)
+            api(projects.resources)
             implementation(projects.core)
-            implementation(projects.design)
-            implementation(projects.resources)
             implementation(projects.platform)
 
-            // Compose
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.materialIconsExtended)
+            // Compose — public types: @Composable + Modifier in every public
+            // composable signature; ImageVector + Color + Shape on every
+            // *Colors / *Dimens data class.
+            api(compose.runtime)
+            api(compose.ui)
+            api(compose.foundation)
+            api(compose.material3)
             implementation(compose.components.resources)
             implementation(libs.compose.ui.tooling.preview)
 

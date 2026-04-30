@@ -3,8 +3,6 @@ package uz.yalla.primitives.button
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -19,6 +17,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
+import uz.yalla.resources.icons.ArrowLeft
+import uz.yalla.resources.icons.YallaIcons
 
 /**
  * Color configuration for [NavigationButton].
@@ -65,8 +65,10 @@ data class NavigationButtonDimens(
  *
  * @param onClick Called when this button is clicked.
  * @param modifier [Modifier] applied to the root container.
- * @param icon [ImageVector] to display. Defaults to back arrow.
- * @param contentDescription Accessibility description. Defaults to "Navigate back".
+ * @param icon [ImageVector] to display. Defaults to [YallaIcons.ArrowLeft].
+ * @param contentDescription Accessibility description for screen readers.
+ *   Pass a localized string via `stringResource(...)`; pass `null` if the
+ *   button is decorative or covered by a sibling label.
  * @param colors [NavigationButtonColors] that define container and content colors.
  *   See [NavigationButtonDefaults.colors].
  * @param dimens [NavigationButtonDimens] that define dimensions and shape.
@@ -78,8 +80,8 @@ data class NavigationButtonDimens(
 fun NavigationButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: ImageVector = Icons.AutoMirrored.Filled.ArrowBack,
-    contentDescription: String? = "Navigate back",
+    icon: ImageVector = YallaIcons.ArrowLeft,
+    contentDescription: String? = null,
     colors: NavigationButtonColors = NavigationButtonDefaults.colors(),
     dimens: NavigationButtonDimens = NavigationButtonDefaults.dimens(),
 ) {
