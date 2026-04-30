@@ -25,9 +25,6 @@ import uz.yalla.resources.icons.YallaIcons
  *
  * Controls the visual appearance of filled (selected) and empty (unselected) stars.
  * Use [RatingRowDefaults.colors] to create with theme-aware defaults.
- *
- * @param filled Tint color applied to stars at or below the current rating.
- * @param empty Tint color applied to stars above the current rating.
  */
 @Immutable
 data class RatingRowColors(
@@ -40,11 +37,6 @@ data class RatingRowColors(
  *
  * Controls the size, padding, spacing, and count of star icons.
  * Use [RatingRowDefaults.dimens] to create with standard values.
- *
- * @param starSize Size (width and height) of each star icon.
- * @param starPadding Internal padding inside each star's clickable surface.
- * @param starSpacing Horizontal spacing between adjacent stars.
- * @param starCount Total number of stars displayed in the row.
  */
 @Immutable
 data class RatingRowDimens(
@@ -61,12 +53,7 @@ data class RatingRowDimens(
  */
 object RatingRowDefaults {
 
-    /**
-     * Creates theme-aware color configuration for [RatingRow].
-     *
-     * @param filled Tint color for selected stars.
-     * @param empty Tint color for unselected stars.
-     */
+    /** Creates theme-aware color configuration for [RatingRow]. */
     @Composable
     fun colors(
         filled: Color = System.color.background.brand,
@@ -76,14 +63,7 @@ object RatingRowDefaults {
         empty = empty,
     )
 
-    /**
-     * Creates dimension configuration for [RatingRow].
-     *
-     * @param starSize Size of each star icon.
-     * @param starPadding Internal padding inside each star surface.
-     * @param starSpacing Horizontal spacing between stars.
-     * @param starCount Total number of stars.
-     */
+    /** Creates dimension configuration for [RatingRow]. */
     fun dimens(
         starSize: Dp = 50.dp,
         starPadding: Dp = 10.dp,

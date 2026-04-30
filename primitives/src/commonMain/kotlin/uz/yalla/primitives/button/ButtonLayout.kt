@@ -35,21 +35,6 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
  * - Loading state replaces content with platform-native spinner
  *
  * This is internal API -- not exposed to SDK consumers.
- *
- * @param onClick Called when the button is clicked.
- * @param modifier Applied to the root Surface.
- * @param enabled Whether the button accepts user input.
- * @param loading When true, replaces content with loading indicator.
- * @param shape Container shape (rounded corners, etc.).
- * @param containerColor Background color.
- * @param contentColor Foreground color inherited by text and icons.
- * @param contentPadding Internal padding between container edge and content.
- * @param minHeight Minimum button height for touch target compliance.
- * @param iconSize Size constraint applied to leading/trailing icon containers.
- * @param iconSpacing Horizontal space between icons and main content.
- * @param leadingIcon Optional composable rendered before main content.
- * @param trailingIcon Optional composable rendered after main content.
- * @param content Main button content, typically Text.
  */
 @Composable
 internal fun ButtonLayout(

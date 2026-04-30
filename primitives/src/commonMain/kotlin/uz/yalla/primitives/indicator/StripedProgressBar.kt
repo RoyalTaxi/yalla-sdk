@@ -31,13 +31,7 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import kotlin.math.hypot
 
-/**
- * Color configuration for [StripedProgressBar].
- *
- * @param track Background track color.
- * @param indicator Progress indicator brush (gradient).
- * @param stripe Stripe overlay color (semi-transparent).
- */
+/** Color configuration for [StripedProgressBar]. */
 @Immutable
 data class StripedProgressBarColors(
     val track: Color,
@@ -45,16 +39,7 @@ data class StripedProgressBarColors(
     val stripe: Color,
 )
 
-/**
- * Dimension configuration for [StripedProgressBar].
- *
- * @param shape Progress bar shape.
- * @param height Progress bar height.
- * @param stripeWidth Width of each stripe.
- * @param stripeGap Gap between stripes.
- * @param stripeAngle Angle of stripes in degrees.
- * @param animationDurationMs Animation duration for one stripe cycle.
- */
+/** Dimension configuration for [StripedProgressBar]. */
 @Immutable
 data class StripedProgressBarDimens(
     val shape: Shape,

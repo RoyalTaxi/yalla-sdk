@@ -24,24 +24,14 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.primitives.button.NavigationButton
 
-/**
- * Color configuration for [TopBar].
- *
- * @param container Background color.
- * @param title Title text color.
- */
+/** Color configuration for [TopBar]. */
 @Immutable
 data class TopBarColors(
     val container: Color,
     val title: Color,
 )
 
-/**
- * Dimension configuration for [TopBar].
- *
- * @param contentPadding Padding around content.
- * @param navigationButtonSize Size of navigation button placeholder.
- */
+/** Dimension configuration for [TopBar]. */
 @Immutable
 data class TopBarDimens(
     val contentPadding: PaddingValues,

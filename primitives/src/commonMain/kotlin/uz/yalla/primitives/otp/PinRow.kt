@@ -37,12 +37,6 @@ import uz.yalla.design.theme.System
  *
  * Resolves border and text colors based on fill and error state.
  * Use [PinRowDefaults.colors] to create with theme-aware defaults.
- *
- * @param textColor Text color for digits.
- * @param errorTextColor Text color when in error state.
- * @param filledBorderColor Border color for filled digit boxes.
- * @param emptyBorderColor Border color for empty digit boxes.
- * @param errorBorderColor Border color when in error state.
  */
 @Immutable
 data class PinRowColors(
@@ -57,10 +51,6 @@ data class PinRowColors(
  * Dimension configuration for [PinRow].
  *
  * Use [PinRowDefaults.dimens] to create with standard values.
- *
- * @param shape Shape of individual digit boxes.
- * @param spacing Horizontal spacing between digit boxes.
- * @param borderWidth Border width of digit boxes.
  */
 @Immutable
 data class PinRowDimens(

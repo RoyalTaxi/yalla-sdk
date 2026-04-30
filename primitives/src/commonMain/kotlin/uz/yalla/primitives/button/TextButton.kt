@@ -23,11 +23,6 @@ import uz.yalla.design.theme.YallaTheme
  *
  * Resolves container and content colors based on enabled state.
  * Use [TextButtonDefaults.colors] to create with theme-aware defaults.
- *
- * @param containerColor Background color when enabled.
- * @param contentColor Text and icon color when enabled.
- * @param disabledContainerColor Background color when disabled or loading.
- * @param disabledContentColor Text and icon color when disabled or loading.
  */
 @Immutable
 data class TextButtonColors(
@@ -49,11 +44,6 @@ data class TextButtonColors(
  * Dimension configuration for [TextButton].
  *
  * Use [TextButtonDefaults.dimens] to create with standard values.
- *
- * @param minHeight Minimum button height (touch target).
- * @param contentPadding Padding between container and content.
- * @param shape Container shape.
- * @param iconSpacing Space between icon slots and content.
  */
 @Immutable
 data class TextButtonDimens(
@@ -158,14 +148,7 @@ object TextButtonDefaults {
     /** Default button shape. */
     val Shape: Shape = RoundedCornerShape(20.dp)
 
-    /**
-     * Creates [TextButtonColors] with theme-aware defaults.
-     *
-     * @param containerColor Background color when enabled.
-     * @param contentColor Text/icon color when enabled.
-     * @param disabledContainerColor Background color when disabled.
-     * @param disabledContentColor Text/icon color when disabled.
-     */
+    /** Creates [TextButtonColors] with theme-aware defaults. */
     @Composable
     fun colors(
         containerColor: Color = Color.Transparent,
@@ -179,14 +162,7 @@ object TextButtonDefaults {
         disabledContentColor = disabledContentColor,
     )
 
-    /**
-     * Creates [TextButtonDimens] with standard values.
-     *
-     * @param minHeight Minimum button height.
-     * @param contentPadding Padding between container and content.
-     * @param shape Container shape.
-     * @param iconSpacing Space between icons and content.
-     */
+    /** Creates [TextButtonDimens] with standard values. */
     fun dimens(
         minHeight: Dp = MinHeight,
         contentPadding: PaddingValues = ContentPadding,

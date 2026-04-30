@@ -27,14 +27,7 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_logo_splash
 import uz.yalla.resources.location_gps_subtitle
 
-/**
- * Color configuration for [SplashOverlay].
- *
- * @param background Background brush (gradient) of the overlay.
- * @param indicator Progress indicator color.
- * @param indicatorTrack Progress indicator track color.
- * @param text Loading message text color.
- */
+/** Color configuration for [SplashOverlay]. */
 @Immutable
 data class SplashOverlayColors(
     val background: Brush,
@@ -43,14 +36,7 @@ data class SplashOverlayColors(
     val text: Color,
 )
 
-/**
- * Dimension configuration for [SplashOverlay].
- *
- * @param contentSpacing Spacing between indicator and message text.
- * @param bottomPadding Bottom padding for the loading section.
- * @param indicatorStrokeWidth Stroke width of the progress indicator.
- * @param indicatorGapSize Gap size in the progress indicator.
- */
+/** Dimension configuration for [SplashOverlay]. */
 @Immutable
 data class SplashOverlayDimens(
     val contentSpacing: Dp,

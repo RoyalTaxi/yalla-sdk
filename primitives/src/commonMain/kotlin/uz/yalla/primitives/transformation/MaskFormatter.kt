@@ -18,14 +18,7 @@ package uz.yalla.primitives.transformation
  * @see NumberVisualTransformation for generic number formatting
  */
 object MaskFormatter {
-    /**
-     * Formats text according to a mask pattern.
-     *
-     * @param text Raw text to format (typically digits only)
-     * @param mask Pattern with placeholder characters
-     * @param maskChar Character in mask that should be replaced by input
-     * @return Formatted text with mask applied.
-     */
+    /** Formats [text] according to [mask], replacing [maskChar] positions with input characters. */
     fun format(
         text: String,
         mask: String,
@@ -51,26 +44,13 @@ object MaskFormatter {
         return result.toString()
     }
 
-    /**
-     * Counts the number of placeholder characters in a mask.
-     *
-     * @param mask Pattern to analyze
-     * @param maskChar Placeholder character
-     * @return Number of input positions available.
-     */
+    /** Counts the number of [maskChar] positions in [mask]. */
     fun countPlaceholders(
         mask: String,
         maskChar: Char = '_'
     ): Int = mask.count { it == maskChar }
 
-    /**
-     * Extracts raw input from formatted text.
-     *
-     * @param formatted Text with mask applied
-     * @param mask Pattern used for formatting
-     * @param maskChar Placeholder character
-     * @return Raw input without mask characters.
-     */
+    /** Extracts raw input from [formatted] text by keeping only [maskChar] positions. */
     fun extractRaw(
         formatted: String,
         mask: String,

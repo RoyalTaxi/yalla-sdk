@@ -19,12 +19,7 @@ import io.github.alexzhirkevich.compottie.rememberLottiePainter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import uz.yalla.resources.Res
 
-/**
- * Dimension configuration for [SearchPin].
- *
- * @param size Size of the search pin animation.
- * @param lottieResourcePath Resource path for the Lottie animation.
- */
+/** Dimension configuration for [SearchPin]. */
 @Immutable
 data class SearchPinDimens(
     val size: Dp,

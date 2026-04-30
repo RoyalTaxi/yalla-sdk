@@ -23,11 +23,6 @@ import uz.yalla.design.theme.YallaTheme
  *
  * Resolves container and content colors based on enabled state.
  * Use [PrimaryButtonDefaults.colors] to create with theme-aware defaults.
- *
- * @param containerColor Background color when enabled.
- * @param contentColor Text and icon color when enabled.
- * @param disabledContainerColor Background color when disabled or loading.
- * @param disabledContentColor Text and icon color when disabled or loading.
  */
 @Immutable
 data class PrimaryButtonColors(
@@ -49,11 +44,6 @@ data class PrimaryButtonColors(
  * Dimension configuration for [PrimaryButton].
  *
  * Use [PrimaryButtonDefaults.dimens] to create with standard values.
- *
- * @param minHeight Minimum button height (touch target).
- * @param contentPadding Padding between container and content.
- * @param shape Container shape.
- * @param iconSpacing Space between icon slots and content.
  */
 @Immutable
 data class PrimaryButtonDimens(
@@ -159,14 +149,7 @@ object PrimaryButtonDefaults {
     /** Default button shape. */
     val Shape: Shape = RoundedCornerShape(16.dp)
 
-    /**
-     * Creates [PrimaryButtonColors] with theme-aware defaults.
-     *
-     * @param containerColor Background color when enabled.
-     * @param contentColor Text/icon color when enabled.
-     * @param disabledContainerColor Background color when disabled.
-     * @param disabledContentColor Text/icon color when disabled.
-     */
+    /** Creates [PrimaryButtonColors] with theme-aware defaults. */
     @Composable
     fun colors(
         containerColor: Color = System.color.button.active,
@@ -180,14 +163,7 @@ object PrimaryButtonDefaults {
         disabledContentColor = disabledContentColor,
     )
 
-    /**
-     * Creates [PrimaryButtonDimens] with standard values.
-     *
-     * @param minHeight Minimum button height.
-     * @param contentPadding Padding between container and content.
-     * @param shape Container shape.
-     * @param iconSpacing Space between icons and content.
-     */
+    /** Creates [PrimaryButtonDimens] with standard values. */
     fun dimens(
         minHeight: Dp = MinHeight,
         contentPadding: PaddingValues = ContentPadding,

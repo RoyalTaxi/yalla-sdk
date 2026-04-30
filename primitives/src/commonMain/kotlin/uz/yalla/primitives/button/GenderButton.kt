@@ -32,9 +32,6 @@ import uz.yalla.resources.icons.YallaIcons
  * Color configuration for [GenderButton].
  *
  * Use [GenderButtonDefaults.colors] to create with theme-aware defaults.
- *
- * @param containerColor Background color.
- * @param textColor Text color for the gender label.
  */
 @Immutable
 data class GenderButtonColors(
@@ -46,11 +43,6 @@ data class GenderButtonColors(
  * Dimension configuration for [GenderButton].
  *
  * Use [GenderButtonDefaults.dimens] to create with standard values.
- *
- * @param shape Container shape.
- * @param contentPadding Padding inside the button.
- * @param innerStartPadding Padding before the text label.
- * @param iconSize Size of the check/uncheck icon.
  */
 @Immutable
 data class GenderButtonDimens(
@@ -157,12 +149,7 @@ object GenderButtonDefaults {
     /** Default content padding. */
     val ContentPadding: PaddingValues = PaddingValues(12.dp)
 
-    /**
-     * Creates [GenderButtonColors] with theme-aware defaults.
-     *
-     * @param containerColor Background color.
-     * @param textColor Text color for the gender label.
-     */
+    /** Creates [GenderButtonColors] with theme-aware defaults. */
     @Composable
     fun colors(
         containerColor: Color = System.color.background.secondary,
@@ -172,14 +159,7 @@ object GenderButtonDefaults {
         textColor = textColor,
     )
 
-    /**
-     * Creates [GenderButtonDimens] with standard values.
-     *
-     * @param shape Container shape.
-     * @param contentPadding Padding inside the button.
-     * @param innerStartPadding Padding before the text label.
-     * @param iconSize Size of the check/uncheck icon.
-     */
+    /** Creates [GenderButtonDimens] with standard values. */
     fun dimens(
         shape: Shape = Shape,
         contentPadding: PaddingValues = ContentPadding,

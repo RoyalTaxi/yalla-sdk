@@ -33,12 +33,7 @@ import uz.yalla.design.theme.System
 /**
  * Color configuration for [SearchField].
  *
- * Defines the visual palette used by the search field container, text, and placeholder.
  * Use [SearchFieldDefaults.colors] to create with theme-aware defaults.
- *
- * @param container Background color of the search field card.
- * @param text Color of the input text.
- * @param placeholder Color of the placeholder text shown when the field is empty.
  */
 @Immutable
 data class SearchFieldColors(
@@ -50,13 +45,7 @@ data class SearchFieldColors(
 /**
  * Dimension configuration for [SearchField].
  *
- * Controls the shape, padding, icon spacing, and minimum height of the search field.
  * Use [SearchFieldDefaults.dimens] to create with standard values.
- *
- * @param shape Corner shape of the search field card container.
- * @param contentPadding Padding inside the card between the container edge and content row.
- * @param iconSpacing Horizontal space between leading/trailing icons and the text input.
- * @param minHeight Minimum height of the search field for touch target compliance.
  */
 @Immutable
 data class SearchFieldDimens(
@@ -73,13 +62,7 @@ data class SearchFieldDimens(
  */
 object SearchFieldDefaults {
 
-    /**
-     * Creates theme-aware color configuration for [SearchField].
-     *
-     * @param container Background color of the card container.
-     * @param text Color of the input text.
-     * @param placeholder Color of the placeholder text.
-     */
+    /** Creates theme-aware color configuration for [SearchField]. */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
@@ -91,14 +74,7 @@ object SearchFieldDefaults {
         placeholder = placeholder,
     )
 
-    /**
-     * Creates dimension configuration for [SearchField].
-     *
-     * @param shape Corner shape of the container card.
-     * @param contentPadding Padding inside the card.
-     * @param iconSpacing Space between icons and text input.
-     * @param minHeight Minimum height for touch target compliance.
-     */
+    /** Creates dimension configuration for [SearchField]. */
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 12.dp),

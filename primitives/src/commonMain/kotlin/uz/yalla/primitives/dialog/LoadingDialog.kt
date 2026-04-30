@@ -19,24 +19,14 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.platform.indicator.NativeLoadingIndicator
 
-/**
- * Color configuration for [LoadingDialog].
- *
- * @param container Background color.
- * @param indicator Spinner color.
- */
+/** Color configuration for [LoadingDialog]. */
 @Immutable
 data class LoadingDialogColors(
     val container: Color,
     val indicator: Color,
 )
 
-/**
- * Dimension configuration for [LoadingDialog].
- *
- * @param contentPadding Padding inside dialog.
- * @param shape Dialog shape.
- */
+/** Dimension configuration for [LoadingDialog]. */
 @Immutable
 data class LoadingDialogDimens(
     val contentPadding: Dp,

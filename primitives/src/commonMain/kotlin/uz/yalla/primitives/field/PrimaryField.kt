@@ -25,14 +25,6 @@ import uz.yalla.design.theme.System
  *
  * Resolves text, border, cursor, and placeholder colors based on focus state.
  * Use [PrimaryFieldDefaults.colors] to create with theme-aware defaults.
- *
- * @param focusedTextColor Text color when focused.
- * @param unfocusedTextColor Text color when not focused.
- * @param focusedBorderColor Border color when focused.
- * @param unfocusedBorderColor Border color when not focused.
- * @param cursorColor Cursor color.
- * @param selectionColors Text selection handle and highlight colors.
- * @param placeholderColor Placeholder text color.
  */
 @Immutable
 data class PrimaryFieldColors(
@@ -49,8 +41,6 @@ data class PrimaryFieldColors(
  * Dimension configuration for [PrimaryField].
  *
  * Use [PrimaryFieldDefaults.dimens] to create with standard values.
- *
- * @param shape Corner shape of the outlined field.
  */
 @Immutable
 data class PrimaryFieldDimens(
@@ -64,17 +54,7 @@ data class PrimaryFieldDimens(
  */
 object PrimaryFieldDefaults {
 
-    /**
-     * Creates theme-aware color configuration for [PrimaryField].
-     *
-     * @param focusedTextColor Text color when the field is focused.
-     * @param unfocusedTextColor Text color when the field is not focused.
-     * @param focusedBorderColor Border color when the field is focused.
-     * @param unfocusedBorderColor Border color when the field is not focused.
-     * @param cursorColor Color of the text cursor.
-     * @param selectionColors Colors for text selection handles and highlight.
-     * @param placeholderColor Color of the placeholder text.
-     */
+    /** Creates theme-aware color configuration for [PrimaryField]. */
     @Composable
     fun colors(
         focusedTextColor: Color = System.color.text.base,
@@ -103,11 +83,7 @@ object PrimaryFieldDefaults {
     @Composable
     fun textStyle(): TextStyle = System.font.body.base.medium
 
-    /**
-     * Creates dimension configuration for [PrimaryField].
-     *
-     * @param shape Corner shape of the outlined text field.
-     */
+    /** Creates dimension configuration for [PrimaryField]. */
     fun dimens(
         shape: Shape = RoundedCornerShape(10.dp),
     ): PrimaryFieldDimens = PrimaryFieldDimens(

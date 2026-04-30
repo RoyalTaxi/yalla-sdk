@@ -47,16 +47,6 @@ private const val MAX_PHONE_DIGITS = 9
  *
  * Resolves border color based on focus state.
  * Use [NumberFieldDefaults.colors] to create with theme-aware defaults.
- *
- * @param containerColor Background color.
- * @param textColor Input text color.
- * @param placeholderColor Placeholder text color.
- * @param prefixColor Country code text color.
- * @param dividerColor Vertical divider color between prefix and input.
- * @param focusedBorderColor Border color when focused.
- * @param unfocusedBorderColor Border color when not focused.
- * @param cursorColor Cursor color.
- * @param selectionColors Text selection handle and highlight colors.
  */
 @Immutable
 data class NumberFieldColors(
@@ -75,10 +65,6 @@ data class NumberFieldColors(
  * Dimension configuration for [NumberField].
  *
  * Use [NumberFieldDefaults.dimens] to create with standard values.
- *
- * @param shape Corner shape of the container.
- * @param borderWidth Border width.
- * @param dividerThickness Thickness of the vertical divider.
  */
 @Immutable
 data class NumberFieldDimens(
@@ -94,19 +80,7 @@ data class NumberFieldDimens(
  */
 object NumberFieldDefaults {
 
-    /**
-     * Creates theme-aware color configuration for [NumberField].
-     *
-     * @param containerColor Background color of the field container.
-     * @param textColor Color of the input text.
-     * @param placeholderColor Color of the placeholder text.
-     * @param prefixColor Color of the country code prefix text.
-     * @param dividerColor Color of the vertical divider between prefix and input.
-     * @param focusedBorderColor Border color when the field is focused.
-     * @param unfocusedBorderColor Border color when the field is not focused.
-     * @param cursorColor Color of the text cursor.
-     * @param selectionColors Colors for text selection handles and highlight.
-     */
+    /** Creates theme-aware color configuration for [NumberField]. */
     @Composable
     fun colors(
         containerColor: Color = System.color.background.base,
@@ -139,13 +113,7 @@ object NumberFieldDefaults {
     @Composable
     fun textStyle(): TextStyle = System.font.body.base.medium
 
-    /**
-     * Creates dimension configuration for [NumberField].
-     *
-     * @param shape Corner shape of the field container.
-     * @param borderWidth Width of the field border.
-     * @param dividerThickness Thickness of the vertical divider.
-     */
+    /** Creates dimension configuration for [NumberField]. */
     fun dimens(
         shape: Shape = RoundedCornerShape(10.dp),
         borderWidth: Dp = 1.dp,

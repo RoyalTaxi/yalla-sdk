@@ -22,26 +22,14 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
-/**
- * Color configuration for [DotsIndicator].
- *
- * @param selected Color of the selected dot.
- * @param unselected Color of unselected dots.
- */
+/** Color configuration for [DotsIndicator]. */
 @Immutable
 data class DotsIndicatorColors(
     val selected: Color,
     val unselected: Color,
 )
 
-/**
- * Dimension configuration for [DotsIndicator].
- *
- * @param dotSize Size of each dot.
- * @param selectedWidth Width of the selected dot.
- * @param dotSpacing Spacing between dots.
- * @param animationDurationMillis Duration of the dot width animation.
- */
+/** Dimension configuration for [DotsIndicator]. */
 @Immutable
 data class DotsIndicatorDimens(
     val dotSize: Dp,

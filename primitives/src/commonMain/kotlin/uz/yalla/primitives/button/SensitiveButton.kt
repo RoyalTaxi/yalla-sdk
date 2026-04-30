@@ -48,9 +48,6 @@ import kotlin.math.ceil
  * Color configuration for [SensitiveButton].
  *
  * Use [SensitiveButtonDefaults.colors] to create with theme-aware defaults.
- *
- * @param progressColor Progress fill color during countdown.
- * @param textColor Text color.
  */
 @Immutable
 data class SensitiveButtonColors(
@@ -62,9 +59,6 @@ data class SensitiveButtonColors(
  * Dimension configuration for [SensitiveButton].
  *
  * Use [SensitiveButtonDefaults.dimens] to create with standard values.
- *
- * @param height Button height.
- * @param shape Container shape.
  */
 @Immutable
 data class SensitiveButtonDimens(
@@ -178,18 +172,10 @@ fun SensitiveButton(
  * Provides theme-aware [colors] and standard [dimens] that can be individually overridden.
  */
 object SensitiveButtonDefaults {
-    /** Default button height. */
     val Height = 60.dp
-
-    /** Default button shape. */
     val Shape: Shape = RoundedCornerShape(16.dp)
 
-    /**
-     * Creates [SensitiveButtonColors] with theme-aware defaults.
-     *
-     * @param progressColor Progress fill color during countdown.
-     * @param textColor Text color.
-     */
+    /** Creates [SensitiveButtonColors] with theme-aware defaults. */
     @Composable
     fun colors(
         progressColor: Color = System.color.button.active,
@@ -199,12 +185,7 @@ object SensitiveButtonDefaults {
         textColor = textColor,
     )
 
-    /**
-     * Creates [SensitiveButtonDimens] with standard values.
-     *
-     * @param height Button height.
-     * @param shape Container shape.
-     */
+    /** Creates [SensitiveButtonDimens] with standard values. */
     fun dimens(
         height: Dp = Height,
         shape: Shape = Shape,

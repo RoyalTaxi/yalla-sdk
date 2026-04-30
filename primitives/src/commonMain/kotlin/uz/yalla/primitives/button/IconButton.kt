@@ -21,11 +21,6 @@ import uz.yalla.design.theme.YallaTheme
  *
  * Resolves container and content colors based on enabled state.
  * Use [IconButtonDefaults.colors] to create with theme-aware defaults.
- *
- * @param containerColor Background color when enabled.
- * @param contentColor Icon color when enabled.
- * @param disabledContainerColor Background color when disabled.
- * @param disabledContentColor Icon color when disabled.
  */
 @Immutable
 data class IconButtonColors(
@@ -47,10 +42,6 @@ data class IconButtonColors(
  * Dimension configuration for [IconButton].
  *
  * Use [IconButtonDefaults.dimens] to create with standard values.
- *
- * @param size Button size (width and height).
- * @param iconSize Icon size constraint.
- * @param shape Container shape.
  */
 @Immutable
 data class IconButtonDimens(
@@ -132,14 +123,7 @@ object IconButtonDefaults {
     /** Default button shape. */
     val Shape: Shape = RoundedCornerShape(12.dp)
 
-    /**
-     * Creates [IconButtonColors] with theme-aware defaults.
-     *
-     * @param containerColor Background color when enabled.
-     * @param contentColor Icon color when enabled.
-     * @param disabledContainerColor Background color when disabled.
-     * @param disabledContentColor Icon color when disabled.
-     */
+    /** Creates [IconButtonColors] with theme-aware defaults. */
     @Composable
     fun colors(
         containerColor: Color = System.color.background.tertiary,
@@ -158,11 +142,6 @@ object IconButtonDefaults {
      * Creates filled/prominent [IconButtonColors] with theme-aware defaults.
      *
      * Use for high-emphasis icon actions.
-     *
-     * @param containerColor Background color when enabled.
-     * @param contentColor Icon color when enabled.
-     * @param disabledContainerColor Background color when disabled.
-     * @param disabledContentColor Icon color when disabled.
      */
     @Composable
     fun filledColors(
@@ -177,13 +156,7 @@ object IconButtonDefaults {
         disabledContentColor = disabledContentColor,
     )
 
-    /**
-     * Creates [IconButtonDimens] with standard values.
-     *
-     * @param size Button size (width and height).
-     * @param iconSize Icon size constraint.
-     * @param shape Container shape.
-     */
+    /** Creates [IconButtonDimens] with standard values. */
     fun dimens(
         size: Dp = Size,
         iconSize: Dp = IconSize,

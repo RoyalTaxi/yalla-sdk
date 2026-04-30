@@ -21,10 +21,7 @@ import uz.yalla.primitives.button.BottomSheetButtonDefaults.dimens
  * Color configuration for [BottomSheetButton].
  *
  * Use [BottomSheetButtonDefaults.colors] to create with theme-aware defaults.
- *
- * @param containerColor Background color.
- * @param contentColor Text and icon color.
- * @param iconColor Icon tint color. Use [Color.Unspecified] for original painter colors.
+ * [iconColor] accepts [Color.Unspecified] to preserve original painter colors.
  */
 @Immutable
 data class BottomSheetButtonColors(
@@ -37,11 +34,6 @@ data class BottomSheetButtonColors(
  * Dimension configuration for [BottomSheetButton].
  *
  * Use [BottomSheetButtonDefaults.dimens] to create with standard values.
- *
- * @param minHeight Minimum button height (touch target).
- * @param contentPadding Padding between container and content.
- * @param shape Container shape.
- * @param iconSpacing Space between icon and content.
  */
 @Immutable
 data class BottomSheetButtonDimens(
@@ -145,13 +137,7 @@ object BottomSheetButtonDefaults {
     /** Default button shape. */
     val Shape: Shape = RoundedCornerShape(16.dp)
 
-    /**
-     * Creates [BottomSheetButtonColors] with theme-aware defaults.
-     *
-     * @param containerColor Background color.
-     * @param contentColor Text color.
-     * @param iconColor Icon tint color. Use [Color.Unspecified] for original painter colors.
-     */
+    /** Creates [BottomSheetButtonColors] with theme-aware defaults. */
     @Composable
     fun colors(
         containerColor: Color = System.color.button.tertiary,
@@ -163,14 +149,7 @@ object BottomSheetButtonDefaults {
         iconColor = iconColor,
     )
 
-    /**
-     * Creates [BottomSheetButtonDimens] with standard values.
-     *
-     * @param minHeight Minimum button height.
-     * @param contentPadding Padding between container and content.
-     * @param shape Container shape.
-     * @param iconSpacing Space between icon and content.
-     */
+    /** Creates [BottomSheetButtonDimens] with standard values. */
     fun dimens(
         minHeight: Dp = MinHeight,
         contentPadding: PaddingValues = ContentPadding,

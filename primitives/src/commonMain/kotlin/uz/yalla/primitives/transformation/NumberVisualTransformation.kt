@@ -26,10 +26,6 @@ import androidx.compose.ui.text.input.VisualTransformation
  * )
  * ```
  *
- * @param mask Format pattern where [maskChar] positions are replaced by input characters.
- *   All other characters are inserted as literal separators.
- * @param maskChar Character in the mask that represents an input position. Defaults to `_`.
- *
  * @see PhoneVisualTransformation for phone-specific formatting
  * @see MaskFormatter for the underlying formatting utility
  */
@@ -50,9 +46,6 @@ class NumberVisualTransformation(
     }
 }
 
-/**
- * Offset mapping for number transformation.
- */
 private class NumberOffsetMapping(
     private val original: String,
     private val formatted: String,

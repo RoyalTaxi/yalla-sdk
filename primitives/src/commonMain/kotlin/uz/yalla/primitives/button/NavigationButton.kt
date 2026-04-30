@@ -24,9 +24,6 @@ import uz.yalla.design.theme.YallaTheme
  * Color configuration for [NavigationButton].
  *
  * Use [NavigationButtonDefaults.colors] to create with theme-aware defaults.
- *
- * @param containerColor Background color.
- * @param contentColor Icon color.
  */
 @Immutable
 data class NavigationButtonColors(
@@ -38,10 +35,6 @@ data class NavigationButtonColors(
  * Dimension configuration for [NavigationButton].
  *
  * Use [NavigationButtonDefaults.dimens] to create with standard values.
- *
- * @param size Button size (width and height).
- * @param iconSize Icon size.
- * @param shape Container shape.
  */
 @Immutable
 data class NavigationButtonDimens(
@@ -122,12 +115,7 @@ object NavigationButtonDefaults {
     /** Default button shape. */
     val Shape: Shape = RoundedCornerShape(12.dp)
 
-    /**
-     * Creates [NavigationButtonColors] with theme-aware defaults.
-     *
-     * @param containerColor Background color.
-     * @param contentColor Icon color.
-     */
+    /** Creates [NavigationButtonColors] with theme-aware defaults. */
     @Composable
     fun colors(
         containerColor: Color = System.color.background.tertiary,
@@ -137,13 +125,7 @@ object NavigationButtonDefaults {
         contentColor = contentColor,
     )
 
-    /**
-     * Creates [NavigationButtonDimens] with standard values.
-     *
-     * @param size Button size (width and height).
-     * @param iconSize Icon size.
-     * @param shape Container shape.
-     */
+    /** Creates [NavigationButtonDimens] with standard values. */
     fun dimens(
         size: Dp = Size,
         iconSize: Dp = IconSize,

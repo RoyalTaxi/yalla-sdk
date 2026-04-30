@@ -16,28 +16,14 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.platform.indicator.NativeLoadingIndicator
 
-/**
- * Color configuration for [LoadingIndicator].
- *
- * @param indicator Spinner color.
- * @param track Track color behind spinner.
- */
+/** Color configuration for [LoadingIndicator]. */
 @Immutable
 data class LoadingIndicatorColors(
     val indicator: Color,
     val track: Color,
 )
 
-/**
- * Dimension configuration for [LoadingIndicator].
- *
- * @param smallSize Size for small variant.
- * @param mediumSize Size for medium variant.
- * @param largeSize Size for large variant.
- * @param smallStrokeWidth Stroke width for small variant.
- * @param mediumStrokeWidth Stroke width for medium variant.
- * @param largeStrokeWidth Stroke width for large variant.
- */
+/** Dimension configuration for [LoadingIndicator]. */
 @Immutable
 data class LoadingIndicatorDimens(
     val smallSize: Dp,

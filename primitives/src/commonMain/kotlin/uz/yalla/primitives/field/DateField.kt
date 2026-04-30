@@ -30,11 +30,6 @@ import uz.yalla.resources.icons.YallaIcons
  * Color configuration for [DateField].
  *
  * Use [DateFieldDefaults.colors] to create with theme-aware defaults.
- *
- * @param containerColor Background color of the field.
- * @param textColor Color of the selected date text.
- * @param placeholderColor Color of the placeholder text.
- * @param iconColor Color of the calendar icon.
  */
 @Immutable
 data class DateFieldColors(
@@ -48,9 +43,6 @@ data class DateFieldColors(
  * Dimension configuration for [DateField].
  *
  * Use [DateFieldDefaults.dimens] to create with standard values.
- *
- * @param shape Corner shape of the field.
- * @param contentPadding Padding inside the field container.
  */
 @Immutable
 data class DateFieldDimens(
@@ -65,14 +57,7 @@ data class DateFieldDimens(
  */
 object DateFieldDefaults {
 
-    /**
-     * Creates theme-aware color configuration for [DateField].
-     *
-     * @param containerColor Background color of the field card.
-     * @param textColor Color of the displayed date text.
-     * @param placeholderColor Color of the placeholder text when no date is selected.
-     * @param iconColor Tint color of the trailing calendar icon.
-     */
+    /** Creates theme-aware color configuration for [DateField]. */
     @Composable
     fun colors(
         containerColor: Color = Color.Transparent,
@@ -90,12 +75,7 @@ object DateFieldDefaults {
     @Composable
     fun textStyle(): TextStyle = System.font.body.base.medium
 
-    /**
-     * Creates dimension configuration for [DateField].
-     *
-     * @param shape Corner shape of the field card.
-     * @param contentPadding Padding inside the field card.
-     */
+    /** Creates dimension configuration for [DateField]. */
     fun dimens(
         shape: Shape = RoundedCornerShape(8.dp),
         contentPadding: PaddingValues = PaddingValues(16.dp),
@@ -180,9 +160,6 @@ fun DateField(
     }
 }
 
-/**
- * Formats [LocalDate] as DD.MM.YYYY for display.
- */
 private fun LocalDate.formatDisplay(): String =
     "${day.toString().padStart(2, '0')}." +
         "${month.number.toString().padStart(2, '0')}." +
