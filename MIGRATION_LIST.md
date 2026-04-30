@@ -261,6 +261,50 @@ The foundation/core `LocationProvider` collision question (raised in the audit p
 
 ---
 
+## Phase 3 — `composites` additions
+
+### Promotions / demotions surfaced
+
+*From phase 3 `composites`:* none. Per `COMPOSITES_AUDIT.md` §5: zero promotions, zero demotions of cross-module symbols. One symbol demoted *within* the module: `Modifier.expandableSheetDraggable` → `internal` (zero YallaClient consumers).
+
+### Pending consumers (audit decisions deferred)
+
+- **G1 — `materialIconsExtended` swap.** Composites still uses `Icons.AutoMirrored.{Filled,Default}.ArrowForward(Ios)` in 4 spots (`drawer/Navigable.kt`, `card/NavigableCard.kt`, `item/NavigableItem.kt`, `item/AddressItem.kt`). YallaIcons does not currently ship a chevron-right or arrow-right vector. Deferred until `:resources` adds the vectors; THEN composites can drop `materialIconsExtended` from its dep list. Documented in `composites/MODULE.md` notes.
+- **G4 — Shallow-test rewrite.** All 33 composites tests assert `Colors`/`Dimens`/`Defaults` data-class equality only; the state-holders (`ExpandableSheetState`, `HeaderableSheetState`, `SnackbarController`, `DeviceConnectivityState`) have zero behavioral coverage. Deferred per the same `runComposeUiTest`-infrastructure stance primitives took. Three non-composable tests (A7-A9) ARE backfilled in wave 8 (`DeviceConnectivityStateTest`, `SnackbarControllerTest`, `PaymentResourceTest`) since they don't need a Compose UI test harness.
+- **System.space.* / System.radius.* token adoption** — composites uses raw `dp` literals in every `*Defaults.dimens()` factory. Same posture as primitives (deferred). Documented.
+- **`DeviceConnectivityState` package** — currently `uz.yalla.composites.sheet`, but the class has no sheet relationship. Move to a `connectivity/` sub-package deferred — the YallaClient import-rename churn is net-negative for cosmetic gain.
+
+### Breaking changes shipped
+
+*From phase 3 `composites`:*
+
+- `92d74be26 docs(composites): strip @since tags + paraphrase KDoc per criterion 2`
+  Mechanical: 201 `@since 0.0.1` tags removed across 44 commonMain files; ~400 lines of `@param`/`@property` paraphrase KDoc on `*Colors`/`*Dimens` data classes stripped. Action: none for consumers — KDoc-only changes.
+
+- `beb58df2f refactor!(composites): tighten api/implementation split, drop 5 unused deps`
+  - **5 unused deps dropped:** `kotlinx.serialization.json`, `cupertino`, `constraintlayout`, `coil`, `coil.compose`. Net: 21 declared deps → 16. Action for YallaClient: zero — these were never transitively reachable through composites's public surface (the audit confirmed zero imports).
+  - **6 deps promoted to `api()`:** `projects.design`, `projects.resources`, `compose.runtime`, `compose.ui`, `compose.foundation`, `compose.material3`. Already in YallaClient's direct dep list, so transitive promotion is zero-impact.
+  - `materialIconsExtended` stays `implementation` pending G1.
+
+- `df4c4a66d refactor(composites): split HeaderableSheet.kt into 2 files`
+  Non-breaking: `HeaderableSheetState` class + `rememberHeaderableSheetState` factory moved to a new `composites/sheet/HeaderableSheetState.kt` (193 lines); `HeaderableSheet.kt` 376 → 218 lines. Mirrors the existing `ExpandableSheet`/`ExpandableSheetState` precedent. Public API surface unchanged — both symbols are still in `uz.yalla.composites.sheet`.
+
+- `e27982f95 refactor!(composites): A1+A11+A12+A13 — default copy, visibility, suppress`
+  - **A13 (DatePickerSheet hardcoded copy).** `DatePickerSheetState` gained `title: String? = null`; both platform actuals (`DatePickerSheet.android.kt`, `DatePickerSheet.ios.kt`) now read `state.title` instead of the hardcoded `stringResource(Res.string.register_input_birthdate)`. Null hides the header row entirely. Action: every YallaClient `DatePickerSheet` caller must pass `state.title = stringResource(Res.string.<screen-title>)` (or `null`). Same posture as primitives wave-5 default-copy neutralization.
+  - **A1 (SelectionSheet container color).** `SelectionSheetColors` data class introduced + `SelectionSheetDefaults.colors()` factory. The composable now takes a new `colors: SelectionSheetColors` param (defaulted) instead of hardcoding `System.color.background.base`. Action: callers wanting a non-default container can override; existing call sites are unaffected.
+  - **A11 (Modifier.expandableSheetDraggable → internal).** Zero YallaClient consumers verified. The modifier is plumbing for `ExpandableSheet`'s root box; consumers receive the wired sheet, not the raw modifier.
+  - **A12 (drop `@Suppress("FunctionName")` on DatePickerSheet expect/actual).** Composables ARE allowed PascalCase; the suppression and the "Kotlin compiler flags PascalCase…" comment were noise. No behavioral change.
+
+### Architectural patterns documented (no code change, MODULE.md notes)
+
+- **Coil — single-consumer absent.** Earlier revisions of `composites/AvatarCard` referenced Coil's `AsyncImage` in KDoc only (suggested-impl pattern); the actual `avatar` slot is `@Composable () -> Unit`, caller-driven. Coil deps were never functionally needed — dropped in wave 3.
+- **Material3 `Button` use in ActionPickerSheet / AddressItem (G2).** Kept. Both are structural tappable-row shapes, not CTA buttons; primitives' `PrimaryButton`/`SecondaryButton` enforce CTA shape and would conflict. Document the carve-out.
+- **`SnackbarController.sendData` (G3 RETRACTED).** The audit initially flagged it for deletion; cross-check found 8 `YallaClient/feature/home/.../HomeRoute.kt:357-413` call-sites. Kept as-is; the "redundant nullable wrapper" framing was wrong.
+- **`Sheet.kt` internal `remember { mutableStateOf(...) }`.** Acceptable carve-out from the stateless-atom rule — ephemeral nested-scroll state the caller has no business observing. Same posture as primitives' `SensitiveButton.Animatable`.
+- **`SnackbarController` is a process singleton.** Channel-based event bus; keeps semantics simple at the cost of test-isolation. `SnackbarControllerTest` (wave 8) drains the channel between cases. Refactor to injectable dep is a scope change beyond cleanup.
+
+---
+
 ## Phase status
 
 - Phase 2 `core` — done. Plan: [PHASE_2_CORE_PLAN.md](PHASE_2_CORE_PLAN.md). Audit: [CORE_AUDIT.md](CORE_AUDIT.md).
@@ -268,5 +312,5 @@ The foundation/core `LocationProvider` collision question (raised in the audit p
 - Phase 3 `design` — done. Plan: [PHASE_3_DESIGN_PLAN.md](PHASE_3_DESIGN_PLAN.md). Audit: [DESIGN_AUDIT.md](DESIGN_AUDIT.md).
 - Phase 3 `foundation` — done. Plan: [PHASE_3_FOUNDATION_PLAN.md](PHASE_3_FOUNDATION_PLAN.md). Audit: [FOUNDATION_AUDIT.md](FOUNDATION_AUDIT.md).
 - Phase 3 `primitives` — done. Plan: [PHASE_3_PRIMITIVES_PLAN.md](PHASE_3_PRIMITIVES_PLAN.md). Audit: [PRIMITIVES_AUDIT.md](PRIMITIVES_AUDIT.md).
-- Phase 3 `composites` — TODO.
+- Phase 3 `composites` — done. Plan: [PHASE_3_COMPOSITES_PLAN.md](PHASE_3_COMPOSITES_PLAN.md). Audit: [COMPOSITES_AUDIT.md](COMPOSITES_AUDIT.md).
 - Phase 4 `firebase`, `maps`, `media`, `platform` — TODO.
