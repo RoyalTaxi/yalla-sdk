@@ -17,8 +17,6 @@ Pods/
 DerivedData/
 *.xcworkspace
 *.xcuserdata/
-iosTests/.build/
-iosTests/.swiftpm/
 
 # macOS
 .DS_Store
