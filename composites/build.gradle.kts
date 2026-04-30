@@ -7,39 +7,29 @@ kotlin {
         commonMain.dependencies {
             // Yalla libraries
             api(projects.core)
+            api(projects.design)
+            api(projects.resources)
             implementation(projects.foundation)
             implementation(projects.primitives)
-            implementation(projects.design)
-            implementation(projects.resources)
             implementation(projects.platform)
 
-            // Compose
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material3)
+            // Compose — public types: @Composable + Modifier in every public
+            // composable signature; Color + Shape + Dp + TextStyle in every
+            // *Colors / *Dimens data class; layout primitives + RowScope in
+            // public slots; Surface / Icon / Text / TextField from Material3
+            // in many public composables.
+            api(compose.runtime)
+            api(compose.ui)
+            api(compose.foundation)
+            api(compose.material3)
             implementation(compose.materialIconsExtended)
             implementation(compose.components.resources)
             implementation(libs.compose.ui.tooling.preview)
 
-            // Image loading
-            implementation(libs.coil)
-            implementation(libs.coil.compose)
-
-            // Lottie animations
-            implementation(libs.compottie)
-            implementation(libs.compottie.resources)
-
-            // Layout
-            implementation(libs.constraintlayout)
-
-            // iOS-style components
-            implementation(libs.cupertino)
-
-            // Serialization & datetime
-            implementation(libs.kotlinx.serialization.json)
+            // Datetime — LocalDate fields on DatePickerSheetState
             implementation(libs.kotlinx.datetime)
 
-            // Connectivity
+            // Connectivity — DeviceConnectivityState wraps moko-connectivity
             implementation(libs.connectivity.device)
         }
 
