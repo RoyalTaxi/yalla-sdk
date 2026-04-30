@@ -807,3 +807,35 @@ These need answers before wave-2 lands:
 7. **`LocationManager.DEFAULT_LOCATION` (Tashkent center)** — keep as-is, document in `## Notes`. Confirm.
 
 8. **`LanguageOption` Phase-3 narrowing to Uzbek + Russian** — keep, document in `## Notes`. Drop the "(ADR-014)" parenthetical from the KDoc per the same posture as `core/error/DataError.kt`'s ADR-022 cleanup.
+
+---
+
+## 9. Approval (Islom, 2026-04-30)
+
+Decisions locked for waves 2-10. All gate items approved per subagent + assistant recommendations.
+
+### Gate items
+
+- **G14 — Combined dead-CompositionLocal sweep:** **DELETE all three.** ~137 lines removed: `foundation.location.LocationProvider` Composable wrapper + `LocalLocationManager` + `currentLocationManager()` (~55 lines, Koin DI is the actual injection seam); `foundation.locale.LocaleProvider` + `LocaleState` + `LocalLocaleState` + `currentLocaleState()` (~57 lines, YallaClient defines its own with Activity-recreation logic foundation's lacks); `foundation.locale.currentLocale` (~25 lines). `refactor!:` for the public-API change. Same shape as core G1 + design G9.
+- **G15 — `DataErrorMapper` interface deletion:** **APPROVED.** Delete the interface, fold `DefaultDataErrorMapper.map`'s body directly into `BaseViewModel.mapDataErrorToUserMessage`'s `protected open` default. Drop the constructor param. Subclasses still override the protected member. ~30 lines net deletion. `refactor!:`.
+- **G16 — `ExtendedLocation` demote to `internal`:** **APPROVED.** Type + `LocationManager.extendedLocation` field both `internal`. ~17 lines impact.
+- **G17 — `@Immutable` consistency:** **APPROVED, applied uniformly.** Add `@Immutable` to `Location`, `FoundLocation`, `OptionModel<T>`, and the `Selectable`-implementing `data object`s where applicable. (`ExtendedLocation` becomes internal in G16; `LocaleState` deleted in G14 — skip both.) Matches design G12 precedent.
+- **G18 — Deps cleanup:** **APPROVED.** All 17 → 11 changes:
+  - DROP 11: `projects.design`, `compose.foundation`, `compose.material3`, `koin.compose.viewmodel`, `orbit.core`, `orbit.viewmodel`, `orbit.compose`, `kotlinx.serialization.json`, `connectivity.device`, `geo.compose`, `androidx.lifecycle.viewmodel.compose`.
+  - PROMOTE 5 to `api`: `compose.runtime`, `androidx.lifecycle.runtime.compose`, `geo` (moko-geo `LocationTracker`), `kotlinx.coroutines.core` (`StateFlow`/`CoroutineScope` in public), `projects.resources` (`StringResource` in public).
+  - ADD 1: `androidx.lifecycle.viewmodel` (currently arrives transitively via the `viewmodel.compose` dep being dropped). Verify the catalog has the bare `androidx-lifecycle-viewmodel` alias; add if not.
+  - `refactor!:` for the pom.xml change.
+
+### Quick approvals
+
+- **A1.** Sweep 85 `@since` tags — wave 2.
+- **A2.** Paraphrase KDoc sweep + brand-voice MODULE.md framing drop — wave 2.
+- **A3.** No god-file splits, no `infra/` sub-package split. Wave 4 a no-op.
+- **A4.** Document `BaseViewModel + Orbit` dual-inheritance pattern, `LoadingController` try/finally carve-out, `LocationManager` runCatching system-API carve-out, foundation/core `LocationProvider` resolution — all in MODULE.md `## Notes` (wave 10).
+
+### Out of scope (kept / deferred)
+
+- **`Location.id: Int?` / `FoundLocation.id: Int?`** — defer indefinitely. Post-unwrap UI-ready types; re-wrapping at the read site adds ceremony without type safety.
+- **Inline DTO mapping in `LocationManager.kt:106-114`** (moko-geo `extLoc` → foundation `ExtendedLocation`) — defer; style polish only.
+- **`LocationManager.DEFAULT_LOCATION` (Tashkent center)** — keep, documented in MODULE.md notes (wave 10).
+- **`LanguageOption` Phase-3 narrowing** — keep, documented; drop the "(ADR-014)" parenthetical in wave 7's KDoc pass.
