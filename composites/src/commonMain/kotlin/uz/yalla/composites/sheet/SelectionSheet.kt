@@ -12,11 +12,20 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.platform.sheet.NativeSheet
+
+/**
+ * Color configuration for [SelectionSheet].
+ */
+@Immutable
+data class SelectionSheetColors(
+    val containerColor: Color,
+)
 
 /**
  * Dimension configuration for [SelectionSheet].
@@ -32,13 +41,17 @@ data class SelectionSheetDimens(
 /**
  * Default values for [SelectionSheet].
  *
- * Provides sensible defaults for [dimens] that can be overridden.
+ * Provides sensible defaults for [colors] and [dimens] that can be overridden.
  */
 object SelectionSheetDefaults {
+    @Composable
+    fun colors(
+        containerColor: Color = System.color.background.base,
+    ): SelectionSheetColors =
+        SelectionSheetColors(
+            containerColor = containerColor,
+        )
 
-    /**
-     * Creates default dimensions.
-     */
     fun dimens(
         shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
         contentPadding: PaddingValues = PaddingValues(10.dp),
@@ -81,6 +94,7 @@ object SelectionSheetDefaults {
  * ```
  *
  * @param T Item type. Must implement [equals] for selection comparison.
+ * @param colors Color configuration, defaults to [SelectionSheetDefaults.colors].
  * @param dimens Dimension configuration, defaults to [SelectionSheetDefaults.dimens].
  *
  * @see NativeSheet for the platform-native sheet primitive
@@ -88,7 +102,7 @@ object SelectionSheetDefaults {
  * @see SelectionSheetDefaults for default values
  */
 @Composable
-@Suppress("UnusedParameter") // onSelect wired by itemContent; ADR-005 slot migration in Phase 4
+@Suppress("UnusedParameter") // onSelect callback is exposed for callers that wire it through itemContent
 fun <T> SelectionSheet(
     isVisible: Boolean,
     onDismissRequest: () -> Unit,
@@ -97,6 +111,7 @@ fun <T> SelectionSheet(
     selectedItem: T,
     onSelect: (T) -> Unit,
     modifier: Modifier = Modifier,
+    colors: SelectionSheetColors = SelectionSheetDefaults.colors(),
     dimens: SelectionSheetDimens = SelectionSheetDefaults.dimens(),
     itemKey: ((T) -> Any)? = null,
     itemContent: @Composable (item: T, isSelected: Boolean) -> Unit,
@@ -104,7 +119,7 @@ fun <T> SelectionSheet(
     NativeSheet(
         isVisible = isVisible,
         shape = dimens.shape,
-        containerColor = System.color.background.base,
+        containerColor = colors.containerColor,
         onDismissRequest = onDismissRequest,
     ) {
         Column(modifier.padding(dimens.contentPadding)) {

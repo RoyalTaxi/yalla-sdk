@@ -5,11 +5,17 @@ import kotlinx.datetime.LocalDate
 
 /**
  * State for [DatePickerSheet].
+ *
+ * [title] is the localized header label (e.g. "Date of birth", "Pickup time").
+ * `null` hides the entire header row and renders only the close/done icons +
+ * the wheel picker. Caller passes a `stringResource(...)`; the composite
+ * ships no default copy.
  */
 data class DatePickerSheetState(
     val isVisible: Boolean,
     val startDate: LocalDate,
     val maxDate: LocalDate,
+    val title: String? = null,
 )
 
 /**
@@ -29,8 +35,6 @@ sealed interface DatePickerSheetEffect {
  * On Android this uses a wheel-style picker; on iOS it uses `UIDatePicker`.
  */
 @Composable
-// Kotlin compiler flags PascalCase for non-class functions; Composables use PascalCase by convention.
-@Suppress("FunctionName")
 expect fun DatePickerSheet(
     state: DatePickerSheetState,
     onEffect: (DatePickerSheetEffect) -> Unit,

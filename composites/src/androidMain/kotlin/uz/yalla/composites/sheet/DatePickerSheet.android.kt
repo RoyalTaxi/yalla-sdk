@@ -18,17 +18,12 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import dev.darkokoa.datetimewheelpicker.WheelDatePicker
 import dev.darkokoa.datetimewheelpicker.core.WheelPickerDefaults
-import org.jetbrains.compose.resources.stringResource
 import uz.yalla.design.theme.System
 import uz.yalla.platform.button.SheetIconButton
 import uz.yalla.platform.model.IconType
-import uz.yalla.resources.Res
-import uz.yalla.resources.register_input_birthdate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-// Kotlin compiler flags PascalCase for non-class functions; Composables use PascalCase by convention.
-@Suppress("FunctionName")
 actual fun DatePickerSheet(
     state: DatePickerSheetState,
     onEffect: (DatePickerSheetEffect) -> Unit,
@@ -53,11 +48,13 @@ actual fun DatePickerSheet(
                     iconType = IconType.CLOSE
                 )
 
-                Text(
-                    text = stringResource(Res.string.register_input_birthdate),
-                    color = System.color.text.base,
-                    style = System.font.body.large.medium
-                )
+                state.title?.let {
+                    Text(
+                        text = it,
+                        color = System.color.text.base,
+                        style = System.font.body.large.medium
+                    )
+                }
 
                 SheetIconButton(
                     iconType = IconType.DONE,

@@ -213,10 +213,12 @@ fun rememberExpandableSheetState(
     }
 
 /**
- * Modifier extension for anchored draggable behavior.
+ * Modifier extension wiring [ExpandableSheet]'s root box to its anchored
+ * draggable. Internal — sheet implementations consume this; consumers
+ * receive the wired sheet, not the raw modifier.
  */
 @OptIn(ExperimentalFoundationApi::class)
-fun Modifier.expandableSheetDraggable(state: ExpandableSheetState): Modifier =
+internal fun Modifier.expandableSheetDraggable(state: ExpandableSheetState): Modifier =
     this.anchoredDraggable(
         state = state.anchoredDraggableState,
         orientation = Orientation.Vertical,
