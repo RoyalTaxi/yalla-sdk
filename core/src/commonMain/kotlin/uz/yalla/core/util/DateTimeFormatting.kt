@@ -67,7 +67,15 @@ private fun Long?.toLocalDateTimeOrNull() =
                 .toLocalDateTime(TimeZone.currentSystemDefault())
         }
 
-private fun Long.normalizedEpochSeconds(): Long =
+/**
+ * Normalize a timestamp to epoch seconds.
+ *
+ * Some servers return timestamps in milliseconds, others in seconds. This
+ * detects which form by magnitude (`> 10_000_000_000L` = milliseconds since
+ * the year 2286 in seconds is unreachable; before that boundary anything
+ * larger is millis) and returns seconds either way.
+ */
+fun Long.normalizedEpochSeconds(): Long =
     if (this > 10_000_000_000L) {
         this / 1000
     } else {
