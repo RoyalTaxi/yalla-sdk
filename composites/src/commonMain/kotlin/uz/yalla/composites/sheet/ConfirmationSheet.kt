@@ -128,6 +128,13 @@ object ConfirmationSheetDefaults {
  *
  * @param colors Color configuration, defaults to [ConfirmationSheetDefaults.colors].
  * @param dimens Dimension configuration, defaults to [ConfirmationSheetDefaults.dimens].
+ * @param dismissEnabled When `false`, hides the sheet header (no close button) and
+ *   ignores tap-outside / drag-down dismissal — the only way to advance is via the
+ *   action button. Use for blocker sheets (no-internet, force-update). Defaults to `true`.
+ * @param onDismissAttempt Called when the user tries to dismiss while [dismissEnabled]
+ *   is `false`. Useful for analytics or showing why the sheet can't be closed.
+ * @param actionLoading When `true`, the action button shows a loading indicator and
+ *   is non-interactive. Defaults to `false`.
  *
  * @see ConfirmationSheetDefaults for default values
  */
@@ -145,6 +152,9 @@ fun ConfirmationSheet(
     sheetName: String? = null,
     colors: ConfirmationSheetColors = ConfirmationSheetDefaults.colors(),
     dimens: ConfirmationSheetDimens = ConfirmationSheetDefaults.dimens(),
+    dismissEnabled: Boolean = true,
+    onDismissAttempt: () -> Unit = {},
+    actionLoading: Boolean = false,
 ) {
     Sheet(
         isVisible = isVisible,
@@ -153,17 +163,21 @@ fun ConfirmationSheet(
         colors = SheetDefaults.colors(container = colors.container),
         dimens = SheetDefaults.dimens(shape = dimens.shape),
         dragHandle = null,
+        dismissEnabled = dismissEnabled,
+        onDismissAttempt = onDismissAttempt,
     ) {
         Column(modifier = Modifier.background(colors.container)) {
             Spacer(Modifier.height(dimens.headerTopPadding))
 
-            SheetHeader(
-                onClose = onDismissRequest,
-                title = sheetName,
-                dimens = SheetHeaderDefaults.dimens(
-                    contentPadding = PaddingValues(horizontal = dimens.headerHorizontalPadding),
-                ),
-            )
+            if (dismissEnabled) {
+                SheetHeader(
+                    onClose = onDismissRequest,
+                    title = sheetName,
+                    dimens = SheetHeaderDefaults.dimens(
+                        contentPadding = PaddingValues(horizontal = dimens.headerHorizontalPadding),
+                    ),
+                )
+            }
 
             Spacer(Modifier.height(dimens.contentTopPadding))
 
@@ -206,6 +220,7 @@ fun ConfirmationSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = dimens.actionHorizontalPadding),
+                loading = actionLoading,
             ) {
                 Text(actionText)
             }

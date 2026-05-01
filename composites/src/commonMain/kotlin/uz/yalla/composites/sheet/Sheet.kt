@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -134,7 +135,7 @@ fun Sheet(
     isVisible: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+    sheetState: SheetState? = null,
     colors: SheetColors = SheetDefaults.colors(),
     dimens: SheetDimens = SheetDefaults.dimens(),
     dragHandle: @Composable (() -> Unit)? = { SheetDragHandle() },
@@ -142,22 +143,42 @@ fun Sheet(
     properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties,
     snackbarHost: @Composable (() -> Unit)? = null,
     onFullyExpanded: (() -> Unit)? = null,
+    dismissEnabled: Boolean = true,
+    onDismissAttempt: () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit,
 ) {
     var shouldShow by remember { mutableStateOf(false) }
+    val currentDismissEnabled by rememberUpdatedState(dismissEnabled)
+    val currentIsVisible by rememberUpdatedState(isVisible)
+    val currentOnDismissAttempt by rememberUpdatedState(onDismissAttempt)
+    val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
+
+    val resolvedSheetState =
+        sheetState ?: rememberModalBottomSheetState(
+            skipPartiallyExpanded = true,
+            confirmValueChange = { value ->
+                val isHiding = value == SheetValue.Hidden
+                if (!currentDismissEnabled && currentIsVisible && isHiding) {
+                    currentOnDismissAttempt()
+                    false
+                } else {
+                    true
+                }
+            },
+        )
 
     LaunchedEffect(isVisible) {
         if (isVisible) {
             shouldShow = true
         } else if (shouldShow) {
-            sheetState.hide()
+            resolvedSheetState.hide()
             shouldShow = false
         }
     }
 
-    LaunchedEffect(sheetState, onFullyExpanded) {
+    LaunchedEffect(resolvedSheetState, onFullyExpanded) {
         if (onFullyExpanded == null) return@LaunchedEffect
-        snapshotFlow { sheetState.currentValue to sheetState.targetValue }
+        snapshotFlow { resolvedSheetState.currentValue to resolvedSheetState.targetValue }
             .distinctUntilChanged()
             .filter { (current, target) -> current == SheetValue.Expanded && current == target }
             .collect { onFullyExpanded() }
@@ -166,11 +187,15 @@ fun Sheet(
     if (shouldShow) {
         ModalBottomSheet(
             onDismissRequest = {
-                shouldShow = false
-                onDismissRequest()
+                if (currentDismissEnabled) {
+                    shouldShow = false
+                    currentOnDismissRequest()
+                } else {
+                    currentOnDismissAttempt()
+                }
             },
             modifier = modifier,
-            sheetState = sheetState,
+            sheetState = resolvedSheetState,
             sheetMaxWidth = dimens.maxWidth,
             shape = dimens.shape,
             containerColor = colors.container,
