@@ -18,6 +18,7 @@ actual fun Marker(
     anchor: Offset,
     flat: Boolean,
     rotation: Float,
+    clickable: Boolean,
 ) {
     val mapApplier =
         currentComposer.applier as? MapApplier
@@ -36,6 +37,7 @@ actual fun Marker(
                     this.flat = flat
                     this.icon = icon?.uiImage
                     this.rotation = rotation.toDouble()
+                    this.tappable = clickable
                     this.map = mapApplier.mapView
                 }
 
@@ -51,6 +53,7 @@ actual fun Marker(
             update(flat) { this.marker.flat = it }
             update(icon) { this.marker.icon = it?.uiImage }
             update(rotation) { this.marker.rotation = it.toDouble() }
+            update(clickable) { this.marker.tappable = it }
         }
     )
 }

@@ -18,6 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -80,6 +82,7 @@ internal fun PinContent(
                     Image(
                         painter = painterResource(Res.drawable.img_spinner),
                         contentDescription = null,
+                        colorFilter = ColorFilter.tint(colors.icon, BlendMode.SrcIn),
                         modifier =
                             Modifier
                                 .size(18.dp)

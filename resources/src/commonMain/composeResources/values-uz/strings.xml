@@ -266,8 +266,8 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <!-- Location Input -->
-    <string name="order_destination_hint">Qaerga boramiz?</string>
-    <string name="order_destination_short">Qaerga boramiz?</string>
+    <string name="order_destination_hint">Qayerga boramiz?</string>
+    <string name="order_destination_short">Qayerga boramiz?</string>
     <string name="order_location_not_found">Biz bu manzilni topolmadik.\nIltimos, qayta urinib koʻring.</string>
     <string name="order_location_set_mark">Belgi qoʻyish</string>
     <string name="order_location_not_supported">{0} taksi xizmati tomonidan qoʻllab-quvvatlanmaydi</string>

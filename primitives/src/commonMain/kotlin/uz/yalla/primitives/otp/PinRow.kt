@@ -148,7 +148,10 @@ fun PinRow(
     val scaleAnim = remember { Animatable(1f) }
 
     LaunchedEffect(isError) {
-        if (!isError) return@LaunchedEffect
+        if (!isError) {
+            shakeOffset.snapTo(0f)
+            return@LaunchedEffect
+        }
         repeat(3) {
             shakeOffset.animateTo(10f, tween(40))
             shakeOffset.animateTo(-10f, tween(40))
