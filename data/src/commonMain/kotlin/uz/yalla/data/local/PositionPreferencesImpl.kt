@@ -7,8 +7,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.yalla.core.preferences.PositionPreferences
 import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.preferences.PositionPreferences
 
 /**
  * [DataStore]-backed implementation of [PositionPreferences].
@@ -23,7 +23,7 @@ import uz.yalla.core.geo.GeoPoint
  */
 internal class PositionPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope
 ) : PositionPreferences {
     override val lastMapPosition: Flow<GeoPoint> =
         dataStore.data.map { parseGeoPoint(it[PreferenceKeys.LAST_MAP_POSITION]) }
@@ -38,7 +38,7 @@ internal class PositionPreferencesImpl(
         dataStore.data.map { prefs ->
             parseGeoPoint(
                 raw = prefs[PreferenceKeys.LAST_GPS_POSITION],
-                fallbackRaw = prefs[PreferenceKeys.LAST_MAP_POSITION],
+                fallbackRaw = prefs[PreferenceKeys.LAST_MAP_POSITION]
             )
         }
 
@@ -62,7 +62,7 @@ internal class PositionPreferencesImpl(
  */
 internal fun parseGeoPoint(
     raw: String?,
-    fallbackRaw: String? = null,
+    fallbackRaw: String? = null
 ): GeoPoint {
     val source = raw?.takeIf { it.isNotBlank() } ?: fallbackRaw.orEmpty()
     val parts = source.split(",", limit = 2)

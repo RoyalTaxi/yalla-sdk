@@ -21,8 +21,7 @@ class FakePermissionsController : PermissionsControllerProtocol {
 
     override suspend fun isPermissionGranted(permission: Permission): Boolean = true
 
-    override suspend fun getPermissionState(permission: Permission): PermissionState =
-        PermissionState.Granted
+    override suspend fun getPermissionState(permission: Permission): PermissionState = PermissionState.Granted
 
     override fun openAppSettings() {
         // No-op

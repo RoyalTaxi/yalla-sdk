@@ -9,24 +9,25 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class SnackbarColorsTest {
-
-    private val colors = SnackbarColors(
-        container = Color.Green,
-        iconBackground = Color.White,
-        icon = Color.Black,
-        text = Color.Black,
-        dismissIcon = Color.Gray,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = SnackbarColors(
+    private val colors =
+        SnackbarColors(
             container = Color.Green,
             iconBackground = Color.White,
             icon = Color.Black,
             text = Color.Black,
-            dismissIcon = Color.Gray,
+            dismissIcon = Color.Gray
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            SnackbarColors(
+                container = Color.Green,
+                iconBackground = Color.White,
+                icon = Color.Black,
+                text = Color.Black,
+                dismissIcon = Color.Gray
+            )
         assertEquals(colors, other)
     }
 
@@ -65,7 +66,6 @@ class SnackbarColorsTest {
 }
 
 class SnackbarDimensTest {
-
     @Test
     fun defaults_areNonNull() {
         val dimens = SnackbarDefaults.dimens()

@@ -29,7 +29,7 @@ enum class ExpandableSheetValue {
     Collapsed,
 
     /** Sheet is fully expanded showing the expanded content. */
-    Expanded,
+    Expanded
 }
 
 /**
@@ -62,7 +62,7 @@ class ExpandableSheetState internal constructor(
     val snapAnimationSpec: AnimationSpec<Float>,
     internal val density: Density,
     /** Threshold function for determining snap position. */
-    val positionalThreshold: (totalDistance: Float) -> Float = { it * 0.5f },
+    val positionalThreshold: (totalDistance: Float) -> Float = { it * 0.5f }
 ) {
     internal var collapsedHeightPx by mutableFloatStateOf(0f)
     internal var expandedHeightPx by mutableFloatStateOf(0f)
@@ -148,7 +148,7 @@ class ExpandableSheetState internal constructor(
     fun updateHeights(
         collapsedHeightPx: Int,
         expandedHeightPx: Int,
-        footerHeightPx: Int,
+        footerHeightPx: Int
     ) {
         this.collapsedHeightPx = collapsedHeightPx.toFloat()
         this.expandedHeightPx = expandedHeightPx.toFloat()
@@ -180,12 +180,13 @@ class ExpandableSheetState internal constructor(
 }
 
 /**
- * Spring animation for expandable sheet.
+ * Spring animation for expandable sheet — critically damped (no overshoot)
+ * to match Material 3 ModalBottomSheet feel.
  */
 val ExpandableSheetSpringSpec: AnimationSpec<Float> =
     spring(
-        dampingRatio = Spring.DampingRatioMediumBouncy,
-        stiffness = Spring.StiffnessMedium,
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMedium
     )
 
 /**
@@ -201,14 +202,14 @@ fun rememberExpandableSheetState(
     initialValue: ExpandableSheetValue = ExpandableSheetValue.Collapsed,
     snapAnimationSpec: AnimationSpec<Float> = ExpandableSheetSpringSpec,
     density: Density = LocalDensity.current,
-    positionalThreshold: (totalDistance: Float) -> Float = { it * 0.5f },
+    positionalThreshold: (totalDistance: Float) -> Float = { it * 0.5f }
 ): ExpandableSheetState =
     remember {
         ExpandableSheetState(
             initialValue = initialValue,
             snapAnimationSpec = snapAnimationSpec,
             density = density,
-            positionalThreshold = positionalThreshold,
+            positionalThreshold = positionalThreshold
         )
     }
 
@@ -221,5 +222,5 @@ fun rememberExpandableSheetState(
 internal fun Modifier.expandableSheetDraggable(state: ExpandableSheetState): Modifier =
     this.anchoredDraggable(
         state = state.anchoredDraggableState,
-        orientation = Orientation.Vertical,
+        orientation = Orientation.Vertical
     )

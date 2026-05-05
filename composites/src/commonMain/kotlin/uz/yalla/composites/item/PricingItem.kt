@@ -29,7 +29,7 @@ data class PricingItemColors(
     val selectedContainer: Color,
     val name: Color,
     val price: Color,
-    val selectedBorder: Brush,
+    val selectedBorder: Brush
 )
 
 /**
@@ -44,14 +44,13 @@ data class PricingItemDimens(
     val selectedBorderWidth: Dp,
     val namePriceSpacing: Dp,
     val priceImageSpacing: Dp,
-    val textMaxLines: Int,
+    val textMaxLines: Int
 )
 
 /**
  * Default configuration values for [PricingItem].
  */
 object PricingItemDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
@@ -61,13 +60,13 @@ object PricingItemDefaults {
         selectedContainer: Color = System.color.background.base,
         name: Color = System.color.text.base,
         price: Color = System.color.text.base,
-        selectedBorder: Brush = System.color.gradient.sunsetNight,
+        selectedBorder: Brush = System.color.gradient.sunsetNight
     ) = PricingItemColors(
         container = container,
         selectedContainer = selectedContainer,
         name = name,
         price = price,
-        selectedBorder = selectedBorder,
+        selectedBorder = selectedBorder
     )
 
     /**
@@ -81,7 +80,7 @@ object PricingItemDefaults {
         selectedBorderWidth: Dp = 2.dp,
         namePriceSpacing: Dp = 6.dp,
         priceImageSpacing: Dp = 10.dp,
-        textMaxLines: Int = 1,
+        textMaxLines: Int = 1
     ) = PricingItemDimens(
         shape = shape,
         height = height,
@@ -90,7 +89,7 @@ object PricingItemDefaults {
         selectedBorderWidth = selectedBorderWidth,
         namePriceSpacing = namePriceSpacing,
         priceImageSpacing = priceImageSpacing,
-        textMaxLines = textMaxLines,
+        textMaxLines = textMaxLines
     )
 }
 
@@ -132,7 +131,7 @@ fun PricingItem(
     modifier: Modifier = Modifier,
     image: (@Composable () -> Unit)? = null,
     colors: PricingItemColors = PricingItemDefaults.colors(),
-    dimens: PricingItemDimens = PricingItemDefaults.dimens(),
+    dimens: PricingItemDimens = PricingItemDefaults.dimens()
 ) {
     Card(
         onClick = onClick,
@@ -148,17 +147,17 @@ fun PricingItem(
                         colors.selectedContainer
                     } else {
                         colors.container
-                    },
+                    }
             ),
         border =
             if (selected) {
                 BorderStroke(
                     width = dimens.selectedBorderWidth,
-                    brush = colors.selectedBorder,
+                    brush = colors.selectedBorder
                 )
             } else {
                 null
-            },
+            }
     ) {
         Column(modifier = Modifier.padding(dimens.contentPadding)) {
             ProvideTextStyle(

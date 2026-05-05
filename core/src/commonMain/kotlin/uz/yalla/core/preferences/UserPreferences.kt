@@ -15,7 +15,6 @@ import uz.yalla.core.payment.PaymentKind
  * @see SessionPreferences.clearSession
  */
 interface UserPreferences {
-
     /** User's first name, cached locally from the profile API. */
     val firstName: Flow<String>
 
@@ -23,10 +22,12 @@ interface UserPreferences {
 
     /** User's last name, cached locally from the profile API. */
     val lastName: Flow<String>
+
     fun setLastName(value: String)
 
     /** User's phone number (primary identifier). */
     val number: Flow<String>
+
     fun setNumber(value: String)
 
     /**
@@ -35,5 +36,6 @@ interface UserPreferences {
      * Defaults to [PaymentKind.Cash] if no preference has been set.
      */
     val paymentType: Flow<PaymentKind>
+
     fun setPaymentType(value: PaymentKind)
 }

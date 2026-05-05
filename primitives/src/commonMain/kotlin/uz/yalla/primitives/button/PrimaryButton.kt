@@ -29,15 +29,13 @@ data class PrimaryButtonColors(
     val containerColor: Color,
     val contentColor: Color,
     val disabledContainerColor: Color,
-    val disabledContentColor: Color,
+    val disabledContentColor: Color
 ) {
     /** Resolves container color based on [enabled] state. */
-    fun containerColor(enabled: Boolean): Color =
-        if (enabled) containerColor else disabledContainerColor
+    fun containerColor(enabled: Boolean): Color = if (enabled) containerColor else disabledContainerColor
 
     /** Resolves content color based on [enabled] state. */
-    fun contentColor(enabled: Boolean): Color =
-        if (enabled) contentColor else disabledContentColor
+    fun contentColor(enabled: Boolean): Color = if (enabled) contentColor else disabledContentColor
 }
 
 /**
@@ -50,7 +48,7 @@ data class PrimaryButtonDimens(
     val minHeight: Dp,
     val contentPadding: PaddingValues,
     val shape: Shape,
-    val iconSpacing: Dp,
+    val iconSpacing: Dp
 )
 
 /**
@@ -114,7 +112,7 @@ fun PrimaryButton(
     dimens: PrimaryButtonDimens = PrimaryButtonDefaults.dimens(),
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     val isInteractive = enabled && !loading
     ButtonLayout(
@@ -130,7 +128,7 @@ fun PrimaryButton(
         iconSpacing = dimens.iconSpacing,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
-        content = content,
+        content = content
     )
 }
 
@@ -155,26 +153,28 @@ object PrimaryButtonDefaults {
         containerColor: Color = System.color.button.active,
         contentColor: Color = System.color.text.white,
         disabledContainerColor: Color = System.color.button.disabled,
-        disabledContentColor: Color = System.color.text.white,
-    ): PrimaryButtonColors = PrimaryButtonColors(
-        containerColor = containerColor,
-        contentColor = contentColor,
-        disabledContainerColor = disabledContainerColor,
-        disabledContentColor = disabledContentColor,
-    )
+        disabledContentColor: Color = System.color.text.white
+    ): PrimaryButtonColors =
+        PrimaryButtonColors(
+            containerColor = containerColor,
+            contentColor = contentColor,
+            disabledContainerColor = disabledContainerColor,
+            disabledContentColor = disabledContentColor
+        )
 
     /** Creates [PrimaryButtonDimens] with standard values. */
     fun dimens(
         minHeight: Dp = MinHeight,
         contentPadding: PaddingValues = ContentPadding,
         shape: Shape = Shape,
-        iconSpacing: Dp = 8.dp,
-    ): PrimaryButtonDimens = PrimaryButtonDimens(
-        minHeight = minHeight,
-        contentPadding = contentPadding,
-        shape = shape,
-        iconSpacing = iconSpacing,
-    )
+        iconSpacing: Dp = 8.dp
+    ): PrimaryButtonDimens =
+        PrimaryButtonDimens(
+            minHeight = minHeight,
+            contentPadding = contentPadding,
+            shape = shape,
+            iconSpacing = iconSpacing
+        )
 }
 
 @Preview

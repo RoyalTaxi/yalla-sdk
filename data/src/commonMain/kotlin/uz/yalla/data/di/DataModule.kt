@@ -49,17 +49,18 @@ import uz.yalla.data.util.ioDispatcher
  * @see uz.yalla.data.local.createDataStore
  * @see uz.yalla.data.local.createSettings
  */
-val dataModule = module {
-    single { createDataStore() }
-    single { createSettings() }
-    // Default process-lifetime scope; override at the consumer level for per-lifecycle clients.
-    // See ADR-011 (docs/06-DECISIONS.md).
-    single { CoroutineScope(ioDispatcher + SupervisorJob()) }
+val dataModule =
+    module {
+        single { createDataStore() }
+        single { createSettings() }
+        // Default process-lifetime scope; override at the consumer level for per-lifecycle clients.
+        // See ADR-011 (docs/06-DECISIONS.md).
+        single { CoroutineScope(ioDispatcher + SupervisorJob()) }
 
-    single<StaticPreferences> { StaticPreferencesImpl(get()) }
-    single<SessionPreferences> { SessionPreferencesImpl(get(), get(), get()) }
-    single<UserPreferences> { UserPreferencesImpl(get(), get()) }
-    single<ConfigPreferences> { ConfigPreferencesImpl(get(), get()) }
-    single<InterfacePreferences> { InterfacePreferencesImpl(get(), get(), get()) }
-    single<PositionPreferences> { PositionPreferencesImpl(get(), get()) }
-}
+        single<StaticPreferences> { StaticPreferencesImpl(get()) }
+        single<SessionPreferences> { SessionPreferencesImpl(get(), get(), get()) }
+        single<UserPreferences> { UserPreferencesImpl(get(), get()) }
+        single<ConfigPreferences> { ConfigPreferencesImpl(get(), get()) }
+        single<InterfacePreferences> { InterfacePreferencesImpl(get(), get(), get()) }
+        single<PositionPreferences> { PositionPreferencesImpl(get(), get()) }
+    }

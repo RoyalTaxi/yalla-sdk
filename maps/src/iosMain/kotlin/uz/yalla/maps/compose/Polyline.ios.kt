@@ -38,7 +38,7 @@ actual fun Polyline(
     endCap: Cap,
     jointType: JointType,
     startCap: Cap,
-    width: Float,
+    width: Float
 ) {
     val mapApplier = currentComposer.applier as? MapApplier ?: return
 

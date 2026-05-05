@@ -11,7 +11,6 @@ import kotlin.test.assertNotNull
  * in pure common code and that associated sealed types have the expected cases.
  */
 class YallaAnalyticsTest {
-
     @Test
     fun shouldInstantiateWithoutThrowing() {
         // YallaAnalytics defers SDK access to the internal `analytics` lazy property;

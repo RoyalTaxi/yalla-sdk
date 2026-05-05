@@ -61,8 +61,7 @@ fun Pair<Double, Double>.isNonZero(): Boolean = first != 0.0 && second != 0.0
  *
  * @return `true` when both components are within valid geographic ranges.
  */
-fun Pair<Double, Double>.isValid(): Boolean =
-    first in -90.0..90.0 && second in -180.0..180.0
+fun Pair<Double, Double>.isValid(): Boolean = first in -90.0..90.0 && second in -180.0..180.0
 
 /**
  * Returns `true` if neither latitude nor longitude is zero, indicating a non-sentinel coordinate.
@@ -189,7 +188,7 @@ fun normalizeHeading(heading: Float): Float {
  */
 fun shortestHeadingPath(
     current: Float,
-    target: Float,
+    target: Float
 ): Float {
     val normalizedCurrent = normalizeHeading(current)
     val normalizedTarget = normalizeHeading(target)

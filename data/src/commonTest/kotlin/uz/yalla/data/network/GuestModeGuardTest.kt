@@ -23,51 +23,56 @@ class GuestModeGuardTest {
         }
 
     @Test
-    fun shouldAllowAllRequestsWhenNotInGuestMode() = runTest {
-        guestMode.value = false
-        val client = createClient()
+    fun shouldAllowAllRequestsWhenNotInGuestMode() =
+        runTest {
+            guestMode.value = false
+            val client = createClient()
 
-        val response = client.get("/api/restricted-endpoint")
+            val response = client.get("/api/restricted-endpoint")
 
-        assertIs<Unit>(Unit) // no exception thrown
-    }
-
-    @Test
-    fun shouldAllowWhitelistedSegmentsInGuestMode() = runTest {
-        guestMode.value = true
-        val client = createClient()
-
-        client.get("/api/client")
-        client.get("/api/v1/valid")
-        // no exception — both are allowed
-    }
-
-    @Test
-    fun shouldBlockNonWhitelistedSegmentsInGuestMode() = runTest {
-        guestMode.value = true
-        val client = createClient()
-
-        assertFailsWith<GuestBlockedException> {
-            client.get("/api/orders")
+            assertIs<Unit>(Unit) // no exception thrown
         }
-    }
 
     @Test
-    fun shouldMatchOnlyLastPathSegment() = runTest {
-        guestMode.value = true
-        val client = createClient(allowedSegments = setOf("allowed"))
+    fun shouldAllowWhitelistedSegmentsInGuestMode() =
+        runTest {
+            guestMode.value = true
+            val client = createClient()
 
-        assertFailsWith<GuestBlockedException> {
-            client.get("/allowed/not-allowed")
+            client.get("/api/client")
+            client.get("/api/v1/valid")
+            // no exception — both are allowed
         }
-    }
 
     @Test
-    fun shouldHandleTrailingSlash() = runTest {
-        guestMode.value = true
-        val client = createClient(allowedSegments = setOf("client"))
+    fun shouldBlockNonWhitelistedSegmentsInGuestMode() =
+        runTest {
+            guestMode.value = true
+            val client = createClient()
 
-        client.get("/api/client/")
-        // no exception — trailing slash is trimmed
-    }
+            assertFailsWith<GuestBlockedException> {
+                client.get("/api/orders")
+            }
+        }
+
+    @Test
+    fun shouldMatchOnlyLastPathSegment() =
+        runTest {
+            guestMode.value = true
+            val client = createClient(allowedSegments = setOf("allowed"))
+
+            assertFailsWith<GuestBlockedException> {
+                client.get("/allowed/not-allowed")
+            }
+        }
+
+    @Test
+    fun shouldHandleTrailingSlash() =
+        runTest {
+            guestMode.value = true
+            val client = createClient(allowedSegments = setOf("client"))
+
+            client.get("/api/client/")
+            // no exception — trailing slash is trimmed
+        }
 }

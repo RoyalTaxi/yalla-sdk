@@ -32,5 +32,9 @@ interface ScreenProvider<C : Route> {
 
     /** Render the screen content for [route]. */
     @Composable
-    fun Content(route: C, navigator: Navigator, toolbarState: ToolbarState)
+    fun Content(
+        route: C,
+        navigator: Navigator,
+        toolbarState: ToolbarState
+    )
 }

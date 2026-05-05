@@ -31,5 +31,5 @@ import uz.yalla.core.geo.GeoPoint
 public data class LocationsOverlayConfig(
     val locations: List<GeoPoint>,
     val startLabel: String? = null,
-    val endLabel: String? = null,
+    val endLabel: String? = null
 )

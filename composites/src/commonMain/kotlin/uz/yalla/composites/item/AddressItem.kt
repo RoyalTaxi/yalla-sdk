@@ -40,7 +40,7 @@ data class AddressItemColors(
     val container: Color,
     val placeholder: Color,
     val location: Color,
-    val arrow: Color,
+    val arrow: Color
 )
 
 /**
@@ -55,14 +55,13 @@ data class AddressItemDimens(
     val dotSize: Dp,
     val dotBorderWidth: Dp,
     val horizontalPadding: Dp,
-    val locationMaxLines: Int,
+    val locationMaxLines: Int
 )
 
 /**
  * Default configuration values for [AddressItem] and [AddressDot].
  */
 object AddressItemDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
@@ -71,12 +70,12 @@ object AddressItemDefaults {
         container: Color = System.color.background.secondary,
         placeholder: Color = System.color.text.subtle,
         location: Color = System.color.text.base,
-        arrow: Color = System.color.icon.subtle,
+        arrow: Color = System.color.icon.subtle
     ) = AddressItemColors(
         container = container,
         placeholder = placeholder,
         location = location,
-        arrow = arrow,
+        arrow = arrow
     )
 
     /**
@@ -90,7 +89,7 @@ object AddressItemDefaults {
         dotSize: Dp = 14.dp,
         dotBorderWidth: Dp = 4.dp,
         horizontalPadding: Dp = 16.dp,
-        locationMaxLines: Int = 1,
+        locationMaxLines: Int = 1
     ) = AddressItemDimens(
         shape = shape,
         minHeight = minHeight,
@@ -99,7 +98,7 @@ object AddressItemDefaults {
         dotSize = dotSize,
         dotBorderWidth = dotBorderWidth,
         horizontalPadding = horizontalPadding,
-        locationMaxLines = locationMaxLines,
+        locationMaxLines = locationMaxLines
     )
 }
 
@@ -139,7 +138,7 @@ fun AddressItem(
     leadingContent: (@Composable () -> Unit)? = null,
     trailingContent: (@Composable () -> Unit)? = null,
     colors: AddressItemColors = AddressItemDefaults.colors(),
-    dimens: AddressItemDimens = AddressItemDefaults.dimens(),
+    dimens: AddressItemDimens = AddressItemDefaults.dimens()
 ) {
     Button(
         onClick = onClick,
@@ -147,17 +146,17 @@ fun AddressItem(
         shape = dimens.shape,
         colors =
             ButtonDefaults.buttonColors(
-                containerColor = colors.container,
+                containerColor = colors.container
             ),
         contentPadding =
             PaddingValues(
                 start = dimens.horizontalPadding,
-                end = 8.dp,
-            ),
+                end = 8.dp
+            )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing),
+            horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing)
         ) {
             leadingContent?.invoke()
 
@@ -214,7 +213,7 @@ fun AddressItem(
     leadingContent: (@Composable () -> Unit)? = null,
     trailingContent: (@Composable () -> Unit)? = null,
     colors: AddressItemColors = AddressItemDefaults.colors(),
-    dimens: AddressItemDimens = AddressItemDefaults.dimens(),
+    dimens: AddressItemDimens = AddressItemDefaults.dimens()
 ) {
     Card(
         onClick = onClick,
@@ -222,8 +221,8 @@ fun AddressItem(
         shape = dimens.shape,
         colors =
             CardDefaults.cardColors(
-                containerColor = colors.container,
-            ),
+                containerColor = colors.container
+            )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -231,7 +230,7 @@ fun AddressItem(
             modifier =
                 Modifier
                     .heightIn(min = dimens.minHeight)
-                    .padding(start = dimens.horizontalPadding, end = 8.dp),
+                    .padding(start = dimens.horizontalPadding, end = 8.dp)
         ) {
             leadingContent?.invoke()
 
@@ -249,7 +248,7 @@ fun AddressItem(
                     modifier = Modifier.weight(1f),
                     verticalArrangement = Arrangement.spacedBy(dimens.flowRowSpacing),
                     horizontalArrangement = Arrangement.spacedBy(dimens.flowRowSpacing),
-                    itemVerticalAlignment = Alignment.CenterVertically,
+                    itemVerticalAlignment = Alignment.CenterVertically
                 ) {
                     locations.forEachIndexed { index, location ->
                         Text(
@@ -257,14 +256,14 @@ fun AddressItem(
                             color = colors.location,
                             style = System.font.body.base.bold,
                             overflow = TextOverflow.Ellipsis,
-                            maxLines = dimens.locationMaxLines,
+                            maxLines = dimens.locationMaxLines
                         )
 
                         if (index != locations.lastIndex) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowForward,
                                 contentDescription = null,
-                                tint = colors.arrow,
+                                tint = colors.arrow
                             )
                         }
                     }
@@ -290,7 +289,7 @@ fun AddressItem(
 fun AddressDot(
     color: Color,
     modifier: Modifier = Modifier,
-    dimens: AddressItemDimens = AddressItemDefaults.dimens(),
+    dimens: AddressItemDimens = AddressItemDefaults.dimens()
 ) {
     Box(
         modifier =
@@ -298,11 +297,11 @@ fun AddressDot(
                 .size(dimens.dotSize)
                 .background(
                     color = System.color.icon.white,
-                    shape = CircleShape,
+                    shape = CircleShape
                 ).border(
                     width = dimens.dotBorderWidth,
                     color = color,
-                    shape = CircleShape,
-                ),
+                    shape = CircleShape
+                )
     )
 }

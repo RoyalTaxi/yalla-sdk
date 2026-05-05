@@ -31,7 +31,7 @@ import uz.yalla.resources.icons.YallaIcons
 @Immutable
 data class SelectionCardColors(
     val container: Color,
-    val iconBackground: Color,
+    val iconBackground: Color
 )
 
 /**
@@ -44,25 +44,25 @@ data class SelectionCardDimens(
     val iconShape: Shape,
     val iconPadding: Dp,
     val iconSpacing: Dp,
-    val trailingSpacing: Dp,
+    val trailingSpacing: Dp
 )
 
 /**
  * Default configuration values for [SelectionCard].
  */
 object SelectionCardDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        iconBackground: Color = System.color.background.secondary,
-    ): SelectionCardColors = SelectionCardColors(
-        container = container,
-        iconBackground = iconBackground,
-    )
+        iconBackground: Color = System.color.background.secondary
+    ): SelectionCardColors =
+        SelectionCardColors(
+            container = container,
+            iconBackground = iconBackground
+        )
 
     /**
      * Creates default dimensions.
@@ -73,15 +73,16 @@ object SelectionCardDefaults {
         iconShape: Shape = RoundedCornerShape(10.dp),
         iconPadding: Dp = 10.dp,
         iconSpacing: Dp = 16.dp,
-        trailingSpacing: Dp = 28.dp,
-    ): SelectionCardDimens = SelectionCardDimens(
-        contentPadding = contentPadding,
-        iconSize = iconSize,
-        iconShape = iconShape,
-        iconPadding = iconPadding,
-        iconSpacing = iconSpacing,
-        trailingSpacing = trailingSpacing,
-    )
+        trailingSpacing: Dp = 28.dp
+    ): SelectionCardDimens =
+        SelectionCardDimens(
+            contentPadding = contentPadding,
+            iconSize = iconSize,
+            iconShape = iconShape,
+            iconPadding = iconPadding,
+            iconSpacing = iconSpacing,
+            trailingSpacing = trailingSpacing
+        )
 }
 
 /**
@@ -117,29 +118,32 @@ fun SelectionCard(
     colors: SelectionCardColors = SelectionCardDefaults.colors(),
     dimens: SelectionCardDimens = SelectionCardDefaults.dimens(),
     leadingIcon: @Composable (() -> Unit)? = null,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ContentCard(
         modifier = modifier,
         onClick = onClick,
         enabled = enabled,
-        colors = ContentCardDefaults.colors(
-            container = colors.container,
-            disabledContainer = colors.container,
-        ),
-        dimens = ContentCardDefaults.dimens(
-            contentPadding = dimens.contentPadding,
-        ),
+        colors =
+            ContentCardDefaults.colors(
+                container = colors.container,
+                disabledContainer = colors.container
+            ),
+        dimens =
+            ContentCardDefaults.dimens(
+                contentPadding = dimens.contentPadding
+            )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (leadingIcon != null) {
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(dimens.iconSize)
-                        .clip(dimens.iconShape)
-                        .background(colors.iconBackground)
-                        .padding(dimens.iconPadding),
+                    modifier =
+                        Modifier
+                            .size(dimens.iconSize)
+                            .clip(dimens.iconShape)
+                            .background(colors.iconBackground)
+                            .padding(dimens.iconPadding)
                 ) {
                     leadingIcon()
                 }
@@ -154,11 +158,12 @@ fun SelectionCard(
             Spacer(Modifier.width(dimens.trailingSpacing))
 
             Icon(
-                painter = rememberVectorPainter(
-                    if (selected) YallaIcons.Checked else YallaIcons.Unchecked,
-                ),
+                painter =
+                    rememberVectorPainter(
+                        if (selected) YallaIcons.Checked else YallaIcons.Unchecked
+                    ),
                 contentDescription = null,
-                tint = Color.Unspecified,
+                tint = Color.Unspecified
             )
         }
     }

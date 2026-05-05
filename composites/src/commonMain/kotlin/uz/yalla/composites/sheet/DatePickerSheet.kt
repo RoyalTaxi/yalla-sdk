@@ -15,7 +15,7 @@ data class DatePickerSheetState(
     val isVisible: Boolean,
     val startDate: LocalDate,
     val maxDate: LocalDate,
-    val title: String? = null,
+    val title: String? = null
 )
 
 /**
@@ -26,7 +26,9 @@ sealed interface DatePickerSheetEffect {
     data object Dismiss : DatePickerSheetEffect
 
     /** User selected a date. */
-    data class Select(val date: LocalDate) : DatePickerSheetEffect
+    data class Select(
+        val date: LocalDate
+    ) : DatePickerSheetEffect
 }
 
 /**
@@ -37,5 +39,5 @@ sealed interface DatePickerSheetEffect {
 @Composable
 expect fun DatePickerSheet(
     state: DatePickerSheetState,
-    onEffect: (DatePickerSheetEffect) -> Unit,
+    onEffect: (DatePickerSheetEffect) -> Unit
 )

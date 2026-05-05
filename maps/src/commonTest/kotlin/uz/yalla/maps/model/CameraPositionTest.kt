@@ -9,12 +9,13 @@ import kotlin.test.assertNotEquals
 class CameraPositionTest {
     @Test
     fun shouldStoreAllProperties() {
-        val pos = CameraPosition(
-            target = GeoPoint(41.0, 69.0),
-            zoom = 15f,
-            bearing = 90f,
-            tilt = 30f,
-        )
+        val pos =
+            CameraPosition(
+                target = GeoPoint(41.0, 69.0),
+                zoom = 15f,
+                bearing = 90f,
+                tilt = 30f
+            )
         assertEquals(GeoPoint(41.0, 69.0), pos.target)
         assertEquals(15f, pos.zoom)
         assertEquals(90f, pos.bearing)

@@ -10,6 +10,4 @@ import androidx.compose.ui.graphics.ImageBitmap
  *
  * @return A [BitmapDescriptor] wrapping the converted `UIImage`.
  */
-internal actual fun ImageBitmap.toBitmapDescriptor(): BitmapDescriptor {
-    return BitmapDescriptor(this.toUIImage())
-}
+internal actual fun ImageBitmap.toBitmapDescriptor(): BitmapDescriptor = BitmapDescriptor(this.toUIImage())

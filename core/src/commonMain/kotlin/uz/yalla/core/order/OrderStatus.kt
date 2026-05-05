@@ -21,12 +21,14 @@ object OrderStatusSerializer : KSerializer<OrderStatus> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("OrderStatus", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: OrderStatus) {
+    override fun serialize(
+        encoder: Encoder,
+        value: OrderStatus
+    ) {
         encoder.encodeString(value.id)
     }
 
-    override fun deserialize(decoder: Decoder): OrderStatus =
-        OrderStatus.from(decoder.decodeString())
+    override fun deserialize(decoder: Decoder): OrderStatus = OrderStatus.from(decoder.decodeString())
 }
 
 /**
@@ -47,7 +49,9 @@ object OrderStatusSerializer : KSerializer<OrderStatus> {
  *
  */
 @Serializable(with = OrderStatusSerializer::class)
-sealed class OrderStatus(val id: String) {
+sealed class OrderStatus(
+    val id: String
+) {
     data object New : OrderStatus("new")
 
     data object Sending : OrderStatus("sending")
@@ -67,7 +71,9 @@ sealed class OrderStatus(val id: String) {
     data object Canceled : OrderStatus("canceled")
 
     /** Unrecognized status from API, preserves [originalId] for debugging. */
-    data class Unknown(val originalId: String) : OrderStatus("unknown")
+    data class Unknown(
+        val originalId: String
+    ) : OrderStatus("unknown")
 
     companion object {
         /**

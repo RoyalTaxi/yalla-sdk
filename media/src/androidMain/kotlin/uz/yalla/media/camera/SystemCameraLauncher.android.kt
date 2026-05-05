@@ -93,7 +93,9 @@ private fun createCameraImageUri(context: Context): Uri? {
  *
  * Guards against double-launch by tracking an internal active flag.
  */
-actual class SystemCameraLauncher actual constructor(private val onLaunch: () -> Unit) {
+actual class SystemCameraLauncher actual constructor(
+    private val onLaunch: () -> Unit
+) {
     private var isCameraActive = false
 
     /**

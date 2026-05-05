@@ -9,18 +9,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class SheetColorsTest {
-
-    private val colors = SheetColors(
-        container = Color.White,
-        scrim = Color.Black,
-    )
+    private val colors =
+        SheetColors(
+            container = Color.White,
+            scrim = Color.Black
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = SheetColors(
-            container = Color.White,
-            scrim = Color.Black,
-        )
+        val other =
+            SheetColors(
+                container = Color.White,
+                scrim = Color.Black
+            )
         assertEquals(colors, other)
     }
 
@@ -39,28 +40,28 @@ class SheetColorsTest {
 }
 
 class SheetDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = SheetDefaults.dimens()
-        assertEquals(RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp), dimens.shape)
+        assertEquals(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp), dimens.shape)
         assertEquals(Dp.Unspecified, dimens.maxWidth)
-        assertEquals(36.dp, dimens.dragHandleWidth)
-        assertEquals(5.dp, dimens.dragHandleHeight)
-        assertEquals(36.dp, dimens.dragHandleContainerWidth)
-        assertEquals(16.dp, dimens.dragHandleContainerHeight)
+        assertEquals(32.dp, dimens.dragHandleWidth)
+        assertEquals(4.dp, dimens.dragHandleHeight)
+        assertEquals(32.dp, dimens.dragHandleContainerWidth)
+        assertEquals(32.dp, dimens.dragHandleContainerHeight)
     }
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = SheetDefaults.dimens(
-            shape = RoundedCornerShape(16.dp),
-            maxWidth = 400.dp,
-            dragHandleWidth = 48.dp,
-            dragHandleHeight = 8.dp,
-            dragHandleContainerWidth = 48.dp,
-            dragHandleContainerHeight = 24.dp,
-        )
+        val dimens =
+            SheetDefaults.dimens(
+                shape = RoundedCornerShape(16.dp),
+                maxWidth = 400.dp,
+                dragHandleWidth = 48.dp,
+                dragHandleHeight = 8.dp,
+                dragHandleContainerWidth = 48.dp,
+                dragHandleContainerHeight = 24.dp
+            )
         assertEquals(RoundedCornerShape(16.dp), dimens.shape)
         assertEquals(400.dp, dimens.maxWidth)
         assertEquals(48.dp, dimens.dragHandleWidth)

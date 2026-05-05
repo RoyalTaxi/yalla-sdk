@@ -16,5 +16,5 @@ import androidx.compose.runtime.Composable
 @GoogleMapComposable
 expect fun rememberComposeBitmapDescriptor(
     vararg keys: Any,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ): BitmapDescriptor

@@ -18,7 +18,6 @@ import kotlin.test.assertTrue
  * This placeholder ensures the file exists in the test source set so the pair is tracked.
  */
 class NativeSwitchTest {
-
     @Test
     fun compileVerify_nativeSwitchSignatureExists() {
         // Confirms the expect declaration is visible from commonTest and the module compiles.

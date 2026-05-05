@@ -19,7 +19,6 @@ import kotlin.test.Test
  *    a non-empty JPEG byte array at quality 100.
  */
 class ImageProxyExtensionsTest {
-
     @Ignore
     @Test
     fun imageProxyToByteArrayAppliesZeroRotation() {

@@ -6,7 +6,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
 class YallaFirebaseTest {
-
     @Test
     fun shouldNotBeInitializedByDefault() {
         // The singleton's _isInitialized field starts as false.

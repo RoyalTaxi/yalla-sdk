@@ -8,16 +8,17 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class SheetHeaderColorsTest {
-
-    private val colors = SheetHeaderColors(
-        title = Color.Black,
-    )
+    private val colors =
+        SheetHeaderColors(
+            title = Color.Black
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = SheetHeaderColors(
-            title = Color.Black,
-        )
+        val other =
+            SheetHeaderColors(
+                title = Color.Black
+            )
         assertEquals(colors, other)
     }
 
@@ -35,18 +36,18 @@ class SheetHeaderColorsTest {
 }
 
 class SheetHeaderDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = SheetHeaderDefaults.dimens()
-        assertEquals(PaddingValues(10.dp), dimens.contentPadding)
+        assertEquals(PaddingValues(16.dp), dimens.contentPadding)
     }
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = SheetHeaderDefaults.dimens(
-            contentPadding = PaddingValues(24.dp),
-        )
+        val dimens =
+            SheetHeaderDefaults.dimens(
+                contentPadding = PaddingValues(24.dp)
+            )
         assertEquals(PaddingValues(24.dp), dimens.contentPadding)
     }
 }

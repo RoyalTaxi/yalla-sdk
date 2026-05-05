@@ -9,7 +9,7 @@ internal data class ExtendedLocation(
     val altitude: Double? = null,
     val speed: Float? = null,
     val bearing: Float? = null,
-    val timestamp: Long = 0L,
+    val timestamp: Long = 0L
 ) {
     fun toGeoPoint(): GeoPoint = GeoPoint(latitude, longitude)
 }
@@ -20,5 +20,5 @@ enum class LocationPermissionState {
     DENIED,
 
     /** User selected "Don't ask again". */
-    DENIED_PERMANENTLY,
+    DENIED_PERMANENTLY
 }

@@ -31,5 +31,5 @@ enum class IconType {
     FOCUS_ORIGIN,
 
     /** Focus the map on the ride destination point. */
-    FOCUS_DESTINATION,
+    FOCUS_DESTINATION
 }

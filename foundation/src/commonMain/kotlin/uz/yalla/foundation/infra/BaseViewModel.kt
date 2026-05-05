@@ -124,7 +124,7 @@ abstract class BaseViewModel : ViewModel() {
     fun CoroutineScope.launchWithLoading(
         showAfter: Duration = LoadingController.DEFAULT_SHOW_AFTER,
         minDisplayTime: Duration = LoadingController.DEFAULT_MIN_DISPLAY_TIME,
-        block: suspend () -> Unit,
+        block: suspend () -> Unit
     ) = launch {
         loadingController.withLoading(showAfter, minDisplayTime, block)
     }

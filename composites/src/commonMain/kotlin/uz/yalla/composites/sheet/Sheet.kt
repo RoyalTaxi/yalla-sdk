@@ -89,12 +89,12 @@ object SheetDefaults {
      * Creates default dimensions.
      */
     fun dimens(
-        shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
+        shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
         maxWidth: Dp = Dp.Unspecified,
-        dragHandleWidth: Dp = 36.dp,
-        dragHandleHeight: Dp = 5.dp,
-        dragHandleContainerWidth: Dp = 36.dp,
-        dragHandleContainerHeight: Dp = 16.dp,
+        dragHandleWidth: Dp = 32.dp,
+        dragHandleHeight: Dp = 4.dp,
+        dragHandleContainerWidth: Dp = 32.dp,
+        dragHandleContainerHeight: Dp = 32.dp,
     ): SheetDimens =
         SheetDimens(
             shape = shape,
@@ -138,7 +138,7 @@ fun Sheet(
     sheetState: SheetState? = null,
     colors: SheetColors = SheetDefaults.colors(),
     dimens: SheetDimens = SheetDefaults.dimens(),
-    dragHandle: @Composable (() -> Unit)? = { SheetDragHandle() },
+    dragHandle: @Composable (() -> Unit)? = null,
     contentWindowInsets: @Composable () -> WindowInsets = { WindowInsets.ime.union(WindowInsets.navigationBars) },
     properties: ModalBottomSheetProperties = ModalBottomSheetDefaults.properties,
     snackbarHost: @Composable (() -> Unit)? = null,

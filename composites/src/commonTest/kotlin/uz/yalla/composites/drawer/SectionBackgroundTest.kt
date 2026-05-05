@@ -9,7 +9,6 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class SectionBackgroundColorsTest {
-
     private val colors = SectionBackgroundColors(background = Color.LightGray)
 
     @Test
@@ -37,7 +36,6 @@ class SectionBackgroundColorsTest {
 }
 
 class SectionBackgroundDimensTest {
-
     @Test
     fun defaults_areNonNull() {
         val dimens = SectionBackgroundDefaults.dimens()

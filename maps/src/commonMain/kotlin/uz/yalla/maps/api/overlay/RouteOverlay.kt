@@ -20,5 +20,5 @@ import uz.yalla.core.geo.GeoPoint
  *   least two points for the polyline to render; fewer points are silently ignored.
  */
 public data class RouteOverlayConfig(
-    val route: List<GeoPoint>,
+    val route: List<GeoPoint>
 )

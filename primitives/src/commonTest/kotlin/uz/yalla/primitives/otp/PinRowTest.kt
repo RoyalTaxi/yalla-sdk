@@ -8,24 +8,25 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class PinRowColorsTest {
-
-    private val colors = PinRowColors(
-        textColor = Color.Black,
-        errorTextColor = Color.Red,
-        filledBorderColor = Color.Blue,
-        emptyBorderColor = Color.LightGray,
-        errorBorderColor = Color.Red,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = PinRowColors(
+    private val colors =
+        PinRowColors(
             textColor = Color.Black,
             errorTextColor = Color.Red,
             filledBorderColor = Color.Blue,
             emptyBorderColor = Color.LightGray,
-            errorBorderColor = Color.Red,
+            errorBorderColor = Color.Red
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            PinRowColors(
+                textColor = Color.Black,
+                errorTextColor = Color.Red,
+                filledBorderColor = Color.Blue,
+                emptyBorderColor = Color.LightGray,
+                errorBorderColor = Color.Red
+            )
         assertEquals(colors, other)
     }
 
@@ -52,7 +53,6 @@ class PinRowColorsTest {
 }
 
 class PinRowDimensTest {
-
     @Test
     fun defaults_shape_isRoundedCorner12dp() {
         val dimens = PinRowDefaults.dimens()
@@ -90,11 +90,12 @@ class PinRowDimensTest {
     @Test
     fun allCustomValues_overrideAllDefaults() {
         val customShape = RoundedCornerShape(4.dp)
-        val dimens = PinRowDefaults.dimens(
-            shape = customShape,
-            spacing = 4.dp,
-            borderWidth = 2.dp,
-        )
+        val dimens =
+            PinRowDefaults.dimens(
+                shape = customShape,
+                spacing = 4.dp,
+                borderWidth = 2.dp
+            )
         assertEquals(customShape, dimens.shape)
         assertEquals(4.dp, dimens.spacing)
         assertEquals(2.dp, dimens.borderWidth)

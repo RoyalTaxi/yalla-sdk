@@ -4,12 +4,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.union
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -71,28 +75,32 @@ fun FormSheet(
     snackbarHost: @Composable (() -> Unit)? = null,
     onFullyExpanded: (() -> Unit)? = null,
     action: @Composable (() -> Unit)? = null,
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Sheet(
         isVisible = isVisible,
         onDismissRequest = onDismissRequest,
-        modifier = modifier.statusBarsPadding().fillMaxHeight(),
+        modifier = modifier.fillMaxHeight(),
         sheetState = sheetState,
         colors = colors,
-        dragHandle = null,
+        contentWindowInsets = {
+            WindowInsets.statusBars
+                .union(WindowInsets.ime)
+                .union(WindowInsets.navigationBars)
+        },
         snackbarHost = snackbarHost,
-        onFullyExpanded = onFullyExpanded,
+        onFullyExpanded = onFullyExpanded
     ) {
         Column(Modifier.fillMaxHeight().imePadding()) {
             SheetHeader(onClose = onDismissRequest, title = title)
             Spacer(Modifier.height(24.dp))
-            Column(Modifier.weight(1f).padding(horizontal = 20.dp)) { content() }
+            Column(Modifier.weight(1f).padding(horizontal = 16.dp)) { content() }
             action?.let {
                 Box(
                     Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
-                        .padding(bottom = 20.dp),
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 16.dp)
                 ) { it() }
             }
         }

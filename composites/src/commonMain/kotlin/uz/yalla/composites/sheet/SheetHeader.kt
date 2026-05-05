@@ -21,7 +21,7 @@ import uz.yalla.platform.model.IconType
  */
 @Immutable
 data class SheetHeaderColors(
-    val title: Color,
+    val title: Color
 )
 
 /**
@@ -29,7 +29,7 @@ data class SheetHeaderColors(
  */
 @Immutable
 data class SheetHeaderDimens(
-    val contentPadding: PaddingValues,
+    val contentPadding: PaddingValues
 )
 
 /**
@@ -38,15 +38,10 @@ data class SheetHeaderDimens(
 object SheetHeaderDefaults {
     /** Creates theme-aware default colors. */
     @Composable
-    fun colors(
-        title: Color = System.color.text.base,
-    ): SheetHeaderColors =
-        SheetHeaderColors(title = title)
+    fun colors(title: Color = System.color.text.base): SheetHeaderColors = SheetHeaderColors(title = title)
 
     /** Creates default dimensions. */
-    fun dimens(
-        contentPadding: PaddingValues = PaddingValues(10.dp),
-    ): SheetHeaderDimens =
+    fun dimens(contentPadding: PaddingValues = PaddingValues(16.dp)): SheetHeaderDimens =
         SheetHeaderDimens(contentPadding = contentPadding)
 }
 
@@ -93,16 +88,16 @@ fun SheetHeader(
     colors: SheetHeaderColors = SheetHeaderDefaults.colors(),
     dimens: SheetHeaderDimens = SheetHeaderDefaults.dimens(),
     closeButtonBorder: BorderStroke? = null,
-    actions: @Composable (() -> Unit)? = null,
+    actions: @Composable (() -> Unit)? = null
 ) {
     Box(
-        modifier = modifier.fillMaxWidth().padding(dimens.contentPadding),
+        modifier = modifier.fillMaxWidth().padding(dimens.contentPadding)
     ) {
         SheetIconButton(
             iconType = IconType.CLOSE,
             onClick = onClose,
             modifier = Modifier.align(Alignment.CenterStart),
-            border = closeButtonBorder,
+            border = closeButtonBorder
         )
 
         title?.let {
@@ -110,7 +105,7 @@ fun SheetHeader(
                 text = it,
                 style = System.font.body.large.medium,
                 color = colors.title,
-                modifier = Modifier.align(Alignment.Center),
+                modifier = Modifier.align(Alignment.Center)
             )
         }
 

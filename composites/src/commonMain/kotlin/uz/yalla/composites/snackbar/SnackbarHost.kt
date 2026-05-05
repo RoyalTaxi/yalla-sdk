@@ -23,7 +23,7 @@ import androidx.compose.material3.SnackbarHost as M3SnackbarHost
  */
 data class SnackbarData(
     val message: String,
-    val isSuccess: Boolean = true,
+    val isSuccess: Boolean = true
 )
 
 /**
@@ -32,7 +32,7 @@ data class SnackbarData(
 @Immutable
 data class SnackbarHostDimens(
     val topPadding: Dp,
-    val horizontalPadding: Dp,
+    val horizontalPadding: Dp
 )
 
 /**
@@ -73,7 +73,7 @@ fun SnackbarHost(
     hostState: SnackbarHostState,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier,
-    dimens: SnackbarHostDimens = SnackbarHostDefaults.dimens(),
+    dimens: SnackbarHostDimens = SnackbarHostDefaults.dimens()
 ) {
     M3SnackbarHost(
         hostState = hostState,
@@ -81,7 +81,7 @@ fun SnackbarHost(
             modifier
                 .statusBarsPadding()
                 .padding(top = dimens.topPadding)
-                .padding(horizontal = dimens.horizontalPadding),
+                .padding(horizontal = dimens.horizontalPadding)
     ) {
         if (data != null) {
             Snackbar(
@@ -90,9 +90,9 @@ fun SnackbarHost(
                         message = data.message,
                         variant = if (data.isSuccess) SnackbarVariant.Success else SnackbarVariant.Error,
                         icon = if (data.isSuccess) successIcon else errorIcon,
-                        dismissIcon = dismissIcon,
+                        dismissIcon = dismissIcon
                     ),
-                onDismiss = onDismiss,
+                onDismiss = onDismiss
             )
         }
     }
@@ -107,11 +107,11 @@ object SnackbarHostDefaults {
      */
     fun dimens(
         topPadding: Dp = 8.dp,
-        horizontalPadding: Dp = 16.dp,
+        horizontalPadding: Dp = 16.dp
     ): SnackbarHostDimens =
         SnackbarHostDimens(
             topPadding = topPadding,
-            horizontalPadding = horizontalPadding,
+            horizontalPadding = horizontalPadding
         )
 }
 
@@ -127,7 +127,7 @@ private fun SnackbarHostPreview() {
         ) {
             Text(
                 text = "Snackbar Preview",
-                style = System.font.body.base.medium,
+                style = System.font.body.base.medium
             )
         }
     }

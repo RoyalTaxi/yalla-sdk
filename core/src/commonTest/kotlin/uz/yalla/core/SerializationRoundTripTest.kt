@@ -6,8 +6,8 @@ import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.identity.AddressId
 import uz.yalla.core.identity.AddressOptionId
 import uz.yalla.core.identity.CardId
-import uz.yalla.core.identity.ExtraServiceId
 import uz.yalla.core.identity.ExecutorId
+import uz.yalla.core.identity.ExtraServiceId
 import uz.yalla.core.identity.ServiceBrandId
 import uz.yalla.core.location.Address
 import uz.yalla.core.location.AddressOption
@@ -175,7 +175,13 @@ class SerializationRoundTripTest {
 
     @Test
     fun shouldRoundTripExtraService() {
-        val value = ExtraService(id = ExtraServiceId(2), cost = 5000, name = "Child seat", costType = ExtraService.CostType.Fixed)
+        val value =
+            ExtraService(
+                id = ExtraServiceId(2),
+                cost = 5000,
+                name = "Child seat",
+                costType = ExtraService.CostType.Fixed
+            )
         val encoded = json.encodeToString(value)
 
         assertEquals(value, json.decodeFromString<ExtraService>(encoded))
@@ -261,17 +267,18 @@ class SerializationRoundTripTest {
 
     @Test
     fun orderStatus_roundTrip_allKnownSubtypes() {
-        val knownSubtypes = listOf(
-            OrderStatus.New,
-            OrderStatus.Sending,
-            OrderStatus.UserSending,
-            OrderStatus.NonStopSending,
-            OrderStatus.Appointed,
-            OrderStatus.AtAddress,
-            OrderStatus.InProgress,
-            OrderStatus.Completed,
-            OrderStatus.Canceled
-        )
+        val knownSubtypes =
+            listOf(
+                OrderStatus.New,
+                OrderStatus.Sending,
+                OrderStatus.UserSending,
+                OrderStatus.NonStopSending,
+                OrderStatus.Appointed,
+                OrderStatus.AtAddress,
+                OrderStatus.InProgress,
+                OrderStatus.Completed,
+                OrderStatus.Canceled
+            )
         knownSubtypes.forEach { status ->
             val encoded = json.encodeToString(OrderStatus.serializer(), status)
             val decoded = json.decodeFromString(OrderStatus.serializer(), encoded)

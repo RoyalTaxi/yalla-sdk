@@ -32,7 +32,7 @@ import uz.yalla.resources.img_coin
 @Immutable
 data class ValueItemColors(
     val background: Brush,
-    val text: Color,
+    val text: Color
 )
 
 /**
@@ -44,24 +44,23 @@ data class ValueItemDimens(
     val contentPadding: PaddingValues,
     val iconSize: Dp,
     val iconSpacing: Dp,
-    val trailingSpacing: Dp,
+    val trailingSpacing: Dp
 )
 
 /**
  * Default configuration values for [ClickableValueItem] and [ValueItemView].
  */
 object ValueItemDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
     @Composable
     fun colors(
         background: Brush = System.color.gradient.sunsetNight,
-        text: Color = System.color.text.white,
+        text: Color = System.color.text.white
     ) = ValueItemColors(
         background = background,
-        text = text,
+        text = text
     )
 
     /**
@@ -72,13 +71,13 @@ object ValueItemDefaults {
         contentPadding: PaddingValues = PaddingValues(4.dp),
         iconSize: Dp = 20.dp,
         iconSpacing: Dp = 4.dp,
-        trailingSpacing: Dp = 12.dp,
+        trailingSpacing: Dp = 12.dp
     ) = ValueItemDimens(
         shape = shape,
         contentPadding = contentPadding,
         iconSize = iconSize,
         iconSpacing = iconSpacing,
-        trailingSpacing = trailingSpacing,
+        trailingSpacing = trailingSpacing
     )
 }
 
@@ -109,17 +108,17 @@ fun ClickableValueItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     colors: ValueItemColors = ValueItemDefaults.colors(),
-    dimens: ValueItemDimens = ValueItemDefaults.dimens(),
+    dimens: ValueItemDimens = ValueItemDefaults.dimens()
 ) = Surface(
     shape = dimens.shape,
     color = Color.Transparent,
     modifier = modifier,
-    onClick = onClick,
+    onClick = onClick
 ) {
     ValueItemContent(
         bonus = bonus,
         colors = colors,
-        dimens = dimens,
+        dimens = dimens
     )
 }
 
@@ -145,15 +144,15 @@ fun ValueItemView(
     bonus: Long,
     modifier: Modifier = Modifier,
     colors: ValueItemColors = ValueItemDefaults.colors(),
-    dimens: ValueItemDimens = ValueItemDefaults.dimens(),
+    dimens: ValueItemDimens = ValueItemDefaults.dimens()
 ) = Card(
     shape = dimens.shape,
-    modifier = modifier,
+    modifier = modifier
 ) {
     ValueItemContent(
         bonus = bonus,
         colors = colors,
-        dimens = dimens,
+        dimens = dimens
     )
 }
 
@@ -161,7 +160,7 @@ fun ValueItemView(
 private fun ValueItemContent(
     bonus: Long,
     colors: ValueItemColors,
-    dimens: ValueItemDimens,
+    dimens: ValueItemDimens
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -169,18 +168,18 @@ private fun ValueItemContent(
         modifier =
             Modifier
                 .background(colors.background)
-                .padding(dimens.contentPadding),
+                .padding(dimens.contentPadding)
     ) {
         Image(
             painter = painterResource(Res.drawable.img_coin),
             contentDescription = null,
-            modifier = Modifier.size(dimens.iconSize),
+            modifier = Modifier.size(dimens.iconSize)
         )
 
         Text(
             text = bonus.toString(),
             style = System.font.body.base.bold,
-            color = colors.text,
+            color = colors.text
         )
 
         Spacer(modifier = Modifier.size(dimens.trailingSpacing))

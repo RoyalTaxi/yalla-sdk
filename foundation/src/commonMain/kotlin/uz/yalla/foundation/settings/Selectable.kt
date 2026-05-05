@@ -1,7 +1,7 @@
 package uz.yalla.foundation.settings
 
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -32,11 +32,10 @@ interface Selectable {
  * @param iconColor Tint applied to the icon. Use [Color.Unspecified] for multi-color icons (e.g. flags).
  */
 @Composable
-fun <T : Selectable> T.toSelectableItem(
-    iconColor: Color = Color.Unspecified
-) = OptionModel(
-    item = this,
-    title = stringResource(name),
-    icon = icon?.let { rememberVectorPainter(it) },
-    iconColor = iconColor
-)
+fun <T : Selectable> T.toSelectableItem(iconColor: Color = Color.Unspecified) =
+    OptionModel(
+        item = this,
+        title = stringResource(name),
+        icon = icon?.let { rememberVectorPainter(it) },
+        iconColor = iconColor
+    )

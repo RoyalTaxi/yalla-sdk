@@ -20,7 +20,6 @@ private sealed class TestRoute : Route {
 }
 
 class NavigatorImplTest {
-
     @Test
     fun shouldReportCanGoBackFalseOnSingleItemStack() {
         val nav = StackNavigation<TestRoute>()
@@ -131,7 +130,7 @@ class NavigatorImplTest {
         val items = routes.map { Child.Created(configuration = it, instance = Unit) }
         return ChildStack(
             active = items.last(),
-            backStack = items.dropLast(1),
+            backStack = items.dropLast(1)
         )
     }
 }

@@ -17,5 +17,5 @@ data class MapProperties(
     val isTrafficEnabled: Boolean = false,
     val mapType: MapType = MapType.NORMAL,
     val minZoomPreference: Float = 3.0f,
-    val maxZoomPreference: Float = 21.0f,
+    val maxZoomPreference: Float = 21.0f
 )

@@ -23,11 +23,12 @@ import kotlin.test.assertTrue
  * - [ToolbarIcon] enum has all four documented entries.
  */
 class RouteTest {
-
     private sealed class TestRoute : Route {
         data object Home : TestRoute()
 
-        data class Detail(val id: String) : TestRoute()
+        data class Detail(
+            val id: String
+        ) : TestRoute()
     }
 
     @Test

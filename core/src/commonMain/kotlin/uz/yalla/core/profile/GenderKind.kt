@@ -13,7 +13,9 @@ import uz.yalla.core.util.normalizedId
  * @see Client
  */
 @Serializable
-enum class GenderKind(val id: String) {
+enum class GenderKind(
+    val id: String
+) {
     @SerialName("male")
     Male("male"),
 

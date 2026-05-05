@@ -2,8 +2,8 @@ package uz.yalla.maps.provider.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import uz.yalla.core.location.LocationProvider
 import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.location.LocationProvider
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.model.MarkerState
 import uz.yalla.maps.config.MapConstants

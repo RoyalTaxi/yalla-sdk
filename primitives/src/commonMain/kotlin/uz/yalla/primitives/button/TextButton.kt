@@ -29,15 +29,13 @@ data class TextButtonColors(
     val containerColor: Color,
     val contentColor: Color,
     val disabledContainerColor: Color,
-    val disabledContentColor: Color,
+    val disabledContentColor: Color
 ) {
     /** Resolves container color based on [enabled] state. */
-    fun containerColor(enabled: Boolean): Color =
-        if (enabled) containerColor else disabledContainerColor
+    fun containerColor(enabled: Boolean): Color = if (enabled) containerColor else disabledContainerColor
 
     /** Resolves content color based on [enabled] state. */
-    fun contentColor(enabled: Boolean): Color =
-        if (enabled) contentColor else disabledContentColor
+    fun contentColor(enabled: Boolean): Color = if (enabled) contentColor else disabledContentColor
 }
 
 /**
@@ -50,7 +48,7 @@ data class TextButtonDimens(
     val minHeight: Dp,
     val contentPadding: PaddingValues,
     val shape: Shape,
-    val iconSpacing: Dp,
+    val iconSpacing: Dp
 )
 
 /**
@@ -113,7 +111,7 @@ fun TextButton(
     dimens: TextButtonDimens = TextButtonDefaults.dimens(),
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     val isInteractive = enabled && !loading
     ButtonLayout(
@@ -129,7 +127,7 @@ fun TextButton(
         iconSpacing = dimens.iconSpacing,
         leadingIcon = leadingIcon,
         trailingIcon = trailingIcon,
-        content = content,
+        content = content
     )
 }
 
@@ -154,26 +152,28 @@ object TextButtonDefaults {
         containerColor: Color = Color.Transparent,
         contentColor: Color = System.color.text.base,
         disabledContainerColor: Color = Color.Transparent,
-        disabledContentColor: Color = System.color.text.subtle,
-    ): TextButtonColors = TextButtonColors(
-        containerColor = containerColor,
-        contentColor = contentColor,
-        disabledContainerColor = disabledContainerColor,
-        disabledContentColor = disabledContentColor,
-    )
+        disabledContentColor: Color = System.color.text.subtle
+    ): TextButtonColors =
+        TextButtonColors(
+            containerColor = containerColor,
+            contentColor = contentColor,
+            disabledContainerColor = disabledContainerColor,
+            disabledContentColor = disabledContentColor
+        )
 
     /** Creates [TextButtonDimens] with standard values. */
     fun dimens(
         minHeight: Dp = MinHeight,
         contentPadding: PaddingValues = ContentPadding,
         shape: Shape = Shape,
-        iconSpacing: Dp = 8.dp,
-    ): TextButtonDimens = TextButtonDimens(
-        minHeight = minHeight,
-        contentPadding = contentPadding,
-        shape = shape,
-        iconSpacing = iconSpacing,
-    )
+        iconSpacing: Dp = 8.dp
+    ): TextButtonDimens =
+        TextButtonDimens(
+            minHeight = minHeight,
+            contentPadding = contentPadding,
+            shape = shape,
+            iconSpacing = iconSpacing
+        )
 }
 
 @Preview

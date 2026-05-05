@@ -19,7 +19,6 @@ import kotlin.test.assertTrue
  * - The [HapticController] interface is callable via an anonymous implementation.
  */
 class HapticTypeTest {
-
     @Test
     fun shouldExposeSevenHapticVariants() {
         // The seven variants are part of the stable public API; their count must not shrink.
@@ -42,11 +41,12 @@ class HapticTypeTest {
     fun shouldAllowHapticControllerImplementation() {
         // Verify the HapticController interface can be implemented: essential for fakes in tests.
         val receivedTypes = mutableListOf<HapticType>()
-        val controller = object : HapticController {
-            override fun perform(type: HapticType) {
-                receivedTypes += type
+        val controller =
+            object : HapticController {
+                override fun perform(type: HapticType) {
+                    receivedTypes += type
+                }
             }
-        }
 
         controller.perform(HapticType.Light)
         controller.perform(HapticType.Success)
@@ -60,17 +60,18 @@ class HapticTypeTest {
     fun shouldAllowHapticControllerToReceiveAllTypes() {
         // Iterate all HapticType entries to confirm the controller API is reachable for each.
         val received = mutableListOf<HapticType>()
-        val controller = object : HapticController {
-            override fun perform(type: HapticType) {
-                received += type
+        val controller =
+            object : HapticController {
+                override fun perform(type: HapticType) {
+                    received += type
+                }
             }
-        }
 
         HapticType.entries.forEach { controller.perform(it) }
 
         assertTrue(
             received.containsAll(HapticType.entries),
-            "All HapticType variants should be deliverable to HapticController",
+            "All HapticType variants should be deliverable to HapticController"
         )
     }
 }

@@ -11,7 +11,6 @@ import kotlin.test.assertNotNull
  * in pure common code without touching platform services.
  */
 class YallaCrashlyticsTest {
-
     @Test
     fun shouldInstantiateWithoutThrowing() {
         // YallaCrashlytics defers SDK access to the internal `crashlytics` lazy property;

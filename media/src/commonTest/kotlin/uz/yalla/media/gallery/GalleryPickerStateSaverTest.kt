@@ -23,7 +23,6 @@ import kotlin.test.assertTrue
  * the same values, and min-column boundary.
  */
 class GalleryPickerStateSaverTest {
-
     // -----------------------------------------------------------------------
     // Saver exists (compile-time contract)
     // -----------------------------------------------------------------------

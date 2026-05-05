@@ -8,20 +8,21 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ConfirmationSheetColorsTest {
-
-    private val colors = ConfirmationSheetColors(
-        container = Color.White,
-        title = Color.Black,
-        description = Color.Gray,
-    )
+    private val colors =
+        ConfirmationSheetColors(
+            container = Color.White,
+            title = Color.Black,
+            description = Color.Gray
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = ConfirmationSheetColors(
-            container = Color.White,
-            title = Color.Black,
-            description = Color.Gray,
-        )
+        val other =
+            ConfirmationSheetColors(
+                container = Color.White,
+                title = Color.Black,
+                description = Color.Gray
+            )
         assertEquals(colors, other)
     }
 
@@ -41,13 +42,12 @@ class ConfirmationSheetColorsTest {
 }
 
 class ConfirmationSheetDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = ConfirmationSheetDefaults.dimens()
-        assertEquals(RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp), dimens.shape)
-        assertEquals(10.dp, dimens.headerTopPadding)
-        assertEquals(10.dp, dimens.headerHorizontalPadding)
+        assertEquals(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp), dimens.shape)
+        assertEquals(16.dp, dimens.headerTopPadding)
+        assertEquals(16.dp, dimens.headerHorizontalPadding)
         assertEquals(44.dp, dimens.contentTopPadding)
         assertEquals(36.dp, dimens.contentHorizontalPadding)
         assertEquals(0.6f, dimens.imageWidthFraction)
@@ -60,19 +60,20 @@ class ConfirmationSheetDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = ConfirmationSheetDefaults.dimens(
-            shape = RoundedCornerShape(16.dp),
-            headerTopPadding = 16.dp,
-            headerHorizontalPadding = 16.dp,
-            contentTopPadding = 32.dp,
-            contentHorizontalPadding = 24.dp,
-            imageWidthFraction = 0.8f,
-            imageBottomSpacing = 24.dp,
-            titleDescriptionSpacing = 16.dp,
-            actionTopSpacing = 48.dp,
-            actionHorizontalPadding = 16.dp,
-            actionBottomSpacing = 16.dp,
-        )
+        val dimens =
+            ConfirmationSheetDefaults.dimens(
+                shape = RoundedCornerShape(16.dp),
+                headerTopPadding = 16.dp,
+                headerHorizontalPadding = 16.dp,
+                contentTopPadding = 32.dp,
+                contentHorizontalPadding = 24.dp,
+                imageWidthFraction = 0.8f,
+                imageBottomSpacing = 24.dp,
+                titleDescriptionSpacing = 16.dp,
+                actionTopSpacing = 48.dp,
+                actionHorizontalPadding = 16.dp,
+                actionBottomSpacing = 16.dp
+            )
         assertEquals(RoundedCornerShape(16.dp), dimens.shape)
         assertEquals(16.dp, dimens.headerTopPadding)
         assertEquals(16.dp, dimens.headerHorizontalPadding)

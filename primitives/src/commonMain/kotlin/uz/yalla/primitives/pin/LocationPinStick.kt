@@ -22,14 +22,14 @@ internal fun PinStick(
     clipHeight: Dp,
     colors: LocationPinColors,
     dimens: LocationPinDimens,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Box(
         contentAlignment = Alignment.TopCenter,
         modifier =
             modifier
                 .width(dimens.stickWidth)
-                .height(dimens.stickHeight),
+                .height(dimens.stickHeight)
     ) {
         Box(
             modifier =
@@ -39,12 +39,12 @@ internal fun PinStick(
                     .clipToBounds()
                     .background(
                         shape = CircleShape,
-                        color = colors.stick,
+                        color = colors.stick
                     ).border(
                         width = 1.dp,
                         shape = CircleShape,
-                        color = colors.stickBorder,
-                    ),
+                        color = colors.stickBorder
+                    )
         )
     }
 }

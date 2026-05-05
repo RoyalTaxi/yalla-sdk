@@ -24,9 +24,8 @@ import platform.darwin.NSObject
 internal class UIKitNavigator<C : Route>(
     private val navController: UINavigationController,
     private val vcFactory: (route: C, navigator: Navigator) -> UIViewController,
-    initialRoute: C,
+    initialRoute: C
 ) : Navigator {
-
     private val routeStack = mutableListOf(initialRoute)
 
     private val _canGoBack = MutableStateFlow(false)
@@ -118,11 +117,13 @@ internal class UIKitNavigator<C : Route>(
      * observes `didShowViewController` and trims [routeStack] to match the actual
      * UINavigationController stack size, keeping the parallel bookkeeping in sync.
      */
-    private inner class SwipeBackDelegate : NSObject(), UINavigationControllerDelegateProtocol {
+    private inner class SwipeBackDelegate :
+        NSObject(),
+        UINavigationControllerDelegateProtocol {
         override fun navigationController(
             navigationController: UINavigationController,
             didShowViewController: UIViewController,
-            animated: Boolean,
+            animated: Boolean
         ) {
             val vcCount = navigationController.viewControllers.count().toInt()
             if (vcCount < routeStack.size) {

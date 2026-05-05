@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.settings.LocaleKind
 import uz.yalla.core.settings.MapKind
 import uz.yalla.core.settings.ThemeKind
@@ -27,7 +27,7 @@ import kotlin.test.assertTrue
 // ---------------------------------------------------------------------------
 
 private class FakeInterfacePreferences(
-    initialMapKind: MapKind = MapKind.Google,
+    initialMapKind: MapKind = MapKind.Google
 ) : InterfacePreferences {
     private val _mapKind = MutableStateFlow(initialMapKind)
     override val mapKind: Flow<MapKind> = _mapKind.asStateFlow()
@@ -81,22 +81,38 @@ private class FakeMapController : MapController {
         _isReady.value = true
     }
 
-    override suspend fun moveTo(point: GeoPoint, zoom: Float) {
+    override suspend fun moveTo(
+        point: GeoPoint,
+        zoom: Float
+    ) {
         calls += "moveTo($point,$zoom)"
         _cameraPosition.value = CameraPosition(target = point, zoom = zoom)
     }
 
-    override suspend fun animateTo(point: GeoPoint, zoom: Float, durationMs: Int) {
+    override suspend fun animateTo(
+        point: GeoPoint,
+        zoom: Float,
+        durationMs: Int
+    ) {
         calls += "animateTo($point,$zoom,$durationMs)"
         _cameraPosition.value = CameraPosition(target = point, zoom = zoom)
     }
 
-    override suspend fun animateToWithBearing(point: GeoPoint, bearing: Float, zoom: Float, durationMs: Int) {
+    override suspend fun animateToWithBearing(
+        point: GeoPoint,
+        bearing: Float,
+        zoom: Float,
+        durationMs: Int
+    ) {
         calls += "animateToWithBearing($point,$bearing,$zoom,$durationMs)"
         _cameraPosition.value = CameraPosition(target = point, zoom = zoom, bearing = bearing)
     }
 
-    override suspend fun fitBounds(points: List<GeoPoint>, padding: PaddingValues, animate: Boolean) {
+    override suspend fun fitBounds(
+        points: List<GeoPoint>,
+        padding: PaddingValues,
+        animate: Boolean
+    ) {
         calls += "fitBounds(${points.size},$animate)"
     }
 
@@ -165,193 +181,205 @@ private class FakeMapController : MapController {
  * composition required).
  */
 class MapControllerFakeProviderTest {
-
     // -----------------------------------------------------------------------
     // Initial state
     // -----------------------------------------------------------------------
 
     @Test
-    fun initialStateIsNotReady() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun initialStateIsNotReady() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        assertFalse(controller.isReady.value)
+            assertFalse(controller.isReady.value)
 
-        controller.close()
-    }
-
-    @Test
-    fun initialCameraIsDefault() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-
-        assertEquals(CameraPosition.DEFAULT, controller.cameraPosition.value)
-
-        controller.close()
-    }
+            controller.close()
+        }
 
     @Test
-    fun initialMarkerIsInitial() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun initialCameraIsDefault() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        assertEquals(MarkerState.INITIAL, controller.markerState.value)
+            assertEquals(CameraPosition.DEFAULT, controller.cameraPosition.value)
 
-        controller.close()
-    }
+            controller.close()
+        }
+
+    @Test
+    fun initialMarkerIsInitial() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+
+            assertEquals(MarkerState.INITIAL, controller.markerState.value)
+
+            controller.close()
+        }
 
     // -----------------------------------------------------------------------
     // onMapReady forwards to the active controller
     // -----------------------------------------------------------------------
 
     @Test
-    fun onMapReadyMakesControllerReady() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun onMapReadyMakesControllerReady() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        // onMapReady on the SwitchingMapController delegates to the underlying
-        // GoogleMapController (default). After calling it isReady should be true.
-        controller.onMapReady()
+            // onMapReady on the SwitchingMapController delegates to the underlying
+            // GoogleMapController (default). After calling it isReady should be true.
+            controller.onMapReady()
 
-        assertTrue(controller.isReady.value)
+            assertTrue(controller.isReady.value)
 
-        controller.close()
-    }
+            controller.close()
+        }
 
     // -----------------------------------------------------------------------
     // updateMarkerState / setMarkerPosition / clearMarker
     // -----------------------------------------------------------------------
 
     @Test
-    fun updateMarkerStatePropagatesViaCollector() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-        controller.onMapReady()
+    fun updateMarkerStatePropagatesViaCollector() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+            controller.onMapReady()
 
-        val newMarker = MarkerState(point = GeoPoint(41.0, 69.0), isMoving = false, isByUser = false)
-        controller.updateMarkerState(newMarker)
+            val newMarker = MarkerState(point = GeoPoint(41.0, 69.0), isMoving = false, isByUser = false)
+            controller.updateMarkerState(newMarker)
 
-        // The switching controller's own _markerState should eventually reflect the update
-        // via its collectFromActive() coroutine. With UnconfinedTestDispatcher collectors
-        // run eagerly, but the underlying Google controller needs to emit.
-        // We verify via the underlying controller's markerState directly.
-        assertEquals(newMarker, controller.googleController.markerState.value)
+            // The switching controller's own _markerState should eventually reflect the update
+            // via its collectFromActive() coroutine. With UnconfinedTestDispatcher collectors
+            // run eagerly, but the underlying Google controller needs to emit.
+            // We verify via the underlying controller's markerState directly.
+            assertEquals(newMarker, controller.googleController.markerState.value)
 
-        controller.close()
-    }
-
-    @Test
-    fun setMarkerPositionUpdatesPosition() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-        controller.onMapReady()
-
-        val point = GeoPoint(41.5, 69.5)
-        controller.setMarkerPosition(point)
-
-        assertEquals(point, controller.googleController.markerState.value.point)
-
-        controller.close()
-    }
+            controller.close()
+        }
 
     @Test
-    fun clearMarkerResetsToInitial() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-        controller.onMapReady()
+    fun setMarkerPositionUpdatesPosition() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+            controller.onMapReady()
 
-        val newMarker = MarkerState(point = GeoPoint(41.0, 69.0), isMoving = true, isByUser = true)
-        controller.updateMarkerState(newMarker)
-        controller.clearMarker()
+            val point = GeoPoint(41.5, 69.5)
+            controller.setMarkerPosition(point)
 
-        assertEquals(MarkerState.INITIAL, controller.googleController.markerState.value)
+            assertEquals(point, controller.googleController.markerState.value.point)
 
-        controller.close()
-    }
+            controller.close()
+        }
+
+    @Test
+    fun clearMarkerResetsToInitial() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+            controller.onMapReady()
+
+            val newMarker = MarkerState(point = GeoPoint(41.0, 69.0), isMoving = true, isByUser = true)
+            controller.updateMarkerState(newMarker)
+            controller.clearMarker()
+
+            assertEquals(MarkerState.INITIAL, controller.googleController.markerState.value)
+
+            controller.close()
+        }
 
     // -----------------------------------------------------------------------
     // reset
     // -----------------------------------------------------------------------
 
     @Test
-    fun resetClearsReadiness() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-        controller.onMapReady()
-        assertTrue(controller.isReady.value)
+    fun resetClearsReadiness() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+            controller.onMapReady()
+            assertTrue(controller.isReady.value)
 
-        controller.reset()
+            controller.reset()
 
-        assertFalse(controller.isReady.value)
+            assertFalse(controller.isReady.value)
 
-        controller.close()
-    }
-
-    @Test
-    fun resetClearsMarkerState() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-        controller.onMapReady()
-
-        controller.updateMarkerState(MarkerState(GeoPoint(41.0, 69.0), isMoving = true, isByUser = true))
-        controller.reset()
-
-        assertEquals(MarkerState.INITIAL, controller.markerState.value)
-
-        controller.close()
-    }
+            controller.close()
+        }
 
     @Test
-    fun resetClearsCameraPosition() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun resetClearsMarkerState() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+            controller.onMapReady()
 
-        controller.reset()
+            controller.updateMarkerState(MarkerState(GeoPoint(41.0, 69.0), isMoving = true, isByUser = true))
+            controller.reset()
 
-        assertEquals(CameraPosition.DEFAULT, controller.cameraPosition.value)
+            assertEquals(MarkerState.INITIAL, controller.markerState.value)
 
-        controller.close()
-    }
+            controller.close()
+        }
+
+    @Test
+    fun resetClearsCameraPosition() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+
+            controller.reset()
+
+            assertEquals(CameraPosition.DEFAULT, controller.cameraPosition.value)
+
+            controller.close()
+        }
 
     // -----------------------------------------------------------------------
     // setDesiredPadding (sync, no live camera required)
     // -----------------------------------------------------------------------
 
     @Test
-    fun setDesiredPaddingDoesNotThrow() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun setDesiredPaddingDoesNotThrow() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        // Should not throw — delegates to underlying controller
-        controller.setDesiredPadding(PaddingValues())
+            // Should not throw — delegates to underlying controller
+            controller.setDesiredPadding(PaddingValues())
 
-        controller.close()
-    }
+            controller.close()
+        }
 
     // -----------------------------------------------------------------------
     // close
     // -----------------------------------------------------------------------
 
     @Test
-    fun closeMarksControllerAsClosed() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun closeMarksControllerAsClosed() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        assertFalse(controller.isClosed)
-        controller.close()
-        assertTrue(controller.isClosed)
-    }
+            assertFalse(controller.isClosed)
+            controller.close()
+            assertTrue(controller.isClosed)
+        }
 
     @Test
-    fun closeTwiceIsIdempotent() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun closeTwiceIsIdempotent() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        controller.close()
-        controller.close() // must not throw
+            controller.close()
+            controller.close() // must not throw
 
-        assertTrue(controller.isClosed)
-    }
+            assertTrue(controller.isClosed)
+        }
 
     @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
     @Test
@@ -363,9 +391,10 @@ class MapControllerFakeProviderTest {
             // Track whether a job launched in backgroundScope observing isReady
             // gets cancelled after close().
             var collectCount = 0
-            val observerJob: Job = backgroundScope.launch {
-                controller.isReady.collect { collectCount++ }
-            }
+            val observerJob: Job =
+                backgroundScope.launch {
+                    controller.isReady.collect { collectCount++ }
+                }
 
             controller.onMapReady()
             controller.close()
@@ -382,16 +411,17 @@ class MapControllerFakeProviderTest {
     // -----------------------------------------------------------------------
 
     @Test
-    fun resetAfterCloseIsNoOp() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-        controller.close()
+    fun resetAfterCloseIsNoOp() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+            controller.close()
 
-        // Must not throw
-        controller.reset()
+            // Must not throw
+            controller.reset()
 
-        assertTrue(controller.isClosed)
-    }
+            assertTrue(controller.isClosed)
+        }
 
     // -----------------------------------------------------------------------
     // Suspend operations — moveTo, animateTo, fitBounds, zoomIn/Out, setZoom, updatePadding
@@ -400,116 +430,126 @@ class MapControllerFakeProviderTest {
     // -----------------------------------------------------------------------
 
     @Test
-    fun moveToCompletesWithoutThrow() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun moveToCompletesWithoutThrow() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        controller.moveTo(GeoPoint(41.0, 69.0), zoom = 15f)
+            controller.moveTo(GeoPoint(41.0, 69.0), zoom = 15f)
 
-        controller.close()
-    }
-
-    @Test
-    fun animateToCompletesWithoutThrow() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-
-        controller.animateTo(GeoPoint(41.0, 69.0), zoom = 14f, durationMs = 500)
-
-        controller.close()
-    }
+            controller.close()
+        }
 
     @Test
-    fun animateToWithBearingCompletesWithoutThrow() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun animateToCompletesWithoutThrow() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        controller.animateToWithBearing(GeoPoint(41.0, 69.0), bearing = 45f, zoom = 14f, durationMs = 300)
+            controller.animateTo(GeoPoint(41.0, 69.0), zoom = 14f, durationMs = 500)
 
-        controller.close()
-    }
-
-    @Test
-    fun fitBoundsCompletesWithoutThrow() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-
-        controller.fitBounds(
-            points = listOf(GeoPoint(41.0, 69.0), GeoPoint(42.0, 70.0)),
-            animate = false,
-        )
-
-        controller.close()
-    }
+            controller.close()
+        }
 
     @Test
-    fun zoomInCompletesWithoutThrow() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun animateToWithBearingCompletesWithoutThrow() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        controller.zoomIn()
+            controller.animateToWithBearing(GeoPoint(41.0, 69.0), bearing = 45f, zoom = 14f, durationMs = 300)
 
-        controller.close()
-    }
-
-    @Test
-    fun zoomOutCompletesWithoutThrow() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
-
-        controller.zoomOut()
-
-        controller.close()
-    }
+            controller.close()
+        }
 
     @Test
-    fun setZoomCompletesWithoutThrow() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun fitBoundsCompletesWithoutThrow() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        controller.setZoom(16f)
+            controller.fitBounds(
+                points = listOf(GeoPoint(41.0, 69.0), GeoPoint(42.0, 70.0)),
+                animate = false
+            )
 
-        controller.close()
-    }
+            controller.close()
+        }
 
     @Test
-    fun updatePaddingCompletesWithoutThrow() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun zoomInCompletesWithoutThrow() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        controller.updatePadding(PaddingValues())
+            controller.zoomIn()
 
-        controller.close()
-    }
+            controller.close()
+        }
+
+    @Test
+    fun zoomOutCompletesWithoutThrow() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+
+            controller.zoomOut()
+
+            controller.close()
+        }
+
+    @Test
+    fun setZoomCompletesWithoutThrow() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+
+            controller.setZoom(16f)
+
+            controller.close()
+        }
+
+    @Test
+    fun updatePaddingCompletesWithoutThrow() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
+
+            controller.updatePadding(PaddingValues())
+
+            controller.close()
+        }
 
     // -----------------------------------------------------------------------
     // Lazy controller initialization
     // -----------------------------------------------------------------------
 
     @Test
-    fun googleControllerIsExposedAfterAccess() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun googleControllerIsExposedAfterAccess() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        // Accessing googleController triggers lazy init; must not throw
-        val google = controller.googleController
+            // Accessing googleController triggers lazy init; must not throw
+            val google = controller.googleController
 
-        assertFalse(google.isReady.value)
+            assertFalse(google.isReady.value)
 
-        controller.close()
-    }
+            controller.close()
+        }
 
     @Test
-    fun libreControllerIsExposedAfterAccess() = runTest {
-        val prefs = FakeInterfacePreferences()
-        val controller = SwitchingMapController(prefs, this)
+    fun libreControllerIsExposedAfterAccess() =
+        runTest {
+            val prefs = FakeInterfacePreferences()
+            val controller = SwitchingMapController(prefs, this)
 
-        val libre = controller.libreController
+            val libre = controller.libreController
 
-        assertFalse(libre.isReady.value)
+            assertFalse(libre.isReady.value)
 
-        controller.close()
-    }
+            controller.close()
+        }
 
     // -----------------------------------------------------------------------
     // FakeMapController unit tests — verifies the fake records calls correctly
@@ -517,100 +557,107 @@ class MapControllerFakeProviderTest {
     // -----------------------------------------------------------------------
 
     @Test
-    fun fakeRecordsUpdateMarkerState() = runTest {
-        val fake = FakeMapController()
-        val state = MarkerState(GeoPoint(1.0, 2.0), isMoving = false, isByUser = false)
+    fun fakeRecordsUpdateMarkerState() =
+        runTest {
+            val fake = FakeMapController()
+            val state = MarkerState(GeoPoint(1.0, 2.0), isMoving = false, isByUser = false)
 
-        fake.updateMarkerState(state)
+            fake.updateMarkerState(state)
 
-        assertTrue(fake.calls.contains("updateMarkerState"))
-        assertEquals(state, fake.markerState.value)
-    }
-
-    @Test
-    fun fakeRecordsSetMarkerPosition() = runTest {
-        val fake = FakeMapController()
-        val point = GeoPoint(3.0, 4.0)
-
-        fake.setMarkerPosition(point)
-
-        assertTrue(fake.calls.any { it.startsWith("setMarkerPosition") })
-        assertEquals(point, fake.markerState.value.point)
-    }
+            assertTrue(fake.calls.contains("updateMarkerState"))
+            assertEquals(state, fake.markerState.value)
+        }
 
     @Test
-    fun fakeRecordsClearMarker() = runTest {
-        val fake = FakeMapController()
-        fake.updateMarkerState(MarkerState(GeoPoint(1.0, 2.0), isMoving = true, isByUser = true))
-        fake.clearMarker()
+    fun fakeRecordsSetMarkerPosition() =
+        runTest {
+            val fake = FakeMapController()
+            val point = GeoPoint(3.0, 4.0)
 
-        assertTrue(fake.calls.contains("clearMarker"))
-        assertEquals(MarkerState.INITIAL, fake.markerState.value)
-    }
+            fake.setMarkerPosition(point)
 
-    @Test
-    fun fakeOnMapReadySetsIsReady() = runTest {
-        val fake = FakeMapController()
-        fake.onMapReady()
-        assertTrue(fake.isReady.value)
-        assertTrue(fake.calls.contains("onMapReady"))
-    }
+            assertTrue(fake.calls.any { it.startsWith("setMarkerPosition") })
+            assertEquals(point, fake.markerState.value.point)
+        }
 
     @Test
-    fun fakeResetClearsAll() = runTest {
-        val fake = FakeMapController()
-        fake.onMapReady()
-        fake.reset()
+    fun fakeRecordsClearMarker() =
+        runTest {
+            val fake = FakeMapController()
+            fake.updateMarkerState(MarkerState(GeoPoint(1.0, 2.0), isMoving = true, isByUser = true))
+            fake.clearMarker()
 
-        assertFalse(fake.isReady.value)
-        assertEquals(MarkerState.INITIAL, fake.markerState.value)
-        assertEquals(CameraPosition.DEFAULT, fake.cameraPosition.value)
-        assertTrue(fake.calls.contains("reset"))
-    }
+            assertTrue(fake.calls.contains("clearMarker"))
+            assertEquals(MarkerState.INITIAL, fake.markerState.value)
+        }
 
     @Test
-    fun fakeSuspendOpsRecordCalls() = runTest {
-        val fake = FakeMapController()
+    fun fakeOnMapReadySetsIsReady() =
+        runTest {
+            val fake = FakeMapController()
+            fake.onMapReady()
+            assertTrue(fake.isReady.value)
+            assertTrue(fake.calls.contains("onMapReady"))
+        }
 
-        fake.moveTo(GeoPoint(10.0, 20.0), 12f)
-        fake.animateTo(GeoPoint(11.0, 21.0), 13f, 400)
-        fake.animateToWithBearing(GeoPoint(12.0, 22.0), 90f, 14f, 300)
-        fake.fitBounds(listOf(GeoPoint(1.0, 2.0), GeoPoint(3.0, 4.0)), animate = true)
-        fake.zoomIn()
-        fake.zoomOut()
-        fake.setZoom(10f)
-        fake.setDesiredPadding(PaddingValues())
-        fake.updatePadding(PaddingValues())
+    @Test
+    fun fakeResetClearsAll() =
+        runTest {
+            val fake = FakeMapController()
+            fake.onMapReady()
+            fake.reset()
 
-        assertTrue(fake.calls.any { it.startsWith("moveTo") })
-        assertTrue(fake.calls.any { it.startsWith("animateTo") })
-        assertTrue(fake.calls.any { it.startsWith("animateToWithBearing") })
-        assertTrue(fake.calls.any { it.startsWith("fitBounds") })
-        assertTrue(fake.calls.contains("zoomIn"))
-        assertTrue(fake.calls.contains("zoomOut"))
-        assertTrue(fake.calls.any { it.startsWith("setZoom") })
-        assertTrue(fake.calls.contains("setDesiredPadding"))
-        assertTrue(fake.calls.contains("updatePadding"))
-    }
+            assertFalse(fake.isReady.value)
+            assertEquals(MarkerState.INITIAL, fake.markerState.value)
+            assertEquals(CameraPosition.DEFAULT, fake.cameraPosition.value)
+            assertTrue(fake.calls.contains("reset"))
+        }
+
+    @Test
+    fun fakeSuspendOpsRecordCalls() =
+        runTest {
+            val fake = FakeMapController()
+
+            fake.moveTo(GeoPoint(10.0, 20.0), 12f)
+            fake.animateTo(GeoPoint(11.0, 21.0), 13f, 400)
+            fake.animateToWithBearing(GeoPoint(12.0, 22.0), 90f, 14f, 300)
+            fake.fitBounds(listOf(GeoPoint(1.0, 2.0), GeoPoint(3.0, 4.0)), animate = true)
+            fake.zoomIn()
+            fake.zoomOut()
+            fake.setZoom(10f)
+            fake.setDesiredPadding(PaddingValues())
+            fake.updatePadding(PaddingValues())
+
+            assertTrue(fake.calls.any { it.startsWith("moveTo") })
+            assertTrue(fake.calls.any { it.startsWith("animateTo") })
+            assertTrue(fake.calls.any { it.startsWith("animateToWithBearing") })
+            assertTrue(fake.calls.any { it.startsWith("fitBounds") })
+            assertTrue(fake.calls.contains("zoomIn"))
+            assertTrue(fake.calls.contains("zoomOut"))
+            assertTrue(fake.calls.any { it.startsWith("setZoom") })
+            assertTrue(fake.calls.contains("setDesiredPadding"))
+            assertTrue(fake.calls.contains("updatePadding"))
+        }
 
     // -----------------------------------------------------------------------
     // Seed next controller: verify desiredPadding is forwarded on handoff
     // -----------------------------------------------------------------------
 
     @Test
-    fun setDesiredPaddingIsForwardedToNextProvider() = runTest {
-        val prefs = FakeInterfacePreferences(initialMapKind = MapKind.Google)
-        val controller = SwitchingMapController(prefs, this)
+    fun setDesiredPaddingIsForwardedToNextProvider() =
+        runTest {
+            val prefs = FakeInterfacePreferences(initialMapKind = MapKind.Google)
+            val controller = SwitchingMapController(prefs, this)
 
-        // Set padding while on Google
-        controller.setDesiredPadding(PaddingValues())
+            // Set padding while on Google
+            controller.setDesiredPadding(PaddingValues())
 
-        // Switching to Libre triggers seedNextController, which re-applies padding.
-        // We verify this doesn't throw and the controller stays non-closed.
-        prefs.emitMapKind(MapKind.Libre)
+            // Switching to Libre triggers seedNextController, which re-applies padding.
+            // We verify this doesn't throw and the controller stays non-closed.
+            prefs.emitMapKind(MapKind.Libre)
 
-        assertFalse(controller.isClosed)
+            assertFalse(controller.isClosed)
 
-        controller.close()
-    }
+            controller.close()
+        }
 }

@@ -20,7 +20,6 @@ import kotlin.test.assertNotNull
  * This file verifies [IconType], which is the key parameter type, at compile-and-run level.
  */
 class NativeCircleIconButtonTest {
-
     @Test
     fun shouldExposeEightIconTypeVariants() {
         // IconType is the core parameter of NativeCircleIconButton; its count must be stable.

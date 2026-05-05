@@ -9,11 +9,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class SelectionCardColorsTest {
-
-    private val colors = SelectionCardColors(
-        container = Color.Transparent,
-        iconBackground = Color.LightGray,
-    )
+    private val colors =
+        SelectionCardColors(
+            container = Color.Transparent,
+            iconBackground = Color.LightGray
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
@@ -28,7 +28,6 @@ class SelectionCardColorsTest {
 }
 
 class SelectionCardDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = SelectionCardDefaults.dimens()

@@ -37,7 +37,7 @@ data class ColorScheme(
     val button: Button,
     val icon: Icon,
     val accent: Accent,
-    val gradient: Gradient,
+    val gradient: Gradient
 ) {
     @Immutable
     data class Text(
@@ -45,7 +45,7 @@ data class ColorScheme(
         val subtle: Color,
         val link: Color,
         val red: Color,
-        val white: Color,
+        val white: Color
     )
 
     @Immutable
@@ -53,7 +53,7 @@ data class ColorScheme(
         val base: Color,
         val brand: Color,
         val secondary: Color,
-        val tertiary: Color,
+        val tertiary: Color
     )
 
     @Immutable
@@ -61,7 +61,7 @@ data class ColorScheme(
         val disabled: Color,
         val filled: Color,
         val white: Color,
-        val error: Color,
+        val error: Color
     )
 
     @Immutable
@@ -70,7 +70,7 @@ data class ColorScheme(
         val disabled: Color,
         val secondary: Color,
         val tertiary: Color,
-        val disabledTertiary: Color,
+        val disabledTertiary: Color
     )
 
     @Immutable
@@ -80,7 +80,7 @@ data class ColorScheme(
         val secondary: Color,
         val disabled: Color,
         val red: Color,
-        val subtle: Color,
+        val subtle: Color
     )
 
     /**
@@ -98,13 +98,13 @@ data class ColorScheme(
         val color2: Color,
         val color3: Color,
         val color4: Color,
-        val color5: Color,
+        val color5: Color
     )
 
     @Immutable
     data class Gradient(
         val splash: Brush,
-        val sunsetNight: Brush,
+        val sunsetNight: Brush
     )
 }
 
@@ -116,54 +116,62 @@ data class ColorScheme(
  * the result to `YallaTheme(colorScheme = light())` to force light mode, or `light().copy(...)`
  * for white-labeling without rebuilding every group.
  */
-fun light() = ColorScheme(
-    text = ColorScheme.Text(
-        base = LightTextBase,
-        subtle = LightTextSubtle,
-        link = LightTextLink,
-        red = LightTextRed,
-        white = LightTextWhite,
-    ),
-    background = ColorScheme.Background(
-        base = LightBackgroundBase,
-        brand = LightBackgroundBrandBase,
-        secondary = LightBackgroundSecondary,
-        tertiary = LightBackgroundTertiary,
-    ),
-    border = ColorScheme.Border(
-        disabled = LightBorderDisabled,
-        filled = LightBorderFilled,
-        white = LightBorderWhite,
-        error = LightBorderError,
-    ),
-    button = ColorScheme.Button(
-        active = LightButtonActive,
-        disabled = LightButtonDisabled,
-        secondary = LightButtonSecondary,
-        tertiary = LightButtonTertiary,
-        disabledTertiary = LightButtonDisabledTertiary,
-    ),
-    icon = ColorScheme.Icon(
-        white = LightIconWhite,
-        base = LightIconBase,
-        secondary = LightIconSecondary,
-        disabled = LightIconDisabled,
-        red = LightIconRed,
-        subtle = LightIconSubtle,
-    ),
-    accent = ColorScheme.Accent(
-        pinkSun = PinkSun,
-        color1 = Color1,
-        color2 = Color2,
-        color3 = Color3,
-        color4 = Color4,
-        color5 = Color5,
-    ),
-    gradient = ColorScheme.Gradient(
-        splash = SplashBackground,
-        sunsetNight = SunsetNight,
-    ),
-)
+fun light() =
+    ColorScheme(
+        text =
+            ColorScheme.Text(
+                base = LightTextBase,
+                subtle = LightTextSubtle,
+                link = LightTextLink,
+                red = LightTextRed,
+                white = LightTextWhite
+            ),
+        background =
+            ColorScheme.Background(
+                base = LightBackgroundBase,
+                brand = LightBackgroundBrandBase,
+                secondary = LightBackgroundSecondary,
+                tertiary = LightBackgroundTertiary
+            ),
+        border =
+            ColorScheme.Border(
+                disabled = LightBorderDisabled,
+                filled = LightBorderFilled,
+                white = LightBorderWhite,
+                error = LightBorderError
+            ),
+        button =
+            ColorScheme.Button(
+                active = LightButtonActive,
+                disabled = LightButtonDisabled,
+                secondary = LightButtonSecondary,
+                tertiary = LightButtonTertiary,
+                disabledTertiary = LightButtonDisabledTertiary
+            ),
+        icon =
+            ColorScheme.Icon(
+                white = LightIconWhite,
+                base = LightIconBase,
+                secondary = LightIconSecondary,
+                disabled = LightIconDisabled,
+                red = LightIconRed,
+                subtle = LightIconSubtle
+            ),
+        accent =
+            ColorScheme.Accent(
+                pinkSun = PinkSun,
+                color1 = Color1,
+                color2 = Color2,
+                color3 = Color3,
+                color4 = Color4,
+                color5 = Color5
+            ),
+        gradient =
+            ColorScheme.Gradient(
+                splash = SplashBackground,
+                sunsetNight = SunsetNight
+            )
+    )
 
 /**
  * Returns the built-in dark [ColorScheme].
@@ -172,54 +180,62 @@ fun light() = ColorScheme(
  * and `button`/`icon` disabled states (opacity achieved with dark fills, not lightened tints).
  * Accent and gradient tokens are identical to [light] — they are theme-invariant by design.
  */
-fun dark() = ColorScheme(
-    text = ColorScheme.Text(
-        base = DarkTextBase,
-        subtle = DarkTextSubtle,
-        link = DarkTextLink,
-        red = DarkTextRed,
-        white = DarkTextWhite,
-    ),
-    background = ColorScheme.Background(
-        base = DarkBackgroundBase,
-        brand = DarkBackgroundBrandBase,
-        secondary = DarkBackgroundSecondary,
-        tertiary = DarkBackgroundTertiary,
-    ),
-    border = ColorScheme.Border(
-        disabled = DarkBorderDisabled,
-        filled = DarkBorderFilled,
-        white = DarkBorderWhite,
-        error = DarkBorderError,
-    ),
-    button = ColorScheme.Button(
-        active = DarkButtonActive,
-        disabled = DarkButtonDisabled,
-        secondary = DarkButtonSecondary,
-        tertiary = DarkButtonTertiary,
-        disabledTertiary = DarkButtonDisabledTertiary,
-    ),
-    icon = ColorScheme.Icon(
-        white = DarkIconWhite,
-        base = DarkIconBase,
-        secondary = DarkIconSecondary,
-        disabled = DarkIconDisabled,
-        red = DarkIconRed,
-        subtle = DarkIconSubtle,
-    ),
-    accent = ColorScheme.Accent(
-        pinkSun = PinkSun,
-        color1 = Color1,
-        color2 = Color2,
-        color3 = Color3,
-        color4 = Color4,
-        color5 = Color5,
-    ),
-    gradient = ColorScheme.Gradient(
-        splash = SplashBackground,
-        sunsetNight = SunsetNight,
-    ),
-)
+fun dark() =
+    ColorScheme(
+        text =
+            ColorScheme.Text(
+                base = DarkTextBase,
+                subtle = DarkTextSubtle,
+                link = DarkTextLink,
+                red = DarkTextRed,
+                white = DarkTextWhite
+            ),
+        background =
+            ColorScheme.Background(
+                base = DarkBackgroundBase,
+                brand = DarkBackgroundBrandBase,
+                secondary = DarkBackgroundSecondary,
+                tertiary = DarkBackgroundTertiary
+            ),
+        border =
+            ColorScheme.Border(
+                disabled = DarkBorderDisabled,
+                filled = DarkBorderFilled,
+                white = DarkBorderWhite,
+                error = DarkBorderError
+            ),
+        button =
+            ColorScheme.Button(
+                active = DarkButtonActive,
+                disabled = DarkButtonDisabled,
+                secondary = DarkButtonSecondary,
+                tertiary = DarkButtonTertiary,
+                disabledTertiary = DarkButtonDisabledTertiary
+            ),
+        icon =
+            ColorScheme.Icon(
+                white = DarkIconWhite,
+                base = DarkIconBase,
+                secondary = DarkIconSecondary,
+                disabled = DarkIconDisabled,
+                red = DarkIconRed,
+                subtle = DarkIconSubtle
+            ),
+        accent =
+            ColorScheme.Accent(
+                pinkSun = PinkSun,
+                color1 = Color1,
+                color2 = Color2,
+                color3 = Color3,
+                color4 = Color4,
+                color5 = Color5
+            ),
+        gradient =
+            ColorScheme.Gradient(
+                splash = SplashBackground,
+                sunsetNight = SunsetNight
+            )
+    )
 
 /**
  * [CompositionLocal][androidx.compose.runtime.CompositionLocal] for providing [ColorScheme].

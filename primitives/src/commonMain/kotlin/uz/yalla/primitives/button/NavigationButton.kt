@@ -28,7 +28,7 @@ import uz.yalla.resources.icons.YallaIcons
 @Immutable
 data class NavigationButtonColors(
     val containerColor: Color,
-    val contentColor: Color,
+    val contentColor: Color
 )
 
 /**
@@ -40,7 +40,7 @@ data class NavigationButtonColors(
 data class NavigationButtonDimens(
     val size: Dp,
     val iconSize: Dp,
-    val shape: Shape,
+    val shape: Shape
 )
 
 /**
@@ -83,20 +83,20 @@ fun NavigationButton(
     icon: ImageVector = YallaIcons.ArrowLeft,
     contentDescription: String? = null,
     colors: NavigationButtonColors = NavigationButtonDefaults.colors(),
-    dimens: NavigationButtonDimens = NavigationButtonDefaults.dimens(),
+    dimens: NavigationButtonDimens = NavigationButtonDefaults.dimens()
 ) {
     Surface(
         onClick = onClick,
         modifier = modifier.size(dimens.size),
         shape = dimens.shape,
         color = colors.containerColor,
-        contentColor = colors.contentColor,
+        contentColor = colors.contentColor
     ) {
         Box(contentAlignment = Alignment.Center) {
             Icon(
                 imageVector = icon,
                 contentDescription = contentDescription,
-                modifier = Modifier.size(dimens.iconSize),
+                modifier = Modifier.size(dimens.iconSize)
             )
         }
     }
@@ -121,22 +121,24 @@ object NavigationButtonDefaults {
     @Composable
     fun colors(
         containerColor: Color = System.color.background.tertiary,
-        contentColor: Color = System.color.icon.base,
-    ): NavigationButtonColors = NavigationButtonColors(
-        containerColor = containerColor,
-        contentColor = contentColor,
-    )
+        contentColor: Color = System.color.icon.base
+    ): NavigationButtonColors =
+        NavigationButtonColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        )
 
     /** Creates [NavigationButtonDimens] with standard values. */
     fun dimens(
         size: Dp = Size,
         iconSize: Dp = IconSize,
-        shape: Shape = NavigationButtonDefaults.Shape,
-    ): NavigationButtonDimens = NavigationButtonDimens(
-        size = size,
-        iconSize = iconSize,
-        shape = shape,
-    )
+        shape: Shape = NavigationButtonDefaults.Shape
+    ): NavigationButtonDimens =
+        NavigationButtonDimens(
+            size = size,
+            iconSize = iconSize,
+            shape = shape
+        )
 }
 
 @Preview

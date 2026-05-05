@@ -29,6 +29,6 @@ interface SquircleIconButtonFactory {
         icon: String,
         onClick: () -> Unit,
         borderWidth: Double,
-        borderColor: Long,
+        borderColor: Long
     ): UIViewController
 }

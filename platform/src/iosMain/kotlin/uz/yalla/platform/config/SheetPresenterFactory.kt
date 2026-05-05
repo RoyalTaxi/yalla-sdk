@@ -27,18 +27,24 @@ interface SheetPresenterFactory {
         cornerRadius: Double,
         backgroundColor: Long,
         onDismiss: () -> Unit,
-        onPresented: () -> Unit,
+        onPresented: () -> Unit
     )
 
     /**
      * Updates the sheet's custom detent height to match the measured Compose content.
      */
-    fun updateHeight(controller: UIViewController, height: Double)
+    fun updateHeight(
+        controller: UIViewController,
+        height: Double
+    )
 
     /**
      * Updates the sheet's background color while it is visible.
      */
-    fun updateBackground(controller: UIViewController, backgroundColor: Long)
+    fun updateBackground(
+        controller: UIViewController,
+        backgroundColor: Long
+    )
 
     /**
      * Updates whether the user can interactively dismiss the sheet.
@@ -48,11 +54,14 @@ interface SheetPresenterFactory {
     fun updateDismissBehavior(
         controller: UIViewController,
         dismissEnabled: Boolean,
-        onDismissAttempt: () -> Unit,
+        onDismissAttempt: () -> Unit
     )
 
     /**
      * Dismisses the sheet.
      */
-    fun dismiss(controller: UIViewController, animated: Boolean)
+    fun dismiss(
+        controller: UIViewController,
+        animated: Boolean
+    )
 }

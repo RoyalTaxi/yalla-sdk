@@ -29,7 +29,7 @@ val mapModule =
                 googleProvider = GoogleMapProvider(),
                 libreProvider = LibreMapProvider(),
                 interfacePreferences = deps.interfacePreferences,
-                scope = deps.scope,
+                scope = deps.scope
             )
         }
         factory<LiteMap> { get<MapProvider>().createLiteMap() }
@@ -39,7 +39,7 @@ val mapModule =
             val deps = get<MapDependencies>()
             SwitchingMapController(
                 interfacePreferences = deps.interfacePreferences,
-                scope = deps.scope,
+                scope = deps.scope
             )
         }
     }

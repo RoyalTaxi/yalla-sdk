@@ -8,7 +8,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class StaticPreferencesImplTest {
-
     @Test
     fun shouldDefaultLocaleCodeToUzOnColdRead() {
         val impl = StaticPreferencesImpl(MapSettings())

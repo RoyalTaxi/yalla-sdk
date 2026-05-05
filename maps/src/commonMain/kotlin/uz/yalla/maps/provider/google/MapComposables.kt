@@ -75,7 +75,7 @@ fun BaseMapContent(
     onMapReady: () -> Unit = {},
     content:
         @Composable
-        @GoogleMapComposable () -> Unit = {},
+        @GoogleMapComposable () -> Unit = {}
 ) {
     val uiSettings =
         remember(gesturesEnabled) {

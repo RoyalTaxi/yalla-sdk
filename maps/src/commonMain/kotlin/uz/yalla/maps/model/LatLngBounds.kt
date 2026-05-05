@@ -8,7 +8,7 @@ package uz.yalla.maps.model
  */
 data class LatLngBounds(
     val southwest: LatLng,
-    val northeast: LatLng,
+    val northeast: LatLng
 ) {
     /**
      * The geographic midpoint of this bounding rectangle.
@@ -17,7 +17,7 @@ data class LatLngBounds(
         get() =
             LatLng(
                 latitude = (southwest.latitude + northeast.latitude) / 2,
-                longitude = (southwest.longitude + northeast.longitude) / 2,
+                longitude = (southwest.longitude + northeast.longitude) / 2
             )
 
     /**
@@ -52,7 +52,7 @@ data class LatLngBounds(
             require(southWestLat != Double.MAX_VALUE) { "No points included" }
             return LatLngBounds(
                 southwest = LatLng(southWestLat, southWestLng),
-                northeast = LatLng(northEastLat, northEastLng),
+                northeast = LatLng(northEastLat, northEastLng)
             )
         }
     }

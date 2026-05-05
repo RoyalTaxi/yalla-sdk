@@ -26,14 +26,14 @@ import uz.yalla.platform.model.IconType
 @Composable
 actual fun DatePickerSheet(
     state: DatePickerSheetState,
-    onEffect: (DatePickerSheetEffect) -> Unit,
+    onEffect: (DatePickerSheetEffect) -> Unit
 ) {
     var snappedDate by remember { mutableStateOf(state.startDate) }
 
     Sheet(
         isVisible = state.isVisible,
         onDismissRequest = { onEffect(DatePickerSheetEffect.Dismiss) },
-        dragHandle = null,
+        dragHandle = null
     ) {
         Column(
             modifier = Modifier.padding(10.dp)

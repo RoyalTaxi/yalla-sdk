@@ -25,7 +25,6 @@ sealed class ThemeOption(
     override val name: StringResource,
     val kind: ThemeKind
 ) : Selectable {
-
     /** Always uses light color scheme. */
     data object Light : ThemeOption(
         icon = YallaIcons.ThemeLight,

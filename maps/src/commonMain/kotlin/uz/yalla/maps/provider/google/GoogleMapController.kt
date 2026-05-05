@@ -162,12 +162,13 @@ class GoogleMapController : MapController {
         val target = point.toLatLng()
         val clampedZoom = zoom.clampZoom()
         setProgrammaticTarget(target, clampedZoom)
-        camera.position = ComposeCameraPosition(
-            target = target,
-            zoom = clampedZoom,
-            bearing = camera.position.bearing,
-            tilt = camera.position.tilt
-        )
+        camera.position =
+            ComposeCameraPosition(
+                target = target,
+                zoom = clampedZoom,
+                bearing = camera.position.bearing,
+                tilt = camera.position.tilt
+            )
         updateFromCamera(camera.position)
     }
 

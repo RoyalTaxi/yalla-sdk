@@ -45,7 +45,7 @@ import uz.yalla.resources.img_light_trash_can
  */
 enum class ThemedImage(
     val light: DrawableResource,
-    val dark: DrawableResource,
+    val dark: DrawableResource
 ) {
     BlurryLogo(Res.drawable.img_light_blurry_logo, Res.drawable.img_dark_blurry_logo),
     CloseCircle(Res.drawable.img_light_close_circle, Res.drawable.img_dark_close_circle),
@@ -58,5 +58,5 @@ enum class ThemedImage(
     Safety(Res.drawable.img_light_safety, Res.drawable.img_dark_safety),
     ShieldCheck(Res.drawable.img_light_shield_check, Res.drawable.img_dark_shield_check),
     TariffCard(Res.drawable.img_light_tariff_card, Res.drawable.img_dark_tariff_card),
-    TrashCan(Res.drawable.img_light_trash_can, Res.drawable.img_dark_trash_can),
+    TrashCan(Res.drawable.img_light_trash_can, Res.drawable.img_dark_trash_can)
 }

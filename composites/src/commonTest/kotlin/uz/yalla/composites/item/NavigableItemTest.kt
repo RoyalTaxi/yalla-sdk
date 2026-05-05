@@ -9,26 +9,27 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class NavigableItemColorsTest {
-
-    private val colors = NavigableItemColors(
-        container = Color.White,
-        iconBackground = Color.LightGray,
-        icon = Color.Black,
-        title = Color.Black,
-        subtitle = Color.Gray,
-        arrow = Color.DarkGray,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = NavigableItemColors(
+    private val colors =
+        NavigableItemColors(
             container = Color.White,
             iconBackground = Color.LightGray,
             icon = Color.Black,
             title = Color.Black,
             subtitle = Color.Gray,
-            arrow = Color.DarkGray,
+            arrow = Color.DarkGray
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            NavigableItemColors(
+                container = Color.White,
+                iconBackground = Color.LightGray,
+                icon = Color.Black,
+                title = Color.Black,
+                subtitle = Color.Gray,
+                arrow = Color.DarkGray
+            )
         assertEquals(colors, other)
     }
 
@@ -51,7 +52,6 @@ class NavigableItemColorsTest {
 }
 
 class NavigableItemDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = NavigableItemDefaults.dimens()
@@ -66,12 +66,13 @@ class NavigableItemDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = NavigableItemDefaults.dimens(
-            height = 80.dp,
-            contentSpacing = 24.dp,
-            iconContainerSize = 56.dp,
-            arrowSize = 20.dp,
-        )
+        val dimens =
+            NavigableItemDefaults.dimens(
+                height = 80.dp,
+                contentSpacing = 24.dp,
+                iconContainerSize = 56.dp,
+                arrowSize = 20.dp
+            )
         assertEquals(80.dp, dimens.height)
         assertEquals(24.dp, dimens.contentSpacing)
         assertEquals(56.dp, dimens.iconContainerSize)

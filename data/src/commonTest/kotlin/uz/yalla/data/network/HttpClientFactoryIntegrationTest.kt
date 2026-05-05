@@ -33,11 +33,11 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withTimeout
 import kotlinx.io.IOException
 import kotlinx.serialization.json.Json
+import uz.yalla.core.error.DataError
+import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.preferences.PositionPreferences
 import uz.yalla.core.preferences.SessionPreferences
-import uz.yalla.core.error.DataError
-import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.result.Either
 import uz.yalla.core.session.UnauthorizedSessionEvents
 import uz.yalla.core.settings.LocaleKind
@@ -74,7 +74,6 @@ import kotlin.test.assertIs
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class HttpClientFactoryIntegrationTest {
-
     @BeforeTest
     fun clearPendingUnauthorizedEvent() {
         // Global singleton — drain any stale event left by previous tests in
@@ -88,153 +87,166 @@ class HttpClientFactoryIntegrationTest {
     }
 
     @Test
-    fun respondsWith401TriggersUnauthorizedSessionEventsEmit() = runTest(UnconfinedTestDispatcher()) {
-        val sessionPrefs = FakeSessionPreferences(initialAccessToken = TEST_TOKEN)
-        val eventReceived = CompletableDeferred<Unit>()
-        backgroundScope.launch {
-            UnauthorizedSessionEvents.events.collectLatest {
-                eventReceived.complete(Unit)
+    fun respondsWith401TriggersUnauthorizedSessionEventsEmit() =
+        runTest(UnconfinedTestDispatcher()) {
+            val sessionPrefs = FakeSessionPreferences(initialAccessToken = TEST_TOKEN)
+            val eventReceived = CompletableDeferred<Unit>()
+            backgroundScope.launch {
+                UnauthorizedSessionEvents.events.collectLatest {
+                    eventReceived.complete(Unit)
+                }
             }
+
+            val client =
+                buildTestClient(
+                    testScope = this,
+                    sessionPrefs = sessionPrefs
+                ) {
+                    addHandler { respond("", HttpStatusCode.Unauthorized) }
+                }
+
+            // expectSuccess (the Ktor default for HttpCallValidator) turns 401 into
+            // a ClientRequestException — exercise both the validateResponse and
+            // handleResponseExceptionWithRequest branches by running the call
+            // through safeApiCall, which captures the exception and maps it.
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/some/endpoint") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+
+            withTimeout(EVENT_TIMEOUT_MS) { eventReceived.await() }
+            assertEquals("", sessionPrefs.accessToken.value, "session must be cleared after 401")
         }
-
-        val client = buildTestClient(
-            testScope = this,
-            sessionPrefs = sessionPrefs,
-        ) {
-            addHandler { respond("", HttpStatusCode.Unauthorized) }
-        }
-
-        // expectSuccess (the Ktor default for HttpCallValidator) turns 401 into
-        // a ClientRequestException — exercise both the validateResponse and
-        // handleResponseExceptionWithRequest branches by running the call
-        // through safeApiCall, which captures the exception and maps it.
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/some/endpoint") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-
-        withTimeout(EVENT_TIMEOUT_MS) { eventReceived.await() }
-        assertEquals("", sessionPrefs.accessToken.value, "session must be cleared after 401")
-    }
 
     @Test
-    fun retriesOnIoExceptionForIdempotentCall() = runTest(UnconfinedTestDispatcher()) {
-        var callCount = 0
-        val client = buildTestClient(testScope = this) {
-            addHandler {
-                callCount++
-                if (callCount < 3) throw IOException("transient")
-                respond(
-                    content = """{"id":7,"name":"recovered"}""",
-                    status = HttpStatusCode.OK,
-                    headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()),
+    fun retriesOnIoExceptionForIdempotentCall() =
+        runTest(UnconfinedTestDispatcher()) {
+            var callCount = 0
+            val client =
+                buildTestClient(testScope = this) {
+                    addHandler {
+                        callCount++
+                        if (callCount < 3) throw IOException("transient")
+                        respond(
+                            content = """{"id":7,"name":"recovered"}""",
+                            status = HttpStatusCode.OK,
+                            headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+                        )
+                    }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse>(isIdempotent = true) { client.get("/retry") }
+
+            assertIs<Either.Success<SafeApiCallTestResponse>>(result)
+            assertEquals(7, result.data.id)
+            assertEquals("recovered", result.data.name)
+            assertEquals(3, callCount, "two retries, third succeeds")
+        }
+
+    @Test
+    fun guestModeBlocksNonWhitelistedEndpoint() =
+        runTest(UnconfinedTestDispatcher()) {
+            val sessionPrefs = FakeSessionPreferences(initialGuestMode = true)
+            val client =
+                buildTestClient(
+                    testScope = this,
+                    sessionPrefs = sessionPrefs,
+                    config = defaultNetworkConfig(guestAllowedSegments = listOf("public"))
+                ) {
+                    addHandler { respond("ok", HttpStatusCode.OK) }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/api/private") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Guest, result.error)
+        }
+
+    @Test
+    fun connectionErrorSurfacesAsDataErrorNetworkConnection() =
+        runTest(UnconfinedTestDispatcher()) {
+            val client =
+                buildTestClient(testScope = this) {
+                    addHandler { throw IOException("offline") }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/any") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Connection, result.error)
+        }
+
+    @Test
+    fun requestTimeoutSurfacesAsDataErrorNetworkTimeout() =
+        runTest(UnconfinedTestDispatcher()) {
+            // HttpTimeout is installed (mirrors createHttpClient), but MockEngine's
+            // execute dispatcher is not driven by `runTest`'s virtual clock, so we
+            // can't rely on `delay(N)` inside a mock handler to trip `HttpTimeout`
+            // under virtual time. Instead, throw the concrete socket-timeout that
+            // safeApiCall maps to DataError.Network.Timeout — the same path
+            // exercised by SafeApiCallTest.shouldReturnTimeoutErrorOnSocketTimeoutException.
+            // The HttpRequestTimeoutException → Timeout mapping is verified directly in
+            // SafeApiCallTest.shouldReturnTimeoutOnHttpRequestTimeoutException.
+            val client =
+                buildTestClient(testScope = this) {
+                    addHandler {
+                        throw io.ktor.client.network.sockets
+                            .SocketTimeoutException("request timed out")
+                    }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/slow") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Timeout, result.error)
+        }
+
+    @Test
+    fun cancellingScopeStopsHeaderObserverCoroutines() =
+        runTest(UnconfinedTestDispatcher()) {
+            // Independent SupervisorJob so cancelling this scope does NOT propagate
+            // to the test's own coroutineContext. Share only the dispatcher so
+            // virtual time still applies.
+            val clientScope =
+                CoroutineScope(
+                    SupervisorJob() + coroutineContext[kotlin.coroutines.ContinuationInterceptor]!!
                 )
-            }
+            val sessionPrefs = FakeSessionPreferences()
+            val interfacePrefs = FakeInterfacePreferences(initialLocale = LocaleKind.Uz)
+
+            val client =
+                buildTestClient(
+                    testScope = this,
+                    sessionPrefs = sessionPrefs,
+                    interfacePrefs = interfacePrefs,
+                    clientScope = clientScope
+                ) {
+                    addHandler { respond("ok", HttpStatusCode.OK) }
+                }
+
+            // Record initial locale — observer should have cached "uz".
+            val warmup = client.get("/warm")
+            assertEquals(HttpStatusCode.OK, warmup.status)
+            val warmupLang = warmup.call.request.headers[LANG_HEADER]
+            assertEquals("uz", warmupLang)
+
+            // Cancel the scope that hosts the preference observers.
+            clientScope.cancel()
+
+            // Mutate locale — because observers are dead, the cached value should
+            // stay "uz". Assert via the outbound header on the next request.
+            interfacePrefs.setLocaleType(LocaleKind.Ru)
+            val afterCancel = client.get("/after")
+            assertEquals(HttpStatusCode.OK, afterCancel.status)
+            val afterLang = afterCancel.call.request.headers[LANG_HEADER]
+            assertEquals(
+                expected = "uz",
+                actual = afterLang,
+                message = "observer must be cancelled after scope cancel"
+            )
+
+            assertFalse(clientScope.isActive, "scope should be cancelled")
+            client.close()
         }
-
-        val result = safeApiCall<SafeApiCallTestResponse>(isIdempotent = true) { client.get("/retry") }
-
-        assertIs<Either.Success<SafeApiCallTestResponse>>(result)
-        assertEquals(7, result.data.id)
-        assertEquals("recovered", result.data.name)
-        assertEquals(3, callCount, "two retries, third succeeds")
-    }
-
-    @Test
-    fun guestModeBlocksNonWhitelistedEndpoint() = runTest(UnconfinedTestDispatcher()) {
-        val sessionPrefs = FakeSessionPreferences(initialGuestMode = true)
-        val client = buildTestClient(
-            testScope = this,
-            sessionPrefs = sessionPrefs,
-            config = defaultNetworkConfig(guestAllowedSegments = listOf("public")),
-        ) {
-            addHandler { respond("ok", HttpStatusCode.OK) }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/api/private") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Guest, result.error)
-    }
-
-    @Test
-    fun connectionErrorSurfacesAsDataErrorNetworkConnection() = runTest(UnconfinedTestDispatcher()) {
-        val client = buildTestClient(testScope = this) {
-            addHandler { throw IOException("offline") }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/any") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Connection, result.error)
-    }
-
-    @Test
-    fun requestTimeoutSurfacesAsDataErrorNetworkTimeout() = runTest(UnconfinedTestDispatcher()) {
-        // HttpTimeout is installed (mirrors createHttpClient), but MockEngine's
-        // execute dispatcher is not driven by `runTest`'s virtual clock, so we
-        // can't rely on `delay(N)` inside a mock handler to trip `HttpTimeout`
-        // under virtual time. Instead, throw the concrete socket-timeout that
-        // safeApiCall maps to DataError.Network.Timeout — the same path
-        // exercised by SafeApiCallTest.shouldReturnTimeoutErrorOnSocketTimeoutException.
-        // The HttpRequestTimeoutException → Timeout mapping is verified directly in
-        // SafeApiCallTest.shouldReturnTimeoutOnHttpRequestTimeoutException.
-        val client = buildTestClient(testScope = this) {
-            addHandler {
-                throw io.ktor.client.network.sockets
-                    .SocketTimeoutException("request timed out")
-            }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/slow") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Timeout, result.error)
-    }
-
-    @Test
-    fun cancellingScopeStopsHeaderObserverCoroutines() = runTest(UnconfinedTestDispatcher()) {
-        // Independent SupervisorJob so cancelling this scope does NOT propagate
-        // to the test's own coroutineContext. Share only the dispatcher so
-        // virtual time still applies.
-        val clientScope = CoroutineScope(
-            SupervisorJob() + coroutineContext[kotlin.coroutines.ContinuationInterceptor]!!,
-        )
-        val sessionPrefs = FakeSessionPreferences()
-        val interfacePrefs = FakeInterfacePreferences(initialLocale = LocaleKind.Uz)
-
-        val client = buildTestClient(
-            testScope = this,
-            sessionPrefs = sessionPrefs,
-            interfacePrefs = interfacePrefs,
-            clientScope = clientScope,
-        ) {
-            addHandler { respond("ok", HttpStatusCode.OK) }
-        }
-
-        // Record initial locale — observer should have cached "uz".
-        val warmup = client.get("/warm")
-        assertEquals(HttpStatusCode.OK, warmup.status)
-        val warmupLang = warmup.call.request.headers[LANG_HEADER]
-        assertEquals("uz", warmupLang)
-
-        // Cancel the scope that hosts the preference observers.
-        clientScope.cancel()
-
-        // Mutate locale — because observers are dead, the cached value should
-        // stay "uz". Assert via the outbound header on the next request.
-        interfacePrefs.setLocaleType(LocaleKind.Ru)
-        val afterCancel = client.get("/after")
-        assertEquals(HttpStatusCode.OK, afterCancel.status)
-        val afterLang = afterCancel.call.request.headers[LANG_HEADER]
-        assertEquals(
-            expected = "uz",
-            actual = afterLang,
-            message = "observer must be cancelled after scope cancel",
-        )
-
-        assertFalse(clientScope.isActive, "scope should be cancelled")
-        client.close()
-    }
 
     // --- Direct createHttpClient tests (via the engine= test seam) ---
     //
@@ -245,29 +257,32 @@ class HttpClientFactoryIntegrationTest {
     // createHttpClient that breaks these assertions surfaces here directly.
 
     @Test
-    fun directBearerTokenAttachedWhenSessionHasToken() = runTest(UnconfinedTestDispatcher()) {
-        val sessionPrefs = FakeSessionPreferences(initialAccessToken = TEST_TOKEN)
-        val capturedAuth = CompletableDeferred<String?>()
-        val mockEngine = MockEngine { request ->
-            capturedAuth.complete(request.headers[HttpHeaders.Authorization])
-            respond("ok", HttpStatusCode.OK)
+    fun directBearerTokenAttachedWhenSessionHasToken() =
+        runTest(UnconfinedTestDispatcher()) {
+            val sessionPrefs = FakeSessionPreferences(initialAccessToken = TEST_TOKEN)
+            val capturedAuth = CompletableDeferred<String?>()
+            val mockEngine =
+                MockEngine { request ->
+                    capturedAuth.complete(request.headers[HttpHeaders.Authorization])
+                    respond("ok", HttpStatusCode.OK)
+                }
+
+            val client =
+                createHttpClient(
+                    config = defaultNetworkConfig(),
+                    sessionPrefs = sessionPrefs,
+                    interfacePrefs = FakeInterfacePreferences(),
+                    positionPrefs = FakePositionPreferences(),
+                    scope = backgroundScope,
+                    engine = mockEngine
+                )
+
+            client.get("/whoami")
+
+            val auth = withTimeout(EVENT_TIMEOUT_MS) { capturedAuth.await() }
+            assertEquals("Bearer $TEST_TOKEN", auth)
+            client.close()
         }
-
-        val client = createHttpClient(
-            config = defaultNetworkConfig(),
-            sessionPrefs = sessionPrefs,
-            interfacePrefs = FakeInterfacePreferences(),
-            positionPrefs = FakePositionPreferences(),
-            scope = backgroundScope,
-            engine = mockEngine,
-        )
-
-        client.get("/whoami")
-
-        val auth = withTimeout(EVENT_TIMEOUT_MS) { capturedAuth.await() }
-        assertEquals("Bearer $TEST_TOKEN", auth)
-        client.close()
-    }
 
     @Test
     fun directRespondsWith401ClearsSessionAndPublishesEvent() =
@@ -281,14 +296,15 @@ class HttpClientFactoryIntegrationTest {
             }
             val mockEngine = MockEngine { respond("", HttpStatusCode.Unauthorized) }
 
-            val client = createHttpClient(
-                config = defaultNetworkConfig(),
-                sessionPrefs = sessionPrefs,
-                interfacePrefs = FakeInterfacePreferences(),
-                positionPrefs = FakePositionPreferences(),
-                scope = backgroundScope,
-                engine = mockEngine,
-            )
+            val client =
+                createHttpClient(
+                    config = defaultNetworkConfig(),
+                    sessionPrefs = sessionPrefs,
+                    interfacePrefs = FakeInterfacePreferences(),
+                    positionPrefs = FakePositionPreferences(),
+                    scope = backgroundScope,
+                    engine = mockEngine
+                )
 
             val result = safeApiCall<SafeApiCallTestResponse> { client.get("/needs-auth") }
 
@@ -299,35 +315,39 @@ class HttpClientFactoryIntegrationTest {
         }
 
     @Test
-    fun directDynamicHeadersReflectPreferences() = runTest(UnconfinedTestDispatcher()) {
-        val interfacePrefs = FakeInterfacePreferences(initialLocale = LocaleKind.Ru)
-        val positionPrefs = FakePositionPreferences().apply {
-            setLastMapPosition(GeoPoint(lat = 41.31, lng = 69.28))
+    fun directDynamicHeadersReflectPreferences() =
+        runTest(UnconfinedTestDispatcher()) {
+            val interfacePrefs = FakeInterfacePreferences(initialLocale = LocaleKind.Ru)
+            val positionPrefs =
+                FakePositionPreferences().apply {
+                    setLastMapPosition(GeoPoint(lat = 41.31, lng = 69.28))
+                }
+            val captured = CompletableDeferred<Pair<String?, String?>>()
+            val mockEngine =
+                MockEngine { request ->
+                    captured.complete(
+                        request.headers[LANG_HEADER] to request.headers["x-position"]
+                    )
+                    respond("ok", HttpStatusCode.OK)
+                }
+
+            val client =
+                createHttpClient(
+                    config = defaultNetworkConfig(),
+                    sessionPrefs = FakeSessionPreferences(),
+                    interfacePrefs = interfacePrefs,
+                    positionPrefs = positionPrefs,
+                    scope = backgroundScope,
+                    engine = mockEngine
+                )
+
+            client.get("/headers-check")
+
+            val (lang, position) = withTimeout(EVENT_TIMEOUT_MS) { captured.await() }
+            assertEquals("ru", lang)
+            assertEquals("41.31 69.28", position)
+            client.close()
         }
-        val captured = CompletableDeferred<Pair<String?, String?>>()
-        val mockEngine = MockEngine { request ->
-            captured.complete(
-                request.headers[LANG_HEADER] to request.headers["x-position"]
-            )
-            respond("ok", HttpStatusCode.OK)
-        }
-
-        val client = createHttpClient(
-            config = defaultNetworkConfig(),
-            sessionPrefs = FakeSessionPreferences(),
-            interfacePrefs = interfacePrefs,
-            positionPrefs = positionPrefs,
-            scope = backgroundScope,
-            engine = mockEngine,
-        )
-
-        client.get("/headers-check")
-
-        val (lang, position) = withTimeout(EVENT_TIMEOUT_MS) { captured.await() }
-        assertEquals("ru", lang)
-        assertEquals("41.31 69.28", position)
-        client.close()
-    }
 
     /**
      * Builds an [HttpClient] whose plugin stack mirrors [createHttpClient] but
@@ -344,7 +364,7 @@ class HttpClientFactoryIntegrationTest {
         positionPrefs: FakePositionPreferences = FakePositionPreferences(),
         config: NetworkConfig = defaultNetworkConfig(),
         clientScope: CoroutineScope = testScope.backgroundScope,
-        engineConfig: io.ktor.client.engine.mock.MockEngineConfig.() -> Unit,
+        engineConfig: io.ktor.client.engine.mock.MockEngineConfig.() -> Unit
     ): HttpClient {
         val localeCache = MutableStateFlow("")
         val accessTokenCache = MutableStateFlow("")
@@ -370,20 +390,22 @@ class HttpClientFactoryIntegrationTest {
             install(HttpCallValidator) {
                 validateResponse { response ->
                     if (response.status == HttpStatusCode.Unauthorized) {
-                        val requestToken = response.call.request
-                            .headers[HttpHeaders.Authorization]
-                            ?.removePrefix("Bearer ")
-                            ?.trim()
-                            ?.takeIf { it.isNotEmpty() }
+                        val requestToken =
+                            response.call.request
+                                .headers[HttpHeaders.Authorization]
+                                ?.removePrefix("Bearer ")
+                                ?.trim()
+                                ?.takeIf { it.isNotEmpty() }
                         handleUnauthorizedForTest(sessionPrefs, accessTokenCache, requestToken)
                     }
                 }
                 handleResponseExceptionWithRequest { cause, request ->
                     if (cause is ClientRequestException && cause.response.status == HttpStatusCode.Unauthorized) {
-                        val requestToken = request.headers[HttpHeaders.Authorization]
-                            ?.removePrefix("Bearer ")
-                            ?.trim()
-                            ?.takeIf { it.isNotEmpty() }
+                        val requestToken =
+                            request.headers[HttpHeaders.Authorization]
+                                ?.removePrefix("Bearer ")
+                                ?.trim()
+                                ?.takeIf { it.isNotEmpty() }
                         handleUnauthorizedForTest(sessionPrefs, accessTokenCache, requestToken)
                     }
                 }
@@ -435,7 +457,7 @@ class HttpClientFactoryIntegrationTest {
     private fun handleUnauthorizedForTest(
         sessionPrefs: FakeSessionPreferences,
         accessTokenCache: MutableStateFlow<String>,
-        requestToken: String?,
+        requestToken: String?
     ) {
         val currentToken = accessTokenCache.value
         if (currentToken.isEmpty()) return
@@ -448,13 +470,14 @@ class HttpClientFactoryIntegrationTest {
     }
 
     private fun defaultNetworkConfig(
-        guestAllowedSegments: List<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS,
-    ): NetworkConfig = NetworkConfig(
-        baseUrl = "https://api.test.local/",
-        brandId = "test-brand",
-        secretKey = "test-secret",
-        guestAllowedSegments = guestAllowedSegments,
-    )
+        guestAllowedSegments: List<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS
+    ): NetworkConfig =
+        NetworkConfig(
+            baseUrl = "https://api.test.local/",
+            brandId = "test-brand",
+            secretKey = "test-secret",
+            guestAllowedSegments = guestAllowedSegments
+        )
 
     private companion object {
         const val TEST_TOKEN = "test-token-abc"
@@ -468,7 +491,7 @@ class HttpClientFactoryIntegrationTest {
 
 private class FakeSessionPreferences(
     initialAccessToken: String = "",
-    initialGuestMode: Boolean = false,
+    initialGuestMode: Boolean = false
 ) : SessionPreferences {
     private val _accessToken = MutableStateFlow(initialAccessToken)
     override val accessToken: StateFlow<String> = _accessToken.asStateFlow()
@@ -506,7 +529,7 @@ private class FakeSessionPreferences(
 }
 
 private class FakeInterfacePreferences(
-    initialLocale: LocaleKind = LocaleKind.Uz,
+    initialLocale: LocaleKind = LocaleKind.Uz
 ) : InterfacePreferences {
     private val _localeType = MutableStateFlow(initialLocale)
     override val localeType: StateFlow<LocaleKind> = _localeType.asStateFlow()

@@ -26,7 +26,7 @@ actual fun Polyline(
     endCap: Cap,
     jointType: JointType,
     startCap: Cap,
-    width: Float,
+    width: Float
 ) {
     val googlePoints = remember(points) { points.map(LatLng::toGoogleLatLng) }
 
@@ -36,6 +36,6 @@ actual fun Polyline(
         endCap = endCap.toGoogleCap(),
         jointType = jointType.toGoogleJointType(),
         startCap = startCap.toGoogleCap(),
-        width = width,
+        width = width
     )
 }

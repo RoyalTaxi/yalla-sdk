@@ -44,7 +44,7 @@ data class PinRowColors(
     val errorTextColor: Color,
     val filledBorderColor: Color,
     val emptyBorderColor: Color,
-    val errorBorderColor: Color,
+    val errorBorderColor: Color
 )
 
 /**
@@ -56,7 +56,7 @@ data class PinRowColors(
 data class PinRowDimens(
     val shape: Shape,
     val spacing: Dp,
-    val borderWidth: Dp,
+    val borderWidth: Dp
 )
 
 /**
@@ -65,7 +65,6 @@ data class PinRowDimens(
  * Provides theme-aware defaults for [colors], [digitStyle], and [dimens].
  */
 object PinRowDefaults {
-
     /** Creates theme-aware color configuration for [PinRow]. */
     @Composable
     fun colors(
@@ -73,14 +72,15 @@ object PinRowDefaults {
         errorTextColor: Color = System.color.text.red,
         filledBorderColor: Color = System.color.border.filled,
         emptyBorderColor: Color = System.color.border.disabled,
-        errorBorderColor: Color = System.color.text.red,
-    ): PinRowColors = PinRowColors(
-        textColor = textColor,
-        errorTextColor = errorTextColor,
-        filledBorderColor = filledBorderColor,
-        emptyBorderColor = emptyBorderColor,
-        errorBorderColor = errorBorderColor,
-    )
+        errorBorderColor: Color = System.color.text.red
+    ): PinRowColors =
+        PinRowColors(
+            textColor = textColor,
+            errorTextColor = errorTextColor,
+            filledBorderColor = filledBorderColor,
+            emptyBorderColor = emptyBorderColor,
+            errorBorderColor = errorBorderColor
+        )
 
     /** Creates theme-aware text style for digits in [PinRow]. */
     @Composable
@@ -90,12 +90,13 @@ object PinRowDefaults {
     fun dimens(
         shape: Shape = RoundedCornerShape(12.dp),
         spacing: Dp = 8.dp,
-        borderWidth: Dp = 1.dp,
-    ): PinRowDimens = PinRowDimens(
-        shape = shape,
-        spacing = spacing,
-        borderWidth = borderWidth,
-    )
+        borderWidth: Dp = 1.dp
+    ): PinRowDimens =
+        PinRowDimens(
+            shape = shape,
+            spacing = spacing,
+            borderWidth = borderWidth
+        )
 }
 
 /**
@@ -142,7 +143,7 @@ fun PinRow(
     isError: Boolean = false,
     colors: PinRowColors = PinRowDefaults.colors(),
     digitStyle: TextStyle = PinRowDefaults.digitStyle(),
-    dimens: PinRowDimens = PinRowDefaults.dimens(),
+    dimens: PinRowDimens = PinRowDefaults.dimens()
 ) {
     val shakeOffset = remember { Animatable(0f) }
     val scaleAnim = remember { Animatable(1f) }
@@ -172,47 +173,50 @@ fun PinRow(
                 }
             }
         },
-        modifier = modifier
-            .fillMaxWidth()
-            .graphicsLayer {
-                translationX = shakeOffset.value
-                scaleX = scaleAnim.value
-                scaleY = scaleAnim.value
-            }.then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .graphicsLayer {
+                    translationX = shakeOffset.value
+                    scaleX = scaleAnim.value
+                    scaleY = scaleAnim.value
+                }.then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
         decorationBox = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(dimens.spacing),
+                horizontalArrangement = Arrangement.spacedBy(dimens.spacing)
             ) {
                 repeat(length) { index ->
                     val char = value.getOrNull(index)
-                    val borderColor = when {
-                        isError -> colors.errorBorderColor
-                        char != null -> colors.filledBorderColor
-                        else -> colors.emptyBorderColor
-                    }
+                    val borderColor =
+                        when {
+                            isError -> colors.errorBorderColor
+                            char != null -> colors.filledBorderColor
+                            else -> colors.emptyBorderColor
+                        }
 
                     Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .aspectRatio(1f)
-                            .border(dimens.borderWidth, borderColor, dimens.shape),
-                        contentAlignment = Alignment.Center,
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .aspectRatio(1f)
+                                .border(dimens.borderWidth, borderColor, dimens.shape),
+                        contentAlignment = Alignment.Center
                     ) {
                         char?.let {
                             Text(
                                 text = it.toString(),
                                 style = digitStyle,
                                 color = if (isError) colors.errorTextColor else colors.textColor,
-                                textAlign = TextAlign.Center,
+                                textAlign = TextAlign.Center
                             )
                         }
                     }
                 }
             }
-        },
+        }
     )
 }

@@ -17,12 +17,11 @@ import kotlin.test.assertEquals
  * `getStringResource()` extension.
  */
 class PaymentResourceTest {
-
     @Test
     fun cash_resolves_to_payment_type_cash() {
         assertEquals(
             Res.string.payment_type_cash,
-            PaymentKind.Cash.getStringResource(),
+            PaymentKind.Cash.getStringResource()
         )
     }
 
@@ -31,7 +30,7 @@ class PaymentResourceTest {
         val card = PaymentKind.Card(cardId = CardId("1234567890123456"), maskedNumber = "**** 3456")
         assertEquals(
             Res.string.payment_card_humo_format,
-            card.getStringResource(),
+            card.getStringResource()
         )
     }
 
@@ -40,7 +39,7 @@ class PaymentResourceTest {
         val card = PaymentKind.Card(cardId = CardId("123456789012345"), maskedNumber = "**** 2345")
         assertEquals(
             Res.string.payment_card_uzcard_format,
-            card.getStringResource(),
+            card.getStringResource()
         )
     }
 
@@ -49,7 +48,7 @@ class PaymentResourceTest {
         val card = PaymentKind.Card(cardId = CardId("12345678"), maskedNumber = "**** 5678")
         assertEquals(
             Res.string.payment_card_uzcard_format,
-            card.getStringResource(),
+            card.getStringResource()
         )
     }
 
@@ -58,7 +57,7 @@ class PaymentResourceTest {
         val card = PaymentKind.Card(cardId = CardId(""), maskedNumber = "")
         assertEquals(
             Res.string.payment_card_uzcard_format,
-            card.getStringResource(),
+            card.getStringResource()
         )
     }
 }

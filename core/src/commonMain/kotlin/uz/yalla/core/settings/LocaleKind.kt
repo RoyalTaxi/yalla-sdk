@@ -16,7 +16,9 @@ import kotlinx.serialization.Serializable
  * @see uz.yalla.core.preferences.InterfacePreferences.localeType
  */
 @Serializable
-enum class LocaleKind(val code: String) {
+enum class LocaleKind(
+    val code: String
+) {
     /** Uzbek (Latin script). Default locale. */
     @SerialName("uz")
     Uz("uz"),
@@ -35,7 +37,12 @@ enum class LocaleKind(val code: String) {
          * @return Matching [LocaleKind], defaulting to [Uz].
          */
         fun from(code: String?): LocaleKind {
-            val normalized = code?.trim()?.replace('_', '-')?.lowercase().orEmpty()
+            val normalized =
+                code
+                    ?.trim()
+                    ?.replace('_', '-')
+                    ?.lowercase()
+                    .orEmpty()
             return entries.find { it.code.lowercase() == normalized } ?: Uz
         }
     }

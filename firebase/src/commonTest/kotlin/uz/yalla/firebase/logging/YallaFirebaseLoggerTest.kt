@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class YallaFirebaseLoggerTest {
-
     @Test
     fun shouldNoopLoggerNotThrow() {
         // Should complete without throwing any exception
@@ -16,10 +15,11 @@ class YallaFirebaseLoggerTest {
         var capturedTag: String? = null
         var capturedMessage: String? = null
 
-        val logger = YallaFirebaseLogger { tag, message ->
-            capturedTag = tag
-            capturedMessage = message
-        }
+        val logger =
+            YallaFirebaseLogger { tag, message ->
+                capturedTag = tag
+                capturedMessage = message
+            }
 
         logger.log("Analytics", "Failed to log event")
 

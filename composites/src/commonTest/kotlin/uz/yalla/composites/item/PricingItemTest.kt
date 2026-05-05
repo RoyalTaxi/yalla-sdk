@@ -9,26 +9,27 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class PricingItemColorsTest {
-
     private val brush = Brush.linearGradient(listOf(Color.Red, Color.Blue))
 
-    private val colors = PricingItemColors(
-        container = Color.LightGray,
-        selectedContainer = Color.White,
-        name = Color.Black,
-        price = Color.Black,
-        selectedBorder = brush,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = PricingItemColors(
+    private val colors =
+        PricingItemColors(
             container = Color.LightGray,
             selectedContainer = Color.White,
             name = Color.Black,
             price = Color.Black,
-            selectedBorder = brush,
+            selectedBorder = brush
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            PricingItemColors(
+                container = Color.LightGray,
+                selectedContainer = Color.White,
+                name = Color.Black,
+                price = Color.Black,
+                selectedBorder = brush
+            )
         assertEquals(colors, other)
     }
 
@@ -50,7 +51,6 @@ class PricingItemColorsTest {
 }
 
 class PricingItemDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = PricingItemDefaults.dimens()
@@ -66,12 +66,13 @@ class PricingItemDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = PricingItemDefaults.dimens(
-            height = 160.dp,
-            minWidth = 200.dp,
-            contentPadding = 16.dp,
-            textMaxLines = 2,
-        )
+        val dimens =
+            PricingItemDefaults.dimens(
+                height = 160.dp,
+                minWidth = 200.dp,
+                contentPadding = 16.dp,
+                textMaxLines = 2
+            )
         assertEquals(160.dp, dimens.height)
         assertEquals(200.dp, dimens.minWidth)
         assertEquals(16.dp, dimens.contentPadding)

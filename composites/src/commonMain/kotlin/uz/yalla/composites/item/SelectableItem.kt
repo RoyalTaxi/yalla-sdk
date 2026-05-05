@@ -31,7 +31,7 @@ data class SelectableItemColors(
     val selectedContainer: Color,
     val unselectedContainer: Color,
     val border: Color,
-    val text: Color,
+    val text: Color
 )
 
 /**
@@ -42,14 +42,13 @@ data class SelectableItemDimens(
     val shape: Shape,
     val contentPadding: PaddingValues,
     val iconSpacing: Dp,
-    val borderWidth: Dp,
+    val borderWidth: Dp
 )
 
 /**
  * Default configuration values for [SelectableItem].
  */
 object SelectableItemDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
@@ -58,12 +57,12 @@ object SelectableItemDefaults {
         selectedContainer: Color = System.color.background.secondary,
         unselectedContainer: Color = Color.Transparent,
         border: Color = System.color.border.disabled,
-        text: Color = System.color.text.base,
+        text: Color = System.color.text.base
     ) = SelectableItemColors(
         selectedContainer = selectedContainer,
         unselectedContainer = unselectedContainer,
         border = border,
-        text = text,
+        text = text
     )
 
     /**
@@ -73,12 +72,12 @@ object SelectableItemDefaults {
         shape: Shape = RoundedCornerShape(16.dp),
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         iconSpacing: Dp = 12.dp,
-        borderWidth: Dp = 1.dp,
+        borderWidth: Dp = 1.dp
     ) = SelectableItemDimens(
         shape = shape,
         contentPadding = contentPadding,
         iconSpacing = iconSpacing,
-        borderWidth = borderWidth,
+        borderWidth = borderWidth
     )
 }
 
@@ -121,7 +120,7 @@ fun SelectableItem(
     modifier: Modifier = Modifier,
     icon: (@Composable () -> Unit)? = null,
     colors: SelectableItemColors = SelectableItemDefaults.colors(),
-    dimens: SelectableItemDimens = SelectableItemDefaults.dimens(),
+    dimens: SelectableItemDimens = SelectableItemDefaults.dimens()
 ) {
     Surface(
         modifier = modifier,
@@ -131,12 +130,12 @@ fun SelectableItem(
         border =
             BorderStroke(
                 width = if (isSelected) 0.dp else dimens.borderWidth,
-                color = colors.border,
-            ),
+                color = colors.border
+            )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(dimens.contentPadding),
+            modifier = Modifier.padding(dimens.contentPadding)
         ) {
             if (icon != null) {
                 icon()
@@ -156,7 +155,7 @@ fun SelectableItem(
                 Icon(
                     painter = rememberVectorPainter(YallaIcons.Checked),
                     contentDescription = null,
-                    tint = Color.Unspecified,
+                    tint = Color.Unspecified
                 )
             }
         }

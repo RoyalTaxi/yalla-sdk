@@ -10,22 +10,23 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class IconItemColorsTest {
-
-    private val colors = IconItemColors(
-        container = Color.White,
-        iconBackground = Color.LightGray,
-        title = Color.Black,
-        subtitle = Color.Gray,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = IconItemColors(
+    private val colors =
+        IconItemColors(
             container = Color.White,
             iconBackground = Color.LightGray,
             title = Color.Black,
-            subtitle = Color.Gray,
+            subtitle = Color.Gray
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            IconItemColors(
+                container = Color.White,
+                iconBackground = Color.LightGray,
+                title = Color.Black,
+                subtitle = Color.Gray
+            )
         assertEquals(colors, other)
     }
 
@@ -46,7 +47,6 @@ class IconItemColorsTest {
 }
 
 class IconItemDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = IconItemDefaults.dimens()
@@ -61,11 +61,12 @@ class IconItemDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = IconItemDefaults.dimens(
-            contentSpacing = 24.dp,
-            iconContainerSize = 48.dp,
-            iconPadding = 8.dp,
-        )
+        val dimens =
+            IconItemDefaults.dimens(
+                contentSpacing = 24.dp,
+                iconContainerSize = 48.dp,
+                iconPadding = 8.dp
+            )
         assertEquals(24.dp, dimens.contentSpacing)
         assertEquals(48.dp, dimens.iconContainerSize)
         assertEquals(8.dp, dimens.iconPadding)

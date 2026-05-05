@@ -38,7 +38,7 @@ import uz.yalla.resources.icons.YallaIcons
 actual fun <C : Route> NativeNavHost(
     rootComponent: NativeRootComponent<C>,
     screenProvider: ScreenProvider<C>,
-    modifier: Modifier,
+    modifier: Modifier
 ) {
     val navigator = rootComponent.navigator
     val canGoBack by navigator.canGoBack.collectAsState()
@@ -47,7 +47,7 @@ actual fun <C : Route> NativeNavHost(
         Children(
             stack = rootComponent.childStack,
             modifier = modifier,
-            animation = stackAnimation(slide()),
+            animation = stackAnimation(slide())
         ) { child ->
             val route = child.configuration
             val config = remember(route) { screenProvider.configFor(route) }
@@ -59,9 +59,9 @@ actual fun <C : Route> NativeNavHost(
                         TopAppBar(
                             title = {},
                             navigationIcon = { BackButton(canGoBack, navigator) },
-                            actions = { ToolbarActions(toolbarState) },
+                            actions = { ToolbarActions(toolbarState) }
                         )
-                    },
+                    }
                 ) { paddingValues ->
                     SideEffect {
                         if (toolbarState.contentPadding != paddingValues) {
@@ -94,12 +94,15 @@ actual fun <C : Route> NativeNavHost(
  * @param navigator [Navigator] whose [Navigator.pop] is invoked on click.
  */
 @Composable
-private fun BackButton(canGoBack: Boolean, navigator: Navigator) {
+private fun BackButton(
+    canGoBack: Boolean,
+    navigator: Navigator
+) {
     if (canGoBack) {
         IconButton(onClick = { navigator.pop() }) {
             Icon(
                 imageVector = YallaIcons.ArrowLeft,
-                contentDescription = null,
+                contentDescription = null
             )
         }
     }
@@ -114,13 +117,15 @@ private fun BackButton(canGoBack: Boolean, navigator: Navigator) {
 private fun RowScope.ToolbarActions(toolbarState: ToolbarState) {
     toolbarState.actions.forEach { action ->
         when (action) {
-            is ToolbarAction.Text -> TextButton(onClick = action.onClick) {
-                Text(action.label)
-            }
+            is ToolbarAction.Text ->
+                TextButton(onClick = action.onClick) {
+                    Text(action.label)
+                }
 
-            is ToolbarAction.Icon -> IconButton(onClick = action.onClick) {
-                Text(action.icon.name)
-            }
+            is ToolbarAction.Icon ->
+                IconButton(onClick = action.onClick) {
+                    Text(action.icon.name)
+                }
         }
     }
 }

@@ -23,7 +23,6 @@ import kotlin.test.Test
  *   These can be added when compose-ui-test is wired into the module's androidTest variant.
  */
 class ObserveAsEventsTest {
-
     @Test
     fun placeholder_compileCheck() {
         // Intentionally empty — ensures this file compiles on both iOS and future Android targets.

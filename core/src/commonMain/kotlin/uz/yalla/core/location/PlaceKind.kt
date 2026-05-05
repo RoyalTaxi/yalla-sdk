@@ -13,7 +13,9 @@ import uz.yalla.core.util.normalizedId
  * @see SavedAddress
  */
 @Serializable
-enum class PlaceKind(val id: String) {
+enum class PlaceKind(
+    val id: String
+) {
     @SerialName("home")
     Home("home"),
 
@@ -21,7 +23,7 @@ enum class PlaceKind(val id: String) {
     Work("work"),
 
     @SerialName("other")
-    Other("other"),
+    Other("other")
     ;
 
     companion object {

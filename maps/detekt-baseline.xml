@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:GoogleExtendedMap.kt$GoogleExtendedMap$@Composable override fun Content( controller: MapController, modifier: Modifier, route: List&lt;GeoPoint>, locations: List&lt;GeoPoint>, initialPoint: GeoPoint?, showLocationIndicator: Boolean, showMarkerLabels: Boolean, startMarkerLabel: String?, endMarkerLabel: String?, isInteractionEnabled: Boolean, useInternalCameraInitialization: Boolean, onMarkerChanged: ((MarkerState) -> Unit)?, onMapReady: (() -> Unit)?, content: @Composable MapScope.() -> Unit )</ID>
+    <ID>CyclomaticComplexMethod:GoogleMap.ios.kt$@OptIn(ExperimentalForeignApi::class) @Composable actual fun GoogleMap( modifier: Modifier, cameraPositionState: CameraPositionState, properties: MapProperties, uiSettings: MapUiSettings, theme: ThemeKind, contentPadding: PaddingValues, onMapLoaded: (() -> Unit)?, content: ( @Composable @GoogleMapComposable () -> Unit )? )</ID>
+    <ID>CyclomaticComplexMethod:LibreExtendedMap.kt$LibreExtendedMap$@Composable override fun Content( controller: MapController, modifier: Modifier, route: List&lt;GeoPoint>, locations: List&lt;GeoPoint>, initialPoint: GeoPoint?, showLocationIndicator: Boolean, showMarkerLabels: Boolean, startMarkerLabel: String?, endMarkerLabel: String?, isInteractionEnabled: Boolean, useInternalCameraInitialization: Boolean, onMarkerChanged: ((MarkerState) -> Unit)?, onMapReady: (() -> Unit)?, content: @Composable MapScope.() -> Unit )</ID>
+    <ID>CyclomaticComplexMethod:RememberComposeBitmapDescriptor.ios.kt$@OptIn(ExperimentalForeignApi::class, ExperimentalComposeUiApi::class) internal suspend fun captureComposableToUIImage(content: @Composable () -> Unit): UIImage</ID>
+    <ID>LongMethod:CameraPositionStateSync.kt$@Composable internal fun rememberSyncedGoogleCameraPositionState( cameraPositionState: CameraPositionState, contentPadding: PaddingValues ): GoogleCameraPositionState</ID>
+    <ID>LongMethod:GoogleExtendedMap.kt$GoogleExtendedMap$@Composable override fun Content( controller: MapController, modifier: Modifier, route: List&lt;GeoPoint>, locations: List&lt;GeoPoint>, initialPoint: GeoPoint?, showLocationIndicator: Boolean, showMarkerLabels: Boolean, startMarkerLabel: String?, endMarkerLabel: String?, isInteractionEnabled: Boolean, useInternalCameraInitialization: Boolean, onMarkerChanged: ((MarkerState) -> Unit)?, onMapReady: (() -> Unit)?, content: @Composable MapScope.() -> Unit )</ID>
+    <ID>LongMethod:GoogleLiteMap.kt$GoogleLiteMap$@Composable override fun Content( controller: MapController, modifier: Modifier, initialPoint: GeoPoint?, showLocationIndicator: Boolean, bindLocationTracker: Boolean, onMarkerChanged: ((MarkerState) -> Unit)?, onMapReady: (() -> Unit)? )</ID>
+    <ID>LongMethod:GoogleMap.ios.kt$@OptIn(ExperimentalForeignApi::class) @Composable actual fun GoogleMap( modifier: Modifier, cameraPositionState: CameraPositionState, properties: MapProperties, uiSettings: MapUiSettings, theme: ThemeKind, contentPadding: PaddingValues, onMapLoaded: (() -> Unit)?, content: ( @Composable @GoogleMapComposable () -> Unit )? )</ID>
+    <ID>LongMethod:LibreExtendedMap.kt$LibreExtendedMap$@Composable override fun Content( controller: MapController, modifier: Modifier, route: List&lt;GeoPoint>, locations: List&lt;GeoPoint>, initialPoint: GeoPoint?, showLocationIndicator: Boolean, showMarkerLabels: Boolean, startMarkerLabel: String?, endMarkerLabel: String?, isInteractionEnabled: Boolean, useInternalCameraInitialization: Boolean, onMarkerChanged: ((MarkerState) -> Unit)?, onMapReady: (() -> Unit)?, content: @Composable MapScope.() -> Unit )</ID>
+    <ID>LongMethod:LibreStaticMap.kt$LibreStaticMap$@Composable override fun Content( modifier: Modifier, route: List&lt;GeoPoint>?, locations: List&lt;GeoPoint>?, startLabel: String?, endLabel: String?, onMapReady: (() -> Unit)? )</ID>
+    <ID>LongMethod:RememberComposeBitmapDescriptor.ios.kt$@OptIn(ExperimentalForeignApi::class, ExperimentalComposeUiApi::class) internal suspend fun captureComposableToUIImage(content: @Composable () -> Unit): UIImage</ID>
+    <ID>LongParameterList:ExtendedMap.kt$ExtendedMap$( controller: MapController, modifier: Modifier = Modifier, route: List&lt;GeoPoint> = emptyList(), locations: List&lt;GeoPoint> = emptyList(), initialPoint: GeoPoint? = null, showLocationIndicator: Boolean = true, showMarkerLabels: Boolean = true, startMarkerLabel: String? = null, endMarkerLabel: String? = null, isInteractionEnabled: Boolean = true, useInternalCameraInitialization: Boolean = true, onMarkerChanged: ((MarkerState) -> Unit)? = null, onMapReady: (() -> Unit)? = null, content: @Composable MapScope.() -> Unit = {} )</ID>
+    <ID>LongParameterList:GoogleExtendedMap.kt$( modifier: Modifier, cameraState: CameraPositionState, theme: ThemeKind, isInteractionEnabled: Boolean, route: List&lt;GeoPoint>, locations: List&lt;GeoPoint>, showLocationIndicator: Boolean, showMarkerLabels: Boolean, startMarkerLabel: String?, endMarkerLabel: String?, userLocation: GeoPoint?, contentPadding: PaddingValues, onMapSizeChanged: ((IntSize) -> Unit)?, onMapReady: () -> Unit, content: @Composable MapScope.() -> Unit )</ID>
+    <ID>LongParameterList:GoogleMap.android.kt$( modifier: Modifier, cameraPositionState: CameraPositionState, properties: MapProperties, uiSettings: MapUiSettings, theme: ThemeKind, contentPadding: PaddingValues, onMapLoaded: (() -> Unit)?, content: ( @Composable @GoogleMapComposable () -> Unit )? )</ID>
+    <ID>LongParameterList:GoogleMap.ios.kt$( modifier: Modifier, cameraPositionState: CameraPositionState, properties: MapProperties, uiSettings: MapUiSettings, theme: ThemeKind, contentPadding: PaddingValues, onMapLoaded: (() -> Unit)?, content: ( @Composable @GoogleMapComposable () -> Unit )? )</ID>
+    <ID>LongParameterList:GoogleMap.kt$( modifier: Modifier = Modifier, cameraPositionState: CameraPositionState = rememberCameraPositionState(), properties: MapProperties = MapProperties(), uiSettings: MapUiSettings = MapUiSettings(), theme: ThemeKind = ThemeKind.System, contentPadding: PaddingValues = PaddingValues(0.dp), onMapLoaded: (() -> Unit)? = null, content: ( @Composable @GoogleMapComposable () -> Unit )? = null )</ID>
+    <ID>LongParameterList:LibreExtendedMap.kt$( modifier: Modifier, cameraState: CameraState, theme: ThemeKind, isInteractionEnabled: Boolean, route: List&lt;GeoPoint>, locations: List&lt;GeoPoint>, showLocationIndicator: Boolean, showMarkerLabels: Boolean, startMarkerLabel: String?, endMarkerLabel: String?, userLocation: GeoPoint?, onMapReady: () -> Unit, content: @Composable MapScope.() -> Unit )</ID>
+    <ID>LongParameterList:MapComposables.kt$( cameraState: CameraPositionState, theme: ThemeKind, modifier: Modifier = Modifier, gesturesEnabled: Boolean = true, contentPadding: PaddingValues, onMapSizeChanged: ((IntSize) -> Unit)? = null, onMapReady: () -> Unit = {}, content: @Composable @GoogleMapComposable () -> Unit = {} )</ID>
+    <ID>LongParameterList:MapUiSettings.kt$MapUiSettings$( compassEnabled: Boolean = this.compassEnabled, indoorLevelPickerEnabled: Boolean = this.indoorLevelPickerEnabled, mapToolbarEnabled: Boolean = this.mapToolbarEnabled, myLocationButtonEnabled: Boolean = this.myLocationButtonEnabled, rotationGesturesEnabled: Boolean = this.rotationGesturesEnabled, scrollGesturesEnabled: Boolean = this.scrollGesturesEnabled, scrollGesturesEnabledDuringRotateOrZoom: Boolean = this.scrollGesturesEnabledDuringRotateOrZoom, tiltGesturesEnabled: Boolean = this.tiltGesturesEnabled, zoomControlsEnabled: Boolean = this.zoomControlsEnabled, zoomGesturesEnabled: Boolean = this.zoomGesturesEnabled )</ID>
+    <ID>LongParameterList:MapUiSettings.kt$MapUiSettings$( val compassEnabled: Boolean = true, val indoorLevelPickerEnabled: Boolean = true, val mapToolbarEnabled: Boolean = true, val myLocationButtonEnabled: Boolean = true, val rotationGesturesEnabled: Boolean = true, val scrollGesturesEnabled: Boolean = true, val scrollGesturesEnabledDuringRotateOrZoom: Boolean = true, val tiltGesturesEnabled: Boolean = true, val zoomControlsEnabled: Boolean = true, val zoomGesturesEnabled: Boolean = true )</ID>
+    <ID>MagicNumber:BitmapDescriptor.android.kt$BitmapDescriptorFactory$3</ID>
+    <ID>MagicNumber:BitmapDescriptor.android.kt$BitmapDescriptorFactory$4</ID>
+    <ID>MagicNumber:BitmapDescriptor.ios.kt$BitmapDescriptorFactory$4</ID>
+    <ID>MagicNumber:LatLng.kt$LatLng$180.0</ID>
+    <ID>MagicNumber:LatLng.kt$LatLng$90.0</ID>
+    <ID>MagicNumber:LocationIndicator.kt$0.1f</ID>
+    <ID>MagicNumber:LocationIndicator.kt$0.5f</ID>
+    <ID>MagicNumber:LocationIndicator.kt$156543.03392</ID>
+    <ID>MagicNumber:LocationIndicator.kt$180.0</ID>
+    <ID>MagicNumber:LocationIndicator.kt$20f</ID>
+    <ID>MagicNumber:LocationsLayer.kt$0.5f</ID>
+    <ID>MagicNumber:MapExtensions.kt$180.0</ID>
+    <ID>MagicNumber:MapExtensions.kt$180f</ID>
+    <ID>MagicNumber:MapExtensions.kt$360</ID>
+    <ID>MagicNumber:MapExtensions.kt$360f</ID>
+    <ID>MagicNumber:MapExtensions.kt$90.0</ID>
+    <ID>MagicNumber:Marker.kt$0.5f</ID>
+    <ID>MagicNumber:RememberComposeBitmapDescriptor.ios.kt$0xFF</ID>
+    <ID>MagicNumber:RememberComposeBitmapDescriptor.ios.kt$1000.0</ID>
+    <ID>MagicNumber:RememberComposeBitmapDescriptor.ios.kt$16</ID>
+    <ID>MagicNumber:RememberComposeBitmapDescriptor.ios.kt$200.0</ID>
+    <ID>MagicNumber:RememberComposeBitmapDescriptor.ios.kt$24</ID>
+    <ID>MagicNumber:RememberComposeBitmapDescriptor.ios.kt$3</ID>
+    <ID>MagicNumber:RememberComposeBitmapDescriptor.ios.kt$4</ID>
+    <ID>MagicNumber:RememberComposeBitmapDescriptor.ios.kt$8</ID>
+    <ID>MatchingDeclarationName:Circle.android.kt$Circle</ID>
+    <ID>MatchingDeclarationName:Circle.ios.kt$Circle</ID>
+    <ID>MatchingDeclarationName:GoogleMapComposable.ios.kt$GoogleMapComposable</ID>
+    <ID>MatchingDeclarationName:LocationIndicatorOverlay.kt$LocationIndicatorConfig</ID>
+    <ID>MatchingDeclarationName:LocationsOverlay.kt$LocationsOverlayConfig</ID>
+    <ID>MatchingDeclarationName:Polyline.android.kt$Polyline</ID>
+    <ID>MatchingDeclarationName:Polyline.ios.kt$Polyline</ID>
+    <ID>MatchingDeclarationName:RouteOverlay.kt$RouteOverlayConfig</ID>
+    <ID>TooManyFunctions:GoogleMapController.kt$GoogleMapController : MapController</ID>
+    <ID>TooManyFunctions:LibreMapController.kt$LibreMapController : MapController</ID>
+    <ID>TooManyFunctions:SwitchingMapController.kt$SwitchingMapController : MapController</ID>
+  </CurrentIssues>
+</SmellBaseline>

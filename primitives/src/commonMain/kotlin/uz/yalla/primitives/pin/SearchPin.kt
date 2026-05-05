@@ -32,7 +32,7 @@ import uz.yalla.resources.Res
 @Immutable
 data class SearchPinDimens(
     val size: Dp,
-    val lottieResourcePath: String,
+    val lottieResourcePath: String
 )
 
 /**
@@ -63,7 +63,7 @@ data class SearchPinDimens(
 @Composable
 fun SearchPin(
     modifier: Modifier = Modifier,
-    dimens: SearchPinDimens = SearchPinDefaults.dimens(),
+    dimens: SearchPinDimens = SearchPinDefaults.dimens()
 ) {
     var lottieJson by remember { mutableStateOf<String?>(null) }
 
@@ -97,9 +97,10 @@ object SearchPinDefaults {
     /** Creates dimension configuration for [SearchPin]. */
     fun dimens(
         size: Dp = 200.dp,
-        lottieResourcePath: String = "files/lottie_order_search.json",
-    ): SearchPinDimens = SearchPinDimens(
-        size = size,
-        lottieResourcePath = lottieResourcePath,
-    )
+        lottieResourcePath: String = "files/lottie_order_search.json"
+    ): SearchPinDimens =
+        SearchPinDimens(
+            size = size,
+            lottieResourcePath = lottieResourcePath
+        )
 }

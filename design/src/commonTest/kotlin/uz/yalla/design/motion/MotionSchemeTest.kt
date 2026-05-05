@@ -6,7 +6,6 @@ import kotlin.test.assertNotEquals
 import kotlin.time.Duration.Companion.milliseconds
 
 class MotionSchemeTest {
-
     @Test
     fun standardMotionSchemeReturnsCanonicalDurations() {
         val scheme = standardMotionScheme()
@@ -39,20 +38,22 @@ class MotionSchemeTest {
 
     @Test
     fun durationEqualityHoldsForIdenticalContent() {
-        val a = MotionScheme.Duration(
-            instant = 100.milliseconds,
-            quick = 200.milliseconds,
-            standard = 350.milliseconds,
-            slow = 500.milliseconds,
-            contemplative = 800.milliseconds,
-        )
-        val b = MotionScheme.Duration(
-            instant = 100.milliseconds,
-            quick = 200.milliseconds,
-            standard = 350.milliseconds,
-            slow = 500.milliseconds,
-            contemplative = 800.milliseconds,
-        )
+        val a =
+            MotionScheme.Duration(
+                instant = 100.milliseconds,
+                quick = 200.milliseconds,
+                standard = 350.milliseconds,
+                slow = 500.milliseconds,
+                contemplative = 800.milliseconds
+            )
+        val b =
+            MotionScheme.Duration(
+                instant = 100.milliseconds,
+                quick = 200.milliseconds,
+                standard = 350.milliseconds,
+                slow = 500.milliseconds,
+                contemplative = 800.milliseconds
+            )
 
         assertEquals(a, b)
     }
@@ -67,16 +68,18 @@ class MotionSchemeTest {
 
     @Test
     fun staggerEqualityHoldsForIdenticalContent() {
-        val a = MotionScheme.Stagger(
-            list = 30.milliseconds,
-            grid = 50.milliseconds,
-            cards = 75.milliseconds,
-        )
-        val b = MotionScheme.Stagger(
-            list = 30.milliseconds,
-            grid = 50.milliseconds,
-            cards = 75.milliseconds,
-        )
+        val a =
+            MotionScheme.Stagger(
+                list = 30.milliseconds,
+                grid = 50.milliseconds,
+                cards = 75.milliseconds
+            )
+        val b =
+            MotionScheme.Stagger(
+                list = 30.milliseconds,
+                grid = 50.milliseconds,
+                cards = 75.milliseconds
+            )
 
         assertEquals(a, b)
     }
@@ -89,9 +92,10 @@ class MotionSchemeTest {
     @Test
     fun motionSchemeCopyDifferentiatesFromStandard() {
         val standard = standardMotionScheme()
-        val tuned = standard.copy(
-            duration = standard.duration.copy(quick = 220.milliseconds),
-        )
+        val tuned =
+            standard.copy(
+                duration = standard.duration.copy(quick = 220.milliseconds)
+            )
 
         assertNotEquals(standard, tuned)
         assertEquals(220.milliseconds, tuned.duration.quick)

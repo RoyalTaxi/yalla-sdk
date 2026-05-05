@@ -31,7 +31,7 @@ data class NavigableCardColors(
     val arrow: Color,
     val disabledContainer: Color,
     val disabledBorder: Color,
-    val disabledArrow: Color,
+    val disabledArrow: Color
 )
 
 /**
@@ -43,14 +43,13 @@ data class NavigableCardDimens(
     val borderWidth: Dp,
     val arrowSize: Dp,
     val iconSpacing: Dp,
-    val contentPadding: PaddingValues,
+    val contentPadding: PaddingValues
 )
 
 /**
  * Default configuration values for [NavigableCard].
  */
 object NavigableCardDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
@@ -60,17 +59,19 @@ object NavigableCardDefaults {
         border: Color = System.color.border.disabled,
         arrow: Color = System.color.icon.base,
         disabledContainer: Color = Color.Transparent,
-        disabledBorder: Color = System.color.border.disabled
-            .copy(alpha = 0.5f),
-        disabledArrow: Color = System.color.icon.disabled,
-    ): NavigableCardColors = NavigableCardColors(
-        container = container,
-        border = border,
-        arrow = arrow,
-        disabledContainer = disabledContainer,
-        disabledBorder = disabledBorder,
-        disabledArrow = disabledArrow,
-    )
+        disabledBorder: Color =
+            System.color.border.disabled
+                .copy(alpha = 0.5f),
+        disabledArrow: Color = System.color.icon.disabled
+    ): NavigableCardColors =
+        NavigableCardColors(
+            container = container,
+            border = border,
+            arrow = arrow,
+            disabledContainer = disabledContainer,
+            disabledBorder = disabledBorder,
+            disabledArrow = disabledArrow
+        )
 
     /**
      * Creates default dimensions.
@@ -80,14 +81,15 @@ object NavigableCardDefaults {
         borderWidth: Dp = 1.dp,
         arrowSize: Dp = 24.dp,
         iconSpacing: Dp = 8.dp,
-        contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 18.dp),
-    ): NavigableCardDimens = NavigableCardDimens(
-        shape = shape,
-        borderWidth = borderWidth,
-        arrowSize = arrowSize,
-        iconSpacing = iconSpacing,
-        contentPadding = contentPadding,
-    )
+        contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 18.dp)
+    ): NavigableCardDimens =
+        NavigableCardDimens(
+            shape = shape,
+            borderWidth = borderWidth,
+            arrowSize = arrowSize,
+            iconSpacing = iconSpacing,
+            contentPadding = contentPadding
+        )
 }
 
 /**
@@ -129,28 +131,31 @@ fun NavigableCard(
     colors: NavigableCardColors = NavigableCardDefaults.colors(),
     dimens: NavigableCardDimens = NavigableCardDefaults.dimens(),
     leadingIcon: @Composable (() -> Unit)? = null,
-    content: @Composable (Modifier) -> Unit,
+    content: @Composable (Modifier) -> Unit
 ) {
     ContentCard(
         modifier = modifier,
         onClick = onClick,
         enabled = enabled,
-        border = BorderStroke(
-            width = dimens.borderWidth,
-            color = if (enabled) colors.border else colors.disabledBorder,
-        ),
-        colors = ContentCardDefaults.colors(
-            container = colors.container,
-            disabledContainer = colors.disabledContainer,
-        ),
-        dimens = ContentCardDefaults.dimens(
-            shape = dimens.shape,
-            contentPadding = dimens.contentPadding,
-        ),
+        border =
+            BorderStroke(
+                width = dimens.borderWidth,
+                color = if (enabled) colors.border else colors.disabledBorder
+            ),
+        colors =
+            ContentCardDefaults.colors(
+                container = colors.container,
+                disabledContainer = colors.disabledContainer
+            ),
+        dimens =
+            ContentCardDefaults.dimens(
+                shape = dimens.shape,
+                contentPadding = dimens.contentPadding
+            )
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             if (leadingIcon != null) {
                 leadingIcon()
@@ -165,7 +170,7 @@ fun NavigableCard(
                 imageVector = Icons.AutoMirrored.Default.ArrowForwardIos,
                 contentDescription = null,
                 tint = if (enabled) colors.arrow else colors.disabledArrow,
-                modifier = Modifier.size(dimens.arrowSize),
+                modifier = Modifier.size(dimens.arrowSize)
             )
         }
     }

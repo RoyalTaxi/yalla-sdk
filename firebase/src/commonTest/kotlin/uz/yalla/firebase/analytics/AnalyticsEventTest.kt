@@ -6,7 +6,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 
 class AnalyticsEventTest {
-
     // --- ScreenView ---
 
     @Test

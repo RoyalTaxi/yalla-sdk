@@ -53,7 +53,7 @@ class EitherExtensionsTest {
         val result =
             either.fold(
                 ifFailure = { "err-$it" },
-                ifSuccess = { "ok-$it" },
+                ifSuccess = { "ok-$it" }
             )
 
         assertEquals("ok-7", result)
@@ -66,7 +66,7 @@ class EitherExtensionsTest {
         val result =
             either.fold(
                 ifFailure = { "err-$it" },
-                ifSuccess = { "ok-$it" },
+                ifSuccess = { "ok-$it" }
             )
 
         assertEquals("err-boom", result)

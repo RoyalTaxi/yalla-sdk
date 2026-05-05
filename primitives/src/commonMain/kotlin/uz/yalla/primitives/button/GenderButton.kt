@@ -36,7 +36,7 @@ import uz.yalla.resources.icons.YallaIcons
 @Immutable
 data class GenderButtonColors(
     val containerColor: Color,
-    val textColor: Color,
+    val textColor: Color
 )
 
 /**
@@ -49,7 +49,7 @@ data class GenderButtonDimens(
     val shape: Shape,
     val contentPadding: PaddingValues,
     val innerStartPadding: Dp,
-    val iconSize: Dp,
+    val iconSize: Dp
 )
 
 /**
@@ -100,38 +100,41 @@ fun GenderButton(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = System.font.body.base.medium,
     colors: GenderButtonColors = GenderButtonDefaults.colors(),
-    dimens: GenderButtonDimens = GenderButtonDefaults.dimens(),
+    dimens: GenderButtonDimens = GenderButtonDefaults.dimens()
 ) {
     Surface(
         onClick = onClick,
         modifier = modifier,
         shape = dimens.shape,
-        color = colors.containerColor,
+        color = colors.containerColor
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimens.contentPadding)
-                .padding(start = dimens.innerStartPadding),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(dimens.contentPadding)
+                    .padding(start = dimens.innerStartPadding)
         ) {
             Text(
-                text = gender.resource
-                    ?.let { res -> stringResource(res) }
-                    .orEmpty(),
+                text =
+                    gender.resource
+                        ?.let { res -> stringResource(res) }
+                        .orEmpty(),
                 color = colors.textColor,
-                style = textStyle,
+                style = textStyle
             )
 
             Image(
                 contentDescription = null,
                 modifier = Modifier.size(dimens.iconSize),
-                painter = if (isSelected) {
-                    rememberVectorPainter(YallaIcons.Checked)
-                } else {
-                    rememberVectorPainter(YallaIcons.Unchecked)
-                },
+                painter =
+                    if (isSelected) {
+                        rememberVectorPainter(YallaIcons.Checked)
+                    } else {
+                        rememberVectorPainter(YallaIcons.Unchecked)
+                    }
             )
         }
     }
@@ -153,22 +156,24 @@ object GenderButtonDefaults {
     @Composable
     fun colors(
         containerColor: Color = System.color.background.secondary,
-        textColor: Color = System.color.text.base,
-    ): GenderButtonColors = GenderButtonColors(
-        containerColor = containerColor,
-        textColor = textColor,
-    )
+        textColor: Color = System.color.text.base
+    ): GenderButtonColors =
+        GenderButtonColors(
+            containerColor = containerColor,
+            textColor = textColor
+        )
 
     /** Creates [GenderButtonDimens] with standard values. */
     fun dimens(
         shape: Shape = Shape,
         contentPadding: PaddingValues = ContentPadding,
         innerStartPadding: Dp = 12.dp,
-        iconSize: Dp = 24.dp,
-    ): GenderButtonDimens = GenderButtonDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-        innerStartPadding = innerStartPadding,
-        iconSize = iconSize,
-    )
+        iconSize: Dp = 24.dp
+    ): GenderButtonDimens =
+        GenderButtonDimens(
+            shape = shape,
+            contentPadding = contentPadding,
+            innerStartPadding = innerStartPadding,
+            iconSize = iconSize
+        )
 }

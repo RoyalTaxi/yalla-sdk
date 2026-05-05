@@ -51,6 +51,7 @@ interface Navigator {
  * CompositionLocal providing the [Navigator] inside a [NativeNavHost].
  * Throws if accessed outside of [NativeNavHost].
  */
-val LocalNavigator = staticCompositionLocalOf<Navigator> {
-    error("No Navigator provided. Ensure you are inside a NativeNavHost.")
-}
+val LocalNavigator =
+    staticCompositionLocalOf<Navigator> {
+        error("No Navigator provided. Ensure you are inside a NativeNavHost.")
+    }

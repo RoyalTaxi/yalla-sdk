@@ -87,27 +87,28 @@ class GoogleExtendedMap : ExtendedMap {
             }
         val cameraState = rememberInitialCameraState(initialTarget)
 
-        val pendingTarget = remember(
-            initState.isMapReady,
-            initState.hasMovedToLocation,
-            initState.hasMovedToUserLocation,
-            initialPoint,
-            userLocation,
-            fallback,
-            useInternalCameraInitialization
-        ) {
-            if (!useInternalCameraInitialization) return@remember null
+        val pendingTarget =
+            remember(
+                initState.isMapReady,
+                initState.hasMovedToLocation,
+                initState.hasMovedToUserLocation,
+                initialPoint,
+                userLocation,
+                fallback,
+                useInternalCameraInitialization
+            ) {
+                if (!useInternalCameraInitialization) return@remember null
 
-            when {
-                !initState.isMapReady -> null
-                initialPoint != null && !initState.hasMovedToLocation -> initialPoint
-                initialPoint != null -> null
-                initState.hasMovedToUserLocation -> null
-                userLocation != null -> userLocation
-                !initState.hasMovedToLocation -> fallback
-                else -> null
+                when {
+                    !initState.isMapReady -> null
+                    initialPoint != null && !initState.hasMovedToLocation -> initialPoint
+                    initialPoint != null -> null
+                    initState.hasMovedToUserLocation -> null
+                    userLocation != null -> userLocation
+                    !initState.hasMovedToLocation -> fallback
+                    else -> null
+                }
             }
-        }
 
         ControllerBindingEffect(googleController, cameraState, scope, density)
 

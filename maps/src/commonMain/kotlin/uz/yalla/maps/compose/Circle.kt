@@ -32,5 +32,5 @@ expect fun Circle(
     radius: Double = 0.0,
     fillColor: Color = Color.Transparent,
     strokeColor: Color = Color.Black,
-    strokeWidth: Float = 10f,
+    strokeWidth: Float = 10f
 )

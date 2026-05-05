@@ -27,7 +27,7 @@ import uz.yalla.primitives.button.BottomSheetButtonDefaults.dimens
 data class BottomSheetButtonColors(
     val containerColor: Color,
     val contentColor: Color,
-    val iconColor: Color,
+    val iconColor: Color
 )
 
 /**
@@ -40,7 +40,7 @@ data class BottomSheetButtonDimens(
     val minHeight: Dp,
     val contentPadding: PaddingValues,
     val shape: Shape,
-    val iconSpacing: Dp,
+    val iconSpacing: Dp
 )
 
 /**
@@ -98,7 +98,7 @@ fun BottomSheetButton(
     enabled: Boolean = true,
     colors: BottomSheetButtonColors = colors(),
     dimens: BottomSheetButtonDimens = dimens(),
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     ButtonLayout(
         onClick = onClick,
@@ -115,10 +115,10 @@ fun BottomSheetButton(
             Icon(
                 painter = icon,
                 contentDescription = null,
-                tint = colors.iconColor,
+                tint = colors.iconColor
             )
         },
-        content = content,
+        content = content
     )
 }
 
@@ -142,23 +142,25 @@ object BottomSheetButtonDefaults {
     fun colors(
         containerColor: Color = System.color.button.tertiary,
         contentColor: Color = System.color.background.base,
-        iconColor: Color = Color.Unspecified,
-    ): BottomSheetButtonColors = BottomSheetButtonColors(
-        containerColor = containerColor,
-        contentColor = contentColor,
-        iconColor = iconColor,
-    )
+        iconColor: Color = Color.Unspecified
+    ): BottomSheetButtonColors =
+        BottomSheetButtonColors(
+            containerColor = containerColor,
+            contentColor = contentColor,
+            iconColor = iconColor
+        )
 
     /** Creates [BottomSheetButtonDimens] with standard values. */
     fun dimens(
         minHeight: Dp = MinHeight,
         contentPadding: PaddingValues = ContentPadding,
         shape: Shape = Shape,
-        iconSpacing: Dp = 8.dp,
-    ): BottomSheetButtonDimens = BottomSheetButtonDimens(
-        minHeight = minHeight,
-        contentPadding = contentPadding,
-        shape = shape,
-        iconSpacing = iconSpacing,
-    )
+        iconSpacing: Dp = 8.dp
+    ): BottomSheetButtonDimens =
+        BottomSheetButtonDimens(
+            minHeight = minHeight,
+            contentPadding = contentPadding,
+            shape = shape,
+            iconSpacing = iconSpacing
+        )
 }

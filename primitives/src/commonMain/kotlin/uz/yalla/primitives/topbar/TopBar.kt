@@ -36,14 +36,14 @@ import uz.yalla.primitives.button.NavigationButton
 @Immutable
 data class TopBarColors(
     val container: Color,
-    val title: Color,
+    val title: Color
 )
 
 /** Dimension configuration for [TopBar]. */
 @Immutable
 data class TopBarDimens(
     val contentPadding: PaddingValues,
-    val navigationButtonSize: Dp,
+    val navigationButtonSize: Dp
 )
 
 /**
@@ -106,7 +106,7 @@ fun TopBar(
     navigationIconContentDescription: String? = null,
     colors: TopBarColors = TopBarDefaults.colors(),
     dimens: TopBarDimens = TopBarDefaults.dimens(),
-    actions: @Composable (() -> Unit)? = null,
+    actions: @Composable (() -> Unit)? = null
 ) {
     Row(
         modifier =
@@ -116,13 +116,13 @@ fun TopBar(
                 .padding(dimens.contentPadding)
                 .height(dimens.navigationButtonSize),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         // Navigation button
         if (onNavigationClick != null) {
             NavigationButton(
                 onClick = onNavigationClick,
-                contentDescription = navigationIconContentDescription,
+                contentDescription = navigationIconContentDescription
             )
         } else {
             Spacer(Modifier.width(dimens.navigationButtonSize))
@@ -132,7 +132,7 @@ fun TopBar(
         if (title != null) {
             Box(
                 modifier = Modifier.weight(1f),
-                contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center
             ) {
                 title()
             }
@@ -144,7 +144,7 @@ fun TopBar(
         Row(
             modifier = Modifier.height(dimens.navigationButtonSize),
             horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             actions?.invoke()
         }
@@ -161,19 +161,19 @@ object TopBarDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        title: Color = System.color.text.base,
+        title: Color = System.color.text.base
     ) = TopBarColors(
         container = container,
-        title = title,
+        title = title
     )
 
     /** Creates dimension configuration for [TopBar]. */
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(16.dp),
-        navigationButtonSize: Dp = 40.dp,
+        navigationButtonSize: Dp = 40.dp
     ) = TopBarDimens(
         contentPadding = contentPadding,
-        navigationButtonSize = navigationButtonSize,
+        navigationButtonSize = navigationButtonSize
     )
 }
 
@@ -192,10 +192,10 @@ private fun TopBarPreview() {
                     Text(
                         text = "Settings",
                         style = System.font.body.base.medium,
-                        color = System.color.text.base,
+                        color = System.color.text.base
                     )
                 },
-                onNavigationClick = {},
+                onNavigationClick = {}
             )
         }
     }

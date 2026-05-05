@@ -43,7 +43,7 @@ private const val MIN_QUALITY_INT = 10
 @OptIn(ExperimentalForeignApi::class)
 actual fun compressImage(
     imageBytes: ByteArray,
-    config: CompressionConfig,
+    config: CompressionConfig
 ): ByteArray {
     val maxDimension = config.maxDimension
     val maxSizeBytes = config.maxFileSize
@@ -65,7 +65,7 @@ actual fun compressImage(
         ) {
             min(
                 maxDimension.toDouble() / originalWidth.toDouble(),
-                maxDimension.toDouble() / originalHeight.toDouble(),
+                maxDimension.toDouble() / originalHeight.toDouble()
             )
         } else {
             1.0

@@ -14,7 +14,7 @@ import kotlin.math.min
  */
 actual fun compressImage(
     imageBytes: ByteArray,
-    config: CompressionConfig,
+    config: CompressionConfig
 ): ByteArray {
     val maxDimension = config.maxDimension
     val maxSizeBytes = config.maxFileSize
@@ -35,7 +35,7 @@ actual fun compressImage(
         ) {
             min(
                 maxDimension.toDouble() / originalWidth,
-                maxDimension.toDouble() / originalHeight,
+                maxDimension.toDouble() / originalHeight
             )
         } else {
             1.0
@@ -74,7 +74,7 @@ actual fun compressImage(
                     bitmap.width,
                     bitmap.height,
                     matrix,
-                    true,
+                    true
                 ).also {
                     if (it != bitmap) {
                         bitmap.recycle()
@@ -109,7 +109,7 @@ actual fun compressImage(
                 resizedBitmap,
                 resizedBitmap.width / 2,
                 resizedBitmap.height / 2,
-                true,
+                true
             )
         val stream = ByteArrayOutputStream()
         smaller.compress(Bitmap.CompressFormat.JPEG, 10, stream)

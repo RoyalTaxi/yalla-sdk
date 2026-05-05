@@ -31,7 +31,7 @@ import uz.yalla.core.geo.GeoPoint
  */
 public data class LocationIndicatorConfig(
     val location: GeoPoint?,
-    val accuracyMeters: Double = DEFAULT_ACCURACY_METERS,
+    val accuracyMeters: Double = DEFAULT_ACCURACY_METERS
 ) {
     public companion object {
         /** Default GPS accuracy radius in metres (50 m). Mirrors the provider-layer default. */

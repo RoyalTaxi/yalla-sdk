@@ -28,5 +28,5 @@ data class NavigationBarAppearance(
     val isTranslucent: Boolean = true,
     val showsSeparator: Boolean = true,
     val largeTitleFontName: String? = null,
-    val titleFontName: String? = null,
+    val titleFontName: String? = null
 )

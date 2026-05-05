@@ -20,16 +20,16 @@ import kotlin.test.assertNotNull
  * - The [open] function signature is callable with a String argument.
  */
 class InAppBrowserLauncherTest {
-
     @Test
     fun shouldAllowInAppBrowserLauncherImplementation() {
         // Verify the interface can be implemented — needed for fakes in consumer tests.
         val openedUrls = mutableListOf<String>()
-        val launcher = object : InAppBrowserLauncher {
-            override fun open(url: String) {
-                openedUrls += url
+        val launcher =
+            object : InAppBrowserLauncher {
+                override fun open(url: String) {
+                    openedUrls += url
+                }
             }
-        }
 
         launcher.open("https://example.com")
 
@@ -40,11 +40,12 @@ class InAppBrowserLauncherTest {
     @Test
     fun shouldAllowMultipleUrlsViaOpen() {
         val openedUrls = mutableListOf<String>()
-        val launcher = object : InAppBrowserLauncher {
-            override fun open(url: String) {
-                openedUrls += url
+        val launcher =
+            object : InAppBrowserLauncher {
+                override fun open(url: String) {
+                    openedUrls += url
+                }
             }
-        }
 
         launcher.open("https://yalla.uz")
         launcher.open("https://royaltaxi.uz")

@@ -39,9 +39,8 @@ class IosPlatformConfig private constructor(
     val circleButton: CircleIconButtonFactory,
     val squircleButton: SquircleIconButtonFactory,
     val themeProvider: ThemeProvider? = null,
-    val navigationBarAppearance: NavigationBarAppearance? = null,
+    val navigationBarAppearance: NavigationBarAppearance? = null
 ) : PlatformConfig {
-
     /**
      * Builder for constructing an [IosPlatformConfig].
      *
@@ -76,19 +75,23 @@ class IosPlatformConfig private constructor(
          * @throws IllegalStateException if [sheetPresenter], [circleButton], or
          *   [squircleButton] is `null`.
          */
-        fun build(): IosPlatformConfig = IosPlatformConfig(
-            sheetPresenter = requireNotNull(sheetPresenter) {
-                "sheetPresenter is required. Provide a SheetPresenterFactory implementation."
-            },
-            circleButton = requireNotNull(circleButton) {
-                "circleButton is required. Provide a CircleIconButtonFactory implementation."
-            },
-            squircleButton = requireNotNull(squircleButton) {
-                "squircleButton is required. Provide a SquircleIconButtonFactory implementation."
-            },
-            themeProvider = themeProvider,
-            navigationBarAppearance = navigationBarAppearance,
-        )
+        fun build(): IosPlatformConfig =
+            IosPlatformConfig(
+                sheetPresenter =
+                    requireNotNull(sheetPresenter) {
+                        "sheetPresenter is required. Provide a SheetPresenterFactory implementation."
+                    },
+                circleButton =
+                    requireNotNull(circleButton) {
+                        "circleButton is required. Provide a CircleIconButtonFactory implementation."
+                    },
+                squircleButton =
+                    requireNotNull(squircleButton) {
+                        "squircleButton is required. Provide a SquircleIconButtonFactory implementation."
+                    },
+                themeProvider = themeProvider,
+                navigationBarAppearance = navigationBarAppearance
+            )
     }
 }
 
@@ -100,5 +103,4 @@ class IosPlatformConfig private constructor(
  * @return The registered [IosPlatformConfig].
  * @throws IllegalStateException if [YallaPlatform.install] has not been called.
  */
-internal fun requireIosConfig(): IosPlatformConfig =
-    YallaPlatform.requireConfig<IosPlatformConfig>()
+internal fun requireIosConfig(): IosPlatformConfig = YallaPlatform.requireConfig<IosPlatformConfig>()

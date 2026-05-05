@@ -58,7 +58,7 @@ data class NumberFieldColors(
     val focusedBorderColor: Color,
     val unfocusedBorderColor: Color,
     val cursorColor: Color,
-    val selectionColors: TextSelectionColors,
+    val selectionColors: TextSelectionColors
 )
 
 /**
@@ -70,7 +70,7 @@ data class NumberFieldColors(
 data class NumberFieldDimens(
     val shape: Shape,
     val borderWidth: Dp,
-    val dividerThickness: Dp,
+    val dividerThickness: Dp
 )
 
 /**
@@ -79,7 +79,6 @@ data class NumberFieldDimens(
  * Provides theme-aware defaults for [colors], [textStyle], and [dimens].
  */
 object NumberFieldDefaults {
-
     /** Creates theme-aware color configuration for [NumberField]. */
     @Composable
     fun colors(
@@ -94,20 +93,22 @@ object NumberFieldDefaults {
         selectionColors: TextSelectionColors =
             TextSelectionColors(
                 handleColor = System.color.text.link,
-                backgroundColor = System.color.text.link
-                    .copy(.3f)
-            ),
-    ): NumberFieldColors = NumberFieldColors(
-        containerColor = containerColor,
-        textColor = textColor,
-        placeholderColor = placeholderColor,
-        prefixColor = prefixColor,
-        dividerColor = dividerColor,
-        focusedBorderColor = focusedBorderColor,
-        unfocusedBorderColor = unfocusedBorderColor,
-        cursorColor = cursorColor,
-        selectionColors = selectionColors,
-    )
+                backgroundColor =
+                    System.color.text.link
+                        .copy(.3f)
+            )
+    ): NumberFieldColors =
+        NumberFieldColors(
+            containerColor = containerColor,
+            textColor = textColor,
+            placeholderColor = placeholderColor,
+            prefixColor = prefixColor,
+            dividerColor = dividerColor,
+            focusedBorderColor = focusedBorderColor,
+            unfocusedBorderColor = unfocusedBorderColor,
+            cursorColor = cursorColor,
+            selectionColors = selectionColors
+        )
 
     /** Creates theme-aware text style for [NumberField]. */
     @Composable
@@ -117,12 +118,13 @@ object NumberFieldDefaults {
     fun dimens(
         shape: Shape = RoundedCornerShape(10.dp),
         borderWidth: Dp = 1.dp,
-        dividerThickness: Dp = 1.dp,
-    ): NumberFieldDimens = NumberFieldDimens(
-        shape = shape,
-        borderWidth = borderWidth,
-        dividerThickness = dividerThickness,
-    )
+        dividerThickness: Dp = 1.dp
+    ): NumberFieldDimens =
+        NumberFieldDimens(
+            shape = shape,
+            borderWidth = borderWidth,
+            dividerThickness = dividerThickness
+        )
 }
 
 /**
@@ -163,7 +165,7 @@ fun NumberField(
     focusRequester: FocusRequester? = null,
     colors: NumberFieldColors = NumberFieldDefaults.colors(),
     textStyle: TextStyle = NumberFieldDefaults.textStyle(),
-    dimens: NumberFieldDimens = NumberFieldDefaults.dimens(),
+    dimens: NumberFieldDimens = NumberFieldDefaults.dimens()
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -171,26 +173,27 @@ fun NumberField(
         modifier = modifier,
         color = colors.containerColor,
         shape = dimens.shape,
-        border = BorderStroke(
-            width = dimens.borderWidth,
-            color = if (isFocused) colors.focusedBorderColor else colors.unfocusedBorderColor,
-        ),
+        border =
+            BorderStroke(
+                width = dimens.borderWidth,
+                color = if (isFocused) colors.focusedBorderColor else colors.unfocusedBorderColor
+            )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.height(IntrinsicSize.Min),
+            modifier = Modifier.height(IntrinsicSize.Min)
         ) {
             Text(
                 text = stringResource(Res.string.auth_phone_country_code),
                 color = colors.prefixColor,
                 style = textStyle,
-                modifier = Modifier.padding(16.dp),
+                modifier = Modifier.padding(16.dp)
             )
 
             VerticalDivider(
                 thickness = dimens.dividerThickness,
                 color = colors.dividerColor,
-                modifier = Modifier.padding(vertical = 6.dp),
+                modifier = Modifier.padding(vertical = 6.dp)
             )
 
             TextField(
@@ -203,46 +206,47 @@ fun NumberField(
                 singleLine = true,
                 visualTransformation = PhoneVisualTransformation,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                modifier = Modifier
-                    .weight(1f)
-                    .onFocusChanged { isFocused = it.isFocused }
-                    .then(
-                        if (focusRequester != null) {
-                            Modifier.focusRequester(focusRequester)
-                        } else {
-                            Modifier
-                        }
-                    ),
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .onFocusChanged { isFocused = it.isFocused }
+                        .then(
+                            if (focusRequester != null) {
+                                Modifier.focusRequester(focusRequester)
+                            } else {
+                                Modifier
+                            }
+                        ),
                 placeholder = @Composable {
                     Text(
                         text = stringResource(Res.string.auth_phone_placeholder),
                         color = colors.placeholderColor,
-                        style = textStyle,
+                        style = textStyle
                     )
                 },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = colors.containerColor,
-                    unfocusedContainerColor = colors.containerColor,
-                    disabledContainerColor = colors.containerColor,
-                    errorContainerColor = colors.containerColor,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent,
-                    focusedTextColor = colors.textColor,
-                    unfocusedTextColor = colors.textColor,
-                    disabledTextColor = colors.textColor,
-                    errorTextColor = colors.textColor,
-                    cursorColor = colors.cursorColor,
-                    selectionColors = colors.selectionColors,
-                ),
+                colors =
+                    TextFieldDefaults.colors(
+                        focusedContainerColor = colors.containerColor,
+                        unfocusedContainerColor = colors.containerColor,
+                        disabledContainerColor = colors.containerColor,
+                        errorContainerColor = colors.containerColor,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent,
+                        errorIndicatorColor = Color.Transparent,
+                        focusedTextColor = colors.textColor,
+                        unfocusedTextColor = colors.textColor,
+                        disabledTextColor = colors.textColor,
+                        errorTextColor = colors.textColor,
+                        cursorColor = colors.cursorColor,
+                        selectionColors = colors.selectionColors
+                    )
             )
         }
     }
 }
 
 private object PhoneVisualTransformation : VisualTransformation {
-
     // Format: (XX) XXX XX XX
     override fun filter(text: AnnotatedString): TransformedText {
         val raw = text.text
@@ -274,12 +278,10 @@ private object PhoneVisualTransformation : VisualTransformation {
         return TransformedText(
             AnnotatedString(formatted),
             object : OffsetMapping {
-                override fun originalToTransformed(offset: Int) =
-                    origToTrans[offset.coerceIn(0, raw.length)]
+                override fun originalToTransformed(offset: Int) = origToTrans[offset.coerceIn(0, raw.length)]
 
-                override fun transformedToOriginal(offset: Int) =
-                    transToOrig[offset.coerceIn(0, formatted.length)]
-            },
+                override fun transformedToOriginal(offset: Int) = transToOrig[offset.coerceIn(0, formatted.length)]
+            }
         )
     }
 }

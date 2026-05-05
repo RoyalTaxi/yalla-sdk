@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>LongMethod:HapticFeedback.ios.kt$&lt;no name provided>$override fun perform(type: HapticType)</ID>
+    <ID>LongMethod:NativeSheet.android.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable actual fun NativeSheet( isVisible: Boolean, shape: Shape, containerColor: Color, onDismissRequest: () -> Unit, dismissEnabled: Boolean, onDismissAttempt: () -> Unit, isDark: Boolean?, skipPartiallyExpanded: Boolean, onFullyExpanded: (() -> Unit)?, content: @Composable () -> Unit )</ID>
+    <ID>LongParameterList:NativeIconButton.kt$( iconType: IconType, onClick: () -> Unit, modifier: Modifier, border: BorderStroke?, background: Color, backgroundShape: Shape, factory: (icon: String, onClick: () -> Unit, borderWidth: Double, borderColor: Long) -> UIViewController, alpha: Float = 1f, useKey: Boolean = false )</ID>
+    <ID>LongParameterList:NativeSheet.android.kt$( isVisible: Boolean, shape: Shape, containerColor: Color, onDismissRequest: () -> Unit, dismissEnabled: Boolean, onDismissAttempt: () -> Unit, isDark: Boolean?, skipPartiallyExpanded: Boolean, onFullyExpanded: (() -> Unit)?, content: @Composable () -> Unit )</ID>
+    <ID>LongParameterList:NativeSheet.ios.kt$( isVisible: Boolean, shape: Shape, containerColor: Color, onDismissRequest: () -> Unit, dismissEnabled: Boolean, onDismissAttempt: () -> Unit, isDark: Boolean?, skipPartiallyExpanded: Boolean, onFullyExpanded: (() -> Unit)?, content: @Composable () -> Unit )</ID>
+    <ID>LongParameterList:NativeSheet.kt$( isVisible: Boolean, shape: Shape, containerColor: Color, onDismissRequest: () -> Unit, dismissEnabled: Boolean = true, onDismissAttempt: () -> Unit = {}, isDark: Boolean? = null, skipPartiallyExpanded: Boolean = false, onFullyExpanded: (() -> Unit)? = null, content: @Composable () -> Unit )</ID>
+    <ID>MagicNumber:HapticFeedback.android.kt$&lt;no name provided>$100</ID>
+    <ID>MagicNumber:HapticFeedback.android.kt$&lt;no name provided>$200</ID>
+    <ID>MagicNumber:HapticFeedback.ios.kt$&lt;no name provided>$100_000_000</ID>
+    <ID>MagicNumber:HapticFeedback.ios.kt$&lt;no name provided>$200_000_000</ID>
+    <ID>MagicNumber:NativeHapticController.android.kt$100</ID>
+    <ID>MagicNumber:NativeHapticController.android.kt$200</ID>
+    <ID>MagicNumber:NativeHapticController.ios.kt$100_000_000</ID>
+    <ID>MagicNumber:NativeNavHost.ios.kt$0xFF</ID>
+    <ID>MagicNumber:NativeNavHost.ios.kt$16</ID>
+    <ID>MagicNumber:NativeNavHost.ios.kt$24</ID>
+    <ID>MagicNumber:NativeNavHost.ios.kt$255.0</ID>
+    <ID>MagicNumber:NativeNavHost.ios.kt$8</ID>
+    <ID>MagicNumber:NativeWheelDatePicker.android.kt$12</ID>
+    <ID>MagicNumber:NativeWheelDatePicker.android.kt$1900</ID>
+    <ID>MagicNumber:NativeWheelDatePicker.android.kt$2100</ID>
+    <ID>MagicNumber:NativeWheelDatePicker.android.kt$31</ID>
+    <ID>MagicNumber:NativeWheelDatePicker.ios.kt$1000.0</ID>
+  </CurrentIssues>
+</SmellBaseline>

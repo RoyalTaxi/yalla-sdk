@@ -49,7 +49,7 @@ data class LocationPinColors(
     val header: Color,
     val headerText: Color,
     val icon: Color,
-    val text: Color,
+    val text: Color
 )
 
 /**
@@ -72,7 +72,7 @@ data class LocationPinDimens(
     val headerVerticalPadding: Dp,
     val headerHorizontalPadding: Dp,
     val contentBottomOffset: Dp,
-    val headerBottomOffset: Dp,
+    val headerBottomOffset: Dp
 )
 
 internal const val SHADOW_SHRINK_DURATION_MS = 400
@@ -138,7 +138,7 @@ fun LocationPin(
     timeoutLabelStyle: TextStyle = System.font.body.small.bold,
     headerStyle: TextStyle = System.font.body.caption,
     colors: LocationPinColors = LocationPinDefaults.colors(),
-    dimens: LocationPinDimens = LocationPinDefaults.dimens(),
+    dimens: LocationPinDimens = LocationPinDefaults.dimens()
 ) {
     val density = LocalDensity.current
     val jumpHeightPx = with(density) { dimens.jumpHeight.toPx() }
@@ -155,8 +155,8 @@ fun LocationPin(
                 animationSpec =
                     tween(
                         durationMillis = SHADOW_SHRINK_DURATION_MS,
-                        easing = EaseInOut,
-                    ),
+                        easing = EaseInOut
+                    )
             )
         } else {
             shadowScale.animateTo(
@@ -164,8 +164,8 @@ fun LocationPin(
                 animationSpec =
                     spring(
                         dampingRatio = Spring.DampingRatioLowBouncy,
-                        stiffness = Spring.StiffnessLow,
-                    ),
+                        stiffness = Spring.StiffnessLow
+                    )
             )
         }
     }
@@ -179,10 +179,10 @@ fun LocationPin(
                         animation =
                             tween(
                                 durationMillis = JUMP_CYCLE_DURATION_MS,
-                                easing = EaseInOut,
+                                easing = EaseInOut
                             ),
-                        repeatMode = RepeatMode.Reverse,
-                    ),
+                        repeatMode = RepeatMode.Reverse
+                    )
             )
         } else {
             jumpOffset.animateTo(
@@ -190,8 +190,8 @@ fun LocationPin(
                 animationSpec =
                     spring(
                         dampingRatio = Spring.DampingRatioLowBouncy,
-                        stiffness = Spring.StiffnessVeryLow,
-                    ),
+                        stiffness = Spring.StiffnessVeryLow
+                    )
             )
         }
     }
@@ -213,7 +213,7 @@ fun LocationPin(
                     }.constrainAs(shadow) {
                         linkTo(top = parent.top, bottom = parent.bottom)
                         linkTo(start = parent.start, end = parent.end)
-                    },
+                    }
         )
 
         PinStick(
@@ -226,20 +226,21 @@ fun LocationPin(
                     .constrainAs(stick) {
                         top.linkTo(content.bottom)
                         linkTo(start = parent.start, end = parent.end)
-                    },
+                    }
         )
 
         PinContent(
             timeout = timeout,
             jumping = jumping,
-            icon = icon ?: {
-                Icon(
-                    painter = rememberVectorPainter(YallaIcons.FocusOrigin),
-                    contentDescription = null,
-                    tint = colors.icon,
-                    modifier = Modifier.size(18.dp),
-                )
-            },
+            icon =
+                icon ?: {
+                    Icon(
+                        painter = rememberVectorPainter(YallaIcons.FocusOrigin),
+                        contentDescription = null,
+                        tint = colors.icon,
+                        modifier = Modifier.size(18.dp)
+                    )
+                },
             timeoutStyle = timeoutStyle,
             timeoutLabelStyle = timeoutLabelStyle,
             colors = colors,
@@ -250,7 +251,7 @@ fun LocationPin(
                     .constrainAs(content) {
                         bottom.linkTo(shadow.bottom, margin = dimens.stickHeight + dimens.contentBottomOffset)
                         linkTo(start = parent.start, end = parent.end)
-                    },
+                    }
         )
 
         address?.let { addr ->
@@ -263,7 +264,7 @@ fun LocationPin(
                     Modifier.constrainAs(header) {
                         bottom.linkTo(content.top, margin = dimens.jumpHeight + dimens.headerBottomOffset)
                         linkTo(start = parent.start, end = parent.end)
-                    },
+                    }
             )
         }
     }
@@ -276,7 +277,6 @@ fun LocationPin(
  * that can be individually overridden.
  */
 object LocationPinDefaults {
-
     /** Creates theme-aware color configuration for [LocationPin]. */
     @Composable
     fun colors(
@@ -287,17 +287,18 @@ object LocationPinDefaults {
         header: Color = System.color.icon.base,
         headerText: Color = System.color.background.base,
         icon: Color = System.color.icon.base,
-        text: Color = System.color.text.base,
-    ): LocationPinColors = LocationPinColors(
-        background = background,
-        border = border,
-        stick = stick,
-        stickBorder = stickBorder,
-        header = header,
-        headerText = headerText,
-        icon = icon,
-        text = text,
-    )
+        text: Color = System.color.text.base
+    ): LocationPinColors =
+        LocationPinColors(
+            background = background,
+            border = border,
+            stick = stick,
+            stickBorder = stickBorder,
+            header = header,
+            headerText = headerText,
+            icon = icon,
+            text = text
+        )
 
     /** Creates dimension configuration for [LocationPin]. */
     fun dimens(
@@ -312,19 +313,20 @@ object LocationPinDefaults {
         headerVerticalPadding: Dp = 6.dp,
         headerHorizontalPadding: Dp = 12.dp,
         contentBottomOffset: Dp = 6.dp,
-        headerBottomOffset: Dp = 2.dp,
-    ): LocationPinDimens = LocationPinDimens(
-        stickHeight = stickHeight,
-        stickWidth = stickWidth,
-        jumpHeight = jumpHeight,
-        contentSize = contentSize,
-        contentShape = contentShape,
-        borderWidth = borderWidth,
-        shadowSize = shadowSize,
-        headerShape = headerShape,
-        headerVerticalPadding = headerVerticalPadding,
-        headerHorizontalPadding = headerHorizontalPadding,
-        contentBottomOffset = contentBottomOffset,
-        headerBottomOffset = headerBottomOffset,
-    )
+        headerBottomOffset: Dp = 2.dp
+    ): LocationPinDimens =
+        LocationPinDimens(
+            stickHeight = stickHeight,
+            stickWidth = stickWidth,
+            jumpHeight = jumpHeight,
+            contentSize = contentSize,
+            contentShape = contentShape,
+            borderWidth = borderWidth,
+            shadowSize = shadowSize,
+            headerShape = headerShape,
+            headerVerticalPadding = headerVerticalPadding,
+            headerHorizontalPadding = headerHorizontalPadding,
+            contentBottomOffset = contentBottomOffset,
+            headerBottomOffset = headerBottomOffset
+        )
 }

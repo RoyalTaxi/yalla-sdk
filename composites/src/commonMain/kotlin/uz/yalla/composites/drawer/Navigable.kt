@@ -30,7 +30,7 @@ data class NavigableColors(
     val container: Color,
     val title: Color,
     val description: Color,
-    val chevron: Color,
+    val chevron: Color
 )
 
 /**
@@ -42,7 +42,7 @@ data class NavigableDimens(
     val iconSpacing: Dp,
     val descriptionSpacing: Dp,
     val trailingSpacing: Dp,
-    val chevronSize: Dp,
+    val chevronSize: Dp
 )
 
 /**
@@ -96,16 +96,16 @@ fun Navigable(
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingView: (@Composable () -> Unit)? = null,
     colors: NavigableColors = NavigableDefaults.colors(),
-    dimens: NavigableDimens = NavigableDefaults.dimens(),
+    dimens: NavigableDimens = NavigableDefaults.dimens()
 ) {
     Surface(
         modifier = modifier,
         onClick = onClick,
-        color = colors.container,
+        color = colors.container
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(dimens.contentPadding),
+            modifier = Modifier.padding(dimens.contentPadding)
         ) {
             leadingIcon?.let { it() }
 
@@ -113,7 +113,7 @@ fun Navigable(
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(dimens.descriptionSpacing),
+                verticalArrangement = Arrangement.spacedBy(dimens.descriptionSpacing)
             ) {
                 ProvideTextStyle(
                     System.font.body.large.medium
@@ -141,7 +141,7 @@ fun Navigable(
                 imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
                 contentDescription = null,
                 tint = colors.chevron,
-                modifier = Modifier.size(dimens.chevronSize),
+                modifier = Modifier.size(dimens.chevronSize)
             )
         }
     }
@@ -161,13 +161,14 @@ object NavigableDefaults {
         container: Color = System.color.background.secondary,
         title: Color = System.color.text.base,
         description: Color = System.color.text.base,
-        chevron: Color = System.color.icon.base,
-    ): NavigableColors = NavigableColors(
-        container = container,
-        title = title,
-        description = description,
-        chevron = chevron,
-    )
+        chevron: Color = System.color.icon.base
+    ): NavigableColors =
+        NavigableColors(
+            container = container,
+            title = title,
+            description = description,
+            chevron = chevron
+        )
 
     /**
      * Creates default dimensions.
@@ -177,12 +178,13 @@ object NavigableDefaults {
         iconSpacing: Dp = 6.dp,
         descriptionSpacing: Dp = 4.dp,
         trailingSpacing: Dp = 8.dp,
-        chevronSize: Dp = 24.dp,
-    ): NavigableDimens = NavigableDimens(
-        contentPadding = contentPadding,
-        iconSpacing = iconSpacing,
-        descriptionSpacing = descriptionSpacing,
-        trailingSpacing = trailingSpacing,
-        chevronSize = chevronSize,
-    )
+        chevronSize: Dp = 24.dp
+    ): NavigableDimens =
+        NavigableDimens(
+            contentPadding = contentPadding,
+            iconSpacing = iconSpacing,
+            descriptionSpacing = descriptionSpacing,
+            trailingSpacing = trailingSpacing,
+            chevronSize = chevronSize
+        )
 }

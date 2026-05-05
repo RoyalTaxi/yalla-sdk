@@ -12,35 +12,45 @@ import kotlin.jvm.JvmInline
  */
 @Serializable
 @JvmInline
-value class OrderId(val raw: Int)
+value class OrderId(
+    val raw: Int
+)
 
 /**
  * Typed identifier for an [uz.yalla.core.order.Executor]. Wire format: bare integer.
  */
 @Serializable
 @JvmInline
-value class ExecutorId(val raw: Int)
+value class ExecutorId(
+    val raw: Int
+)
 
 /**
  * Typed identifier for an [uz.yalla.core.order.Order.Taxi]. Wire format: bare integer.
  */
 @Serializable
 @JvmInline
-value class TaxiId(val raw: Int)
+value class TaxiId(
+    val raw: Int
+)
 
 /**
  * Typed identifier for an [uz.yalla.core.order.ExtraService]. Wire format: bare integer.
  */
 @Serializable
 @JvmInline
-value class ExtraServiceId(val raw: Int)
+value class ExtraServiceId(
+    val raw: Int
+)
 
 /**
  * Typed identifier for an [uz.yalla.core.order.ServiceBrand]. Wire format: bare integer.
  */
 @Serializable
 @JvmInline
-value class ServiceBrandId(val raw: Int)
+value class ServiceBrandId(
+    val raw: Int
+)
 
 /**
  * Typed identifier for an [uz.yalla.core.location.Address].
@@ -53,14 +63,18 @@ value class ServiceBrandId(val raw: Int)
  */
 @Serializable
 @JvmInline
-value class AddressId(val raw: Int)
+value class AddressId(
+    val raw: Int
+)
 
 /**
  * Typed identifier for an [uz.yalla.core.location.AddressOption]. Wire format: bare integer.
  */
 @Serializable
 @JvmInline
-value class AddressOptionId(val raw: Int)
+value class AddressOptionId(
+    val raw: Int
+)
 
 /**
  * Typed identifier for a saved payment card.
@@ -72,4 +86,6 @@ value class AddressOptionId(val raw: Int)
  */
 @Serializable
 @JvmInline
-value class CardId(val raw: String)
+value class CardId(
+    val raw: String
+)

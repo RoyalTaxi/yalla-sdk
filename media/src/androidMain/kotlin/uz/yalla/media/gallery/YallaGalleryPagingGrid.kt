@@ -67,7 +67,7 @@ fun YallaGalleryPagingGrid(
     header: @Composable () -> Unit = {},
     progressIndicator: @Composable () -> Unit = {},
     permissionDeniedContent: @Composable () -> Unit = {},
-    onImageSelected: (ByteArray?) -> Unit,
+    onImageSelected: (ByteArray?) -> Unit
 ) {
     val context = LocalContext.current
     val storagePermission = getPagingGridStoragePermission()
@@ -112,7 +112,7 @@ private fun PagingGalleryContent(
     header: @Composable () -> Unit,
     images: LazyPagingItems<YallaMediaImage>,
     progressIndicator: @Composable () -> Unit,
-    onImageSelected: (ByteArray?) -> Unit,
+    onImageSelected: (ByteArray?) -> Unit
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -179,7 +179,7 @@ private fun PagingGalleryContent(
 private fun PagingGalleryImageCard(
     bitmap: android.graphics.Bitmap?,
     state: GalleryPickerState,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Card(
         shape = RoundedCornerShape(state.cornerSize.dp),

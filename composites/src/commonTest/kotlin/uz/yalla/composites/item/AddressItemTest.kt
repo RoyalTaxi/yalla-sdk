@@ -8,22 +8,23 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class AddressItemColorsTest {
-
-    private val colors = AddressItemColors(
-        container = Color.LightGray,
-        placeholder = Color.Gray,
-        location = Color.Black,
-        arrow = Color.DarkGray,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = AddressItemColors(
+    private val colors =
+        AddressItemColors(
             container = Color.LightGray,
             placeholder = Color.Gray,
             location = Color.Black,
-            arrow = Color.DarkGray,
+            arrow = Color.DarkGray
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            AddressItemColors(
+                container = Color.LightGray,
+                placeholder = Color.Gray,
+                location = Color.Black,
+                arrow = Color.DarkGray
+            )
         assertEquals(colors, other)
     }
 
@@ -44,7 +45,6 @@ class AddressItemColorsTest {
 }
 
 class AddressItemDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = AddressItemDefaults.dimens()
@@ -60,12 +60,13 @@ class AddressItemDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = AddressItemDefaults.dimens(
-            minHeight = 80.dp,
-            contentSpacing = 16.dp,
-            dotSize = 18.dp,
-            locationMaxLines = 2,
-        )
+        val dimens =
+            AddressItemDefaults.dimens(
+                minHeight = 80.dp,
+                contentSpacing = 16.dp,
+                dotSize = 18.dp,
+                locationMaxLines = 2
+            )
         assertEquals(80.dp, dimens.minHeight)
         assertEquals(16.dp, dimens.contentSpacing)
         assertEquals(18.dp, dimens.dotSize)

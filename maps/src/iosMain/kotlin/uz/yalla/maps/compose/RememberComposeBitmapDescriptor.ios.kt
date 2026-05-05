@@ -1,6 +1,6 @@
 @file:Suppress(
     "TooGenericExceptionCaught", // bitmap capture legitimately catches any interop error to fall back
-    "SwallowedException", // fallback path intentionally swallows non-cancellation exceptions
+    "SwallowedException" // fallback path intentionally swallows non-cancellation exceptions
 )
 
 package uz.yalla.maps.compose
@@ -87,7 +87,7 @@ private const val LAYOUT_SETTLE_DELAY_MS = 100L
 @GoogleMapComposable
 actual fun rememberComposeBitmapDescriptor(
     vararg keys: Any,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ): BitmapDescriptor {
     var capturedImage by remember { mutableStateOf<UIImage?>(null) }
 

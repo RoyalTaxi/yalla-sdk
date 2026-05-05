@@ -22,7 +22,6 @@ import kotlin.test.Test
  *  - [Bitmap.rotate] returns a valid JPEG byte array (non-empty, decodable).
  */
 class ImageExtensionsTest {
-
     @Ignore
     @Test
     fun bitmapToByteArrayProducesNonEmptyJpeg() {

@@ -42,7 +42,7 @@ import kotlin.time.TimeSource
  */
 class LoadingController(
     private val showAfter: Duration = DEFAULT_SHOW_AFTER,
-    private val minDisplayTime: Duration = DEFAULT_MIN_DISPLAY_TIME,
+    private val minDisplayTime: Duration = DEFAULT_MIN_DISPLAY_TIME
 ) {
     private val _loading = MutableStateFlow(false)
 
@@ -62,7 +62,7 @@ class LoadingController(
     suspend fun <T> withLoading(
         showAfter: Duration = this.showAfter,
         minDisplayTime: Duration = this.minDisplayTime,
-        block: suspend () -> T,
+        block: suspend () -> T
     ): T =
         coroutineScope {
             mutex.withLock {
@@ -84,20 +84,22 @@ class LoadingController(
             try {
                 block()
             } finally {
-                val (remainingDelay, gen) = mutex.withLock {
-                    activeOperations--
-                    if (activeOperations == 0) {
-                        showJob?.cancel()
-                        showJob = null
-                        val delay = visibleSince?.elapsedNow()?.let { elapsed ->
-                            val remaining = minDisplayTime - elapsed
-                            if (remaining.isPositive()) remaining else null
+                val (remainingDelay, gen) =
+                    mutex.withLock {
+                        activeOperations--
+                        if (activeOperations == 0) {
+                            showJob?.cancel()
+                            showJob = null
+                            val delay =
+                                visibleSince?.elapsedNow()?.let { elapsed ->
+                                    val remaining = minDisplayTime - elapsed
+                                    if (remaining.isPositive()) remaining else null
+                                }
+                            Pair(delay, ++generation)
+                        } else {
+                            Pair(null, generation)
                         }
-                        Pair(delay, ++generation)
-                    } else {
-                        Pair(null, generation)
                     }
-                }
                 remainingDelay?.let { delay(it) }
                 mutex.withLock {
                     if (activeOperations == 0 && generation == gen) {

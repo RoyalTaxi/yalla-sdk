@@ -20,7 +20,6 @@ import kotlin.test.assertTrue
  * This placeholder ensures the file exists in the test source set so the pair is tracked.
  */
 class RememberInAppBrowserTest {
-
     @Test
     fun compileVerify_rememberInAppBrowserSignatureExists() {
         // Confirms the expect declaration is visible from commonTest and the module compiles.

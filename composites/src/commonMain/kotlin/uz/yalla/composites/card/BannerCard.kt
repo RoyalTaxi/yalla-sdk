@@ -25,7 +25,7 @@ import uz.yalla.design.theme.System
  */
 @Immutable
 data class BannerCardColors(
-    val contentColor: Color,
+    val contentColor: Color
 )
 
 /**
@@ -35,23 +35,21 @@ data class BannerCardColors(
 data class BannerCardDimens(
     val shape: Shape,
     val height: Dp,
-    val contentPadding: PaddingValues,
+    val contentPadding: PaddingValues
 )
 
 /**
  * Default configuration values for [BannerCard].
  */
 object BannerCardDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
     @Composable
-    fun colors(
-        contentColor: Color = System.color.text.white,
-    ): BannerCardColors = BannerCardColors(
-        contentColor = contentColor,
-    )
+    fun colors(contentColor: Color = System.color.text.white): BannerCardColors =
+        BannerCardColors(
+            contentColor = contentColor
+        )
 
     /**
      * Creates default dimensions.
@@ -59,12 +57,13 @@ object BannerCardDefaults {
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         height: Dp = 148.dp,
-        contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 20.dp),
-    ): BannerCardDimens = BannerCardDimens(
-        shape = shape,
-        height = height,
-        contentPadding = contentPadding,
-    )
+        contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 20.dp)
+    ): BannerCardDimens =
+        BannerCardDimens(
+            shape = shape,
+            height = height,
+            contentPadding = contentPadding
+        )
 }
 
 /**
@@ -99,21 +98,23 @@ fun BannerCard(
     onClick: (() -> Unit)? = null,
     colors: BannerCardColors = BannerCardDefaults.colors(),
     dimens: BannerCardDimens = BannerCardDefaults.dimens(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ContentCard(
         modifier = modifier.height(dimens.height),
         onClick = onClick,
-        dimens = ContentCardDefaults.dimens(
-            shape = dimens.shape,
-            contentPadding = PaddingValues(0.dp),
-        ),
+        dimens =
+            ContentCardDefaults.dimens(
+                shape = dimens.shape,
+                contentPadding = PaddingValues(0.dp)
+            )
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .paint(painter = background, contentScale = ContentScale.Crop)
-                .padding(dimens.contentPadding),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .paint(painter = background, contentScale = ContentScale.Crop)
+                    .padding(dimens.contentPadding)
         ) {
             CompositionLocalProvider(LocalContentColor provides colors.contentColor) {
                 content()

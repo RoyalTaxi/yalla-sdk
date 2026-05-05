@@ -11,7 +11,9 @@ import kotlinx.coroutines.flow.receiveAsFlow
  */
 sealed interface SnackbarEvent {
     /** Show a snackbar with the given data. */
-    data class Show(val data: SnackbarData) : SnackbarEvent
+    data class Show(
+        val data: SnackbarData
+    ) : SnackbarEvent
 
     /** Dismiss the current snackbar. */
     data object Dismiss : SnackbarEvent

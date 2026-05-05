@@ -45,21 +45,24 @@ class GoogleStaticMap : StaticMap {
 
         val fallback = MapConstants.BOBUR_SQUARE.toGeoPoint()
 
-        val cameraState = rememberCameraPositionState {
-            position = CameraPosition(
-                target = fallback.toLatLng(),
-                zoom = MapConstants.DEFAULT_ZOOM.toFloat()
-            )
-        }
+        val cameraState =
+            rememberCameraPositionState {
+                position =
+                    CameraPosition(
+                        target = fallback.toLatLng(),
+                        zoom = MapConstants.DEFAULT_ZOOM.toFloat()
+                    )
+            }
 
         var isMapReady by remember { mutableStateOf(false) }
 
-        val allPoints = remember(route, locations) {
-            buildList {
-                route?.let { addAll(it) }
-                locations?.let { addAll(it) }
-            }.filter { it != GeoPoint.Zero }
-        }
+        val allPoints =
+            remember(route, locations) {
+                buildList {
+                    route?.let { addAll(it) }
+                    locations?.let { addAll(it) }
+                }.filter { it != GeoPoint.Zero }
+            }
 
         val paddingPx = with(density) { MapConstants.DEFAULT_PADDING.roundToPx() }
 
@@ -67,10 +70,11 @@ class GoogleStaticMap : StaticMap {
             if (!isMapReady || allPoints.isEmpty()) return@LaunchedEffect
 
             if (allPoints.size == 1) {
-                cameraState.position = CameraPosition(
-                    target = allPoints.first().toLatLng(),
-                    zoom = MapConstants.DEFAULT_ZOOM.toFloat()
-                )
+                cameraState.position =
+                    CameraPosition(
+                        target = allPoints.first().toLatLng(),
+                        zoom = MapConstants.DEFAULT_ZOOM.toFloat()
+                    )
             } else {
                 val bounds = allPoints.toLatLngBounds() ?: return@LaunchedEffect
                 cameraState.animateToBounds(bounds, paddingPx)

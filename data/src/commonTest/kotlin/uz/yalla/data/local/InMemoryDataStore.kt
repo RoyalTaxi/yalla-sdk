@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.asStateFlow
  * platform `PreferenceDataStoreFactory`, no coroutine scheduler quirks.
  */
 internal class InMemoryDataStore(
-    initial: Preferences = mutablePreferencesOf(),
+    initial: Preferences = mutablePreferencesOf()
 ) : DataStore<Preferences> {
     private val state = MutableStateFlow(initial)
 

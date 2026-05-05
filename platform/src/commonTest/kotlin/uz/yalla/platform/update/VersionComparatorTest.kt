@@ -5,7 +5,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class VersionComparatorTest {
-
     // --- Basic comparisons ---
 
     @Test

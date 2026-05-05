@@ -37,7 +37,7 @@ import uz.yalla.primitives.button.NavigationButton
 @Immutable
 data class LargeTopBarColors(
     val container: Color,
-    val title: Color,
+    val title: Color
 )
 
 /** Dimension configuration for [LargeTopBar]. */
@@ -45,7 +45,7 @@ data class LargeTopBarColors(
 data class LargeTopBarDimens(
     val contentPadding: PaddingValues,
     val navigationButtonSize: Dp,
-    val titleTopSpacing: Dp,
+    val titleTopSpacing: Dp
 )
 
 /**
@@ -90,25 +90,25 @@ fun LargeTopBar(
     navigationIconContentDescription: String? = null,
     colors: LargeTopBarColors = LargeTopBarDefaults.colors(),
     dimens: LargeTopBarDimens = LargeTopBarDefaults.dimens(),
-    actions: @Composable (() -> Unit)? = null,
+    actions: @Composable (() -> Unit)? = null
 ) {
     Column(
         modifier =
             modifier
                 .fillMaxWidth()
                 .statusBarsPadding()
-                .padding(dimens.contentPadding),
+                .padding(dimens.contentPadding)
     ) {
         // Navigation row
         Row(
             modifier = Modifier.fillMaxWidth().height(dimens.navigationButtonSize),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             if (onNavigationClick != null) {
                 NavigationButton(
                     onClick = onNavigationClick,
-                    contentDescription = navigationIconContentDescription,
+                    contentDescription = navigationIconContentDescription
                 )
             } else {
                 Spacer(Modifier.width(dimens.navigationButtonSize))
@@ -117,7 +117,7 @@ fun LargeTopBar(
             Row(
                 modifier = Modifier.height(dimens.navigationButtonSize),
                 horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 actions?.invoke()
             }
@@ -142,21 +142,21 @@ object LargeTopBarDefaults {
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        title: Color = System.color.text.base,
+        title: Color = System.color.text.base
     ) = LargeTopBarColors(
         container = container,
-        title = title,
+        title = title
     )
 
     /** Creates dimension configuration for [LargeTopBar]. */
     fun dimens(
         contentPadding: PaddingValues = PaddingValues(16.dp),
         navigationButtonSize: Dp = 40.dp,
-        titleTopSpacing: Dp = 20.dp,
+        titleTopSpacing: Dp = 20.dp
     ) = LargeTopBarDimens(
         contentPadding = contentPadding,
         navigationButtonSize = navigationButtonSize,
-        titleTopSpacing = titleTopSpacing,
+        titleTopSpacing = titleTopSpacing
     )
 }
 
@@ -175,10 +175,10 @@ private fun LargeTopBarPreview() {
                     Text(
                         text = "Order History",
                         style = System.font.title.xLarge,
-                        color = System.color.text.base,
+                        color = System.color.text.base
                     )
                 },
-                onNavigationClick = {},
+                onNavigationClick = {}
             )
         }
     }

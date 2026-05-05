@@ -51,29 +51,30 @@ internal fun ButtonLayout(
     iconSpacing: Dp = 8.dp,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-    content: @Composable RowScope.() -> Unit,
+    content: @Composable RowScope.() -> Unit
 ) {
     Surface(
         onClick = onClick,
-        modifier = modifier
-            .defaultMinSize(minHeight = minHeight)
-            .semantics { role = Role.Button },
+        modifier =
+            modifier
+                .defaultMinSize(minHeight = minHeight)
+                .semantics { role = Role.Button },
         enabled = enabled && !loading,
         shape = shape,
         color = containerColor,
-        contentColor = contentColor,
+        contentColor = contentColor
     ) {
         CompositionLocalProvider(LocalContentColor provides contentColor) {
             Row(
                 modifier = Modifier.padding(contentPadding),
                 horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 if (loading) {
                     NativeLoadingIndicator(
                         modifier = Modifier.size(iconSize),
                         color = contentColor,
-                        backgroundColor = containerColor,
+                        backgroundColor = containerColor
                     )
                 } else {
                     leadingIcon?.let { icon ->

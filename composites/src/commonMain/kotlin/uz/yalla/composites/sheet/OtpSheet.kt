@@ -26,7 +26,7 @@ import uz.yalla.primitives.otp.PinRow
 @Immutable
 data class OtpSheetColors(
     val headline: Color,
-    val description: Color,
+    val description: Color
 )
 
 /**
@@ -35,7 +35,7 @@ data class OtpSheetColors(
 @Immutable
 data class OtpSheetDimens(
     val headlineDescriptionSpacing: Dp,
-    val descriptionPinSpacing: Dp,
+    val descriptionPinSpacing: Dp
 )
 
 /**
@@ -44,7 +44,6 @@ data class OtpSheetDimens(
  * Provides theme-aware defaults for [colors] and layout [dimens] that can be overridden.
  */
 object OtpSheetDefaults {
-
     /**
      * Creates theme-aware default colors.
      *
@@ -54,11 +53,11 @@ object OtpSheetDefaults {
     @Composable
     fun colors(
         headline: Color = System.color.text.base,
-        description: Color = System.color.text.subtle,
+        description: Color = System.color.text.subtle
     ): OtpSheetColors =
         OtpSheetColors(
             headline = headline,
-            description = description,
+            description = description
         )
 
     /**
@@ -66,11 +65,11 @@ object OtpSheetDefaults {
      */
     fun dimens(
         headlineDescriptionSpacing: Dp = 10.dp,
-        descriptionPinSpacing: Dp = 32.dp,
+        descriptionPinSpacing: Dp = 32.dp
     ): OtpSheetDimens =
         OtpSheetDimens(
             headlineDescriptionSpacing = headlineDescriptionSpacing,
-            descriptionPinSpacing = descriptionPinSpacing,
+            descriptionPinSpacing = descriptionPinSpacing
         )
 }
 
@@ -136,7 +135,7 @@ fun OtpSheet(
     colors: OtpSheetColors = OtpSheetDefaults.colors(),
     dimens: OtpSheetDimens = OtpSheetDefaults.dimens(),
     resendButton: @Composable (() -> Unit)? = null,
-    confirmButton: @Composable (() -> Unit)? = null,
+    confirmButton: @Composable (() -> Unit)? = null
 ) {
     FormSheet(
         isVisible = isVisible,
@@ -145,18 +144,18 @@ fun OtpSheet(
         title = title,
         sheetState = sheetState,
         onFullyExpanded = onFullyExpanded,
-        action = confirmButton,
+        action = confirmButton
     ) {
         Text(
             text = headline,
             style = System.font.title.xLarge,
-            color = colors.headline,
+            color = colors.headline
         )
         Spacer(Modifier.height(dimens.headlineDescriptionSpacing))
         Text(
             text = description,
             style = System.font.body.small.regular,
-            color = colors.description,
+            color = colors.description
         )
         Spacer(Modifier.height(dimens.descriptionPinSpacing))
         PinRow(
@@ -166,7 +165,7 @@ fun OtpSheet(
             onComplete = onCodeComplete,
             modifier = Modifier.fillMaxWidth(),
             isError = isError,
-            focusRequester = focusRequester ?: remember { FocusRequester() },
+            focusRequester = focusRequester ?: remember { FocusRequester() }
         )
         Spacer(Modifier.height(8.dp))
         resendButton?.let {

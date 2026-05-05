@@ -18,13 +18,17 @@ import uz.yalla.design.theme.System
  * Color configuration for [SectionBackground].
  */
 @Immutable
-data class SectionBackgroundColors(val background: Color)
+data class SectionBackgroundColors(
+    val background: Color
+)
 
 /**
  * Dimension configuration for [SectionBackground].
  */
 @Immutable
-data class SectionBackgroundDimens(val shape: Shape)
+data class SectionBackgroundDimens(
+    val shape: Shape
+)
 
 /**
  * Container with rounded corners and secondary background.
@@ -48,7 +52,7 @@ fun SectionBackground(
     modifier: Modifier = Modifier,
     colors: SectionBackgroundColors = SectionBackgroundDefaults.colors(),
     dimens: SectionBackgroundDimens = SectionBackgroundDefaults.dimens(),
-    content: @Composable ColumnScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Column(
         content = content,

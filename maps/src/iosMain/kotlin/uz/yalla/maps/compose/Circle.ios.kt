@@ -33,7 +33,7 @@ actual fun Circle(
     radius: Double,
     fillColor: Color,
     strokeColor: Color,
-    strokeWidth: Float,
+    strokeWidth: Float
 ) {
     val mapApplier =
         currentComposer.applier as? MapApplier

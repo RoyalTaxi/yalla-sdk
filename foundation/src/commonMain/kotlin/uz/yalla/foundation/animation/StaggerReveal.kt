@@ -42,7 +42,7 @@ fun Modifier.staggerReveal(
     index: Int,
     staggerMs: Int = DEFAULT_STAGGER_MS,
     durationMs: Int = DEFAULT_DURATION_MS,
-    slidePx: Float = DEFAULT_SLIDE_PX,
+    slidePx: Float = DEFAULT_SLIDE_PX
 ): Modifier {
     val delayMs = index * staggerMs
     val alpha by animateFloatAsState(

@@ -13,7 +13,6 @@ import kotlin.test.assertTrue
  * a Compose UI harness that is not wired in this module; those are deferred to Phase 4.
  */
 class AppUpdateStateTest {
-
     @Test
     fun shouldStartWithNoUpdateAvailable() {
         // Initial state must indicate no update so UIs do not show a banner on first composition.

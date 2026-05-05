@@ -33,7 +33,7 @@
     <!-- Format -->
     <string name="format_currency_sum">{0} soʻm</string>
     <string name="format_currency_range">{0} dan {1} gacha</string>
-    <string name="format_time_min">{0} min</string>
+    <string name="format_time_min">{0} daq</string>
     <string name="format_time_min_short">daq</string>
     <string name="format_percent_up_to">{0}% gacha</string>
 
@@ -49,7 +49,7 @@
 
     <!-- OTP Verification -->
     <string name="auth_otp_title">Xavfsizlik kodi</string>
-    <string name="auth_otp_description">Iltimos, +998{0} raqamiga yuborilgan 5 xonali kodni kiriting.</string>
+    <string name="auth_otp_description">Iltimos, +998{0} raqamiga yuborilgan {1} xonali kodni kiriting.</string>
     <string name="auth_otp_resend">Kodni qayta yuborish</string>
     <string name="auth_otp_resend_countdown">{0} soniyadan soʻng kodni qayta yuborish</string>
 
@@ -99,12 +99,12 @@
     <!-- Delete Account -->
     <string name="profile_delete_title">Hisobni oʻchirish</string>
     <string name="profile_delete_confirm">Hisobingizni rostdan ham oʻchirmoqchimisiz?</string>
-    <string name="profile_delete_warning">Hisob oʻchirilgandan soʻng barcha maʻlumotlar butunlay yoʻqoladi va qayta tiklanmaydi.</string>
+    <string name="profile_delete_warning">Hisobingiz oʻchirilgandan soʻng barcha maʻlumotlar butunlay yoʻqoladi va qayta tiklanmaydi.</string>
     <string name="profile_delete_action">Ha, hisobni oʻchirish</string>
 
     <!-- Logout -->
     <string name="profile_logout_title">Hisobdan chiqish</string>
-    <string name="profile_logout_confirm">Hisobdan chiqishni rostdan xohlaysizmi?</string>
+    <string name="profile_logout_confirm">Hisobdan rostdan ham chiqmoqchimisiz?</string>
     <string name="profile_logout_description">Chiqqaningizdan soʻng qaytadan hisobingizga kirishingiz mumkin</string>
     <string name="profile_logout_action">Ha, hisobdan chiqish</string>
 
@@ -147,7 +147,7 @@
     <string name="intro_onboarding_2_description">Yalladagi har bir haydovchi tekshiruvdan oʻtgan va yuqori reytingga ega.</string>
 
     <string name="intro_onboarding_3_title">Shaffof narx</string>
-    <string name="intro_onboarding_3_description">Safar boshlanishidan oldin narxni bilib oling — yashirin toʻlovlar va kutilmagan xarajatlar yoʻq.</string>
+    <string name="intro_onboarding_3_description">Safar boshlanishidan oldin narxni bilib oling — yashirin toʻlovlar va kutilmagan xarajatlarsiz.</string>
 
     <string name="intro_onboarding_4_title">Qulay toʻlov</string>
     <string name="intro_onboarding_4_description">Oʻzingizga qulay usulda toʻlang — karta yoki naqd pul bilan. Yalla bilan hammasi oson.</string>
@@ -163,7 +163,7 @@
 
     <!-- Theme Options -->
     <string name="settings_theme_light">Yorugʻ mavzu</string>
-    <string name="settings_theme_dark">Tungi mavzu</string>
+    <string name="settings_theme_dark">Qorongʻi mavzu</string>
     <string name="settings_theme_system">Tizim boʻyicha</string>
 
     <!-- Map Options -->
@@ -197,7 +197,7 @@
 
     <!-- Delete Address -->
     <string name="places_delete_title">Manzilni oʻchirish</string>
-    <string name="places_delete_confirm">Siz haqiqatan ham ushbu manzilni oʻchirmoqchimisiz?</string>
+    <string name="places_delete_confirm">Ushbu manzilni rostdan ham oʻchirmoqchimisiz?</string>
     <string name="places_delete_warning">Manzil oʻchirilgandan soʻng maʻlumotlarni tiklab boʻlmaydi</string>
     <string name="places_delete_action">Ha, manzilni oʻchirish</string>
 
@@ -268,7 +268,7 @@
     <!-- Location Input -->
     <string name="order_destination_hint">Qayerga boramiz?</string>
     <string name="order_destination_short">Qayerga boramiz?</string>
-    <string name="order_location_not_found">Biz bu manzilni topolmadik.\nIltimos, qayta urinib koʻring.</string>
+    <string name="order_location_not_found">Biz bu manzilni topa olmadik.\nIltimos, qayta urinib koʻring.</string>
     <string name="order_location_set_mark">Belgi qoʻyish</string>
     <string name="order_location_not_supported">{0} taksi xizmati tomonidan qoʻllab-quvvatlanmaydi</string>
 
@@ -305,7 +305,7 @@
     <!-- Order Bottom Sheet -->
     <string name="order_free_waiting">Bepul kutish</string>
     <string name="order_paid_waiting">Pullik kutish</string>
-    <string name="order_eta_format">~ {0} min</string>
+    <string name="order_eta_format">~ {0} daq</string>
     <string name="order_arriving_in">Kelish vaqti</string>
     <string name="order_contact_driver">Haydovchi bilan bogʻlanish</string>
     <string name="order_until_trip_end">Safar yakunigacha</string>
@@ -314,10 +314,10 @@
     <string name="order_details_contact">Bogʻlanish</string>
     <string name="order_details_safety">Xavfsizlik</string>
     <string name="order_details_share">Ulashish</string>
-    <string name="order_details_pickup_eta">Etib kelish ~{0}</string>
+    <string name="order_details_pickup_eta">Yetib kelish ~{0}</string>
     <string name="order_details_about_trip">Safar haqida</string>
     <string name="order_details_need_help">Yordam kerakmi?</string>
-    <string name="order_details_arrival">Etib kelish</string>
+    <string name="order_details_arrival">Yetib kelish</string>
 
     <!-- Cancel Order -->
     <string name="order_cancel_confirm_title">Safarni rostdan ham bekor qilmoqchimisiz?</string>
@@ -375,8 +375,8 @@
 
     <string name="driver_status_coming">Kelmoqda</string>
     <string name="driver_status_on_way">Yoʻlda</string>
-    <string name="driver_arrival_time">{0} min</string>
-    <string name="driver_travel_time">Yoʻl vaqti: {0} min</string>
+    <string name="driver_arrival_time">{0} daq</string>
+    <string name="driver_travel_time">Yoʻl vaqti: {0} daq</string>
     <string name="driver_become">Haydovchi boʻlish</string>
 
     <!-- Labels -->
@@ -393,7 +393,7 @@
     <string name="driver_become_name_hint">Ismingiz</string>
     <string name="driver_become_submit">Arizani yuborish</string>
     <string name="driver_become_success">Arizangiz muvaffaqiyatli yuborildi. Tez orada siz bilan bogʻlanamiz.</string>
-    <string name="driver_become_error">Nimadir xato ketdi. Qaytadan urinib koʻring.</string>
+    <string name="driver_become_error">Nimadir xato ketdi. Qayta urinib koʻring.</string>
     <string name="driver_become_select_region">Viloyatingiz</string>
     <string name="driver_become_region_title">Viloyatingiz</string>
 
@@ -403,7 +403,7 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="service_taxi">Taksi</string>
-    <string name="service_delivery">Etkazib berish</string>
+    <string name="service_delivery">Yetkazib berish</string>
     <string name="service_intercity">Shaharlararo</string>
     <string name="service_mail">Pochta</string>
 
@@ -425,7 +425,7 @@
 
     <string name="info_about_title">Ilova haqida</string>
     <string name="info_privacy_policy">Maxfiylik siyosati</string>
-    <string name="info_license">Lisenziya shartnomasi</string>
+    <string name="info_license">Litsenziya shartnomasi</string>
     <string name="info_social_media">Biz ijtimoiy tarmoqlarda</string>
     <string name="info_rate_app">Ilovani baholash</string>
 
@@ -450,8 +450,9 @@
          ═══════════════════════════════════════════════════════════════════════════════ -->
 
     <string name="no_internet_title">Internetga ulanish yoʻq</string>
-    <string name="no_internet_description">Internetga ulanishni tekshiring</string>
+    <string name="no_internet_description">Internet ulanishingizni tekshiring</string>
     <string name="no_internet_action">Yangilash</string>
+    <string name="no_internet_action_menu">Menyuga oʻtish</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════

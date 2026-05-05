@@ -100,4 +100,3 @@ val LocalFontScheme =
     staticCompositionLocalOf<FontScheme> {
         error("No FontScheme provided. Wrap your content with YallaTheme or provide a FontScheme via LocalFontScheme.")
     }
-

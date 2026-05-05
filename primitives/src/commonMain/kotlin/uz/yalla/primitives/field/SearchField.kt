@@ -39,7 +39,7 @@ import uz.yalla.design.theme.System
 data class SearchFieldColors(
     val container: Color,
     val text: Color,
-    val placeholder: Color,
+    val placeholder: Color
 )
 
 /**
@@ -52,7 +52,7 @@ data class SearchFieldDimens(
     val shape: Shape,
     val contentPadding: PaddingValues,
     val iconSpacing: Dp,
-    val minHeight: Dp,
+    val minHeight: Dp
 )
 
 /**
@@ -61,31 +61,32 @@ data class SearchFieldDimens(
  * Provides theme-aware defaults for [colors] and [dimens] that can be individually overridden.
  */
 object SearchFieldDefaults {
-
     /** Creates theme-aware color configuration for [SearchField]. */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
         text: Color = System.color.text.base,
-        placeholder: Color = System.color.text.subtle,
-    ): SearchFieldColors = SearchFieldColors(
-        container = container,
-        text = text,
-        placeholder = placeholder,
-    )
+        placeholder: Color = System.color.text.subtle
+    ): SearchFieldColors =
+        SearchFieldColors(
+            container = container,
+            text = text,
+            placeholder = placeholder
+        )
 
     /** Creates dimension configuration for [SearchField]. */
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         iconSpacing: Dp = 8.dp,
-        minHeight: Dp = 48.dp,
-    ): SearchFieldDimens = SearchFieldDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-        iconSpacing = iconSpacing,
-        minHeight = minHeight,
-    )
+        minHeight: Dp = 48.dp
+    ): SearchFieldDimens =
+        SearchFieldDimens(
+            shape = shape,
+            contentPadding = contentPadding,
+            iconSpacing = iconSpacing,
+            minHeight = minHeight
+        )
 }
 
 /**
@@ -147,20 +148,21 @@ fun SearchField(
     colors: SearchFieldColors = SearchFieldDefaults.colors(),
     dimens: SearchFieldDimens = SearchFieldDefaults.dimens(),
     leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null
 ) {
     Card(
         modifier = modifier,
         shape = dimens.shape,
-        colors = CardDefaults.cardColors(colors.container),
+        colors = CardDefaults.cardColors(colors.container)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .heightIn(min = dimens.minHeight)
-                .height(IntrinsicSize.Min)
-                .padding(dimens.contentPadding)
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .heightIn(min = dimens.minHeight)
+                    .height(IntrinsicSize.Min)
+                    .padding(dimens.contentPadding)
+                    .fillMaxWidth()
         ) {
             if (leadingIcon != null) {
                 leadingIcon()
@@ -169,25 +171,27 @@ fun SearchField(
 
             Box(
                 contentAlignment = Alignment.CenterStart,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f)
             ) {
                 if (state.text.isEmpty() && placeholder.isNotEmpty()) {
                     Text(
                         text = placeholder,
                         color = colors.placeholder,
-                        style = System.font.body.base.bold,
+                        style = System.font.body.base.bold
                     )
                 }
 
                 BasicTextField(
                     state = state,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .applyFocusRequester(focusRequester),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .applyFocusRequester(focusRequester),
                     cursorBrush = SolidColor(System.color.text.link),
-                    textStyle = System.font.body.base.bold
-                        .copy(color = colors.text),
-                    lineLimits = TextFieldLineLimits.SingleLine,
+                    textStyle =
+                        System.font.body.base.bold
+                            .copy(color = colors.text),
+                    lineLimits = TextFieldLineLimits.SingleLine
                 )
             }
 

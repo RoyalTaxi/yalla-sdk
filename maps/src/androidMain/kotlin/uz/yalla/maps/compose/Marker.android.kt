@@ -15,7 +15,7 @@ actual fun Marker(
     anchor: Offset,
     flat: Boolean,
     rotation: Float,
-    clickable: Boolean,
+    clickable: Boolean
 ) {
     val androidState =
         androidRememberUpdatedMarkerState(
@@ -35,6 +35,6 @@ actual fun Marker(
         flat = flat,
         icon = icon?.googleBitmapDescriptor,
         rotation = rotation,
-        onClick = { !clickable },
+        onClick = { !clickable }
     )
 }

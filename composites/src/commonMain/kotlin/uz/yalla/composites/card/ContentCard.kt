@@ -21,7 +21,7 @@ import uz.yalla.design.theme.System
 @Immutable
 data class ContentCardColors(
     val container: Color,
-    val disabledContainer: Color,
+    val disabledContainer: Color
 )
 
 /**
@@ -30,37 +30,39 @@ data class ContentCardColors(
 @Immutable
 data class ContentCardDimens(
     val shape: Shape,
-    val contentPadding: PaddingValues,
+    val contentPadding: PaddingValues
 )
 
 /**
  * Default configuration values for [ContentCard].
  */
 object ContentCardDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
-        disabledContainer: Color = System.color.background.secondary
-            .copy(alpha = 0.6f),
-    ): ContentCardColors = ContentCardColors(
-        container = container,
-        disabledContainer = disabledContainer,
-    )
+        disabledContainer: Color =
+            System.color.background.secondary
+                .copy(alpha = 0.6f)
+    ): ContentCardColors =
+        ContentCardColors(
+            container = container,
+            disabledContainer = disabledContainer
+        )
 
     /**
      * Creates default dimensions.
      */
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
-        contentPadding: PaddingValues = PaddingValues(16.dp),
-    ): ContentCardDimens = ContentCardDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-    )
+        contentPadding: PaddingValues = PaddingValues(16.dp)
+    ): ContentCardDimens =
+        ContentCardDimens(
+            shape = shape,
+            contentPadding = contentPadding
+        )
 }
 
 /**
@@ -101,7 +103,7 @@ fun ContentCard(
     border: BorderStroke? = null,
     colors: ContentCardColors = ContentCardDefaults.colors(),
     dimens: ContentCardDimens = ContentCardDefaults.dimens(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     Card(
         onClick = onClick ?: {},
@@ -109,10 +111,11 @@ fun ContentCard(
         modifier = modifier,
         shape = dimens.shape,
         border = border,
-        colors = CardDefaults.cardColors(
-            containerColor = colors.container,
-            disabledContainerColor = colors.disabledContainer,
-        ),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = colors.container,
+                disabledContainerColor = colors.disabledContainer
+            )
     ) {
         Box(modifier = Modifier.padding(dimens.contentPadding)) {
             content()

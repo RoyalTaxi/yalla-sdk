@@ -20,47 +20,50 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 class SafeApiCallIntegrationTest {
-
     private val jsonHeaders = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
 
     @Test
-    fun shouldRetryAndSucceedOnTransientFailure() = runTest {
-        var callCount = 0
-        val client = HttpClient(MockEngine) {
-            expectSuccess = false
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-            engine {
-                addHandler {
-                    callCount++
-                    if (callCount < 2) throw IOException("transient")
-                    respond("""{"id":1,"name":"recovered"}""", HttpStatusCode.OK, jsonHeaders)
+    fun shouldRetryAndSucceedOnTransientFailure() =
+        runTest {
+            var callCount = 0
+            val client =
+                HttpClient(MockEngine) {
+                    expectSuccess = false
+                    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+                    engine {
+                        addHandler {
+                            callCount++
+                            if (callCount < 2) throw IOException("transient")
+                            respond("""{"id":1,"name":"recovered"}""", HttpStatusCode.OK, jsonHeaders)
+                        }
+                    }
                 }
-            }
+
+            val result = safeApiCall<SafeApiCallTestResponse>(isIdempotent = true) { client.get("/test") }
+
+            assertIs<Either.Success<SafeApiCallTestResponse>>(result)
+            assertEquals("recovered", result.data.name)
+            assertEquals(2, callCount)
         }
-
-        val result = safeApiCall<SafeApiCallTestResponse>(isIdempotent = true) { client.get("/test") }
-
-        assertIs<Either.Success<SafeApiCallTestResponse>>(result)
-        assertEquals("recovered", result.data.name)
-        assertEquals(2, callCount)
-    }
 
     @Test
-    fun shouldReturnFailureWhenRetriesExhausted() = runTest {
-        var callCount = 0
-        val client = HttpClient(MockEngine) {
-            engine {
-                addHandler {
-                    callCount++
-                    throw IOException("persistent failure")
+    fun shouldReturnFailureWhenRetriesExhausted() =
+        runTest {
+            var callCount = 0
+            val client =
+                HttpClient(MockEngine) {
+                    engine {
+                        addHandler {
+                            callCount++
+                            throw IOException("persistent failure")
+                        }
+                    }
                 }
-            }
+
+            val result = safeApiCall<SafeApiCallTestResponse>(isIdempotent = true) { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Connection, result.error)
+            assertEquals(3, callCount)
         }
-
-        val result = safeApiCall<SafeApiCallTestResponse>(isIdempotent = true) { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Connection, result.error)
-        assertEquals(3, callCount)
-    }
 }

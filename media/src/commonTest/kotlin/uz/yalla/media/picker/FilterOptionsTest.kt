@@ -61,7 +61,7 @@ class FilterOptionsTest {
                 FilterOptions.Default,
                 FilterOptions.GrayScale,
                 FilterOptions.Sepia,
-                FilterOptions.Invert,
+                FilterOptions.Invert
             )
         assertEquals(4, filters.size)
     }
@@ -127,7 +127,7 @@ class FilterOptionsTest {
                 FilterOptions.Default,
                 FilterOptions.GrayScale,
                 FilterOptions.Sepia,
-                FilterOptions.Invert,
+                FilterOptions.Invert
             )
         assertEquals(4, filters.size)
         assertIs<FilterOptions.Default>(filters[0])
@@ -158,7 +158,7 @@ class FilterOptionsTest {
                 FilterOptions.Default,
                 FilterOptions.GrayScale,
                 FilterOptions.Sepia,
-                FilterOptions.Invert,
+                FilterOptions.Invert
             )
         val names =
             filters.map { filter ->
@@ -181,7 +181,7 @@ class FilterOptionsTest {
                 FilterOptions.Default to "none",
                 FilterOptions.GrayScale to "gray",
                 FilterOptions.Sepia to "warm",
-                FilterOptions.Invert to "negative",
+                FilterOptions.Invert to "negative"
             )
         assertEquals("none", map[FilterOptions.Default])
         assertEquals("gray", map[FilterOptions.GrayScale])
@@ -198,7 +198,7 @@ class FilterOptionsTest {
                 FilterOptions.Default,
                 FilterOptions.GrayScale,
                 FilterOptions.Sepia,
-                FilterOptions.Invert,
+                FilterOptions.Invert
             )
         assertTrue(FilterOptions.Default in all)
         assertTrue(FilterOptions.GrayScale in all)

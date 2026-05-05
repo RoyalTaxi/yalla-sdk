@@ -29,7 +29,7 @@ import uz.yalla.resources.icons.YallaIcons
 @Immutable
 data class RatingRowColors(
     val filled: Color,
-    val empty: Color,
+    val empty: Color
 )
 
 /**
@@ -43,7 +43,7 @@ data class RatingRowDimens(
     val starSize: Dp,
     val starPadding: Dp,
     val starSpacing: Dp,
-    val starCount: Int,
+    val starCount: Int
 )
 
 /**
@@ -52,29 +52,30 @@ data class RatingRowDimens(
  * Provides theme-aware defaults for [colors] and [dimens] that can be individually overridden.
  */
 object RatingRowDefaults {
-
     /** Creates theme-aware color configuration for [RatingRow]. */
     @Composable
     fun colors(
         filled: Color = System.color.background.brand,
-        empty: Color = System.color.icon.disabled,
-    ): RatingRowColors = RatingRowColors(
-        filled = filled,
-        empty = empty,
-    )
+        empty: Color = System.color.icon.disabled
+    ): RatingRowColors =
+        RatingRowColors(
+            filled = filled,
+            empty = empty
+        )
 
     /** Creates dimension configuration for [RatingRow]. */
     fun dimens(
         starSize: Dp = 50.dp,
         starPadding: Dp = 10.dp,
         starSpacing: Dp = 6.dp,
-        starCount: Int = 5,
-    ): RatingRowDimens = RatingRowDimens(
-        starSize = starSize,
-        starPadding = starPadding,
-        starSpacing = starSpacing,
-        starCount = starCount,
-    )
+        starCount: Int = 5
+    ): RatingRowDimens =
+        RatingRowDimens(
+            starSize = starSize,
+            starPadding = starPadding,
+            starSpacing = starSpacing,
+            starCount = starCount
+        )
 }
 
 /**
@@ -121,29 +122,31 @@ fun RatingRow(
     onRatingChange: (Int) -> Unit,
     modifier: Modifier = Modifier,
     colors: RatingRowColors = RatingRowDefaults.colors(),
-    dimens: RatingRowDimens = RatingRowDefaults.dimens(),
+    dimens: RatingRowDimens = RatingRowDefaults.dimens()
 ) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(dimens.starSpacing),
+        horizontalArrangement = Arrangement.spacedBy(dimens.starSpacing)
     ) {
         repeat(dimens.starCount) { index ->
             val isFilled = rating != null && index < rating
             Surface(
                 shape = CircleShape,
                 color = Color.Transparent,
-                onClick = { onRatingChange(index + 1) },
+                onClick = { onRatingChange(index + 1) }
             ) {
                 Image(
                     painter = rememberVectorPainter(YallaIcons.Star),
                     contentDescription = null,
-                    colorFilter = ColorFilter.tint(
-                        if (isFilled) colors.filled else colors.empty
-                    ),
-                    modifier = Modifier
-                        .padding(dimens.starPadding)
-                        .size(dimens.starSize),
+                    colorFilter =
+                        ColorFilter.tint(
+                            if (isFilled) colors.filled else colors.empty
+                        ),
+                    modifier =
+                        Modifier
+                            .padding(dimens.starPadding)
+                            .size(dimens.starSize)
                 )
             }
         }

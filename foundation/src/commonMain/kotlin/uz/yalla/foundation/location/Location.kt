@@ -5,7 +5,6 @@ import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.location.PlaceKind
 
 @Immutable
-
 data class Location(
     val id: Int? = null,
     val name: String? = null,

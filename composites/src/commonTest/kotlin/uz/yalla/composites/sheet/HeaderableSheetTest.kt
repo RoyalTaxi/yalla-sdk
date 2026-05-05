@@ -8,18 +8,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class HeaderableSheetColorsTest {
-
-    private val colors = HeaderableSheetColors(
-        container = Color.White,
-        dragHandle = Color.Gray,
-    )
+    private val colors =
+        HeaderableSheetColors(
+            container = Color.White,
+            dragHandle = Color.Gray
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = HeaderableSheetColors(
-            container = Color.White,
-            dragHandle = Color.Gray,
-        )
+        val other =
+            HeaderableSheetColors(
+                container = Color.White,
+                dragHandle = Color.Gray
+            )
         assertEquals(colors, other)
     }
 
@@ -38,25 +39,25 @@ class HeaderableSheetColorsTest {
 }
 
 class HeaderableSheetDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = HeaderableSheetDefaults.dimens()
-        assertEquals(38.dp, dimens.cornerRadius)
-        assertEquals(RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp), dimens.shape)
-        assertEquals(36.dp, dimens.dragHandleWidth)
-        assertEquals(5.dp, dimens.dragHandleHeight)
-        assertEquals(16.dp, dimens.dragHandleContainerHeight)
+        assertEquals(28.dp, dimens.cornerRadius)
+        assertEquals(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp), dimens.shape)
+        assertEquals(32.dp, dimens.dragHandleWidth)
+        assertEquals(4.dp, dimens.dragHandleHeight)
+        assertEquals(32.dp, dimens.dragHandleContainerHeight)
     }
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = HeaderableSheetDefaults.dimens(
-            cornerRadius = 16.dp,
-            dragHandleWidth = 48.dp,
-            dragHandleHeight = 8.dp,
-            dragHandleContainerHeight = 24.dp,
-        )
+        val dimens =
+            HeaderableSheetDefaults.dimens(
+                cornerRadius = 16.dp,
+                dragHandleWidth = 48.dp,
+                dragHandleHeight = 8.dp,
+                dragHandleContainerHeight = 24.dp
+            )
         assertEquals(16.dp, dimens.cornerRadius)
         assertEquals(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp), dimens.shape)
         assertEquals(48.dp, dimens.dragHandleWidth)

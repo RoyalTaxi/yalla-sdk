@@ -87,27 +87,28 @@ class LibreExtendedMap : ExtendedMap {
             }
         val cameraState = rememberInitialCameraState(initialTarget)
 
-        val pendingTarget = remember(
-            initState.isMapReady,
-            initState.hasMovedToLocation,
-            initState.hasMovedToUserLocation,
-            initialPoint,
-            userLocation,
-            fallback,
-            useInternalCameraInitialization
-        ) {
-            if (!useInternalCameraInitialization) return@remember null
+        val pendingTarget =
+            remember(
+                initState.isMapReady,
+                initState.hasMovedToLocation,
+                initState.hasMovedToUserLocation,
+                initialPoint,
+                userLocation,
+                fallback,
+                useInternalCameraInitialization
+            ) {
+                if (!useInternalCameraInitialization) return@remember null
 
-            when {
-                !initState.isMapReady -> null
-                initialPoint != null && !initState.hasMovedToLocation -> initialPoint
-                initialPoint != null -> null
-                initState.hasMovedToUserLocation -> null
-                userLocation != null -> userLocation
-                !initState.hasMovedToLocation -> fallback
-                else -> null
+                when {
+                    !initState.isMapReady -> null
+                    initialPoint != null && !initState.hasMovedToLocation -> initialPoint
+                    initialPoint != null -> null
+                    initState.hasMovedToUserLocation -> null
+                    userLocation != null -> userLocation
+                    !initState.hasMovedToLocation -> fallback
+                    else -> null
+                }
             }
-        }
 
         ControllerBindingEffect(libreController, cameraState, scope)
 
@@ -208,20 +209,23 @@ private fun MapContent(
     LaunchedEffect(cameraState) {
         snapshotFlow { cameraState.position }
             .collect { pos ->
-                adaptedCameraState.rawPosition = uz.yalla.maps.model.CameraPosition(
-                    target = uz.yalla.maps.model
-                        .LatLng(pos.target.latitude, pos.target.longitude),
-                    zoom = pos.zoom.toFloat()
-                )
+                adaptedCameraState.rawPosition =
+                    uz.yalla.maps.model.CameraPosition(
+                        target =
+                            uz.yalla.maps.model
+                                .LatLng(pos.target.latitude, pos.target.longitude),
+                        zoom = pos.zoom.toFloat()
+                    )
             }
     }
 
-    val mapScope = remember(adaptedCameraState) {
-        MapScopeImpl(
-            cameraState = adaptedCameraState,
-            isGoogleMaps = false
-        )
-    }
+    val mapScope =
+        remember(adaptedCameraState) {
+            MapScopeImpl(
+                cameraState = adaptedCameraState,
+                isGoogleMaps = false
+            )
+        }
 
     Box(modifier = modifier) {
         BaseMapContent(

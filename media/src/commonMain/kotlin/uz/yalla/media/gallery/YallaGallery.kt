@@ -31,5 +31,5 @@ import androidx.compose.ui.Modifier
 @Composable
 expect fun YallaGallery(
     modifier: Modifier = Modifier,
-    onImageSelected: (ByteArray?) -> Unit,
+    onImageSelected: (ByteArray?) -> Unit
 )

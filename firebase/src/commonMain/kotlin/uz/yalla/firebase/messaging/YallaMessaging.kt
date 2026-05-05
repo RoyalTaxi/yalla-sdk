@@ -34,14 +34,13 @@ class YallaMessaging {
      * @see MessagingDelegate.onNewToken
      * @see deleteToken
      */
-    suspend fun getToken(): String? {
-        return try {
+    suspend fun getToken(): String? =
+        try {
             messaging.getToken()
         } catch (e: Exception) {
             YallaFirebase.logger.log("Messaging", "Failed to get token: ${e.message}")
             null
         }
-    }
 
     /**
      * Subscribes this device to an FCM topic.

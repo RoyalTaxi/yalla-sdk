@@ -22,7 +22,7 @@ import uz.yalla.design.theme.System
  */
 @Immutable
 data class LocationPointColors(
-    val label: Color,
+    val label: Color
 )
 
 /**
@@ -31,44 +31,42 @@ data class LocationPointColors(
 @Immutable
 data class LocationPointDimens(
     val iconLabelSpacing: Dp,
-    val labelMaxLines: Int,
+    val labelMaxLines: Int
 )
 
 /**
  * Default configuration values for [LocationPoint].
  */
 object LocationPointDefaults {
-
     /**
      * Creates theme-aware default colors for origin points.
      */
     @Composable
-    fun colors(
-        label: Color = System.color.text.base,
-    ): LocationPointColors = LocationPointColors(
-        label = label,
-    )
+    fun colors(label: Color = System.color.text.base): LocationPointColors =
+        LocationPointColors(
+            label = label
+        )
 
     /**
      * Creates theme-aware default colors for destination points.
      */
     @Composable
-    fun destinationColors(
-        label: Color = System.color.text.subtle,
-    ): LocationPointColors = LocationPointColors(
-        label = label,
-    )
+    fun destinationColors(label: Color = System.color.text.subtle): LocationPointColors =
+        LocationPointColors(
+            label = label
+        )
 
     /**
      * Creates default dimensions.
      */
     fun dimens(
         iconLabelSpacing: Dp = 8.dp,
-        labelMaxLines: Int = 1,
-    ): LocationPointDimens = LocationPointDimens(
-        iconLabelSpacing = iconLabelSpacing,
-        labelMaxLines = labelMaxLines,
-    )
+        labelMaxLines: Int = 1
+    ): LocationPointDimens =
+        LocationPointDimens(
+            iconLabelSpacing = iconLabelSpacing,
+            labelMaxLines = labelMaxLines
+        )
 }
 
 /**
@@ -99,15 +97,15 @@ fun LocationPoint(
     modifier: Modifier = Modifier,
     labelStyle: TextStyle = System.font.body.small.bold,
     colors: LocationPointColors = LocationPointDefaults.colors(),
-    dimens: LocationPointDimens = LocationPointDefaults.dimens(),
+    dimens: LocationPointDimens = LocationPointDefaults.dimens()
 ) {
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = icon,
-            contentDescription = null,
+            contentDescription = null
         )
 
         Spacer(Modifier.width(dimens.iconLabelSpacing))
@@ -117,7 +115,7 @@ fun LocationPoint(
             style = labelStyle,
             color = colors.label,
             overflow = TextOverflow.Ellipsis,
-            maxLines = dimens.labelMaxLines,
+            maxLines = dimens.labelMaxLines
         )
     }
 }

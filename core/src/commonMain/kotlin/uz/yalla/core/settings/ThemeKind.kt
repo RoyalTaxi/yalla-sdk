@@ -13,7 +13,9 @@ import uz.yalla.core.util.normalizedId
  * @see uz.yalla.core.preferences.InterfacePreferences.themeType
  */
 @Serializable
-enum class ThemeKind(val id: String) {
+enum class ThemeKind(
+    val id: String
+) {
     /** Always light theme, regardless of system setting. */
     @SerialName("light")
     Light("light"),

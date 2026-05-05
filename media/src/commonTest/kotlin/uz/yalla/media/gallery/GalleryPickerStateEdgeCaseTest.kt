@@ -14,7 +14,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = Int.MAX_VALUE,
                 itemSpacing = 4,
                 cornerSize = 0,
-                columns = 3,
+                columns = 3
             )
         assertEquals(Int.MAX_VALUE, state.contentPadding)
     }
@@ -26,7 +26,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 4,
                 itemSpacing = Int.MAX_VALUE,
                 cornerSize = 0,
-                columns = 3,
+                columns = 3
             )
         assertEquals(Int.MAX_VALUE, state.itemSpacing)
     }
@@ -38,7 +38,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 4,
                 itemSpacing = 4,
                 cornerSize = Int.MAX_VALUE,
-                columns = 3,
+                columns = 3
             )
         assertEquals(Int.MAX_VALUE, state.cornerSize)
     }
@@ -50,7 +50,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 4,
                 itemSpacing = 4,
                 cornerSize = 0,
-                columns = Int.MAX_VALUE,
+                columns = Int.MAX_VALUE
             )
         assertEquals(Int.MAX_VALUE, state.columns)
     }
@@ -64,7 +64,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = -1,
                 itemSpacing = 4,
                 cornerSize = 0,
-                columns = 3,
+                columns = 3
             )
         assertEquals(-1, state.contentPadding)
     }
@@ -76,7 +76,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 4,
                 itemSpacing = -1,
                 cornerSize = 0,
-                columns = 3,
+                columns = 3
             )
         assertEquals(-1, state.itemSpacing)
     }
@@ -88,7 +88,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 4,
                 itemSpacing = 4,
                 cornerSize = -1,
-                columns = 3,
+                columns = 3
             )
         assertEquals(-1, state.cornerSize)
     }
@@ -100,7 +100,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 4,
                 itemSpacing = 4,
                 cornerSize = 0,
-                columns = 0,
+                columns = 0
             )
         assertEquals(0, state.columns)
     }
@@ -114,7 +114,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 0,
                 itemSpacing = 0,
                 cornerSize = 0,
-                columns = 1,
+                columns = 1
             )
         assertEquals(1, state.columns)
     }
@@ -137,7 +137,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 10,
                 itemSpacing = 20,
                 cornerSize = 30,
-                columns = 5,
+                columns = 5
             )
         assertEquals(10, state.contentPadding)
         assertEquals(20, state.itemSpacing)
@@ -154,7 +154,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 2,
                 itemSpacing = 2,
                 cornerSize = 4,
-                columns = 4,
+                columns = 4
             )
         assertEquals(2, state.contentPadding)
         assertEquals(2, state.itemSpacing)
@@ -169,7 +169,7 @@ class GalleryPickerStateEdgeCaseTest {
                 contentPadding = 16,
                 itemSpacing = 12,
                 cornerSize = 16,
-                columns = 2,
+                columns = 2
             )
         assertEquals(16, state.contentPadding)
         assertEquals(12, state.itemSpacing)

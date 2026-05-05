@@ -223,7 +223,7 @@ class CameraModeEdgeCaseTest {
         val map =
             mapOf(
                 CameraMode.Front to "selfie",
-                CameraMode.Back to "world",
+                CameraMode.Back to "world"
             )
         assertEquals("selfie", map[CameraMode.Front])
         assertEquals("world", map[CameraMode.Back])

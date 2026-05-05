@@ -9,18 +9,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class PlaceButtonColorsTest {
-
-    private val colors = PlaceButtonColors(
-        container = Color.LightGray,
-        text = Color.Black,
-    )
+    private val colors =
+        PlaceButtonColors(
+            container = Color.LightGray,
+            text = Color.Black
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = PlaceButtonColors(
-            container = Color.LightGray,
-            text = Color.Black,
-        )
+        val other =
+            PlaceButtonColors(
+                container = Color.LightGray,
+                text = Color.Black
+            )
         assertEquals(colors, other)
     }
 
@@ -39,7 +40,6 @@ class PlaceButtonColorsTest {
 }
 
 class PlaceButtonDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = PlaceButtonDefaults.dimens()
@@ -50,11 +50,12 @@ class PlaceButtonDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = PlaceButtonDefaults.dimens(
-            shape = RoundedCornerShape(8.dp),
-            contentPadding = PaddingValues(16.dp),
-            iconSpacing = 24.dp,
-        )
+        val dimens =
+            PlaceButtonDefaults.dimens(
+                shape = RoundedCornerShape(8.dp),
+                contentPadding = PaddingValues(16.dp),
+                iconSpacing = 24.dp
+            )
         assertEquals(RoundedCornerShape(8.dp), dimens.shape)
         assertEquals(PaddingValues(16.dp), dimens.contentPadding)
         assertEquals(24.dp, dimens.iconSpacing)

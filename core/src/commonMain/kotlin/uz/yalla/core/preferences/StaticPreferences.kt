@@ -23,7 +23,6 @@ package uz.yalla.core.preferences
  * @see InterfacePreferences for the reactive locale/onboarding equivalent
  */
 interface StaticPreferences {
-
     /**
      * Current app locale code (e.g., "uz", "ru", "en").
      *
@@ -53,7 +52,10 @@ interface StaticPreferences {
     val onboardingStage: String
 
     fun setLocaleCode(value: String)
+
     fun setDeviceRegistered(value: Boolean)
+
     fun setGuestMode(value: Boolean)
+
     fun setOnboardingStage(value: String)
 }

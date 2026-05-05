@@ -5,7 +5,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ColorSchemeTest {
-
     @Test
     fun shouldCreateLightSchemeWithCorrectTextColors() {
         val scheme = light()
@@ -132,9 +131,10 @@ class ColorSchemeTest {
     @Test
     fun shouldCopyWithModifiedTextColors() {
         val original = light()
-        val modified = original.copy(
-            text = original.text.copy(base = DarkTextBase),
-        )
+        val modified =
+            original.copy(
+                text = original.text.copy(base = DarkTextBase)
+            )
         assertEquals(DarkTextBase, modified.text.base)
         assertEquals(original.text.subtle, modified.text.subtle)
         assertEquals(original.background, modified.background)

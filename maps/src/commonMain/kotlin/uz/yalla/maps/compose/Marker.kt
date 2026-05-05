@@ -19,5 +19,5 @@ expect fun Marker(
     anchor: Offset = Offset(0.5f, 1.0f),
     flat: Boolean = false,
     rotation: Float = 0.0f,
-    clickable: Boolean = true,
+    clickable: Boolean = true
 )

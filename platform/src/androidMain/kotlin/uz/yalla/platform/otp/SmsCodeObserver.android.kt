@@ -37,20 +37,24 @@ fun ObserveSmsCode(onCodeReceived: (String) -> Unit) {
         val client = SmsRetriever.getClient(context)
         client.startSmsRetriever()
 
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(ctx: Context?, intent: Intent?) {
-                if (intent?.action != SmsRetriever.SMS_RETRIEVED_ACTION) return
-                val extras = intent.extras ?: return
-                val status = extras.get(SmsRetriever.EXTRA_STATUS) as? Status ?: return
+        val receiver =
+            object : BroadcastReceiver() {
+                override fun onReceive(
+                    ctx: Context?,
+                    intent: Intent?
+                ) {
+                    if (intent?.action != SmsRetriever.SMS_RETRIEVED_ACTION) return
+                    val extras = intent.extras ?: return
+                    val status = extras.get(SmsRetriever.EXTRA_STATUS) as? Status ?: return
 
-                if (status.statusCode == CommonStatusCodes.SUCCESS) {
-                    val message = extras.getString(SmsRetriever.EXTRA_SMS_MESSAGE).orEmpty()
-                    if (message.isNotBlank()) {
-                        currentCallback.value(message)
+                    if (status.statusCode == CommonStatusCodes.SUCCESS) {
+                        val message = extras.getString(SmsRetriever.EXTRA_SMS_MESSAGE).orEmpty()
+                        if (message.isNotBlank()) {
+                            currentCallback.value(message)
+                        }
                     }
                 }
             }
-        }
 
         ContextCompat.registerReceiver(
             context,

@@ -31,5 +31,5 @@ interface Route
  * @see ScreenProvider.configFor
  */
 data class ScreenConfig(
-    val showsNavigationBar: Boolean = true,
+    val showsNavigationBar: Boolean = true
 )

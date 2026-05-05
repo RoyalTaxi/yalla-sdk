@@ -1,0 +1,125 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <uz.yalla.sdk:firebase>
+abstract fun interface uz.yalla.firebase.logging/YallaFirebaseLogger { // uz.yalla.firebase.logging/YallaFirebaseLogger|null[0]
+    abstract fun log(kotlin/String, kotlin/String) // uz.yalla.firebase.logging/YallaFirebaseLogger.log|log(kotlin.String;kotlin.String){}[0]
+
+    final object Companion { // uz.yalla.firebase.logging/YallaFirebaseLogger.Companion|null[0]
+        final val Noop // uz.yalla.firebase.logging/YallaFirebaseLogger.Companion.Noop|{}Noop[0]
+            final fun <get-Noop>(): uz.yalla.firebase.logging/YallaFirebaseLogger // uz.yalla.firebase.logging/YallaFirebaseLogger.Companion.Noop.<get-Noop>|<get-Noop>(){}[0]
+    }
+}
+
+abstract interface uz.yalla.firebase.messaging/MessagingDelegate { // uz.yalla.firebase.messaging/MessagingDelegate|null[0]
+    abstract fun onMessageReceived(kotlin/String?, kotlin/String?, kotlin.collections/Map<kotlin/String, kotlin/String>) // uz.yalla.firebase.messaging/MessagingDelegate.onMessageReceived|onMessageReceived(kotlin.String?;kotlin.String?;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    abstract fun onNewToken(kotlin/String) // uz.yalla.firebase.messaging/MessagingDelegate.onNewToken|onNewToken(kotlin.String){}[0]
+}
+
+final class uz.yalla.firebase.analytics/YallaAnalytics { // uz.yalla.firebase.analytics/YallaAnalytics|null[0]
+    constructor <init>() // uz.yalla.firebase.analytics/YallaAnalytics.<init>|<init>(){}[0]
+
+    final fun log(uz.yalla.firebase.analytics/AnalyticsEvent) // uz.yalla.firebase.analytics/YallaAnalytics.log|log(uz.yalla.firebase.analytics.AnalyticsEvent){}[0]
+    final fun logEvent(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/Any>? = ...) // uz.yalla.firebase.analytics/YallaAnalytics.logEvent|logEvent(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.Any>?){}[0]
+    final fun setAnalyticsCollectionEnabled(kotlin/Boolean) // uz.yalla.firebase.analytics/YallaAnalytics.setAnalyticsCollectionEnabled|setAnalyticsCollectionEnabled(kotlin.Boolean){}[0]
+    final suspend fun setUserId(kotlin/String?) // uz.yalla.firebase.analytics/YallaAnalytics.setUserId|setUserId(kotlin.String?){}[0]
+    final suspend fun setUserProperty(kotlin/String, kotlin/String) // uz.yalla.firebase.analytics/YallaAnalytics.setUserProperty|setUserProperty(kotlin.String;kotlin.String){}[0]
+}
+
+final class uz.yalla.firebase.crashlytics/YallaCrashlytics { // uz.yalla.firebase.crashlytics/YallaCrashlytics|null[0]
+    constructor <init>() // uz.yalla.firebase.crashlytics/YallaCrashlytics.<init>|<init>(){}[0]
+
+    final fun log(kotlin/String) // uz.yalla.firebase.crashlytics/YallaCrashlytics.log|log(kotlin.String){}[0]
+    final fun recordException(kotlin/Throwable) // uz.yalla.firebase.crashlytics/YallaCrashlytics.recordException|recordException(kotlin.Throwable){}[0]
+    final fun setCrashlyticsCollectionEnabled(kotlin/Boolean) // uz.yalla.firebase.crashlytics/YallaCrashlytics.setCrashlyticsCollectionEnabled|setCrashlyticsCollectionEnabled(kotlin.Boolean){}[0]
+    final fun setCustomKey(kotlin/String, kotlin/String) // uz.yalla.firebase.crashlytics/YallaCrashlytics.setCustomKey|setCustomKey(kotlin.String;kotlin.String){}[0]
+    final fun setUserId(kotlin/String) // uz.yalla.firebase.crashlytics/YallaCrashlytics.setUserId|setUserId(kotlin.String){}[0]
+}
+
+final class uz.yalla.firebase.messaging/YallaMessaging { // uz.yalla.firebase.messaging/YallaMessaging|null[0]
+    constructor <init>() // uz.yalla.firebase.messaging/YallaMessaging.<init>|<init>(){}[0]
+
+    final suspend fun deleteToken() // uz.yalla.firebase.messaging/YallaMessaging.deleteToken|deleteToken(){}[0]
+    final suspend fun getToken(): kotlin/String? // uz.yalla.firebase.messaging/YallaMessaging.getToken|getToken(){}[0]
+    final suspend fun subscribeToTopic(kotlin/String) // uz.yalla.firebase.messaging/YallaMessaging.subscribeToTopic|subscribeToTopic(kotlin.String){}[0]
+    final suspend fun unsubscribeFromTopic(kotlin/String) // uz.yalla.firebase.messaging/YallaMessaging.unsubscribeFromTopic|unsubscribeFromTopic(kotlin.String){}[0]
+}
+
+sealed class uz.yalla.firebase.analytics/AnalyticsEvent { // uz.yalla.firebase.analytics/AnalyticsEvent|null[0]
+    open val name // uz.yalla.firebase.analytics/AnalyticsEvent.name|{}name[0]
+        open fun <get-name>(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.name.<get-name>|<get-name>(){}[0]
+    open val params // uz.yalla.firebase.analytics/AnalyticsEvent.params|{}params[0]
+        open fun <get-params>(): kotlin.collections/Map<kotlin/String, kotlin/Any>? // uz.yalla.firebase.analytics/AnalyticsEvent.params.<get-params>|<get-params>(){}[0]
+
+    final class ButtonClick : uz.yalla.firebase.analytics/AnalyticsEvent { // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick|null[0]
+        constructor <init>(kotlin/String, kotlin/String? = ...) // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.<init>|<init>(kotlin.String;kotlin.String?){}[0]
+
+        final val buttonName // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.buttonName|{}buttonName[0]
+            final fun <get-buttonName>(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.buttonName.<get-buttonName>|<get-buttonName>(){}[0]
+        final val source // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.source|{}source[0]
+            final fun <get-source>(): kotlin/String? // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.source.<get-source>|<get-source>(){}[0]
+
+        final fun component1(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.component1|component1(){}[0]
+        final fun component2(): kotlin/String? // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String? = ...): uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.copy|copy(kotlin.String;kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.ButtonClick.toString|toString(){}[0]
+    }
+
+    final class Custom : uz.yalla.firebase.analytics/AnalyticsEvent { // uz.yalla.firebase.analytics/AnalyticsEvent.Custom|null[0]
+        constructor <init>(kotlin/String) // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.<init>|<init>(kotlin.String){}[0]
+        constructor <init>(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/Any>? = ...) // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.<init>|<init>(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.Any>?){}[0]
+
+        final val name // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.name|{}name[0]
+            final fun <get-name>(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.name.<get-name>|<get-name>(){}[0]
+        final val params // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.params|{}params[0]
+            final fun <get-params>(): kotlin.collections/Map<kotlin/String, kotlin/Any>? // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.params.<get-params>|<get-params>(){}[0]
+
+        final fun component1(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.component1|component1(){}[0]
+        final fun component2(): kotlin.collections/Map<kotlin/String, kotlin/Any>? // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin.collections/Map<kotlin/String, kotlin/Any>? = ...): uz.yalla.firebase.analytics/AnalyticsEvent.Custom // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.copy|copy(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.Any>?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.Custom.toString|toString(){}[0]
+    }
+
+    final class ScreenView : uz.yalla.firebase.analytics/AnalyticsEvent { // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView|null[0]
+        constructor <init>(kotlin/String, kotlin/String? = ...) // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.<init>|<init>(kotlin.String;kotlin.String?){}[0]
+
+        final val screenClass // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.screenClass|{}screenClass[0]
+            final fun <get-screenClass>(): kotlin/String? // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.screenClass.<get-screenClass>|<get-screenClass>(){}[0]
+        final val screenName // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.screenName|{}screenName[0]
+            final fun <get-screenName>(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.screenName.<get-screenName>|<get-screenName>(){}[0]
+
+        final fun component1(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.component1|component1(){}[0]
+        final fun component2(): kotlin/String? // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.component2|component2(){}[0]
+        final fun copy(kotlin/String = ..., kotlin/String? = ...): uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.copy|copy(kotlin.String;kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.firebase.analytics/AnalyticsEvent.ScreenView.toString|toString(){}[0]
+    }
+}
+
+final object uz.yalla.firebase/YallaFirebase { // uz.yalla.firebase/YallaFirebase|null[0]
+    final val analytics // uz.yalla.firebase/YallaFirebase.analytics|{}analytics[0]
+        final fun <get-analytics>(): uz.yalla.firebase.analytics/YallaAnalytics // uz.yalla.firebase/YallaFirebase.analytics.<get-analytics>|<get-analytics>(){}[0]
+    final val crashlytics // uz.yalla.firebase/YallaFirebase.crashlytics|{}crashlytics[0]
+        final fun <get-crashlytics>(): uz.yalla.firebase.crashlytics/YallaCrashlytics // uz.yalla.firebase/YallaFirebase.crashlytics.<get-crashlytics>|<get-crashlytics>(){}[0]
+    final val isInitialized // uz.yalla.firebase/YallaFirebase.isInitialized|{}isInitialized[0]
+        final fun <get-isInitialized>(): kotlin/Boolean // uz.yalla.firebase/YallaFirebase.isInitialized.<get-isInitialized>|<get-isInitialized>(){}[0]
+    final val messaging // uz.yalla.firebase/YallaFirebase.messaging|{}messaging[0]
+        final fun <get-messaging>(): uz.yalla.firebase.messaging/YallaMessaging // uz.yalla.firebase/YallaFirebase.messaging.<get-messaging>|<get-messaging>(){}[0]
+
+    final var logger // uz.yalla.firebase/YallaFirebase.logger|{}logger[0]
+        final fun <get-logger>(): uz.yalla.firebase.logging/YallaFirebaseLogger // uz.yalla.firebase/YallaFirebase.logger.<get-logger>|<get-logger>(){}[0]
+        final fun <set-logger>(uz.yalla.firebase.logging/YallaFirebaseLogger) // uz.yalla.firebase/YallaFirebase.logger.<set-logger>|<set-logger>(uz.yalla.firebase.logging.YallaFirebaseLogger){}[0]
+
+    final fun initialize() // uz.yalla.firebase/YallaFirebase.initialize|initialize(){}[0]
+}
+
+final fun uz.yalla.firebase.analytics/trackEvent(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/Any> = ...) // uz.yalla.firebase.analytics/trackEvent|trackEvent(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.Any>){}[0]

@@ -27,7 +27,7 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
 @Immutable
 data class LoadingIndicatorColors(
     val indicator: Color,
-    val track: Color,
+    val track: Color
 )
 
 /** Dimension configuration for [LoadingIndicator]. */
@@ -35,7 +35,7 @@ data class LoadingIndicatorColors(
 data class LoadingIndicatorDimens(
     val smallSize: Dp,
     val mediumSize: Dp,
-    val largeSize: Dp,
+    val largeSize: Dp
 ) {
     /** Resolves the indicator diameter for the given [size] variant. */
     fun size(size: LoadingIndicatorSize): Dp =
@@ -70,11 +70,11 @@ fun LoadingIndicator(
     modifier: Modifier = Modifier,
     size: LoadingIndicatorSize = LoadingIndicatorSize.Medium,
     colors: LoadingIndicatorColors = LoadingIndicatorDefaults.colors(),
-    dimens: LoadingIndicatorDimens = LoadingIndicatorDefaults.dimens(),
+    dimens: LoadingIndicatorDimens = LoadingIndicatorDefaults.dimens()
 ) {
     NativeLoadingIndicator(
         modifier = modifier.size(dimens.size(size)),
-        color = colors.indicator,
+        color = colors.indicator
     )
 }
 
@@ -84,7 +84,7 @@ fun LoadingIndicator(
 enum class LoadingIndicatorSize {
     Small,
     Medium,
-    Large,
+    Large
 }
 
 /**
@@ -97,21 +97,21 @@ object LoadingIndicatorDefaults {
     @Composable
     fun colors(
         indicator: Color = System.color.button.active,
-        track: Color = System.color.background.tertiary,
+        track: Color = System.color.background.tertiary
     ) = LoadingIndicatorColors(
         indicator = indicator,
-        track = track,
+        track = track
     )
 
     /** Creates dimension configuration for [LoadingIndicator]. */
     fun dimens(
         smallSize: Dp = 20.dp,
         mediumSize: Dp = 36.dp,
-        largeSize: Dp = 48.dp,
+        largeSize: Dp = 48.dp
     ) = LoadingIndicatorDimens(
         smallSize = smallSize,
         mediumSize = mediumSize,
-        largeSize = largeSize,
+        largeSize = largeSize
     )
 }
 
@@ -124,7 +124,7 @@ private fun LoadingIndicatorPreview() {
                 Modifier
                     .background(Color.White)
                     .padding(16.dp),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             LoadingIndicator()
         }

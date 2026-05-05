@@ -47,21 +47,24 @@ class LibreStaticMap : StaticMap {
 
         val fallback = MapConstants.BOBUR_SQUARE.toGeoPoint()
 
-        val cameraState = rememberCameraState(
-            firstPosition = LibreCameraPosition(
-                target = Position(latitude = fallback.lat, longitude = fallback.lng),
-                zoom = MapConstants.DEFAULT_ZOOM
+        val cameraState =
+            rememberCameraState(
+                firstPosition =
+                    LibreCameraPosition(
+                        target = Position(latitude = fallback.lat, longitude = fallback.lng),
+                        zoom = MapConstants.DEFAULT_ZOOM
+                    )
             )
-        )
 
         var isMapReady by remember { mutableStateOf(false) }
 
-        val allPoints = remember(route, locations) {
-            buildList {
-                route?.let { addAll(it) }
-                locations?.let { addAll(it) }
-            }.filter { it != GeoPoint.Zero }
-        }
+        val allPoints =
+            remember(route, locations) {
+                buildList {
+                    route?.let { addAll(it) }
+                    locations?.let { addAll(it) }
+                }.filter { it != GeoPoint.Zero }
+            }
 
         LaunchedEffect(isMapReady, allPoints) {
             if (!isMapReady || allPoints.isEmpty()) return@LaunchedEffect
@@ -70,10 +73,11 @@ class LibreStaticMap : StaticMap {
                 val point = allPoints.first()
                 cameraState.animateTo(
                     duration = 1.milliseconds,
-                    finalPosition = LibreCameraPosition(
-                        target = Position(latitude = point.lat, longitude = point.lng),
-                        zoom = MapConstants.DEFAULT_ZOOM
-                    )
+                    finalPosition =
+                        LibreCameraPosition(
+                            target = Position(latitude = point.lat, longitude = point.lng),
+                            zoom = MapConstants.DEFAULT_ZOOM
+                        )
                 )
             } else {
                 cameraState.animateTo(

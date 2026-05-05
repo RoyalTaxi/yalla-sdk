@@ -32,7 +32,10 @@ data class ExtraService(
 ) {
     @Serializable
     enum class CostType {
-        @SerialName("cost") Fixed,
-        @SerialName("percent") Percent
+        @SerialName("cost")
+        Fixed,
+
+        @SerialName("percent")
+        Percent
     }
 }

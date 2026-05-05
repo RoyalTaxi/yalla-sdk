@@ -25,7 +25,7 @@ data class IconItemColors(
     val container: Color,
     val iconBackground: Color,
     val title: Color,
-    val subtitle: Color,
+    val subtitle: Color
 )
 
 /**
@@ -39,7 +39,7 @@ data class IconItemDimens(
     val iconContainerSize: Dp,
     val iconContainerShape: Shape,
     val iconPadding: Dp,
-    val titleSubtitleSpacing: Dp,
+    val titleSubtitleSpacing: Dp
 )
 
 /**
@@ -82,7 +82,7 @@ fun IconItem(
     icon: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
     colors: IconItemColors = IconItemDefaults.colors(),
-    dimens: IconItemDimens = IconItemDefaults.dimens(),
+    dimens: IconItemDimens = IconItemDefaults.dimens()
 ) {
     ListItem(
         title = title,
@@ -90,31 +90,35 @@ fun IconItem(
         enabled = enabled,
         onClick = onClick,
         modifier = modifier,
-        leadingContent = icon?.let {
-            {
-                Box(
-                    modifier = Modifier
-                        .size(dimens.iconContainerSize)
-                        .background(colors.iconBackground, dimens.iconContainerShape)
-                        .padding(dimens.iconPadding),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    it()
+        leadingContent =
+            icon?.let {
+                {
+                    Box(
+                        modifier =
+                            Modifier
+                                .size(dimens.iconContainerSize)
+                                .background(colors.iconBackground, dimens.iconContainerShape)
+                                .padding(dimens.iconPadding),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        it()
+                    }
                 }
-            }
-        },
+            },
         trailingContent = trailingContent,
-        colors = ListItemDefaults.colors(
-            container = colors.container,
-            title = colors.title,
-            subtitle = colors.subtitle,
-        ),
-        dimens = ListItemDefaults.dimens(
-            shape = dimens.shape,
-            contentPadding = dimens.contentPadding,
-            contentSpacing = dimens.contentSpacing,
-            titleSubtitleSpacing = dimens.titleSubtitleSpacing,
-        ),
+        colors =
+            ListItemDefaults.colors(
+                container = colors.container,
+                title = colors.title,
+                subtitle = colors.subtitle
+            ),
+        dimens =
+            ListItemDefaults.dimens(
+                shape = dimens.shape,
+                contentPadding = dimens.contentPadding,
+                contentSpacing = dimens.contentSpacing,
+                titleSubtitleSpacing = dimens.titleSubtitleSpacing
+            )
     )
 }
 
@@ -122,7 +126,6 @@ fun IconItem(
  * Default configuration values for [IconItem].
  */
 object IconItemDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
@@ -131,13 +134,14 @@ object IconItemDefaults {
         container: Color = Color.Transparent,
         iconBackground: Color = System.color.background.secondary,
         title: Color = System.color.text.base,
-        subtitle: Color = System.color.text.subtle,
-    ): IconItemColors = IconItemColors(
-        container = container,
-        iconBackground = iconBackground,
-        title = title,
-        subtitle = subtitle,
-    )
+        subtitle: Color = System.color.text.subtle
+    ): IconItemColors =
+        IconItemColors(
+            container = container,
+            iconBackground = iconBackground,
+            title = title,
+            subtitle = subtitle
+        )
 
     /**
      * Creates default dimensions.
@@ -149,14 +153,15 @@ object IconItemDefaults {
         iconContainerSize: Dp = 24.dp,
         iconContainerShape: Shape = RoundedCornerShape(6.dp),
         iconPadding: Dp = 0.dp,
-        titleSubtitleSpacing: Dp = 4.dp,
-    ): IconItemDimens = IconItemDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-        contentSpacing = contentSpacing,
-        iconContainerSize = iconContainerSize,
-        iconContainerShape = iconContainerShape,
-        iconPadding = iconPadding,
-        titleSubtitleSpacing = titleSubtitleSpacing,
-    )
+        titleSubtitleSpacing: Dp = 4.dp
+    ): IconItemDimens =
+        IconItemDimens(
+            shape = shape,
+            contentPadding = contentPadding,
+            contentSpacing = contentSpacing,
+            iconContainerSize = iconContainerSize,
+            iconContainerShape = iconContainerShape,
+            iconPadding = iconPadding,
+            titleSubtitleSpacing = titleSubtitleSpacing
+        )
 }

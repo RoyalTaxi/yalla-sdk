@@ -24,7 +24,7 @@ import uz.yalla.core.preferences.UserPreferences
  */
 internal class UserPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope
 ) : UserPreferences {
     override val firstName: Flow<String> =
         dataStore.data.map { it[PreferenceKeys.FIRST_NAME].orEmpty() }
@@ -52,7 +52,7 @@ internal class UserPreferencesImpl(
             PaymentKind.from(
                 id = prefs[PreferenceKeys.PAYMENT_TYPE],
                 cardId = prefs[PreferenceKeys.CARD_ID]?.let { CardId(it) },
-                maskedNumber = prefs[PreferenceKeys.CARD_NUMBER],
+                maskedNumber = prefs[PreferenceKeys.CARD_NUMBER]
             )
         }
 

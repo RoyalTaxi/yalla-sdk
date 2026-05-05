@@ -9,26 +9,27 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ListItemColorsTest {
-
-    private val colors = ListItemColors(
-        container = Color.White,
-        title = Color.Black,
-        subtitle = Color.Gray,
-        disabledContainer = Color.LightGray,
-        disabledTitle = Color.DarkGray,
-        disabledSubtitle = Color.DarkGray,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = ListItemColors(
+    private val colors =
+        ListItemColors(
             container = Color.White,
             title = Color.Black,
             subtitle = Color.Gray,
             disabledContainer = Color.LightGray,
             disabledTitle = Color.DarkGray,
-            disabledSubtitle = Color.DarkGray,
+            disabledSubtitle = Color.DarkGray
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            ListItemColors(
+                container = Color.White,
+                title = Color.Black,
+                subtitle = Color.Gray,
+                disabledContainer = Color.LightGray,
+                disabledTitle = Color.DarkGray,
+                disabledSubtitle = Color.DarkGray
+            )
         assertEquals(colors, other)
     }
 
@@ -51,7 +52,6 @@ class ListItemColorsTest {
 }
 
 class ListItemDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = ListItemDefaults.dimens()
@@ -65,12 +65,13 @@ class ListItemDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = ListItemDefaults.dimens(
-            contentSpacing = 24.dp,
-            titleSubtitleSpacing = 8.dp,
-            titleMaxLines = 3,
-            subtitleMaxLines = 5,
-        )
+        val dimens =
+            ListItemDefaults.dimens(
+                contentSpacing = 24.dp,
+                titleSubtitleSpacing = 8.dp,
+                titleMaxLines = 3,
+                subtitleMaxLines = 5
+            )
         assertEquals(24.dp, dimens.contentSpacing)
         assertEquals(8.dp, dimens.titleSubtitleSpacing)
         assertEquals(3, dimens.titleMaxLines)

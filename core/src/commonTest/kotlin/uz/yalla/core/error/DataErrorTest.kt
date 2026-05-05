@@ -53,15 +53,16 @@ class DataErrorTest {
     fun networkVariantsAreDistinct() {
         // Sanity: data objects within the same sealed class compare by identity-as-equality;
         // distinct objects must not collide.
-        val variants = listOf(
-            DataError.Network.Connection,
-            DataError.Network.Timeout,
-            DataError.Network.Server,
-            DataError.Network.Client,
-            DataError.Network.Serialization,
-            DataError.Network.Guest,
-            DataError.Network.Unknown,
-        )
+        val variants =
+            listOf(
+                DataError.Network.Connection,
+                DataError.Network.Timeout,
+                DataError.Network.Server,
+                DataError.Network.Client,
+                DataError.Network.Serialization,
+                DataError.Network.Guest,
+                DataError.Network.Unknown
+            )
         for (i in variants.indices) {
             for (j in variants.indices) {
                 if (i != j) assertNotEquals(variants[i], variants[j])
@@ -73,7 +74,7 @@ class DataErrorTest {
     fun clientWithMessageEqualsByCodeAndMessage() {
         assertEquals(
             DataError.Network.ClientWithMessage(code = 400, message = "bad request"),
-            DataError.Network.ClientWithMessage(code = 400, message = "bad request"),
+            DataError.Network.ClientWithMessage(code = 400, message = "bad request")
         )
     }
 
@@ -81,7 +82,7 @@ class DataErrorTest {
     fun clientWithMessageDiffersByCode() {
         assertNotEquals(
             DataError.Network.ClientWithMessage(code = 400, message = "x"),
-            DataError.Network.ClientWithMessage(code = 422, message = "x"),
+            DataError.Network.ClientWithMessage(code = 422, message = "x")
         )
     }
 
@@ -89,7 +90,7 @@ class DataErrorTest {
     fun clientWithMessageDiffersByMessage() {
         assertNotEquals(
             DataError.Network.ClientWithMessage(code = 400, message = "a"),
-            DataError.Network.ClientWithMessage(code = 400, message = "b"),
+            DataError.Network.ClientWithMessage(code = 400, message = "b")
         )
     }
 

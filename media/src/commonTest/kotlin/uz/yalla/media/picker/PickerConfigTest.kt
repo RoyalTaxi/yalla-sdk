@@ -70,7 +70,7 @@ class PickerConfigTest {
                 width = 1024,
                 height = 768,
                 resizeThresholdBytes = 512_000L,
-                compressionQuality = 0.75,
+                compressionQuality = 0.75
             )
         assertEquals(1024, options.width)
         assertEquals(768, options.height)
@@ -97,7 +97,7 @@ class PickerConfigTest {
                 FilterOptions.Default,
                 FilterOptions.GrayScale,
                 FilterOptions.Sepia,
-                FilterOptions.Invert,
+                FilterOptions.Invert
             )
         assertEquals(4, filters.size)
     }
@@ -109,7 +109,7 @@ class PickerConfigTest {
                 FilterOptions.Default,
                 FilterOptions.GrayScale,
                 FilterOptions.Sepia,
-                FilterOptions.Invert,
+                FilterOptions.Invert
             )
         assertEquals(4, filters.size)
     }

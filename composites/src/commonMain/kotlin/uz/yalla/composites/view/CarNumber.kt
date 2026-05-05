@@ -44,7 +44,7 @@ import uz.yalla.resources.img_flag_uz_square
  */
 data class CarNumberState(
     val code: String,
-    val number: List<String>,
+    val number: List<String>
 )
 
 /**
@@ -55,7 +55,7 @@ data class CarNumberColors(
     val container: Color,
     val border: Color,
     val text: Color,
-    val countryCode: Color,
+    val countryCode: Color
 )
 
 /**
@@ -70,7 +70,7 @@ data class CarNumberDimens(
     val height: Dp,
     val cornerRadius: Dp,
     val borderWidth: Dp,
-    val dotSize: Dp,
+    val dotSize: Dp
 )
 
 /**
@@ -104,7 +104,7 @@ fun CarNumber(
     modifier: Modifier = Modifier,
     numberStyle: TextStyle = System.font.custom.carNumber,
     colors: CarNumberColors = CarNumberDefaults.colors(),
-    dimens: CarNumberDimens = CarNumberDefaults.dimens(),
+    dimens: CarNumberDimens = CarNumberDefaults.dimens()
 ) {
     val scale = remember(dimens.height) { dimens.height.value / CarNumberDefaults.BASE_HEIGHT }
 
@@ -119,18 +119,18 @@ fun CarNumber(
         modifier = modifier,
         border = BorderStroke(dimens.borderWidth.scaled(), colors.border),
         colors = CardDefaults.cardColors(colors.container),
-        shape = RoundedCornerShape(dimens.cornerRadius.scaled()),
+        shape = RoundedCornerShape(dimens.cornerRadius.scaled())
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.height(IntrinsicSize.Min).padding(horizontal = 4.dp.scaled()),
+            modifier = Modifier.height(IntrinsicSize.Min).padding(horizontal = 4.dp.scaled())
         ) {
             Box(
                 modifier =
                     Modifier.size(dimens.dotSize.scaled()).background(
                         shape = CircleShape,
-                        color = colors.text,
-                    ),
+                        color = colors.text
+                    )
             )
 
             Text(
@@ -139,14 +139,14 @@ fun CarNumber(
                 style =
                     numberStyle.copy(
                         fontSize = baseFontSize.scaled(),
-                        lineHeight = baseLineHeight.scaled(),
+                        lineHeight = baseLineHeight.scaled()
                     ),
-                modifier = Modifier.padding(3.dp.scaled()),
+                modifier = Modifier.padding(3.dp.scaled())
             )
 
             VerticalDivider(
                 thickness = dimens.borderWidth.scaled(),
-                color = colors.border,
+                color = colors.border
             )
 
             Text(
@@ -155,20 +155,20 @@ fun CarNumber(
                 style =
                     numberStyle.copy(
                         fontSize = baseFontSize.scaled(),
-                        lineHeight = baseLineHeight.scaled(),
+                        lineHeight = baseLineHeight.scaled()
                     ),
-                modifier = Modifier.padding(3.dp.scaled()),
+                modifier = Modifier.padding(3.dp.scaled())
             )
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier.padding(vertical = 3.dp.scaled()),
+                modifier = Modifier.padding(vertical = 3.dp.scaled())
             ) {
                 Image(
                     painter = painterResource(Res.drawable.img_flag_uz_square),
                     contentDescription = null,
-                    modifier = Modifier.height(4.dp.scaled()),
+                    modifier = Modifier.height(4.dp.scaled())
                 )
 
                 Text(
@@ -177,8 +177,8 @@ fun CarNumber(
                     style =
                         numberStyle.copy(
                             fontSize = 8.sp.scaled(),
-                            lineHeight = 8.sp.scaled(),
-                        ),
+                            lineHeight = 8.sp.scaled()
+                        )
                 )
             }
 
@@ -188,8 +188,8 @@ fun CarNumber(
                 modifier =
                     Modifier.size(dimens.dotSize.scaled()).background(
                         shape = CircleShape,
-                        color = colors.text,
-                    ),
+                        color = colors.text
+                    )
             )
         }
     }
@@ -209,13 +209,14 @@ object CarNumberDefaults {
         container: Color = Color.White,
         border: Color = System.color.border.filled,
         text: Color = Color.Black,
-        countryCode: Color = Color(0xFF029BB7),
-    ): CarNumberColors = CarNumberColors(
-        container = container,
-        border = border,
-        text = text,
-        countryCode = countryCode,
-    )
+        countryCode: Color = Color(0xFF029BB7)
+    ): CarNumberColors =
+        CarNumberColors(
+            container = container,
+            border = border,
+            text = text,
+            countryCode = countryCode
+        )
 
     /**
      * Creates default dimensions.
@@ -224,11 +225,12 @@ object CarNumberDefaults {
         height: Dp = 24.dp,
         cornerRadius: Dp = 4.dp,
         borderWidth: Dp = 1.dp,
-        dotSize: Dp = 2.dp,
-    ): CarNumberDimens = CarNumberDimens(
-        height = height,
-        cornerRadius = cornerRadius,
-        borderWidth = borderWidth,
-        dotSize = dotSize,
-    )
+        dotSize: Dp = 2.dp
+    ): CarNumberDimens =
+        CarNumberDimens(
+            height = height,
+            cornerRadius = cornerRadius,
+            borderWidth = borderWidth,
+            dotSize = dotSize
+        )
 }

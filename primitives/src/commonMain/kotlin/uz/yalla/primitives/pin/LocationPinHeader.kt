@@ -25,12 +25,12 @@ internal fun PinHeader(
     headerStyle: TextStyle,
     colors: LocationPinColors,
     dimens: LocationPinDimens,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Surface(
         shape = dimens.headerShape,
         color = colors.header,
-        modifier = modifier,
+        modifier = modifier
     ) {
         Text(
             text =
@@ -46,12 +46,12 @@ internal fun PinHeader(
                         animationSpec =
                             spring(
                                 dampingRatio = Spring.DampingRatioNoBouncy,
-                                stiffness = Spring.StiffnessMedium,
-                            ),
+                                stiffness = Spring.StiffnessMedium
+                            )
                     ).padding(
                         vertical = dimens.headerVerticalPadding,
-                        horizontal = dimens.headerHorizontalPadding,
-                    ),
+                        horizontal = dimens.headerHorizontalPadding
+                    )
         )
     }
 }

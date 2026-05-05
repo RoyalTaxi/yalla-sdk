@@ -11,7 +11,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class GeoUtilTest {
-
     // ============================================
     // haversineDistance
     // ============================================
@@ -299,11 +298,12 @@ class GeoUtilTest {
 
     @Test
     fun boundsBuilderMultiplePointsSpanCorrectly() {
-        val builder = LatLngBounds
-            .Builder()
-            .include(LatLng(10.0, 20.0))
-            .include(LatLng(30.0, 40.0))
-            .include(LatLng(20.0, 30.0))
+        val builder =
+            LatLngBounds
+                .Builder()
+                .include(LatLng(10.0, 20.0))
+                .include(LatLng(30.0, 40.0))
+                .include(LatLng(20.0, 30.0))
 
         val bounds = builder.build()
 
@@ -315,11 +315,12 @@ class GeoUtilTest {
 
     @Test
     fun boundsBuilderChainingWorks() {
-        val bounds = LatLngBounds
-            .Builder()
-            .include(LatLng(0.0, 0.0))
-            .include(LatLng(10.0, 10.0))
-            .build()
+        val bounds =
+            LatLngBounds
+                .Builder()
+                .include(LatLng(0.0, 0.0))
+                .include(LatLng(10.0, 10.0))
+                .build()
 
         assertEquals(0.0, bounds.southwest.latitude)
         assertEquals(10.0, bounds.northeast.latitude)
@@ -327,10 +328,11 @@ class GeoUtilTest {
 
     @Test
     fun boundsCenterIsCorrectForSymmetricBounds() {
-        val bounds = LatLngBounds(
-            southwest = LatLng(10.0, 20.0),
-            northeast = LatLng(30.0, 40.0)
-        )
+        val bounds =
+            LatLngBounds(
+                southwest = LatLng(10.0, 20.0),
+                northeast = LatLng(30.0, 40.0)
+            )
 
         val center = bounds.center
 
@@ -351,11 +353,12 @@ class GeoUtilTest {
 
     @Test
     fun boundsBuilderWithNegativeCoordinates() {
-        val bounds = LatLngBounds
-            .Builder()
-            .include(LatLng(-10.0, -20.0))
-            .include(LatLng(10.0, 20.0))
-            .build()
+        val bounds =
+            LatLngBounds
+                .Builder()
+                .include(LatLng(-10.0, -20.0))
+                .include(LatLng(10.0, 20.0))
+                .build()
 
         assertEquals(-10.0, bounds.southwest.latitude)
         assertEquals(-20.0, bounds.southwest.longitude)

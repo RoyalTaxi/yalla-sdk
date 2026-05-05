@@ -17,13 +17,18 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class LocationMappersTest {
-
     @Test
     fun shouldMapAddressOptionToFoundLocation() {
-        val option = AddressOption(
-            id = AddressOptionId(42), title = "Office", address = "123 Main St",
-            distance = 1.5, lat = 41.3, lng = 69.2, isFromDatabase = false
-        )
+        val option =
+            AddressOption(
+                id = AddressOptionId(42),
+                title = "Office",
+                address = "123 Main St",
+                distance = 1.5,
+                lat = 41.3,
+                lng = 69.2,
+                isFromDatabase = false
+            )
 
         val result = option.toFoundLocation()
 
@@ -36,11 +41,17 @@ class LocationMappersTest {
 
     @Test
     fun shouldMapSavedAddressToFoundLocation() {
-        val saved = SavedAddress(
-            distance = 2.0, duration = 10.0, lat = 41.3, lng = 69.2,
-            address = "456 Elm St", title = "Home",
-            kind = PlaceKind.Home, parent = SavedAddress.Parent(name = null)
-        )
+        val saved =
+            SavedAddress(
+                distance = 2.0,
+                duration = 10.0,
+                lat = 41.3,
+                lng = 69.2,
+                address = "456 Elm St",
+                title = "Home",
+                kind = PlaceKind.Home,
+                parent = SavedAddress.Parent(name = null)
+            )
 
         val result = saved.toFoundLocation()
 
@@ -76,11 +87,12 @@ class LocationMappersTest {
 
     @Test
     fun shouldMapRouteToLocation() {
-        val route = Order.Taxi.Route(
-            coords = Order.Taxi.Route.Coords(lat = 41.3, lng = 69.2),
-            fullAddress = "789 Oak Ave",
-            index = 1
-        )
+        val route =
+            Order.Taxi.Route(
+                coords = Order.Taxi.Route.Coords(lat = 41.3, lng = 69.2),
+                fullAddress = "789 Oak Ave",
+                index = 1
+            )
 
         val result = route.toLocation()
 
@@ -91,13 +103,15 @@ class LocationMappersTest {
 
     @Test
     fun shouldSortRouteLocationsByIndex() {
-        val order = testOrder(
-            routes = listOf(
-                Order.Taxi.Route(Order.Taxi.Route.Coords(3.0, 3.0), "C", index = 3),
-                Order.Taxi.Route(Order.Taxi.Route.Coords(1.0, 1.0), "A", index = 1),
-                Order.Taxi.Route(Order.Taxi.Route.Coords(2.0, 2.0), "B", index = 2),
+        val order =
+            testOrder(
+                routes =
+                    listOf(
+                        Order.Taxi.Route(Order.Taxi.Route.Coords(3.0, 3.0), "C", index = 3),
+                        Order.Taxi.Route(Order.Taxi.Route.Coords(1.0, 1.0), "A", index = 1),
+                        Order.Taxi.Route(Order.Taxi.Route.Coords(2.0, 2.0), "B", index = 2)
+                    )
             )
-        )
 
         val result = order.sortedRouteLocations()
 
@@ -109,12 +123,14 @@ class LocationMappersTest {
 
     @Test
     fun shouldMapFoundLocationToLocation() {
-        val found = FoundLocation(
-            id = 10, name = "Found Place",
-            address = "should be dropped",
-            point = GeoPoint(41.3, 69.2),
-            placeKind = PlaceKind.Work
-        )
+        val found =
+            FoundLocation(
+                id = 10,
+                name = "Found Place",
+                address = "should be dropped",
+                point = GeoPoint(41.3, 69.2),
+                placeKind = PlaceKind.Work
+            )
 
         val result = found.toLocation()
 
@@ -125,26 +141,48 @@ class LocationMappersTest {
 
     // --- Test helpers ---
 
-    private fun testOrder(routes: List<Order.Taxi.Route>) = Order(
-        comment = "",
-        dateTime = 0L,
-        executor = Order.Executor(
-            coords = Order.Executor.Coords(0.0, 0.0, 0.0),
-            vehicle = Order.Executor.Vehicle(
-                callsign = "", color = Order.Executor.Vehicle.Color("", ""),
-                id = 0, mark = "", model = "", stateNumber = ""
-            ),
-            fatherName = "", givenNames = "", id = ExecutorId(0), phone = "", photo = "", rating = 0.0, surName = ""
-        ),
-        id = OrderId(1),
-        paymentType = PaymentKind.Cash,
-        service = "",
-        status = OrderStatus.New,
-        statusTime = emptyList(),
-        taxi = Order.Taxi(
-            bonusAmount = 0, clientTotalPrice = 0.0, distance = 0.0, fixedPrice = false,
-            routes = routes, services = emptyList(), startPrice = 0,
-            tariff = "", tariffId = 0, totalPrice = 0, waitingTime = 0
+    private fun testOrder(routes: List<Order.Taxi.Route>) =
+        Order(
+            comment = "",
+            dateTime = 0L,
+            executor =
+                Order.Executor(
+                    coords = Order.Executor.Coords(0.0, 0.0, 0.0),
+                    vehicle =
+                        Order.Executor.Vehicle(
+                            callsign = "",
+                            color = Order.Executor.Vehicle.Color("", ""),
+                            id = 0,
+                            mark = "",
+                            model = "",
+                            stateNumber = ""
+                        ),
+                    fatherName = "",
+                    givenNames = "",
+                    id = ExecutorId(0),
+                    phone = "",
+                    photo = "",
+                    rating = 0.0,
+                    surName = ""
+                ),
+            id = OrderId(1),
+            paymentType = PaymentKind.Cash,
+            service = "",
+            status = OrderStatus.New,
+            statusTime = emptyList(),
+            taxi =
+                Order.Taxi(
+                    bonusAmount = 0,
+                    clientTotalPrice = 0.0,
+                    distance = 0.0,
+                    fixedPrice = false,
+                    routes = routes,
+                    services = emptyList(),
+                    startPrice = 0,
+                    tariff = "",
+                    tariffId = 0,
+                    totalPrice = 0,
+                    waitingTime = 0
+                )
         )
-    )
 }

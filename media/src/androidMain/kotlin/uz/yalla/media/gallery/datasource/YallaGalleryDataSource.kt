@@ -12,8 +12,9 @@ import uz.yalla.media.gallery.model.YallaMediaImage
  *
  * @see YallaGalleryRepositoryImpl
  */
-internal class YallaGalleryDataSource(private val onFetch: (limit: Int, offset: Int) -> List<YallaMediaImage>) :
-    PagingSource<Int, YallaMediaImage>() {
+internal class YallaGalleryDataSource(
+    private val onFetch: (limit: Int, offset: Int) -> List<YallaMediaImage>
+) : PagingSource<Int, YallaMediaImage>() {
     override fun getRefreshKey(state: PagingState<Int, YallaMediaImage>): Int? =
         state.anchorPosition?.let {
             state.closestPageToPosition(it)?.prevKey?.plus(1)

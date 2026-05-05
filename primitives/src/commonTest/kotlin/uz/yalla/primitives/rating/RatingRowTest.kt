@@ -7,18 +7,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class RatingRowColorsTest {
-
-    private val colors = RatingRowColors(
-        filled = Color.Yellow,
-        empty = Color.Gray,
-    )
+    private val colors =
+        RatingRowColors(
+            filled = Color.Yellow,
+            empty = Color.Gray
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = RatingRowColors(
-            filled = Color.Yellow,
-            empty = Color.Gray,
-        )
+        val other =
+            RatingRowColors(
+                filled = Color.Yellow,
+                empty = Color.Gray
+            )
         assertEquals(colors, other)
     }
 
@@ -37,7 +38,6 @@ class RatingRowColorsTest {
 }
 
 class RatingRowDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = RatingRowDefaults.dimens()
@@ -49,12 +49,13 @@ class RatingRowDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = RatingRowDefaults.dimens(
-            starSize = 32.dp,
-            starPadding = 4.dp,
-            starSpacing = 8.dp,
-            starCount = 10,
-        )
+        val dimens =
+            RatingRowDefaults.dimens(
+                starSize = 32.dp,
+                starPadding = 4.dp,
+                starSpacing = 8.dp,
+                starCount = 10
+            )
         assertEquals(32.dp, dimens.starSize)
         assertEquals(4.dp, dimens.starPadding)
         assertEquals(8.dp, dimens.starSpacing)

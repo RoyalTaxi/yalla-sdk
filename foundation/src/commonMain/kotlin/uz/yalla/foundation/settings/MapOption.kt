@@ -19,7 +19,6 @@ sealed class MapOption(
     override val name: StringResource,
     val kind: MapKind
 ) : Selectable {
-
     data object Google : MapOption(
         name = Res.string.settings_map_google,
         kind = MapKind.Google

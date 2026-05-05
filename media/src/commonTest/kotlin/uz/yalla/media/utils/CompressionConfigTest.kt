@@ -64,7 +64,7 @@ class CompressionConfigTest {
             listOf(
                 CompressionConfig.Default,
                 CompressionConfig.ProfilePhoto,
-                CompressionConfig.ChatImage,
+                CompressionConfig.ChatImage
             )
         presets.forEach { config ->
             assertTrue(config.quality in 1..100, "quality ${config.quality} out of 1..100")
@@ -79,7 +79,7 @@ class CompressionConfigTest {
             listOf(
                 CompressionConfig.Default,
                 CompressionConfig.ProfilePhoto,
-                CompressionConfig.ChatImage,
+                CompressionConfig.ChatImage
             )
         presets.forEach { config ->
             assertTrue(config.maxFileSize > 0, "maxFileSize should be positive")
@@ -92,7 +92,7 @@ class CompressionConfigTest {
             listOf(
                 CompressionConfig.Default,
                 CompressionConfig.ProfilePhoto,
-                CompressionConfig.ChatImage,
+                CompressionConfig.ChatImage
             )
         presets.forEach { config ->
             assertTrue(config.maxDimension > 0, "maxDimension should be positive")
@@ -107,7 +107,7 @@ class CompressionConfigTest {
             CompressionConfig(
                 maxFileSize = 256 * 1024,
                 maxDimension = 256,
-                quality = 90,
+                quality = 90
             )
         assertEquals(256 * 1024, custom.maxFileSize)
         assertEquals(256, custom.maxDimension)

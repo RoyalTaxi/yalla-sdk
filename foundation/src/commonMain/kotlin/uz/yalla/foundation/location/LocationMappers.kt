@@ -49,8 +49,7 @@ fun Order.Taxi.Route.toLocation() =
  * by `Order.Taxi.Route.index`. Convenience for map/navigation features that
  * need an ordered waypoint list without reaching into the raw `Route` shape.
  */
-fun Order.sortedRouteLocations(): List<Location> {
-    return taxi.routes
+fun Order.sortedRouteLocations(): List<Location> =
+    taxi.routes
         .sortedBy { route -> route.index }
         .map { route -> route.toLocation() }
-}

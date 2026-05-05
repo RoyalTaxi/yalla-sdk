@@ -9,18 +9,19 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class EmptyStateColorsTest {
-
-    private val colors = EmptyStateColors(
-        title = Color.Black,
-        description = Color.Gray,
-    )
+    private val colors =
+        EmptyStateColors(
+            title = Color.Black,
+            description = Color.Gray
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = EmptyStateColors(
-            title = Color.Black,
-            description = Color.Gray,
-        )
+        val other =
+            EmptyStateColors(
+                title = Color.Black,
+                description = Color.Gray
+            )
         assertEquals(colors, other)
     }
 
@@ -50,7 +51,6 @@ class EmptyStateColorsTest {
 }
 
 class EmptyStateDimensTest {
-
     @Test
     fun defaults_areNonNull() {
         val dimens = EmptyStateDefaults.dimens()
@@ -86,7 +86,7 @@ class EmptyStateDimensTest {
         val dimens = EmptyStateDefaults.dimens()
         assertEquals(
             PaddingValues(horizontal = 32.dp, vertical = 48.dp),
-            dimens.contentPadding,
+            dimens.contentPadding
         )
     }
 
@@ -113,11 +113,12 @@ class EmptyStateDimensTest {
 
     @Test
     fun custom_allSpacings_override() {
-        val dimens = EmptyStateDefaults.dimens(
-            imageTitleSpacing = 16.dp,
-            titleDescriptionSpacing = 4.dp,
-            descriptionActionSpacing = 16.dp,
-        )
+        val dimens =
+            EmptyStateDefaults.dimens(
+                imageTitleSpacing = 16.dp,
+                titleDescriptionSpacing = 4.dp,
+                descriptionActionSpacing = 16.dp
+            )
         assertEquals(16.dp, dimens.imageTitleSpacing)
         assertEquals(4.dp, dimens.titleDescriptionSpacing)
         assertEquals(16.dp, dimens.descriptionActionSpacing)

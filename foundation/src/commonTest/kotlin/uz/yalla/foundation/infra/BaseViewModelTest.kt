@@ -27,7 +27,6 @@ private class TestViewModel : BaseViewModel()
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class BaseViewModelTest {
-
     @BeforeTest
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
@@ -45,28 +44,30 @@ class BaseViewModelTest {
     }
 
     @Test
-    fun shouldShowLoadingDuringLaunchWithLoading() = runTest {
-        val vm = TestViewModel()
+    fun shouldShowLoadingDuringLaunchWithLoading() =
+        runTest {
+            val vm = TestViewModel()
 
-        vm.loading.test {
-            assertFalse(awaitItem()) // initial
+            vm.loading.test {
+                assertFalse(awaitItem()) // initial
 
-            val job = async {
-                with(vm) {
-                    vm.safeScope.launchWithLoading(
-                        showAfter = 1.milliseconds,
-                        minDisplayTime = 1.milliseconds,
-                    ) {
-                        delay(100.milliseconds)
+                val job =
+                    async {
+                        with(vm) {
+                            vm.safeScope.launchWithLoading(
+                                showAfter = 1.milliseconds,
+                                minDisplayTime = 1.milliseconds
+                            ) {
+                                delay(100.milliseconds)
+                            }
+                        }
                     }
-                }
-            }
 
-            assertTrue(awaitItem()) // loading shown
-            assertFalse(awaitItem()) // loading hidden
-            job.await()
+                assertTrue(awaitItem()) // loading shown
+                assertFalse(awaitItem()) // loading hidden
+                job.await()
+            }
         }
-    }
 
     @Test
     fun shouldShowErrorDialogOnHandleException() {
@@ -100,33 +101,35 @@ class BaseViewModelTest {
     }
 
     @Test
-    fun shouldCatchExceptionInSafeScope() = runTest {
-        val vm = TestViewModel()
+    fun shouldCatchExceptionInSafeScope() =
+        runTest {
+            val vm = TestViewModel()
 
-        with(vm) {
-            vm.safeScope.launchWithLoading {
-                throw RuntimeException("unhandled")
+            with(vm) {
+                vm.safeScope.launchWithLoading {
+                    throw RuntimeException("unhandled")
+                }
             }
-        }
 
-        // Exception caught by handler, not propagated
-        assertTrue(vm.showErrorDialog.value)
-        assertNotNull(vm.currentErrorMessageId.value)
-    }
+            // Exception caught by handler, not propagated
+            assertTrue(vm.showErrorDialog.value)
+            assertNotNull(vm.currentErrorMessageId.value)
+        }
 
     @Test
-    fun shouldCatchExceptionInLaunchSafe() = runTest {
-        val vm = TestViewModel()
+    fun shouldCatchExceptionInLaunchSafe() =
+        runTest {
+            val vm = TestViewModel()
 
-        with(vm) {
-            vm.safeScope.launchSafe {
-                throw RuntimeException("unhandled")
+            with(vm) {
+                vm.safeScope.launchSafe {
+                    throw RuntimeException("unhandled")
+                }
             }
-        }
 
-        assertTrue(vm.showErrorDialog.value)
-        assertNotNull(vm.currentErrorMessageId.value)
-    }
+            assertTrue(vm.showErrorDialog.value)
+            assertNotNull(vm.currentErrorMessageId.value)
+        }
 
     @Test
     fun shouldMapDataErrorToCorrectMessage() {

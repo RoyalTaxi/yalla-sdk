@@ -39,7 +39,7 @@ data class SplashOverlayColors(
     val background: Brush,
     val indicator: Color,
     val indicatorTrack: Color,
-    val text: Color,
+    val text: Color
 )
 
 /**
@@ -57,7 +57,7 @@ data class SplashOverlayDimens(
     val contentSpacing: Dp,
     val bottomPadding: Dp,
     val indicatorStrokeWidth: Dp,
-    val indicatorGapSize: Dp,
+    val indicatorGapSize: Dp
 )
 
 /**
@@ -98,7 +98,7 @@ fun SplashOverlay(
     modifier: Modifier = Modifier,
     message: String = "",
     colors: SplashOverlayColors = SplashOverlayDefaults.colors(),
-    dimens: SplashOverlayDimens = SplashOverlayDefaults.dimens(),
+    dimens: SplashOverlayDimens = SplashOverlayDefaults.dimens()
 ) {
     Box(
         modifier =
@@ -132,14 +132,14 @@ fun SplashOverlay(
                 trackColor = colors.indicatorTrack,
                 strokeCap = StrokeCap.Round,
                 strokeWidth = dimens.indicatorStrokeWidth,
-                gapSize = dimens.indicatorGapSize,
+                gapSize = dimens.indicatorGapSize
             )
 
             Text(
                 text = message,
                 style = System.font.body.base.medium,
                 color = colors.text,
-                textAlign = TextAlign.Center,
+                textAlign = TextAlign.Center
             )
         }
     }
@@ -156,15 +156,16 @@ object SplashOverlayDefaults {
     fun colors(
         background: Brush = System.color.gradient.splash,
         indicator: Color = System.color.background.base,
-        indicatorTrack: Color = System.color.background.base
-            .copy(alpha = .5f),
-        text: Color = System.color.background.base,
+        indicatorTrack: Color =
+            System.color.background.base
+                .copy(alpha = .5f),
+        text: Color = System.color.background.base
     ): SplashOverlayColors =
         SplashOverlayColors(
             background = background,
             indicator = indicator,
             indicatorTrack = indicatorTrack,
-            text = text,
+            text = text
         )
 
     /** Creates dimension configuration for [SplashOverlay]. */
@@ -172,12 +173,12 @@ object SplashOverlayDefaults {
         contentSpacing: Dp = 24.dp,
         bottomPadding: Dp = 64.dp,
         indicatorStrokeWidth: Dp = 3.dp,
-        indicatorGapSize: Dp = 3.dp,
+        indicatorGapSize: Dp = 3.dp
     ): SplashOverlayDimens =
         SplashOverlayDimens(
             contentSpacing = contentSpacing,
             bottomPadding = bottomPadding,
             indicatorStrokeWidth = indicatorStrokeWidth,
-            indicatorGapSize = indicatorGapSize,
+            indicatorGapSize = indicatorGapSize
         )
 }

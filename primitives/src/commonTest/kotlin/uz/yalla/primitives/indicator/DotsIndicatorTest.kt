@@ -7,18 +7,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class DotsIndicatorColorsTest {
-
-    private val colors = DotsIndicatorColors(
-        selected = Color.Blue,
-        unselected = Color.LightGray,
-    )
+    private val colors =
+        DotsIndicatorColors(
+            selected = Color.Blue,
+            unselected = Color.LightGray
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = DotsIndicatorColors(
-            selected = Color.Blue,
-            unselected = Color.LightGray,
-        )
+        val other =
+            DotsIndicatorColors(
+                selected = Color.Blue,
+                unselected = Color.LightGray
+            )
         assertEquals(colors, other)
     }
 
@@ -37,7 +38,6 @@ class DotsIndicatorColorsTest {
 }
 
 class DotsIndicatorDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = DotsIndicatorDefaults.dimens()
@@ -49,12 +49,13 @@ class DotsIndicatorDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = DotsIndicatorDefaults.dimens(
-            dotSize = 8.dp,
-            selectedWidth = 32.dp,
-            dotSpacing = 6.dp,
-            animationDurationMillis = 300,
-        )
+        val dimens =
+            DotsIndicatorDefaults.dimens(
+                dotSize = 8.dp,
+                selectedWidth = 32.dp,
+                dotSpacing = 6.dp,
+                animationDurationMillis = 300
+            )
         assertEquals(8.dp, dimens.dotSize)
         assertEquals(32.dp, dimens.selectedWidth)
         assertEquals(6.dp, dimens.dotSpacing)

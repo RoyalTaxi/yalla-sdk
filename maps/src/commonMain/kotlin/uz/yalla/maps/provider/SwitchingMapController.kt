@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
-import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.settings.MapKind
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.model.CameraPosition
@@ -63,7 +63,7 @@ import uz.yalla.maps.util.hasSameValues
  */
 class SwitchingMapController(
     interfacePreferences: InterfacePreferences,
-    scope: CoroutineScope,
+    scope: CoroutineScope
 ) : MapController {
     private val _googleController = lazy { GoogleMapController() }
     private val _libreController = lazy { LibreMapController() }

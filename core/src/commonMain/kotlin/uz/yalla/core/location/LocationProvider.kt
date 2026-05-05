@@ -17,7 +17,6 @@ import uz.yalla.core.geo.GeoPoint
  * ```
  */
 interface LocationProvider {
-
     /**
      * Reactive stream of the device's current GPS position.
      *

@@ -9,7 +9,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class BannerCardColorsTest {
-
     private val colors = BannerCardColors(contentColor = Color.White)
 
     @Test
@@ -24,7 +23,6 @@ class BannerCardColorsTest {
 }
 
 class BannerCardDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = BannerCardDefaults.dimens()

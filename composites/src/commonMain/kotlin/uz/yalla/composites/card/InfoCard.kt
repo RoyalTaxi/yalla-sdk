@@ -22,7 +22,7 @@ import uz.yalla.design.theme.System
  */
 @Immutable
 data class InfoCardColors(
-    val container: Color,
+    val container: Color
 )
 
 /**
@@ -32,23 +32,21 @@ data class InfoCardColors(
 data class InfoCardDimens(
     val shape: Shape,
     val height: Dp,
-    val contentPadding: PaddingValues,
+    val contentPadding: PaddingValues
 )
 
 /**
  * Default configuration values for [InfoCard].
  */
 object InfoCardDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
     @Composable
-    fun colors(
-        container: Color = System.color.background.secondary,
-    ): InfoCardColors = InfoCardColors(
-        container = container,
-    )
+    fun colors(container: Color = System.color.background.secondary): InfoCardColors =
+        InfoCardColors(
+            container = container
+        )
 
     /**
      * Creates default dimensions.
@@ -56,17 +54,19 @@ object InfoCardDefaults {
     fun dimens(
         shape: Shape = RoundedCornerShape(20.dp),
         height: Dp = 120.dp,
-        contentPadding: PaddingValues = PaddingValues(
-            top = 10.dp,
-            end = 10.dp,
-            bottom = 8.dp,
-            start = 16.dp,
-        ),
-    ): InfoCardDimens = InfoCardDimens(
-        shape = shape,
-        height = height,
-        contentPadding = contentPadding,
-    )
+        contentPadding: PaddingValues =
+            PaddingValues(
+                top = 10.dp,
+                end = 10.dp,
+                bottom = 8.dp,
+                start = 16.dp
+            )
+    ): InfoCardDimens =
+        InfoCardDimens(
+            shape = shape,
+            height = height,
+            contentPadding = contentPadding
+        )
 }
 
 /**
@@ -109,24 +109,25 @@ fun InfoCard(
     dimens: InfoCardDimens = InfoCardDefaults.dimens(),
     trailingIcon: @Composable (() -> Unit)? = null,
     description: @Composable (() -> Unit)? = null,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ContentCard(
         modifier = modifier.height(dimens.height),
         onClick = onClick,
         colors = ContentCardDefaults.colors(container = colors.container),
-        dimens = ContentCardDefaults.dimens(
-            shape = dimens.shape,
-            contentPadding = dimens.contentPadding,
-        ),
+        dimens =
+            ContentCardDefaults.dimens(
+                shape = dimens.shape,
+                contentPadding = dimens.contentPadding
+            )
     ) {
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxHeight(),
+            modifier = Modifier.fillMaxHeight()
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth()
             ) {
                 content()
                 trailingIcon?.invoke()

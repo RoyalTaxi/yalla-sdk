@@ -45,7 +45,7 @@ internal fun NativeIconButton(
     backgroundShape: Shape,
     factory: (icon: String, onClick: () -> Unit, borderWidth: Double, borderColor: Long) -> UIViewController,
     alpha: Float = 1f,
-    useKey: Boolean = false,
+    useKey: Boolean = false
 ) {
     // BUG-1 fix: always capture the latest onClick so the native button
     // never fires a stale closure captured at factory-creation time.

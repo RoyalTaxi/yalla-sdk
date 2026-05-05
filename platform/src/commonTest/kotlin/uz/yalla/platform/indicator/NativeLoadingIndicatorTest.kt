@@ -19,7 +19,6 @@ import kotlin.test.assertTrue
  * This placeholder ensures the file exists in the test source set so the pair is tracked.
  */
 class NativeLoadingIndicatorTest {
-
     @Test
     fun compileVerify_nativeLoadingIndicatorSignatureExists() {
         // This test exists to confirm the expect declaration is accessible from commonTest.

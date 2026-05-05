@@ -9,18 +9,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ContentCardColorsTest {
-
-    private val colors = ContentCardColors(
-        container = Color.White,
-        disabledContainer = Color.LightGray,
-    )
+    private val colors =
+        ContentCardColors(
+            container = Color.White,
+            disabledContainer = Color.LightGray
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = ContentCardColors(
-            container = Color.White,
-            disabledContainer = Color.LightGray,
-        )
+        val other =
+            ContentCardColors(
+                container = Color.White,
+                disabledContainer = Color.LightGray
+            )
         assertEquals(colors, other)
     }
 
@@ -39,7 +40,6 @@ class ContentCardColorsTest {
 }
 
 class ContentCardDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = ContentCardDefaults.dimens()
@@ -49,10 +49,11 @@ class ContentCardDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = ContentCardDefaults.dimens(
-            shape = RoundedCornerShape(8.dp),
-            contentPadding = PaddingValues(24.dp),
-        )
+        val dimens =
+            ContentCardDefaults.dimens(
+                shape = RoundedCornerShape(8.dp),
+                contentPadding = PaddingValues(24.dp)
+            )
         assertEquals(RoundedCornerShape(8.dp), dimens.shape)
         assertEquals(PaddingValues(24.dp), dimens.contentPadding)
     }

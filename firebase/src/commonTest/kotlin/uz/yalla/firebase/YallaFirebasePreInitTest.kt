@@ -13,18 +13,18 @@ import kotlin.test.assertTrue
  * (there is no platform Firebase SDK available in commonTest, so [isInitialized] remains false).
  */
 class YallaFirebasePreInitTest {
-
     @Test
     fun analyticsBeforeInitShouldThrowWithClearMessage() {
         // Guard: only run when Firebase is not initialized (common test env has no SDK)
         if (YallaFirebase.isInitialized) return
 
-        val ex = assertFailsWith<IllegalStateException> {
-            YallaFirebase.analytics
-        }
+        val ex =
+            assertFailsWith<IllegalStateException> {
+                YallaFirebase.analytics
+            }
         assertTrue(
             ex.message?.contains("initialize()") == true,
-            "Expected message to mention initialize(), got: ${ex.message}",
+            "Expected message to mention initialize(), got: ${ex.message}"
         )
     }
 
@@ -32,12 +32,13 @@ class YallaFirebasePreInitTest {
     fun crashlyticsBeforeInitShouldThrowWithClearMessage() {
         if (YallaFirebase.isInitialized) return
 
-        val ex = assertFailsWith<IllegalStateException> {
-            YallaFirebase.crashlytics
-        }
+        val ex =
+            assertFailsWith<IllegalStateException> {
+                YallaFirebase.crashlytics
+            }
         assertTrue(
             ex.message?.contains("initialize()") == true,
-            "Expected message to mention initialize(), got: ${ex.message}",
+            "Expected message to mention initialize(), got: ${ex.message}"
         )
     }
 
@@ -45,12 +46,13 @@ class YallaFirebasePreInitTest {
     fun messagingBeforeInitShouldThrowWithClearMessage() {
         if (YallaFirebase.isInitialized) return
 
-        val ex = assertFailsWith<IllegalStateException> {
-            YallaFirebase.messaging
-        }
+        val ex =
+            assertFailsWith<IllegalStateException> {
+                YallaFirebase.messaging
+            }
         assertTrue(
             ex.message?.contains("initialize()") == true,
-            "Expected message to mention initialize(), got: ${ex.message}",
+            "Expected message to mention initialize(), got: ${ex.message}"
         )
     }
 

@@ -9,9 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -66,11 +64,11 @@ object HeaderableSheetDefaults {
     )
 
     fun dimens(
-        cornerRadius: Dp = 38.dp,
+        cornerRadius: Dp = 28.dp,
         shape: Shape = RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius),
-        dragHandleWidth: Dp = 36.dp,
-        dragHandleHeight: Dp = 5.dp,
-        dragHandleContainerHeight: Dp = 16.dp
+        dragHandleWidth: Dp = 32.dp,
+        dragHandleHeight: Dp = 4.dp,
+        dragHandleContainerHeight: Dp = 32.dp
     ) = HeaderableSheetDimens(
         shape = shape,
         cornerRadius = cornerRadius,
@@ -140,8 +138,6 @@ fun HeaderableSheet(
             HeaderableSheetLayout(
                 state = state,
                 statusBarHeightPx = statusBarHeightPx,
-                colors = colors,
-                dimens = dimens,
                 header = header,
                 body = body,
                 footer = footer
@@ -154,22 +150,13 @@ fun HeaderableSheet(
 private fun HeaderableSheetLayout(
     state: HeaderableSheetState,
     statusBarHeightPx: Int,
-    colors: HeaderableSheetColors,
-    dimens: HeaderableSheetDimens,
     header: @Composable () -> Unit,
     body: @Composable () -> Unit,
     footer: @Composable () -> Unit
 ) {
     Layout(
         content = {
-            Box(Modifier.fillMaxWidth()) {
-                header()
-                DragHandle(
-                    colors = colors,
-                    dimens = dimens,
-                    modifier = Modifier.align(Alignment.TopCenter)
-                )
-            }
+            Box(Modifier.fillMaxWidth()) { header() }
             Box(Modifier.fillMaxWidth().alpha(state.bodyAlpha)) { body() }
             Box(Modifier.fillMaxWidth()) { footer() }
         }
@@ -195,24 +182,5 @@ private fun HeaderableSheetLayout(
             if (visibleBodyHeight > 0) bodyPlaceable.placeRelative(0, headerPlaceable.height)
             footerPlaceable.placeRelative(0, headerPlaceable.height + visibleBodyHeight)
         }
-    }
-}
-
-@Composable
-private fun DragHandle(
-    colors: HeaderableSheetColors,
-    dimens: HeaderableSheetDimens,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier.size(width = dimens.dragHandleWidth, height = dimens.dragHandleContainerHeight)
-    ) {
-        Box(
-            modifier =
-                Modifier
-                    .background(shape = CircleShape, color = colors.dragHandle)
-                    .size(width = dimens.dragHandleWidth, height = dimens.dragHandleHeight)
-        )
     }
 }

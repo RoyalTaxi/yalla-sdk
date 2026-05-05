@@ -12,6 +12,6 @@ package uz.yalla.maps.compose
     AnnotationTarget.FUNCTION,
     AnnotationTarget.PROPERTY_GETTER,
     AnnotationTarget.TYPE,
-    AnnotationTarget.TYPE_PARAMETER,
+    AnnotationTarget.TYPE_PARAMETER
 )
 expect annotation class GoogleMapComposable()

@@ -19,7 +19,7 @@ object MaskFormatter {
     fun format(
         text: String,
         mask: String,
-        maskChar: Char = '_',
+        maskChar: Char = '_'
     ): String {
         if (text.isEmpty()) return ""
 

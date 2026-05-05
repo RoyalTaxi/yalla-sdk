@@ -53,7 +53,9 @@ sealed class SelectionMode {
      *
      * @property maxSelection Maximum number of selectable images. Use [INFINITY] (0) for no limit.
      */
-    data class Multiple(val maxSelection: Int = INFINITY) : SelectionMode()
+    data class Multiple(
+        val maxSelection: Int = INFINITY
+    ) : SelectionMode()
 
     companion object {
         /** Sentinel value meaning no upper bound on selection count. @since 0.0.1 */

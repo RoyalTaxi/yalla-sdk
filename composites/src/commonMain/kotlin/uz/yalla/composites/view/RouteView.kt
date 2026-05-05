@@ -18,7 +18,7 @@ import uz.yalla.design.theme.System
  */
 data class RouteLocation(
     val name: String,
-    val isOrigin: Boolean = false,
+    val isOrigin: Boolean = false
 )
 
 /**
@@ -26,22 +26,20 @@ data class RouteLocation(
  */
 @Immutable
 data class RouteViewDimens(
-    val itemSpacing: Dp,
+    val itemSpacing: Dp
 )
 
 /**
  * Default configuration values for [RouteView].
  */
 object RouteViewDefaults {
-
     /**
      * Creates default dimensions.
      */
-    fun dimens(
-        itemSpacing: Dp = 8.dp,
-    ): RouteViewDimens = RouteViewDimens(
-        itemSpacing = itemSpacing,
-    )
+    fun dimens(itemSpacing: Dp = 8.dp): RouteViewDimens =
+        RouteViewDimens(
+            itemSpacing = itemSpacing
+        )
 }
 
 /**
@@ -77,11 +75,11 @@ fun RouteView(
     originIcon: Painter,
     destinationIcon: Painter,
     modifier: Modifier = Modifier,
-    dimens: RouteViewDimens = RouteViewDefaults.dimens(),
+    dimens: RouteViewDimens = RouteViewDefaults.dimens()
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(dimens.itemSpacing),
+        verticalArrangement = Arrangement.spacedBy(dimens.itemSpacing)
     ) {
         locations.forEachIndexed { index, location ->
             val isOrigin = index == 0 || location.isOrigin
@@ -90,11 +88,12 @@ fun RouteView(
                 icon = if (isOrigin) originIcon else destinationIcon,
                 label = location.name,
                 labelStyle = if (isOrigin) System.font.body.small.bold else System.font.body.caption,
-                colors = if (isOrigin) {
-                    LocationPointDefaults.colors()
-                } else {
-                    LocationPointDefaults.destinationColors()
-                },
+                colors =
+                    if (isOrigin) {
+                        LocationPointDefaults.colors()
+                    } else {
+                        LocationPointDefaults.destinationColors()
+                    }
             )
         }
     }

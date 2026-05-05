@@ -17,7 +17,7 @@ data class CameraPosition(
     val target: LatLng,
     val zoom: Float = 10f,
     val bearing: Float = 0f,
-    val tilt: Float = 0f,
+    val tilt: Float = 0f
 ) {
     companion object {
         /**

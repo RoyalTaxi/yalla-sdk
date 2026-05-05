@@ -49,8 +49,8 @@ expect val normalFont: FontResource
  * @return Fully configured [FontScheme] instance.
  */
 @Composable
-fun rememberFontScheme(): FontScheme {
-    return FontScheme(
+fun rememberFontScheme(): FontScheme =
+    FontScheme(
         title =
             FontScheme.Title(
                 xLarge =
@@ -154,4 +154,3 @@ fun rememberFontScheme(): FontScheme {
                     )
             )
     )
-}

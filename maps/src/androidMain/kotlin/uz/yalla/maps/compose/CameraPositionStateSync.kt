@@ -34,7 +34,7 @@ import com.google.maps.android.compose.CameraPositionState as GoogleCameraPositi
 @Composable
 internal fun rememberSyncedGoogleCameraPositionState(
     cameraPositionState: CameraPositionState,
-    contentPadding: PaddingValues,
+    contentPadding: PaddingValues
 ): GoogleCameraPositionState {
     val googleCameraPositionState =
         remember {

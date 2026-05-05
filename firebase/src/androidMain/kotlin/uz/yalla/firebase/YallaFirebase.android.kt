@@ -22,17 +22,18 @@ import com.google.firebase.FirebaseApp
  * @see YallaFirebase.markInitialized
  */
 internal actual fun initializePlatform() {
-    val firebaseApp = try {
-        FirebaseApp.getInstance()
-    } catch (e: IllegalStateException) {
-        throw IllegalStateException(
-            "YallaFirebase: Firebase is not initialized on Android. " +
-                "Ensure `google-services.json` is present in your app module " +
-                "and the `com.google.gms.google-services` Gradle plugin is applied. " +
-                "Root cause: ${e.message}",
-            e,
-        )
-    }
+    val firebaseApp =
+        try {
+            FirebaseApp.getInstance()
+        } catch (e: IllegalStateException) {
+            throw IllegalStateException(
+                "YallaFirebase: Firebase is not initialized on Android. " +
+                    "Ensure `google-services.json` is present in your app module " +
+                    "and the `com.google.gms.google-services` Gradle plugin is applied. " +
+                    "Root cause: ${e.message}",
+                e
+            )
+        }
     requireNotNull(firebaseApp) {
         "YallaFirebase: FirebaseApp.getInstance() returned null. " +
             "This typically indicates a corrupted Gradle configuration."

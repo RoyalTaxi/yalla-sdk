@@ -33,7 +33,6 @@ import kotlin.test.assertTrue
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class DeviceConnectivityStateTest {
-
     private class FakeConnectivity : Connectivity {
         val statusFlow = MutableSharedFlow<Connectivity.Status>(replay = 1)
         val monitoringFlow = MutableStateFlow(false)

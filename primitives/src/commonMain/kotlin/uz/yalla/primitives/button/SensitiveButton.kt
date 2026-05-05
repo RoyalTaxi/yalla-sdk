@@ -49,7 +49,7 @@ import kotlin.math.ceil
 @Immutable
 data class SensitiveButtonColors(
     val progressColor: Color,
-    val textColor: Color,
+    val textColor: Color
 )
 
 /**
@@ -60,7 +60,7 @@ data class SensitiveButtonColors(
 @Immutable
 data class SensitiveButtonDimens(
     val height: Dp,
-    val shape: Shape,
+    val shape: Shape
 )
 
 /**
@@ -112,9 +112,8 @@ fun SensitiveButton(
     countdownSeconds: Int = 3,
     textStyle: TextStyle = System.font.body.large.bold,
     colors: SensitiveButtonColors = SensitiveButtonDefaults.colors(),
-    dimens: SensitiveButtonDimens = SensitiveButtonDefaults.dimens(),
+    dimens: SensitiveButtonDimens = SensitiveButtonDefaults.dimens()
 ) {
-
     val lifecycleOwner = LocalLifecycleOwner.current
     val progress = remember { Animatable(0f) }
     val countdown by remember {
@@ -134,14 +133,14 @@ fun SensitiveButton(
         enabled = isEnabled,
         shape = dimens.shape,
         color = Color.Transparent,
-        modifier = modifier.height(dimens.height),
+        modifier = modifier.height(dimens.height)
     ) {
         Box(contentAlignment = Alignment.Center) {
             Image(
                 painter = painterResource(Res.drawable.img_sensitive_background),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
             )
 
             Box(
@@ -149,16 +148,17 @@ fun SensitiveButton(
                     .fillMaxWidth(progress.value)
                     .height(dimens.height)
                     .align(Alignment.CenterStart)
-                    .background(colors.progressColor, dimens.shape),
+                    .background(colors.progressColor, dimens.shape)
             )
 
             Text(
-                text = when {
-                    isEnabled -> confirmText
-                    else -> countdownText.formatArgs(countdown)
-                },
+                text =
+                    when {
+                        isEnabled -> confirmText
+                        else -> countdownText.formatArgs(countdown)
+                    },
                 color = colors.textColor,
-                style = textStyle,
+                style = textStyle
             )
         }
     }
@@ -178,20 +178,22 @@ object SensitiveButtonDefaults {
     @Composable
     fun colors(
         progressColor: Color = System.color.button.active,
-        textColor: Color = System.color.text.white,
-    ): SensitiveButtonColors = SensitiveButtonColors(
-        progressColor = progressColor,
-        textColor = textColor,
-    )
+        textColor: Color = System.color.text.white
+    ): SensitiveButtonColors =
+        SensitiveButtonColors(
+            progressColor = progressColor,
+            textColor = textColor
+        )
 
     /** Creates [SensitiveButtonDimens] with standard values. */
     fun dimens(
         height: Dp = Height,
-        shape: Shape = Shape,
-    ): SensitiveButtonDimens = SensitiveButtonDimens(
-        height = height,
-        shape = shape,
-    )
+        shape: Shape = Shape
+    ): SensitiveButtonDimens =
+        SensitiveButtonDimens(
+            height = height,
+            shape = shape
+        )
 }
 
 @Preview
@@ -199,14 +201,15 @@ object SensitiveButtonDefaults {
 private fun SensitiveButtonPreview() {
     YallaTheme {
         Box(
-            modifier = Modifier
-                .background(Color.White)
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .background(Color.White)
+                    .padding(16.dp)
         ) {
             SensitiveButton(
                 onClick = {},
                 confirmText = "Yes, cancel",
-                countdownText = "Hold to cancel (%s)",
+                countdownText = "Hold to cancel (%s)"
             )
         }
     }

@@ -44,7 +44,7 @@ import kotlin.math.hypot
 data class StripedProgressBarColors(
     val track: Color,
     val indicator: Brush,
-    val stripe: Color,
+    val stripe: Color
 )
 
 /**
@@ -64,7 +64,7 @@ data class StripedProgressBarDimens(
     val stripeWidth: Dp,
     val stripeGap: Dp,
     val stripeAngle: Float,
-    val animationDurationMs: Int,
+    val animationDurationMs: Int
 )
 
 /**
@@ -102,7 +102,7 @@ fun StripedProgressBar(
     progress: Float,
     modifier: Modifier = Modifier,
     colors: StripedProgressBarColors = StripedProgressBarDefaults.colors(),
-    dimens: StripedProgressBarDimens = StripedProgressBarDefaults.dimens(),
+    dimens: StripedProgressBarDimens = StripedProgressBarDefaults.dimens()
 ) {
     val clamped = progress.coerceIn(0f, 1f)
     val density = LocalDensity.current
@@ -180,12 +180,12 @@ object StripedProgressBarDefaults {
     fun colors(
         track: Color = System.color.background.secondary,
         indicator: Brush = System.color.gradient.sunsetNight,
-        stripe: Color = Color.White.copy(alpha = 0.2f),
+        stripe: Color = Color.White.copy(alpha = 0.2f)
     ): StripedProgressBarColors =
         StripedProgressBarColors(
             track = track,
             indicator = indicator,
-            stripe = stripe,
+            stripe = stripe
         )
 
     /** Creates dimension configuration for [StripedProgressBar]. */
@@ -195,7 +195,7 @@ object StripedProgressBarDefaults {
         stripeWidth: Dp = 7.dp,
         stripeGap: Dp = 7.dp,
         stripeAngle: Float = 30f,
-        animationDurationMs: Int = 250,
+        animationDurationMs: Int = 250
     ): StripedProgressBarDimens =
         StripedProgressBarDimens(
             shape = shape,
@@ -203,6 +203,6 @@ object StripedProgressBarDefaults {
             stripeWidth = stripeWidth,
             stripeGap = stripeGap,
             stripeAngle = stripeAngle,
-            animationDurationMs = animationDurationMs,
+            animationDurationMs = animationDurationMs
         )
 }

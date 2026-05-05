@@ -21,7 +21,6 @@ import kotlin.test.assertTrue
  * This placeholder ensures the file exists in the test source set so the pair is tracked.
  */
 class NativeNavHostTest {
-
     @Test
     fun compileVerify_nativeNavHostSignatureExists() {
         // Confirms the expect declaration is visible from commonTest and the module compiles.

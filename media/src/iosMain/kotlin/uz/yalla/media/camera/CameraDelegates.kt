@@ -29,8 +29,9 @@ import platform.posix.memcpy
  * @param onFrame Callback receiving the raw pixel bytes for each video frame, or `null`
  *                to disable frame delivery.
  */
-internal class CameraFrameAnalyzerDelegate(private val onFrame: ((frame: ByteArray) -> Unit)?) :
-    NSObject(),
+internal class CameraFrameAnalyzerDelegate(
+    private val onFrame: ((frame: ByteArray) -> Unit)?
+) : NSObject(),
     AVCaptureVideoDataOutputSampleBufferDelegateProtocol {
     @OptIn(ExperimentalForeignApi::class)
     override fun captureOutput(

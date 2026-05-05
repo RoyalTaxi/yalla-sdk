@@ -39,31 +39,33 @@ actual fun getAppSignature(): String? = null // Requires context, see below
  *
  * @return The 11-character Base64 hash string, or `null` if computation fails.
  */
-fun getAppSignature(context: Context): String? {
-    return runCatching {
+fun getAppSignature(context: Context): String? =
+    runCatching {
         val packageName = context.packageName
-        val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            context.packageManager
-                .getPackageInfo(
-                    packageName,
-                    PackageManager.GET_SIGNING_CERTIFICATES
-                ).signingInfo
-                ?.apkContentsSigners
-        } else {
-            // PackageManager.GET_SIGNATURES is deprecated in API 28+; kept for the pre-P branch above.
-            @Suppress("DEPRECATION")
-            context.packageManager
-                .getPackageInfo(
-                    packageName,
-                    PackageManager.GET_SIGNATURES
-                ).signatures
-        }
+        val signatures =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                context.packageManager
+                    .getPackageInfo(
+                        packageName,
+                        PackageManager.GET_SIGNING_CERTIFICATES
+                    ).signingInfo
+                    ?.apkContentsSigners
+            } else {
+                // PackageManager.GET_SIGNATURES is deprecated in API 28+; kept for the pre-P branch above.
+                @Suppress("DEPRECATION")
+                context.packageManager
+                    .getPackageInfo(
+                        packageName,
+                        PackageManager.GET_SIGNATURES
+                    ).signatures
+            }
 
         signatures?.firstNotNullOfOrNull { signature ->
-            val hash = MessageDigest.getInstance(HASH_TYPE).run {
-                update("$packageName ${signature.toCharsString()}".toByteArray(StandardCharsets.UTF_8))
-                digest()
-            }
+            val hash =
+                MessageDigest.getInstance(HASH_TYPE).run {
+                    update("$packageName ${signature.toCharsString()}".toByteArray(StandardCharsets.UTF_8))
+                    digest()
+                }
             val truncatedHash = Arrays.copyOfRange(hash, 0, NUM_HASHED_BYTES)
             Base64
                 .encodeToString(truncatedHash, Base64.NO_PADDING or Base64.NO_WRAP)
@@ -71,4 +73,3 @@ fun getAppSignature(context: Context): String? {
                 ?.substring(0, NUM_BASE64_CHAR)
         }
     }.getOrNull()
-}

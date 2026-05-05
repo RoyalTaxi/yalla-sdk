@@ -21,6 +21,5 @@ data class LatLng(
      *
      * @return `true` when both latitude and longitude are within bounds.
      */
-    fun isValid(): Boolean =
-        latitude in -90.0..90.0 && longitude in -180.0..180.0
+    fun isValid(): Boolean = latitude in -90.0..90.0 && longitude in -180.0..180.0
 }

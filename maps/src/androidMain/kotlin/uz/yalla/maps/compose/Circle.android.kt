@@ -23,13 +23,13 @@ actual fun Circle(
     radius: Double,
     fillColor: Color,
     strokeColor: Color,
-    strokeWidth: Float,
+    strokeWidth: Float
 ) {
     AndroidCircle(
         center = center.toGoogleLatLng(),
         radius = radius,
         fillColor = fillColor,
         strokeColor = strokeColor,
-        strokeWidth = strokeWidth,
+        strokeWidth = strokeWidth
     )
 }

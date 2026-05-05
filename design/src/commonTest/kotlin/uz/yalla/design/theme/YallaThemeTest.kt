@@ -13,92 +13,99 @@ import kotlin.test.assertNotNull
 
 @OptIn(ExperimentalTestApi::class)
 class YallaThemeTest {
+    @Test
+    fun shouldProvideColorSchemeViaSystem() =
+        runComposeUiTest {
+            var capturedScheme: ColorScheme? = null
+            setContent {
+                YallaTheme(isDark = false) {
+                    capturedScheme = System.color
+                }
+            }
+            assertNotNull(capturedScheme)
+        }
 
     @Test
-    fun shouldProvideColorSchemeViaSystem() = runComposeUiTest {
-        var capturedScheme: ColorScheme? = null
-        setContent {
-            YallaTheme(isDark = false) {
-                capturedScheme = System.color
+    fun shouldProvideFontSchemeViaSystem() =
+        runComposeUiTest {
+            var capturedFont: FontScheme? = null
+            setContent {
+                YallaTheme(isDark = false) {
+                    capturedFont = System.font
+                }
             }
+            assertNotNull(capturedFont)
         }
-        assertNotNull(capturedScheme)
-    }
 
     @Test
-    fun shouldProvideFontSchemeViaSystem() = runComposeUiTest {
-        var capturedFont: FontScheme? = null
-        setContent {
-            YallaTheme(isDark = false) {
-                capturedFont = System.font
+    fun shouldUseLightSchemeWhenNotDark() =
+        runComposeUiTest {
+            var capturedTextBase: Color? = null
+            setContent {
+                YallaTheme(isDark = false) {
+                    capturedTextBase = System.color.text.base
+                }
             }
+            assertEquals(LightTextBase, capturedTextBase)
         }
-        assertNotNull(capturedFont)
-    }
 
     @Test
-    fun shouldUseLightSchemeWhenNotDark() = runComposeUiTest {
-        var capturedTextBase: Color? = null
-        setContent {
-            YallaTheme(isDark = false) {
-                capturedTextBase = System.color.text.base
+    fun shouldUseDarkSchemeWhenDark() =
+        runComposeUiTest {
+            var capturedTextBase: Color? = null
+            setContent {
+                YallaTheme(isDark = true) {
+                    capturedTextBase = System.color.text.base
+                }
             }
+            assertEquals(DarkTextBase, capturedTextBase)
         }
-        assertEquals(LightTextBase, capturedTextBase)
-    }
 
     @Test
-    fun shouldUseDarkSchemeWhenDark() = runComposeUiTest {
-        var capturedTextBase: Color? = null
-        setContent {
-            YallaTheme(isDark = true) {
-                capturedTextBase = System.color.text.base
+    fun shouldProvideIsDarkFlag() =
+        runComposeUiTest {
+            var capturedIsDark: Boolean? = null
+            setContent {
+                YallaTheme(isDark = true) {
+                    capturedIsDark = System.isDark
+                }
             }
+            assertEquals(true, capturedIsDark)
         }
-        assertEquals(DarkTextBase, capturedTextBase)
-    }
 
     @Test
-    fun shouldProvideIsDarkFlag() = runComposeUiTest {
-        var capturedIsDark: Boolean? = null
-        setContent {
-            YallaTheme(isDark = true) {
-                capturedIsDark = System.isDark
+    fun shouldProvideSpaceSchemeViaSystem() =
+        runComposeUiTest {
+            var captured: uz.yalla.design.space.SpaceScheme? = null
+            setContent {
+                YallaTheme(isDark = false) {
+                    captured = System.space
+                }
             }
+            assertNotNull(captured)
         }
-        assertEquals(true, capturedIsDark)
-    }
 
     @Test
-    fun shouldProvideSpaceSchemeViaSystem() = runComposeUiTest {
-        var captured: uz.yalla.design.space.SpaceScheme? = null
-        setContent {
-            YallaTheme(isDark = false) {
-                captured = System.space
+    fun shouldProvideRadiusSchemeViaSystem() =
+        runComposeUiTest {
+            var captured: uz.yalla.design.radius.RadiusScheme? = null
+            setContent {
+                YallaTheme(isDark = false) {
+                    captured = System.radius
+                }
             }
+            assertNotNull(captured)
         }
-        assertNotNull(captured)
-    }
 
     @Test
-    fun shouldProvideRadiusSchemeViaSystem() = runComposeUiTest {
-        var captured: uz.yalla.design.radius.RadiusScheme? = null
-        setContent {
-            YallaTheme(isDark = false) {
-                captured = System.radius
+    fun shouldProvideMotionSchemeViaSystem() =
+        runComposeUiTest {
+            var captured: uz.yalla.design.motion.MotionScheme? = null
+            setContent {
+                YallaTheme(isDark = false) {
+                    captured = System.motion
+                }
             }
+            assertNotNull(captured)
         }
-        assertNotNull(captured)
-    }
-
-    @Test
-    fun shouldProvideMotionSchemeViaSystem() = runComposeUiTest {
-        var captured: uz.yalla.design.motion.MotionScheme? = null
-        setContent {
-            YallaTheme(isDark = false) {
-                captured = System.motion
-            }
-        }
-        assertNotNull(captured)
-    }
 }

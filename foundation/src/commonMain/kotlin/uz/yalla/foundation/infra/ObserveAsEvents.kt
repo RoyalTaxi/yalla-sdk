@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.Flow
 fun <T> ObserveAsEvents(
     flow: Flow<T>,
     key: Any? = Unit,
-    onEvent: suspend (T) -> Unit,
+    onEvent: suspend (T) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -64,7 +64,7 @@ fun <T> ObserveAsEvents(
     flow: Flow<T>,
     minState: Lifecycle.State,
     key: Any? = Unit,
-    onEvent: suspend (T) -> Unit,
+    onEvent: suspend (T) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 

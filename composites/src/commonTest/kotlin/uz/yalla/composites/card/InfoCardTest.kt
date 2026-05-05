@@ -9,7 +9,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class InfoCardColorsTest {
-
     private val colors = InfoCardColors(container = Color.White)
 
     @Test
@@ -24,7 +23,6 @@ class InfoCardColorsTest {
 }
 
 class InfoCardDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = InfoCardDefaults.dimens()
@@ -32,7 +30,7 @@ class InfoCardDimensTest {
         assertEquals(120.dp, dimens.height)
         assertEquals(
             PaddingValues(top = 10.dp, end = 10.dp, bottom = 8.dp, start = 16.dp),
-            dimens.contentPadding,
+            dimens.contentPadding
         )
     }
 

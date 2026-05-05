@@ -33,7 +33,7 @@ import uz.yalla.design.theme.YallaTheme
 @Immutable
 data class DotsIndicatorColors(
     val selected: Color,
-    val unselected: Color,
+    val unselected: Color
 )
 
 /**
@@ -50,7 +50,7 @@ data class DotsIndicatorDimens(
     val dotSize: Dp,
     val selectedWidth: Dp,
     val dotSpacing: Dp,
-    val animationDurationMillis: Int,
+    val animationDurationMillis: Int
 )
 
 /**
@@ -82,11 +82,11 @@ fun DotsIndicator(
     currentPage: Int,
     modifier: Modifier = Modifier,
     colors: DotsIndicatorColors = DotsIndicatorDefaults.colors(),
-    dimens: DotsIndicatorDimens = DotsIndicatorDefaults.dimens(),
+    dimens: DotsIndicatorDimens = DotsIndicatorDefaults.dimens()
 ) {
     Row(
         modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(dimens.dotSpacing),
+        horizontalArrangement = Arrangement.spacedBy(dimens.dotSpacing)
     ) {
         repeat(pageCount) { index ->
             val isSelected = index == currentPage
@@ -94,7 +94,7 @@ fun DotsIndicator(
             val width by animateDpAsState(
                 targetValue = if (isSelected) dimens.selectedWidth else dimens.dotSize,
                 animationSpec = tween(durationMillis = dimens.animationDurationMillis),
-                label = "dotWidth",
+                label = "dotWidth"
             )
 
             Box(
@@ -102,7 +102,7 @@ fun DotsIndicator(
                     Modifier
                         .size(width = width, height = dimens.dotSize)
                         .clip(CircleShape)
-                        .background(if (isSelected) colors.selected else colors.unselected),
+                        .background(if (isSelected) colors.selected else colors.unselected)
             )
         }
     }
@@ -118,10 +118,10 @@ object DotsIndicatorDefaults {
     @Composable
     fun colors(
         selected: Color = System.color.background.brand,
-        unselected: Color = System.color.background.tertiary,
+        unselected: Color = System.color.background.tertiary
     ) = DotsIndicatorColors(
         selected = selected,
-        unselected = unselected,
+        unselected = unselected
     )
 
     /** Creates dimension configuration for [DotsIndicator]. */
@@ -129,12 +129,12 @@ object DotsIndicatorDefaults {
         dotSize: Dp = 10.dp,
         selectedWidth: Dp = 24.dp,
         dotSpacing: Dp = 4.dp,
-        animationDurationMillis: Int = 200,
+        animationDurationMillis: Int = 200
     ) = DotsIndicatorDimens(
         dotSize = dotSize,
         selectedWidth = selectedWidth,
         dotSpacing = dotSpacing,
-        animationDurationMillis = animationDurationMillis,
+        animationDurationMillis = animationDurationMillis
     )
 }
 
@@ -147,11 +147,11 @@ private fun DotsIndicatorPreview() {
                 Modifier
                     .background(Color.White)
                     .padding(16.dp),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             DotsIndicator(
                 pageCount = 5,
-                currentPage = 2,
+                currentPage = 2
             )
         }
     }

@@ -30,7 +30,7 @@ enum class CameraMoveStartedReason {
     API_ANIMATION,
 
     /** Movement was triggered by a developer animation. */
-    DEVELOPER_ANIMATION,
+    DEVELOPER_ANIMATION
 }
 
 /**
@@ -49,7 +49,7 @@ internal sealed class CameraAnimationRequest {
      */
     data class ToPosition(
         val position: CameraPosition,
-        override val durationMs: Int,
+        override val durationMs: Int
     ) : CameraAnimationRequest()
 
     /**
@@ -58,7 +58,7 @@ internal sealed class CameraAnimationRequest {
     data class ToBounds(
         val bounds: LatLngBounds,
         val padding: Int,
-        override val durationMs: Int,
+        override val durationMs: Int
     ) : CameraAnimationRequest()
 }
 

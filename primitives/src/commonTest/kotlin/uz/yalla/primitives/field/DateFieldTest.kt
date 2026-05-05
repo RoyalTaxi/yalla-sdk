@@ -9,22 +9,23 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class DateFieldColorsTest {
-
-    private val colors = DateFieldColors(
-        containerColor = Color.Transparent,
-        textColor = Color.Black,
-        placeholderColor = Color.Gray,
-        iconColor = Color.DarkGray,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = DateFieldColors(
+    private val colors =
+        DateFieldColors(
             containerColor = Color.Transparent,
             textColor = Color.Black,
             placeholderColor = Color.Gray,
-            iconColor = Color.DarkGray,
+            iconColor = Color.DarkGray
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            DateFieldColors(
+                containerColor = Color.Transparent,
+                textColor = Color.Black,
+                placeholderColor = Color.Gray,
+                iconColor = Color.DarkGray
+            )
         assertEquals(colors, other)
     }
 
@@ -50,7 +51,6 @@ class DateFieldColorsTest {
 }
 
 class DateFieldDimensTest {
-
     @Test
     fun defaults_shape_isRoundedCorner8dp() {
         val dimens = DateFieldDefaults.dimens()
@@ -83,10 +83,11 @@ class DateFieldDimensTest {
     fun allCustomValues_overrideAllDefaults() {
         val customShape = RoundedCornerShape(4.dp)
         val customPadding = PaddingValues(8.dp)
-        val dimens = DateFieldDefaults.dimens(
-            shape = customShape,
-            contentPadding = customPadding,
-        )
+        val dimens =
+            DateFieldDefaults.dimens(
+                shape = customShape,
+                contentPadding = customPadding
+            )
         assertEquals(customShape, dimens.shape)
         assertEquals(customPadding, dimens.contentPadding)
     }

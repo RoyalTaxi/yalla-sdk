@@ -10,22 +10,23 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class AvatarCardColorsTest {
-
     private val brush = Brush.linearGradient(listOf(Color.Red, Color.Blue))
 
-    private val colors = AvatarCardColors(
-        name = Color.Black,
-        badgeBackground = brush,
-        badgeText = Color.White,
-    )
+    private val colors =
+        AvatarCardColors(
+            name = Color.Black,
+            badgeBackground = brush,
+            badgeText = Color.White
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = AvatarCardColors(
-            name = Color.Black,
-            badgeBackground = brush,
-            badgeText = Color.White,
-        )
+        val other =
+            AvatarCardColors(
+                name = Color.Black,
+                badgeBackground = brush,
+                badgeText = Color.White
+            )
         assertEquals(colors, other)
     }
 
@@ -45,7 +46,6 @@ class AvatarCardColorsTest {
 }
 
 class AvatarCardDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = AvatarCardDefaults.dimens()
@@ -58,11 +58,12 @@ class AvatarCardDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = AvatarCardDefaults.dimens(
-            avatarSize = 100.dp,
-            nameTopSpacing = 16.dp,
-            contentSpacing = 12.dp,
-        )
+        val dimens =
+            AvatarCardDefaults.dimens(
+                avatarSize = 100.dp,
+                nameTopSpacing = 16.dp,
+                contentSpacing = 12.dp
+            )
         assertEquals(100.dp, dimens.avatarSize)
         assertEquals(16.dp, dimens.nameTopSpacing)
         assertEquals(12.dp, dimens.contentSpacing)

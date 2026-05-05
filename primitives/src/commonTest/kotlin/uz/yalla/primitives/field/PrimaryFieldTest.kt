@@ -9,34 +9,37 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class PrimaryFieldColorsTest {
-
-    private val colors = PrimaryFieldColors(
-        focusedTextColor = Color.Black,
-        unfocusedTextColor = Color.DarkGray,
-        focusedBorderColor = Color.Blue,
-        unfocusedBorderColor = Color.LightGray,
-        cursorColor = Color.Blue,
-        selectionColors = TextSelectionColors(
-            handleColor = Color.Blue,
-            backgroundColor = Color.Blue.copy(alpha = 0.3f),
-        ),
-        placeholderColor = Color.Gray,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = PrimaryFieldColors(
+    private val colors =
+        PrimaryFieldColors(
             focusedTextColor = Color.Black,
             unfocusedTextColor = Color.DarkGray,
             focusedBorderColor = Color.Blue,
             unfocusedBorderColor = Color.LightGray,
             cursorColor = Color.Blue,
-            selectionColors = TextSelectionColors(
-                handleColor = Color.Blue,
-                backgroundColor = Color.Blue.copy(alpha = 0.3f),
-            ),
-            placeholderColor = Color.Gray,
+            selectionColors =
+                TextSelectionColors(
+                    handleColor = Color.Blue,
+                    backgroundColor = Color.Blue.copy(alpha = 0.3f)
+                ),
+            placeholderColor = Color.Gray
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            PrimaryFieldColors(
+                focusedTextColor = Color.Black,
+                unfocusedTextColor = Color.DarkGray,
+                focusedBorderColor = Color.Blue,
+                unfocusedBorderColor = Color.LightGray,
+                cursorColor = Color.Blue,
+                selectionColors =
+                    TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Blue.copy(alpha = 0.3f)
+                    ),
+                placeholderColor = Color.Gray
+            )
         assertEquals(colors, other)
     }
 
@@ -62,7 +65,6 @@ class PrimaryFieldColorsTest {
 }
 
 class PrimaryFieldDimensTest {
-
     @Test
     fun defaults_shape_isRoundedCorner10dp() {
         val dimens = PrimaryFieldDefaults.dimens()

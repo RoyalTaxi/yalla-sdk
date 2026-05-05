@@ -18,7 +18,7 @@ actual fun Marker(
     anchor: Offset,
     flat: Boolean,
     rotation: Float,
-    clickable: Boolean,
+    clickable: Boolean
 ) {
     val mapApplier =
         currentComposer.applier as? MapApplier

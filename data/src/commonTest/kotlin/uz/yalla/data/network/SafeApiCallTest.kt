@@ -22,203 +22,235 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 @Serializable
-internal data class SafeApiCallTestResponse(val id: Int, val name: String)
+internal data class SafeApiCallTestResponse(
+    val id: Int,
+    val name: String
+)
 
 class SafeApiCallTest {
-
     private val jsonHeaders = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
 
     // --- Status code path (expectSuccess = false) ---
 
     @Test
-    fun shouldReturnSuccessOnHttp200() = runTest {
-        val client = HttpClient(MockEngine) {
-            expectSuccess = false
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-            engine {
-                addHandler { respond("""{"id":1,"name":"test"}""", HttpStatusCode.OK, jsonHeaders) }
-            }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Success<SafeApiCallTestResponse>>(result)
-        assertEquals(1, result.data.id)
-        assertEquals("test", result.data.name)
-    }
-
-    @Test
-    fun shouldReturnSuccessForUnitResponse() = runTest {
-        val client = HttpClient(MockEngine) {
-            expectSuccess = false
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-            engine {
-                addHandler { respond("", HttpStatusCode.OK) }
-            }
-        }
-
-        val result = safeApiCall<Unit> { client.get("/test") }
-
-        assertIs<Either.Success<Unit>>(result)
-    }
-
-    @Test
-    fun shouldReturnClientErrorOnHttp400() = runTest {
-        val client = HttpClient(MockEngine) {
-            expectSuccess = false
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-            engine {
-                addHandler { respond("", HttpStatusCode.BadRequest) }
-            }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Client, result.error)
-    }
-
-    @Test
-    fun shouldReturnClientWithMessageOnHttp400WithBody() = runTest {
-        val client = HttpClient(MockEngine) {
-            expectSuccess = false
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-            engine {
-                addHandler { respond("""{"message":"Invalid input"}""", HttpStatusCode.BadRequest, jsonHeaders) }
-            }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        val error = result.error
-        assertIs<DataError.Network.ClientWithMessage>(error)
-        assertEquals(400, error.code)
-        assertEquals("Invalid input", error.message)
-    }
-
-    @Test
-    fun shouldReturnServerErrorOnHttp500() = runTest {
-        val client = HttpClient(MockEngine) {
-            expectSuccess = false
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-            engine {
-                addHandler { respond("", HttpStatusCode.InternalServerError) }
-            }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Server, result.error)
-    }
-
-    @Test
-    fun shouldReturnClientErrorOnHttp3xx() = runTest {
-        val client = HttpClient(MockEngine) {
-            expectSuccess = false
-            followRedirects = false
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-            engine {
-                addHandler { respond("", HttpStatusCode.MovedPermanently) }
-            }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Client, result.error)
-    }
-
-    @Test
-    fun shouldReturnUnknownErrorOnUnexpectedStatusCode() = runTest {
-        val client = HttpClient(MockEngine) {
-            expectSuccess = false
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-            engine {
-                addHandler { respond("", HttpStatusCode(600, "Custom")) }
-            }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Unknown, result.error)
-    }
-
-    @Test
-    fun shouldReturnSerializationErrorOnMalformedJson() = runTest {
-        // Ktor 3.x's JsonConvertException extends ContentConvertException, which
-        // safeApiCall maps explicitly to DataError.Network.Serialization.
-        val client = HttpClient(MockEngine) {
-            expectSuccess = false
-            install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
-            engine {
-                addHandler { respond("{not valid json", HttpStatusCode.OK, jsonHeaders) }
-            }
-        }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Serialization, result.error)
-    }
-
-    @Test
-    fun shouldReturnTimeoutOnHttpRequestTimeoutException() = runTest {
-        // HttpRequestTimeoutException extends IOException; safeApiCall must
-        // catch it before the IOException branch so it maps to Timeout
-        // instead of Connection.
-        val client = HttpClient(MockEngine) {
-            engine {
-                addHandler {
-                    throw io.ktor.client.plugins
-                        .HttpRequestTimeoutException(url = "/timeout", timeoutMillis = 100L)
+    fun shouldReturnSuccessOnHttp200() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    expectSuccess = false
+                    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+                    engine {
+                        addHandler { respond("""{"id":1,"name":"test"}""", HttpStatusCode.OK, jsonHeaders) }
+                    }
                 }
-            }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Success<SafeApiCallTestResponse>>(result)
+            assertEquals(1, result.data.id)
+            assertEquals("test", result.data.name)
         }
 
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/timeout") }
+    @Test
+    fun shouldReturnSuccessForUnitResponse() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    expectSuccess = false
+                    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+                    engine {
+                        addHandler { respond("", HttpStatusCode.OK) }
+                    }
+                }
 
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Timeout, result.error)
-    }
+            val result = safeApiCall<Unit> { client.get("/test") }
+
+            assertIs<Either.Success<Unit>>(result)
+        }
+
+    @Test
+    fun shouldReturnClientErrorOnHttp400() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    expectSuccess = false
+                    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+                    engine {
+                        addHandler { respond("", HttpStatusCode.BadRequest) }
+                    }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Client, result.error)
+        }
+
+    @Test
+    fun shouldReturnClientWithMessageOnHttp400WithBody() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    expectSuccess = false
+                    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+                    engine {
+                        addHandler {
+                            respond(
+                                """{"message":"Invalid input"}""",
+                                HttpStatusCode.BadRequest,
+                                jsonHeaders
+                            )
+                        }
+                    }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            val error = result.error
+            assertIs<DataError.Network.ClientWithMessage>(error)
+            assertEquals(400, error.code)
+            assertEquals("Invalid input", error.message)
+        }
+
+    @Test
+    fun shouldReturnServerErrorOnHttp500() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    expectSuccess = false
+                    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+                    engine {
+                        addHandler { respond("", HttpStatusCode.InternalServerError) }
+                    }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Server, result.error)
+        }
+
+    @Test
+    fun shouldReturnClientErrorOnHttp3xx() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    expectSuccess = false
+                    followRedirects = false
+                    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+                    engine {
+                        addHandler { respond("", HttpStatusCode.MovedPermanently) }
+                    }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Client, result.error)
+        }
+
+    @Test
+    fun shouldReturnUnknownErrorOnUnexpectedStatusCode() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    expectSuccess = false
+                    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+                    engine {
+                        addHandler { respond("", HttpStatusCode(600, "Custom")) }
+                    }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Unknown, result.error)
+        }
+
+    @Test
+    fun shouldReturnSerializationErrorOnMalformedJson() =
+        runTest {
+            // Ktor 3.x's JsonConvertException extends ContentConvertException, which
+            // safeApiCall maps explicitly to DataError.Network.Serialization.
+            val client =
+                HttpClient(MockEngine) {
+                    expectSuccess = false
+                    install(ContentNegotiation) { json(Json { ignoreUnknownKeys = true }) }
+                    engine {
+                        addHandler { respond("{not valid json", HttpStatusCode.OK, jsonHeaders) }
+                    }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Serialization, result.error)
+        }
+
+    @Test
+    fun shouldReturnTimeoutOnHttpRequestTimeoutException() =
+        runTest {
+            // HttpRequestTimeoutException extends IOException; safeApiCall must
+            // catch it before the IOException branch so it maps to Timeout
+            // instead of Connection.
+            val client =
+                HttpClient(MockEngine) {
+                    engine {
+                        addHandler {
+                            throw io.ktor.client.plugins
+                                .HttpRequestTimeoutException(url = "/timeout", timeoutMillis = 100L)
+                        }
+                    }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/timeout") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Timeout, result.error)
+        }
 
     // --- Exception path ---
 
     @Test
-    fun shouldReturnConnectionErrorOnIOException() = runTest {
-        val client = HttpClient(MockEngine) {
-            engine { addHandler { throw IOException("network down") } }
+    fun shouldReturnConnectionErrorOnIOException() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    engine { addHandler { throw IOException("network down") } }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Connection, result.error)
         }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Connection, result.error)
-    }
 
     @Test
-    fun shouldReturnTimeoutErrorOnSocketTimeoutException() = runTest {
-        val client = HttpClient(MockEngine) {
-            engine { addHandler { throw SocketTimeoutException("timed out") } }
+    fun shouldReturnTimeoutErrorOnSocketTimeoutException() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    engine { addHandler { throw SocketTimeoutException("timed out") } }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Timeout, result.error)
         }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Timeout, result.error)
-    }
 
     @Test
-    fun shouldReturnGuestErrorOnGuestBlockedException() = runTest {
-        val client = HttpClient(MockEngine) {
-            engine { addHandler { throw GuestBlockedException() } }
+    fun shouldReturnGuestErrorOnGuestBlockedException() =
+        runTest {
+            val client =
+                HttpClient(MockEngine) {
+                    engine { addHandler { throw GuestBlockedException() } }
+                }
+
+            val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
+
+            assertIs<Either.Failure<DataError.Network>>(result)
+            assertEquals(DataError.Network.Guest, result.error)
         }
-
-        val result = safeApiCall<SafeApiCallTestResponse> { client.get("/test") }
-
-        assertIs<Either.Failure<DataError.Network>>(result)
-        assertEquals(DataError.Network.Guest, result.error)
-    }
 }

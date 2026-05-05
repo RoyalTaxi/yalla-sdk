@@ -11,7 +11,6 @@ import kotlin.test.assertNotNull
  * in pure common code without touching platform services.
  */
 class YallaMessagingTest {
-
     @Test
     fun shouldInstantiateWithoutThrowing() {
         // YallaMessaging defers SDK access to the internal `messaging` lazy property;
@@ -23,11 +22,16 @@ class YallaMessagingTest {
     @Test
     fun messagingDelegateShouldBeImplementable() {
         // Verify the interface contract is stable and can be satisfied in common code
-        val delegate = object : MessagingDelegate {
-            override fun onNewToken(token: String) = Unit
+        val delegate =
+            object : MessagingDelegate {
+                override fun onNewToken(token: String) = Unit
 
-            override fun onMessageReceived(title: String?, body: String?, data: Map<String, String>) = Unit
-        }
+                override fun onMessageReceived(
+                    title: String?,
+                    body: String?,
+                    data: Map<String, String>
+                ) = Unit
+            }
         assertNotNull(delegate)
     }
 }

@@ -7,18 +7,19 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class OtpSheetColorsTest {
-
-    private val colors = OtpSheetColors(
-        headline = Color.Black,
-        description = Color.Gray,
-    )
+    private val colors =
+        OtpSheetColors(
+            headline = Color.Black,
+            description = Color.Gray
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = OtpSheetColors(
-            headline = Color.Black,
-            description = Color.Gray,
-        )
+        val other =
+            OtpSheetColors(
+                headline = Color.Black,
+                description = Color.Gray
+            )
         assertEquals(colors, other)
     }
 
@@ -37,7 +38,6 @@ class OtpSheetColorsTest {
 }
 
 class OtpSheetDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = OtpSheetDefaults.dimens()
@@ -47,10 +47,11 @@ class OtpSheetDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = OtpSheetDefaults.dimens(
-            headlineDescriptionSpacing = 16.dp,
-            descriptionPinSpacing = 24.dp,
-        )
+        val dimens =
+            OtpSheetDefaults.dimens(
+                headlineDescriptionSpacing = 16.dp,
+                descriptionPinSpacing = 24.dp
+            )
         assertEquals(16.dp, dimens.headlineDescriptionSpacing)
         assertEquals(24.dp, dimens.descriptionPinSpacing)
     }

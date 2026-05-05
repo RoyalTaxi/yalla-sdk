@@ -21,12 +21,14 @@ object PointKindSerializer : KSerializer<PointKind> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("PointKind", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: PointKind) {
+    override fun serialize(
+        encoder: Encoder,
+        value: PointKind
+    ) {
         encoder.encodeString(value.wireValue)
     }
 
-    override fun deserialize(decoder: Decoder): PointKind =
-        PointKind.from(decoder.decodeString())
+    override fun deserialize(decoder: Decoder): PointKind = PointKind.from(decoder.decodeString())
 }
 
 /**
@@ -39,7 +41,9 @@ object PointKindSerializer : KSerializer<PointKind> {
  * @see PointRequest
  */
 @Serializable(with = PointKindSerializer::class)
-enum class PointKind(val wireValue: String) {
+enum class PointKind(
+    val wireValue: String
+) {
     START("start"),
 
     POINT("point"),
@@ -55,7 +59,6 @@ enum class PointKind(val wireValue: String) {
          *
          * @return The matching [PointKind], or [POINT] for unknown values
          */
-        fun from(wireValue: String?): PointKind =
-            entries.find { it.wireValue == wireValue } ?: POINT
+        fun from(wireValue: String?): PointKind = entries.find { it.wireValue == wireValue } ?: POINT
     }
 }

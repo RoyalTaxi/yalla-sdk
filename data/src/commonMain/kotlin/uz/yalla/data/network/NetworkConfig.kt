@@ -28,7 +28,7 @@ data class NetworkConfig(
     val secretKey: String,
     val deviceType: String = "client",
     val deviceMode: String = "mobile",
-    val guestAllowedSegments: List<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS,
+    val guestAllowedSegments: List<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS
 )
 
 /**
@@ -39,11 +39,12 @@ data class NetworkConfig(
  * is deterministic and diff-friendly; [createGuestModeGuardPlugin] converts to
  * a `Set` internally for O(1) membership checks.
  */
-val DEFAULT_GUEST_ALLOWED_SEGMENTS: List<String> = listOf(
-    "client",
-    "valid",
-    "register",
-    "location-name",
-    "cost",
-    "lists",
-)
+val DEFAULT_GUEST_ALLOWED_SEGMENTS: List<String> =
+    listOf(
+        "client",
+        "valid",
+        "register",
+        "location-name",
+        "cost",
+        "lists"
+    )

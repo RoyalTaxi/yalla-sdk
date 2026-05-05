@@ -9,25 +9,8 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class NumberFieldColorsTest {
-
-    private val colors = NumberFieldColors(
-        containerColor = Color.White,
-        textColor = Color.Black,
-        placeholderColor = Color.Gray,
-        prefixColor = Color.Black,
-        dividerColor = Color.LightGray,
-        focusedBorderColor = Color.Blue,
-        unfocusedBorderColor = Color.LightGray,
-        cursorColor = Color.Blue,
-        selectionColors = TextSelectionColors(
-            handleColor = Color.Blue,
-            backgroundColor = Color.Blue.copy(alpha = 0.3f),
-        ),
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = NumberFieldColors(
+    private val colors =
+        NumberFieldColors(
             containerColor = Color.White,
             textColor = Color.Black,
             placeholderColor = Color.Gray,
@@ -36,11 +19,31 @@ class NumberFieldColorsTest {
             focusedBorderColor = Color.Blue,
             unfocusedBorderColor = Color.LightGray,
             cursorColor = Color.Blue,
-            selectionColors = TextSelectionColors(
-                handleColor = Color.Blue,
-                backgroundColor = Color.Blue.copy(alpha = 0.3f),
-            ),
+            selectionColors =
+                TextSelectionColors(
+                    handleColor = Color.Blue,
+                    backgroundColor = Color.Blue.copy(alpha = 0.3f)
+                )
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            NumberFieldColors(
+                containerColor = Color.White,
+                textColor = Color.Black,
+                placeholderColor = Color.Gray,
+                prefixColor = Color.Black,
+                dividerColor = Color.LightGray,
+                focusedBorderColor = Color.Blue,
+                unfocusedBorderColor = Color.LightGray,
+                cursorColor = Color.Blue,
+                selectionColors =
+                    TextSelectionColors(
+                        handleColor = Color.Blue,
+                        backgroundColor = Color.Blue.copy(alpha = 0.3f)
+                    )
+            )
         assertEquals(colors, other)
     }
 
@@ -67,7 +70,6 @@ class NumberFieldColorsTest {
 }
 
 class NumberFieldDimensTest {
-
     @Test
     fun defaults_shape_isRoundedCorner10dp() {
         val dimens = NumberFieldDefaults.dimens()
@@ -98,11 +100,12 @@ class NumberFieldDimensTest {
     @Test
     fun allCustomValues_overrideAllDefaults() {
         val customShape = RoundedCornerShape(8.dp)
-        val dimens = NumberFieldDefaults.dimens(
-            shape = customShape,
-            borderWidth = 2.dp,
-            dividerThickness = 2.dp,
-        )
+        val dimens =
+            NumberFieldDefaults.dimens(
+                shape = customShape,
+                borderWidth = 2.dp,
+                dividerThickness = 2.dp
+            )
         assertEquals(customShape, dimens.shape)
         assertEquals(2.dp, dimens.borderWidth)
         assertEquals(2.dp, dimens.dividerThickness)

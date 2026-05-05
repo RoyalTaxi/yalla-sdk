@@ -83,8 +83,7 @@ class DeviceConnectivityState(
 fun rememberDeviceConnectivityState(
     connectivity: Connectivity,
     scope: CoroutineScope = rememberCoroutineScope()
-): DeviceConnectivityState {
-    return remember(connectivity, scope) {
+): DeviceConnectivityState =
+    remember(connectivity, scope) {
         DeviceConnectivityState(connectivity, scope)
     }
-}

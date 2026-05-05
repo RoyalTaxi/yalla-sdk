@@ -1,5 +1,5 @@
 @file:Suppress(
-    "DestructuringDeclarationWithTooManyEntries", // 4-tuple padding destructure reads clearer than index access
+    "DestructuringDeclarationWithTooManyEntries" // 4-tuple padding destructure reads clearer than index access
 )
 
 package uz.yalla.maps.compose
@@ -45,7 +45,7 @@ import uz.yalla.maps.model.MapUiSettings
 @OptIn(ExperimentalForeignApi::class)
 private class GMSMapViewDelegate(
     private val cameraPositionState: CameraPositionState,
-    private val onMapLoaded: (() -> Unit)?,
+    private val onMapLoaded: (() -> Unit)?
 ) : NSObject(),
     GMSMapViewDelegateProtocol {
     private var hasReportedReady = false
@@ -98,9 +98,10 @@ actual fun GoogleMap(
     contentPadding: PaddingValues,
     onMapLoaded: (() -> Unit)?,
     content: (
-        @Composable @GoogleMapComposable
+        @Composable
+        @GoogleMapComposable
         () -> Unit
-    )?,
+    )?
 ) {
     val interfaceStyle =
         when (theme) {
@@ -123,7 +124,7 @@ actual fun GoogleMap(
         remember {
             GMSMapViewDelegate(
                 cameraPositionState = cameraPositionState,
-                onMapLoaded = { currentOnMapLoaded?.invoke() },
+                onMapLoaded = { currentOnMapLoaded?.invoke() }
             )
         }
 

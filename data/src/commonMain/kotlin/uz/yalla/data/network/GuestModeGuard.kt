@@ -40,7 +40,7 @@ internal class GuestBlockedException : RuntimeException()
  */
 fun createGuestModeGuardPlugin(
     isGuestMode: StateFlow<Boolean>,
-    allowedSegments: Set<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS.toSet(),
+    allowedSegments: Set<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS.toSet()
 ) = createClientPlugin("GuestModeGuard") {
     onRequest { request, _ ->
         if (!isGuestMode.value) return@onRequest

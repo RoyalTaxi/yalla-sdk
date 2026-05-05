@@ -29,19 +29,19 @@ import kotlinx.serialization.KSerializer
 class NativeRootComponent<C : Route>(
     componentContext: ComponentContext,
     initialRoute: C,
-    serializer: KSerializer<C>?,
+    serializer: KSerializer<C>?
 ) : ComponentContext by componentContext {
-
     internal val navigation = StackNavigation<C>()
 
     /** Observable navigation stack. */
-    val childStack: Value<ChildStack<C, ComponentContext>> = childStack(
-        source = navigation,
-        serializer = serializer,
-        initialConfiguration = initialRoute,
-        handleBackButton = true,
-        childFactory = { _, childContext -> childContext },
-    )
+    val childStack: Value<ChildStack<C, ComponentContext>> =
+        childStack(
+            source = navigation,
+            serializer = serializer,
+            initialConfiguration = initialRoute,
+            handleBackButton = true,
+            childFactory = { _, childContext -> childContext }
+        )
 
     /** Navigation controller for pushing, popping, and replacing routes. */
     val navigator: Navigator = NavigatorImpl(navigation, childStack)

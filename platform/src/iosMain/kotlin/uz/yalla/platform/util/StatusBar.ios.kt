@@ -19,5 +19,4 @@ import platform.UIKit.UIApplication
  */
 @OptIn(ExperimentalForeignApi::class)
 @Composable
-actual fun statusBarHeight(): Dp =
-    UIApplication.sharedApplication.statusBarFrame.useContents { size.height.dp }
+actual fun statusBarHeight(): Dp = UIApplication.sharedApplication.statusBarFrame.useContents { size.height.dp }

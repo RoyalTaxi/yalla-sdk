@@ -21,7 +21,6 @@ import kotlin.test.assertTrue
  *   - Verifies the BroadcastReceiver is unregistered after the composable leaves composition.
  */
 class ObserveSmsCodeTest {
-
     @Test
     fun compileVerify_observeSmsCodeIsAndroidOnly() {
         // ObserveSmsCode is declared in androidMain only. This placeholder documents that

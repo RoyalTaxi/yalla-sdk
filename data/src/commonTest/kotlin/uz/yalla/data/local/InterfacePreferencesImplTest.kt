@@ -23,115 +23,127 @@ import kotlin.test.assertTrue
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class InterfacePreferencesImplTest {
+    @Test
+    fun shouldDefaultLocaleToUzOnColdRead() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
+
+            assertEquals(LocaleKind.Uz, impl.localeType.first())
+        }
 
     @Test
-    fun shouldDefaultLocaleToUzOnColdRead() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
+    fun shouldPropagateSetLocaleTypeToFlow() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
 
-        assertEquals(LocaleKind.Uz, impl.localeType.first())
-    }
+            impl.setLocaleType(LocaleKind.Ru)
 
-    @Test
-    fun shouldPropagateSetLocaleTypeToFlow() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
-
-        impl.setLocaleType(LocaleKind.Ru)
-
-        assertEquals(LocaleKind.Ru, impl.localeType.first())
-    }
+            assertEquals(LocaleKind.Ru, impl.localeType.first())
+        }
 
     @Test
-    fun shouldDualWriteLocaleCodeToStaticPreferencesSynchronously() = runTest(UnconfinedTestDispatcher()) {
-        val staticPrefs = StaticPreferencesImpl(MapSettings())
-        val impl = newImpl(this, staticPreferences = staticPrefs)
+    fun shouldDualWriteLocaleCodeToStaticPreferencesSynchronously() =
+        runTest(UnconfinedTestDispatcher()) {
+            val staticPrefs = StaticPreferencesImpl(MapSettings())
+            val impl = newImpl(this, staticPreferences = staticPrefs)
 
-        impl.setLocaleType(LocaleKind.Ru)
+            impl.setLocaleType(LocaleKind.Ru)
 
-        // StaticPreferences writes are synchronous: the code is readable even
-        // before the DataStore write dispatches.
-        assertEquals(LocaleKind.Ru.code, staticPrefs.localeCode)
-    }
-
-    @Test
-    fun shouldDefaultThemeToSystemOnColdRead() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
-
-        assertEquals(ThemeKind.System, impl.themeType.first())
-    }
+            // StaticPreferences writes are synchronous: the code is readable even
+            // before the DataStore write dispatches.
+            assertEquals(LocaleKind.Ru.code, staticPrefs.localeCode)
+        }
 
     @Test
-    fun shouldPropagateSetThemeTypeToFlow() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
+    fun shouldDefaultThemeToSystemOnColdRead() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
 
-        impl.setThemeType(ThemeKind.Dark)
-
-        assertEquals(ThemeKind.Dark, impl.themeType.first())
-    }
-
-    @Test
-    fun shouldDefaultMapKindToGoogleOnColdRead() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
-
-        assertEquals(MapKind.Google, impl.mapKind.first())
-    }
+            assertEquals(ThemeKind.System, impl.themeType.first())
+        }
 
     @Test
-    fun shouldPropagateSetMapKindToFlow() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
+    fun shouldPropagateSetThemeTypeToFlow() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
 
-        impl.setMapKind(MapKind.Libre)
+            impl.setThemeType(ThemeKind.Dark)
 
-        assertEquals(MapKind.Libre, impl.mapKind.first())
-    }
-
-    @Test
-    fun shouldDefaultSkipOnboardingToFalseOnColdRead() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
-
-        assertFalse(impl.skipOnboarding.first())
-    }
+            assertEquals(ThemeKind.Dark, impl.themeType.first())
+        }
 
     @Test
-    fun shouldPropagateSetSkipOnboardingToFlow() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
+    fun shouldDefaultMapKindToGoogleOnColdRead() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
 
-        impl.setSkipOnboarding(true)
-
-        assertTrue(impl.skipOnboarding.first())
-    }
-
-    @Test
-    fun shouldDefaultOnboardingStageToFreshOnColdRead() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
-
-        assertEquals(PreferenceKeys.DEFAULT_ONBOARDING_STAGE, impl.onboardingStage.first())
-    }
+            assertEquals(MapKind.Google, impl.mapKind.first())
+        }
 
     @Test
-    fun shouldPropagateSetOnboardingStageToFlow() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
+    fun shouldPropagateSetMapKindToFlow() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
 
-        impl.setOnboardingStage("COMPLETED")
+            impl.setMapKind(MapKind.Libre)
 
-        assertEquals("COMPLETED", impl.onboardingStage.first())
-    }
+            assertEquals(MapKind.Libre, impl.mapKind.first())
+        }
 
     @Test
-    fun shouldDualWriteOnboardingStageToStaticPreferencesSynchronously() = runTest(UnconfinedTestDispatcher()) {
-        val staticPrefs = StaticPreferencesImpl(MapSettings())
-        val impl = newImpl(this, staticPreferences = staticPrefs)
+    fun shouldDefaultSkipOnboardingToFalseOnColdRead() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
 
-        impl.setOnboardingStage("IN_PROGRESS")
+            assertFalse(impl.skipOnboarding.first())
+        }
 
-        assertEquals("IN_PROGRESS", staticPrefs.onboardingStage)
-    }
+    @Test
+    fun shouldPropagateSetSkipOnboardingToFlow() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
+
+            impl.setSkipOnboarding(true)
+
+            assertTrue(impl.skipOnboarding.first())
+        }
+
+    @Test
+    fun shouldDefaultOnboardingStageToFreshOnColdRead() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
+
+            assertEquals(PreferenceKeys.DEFAULT_ONBOARDING_STAGE, impl.onboardingStage.first())
+        }
+
+    @Test
+    fun shouldPropagateSetOnboardingStageToFlow() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
+
+            impl.setOnboardingStage("COMPLETED")
+
+            assertEquals("COMPLETED", impl.onboardingStage.first())
+        }
+
+    @Test
+    fun shouldDualWriteOnboardingStageToStaticPreferencesSynchronously() =
+        runTest(UnconfinedTestDispatcher()) {
+            val staticPrefs = StaticPreferencesImpl(MapSettings())
+            val impl = newImpl(this, staticPreferences = staticPrefs)
+
+            impl.setOnboardingStage("IN_PROGRESS")
+
+            assertEquals("IN_PROGRESS", staticPrefs.onboardingStage)
+        }
 
     private fun newImpl(
         scope: TestScope,
-        staticPreferences: StaticPreferencesImpl = StaticPreferencesImpl(MapSettings()),
-    ): InterfacePreferencesImpl = InterfacePreferencesImpl(
-        dataStore = InMemoryDataStore(),
-        scope = scope.backgroundScope,
-        staticPreferences = staticPreferences,
-    )
+        staticPreferences: StaticPreferencesImpl = StaticPreferencesImpl(MapSettings())
+    ): InterfacePreferencesImpl =
+        InterfacePreferencesImpl(
+            dataStore = InMemoryDataStore(),
+            scope = scope.backgroundScope,
+            staticPreferences = staticPreferences
+        )
 }

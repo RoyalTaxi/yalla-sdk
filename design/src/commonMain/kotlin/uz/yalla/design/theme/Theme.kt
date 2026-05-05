@@ -14,9 +14,14 @@ import uz.yalla.design.color.ColorScheme
 import uz.yalla.design.color.LocalColorScheme
 import uz.yalla.design.color.dark
 import uz.yalla.design.color.light
+import uz.yalla.design.elevation.ElevationScheme
+import uz.yalla.design.elevation.LocalElevationScheme
+import uz.yalla.design.elevation.standardElevationScheme
 import uz.yalla.design.font.FontScheme
 import uz.yalla.design.font.LocalFontScheme
 import uz.yalla.design.font.rememberFontScheme
+import uz.yalla.design.haptic.HapticController
+import uz.yalla.design.haptic.LocalHapticController
 import uz.yalla.design.motion.LocalMotionScheme
 import uz.yalla.design.motion.MotionScheme
 import uz.yalla.design.motion.standardMotionScheme
@@ -26,6 +31,12 @@ import uz.yalla.design.radius.standardRadiusScheme
 import uz.yalla.design.space.LocalSpaceScheme
 import uz.yalla.design.space.SpaceScheme
 import uz.yalla.design.space.standardSpaceScheme
+import uz.yalla.design.stroke.LocalStrokeScheme
+import uz.yalla.design.stroke.StrokeScheme
+import uz.yalla.design.stroke.standardStrokeScheme
+import uz.yalla.design.touchTarget.LocalTouchTargetScheme
+import uz.yalla.design.touchTarget.TouchTargetScheme
+import uz.yalla.design.touchTarget.standardTouchTargetScheme
 import androidx.compose.material3.darkColorScheme as materialDarkColorScheme
 import androidx.compose.material3.lightColorScheme as materialLightColorScheme
 
@@ -63,6 +74,9 @@ private val LocalIsDark = staticCompositionLocalOf { false }
  * @param fontScheme Typography tokens to apply. Defaults to [rememberFontScheme].
  * @param spaceScheme Spacing tokens to apply. Defaults to [standardSpaceScheme].
  * @param radiusScheme Corner-radius tokens to apply. Defaults to [standardRadiusScheme].
+ * @param elevationScheme Elevation tier tokens to apply. Defaults to [standardElevationScheme].
+ * @param strokeScheme Stroke-width tokens to apply. Defaults to [standardStrokeScheme].
+ * @param touchTargetScheme Minimum tap-surface tokens to apply. Defaults to [standardTouchTargetScheme].
  * @param content Composable content wrapped by the theme.
  */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -74,6 +88,10 @@ fun YallaTheme(
     spaceScheme: SpaceScheme = standardSpaceScheme(),
     radiusScheme: RadiusScheme = standardRadiusScheme(),
     motionScheme: MotionScheme = standardMotionScheme(),
+    elevationScheme: ElevationScheme = standardElevationScheme(),
+    strokeScheme: StrokeScheme = standardStrokeScheme(),
+    touchTargetScheme: TouchTargetScheme = standardTouchTargetScheme(),
+    hapticController: HapticController = LocalHapticController.current,
     content: @Composable () -> Unit
 ) {
     val rippleConfiguration =
@@ -122,6 +140,10 @@ fun YallaTheme(
         LocalSpaceScheme provides spaceScheme,
         LocalRadiusScheme provides radiusScheme,
         LocalMotionScheme provides motionScheme,
+        LocalElevationScheme provides elevationScheme,
+        LocalStrokeScheme provides strokeScheme,
+        LocalTouchTargetScheme provides touchTargetScheme,
+        LocalHapticController provides hapticController,
         LocalRippleConfiguration provides rippleConfiguration
     ) {
         MaterialTheme(
@@ -177,6 +199,35 @@ object System {
     val motion: MotionScheme
         @Composable
         get() = LocalMotionScheme.current
+
+    /** Current [ElevationScheme] provided by the nearest [YallaTheme]. */
+    val elevation: ElevationScheme
+        @Composable
+        get() = LocalElevationScheme.current
+
+    /** Current [StrokeScheme] provided by the nearest [YallaTheme]. */
+    val stroke: StrokeScheme
+        @Composable
+        get() = LocalStrokeScheme.current
+
+    /** Current [TouchTargetScheme] provided by the nearest [YallaTheme]. */
+    val touchTarget: TouchTargetScheme
+        @Composable
+        get() = LocalTouchTargetScheme.current
+
+    /**
+     * Current [HapticController] provided by the nearest [YallaTheme].
+     *
+     * Unlike other token accessors, this is a controller, not a value:
+     * `System.haptic.perform(Haptic.Confirm)`.
+     *
+     * Defaults to a no-op outside `YallaTheme` (so previews don't crash). Wire a
+     * real implementation by passing `rememberNativeHapticController()` (from the
+     * `platform` module) to `YallaTheme(hapticController = …)`.
+     */
+    val haptic: HapticController
+        @Composable
+        get() = LocalHapticController.current
 
     /** Whether the current theme is dark mode. */
     val isDark: Boolean

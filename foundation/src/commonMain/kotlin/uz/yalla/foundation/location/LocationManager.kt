@@ -10,8 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import uz.yalla.core.location.LocationProvider
 import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.location.LocationProvider
 
 /**
  * Manages device location tracking and permission state.
@@ -43,9 +43,8 @@ import uz.yalla.core.geo.GeoPoint
 class LocationManager(
     val locationTracker: LocationTracker,
     private val scope: CoroutineScope,
-    private val defaultLocation: GeoPoint = DEFAULT_LOCATION,
+    private val defaultLocation: GeoPoint = DEFAULT_LOCATION
 ) : LocationProvider {
-
     private val _extendedLocation = MutableStateFlow<ExtendedLocation?>(null)
 
     /**
@@ -90,15 +89,16 @@ class LocationManager(
                     .getExtendedLocationsFlow()
                     .distinctUntilChanged()
                     .collect { extLoc ->
-                        _extendedLocation.value = ExtendedLocation(
-                            latitude = extLoc.location.coordinates.latitude,
-                            longitude = extLoc.location.coordinates.longitude,
-                            accuracy = extLoc.location.coordinatesAccuracyMeters.toFloat(),
-                            altitude = extLoc.altitude.altitudeMeters,
-                            speed = extLoc.speed.speedMps.toFloat(),
-                            bearing = extLoc.azimuth.azimuthDegrees.toFloat(),
-                            timestamp = extLoc.timestampMs,
-                        )
+                        _extendedLocation.value =
+                            ExtendedLocation(
+                                latitude = extLoc.location.coordinates.latitude,
+                                longitude = extLoc.location.coordinates.longitude,
+                                accuracy = extLoc.location.coordinatesAccuracyMeters.toFloat(),
+                                altitude = extLoc.altitude.altitudeMeters,
+                                speed = extLoc.speed.speedMps.toFloat(),
+                                bearing = extLoc.azimuth.azimuthDegrees.toFloat(),
+                                timestamp = extLoc.timestampMs
+                            )
                     }
             }.onFailure { e ->
                 _isTracking.value = false

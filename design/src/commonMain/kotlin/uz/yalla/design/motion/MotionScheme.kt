@@ -62,7 +62,7 @@ data class MotionScheme(
     val duration: Duration,
     val easing: Easing,
     val spring: Spring,
-    val stagger: Stagger,
+    val stagger: Stagger
 ) {
     /**
      * Named animation durations.
@@ -84,7 +84,7 @@ data class MotionScheme(
         val quick: kotlin.time.Duration,
         val standard: kotlin.time.Duration,
         val slow: kotlin.time.Duration,
-        val contemplative: kotlin.time.Duration,
+        val contemplative: kotlin.time.Duration
     )
 
     /**
@@ -104,7 +104,7 @@ data class MotionScheme(
         val standard: androidx.compose.animation.core.Easing,
         val emphasized: androidx.compose.animation.core.Easing,
         val entrance: androidx.compose.animation.core.Easing,
-        val exit: androidx.compose.animation.core.Easing,
+        val exit: androidx.compose.animation.core.Easing
     )
 
     /**
@@ -124,7 +124,7 @@ data class MotionScheme(
         val bouncy: SpringSpec<Float>,
         val gentle: SpringSpec<Float>,
         val snappy: SpringSpec<Float>,
-        val stiff: SpringSpec<Float>,
+        val stiff: SpringSpec<Float>
     )
 
     /**
@@ -147,7 +147,7 @@ data class MotionScheme(
     data class Stagger(
         val list: kotlin.time.Duration,
         val grid: kotlin.time.Duration,
-        val cards: kotlin.time.Duration,
+        val cards: kotlin.time.Duration
     )
 }
 
@@ -158,36 +158,41 @@ data class MotionScheme(
  * ADR-021. Consumers override individual tokens by passing a modified
  * [MotionScheme.copy] into `YallaTheme(motionScheme = ...)`.
  */
-fun standardMotionScheme(): MotionScheme = MotionScheme(
-    duration = MotionScheme.Duration(
-        instant = 100.milliseconds,
-        quick = 200.milliseconds,
-        standard = 350.milliseconds,
-        slow = 500.milliseconds,
-        contemplative = 800.milliseconds,
-    ),
-    easing = MotionScheme.Easing(
-        // Material 3 standard.
-        standard = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.0f),
-        // Material 3 emphasized.
-        emphasized = CubicBezierEasing(0.2f, 0.0f, 0.0f, 1.0f),
-        // Fast-start, soft-land — items arriving.
-        entrance = CubicBezierEasing(0.0f, 0.0f, 0.2f, 1.0f),
-        // Soft-start, fast-finish — items leaving.
-        exit = CubicBezierEasing(0.4f, 0.0f, 1.0f, 1.0f),
-    ),
-    spring = MotionScheme.Spring(
-        bouncy = spring(dampingRatio = 0.5f, stiffness = 400f),
-        gentle = spring(dampingRatio = 0.8f, stiffness = 250f),
-        snappy = spring(dampingRatio = 0.7f, stiffness = 700f),
-        stiff = spring(dampingRatio = 1.0f, stiffness = Spring.StiffnessHigh),
-    ),
-    stagger = MotionScheme.Stagger(
-        list = 30.milliseconds,
-        grid = 50.milliseconds,
-        cards = 75.milliseconds,
-    ),
-)
+fun standardMotionScheme(): MotionScheme =
+    MotionScheme(
+        duration =
+            MotionScheme.Duration(
+                instant = 100.milliseconds,
+                quick = 200.milliseconds,
+                standard = 350.milliseconds,
+                slow = 500.milliseconds,
+                contemplative = 800.milliseconds
+            ),
+        easing =
+            MotionScheme.Easing(
+                // Material 3 standard.
+                standard = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.0f),
+                // Material 3 emphasized.
+                emphasized = CubicBezierEasing(0.2f, 0.0f, 0.0f, 1.0f),
+                // Fast-start, soft-land — items arriving.
+                entrance = CubicBezierEasing(0.0f, 0.0f, 0.2f, 1.0f),
+                // Soft-start, fast-finish — items leaving.
+                exit = CubicBezierEasing(0.4f, 0.0f, 1.0f, 1.0f)
+            ),
+        spring =
+            MotionScheme.Spring(
+                bouncy = spring(dampingRatio = 0.5f, stiffness = 400f),
+                gentle = spring(dampingRatio = 0.8f, stiffness = 250f),
+                snappy = spring(dampingRatio = 0.7f, stiffness = 700f),
+                stiff = spring(dampingRatio = 1.0f, stiffness = Spring.StiffnessHigh)
+            ),
+        stagger =
+            MotionScheme.Stagger(
+                list = 30.milliseconds,
+                grid = 50.milliseconds,
+                cards = 75.milliseconds
+            )
+    )
 
 /**
  * [CompositionLocal][androidx.compose.runtime.CompositionLocal] for providing [MotionScheme].

@@ -23,7 +23,7 @@ import uz.yalla.design.theme.System
 @Immutable
 data class EmptyStateColors(
     val title: Color,
-    val description: Color,
+    val description: Color
 )
 
 /**
@@ -35,7 +35,7 @@ data class EmptyStateDimens(
     val imageHeight: Dp,
     val imageTitleSpacing: Dp,
     val titleDescriptionSpacing: Dp,
-    val descriptionActionSpacing: Dp,
+    val descriptionActionSpacing: Dp
 )
 
 /**
@@ -78,7 +78,7 @@ fun EmptyState(
     description: (@Composable () -> Unit)? = null,
     action: (@Composable () -> Unit)? = null,
     colors: EmptyStateColors = EmptyStateDefaults.colors(),
-    dimens: EmptyStateDimens = EmptyStateDefaults.dimens(),
+    dimens: EmptyStateDimens = EmptyStateDefaults.dimens()
 ) {
     Column(
         modifier =
@@ -86,7 +86,7 @@ fun EmptyState(
                 .fillMaxWidth()
                 .padding(dimens.contentPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.Center
     ) {
         image()
 
@@ -127,11 +127,12 @@ object EmptyStateDefaults {
     @Composable
     fun colors(
         title: Color = System.color.text.base,
-        description: Color = System.color.text.subtle,
-    ): EmptyStateColors = EmptyStateColors(
-        title = title,
-        description = description,
-    )
+        description: Color = System.color.text.subtle
+    ): EmptyStateColors =
+        EmptyStateColors(
+            title = title,
+            description = description
+        )
 
     /**
      * Creates default dimensions.
@@ -141,12 +142,13 @@ object EmptyStateDefaults {
         imageHeight: Dp = 180.dp,
         imageTitleSpacing: Dp = 24.dp,
         titleDescriptionSpacing: Dp = 8.dp,
-        descriptionActionSpacing: Dp = 24.dp,
-    ): EmptyStateDimens = EmptyStateDimens(
-        contentPadding = contentPadding,
-        imageHeight = imageHeight,
-        imageTitleSpacing = imageTitleSpacing,
-        titleDescriptionSpacing = titleDescriptionSpacing,
-        descriptionActionSpacing = descriptionActionSpacing,
-    )
+        descriptionActionSpacing: Dp = 24.dp
+    ): EmptyStateDimens =
+        EmptyStateDimens(
+            contentPadding = contentPadding,
+            imageHeight = imageHeight,
+            imageTitleSpacing = imageTitleSpacing,
+            titleDescriptionSpacing = titleDescriptionSpacing,
+            descriptionActionSpacing = descriptionActionSpacing
+        )
 }

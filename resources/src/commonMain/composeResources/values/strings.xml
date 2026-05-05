@@ -37,7 +37,7 @@
 
     <!-- Action Buttons -->
     <string name="common_action_activate">Faollashtirish</string>
-    <string name="common_action_all">Hammasi</string>
+    <string name="common_action_all">Barchasi</string>
     <string name="common_action_allow">Ruxsat berish</string>
     <string name="common_action_cancel">Bekor qilish</string>
     <string name="common_action_confirm">Tasdiqlash</string>
@@ -63,7 +63,7 @@
     <!-- Format -->
     <string name="format_currency_sum">{0} so'm</string>
     <string name="format_currency_range">{0} dan {1} gacha</string>
-    <string name="format_time_min">{0} min</string>
+    <string name="format_time_min">{0} daq</string>
     <string name="format_time_min_short">daq</string>
     <string name="format_percent_up_to">{0}% gacha</string>
 
@@ -136,7 +136,7 @@
 
     <!-- Logout -->
     <string name="profile_logout_title">Hisobdan chiqish</string>
-    <string name="profile_logout_confirm">Hisobdan chiqishni rostdan xohlaysizmi?</string>
+    <string name="profile_logout_confirm">Hisobdan rostdan ham chiqmoqchimisiz?</string>
     <string name="profile_logout_description">Chiqqaningizdan so'ng qaytadan hisobingizga kirishingiz mumkin</string>
     <string name="profile_logout_action">Ha, hisobdan chiqish</string>
 
@@ -169,17 +169,17 @@
 
     <!-- Notification Permission -->
     <string name="intro_notification_title">Bildirishnomalar</string>
-    <string name="intro_notification_description">Bildirishnomalar yuborishga ruxsat bering</string>
+    <string name="intro_notification_description">Bildirishnomalar yuborish uchun ruxsat bering</string>
 
     <!-- Onboarding Slides -->
     <string name="intro_onboarding_1_title">Tez va qulay</string>
-    <string name="intro_onboarding_1_description">Sayohatni buyurtma qiling — Yalla bir necha soniyada eng yaqin haydovchini topadi.</string>
+    <string name="intro_onboarding_1_description">Safarni buyurtma qiling — Yalla bir necha soniyada eng yaqin haydovchini topadi.</string>
 
     <string name="intro_onboarding_2_title">Ishonchli haydovchilar</string>
     <string name="intro_onboarding_2_description">Yalladagi har bir haydovchi tekshiruvdan o'tgan va yuqori reytingga ega.</string>
 
     <string name="intro_onboarding_3_title">Shaffof narx</string>
-    <string name="intro_onboarding_3_description">Sayohat boshlanishidan oldin narxni bilib oling — yashirin to'lovlar va kutilmagan xarajatlarsiz.</string>
+    <string name="intro_onboarding_3_description">Safar boshlanishidan oldin narxni bilib oling — yashirin to'lovlar va kutilmagan xarajatlarsiz.</string>
 
     <string name="intro_onboarding_4_title">Qulay to'lov</string>
     <string name="intro_onboarding_4_description">O'zingizga qulay usulda to'lang — karta yoki naqd pul bilan. Yalla bilan hammasi oson.</string>
@@ -229,7 +229,7 @@
 
     <!-- Delete Address -->
     <string name="places_delete_title">Manzilni o'chirish</string>
-    <string name="places_delete_confirm">Siz haqiqatan ham ushbu manzilni o'chirmoqchimisiz?</string>
+    <string name="places_delete_confirm">Ushbu manzilni rostdan ham o'chirmoqchimisiz?</string>
     <string name="places_delete_warning">Manzil o'chirilgandan so'ng ma'lumotlarni tiklab bo'lmaydi</string>
     <string name="places_delete_action">Ha, manzilni o'chirish</string>
 
@@ -288,7 +288,7 @@
     <string name="bonus_promocode_title">Promokod</string>
     <string name="bonus_promocode_enter">Promokodni kiriting</string>
     <string name="bonus_promocode_placeholder">Kodni kiriting</string>
-    <string name="bonus_promocode_hint">Chegirma keyingi safarda avtomatik qo'llanadi</string>
+    <string name="bonus_promocode_hint">Chegirma keyingi safaringizda avtomatik qo'llanadi</string>
     <string name="bonus_promocode_success">Promokod muvaffaqiyatli qo'llandi</string>
     <string name="bonus_promocode_error">Bunday promokod mavjud emas</string>
 
@@ -337,7 +337,7 @@
     <!-- Order Bottom Sheet -->
     <string name="order_free_waiting">Bepul kutish</string>
     <string name="order_paid_waiting">Pullik kutish</string>
-    <string name="order_eta_format">~ {0} min</string>
+    <string name="order_eta_format">~ {0} daq</string>
     <string name="order_arriving_in">Kelish vaqti</string>
     <string name="order_contact_driver">Haydovchi bilan bog'lanish</string>
     <string name="order_until_trip_end">Safar yakunigacha</string>
@@ -357,7 +357,7 @@
     <string name="order_cancel_countdown">{0} soniya</string>
     <string name="order_cancel_trip_title">Buyurtmani bekor qilish?</string>
     <string name="order_cancel_action_yes">Ha, bekor qilish</string>
-    <string name="order_cancel_before_search">Safar haydovchini qidirish boshlanishidan oldin bekor qilingan</string>
+    <string name="order_cancel_before_search">Safar haydovchini qidirish boshlanishidan oldin bekor qilindi</string>
     <string name="order_cancel_reason_title">Bekor qilish sababi</string>
     <string name="order_cancel_reason_description">Safarni qaysi sabab bilan bekor qildingiz?</string>
 
@@ -407,8 +407,8 @@
 
     <string name="driver_status_coming">Kelmoqda</string>
     <string name="driver_status_on_way">Yo'lda</string>
-    <string name="driver_arrival_time">{0} min</string>
-    <string name="driver_travel_time">Yo'l vaqti: {0} min</string>
+    <string name="driver_arrival_time">{0} daq</string>
+    <string name="driver_travel_time">Yo'l vaqti: {0} daq</string>
     <string name="driver_become">Haydovchi bo'lish</string>
 
     <!-- Labels -->
@@ -484,6 +484,7 @@
     <string name="no_internet_title">Internetga ulanish yo'q</string>
     <string name="no_internet_description">Internet ulanishingizni tekshiring</string>
     <string name="no_internet_action">Yangilash</string>
+    <string name="no_internet_action_menu">Menyuga o'tish</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════

@@ -25,9 +25,13 @@ package uz.yalla.core.result
  * @see onFailure
  */
 sealed interface Either<out E, out D> {
-    data class Failure<E>(val error: E) : Either<E, Nothing>
+    data class Failure<E>(
+        val error: E
+    ) : Either<E, Nothing>
 
-    data class Success<D>(val data: D) : Either<Nothing, D>
+    data class Success<D>(
+        val data: D
+    ) : Either<Nothing, D>
 }
 
 /**
@@ -117,7 +121,7 @@ inline fun <E, D> Either<E, D>.getOrThrow(): D =
  */
 inline fun <E, D, R> Either<E, D>.fold(
     ifFailure: (E) -> R,
-    ifSuccess: (D) -> R,
+    ifSuccess: (D) -> R
 ): R =
     when (this) {
         is Either.Failure -> ifFailure(error)

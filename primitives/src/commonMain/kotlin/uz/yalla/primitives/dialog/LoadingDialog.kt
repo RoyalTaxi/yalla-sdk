@@ -31,14 +31,14 @@ import uz.yalla.platform.indicator.NativeLoadingIndicator
 @Immutable
 data class LoadingDialogColors(
     val container: Color,
-    val indicator: Color,
+    val indicator: Color
 )
 
 /** Dimension configuration for [LoadingDialog]. */
 @Immutable
 data class LoadingDialogDimens(
     val contentPadding: Dp,
-    val shape: Shape,
+    val shape: Shape
 )
 
 /**
@@ -71,29 +71,29 @@ fun LoadingDialog(
     dismissOnBackPress: Boolean = true,
     dismissOnClickOutside: Boolean = false,
     colors: LoadingDialogColors = LoadingDialogDefaults.colors(),
-    dimens: LoadingDialogDimens = LoadingDialogDefaults.dimens(),
+    dimens: LoadingDialogDimens = LoadingDialogDefaults.dimens()
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
         properties =
             DialogProperties(
                 dismissOnBackPress = dismissOnBackPress,
-                dismissOnClickOutside = dismissOnClickOutside,
-            ),
+                dismissOnClickOutside = dismissOnClickOutside
+            )
     ) {
         Box(
             modifier =
                 modifier
                     .background(
                         color = colors.container,
-                        shape = dimens.shape,
+                        shape = dimens.shape
                     ),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             NativeLoadingIndicator(
                 modifier = Modifier.padding(dimens.contentPadding),
                 color = colors.indicator,
-                backgroundColor = colors.container,
+                backgroundColor = colors.container
             )
         }
     }
@@ -109,20 +109,22 @@ object LoadingDialogDefaults {
     @Composable
     fun colors(
         container: Color = Color.White,
-        indicator: Color = System.color.background.brand,
-    ): LoadingDialogColors = LoadingDialogColors(
-        container = container,
-        indicator = indicator,
-    )
+        indicator: Color = System.color.background.brand
+    ): LoadingDialogColors =
+        LoadingDialogColors(
+            container = container,
+            indicator = indicator
+        )
 
     /** Creates dimension configuration for [LoadingDialog]. */
     fun dimens(
         contentPadding: Dp = 20.dp,
-        shape: Shape = CircleShape,
-    ): LoadingDialogDimens = LoadingDialogDimens(
-        contentPadding = contentPadding,
-        shape = shape,
-    )
+        shape: Shape = CircleShape
+    ): LoadingDialogDimens =
+        LoadingDialogDimens(
+            contentPadding = contentPadding,
+            shape = shape
+        )
 }
 
 @Preview
@@ -134,9 +136,9 @@ private fun LoadingDialogContentPreview() {
                 Modifier
                     .background(
                         color = Color.White,
-                        shape = CircleShape,
+                        shape = CircleShape
                     ),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             Box(Modifier.padding(20.dp))
         }

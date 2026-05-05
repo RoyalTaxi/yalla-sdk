@@ -29,5 +29,5 @@ expect fun GoogleMap(
     content: (
         @Composable
         @GoogleMapComposable () -> Unit
-    )? = null,
+    )? = null
 )

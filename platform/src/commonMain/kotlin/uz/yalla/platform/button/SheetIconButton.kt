@@ -44,7 +44,7 @@ fun SheetIconButton(
     modifier: Modifier = Modifier,
     border: BorderStroke? = null,
     containerColor: Color = System.color.background.secondary,
-    contentColor: Color = System.color.icon.base,
+    contentColor: Color = System.color.icon.base
 ) {
     Button(
         onClick = onClick,
@@ -54,7 +54,7 @@ fun SheetIconButton(
         colors =
             ButtonDefaults.buttonColors(
                 containerColor = containerColor,
-                contentColor = contentColor,
+                contentColor = contentColor
             ),
         modifier =
             modifier
@@ -64,7 +64,7 @@ fun SheetIconButton(
         Image(
             painter = rememberVectorPainter(iconType.toImageVector()),
             contentDescription = null,
-            colorFilter = ColorFilter.tint(contentColor),
+            colorFilter = ColorFilter.tint(contentColor)
         )
     }
 }

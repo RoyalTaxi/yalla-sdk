@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>LongMethod:Font.kt$@Composable fun rememberFontScheme(): FontScheme</ID>
+    <ID>LongParameterList:Theme.kt$( isDark: Boolean = isSystemInDarkTheme(), colorScheme: ColorScheme = if (isDark) dark() else light(), fontScheme: FontScheme = rememberFontScheme(), spaceScheme: SpaceScheme = standardSpaceScheme(), radiusScheme: RadiusScheme = standardRadiusScheme(), motionScheme: MotionScheme = standardMotionScheme(), elevationScheme: ElevationScheme = standardElevationScheme(), strokeScheme: StrokeScheme = standardStrokeScheme(), touchTargetScheme: TouchTargetScheme = standardTouchTargetScheme(), hapticController: HapticController = LocalHapticController.current, content: @Composable () -> Unit )</ID>
+    <ID>MagicNumber:MotionScheme.kt$0.2f</ID>
+    <ID>MagicNumber:MotionScheme.kt$0.4f</ID>
+  </CurrentIssues>
+</SmellBaseline>

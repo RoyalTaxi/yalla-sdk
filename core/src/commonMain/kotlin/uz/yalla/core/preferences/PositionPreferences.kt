@@ -14,7 +14,6 @@ import uz.yalla.core.geo.GeoPoint
  * @see uz.yalla.core.location.LocationProvider
  */
 interface PositionPreferences {
-
     /**
      * Last camera center position on the map.
      *

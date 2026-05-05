@@ -25,7 +25,7 @@ import uz.yalla.platform.sheet.NativeSheet
 @Composable
 actual fun DatePickerSheet(
     state: DatePickerSheetState,
-    onEffect: (DatePickerSheetEffect) -> Unit,
+    onEffect: (DatePickerSheetEffect) -> Unit
 ) {
     var selectedDate by remember { mutableStateOf(state.startDate) }
 

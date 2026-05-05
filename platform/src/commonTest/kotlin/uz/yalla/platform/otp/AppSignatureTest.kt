@@ -12,7 +12,6 @@ import kotlin.test.assertTrue
  * On Android: null from the context-free actual (real hash requires a Context overload).
  */
 class AppSignatureTest {
-
     @Test
     fun shouldReturnNullOrStringOnEveryPlatform() {
         val result: String? = getAppSignature()

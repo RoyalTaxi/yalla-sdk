@@ -40,7 +40,7 @@ import kotlin.coroutines.resume
 @Composable
 actual fun YallaGallery(
     modifier: Modifier,
-    onImageSelected: (ByteArray?) -> Unit,
+    onImageSelected: (ByteArray?) -> Unit
 ) {
     var hasLaunched by remember { mutableStateOf(false) }
 
@@ -77,7 +77,7 @@ private suspend fun launchPHPicker(): ByteArray? =
                 object : NSObject(), PHPickerViewControllerDelegateProtocol {
                     override fun picker(
                         picker: PHPickerViewController,
-                        didFinishPicking: List<*>,
+                        didFinishPicking: List<*>
                     ) {
                         picker.dismissViewControllerAnimated(true, null)
 
@@ -92,7 +92,7 @@ private suspend fun launchPHPicker(): ByteArray? =
                         }
 
                         result.itemProvider.loadDataRepresentationForTypeIdentifier(
-                            "public.image",
+                            "public.image"
                         ) { nsData, error ->
                             if (error != null || nsData == null) {
                                 continuation.resume(null)

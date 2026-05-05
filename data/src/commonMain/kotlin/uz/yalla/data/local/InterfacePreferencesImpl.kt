@@ -27,7 +27,7 @@ import uz.yalla.core.util.orFalse
 internal class InterfacePreferencesImpl(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope,
-    private val staticPreferences: StaticPreferences,
+    private val staticPreferences: StaticPreferences
 ) : InterfacePreferences {
     override val localeType: Flow<LocaleKind> =
         dataStore.data.map { LocaleKind.from(it[PreferenceKeys.LOCALE_TYPE]) }

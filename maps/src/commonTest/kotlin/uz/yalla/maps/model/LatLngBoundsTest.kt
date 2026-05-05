@@ -7,32 +7,35 @@ import kotlin.test.assertFailsWith
 class LatLngBoundsTest {
     @Test
     fun shouldComputeCenter() {
-        val bounds = LatLngBounds(
-            southwest = LatLng(40.0, 68.0),
-            northeast = LatLng(42.0, 70.0),
-        )
+        val bounds =
+            LatLngBounds(
+                southwest = LatLng(40.0, 68.0),
+                northeast = LatLng(42.0, 70.0)
+            )
         assertEquals(41.0, bounds.center.latitude)
         assertEquals(69.0, bounds.center.longitude)
     }
 
     @Test
     fun shouldComputeCenterForSinglePoint() {
-        val bounds = LatLngBounds(
-            southwest = LatLng(41.0, 69.0),
-            northeast = LatLng(41.0, 69.0),
-        )
+        val bounds =
+            LatLngBounds(
+                southwest = LatLng(41.0, 69.0),
+                northeast = LatLng(41.0, 69.0)
+            )
         assertEquals(41.0, bounds.center.latitude)
         assertEquals(69.0, bounds.center.longitude)
     }
 
     @Test
     fun shouldBuildFromMultiplePoints() {
-        val bounds = LatLngBounds
-            .Builder()
-            .include(LatLng(40.0, 68.0))
-            .include(LatLng(42.0, 70.0))
-            .include(LatLng(41.0, 69.0))
-            .build()
+        val bounds =
+            LatLngBounds
+                .Builder()
+                .include(LatLng(40.0, 68.0))
+                .include(LatLng(42.0, 70.0))
+                .include(LatLng(41.0, 69.0))
+                .build()
 
         assertEquals(40.0, bounds.southwest.latitude)
         assertEquals(68.0, bounds.southwest.longitude)
@@ -42,10 +45,11 @@ class LatLngBoundsTest {
 
     @Test
     fun shouldBuildFromSinglePoint() {
-        val bounds = LatLngBounds
-            .Builder()
-            .include(LatLng(41.0, 69.0))
-            .build()
+        val bounds =
+            LatLngBounds
+                .Builder()
+                .include(LatLng(41.0, 69.0))
+                .build()
 
         assertEquals(41.0, bounds.southwest.latitude)
         assertEquals(41.0, bounds.northeast.latitude)

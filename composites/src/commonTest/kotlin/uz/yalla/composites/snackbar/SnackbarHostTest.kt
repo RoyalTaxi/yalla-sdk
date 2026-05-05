@@ -7,7 +7,6 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class SnackbarDataTest {
-
     @Test
     fun defaultIsSuccess_isTrue() {
         val data = SnackbarData(message = "Hello")
@@ -57,7 +56,6 @@ class SnackbarDataTest {
 }
 
 class SnackbarHostDimensTest {
-
     @Test
     fun defaults_areNonNull() {
         val dimens = SnackbarHostDefaults.dimens()

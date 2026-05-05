@@ -29,7 +29,6 @@ import kotlin.test.assertTrue
  * can be added to androidUnitTest once the module's test infrastructure supports it.
  */
 class ChangeLanguageTest {
-
     @Test
     fun changeLanguageUzDoesNotThrow() {
         // Must not throw; on iOS writes to NSUserDefaults, on Android calls Locale.setDefault.

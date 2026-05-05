@@ -31,9 +31,13 @@ import kotlin.test.assertTrue
  *  - Assert the result is a non-empty, valid JPEG byte array.
  */
 class YallaImageResizerTest {
-
     // Mirror of the private calculateInSampleSize from YallaImageResizer.
-    private fun calculateInSampleSize(outWidth: Int, outHeight: Int, targetWidth: Int, targetHeight: Int): Int {
+    private fun calculateInSampleSize(
+        outWidth: Int,
+        outHeight: Int,
+        targetWidth: Int,
+        targetHeight: Int
+    ): Int {
         var inSampleSize = 1
         while (outWidth / inSampleSize > targetWidth || outHeight / inSampleSize > targetHeight) {
             inSampleSize *= 2

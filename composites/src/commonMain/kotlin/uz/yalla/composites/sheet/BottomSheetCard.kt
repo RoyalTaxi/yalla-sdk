@@ -31,7 +31,9 @@ import uz.yalla.design.theme.System
  * Color configuration for [BottomSheetCard].
  */
 @Immutable
-data class BottomSheetCardColors(val container: Color)
+data class BottomSheetCardColors(
+    val container: Color
+)
 
 /**
  * Dimension configuration for [BottomSheetCard].
@@ -70,7 +72,7 @@ object BottomSheetCardDefaults {
      * Creates default dimensions.
      */
     fun dimens(
-        cornerRadius: Dp = 38.dp,
+        cornerRadius: Dp = 28.dp,
         shape: Shape = RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)
     ) = BottomSheetCardDimens(
         shape = shape,

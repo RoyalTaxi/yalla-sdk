@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.Flow
  * @see uz.yalla.core.session.UnauthorizedSessionEvents
  */
 interface SessionPreferences {
-
     /**
      * Bearer token for authenticated API requests.
      *

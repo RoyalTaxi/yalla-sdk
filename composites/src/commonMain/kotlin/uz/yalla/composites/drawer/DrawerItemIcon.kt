@@ -16,13 +16,17 @@ import uz.yalla.design.theme.System
  * Color configuration for [DrawerItemIcon].
  */
 @Immutable
-data class DrawerItemIconColors(val tint: Color)
+data class DrawerItemIconColors(
+    val tint: Color
+)
 
 /**
  * Dimension configuration for [DrawerItemIcon].
  */
 @Immutable
-data class DrawerItemIconDimens(val padding: Dp)
+data class DrawerItemIconDimens(
+    val padding: Dp
+)
 
 /**
  * Icon wrapper for drawer/menu items with standard padding.
@@ -46,7 +50,7 @@ fun DrawerItemIcon(
     painter: Painter,
     modifier: Modifier = Modifier,
     colors: DrawerItemIconColors = DrawerItemIconDefaults.colors(),
-    dimens: DrawerItemIconDimens = DrawerItemIconDefaults.dimens(),
+    dimens: DrawerItemIconDimens = DrawerItemIconDefaults.dimens()
 ) = Icon(
     painter = painter,
     tint = colors.tint,
@@ -62,10 +66,8 @@ fun DrawerItemIcon(
 object DrawerItemIconDefaults {
     /** Creates theme-aware default colors. */
     @Composable
-    fun colors(tint: Color = System.color.icon.base): DrawerItemIconColors =
-        DrawerItemIconColors(tint = tint)
+    fun colors(tint: Color = System.color.icon.base): DrawerItemIconColors = DrawerItemIconColors(tint = tint)
 
     /** Creates default dimensions. */
-    fun dimens(padding: Dp = 10.dp): DrawerItemIconDimens =
-        DrawerItemIconDimens(padding = padding)
+    fun dimens(padding: Dp = 10.dp): DrawerItemIconDimens = DrawerItemIconDimens(padding = padding)
 }

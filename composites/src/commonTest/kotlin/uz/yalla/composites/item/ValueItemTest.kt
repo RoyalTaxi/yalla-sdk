@@ -10,20 +10,21 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ValueItemColorsTest {
-
     private val brush = Brush.linearGradient(listOf(Color.Red, Color.Blue))
 
-    private val colors = ValueItemColors(
-        background = brush,
-        text = Color.White,
-    )
+    private val colors =
+        ValueItemColors(
+            background = brush,
+            text = Color.White
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = ValueItemColors(
-            background = brush,
-            text = Color.White,
-        )
+        val other =
+            ValueItemColors(
+                background = brush,
+                text = Color.White
+            )
         assertEquals(colors, other)
     }
 
@@ -42,7 +43,6 @@ class ValueItemColorsTest {
 }
 
 class ValueItemDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = ValueItemDefaults.dimens()
@@ -55,11 +55,12 @@ class ValueItemDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = ValueItemDefaults.dimens(
-            iconSize = 32.dp,
-            iconSpacing = 8.dp,
-            trailingSpacing = 16.dp,
-        )
+        val dimens =
+            ValueItemDefaults.dimens(
+                iconSize = 32.dp,
+                iconSpacing = 8.dp,
+                trailingSpacing = 16.dp
+            )
         assertEquals(32.dp, dimens.iconSize)
         assertEquals(8.dp, dimens.iconSpacing)
         assertEquals(16.dp, dimens.trailingSpacing)

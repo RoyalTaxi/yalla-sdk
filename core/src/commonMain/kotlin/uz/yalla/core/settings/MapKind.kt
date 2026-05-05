@@ -14,7 +14,9 @@ import uz.yalla.core.util.normalizedId
  * @see uz.yalla.core.preferences.InterfacePreferences.mapKind
  */
 @Serializable
-enum class MapKind(val id: String) {
+enum class MapKind(
+    val id: String
+) {
     /** Google Maps SDK. Default on Android. */
     @SerialName("google")
     Google("google"),

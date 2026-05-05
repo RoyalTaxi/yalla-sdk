@@ -23,7 +23,9 @@ expect fun rememberSystemCameraLauncher(
  * Obtain an instance via [rememberSystemCameraLauncher]. Call [launch] to open the camera;
  * the result is delivered through the callback provided at creation time.
  */
-expect class SystemCameraLauncher(onLaunch: () -> Unit) {
+expect class SystemCameraLauncher(
+    onLaunch: () -> Unit
+) {
     /**
      * Opens the system camera. On Android, guards against double-launch; on iOS, presents
      * the picker immediately.

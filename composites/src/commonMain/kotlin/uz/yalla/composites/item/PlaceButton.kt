@@ -23,7 +23,7 @@ import uz.yalla.design.theme.System
 @Immutable
 data class PlaceButtonColors(
     val container: Color,
-    val text: Color,
+    val text: Color
 )
 
 /**
@@ -33,24 +33,23 @@ data class PlaceButtonColors(
 data class PlaceButtonDimens(
     val shape: Shape,
     val contentPadding: PaddingValues,
-    val iconSpacing: Dp,
+    val iconSpacing: Dp
 )
 
 /**
  * Default configuration values for [PlaceButton].
  */
 object PlaceButtonDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
     @Composable
     fun colors(
         container: Color = System.color.background.secondary,
-        text: Color = System.color.text.base,
+        text: Color = System.color.text.base
     ) = PlaceButtonColors(
         container = container,
-        text = text,
+        text = text
     )
 
     /**
@@ -59,11 +58,11 @@ object PlaceButtonDefaults {
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         contentPadding: PaddingValues = PaddingValues(0.dp),
-        iconSpacing: Dp = 12.dp,
+        iconSpacing: Dp = 12.dp
     ) = PlaceButtonDimens(
         shape = shape,
         contentPadding = contentPadding,
-        iconSpacing = iconSpacing,
+        iconSpacing = iconSpacing
     )
 }
 
@@ -97,18 +96,18 @@ fun PlaceButton(
     leadingIcon: (@Composable () -> Unit)? = null,
     trailingIcon: (@Composable () -> Unit)? = null,
     colors: PlaceButtonColors = PlaceButtonDefaults.colors(),
-    dimens: PlaceButtonDimens = PlaceButtonDefaults.dimens(),
+    dimens: PlaceButtonDimens = PlaceButtonDefaults.dimens()
 ) {
     Button(
         modifier = modifier,
         onClick = onClick,
         contentPadding = dimens.contentPadding,
         colors = ButtonDefaults.buttonColors(colors.container),
-        shape = dimens.shape,
+        shape = dimens.shape
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(dimens.iconSpacing),
+            horizontalArrangement = Arrangement.spacedBy(dimens.iconSpacing)
         ) {
             leadingIcon?.let { icon ->
                 icon()
@@ -118,7 +117,7 @@ fun PlaceButton(
                 text = text,
                 color = colors.text,
                 style = System.font.body.base.bold,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f)
             )
 
             trailingIcon?.let { icon ->

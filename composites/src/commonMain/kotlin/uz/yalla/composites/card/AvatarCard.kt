@@ -29,7 +29,7 @@ import uz.yalla.design.theme.System
 data class AvatarCardColors(
     val name: Color,
     val badgeBackground: Brush,
-    val badgeText: Color,
+    val badgeText: Color
 )
 
 /**
@@ -41,14 +41,13 @@ data class AvatarCardDimens(
     val badgeShape: Shape,
     val badgePadding: PaddingValues,
     val nameTopSpacing: Dp,
-    val contentSpacing: Dp,
+    val contentSpacing: Dp
 )
 
 /**
  * Default configuration values for [AvatarCard].
  */
 object AvatarCardDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
@@ -56,12 +55,13 @@ object AvatarCardDefaults {
     fun colors(
         name: Color = System.color.text.base,
         badgeBackground: Brush = System.color.gradient.sunsetNight,
-        badgeText: Color = System.color.text.white,
-    ): AvatarCardColors = AvatarCardColors(
-        name = name,
-        badgeBackground = badgeBackground,
-        badgeText = badgeText,
-    )
+        badgeText: Color = System.color.text.white
+    ): AvatarCardColors =
+        AvatarCardColors(
+            name = name,
+            badgeBackground = badgeBackground,
+            badgeText = badgeText
+        )
 
     /**
      * Creates default dimensions.
@@ -71,14 +71,15 @@ object AvatarCardDefaults {
         badgeShape: Shape = RoundedCornerShape(8.dp),
         badgePadding: PaddingValues = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
         nameTopSpacing: Dp = 12.dp,
-        contentSpacing: Dp = 8.dp,
-    ): AvatarCardDimens = AvatarCardDimens(
-        avatarSize = avatarSize,
-        badgeShape = badgeShape,
-        badgePadding = badgePadding,
-        nameTopSpacing = nameTopSpacing,
-        contentSpacing = contentSpacing,
-    )
+        contentSpacing: Dp = 8.dp
+    ): AvatarCardDimens =
+        AvatarCardDimens(
+            avatarSize = avatarSize,
+            badgeShape = badgeShape,
+            badgePadding = badgePadding,
+            nameTopSpacing = nameTopSpacing,
+            contentSpacing = contentSpacing
+        )
 }
 
 /**
@@ -120,29 +121,31 @@ fun AvatarCard(
     avatar: @Composable () -> Unit,
     badge: @Composable (() -> Unit)? = null,
     content: @Composable (() -> Unit)? = null,
-    name: @Composable () -> Unit,
+    name: @Composable () -> Unit
 ) {
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box {
             Box(
-                modifier = Modifier
-                    .size(dimens.avatarSize)
-                    .clip(CircleShape),
+                modifier =
+                    Modifier
+                        .size(dimens.avatarSize)
+                        .clip(CircleShape)
             ) {
                 avatar()
             }
 
             badge?.let {
                 Box(
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .clip(dimens.badgeShape)
-                        .background(colors.badgeBackground)
-                        .padding(dimens.badgePadding),
-                    contentAlignment = Alignment.Center,
+                    modifier =
+                        Modifier
+                            .align(Alignment.BottomEnd)
+                            .clip(dimens.badgeShape)
+                            .background(colors.badgeBackground)
+                            .padding(dimens.badgePadding),
+                    contentAlignment = Alignment.Center
                 ) {
                     it()
                 }

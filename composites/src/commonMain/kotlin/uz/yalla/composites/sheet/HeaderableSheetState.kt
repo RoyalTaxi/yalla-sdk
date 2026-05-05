@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
  */
 enum class HeaderableSheetValue {
     Collapsed,
-    Expanded,
+    Expanded
 }
 
 /**

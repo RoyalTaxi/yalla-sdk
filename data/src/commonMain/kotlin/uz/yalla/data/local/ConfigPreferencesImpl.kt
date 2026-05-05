@@ -25,7 +25,7 @@ import uz.yalla.core.util.orFalse
  */
 internal class ConfigPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope
 ) : ConfigPreferences {
     override val supportNumber: Flow<String> =
         dataStore.data.map { it[PreferenceKeys.SUPPORT_NUMBER].orEmpty() }

@@ -43,7 +43,7 @@ internal fun PinContent(
     timeoutLabelStyle: androidx.compose.ui.text.TextStyle,
     colors: LocationPinColors,
     dimens: LocationPinDimens,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "loader")
     val rotation by infiniteTransition.animateFloat(
@@ -56,9 +56,9 @@ internal fun PinContent(
                 animation =
                     tween(
                         easing = FastOutSlowInEasing,
-                        durationMillis = JUMP_CYCLE_DURATION_MS * 2,
-                    ),
-            ),
+                        durationMillis = JUMP_CYCLE_DURATION_MS * 2
+                    )
+            )
     )
 
     Box(
@@ -69,12 +69,12 @@ internal fun PinContent(
                 .aspectRatio(1f)
                 .background(
                     shape = dimens.contentShape,
-                    color = colors.background,
+                    color = colors.background
                 ).border(
                     width = dimens.borderWidth,
                     shape = dimens.contentShape,
-                    brush = colors.border,
-                ),
+                    brush = colors.border
+                )
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             when {
@@ -86,7 +86,7 @@ internal fun PinContent(
                         modifier =
                             Modifier
                                 .size(18.dp)
-                                .graphicsLayer { rotationZ = rotation },
+                                .graphicsLayer { rotationZ = rotation }
                     )
                 }
                 timeout == null -> {
@@ -96,7 +96,7 @@ internal fun PinContent(
                     Text(
                         text = timeout.or0().coerceAtLeast(1).toString(),
                         color = colors.text,
-                        style = timeoutStyle,
+                        style = timeoutStyle
                     )
                     Text(
                         text = stringResource(Res.string.format_time_min_short),
@@ -104,8 +104,8 @@ internal fun PinContent(
                         style =
                             timeoutLabelStyle.copy(
                                 fontSize = 9.sp,
-                                lineHeight = 8.sp,
-                            ),
+                                lineHeight = 8.sp
+                            )
                     )
                 }
             }

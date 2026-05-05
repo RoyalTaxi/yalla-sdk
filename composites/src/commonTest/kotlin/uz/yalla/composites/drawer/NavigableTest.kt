@@ -9,22 +9,23 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class NavigableColorsTest {
-
-    private val colors = NavigableColors(
-        container = Color.White,
-        title = Color.Black,
-        description = Color.Gray,
-        chevron = Color.DarkGray,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = NavigableColors(
+    private val colors =
+        NavigableColors(
             container = Color.White,
             title = Color.Black,
             description = Color.Gray,
-            chevron = Color.DarkGray,
+            chevron = Color.DarkGray
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            NavigableColors(
+                container = Color.White,
+                title = Color.Black,
+                description = Color.Gray,
+                chevron = Color.DarkGray
+            )
         assertEquals(colors, other)
     }
 
@@ -68,7 +69,6 @@ class NavigableColorsTest {
 }
 
 class NavigableDimensTest {
-
     @Test
     fun defaults_areNonNull() {
         val dimens = NavigableDefaults.dimens()
@@ -104,7 +104,7 @@ class NavigableDimensTest {
         val dimens = NavigableDefaults.dimens()
         assertEquals(
             PaddingValues(horizontal = 8.dp, vertical = 9.dp),
-            dimens.contentPadding,
+            dimens.contentPadding
         )
     }
 

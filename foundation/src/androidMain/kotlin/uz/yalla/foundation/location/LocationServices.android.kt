@@ -11,7 +11,7 @@ private fun requireKoinContext(fnName: String): Context =
         error(
             "yalla-sdk foundation.location.$fnName requires a Koin global Context binding. " +
                 "Call startKoin { androidContext(applicationContext) } before invoking this function. " +
-                "Root cause: ${cause::class.simpleName}: ${cause.message}",
+                "Root cause: ${cause::class.simpleName}: ${cause.message}"
         )
     }
 
@@ -26,8 +26,9 @@ actual fun isLocationServicesEnabled(): Boolean {
 /** @see openLocationSettings */
 actual fun openLocationSettings() {
     val context = requireKoinContext("openLocationSettings")
-    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
+    val intent =
+        Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
     context.startActivity(intent)
 }

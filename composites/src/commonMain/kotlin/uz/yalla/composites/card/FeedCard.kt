@@ -28,7 +28,7 @@ import uz.yalla.design.theme.System
 data class FeedCardColors(
     val container: Color,
     val border: Color,
-    val indicator: Color,
+    val indicator: Color
 )
 
 /**
@@ -41,14 +41,13 @@ data class FeedCardDimens(
     val contentPadding: PaddingValues,
     val indicatorHeight: Dp,
     val indicatorWidth: Dp,
-    val indicatorRadius: Dp,
+    val indicatorRadius: Dp
 )
 
 /**
  * Default configuration values for [FeedCard].
  */
 object FeedCardDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
@@ -56,12 +55,13 @@ object FeedCardDefaults {
     fun colors(
         container: Color = System.color.background.secondary,
         border: Color = System.color.border.disabled,
-        indicator: Color = System.color.background.brand,
-    ): FeedCardColors = FeedCardColors(
-        container = container,
-        border = border,
-        indicator = indicator,
-    )
+        indicator: Color = System.color.background.brand
+    ): FeedCardColors =
+        FeedCardColors(
+            container = container,
+            border = border,
+            indicator = indicator
+        )
 
     /**
      * Creates default dimensions.
@@ -72,15 +72,16 @@ object FeedCardDefaults {
         contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
         indicatorHeight: Dp = 64.dp,
         indicatorWidth: Dp = 4.dp,
-        indicatorRadius: Dp = 2.dp,
-    ): FeedCardDimens = FeedCardDimens(
-        shape = shape,
-        borderWidth = borderWidth,
-        contentPadding = contentPadding,
-        indicatorHeight = indicatorHeight,
-        indicatorWidth = indicatorWidth,
-        indicatorRadius = indicatorRadius,
-    )
+        indicatorRadius: Dp = 2.dp
+    ): FeedCardDimens =
+        FeedCardDimens(
+            shape = shape,
+            borderWidth = borderWidth,
+            contentPadding = contentPadding,
+            indicatorHeight = indicatorHeight,
+            indicatorWidth = indicatorWidth,
+            indicatorRadius = indicatorRadius
+        )
 }
 
 /**
@@ -119,31 +120,33 @@ fun FeedCard(
     isHighlighted: Boolean = false,
     colors: FeedCardColors = FeedCardDefaults.colors(),
     dimens: FeedCardDimens = FeedCardDefaults.dimens(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ContentCard(
         modifier = modifier,
         onClick = onClick,
         border = BorderStroke(dimens.borderWidth, colors.border),
         colors = ContentCardDefaults.colors(container = colors.container),
-        dimens = ContentCardDefaults.dimens(
-            shape = dimens.shape,
-            contentPadding = PaddingValues(0.dp),
-        ),
+        dimens =
+            ContentCardDefaults.dimens(
+                shape = dimens.shape,
+                contentPadding = PaddingValues(0.dp)
+            )
     ) {
         Box {
             if (isHighlighted) {
                 Box(
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .height(dimens.indicatorHeight)
-                        .width(dimens.indicatorWidth)
-                        .clip(
-                            RoundedCornerShape(
-                                topEnd = dimens.indicatorRadius,
-                                bottomEnd = dimens.indicatorRadius,
-                            ),
-                        ).background(colors.indicator),
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterStart)
+                            .height(dimens.indicatorHeight)
+                            .width(dimens.indicatorWidth)
+                            .clip(
+                                RoundedCornerShape(
+                                    topEnd = dimens.indicatorRadius,
+                                    bottomEnd = dimens.indicatorRadius
+                                )
+                            ).background(colors.indicator)
                 )
             }
 

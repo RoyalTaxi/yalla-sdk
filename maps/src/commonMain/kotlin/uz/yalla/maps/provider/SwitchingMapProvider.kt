@@ -8,8 +8,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.settings.MapKind
 import uz.yalla.maps.api.ExtendedMap
 import uz.yalla.maps.api.LiteMap
@@ -52,7 +52,7 @@ class SwitchingMapProvider(
     private val googleProvider: MapProvider,
     private val libreProvider: MapProvider,
     private val interfacePreferences: InterfacePreferences,
-    private val scope: CoroutineScope,
+    private val scope: CoroutineScope
 ) : MapProvider {
     private var userSelectedProvider: MapProvider? = null
     private val currentProvider: MapProvider get() = userSelectedProvider ?: googleProvider
@@ -212,22 +212,24 @@ private class SwitchingStaticMap(
         val mapType by interfacePreferences.mapKind.collectAsStateWithLifecycle(MapKind.Google)
         key(mapType) {
             when (mapType) {
-                MapKind.Google -> google.Content(
-                    modifier = modifier,
-                    route = route,
-                    locations = locations,
-                    startLabel = startLabel,
-                    endLabel = endLabel,
-                    onMapReady = onMapReady
-                )
-                MapKind.Libre -> libre.Content(
-                    modifier = modifier,
-                    route = route,
-                    locations = locations,
-                    startLabel = startLabel,
-                    endLabel = endLabel,
-                    onMapReady = onMapReady
-                )
+                MapKind.Google ->
+                    google.Content(
+                        modifier = modifier,
+                        route = route,
+                        locations = locations,
+                        startLabel = startLabel,
+                        endLabel = endLabel,
+                        onMapReady = onMapReady
+                    )
+                MapKind.Libre ->
+                    libre.Content(
+                        modifier = modifier,
+                        route = route,
+                        locations = locations,
+                        startLabel = startLabel,
+                        endLabel = endLabel,
+                        onMapReady = onMapReady
+                    )
             }
         }
     }

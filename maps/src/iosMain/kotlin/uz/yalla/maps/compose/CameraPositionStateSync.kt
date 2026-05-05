@@ -27,7 +27,7 @@ import uz.yalla.maps.model.LatLngBounds
 @Composable
 internal fun SetupCameraPositionStateSync(
     cameraPositionState: CameraPositionState,
-    mapView: GMSMapView,
+    mapView: GMSMapView
 ) {
     DisposableEffect(mapView) {
         cameraPositionState.positionUpdater = { position ->
@@ -71,7 +71,7 @@ internal fun SetupCameraPositionStateSync(
 @OptIn(ExperimentalForeignApi::class)
 internal fun updateCameraPositionStateOnIdle(
     cameraPositionState: CameraPositionState,
-    idleAtCameraPosition: GMSCameraPosition,
+    idleAtCameraPosition: GMSCameraPosition
 ) {
     cameraPositionState.isMoving = false
     val (lat, lng) = idleAtCameraPosition.target.useContents { latitude to longitude }
@@ -93,7 +93,7 @@ internal fun updateCameraPositionStateOnIdle(
 @OptIn(ExperimentalForeignApi::class)
 internal fun updateCameraPositionStateOnMove(
     cameraPositionState: CameraPositionState,
-    cameraPosition: GMSCameraPosition,
+    cameraPosition: GMSCameraPosition
 ) {
     cameraPosition.target.useContents {
         cameraPositionState.rawPosition =

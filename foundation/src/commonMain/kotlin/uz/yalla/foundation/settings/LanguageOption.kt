@@ -22,19 +22,18 @@ import uz.yalla.resources.language_uzbek_latin
 sealed class LanguageOption(
     override val icon: ImageVector,
     override val name: StringResource,
-    val kind: LocaleKind,
+    val kind: LocaleKind
 ) : Selectable {
-
     data object Uzbek : LanguageOption(
         icon = YallaIcons.FlagUz,
         name = Res.string.language_uzbek_latin,
-        kind = LocaleKind.Uz,
+        kind = LocaleKind.Uz
     )
 
     data object Russian : LanguageOption(
         icon = YallaIcons.FlagRu,
         name = Res.string.language_russian,
-        kind = LocaleKind.Ru,
+        kind = LocaleKind.Ru
     )
 
     companion object {
@@ -42,9 +41,10 @@ sealed class LanguageOption(
         val all = listOf(Uzbek, Russian)
 
         /** Exhaustive over current [LocaleKind] cases. */
-        fun from(kind: LocaleKind): LanguageOption = when (kind) {
-            LocaleKind.Uz -> Uzbek
-            LocaleKind.Ru -> Russian
-        }
+        fun from(kind: LocaleKind): LanguageOption =
+            when (kind) {
+                LocaleKind.Uz -> Uzbek
+                LocaleKind.Ru -> Russian
+            }
     }
 }

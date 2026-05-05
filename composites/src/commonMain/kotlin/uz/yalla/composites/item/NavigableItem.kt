@@ -25,7 +25,7 @@ data class NavigableItemColors(
     val icon: Color,
     val title: Color,
     val subtitle: Color,
-    val arrow: Color,
+    val arrow: Color
 )
 
 /**
@@ -39,7 +39,7 @@ data class NavigableItemDimens(
     val iconContainerSize: Dp,
     val iconContainerShape: Shape,
     val iconPadding: Dp,
-    val arrowSize: Dp,
+    val arrowSize: Dp
 )
 
 /**
@@ -84,7 +84,7 @@ fun NavigableItem(
     icon: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
     colors: NavigableItemColors = NavigableItemDefaults.colors(),
-    dimens: NavigableItemDimens = NavigableItemDefaults.dimens(),
+    dimens: NavigableItemDimens = NavigableItemDefaults.dimens()
 ) {
     IconItem(
         title = title,
@@ -92,27 +92,30 @@ fun NavigableItem(
         onClick = onClick,
         modifier = modifier,
         icon = icon,
-        trailingContent = trailingContent ?: {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
-                contentDescription = null,
-                tint = colors.arrow,
-                modifier = Modifier.size(dimens.arrowSize),
+        trailingContent =
+            trailingContent ?: {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowForwardIos,
+                    contentDescription = null,
+                    tint = colors.arrow,
+                    modifier = Modifier.size(dimens.arrowSize)
+                )
+            },
+        colors =
+            IconItemDefaults.colors(
+                container = colors.container,
+                iconBackground = colors.iconBackground,
+                title = colors.title,
+                subtitle = colors.subtitle
+            ),
+        dimens =
+            IconItemDefaults.dimens(
+                contentPadding = dimens.contentPadding,
+                contentSpacing = dimens.contentSpacing,
+                iconContainerSize = dimens.iconContainerSize,
+                iconContainerShape = dimens.iconContainerShape,
+                iconPadding = dimens.iconPadding
             )
-        },
-        colors = IconItemDefaults.colors(
-            container = colors.container,
-            iconBackground = colors.iconBackground,
-            title = colors.title,
-            subtitle = colors.subtitle,
-        ),
-        dimens = IconItemDefaults.dimens(
-            contentPadding = dimens.contentPadding,
-            contentSpacing = dimens.contentSpacing,
-            iconContainerSize = dimens.iconContainerSize,
-            iconContainerShape = dimens.iconContainerShape,
-            iconPadding = dimens.iconPadding,
-        ),
     )
 }
 
@@ -120,7 +123,6 @@ fun NavigableItem(
  * Default configuration values for [NavigableItem].
  */
 object NavigableItemDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
@@ -131,15 +133,16 @@ object NavigableItemDefaults {
         icon: Color = System.color.icon.base,
         title: Color = System.color.text.base,
         subtitle: Color = System.color.text.subtle,
-        arrow: Color = System.color.icon.subtle,
-    ): NavigableItemColors = NavigableItemColors(
-        container = container,
-        iconBackground = iconBackground,
-        icon = icon,
-        title = title,
-        subtitle = subtitle,
-        arrow = arrow,
-    )
+        arrow: Color = System.color.icon.subtle
+    ): NavigableItemColors =
+        NavigableItemColors(
+            container = container,
+            iconBackground = iconBackground,
+            icon = icon,
+            title = title,
+            subtitle = subtitle,
+            arrow = arrow
+        )
 
     /**
      * Creates default dimensions.
@@ -151,14 +154,15 @@ object NavigableItemDefaults {
         iconContainerSize: Dp = 44.dp,
         iconContainerShape: Shape = RoundedCornerShape(10.dp),
         iconPadding: Dp = 10.dp,
-        arrowSize: Dp = 16.dp,
-    ): NavigableItemDimens = NavigableItemDimens(
-        height = height,
-        contentPadding = contentPadding,
-        contentSpacing = contentSpacing,
-        iconContainerSize = iconContainerSize,
-        iconContainerShape = iconContainerShape,
-        iconPadding = iconPadding,
-        arrowSize = arrowSize,
-    )
+        arrowSize: Dp = 16.dp
+    ): NavigableItemDimens =
+        NavigableItemDimens(
+            height = height,
+            contentPadding = contentPadding,
+            contentSpacing = contentSpacing,
+            iconContainerSize = iconContainerSize,
+            iconContainerShape = iconContainerShape,
+            iconPadding = iconPadding,
+            arrowSize = arrowSize
+        )
 }

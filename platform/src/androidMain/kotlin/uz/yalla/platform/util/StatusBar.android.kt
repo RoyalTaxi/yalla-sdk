@@ -12,5 +12,4 @@ import androidx.compose.ui.unit.Dp
  * Reads the top padding from [WindowInsets.statusBars] via [asPaddingValues].
  */
 @Composable
-actual fun statusBarHeight(): Dp =
-    WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+actual fun statusBarHeight(): Dp = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()

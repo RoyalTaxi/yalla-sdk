@@ -29,26 +29,28 @@ import uz.yalla.platform.config.requireIosConfig
 actual fun <C : Route> NativeNavHost(
     rootComponent: NativeRootComponent<C>,
     screenProvider: ScreenProvider<C>,
-    modifier: Modifier,
+    modifier: Modifier
 ) {
     val initialRoute = remember { rootComponent.childStack.value.active.configuration }
     val iosConfig = requireIosConfig()
 
-    val (navController, navigator) = remember {
-        val nc = UINavigationController()
-        nc.navigationBar.prefersLargeTitles = true
+    val (navController, navigator) =
+        remember {
+            val nc = UINavigationController()
+            nc.navigationBar.prefersLargeTitles = true
 
-        iosConfig.navigationBarAppearance?.let { applyAppearance(nc, it) }
+            iosConfig.navigationBarAppearance?.let { applyAppearance(nc, it) }
 
-        val nav = UIKitNavigator<C>(
-            navController = nc,
-            vcFactory = { route, nav -> createViewController(route, screenProvider, nav) },
-            initialRoute = initialRoute,
-        )
-        nav.setInitial()
+            val nav =
+                UIKitNavigator<C>(
+                    navController = nc,
+                    vcFactory = { route, nav -> createViewController(route, screenProvider, nav) },
+                    initialRoute = initialRoute
+                )
+            nav.setInitial()
 
-        nc to nav
-    }
+            nc to nav
+        }
 
     // Expose navigator for ScreenFactory; clear on dispose to prevent retention.
     androidx.compose.runtime.DisposableEffect(navigator) {
@@ -59,7 +61,7 @@ actual fun <C : Route> NativeNavHost(
     CompositionLocalProvider(LocalNavigator provides navigator) {
         UIKitViewController(
             factory = { navController },
-            modifier = modifier,
+            modifier = modifier
         )
     }
 }
@@ -97,9 +99,8 @@ var _iosNavigator: Navigator? = null
 @OptIn(ExperimentalForeignApi::class)
 private class ScreenContainerViewController(
     private val hidesNavBar: Boolean,
-    private val toolbarState: ToolbarState,
+    private val toolbarState: ToolbarState
 ) : UIViewController(nibName = null, bundle = null) {
-
     override fun viewWillAppear(animated: Boolean) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(hidesNavBar, animated = animated)
@@ -108,9 +109,13 @@ private class ScreenContainerViewController(
     override fun viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         view.safeAreaInsets.useContents {
-            val newPadding = androidx.compose.foundation.layout.PaddingValues(
-                top = top.dp, bottom = bottom.dp, start = left.dp, end = right.dp,
-            )
+            val newPadding =
+                androidx.compose.foundation.layout.PaddingValues(
+                    top = top.dp,
+                    bottom = bottom.dp,
+                    start = left.dp,
+                    end = right.dp
+                )
             if (toolbarState.contentPadding != newPadding) {
                 toolbarState.contentPadding = newPadding
             }
@@ -134,27 +139,29 @@ private class ScreenContainerViewController(
 private fun <C : Route> createViewController(
     route: C,
     screenProvider: ScreenProvider<C>,
-    navigator: Navigator,
+    navigator: Navigator
 ): UIViewController {
     val config = screenProvider.configFor(route)
     val toolbarState = ToolbarState()
 
-    val containerVC = ScreenContainerViewController(
-        hidesNavBar = !config.showsNavigationBar,
-        toolbarState = toolbarState,
-    )
+    val containerVC =
+        ScreenContainerViewController(
+            hidesNavBar = !config.showsNavigationBar,
+            toolbarState = toolbarState
+        )
 
-    val composeVC = ComposeUIViewController {
-        CompositionLocalProvider(LocalNavigator provides navigator) {
-            screenProvider.Content(route, navigator, toolbarState)
-        }
+    val composeVC =
+        ComposeUIViewController {
+            CompositionLocalProvider(LocalNavigator provides navigator) {
+                screenProvider.Content(route, navigator, toolbarState)
+            }
 
-        LaunchedEffect(toolbarState) {
-            snapshotFlow { toolbarState.actions }.collectLatest { actions ->
-                syncToolbarActions(containerVC, actions)
+            LaunchedEffect(toolbarState) {
+                snapshotFlow { toolbarState.actions }.collectLatest { actions ->
+                    syncToolbarActions(containerVC, actions)
+                }
             }
         }
-    }
 
     containerVC.addChildViewController(composeVC)
     composeVC.view.setFrame(containerVC.view.bounds)
@@ -180,36 +187,42 @@ private fun <C : Route> createViewController(
  * @param vc The view controller whose `navigationItem.rightBarButtonItems` will be updated.
  */
 @OptIn(ExperimentalForeignApi::class)
-private fun syncToolbarActions(vc: UIViewController, actions: List<ToolbarAction>) {
+private fun syncToolbarActions(
+    vc: UIViewController,
+    actions: List<ToolbarAction>
+) {
     if (actions.isEmpty()) {
         vc.navigationItem.rightBarButtonItems = null
         return
     }
-    val items = actions.map { action ->
-        when (action) {
-            is ToolbarAction.Text -> {
-                val item = UIBarButtonItem(
-                    title = action.label,
-                    style = UIBarButtonItemStyle.UIBarButtonItemStylePlain,
-                    target = null,
-                    action = null,
-                )
-                item.primaryAction = UIAction.actionWithHandler { _ -> action.onClick() }
-                item
-            }
-            is ToolbarAction.Icon -> {
-                val image = toolbarIconImage(action.icon)
-                val item = UIBarButtonItem(
-                    image = image,
-                    style = UIBarButtonItemStyle.UIBarButtonItemStylePlain,
-                    target = null,
-                    action = null,
-                )
-                item.primaryAction = UIAction.actionWithHandler { _ -> action.onClick() }
-                item
+    val items =
+        actions.map { action ->
+            when (action) {
+                is ToolbarAction.Text -> {
+                    val item =
+                        UIBarButtonItem(
+                            title = action.label,
+                            style = UIBarButtonItemStyle.UIBarButtonItemStylePlain,
+                            target = null,
+                            action = null
+                        )
+                    item.primaryAction = UIAction.actionWithHandler { _ -> action.onClick() }
+                    item
+                }
+                is ToolbarAction.Icon -> {
+                    val image = toolbarIconImage(action.icon)
+                    val item =
+                        UIBarButtonItem(
+                            image = image,
+                            style = UIBarButtonItemStyle.UIBarButtonItemStylePlain,
+                            target = null,
+                            action = null
+                        )
+                    item.primaryAction = UIAction.actionWithHandler { _ -> action.onClick() }
+                    item
+                }
             }
         }
-    }
     vc.navigationItem.rightBarButtonItems = items
 }
 
@@ -218,12 +231,13 @@ private fun syncToolbarActions(vc: UIViewController, actions: List<ToolbarAction
  *
  * @return The corresponding SF Symbol image, or `null` if the symbol is unavailable.
  */
-private fun toolbarIconImage(icon: ToolbarIcon): UIImage? = when (icon) {
-    ToolbarIcon.Edit -> UIImage.systemImageNamed("pencil")
-    ToolbarIcon.ReadAll -> UIImage.systemImageNamed("envelope.open")
-    ToolbarIcon.More -> UIImage.systemImageNamed("ellipsis")
-    ToolbarIcon.Add -> UIImage.systemImageNamed("plus")
-}
+private fun toolbarIconImage(icon: ToolbarIcon): UIImage? =
+    when (icon) {
+        ToolbarIcon.Edit -> UIImage.systemImageNamed("pencil")
+        ToolbarIcon.ReadAll -> UIImage.systemImageNamed("envelope.open")
+        ToolbarIcon.More -> UIImage.systemImageNamed("ellipsis")
+        ToolbarIcon.Add -> UIImage.systemImageNamed("plus")
+    }
 
 // endregion
 
@@ -237,7 +251,7 @@ private fun toolbarIconImage(icon: ToolbarIcon): UIImage? = when (icon) {
  */
 private fun applyAppearance(
     navController: UINavigationController,
-    appearance: NavigationBarAppearance,
+    appearance: NavigationBarAppearance
 ) {
     val bar = navController.navigationBar
     val barAppearance = UINavigationBarAppearance()
@@ -260,10 +274,11 @@ private fun applyAppearance(
     if (appearance.titleFontName != null && appearance.titleColor != 0L) {
         val font = UIFont.fontWithName(appearance.titleFontName, size = 17.0)
         if (font != null) {
-            val attrs = mapOf<Any?, Any?>(
-                "NSFont" to font,
-                NSForegroundColorAttributeName to argbToUIColor(appearance.titleColor),
-            )
+            val attrs =
+                mapOf<Any?, Any?>(
+                    "NSFont" to font,
+                    NSForegroundColorAttributeName to argbToUIColor(appearance.titleColor)
+                )
             barAppearance.titleTextAttributes = attrs
         }
     }
@@ -271,10 +286,11 @@ private fun applyAppearance(
     if (appearance.largeTitleFontName != null && appearance.titleColor != 0L) {
         val font = UIFont.fontWithName(appearance.largeTitleFontName, size = 34.0)
         if (font != null) {
-            val attrs = mapOf<Any?, Any?>(
-                "NSFont" to font,
-                NSForegroundColorAttributeName to argbToUIColor(appearance.titleColor),
-            )
+            val attrs =
+                mapOf<Any?, Any?>(
+                    "NSFont" to font,
+                    NSForegroundColorAttributeName to argbToUIColor(appearance.titleColor)
+                )
             barAppearance.largeTitleTextAttributes = attrs
         }
     }

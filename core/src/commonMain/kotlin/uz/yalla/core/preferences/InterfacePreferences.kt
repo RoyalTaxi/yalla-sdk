@@ -20,7 +20,6 @@ import uz.yalla.core.settings.ThemeKind
  * @see MapKind
  */
 interface InterfacePreferences {
-
     /** Current app locale. Drives string resource selection and RTL layout. */
     val localeType: Flow<LocaleKind>
 
@@ -28,10 +27,12 @@ interface InterfacePreferences {
 
     /** Light/dark appearance preference. See [ThemeKind] for valid values. */
     val themeType: Flow<ThemeKind>
+
     fun setThemeType(value: ThemeKind)
 
     /** Map rendering backend selection; see [MapKind] for the platform trade-offs. */
     val mapKind: Flow<MapKind>
+
     fun setMapKind(value: MapKind)
 
     /**
@@ -40,6 +41,7 @@ interface InterfacePreferences {
      * launches. Persists across restarts.
      */
     val skipOnboarding: Flow<Boolean>
+
     fun setSkipOnboarding(value: Boolean)
 
     /**

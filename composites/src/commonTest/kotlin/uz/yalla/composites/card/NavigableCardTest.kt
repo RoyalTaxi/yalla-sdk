@@ -9,26 +9,27 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class NavigableCardColorsTest {
-
-    private val colors = NavigableCardColors(
-        container = Color.Transparent,
-        border = Color.Gray,
-        arrow = Color.Black,
-        disabledContainer = Color.Transparent,
-        disabledBorder = Color.LightGray,
-        disabledArrow = Color.LightGray,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = NavigableCardColors(
+    private val colors =
+        NavigableCardColors(
             container = Color.Transparent,
             border = Color.Gray,
             arrow = Color.Black,
             disabledContainer = Color.Transparent,
             disabledBorder = Color.LightGray,
-            disabledArrow = Color.LightGray,
+            disabledArrow = Color.LightGray
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            NavigableCardColors(
+                container = Color.Transparent,
+                border = Color.Gray,
+                arrow = Color.Black,
+                disabledContainer = Color.Transparent,
+                disabledBorder = Color.LightGray,
+                disabledArrow = Color.LightGray
+            )
         assertEquals(colors, other)
     }
 
@@ -46,7 +47,6 @@ class NavigableCardColorsTest {
 }
 
 class NavigableCardDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = NavigableCardDefaults.dimens()

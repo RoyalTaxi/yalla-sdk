@@ -34,7 +34,7 @@ data class PrimaryFieldColors(
     val unfocusedBorderColor: Color,
     val cursorColor: Color,
     val selectionColors: TextSelectionColors,
-    val placeholderColor: Color,
+    val placeholderColor: Color
 )
 
 /**
@@ -44,7 +44,7 @@ data class PrimaryFieldColors(
  */
 @Immutable
 data class PrimaryFieldDimens(
-    val shape: Shape,
+    val shape: Shape
 )
 
 /**
@@ -53,7 +53,6 @@ data class PrimaryFieldDimens(
  * Provides theme-aware defaults for [colors], [textStyle], and [dimens].
  */
 object PrimaryFieldDefaults {
-
     /** Creates theme-aware color configuration for [PrimaryField]. */
     @Composable
     fun colors(
@@ -65,30 +64,31 @@ object PrimaryFieldDefaults {
         selectionColors: TextSelectionColors =
             TextSelectionColors(
                 handleColor = System.color.text.link,
-                backgroundColor = System.color.text.link
-                    .copy(.3f)
+                backgroundColor =
+                    System.color.text.link
+                        .copy(.3f)
             ),
-        placeholderColor: Color = System.color.text.subtle,
-    ): PrimaryFieldColors = PrimaryFieldColors(
-        focusedTextColor = focusedTextColor,
-        unfocusedTextColor = unfocusedTextColor,
-        focusedBorderColor = focusedBorderColor,
-        unfocusedBorderColor = unfocusedBorderColor,
-        cursorColor = cursorColor,
-        selectionColors = selectionColors,
-        placeholderColor = placeholderColor,
-    )
+        placeholderColor: Color = System.color.text.subtle
+    ): PrimaryFieldColors =
+        PrimaryFieldColors(
+            focusedTextColor = focusedTextColor,
+            unfocusedTextColor = unfocusedTextColor,
+            focusedBorderColor = focusedBorderColor,
+            unfocusedBorderColor = unfocusedBorderColor,
+            cursorColor = cursorColor,
+            selectionColors = selectionColors,
+            placeholderColor = placeholderColor
+        )
 
     /** Creates theme-aware text style for [PrimaryField]. */
     @Composable
     fun textStyle(): TextStyle = System.font.body.base.medium
 
     /** Creates dimension configuration for [PrimaryField]. */
-    fun dimens(
-        shape: Shape = RoundedCornerShape(10.dp),
-    ): PrimaryFieldDimens = PrimaryFieldDimens(
-        shape = shape,
-    )
+    fun dimens(shape: Shape = RoundedCornerShape(10.dp)): PrimaryFieldDimens =
+        PrimaryFieldDimens(
+            shape = shape
+        )
 }
 
 /**
@@ -146,7 +146,7 @@ fun PrimaryField(
     dimens: PrimaryFieldDimens = PrimaryFieldDefaults.dimens(),
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
-    placeholder: @Composable (() -> Unit)? = null,
+    placeholder: @Composable (() -> Unit)? = null
 ) {
     OutlinedTextField(
         state = state,
@@ -162,16 +162,17 @@ fun PrimaryField(
         enabled = enabled,
         readOnly = readOnly,
         keyboardOptions = keyboardOptions,
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedTextColor = colors.focusedTextColor,
-            unfocusedTextColor = colors.unfocusedTextColor,
-            focusedBorderColor = colors.focusedBorderColor,
-            unfocusedBorderColor = colors.unfocusedBorderColor,
-            cursorColor = colors.cursorColor,
-            selectionColors = colors.selectionColors,
-            focusedPlaceholderColor = colors.placeholderColor,
-            unfocusedPlaceholderColor = colors.placeholderColor,
-        ),
+        colors =
+            OutlinedTextFieldDefaults.colors(
+                focusedTextColor = colors.focusedTextColor,
+                unfocusedTextColor = colors.unfocusedTextColor,
+                focusedBorderColor = colors.focusedBorderColor,
+                unfocusedBorderColor = colors.unfocusedBorderColor,
+                cursorColor = colors.cursorColor,
+                selectionColors = colors.selectionColors,
+                focusedPlaceholderColor = colors.placeholderColor,
+                unfocusedPlaceholderColor = colors.placeholderColor
+            )
     )
 }
 

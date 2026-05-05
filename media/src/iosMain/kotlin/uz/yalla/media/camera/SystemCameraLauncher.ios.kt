@@ -63,7 +63,9 @@ actual fun rememberSystemCameraLauncher(
  * Directly delegates to the `onLaunch` closure without double-launch guarding
  * (the iOS UIKit presentation handles this natively).
  */
-actual class SystemCameraLauncher actual constructor(private val onLaunch: () -> Unit) {
+actual class SystemCameraLauncher actual constructor(
+    private val onLaunch: () -> Unit
+) {
     /** @since 0.0.1 */
     actual fun launch() = onLaunch()
 }

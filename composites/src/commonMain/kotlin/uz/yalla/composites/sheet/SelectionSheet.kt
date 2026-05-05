@@ -24,7 +24,7 @@ import uz.yalla.platform.sheet.NativeSheet
  */
 @Immutable
 data class SelectionSheetColors(
-    val containerColor: Color,
+    val containerColor: Color
 )
 
 /**
@@ -35,7 +35,7 @@ data class SelectionSheetDimens(
     val shape: Shape,
     val contentPadding: PaddingValues,
     val headerContentSpacing: Dp,
-    val itemSpacing: Dp,
+    val itemSpacing: Dp
 )
 
 /**
@@ -45,24 +45,22 @@ data class SelectionSheetDimens(
  */
 object SelectionSheetDefaults {
     @Composable
-    fun colors(
-        containerColor: Color = System.color.background.base,
-    ): SelectionSheetColors =
+    fun colors(containerColor: Color = System.color.background.base): SelectionSheetColors =
         SelectionSheetColors(
-            containerColor = containerColor,
+            containerColor = containerColor
         )
 
     fun dimens(
-        shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
-        contentPadding: PaddingValues = PaddingValues(10.dp),
+        shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+        contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
         headerContentSpacing: Dp = 24.dp,
-        itemSpacing: Dp = 10.dp,
+        itemSpacing: Dp = 8.dp
     ): SelectionSheetDimens =
         SelectionSheetDimens(
             shape = shape,
             contentPadding = contentPadding,
             headerContentSpacing = headerContentSpacing,
-            itemSpacing = itemSpacing,
+            itemSpacing = itemSpacing
         )
 }
 
@@ -114,18 +112,21 @@ fun <T> SelectionSheet(
     colors: SelectionSheetColors = SelectionSheetDefaults.colors(),
     dimens: SelectionSheetDimens = SelectionSheetDefaults.dimens(),
     itemKey: ((T) -> Any)? = null,
-    itemContent: @Composable (item: T, isSelected: Boolean) -> Unit,
+    itemContent: @Composable (item: T, isSelected: Boolean) -> Unit
 ) {
     NativeSheet(
         isVisible = isVisible,
         shape = dimens.shape,
         containerColor = colors.containerColor,
-        onDismissRequest = onDismissRequest,
+        onDismissRequest = onDismissRequest
     ) {
-        Column(modifier.padding(dimens.contentPadding)) {
+        Column(modifier) {
             SheetHeader(onClose = onDismissRequest, title = title)
             Spacer(Modifier.height(dimens.headerContentSpacing))
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(dimens.itemSpacing)) {
+            LazyColumn(
+                modifier = Modifier.padding(dimens.contentPadding),
+                verticalArrangement = Arrangement.spacedBy(dimens.itemSpacing)
+            ) {
                 items(items = items, key = itemKey) { item ->
                     itemContent(item, item == selectedItem)
                 }

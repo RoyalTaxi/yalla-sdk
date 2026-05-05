@@ -22,9 +22,8 @@ import kotlinx.coroutines.flow.asStateFlow
  */
 internal class NavigatorImpl<C : Route>(
     private val navigation: StackNavigation<C>,
-    childStack: Value<ChildStack<C, *>>,
+    childStack: Value<ChildStack<C, *>>
 ) : Navigator {
-
     private val _canGoBack = MutableStateFlow(childStack.value.backStack.isNotEmpty())
     override val canGoBack: StateFlow<Boolean> = _canGoBack.asStateFlow()
 

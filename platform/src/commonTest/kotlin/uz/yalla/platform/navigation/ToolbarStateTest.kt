@@ -14,10 +14,11 @@ class ToolbarStateTest {
     @Test
     fun shouldUpdateActionsWhenSet() {
         val state = ToolbarState()
-        val actions = listOf(
-            ToolbarAction.Icon(ToolbarIcon.Edit) {},
-            ToolbarAction.Text("Save") {},
-        )
+        val actions =
+            listOf(
+                ToolbarAction.Icon(ToolbarIcon.Edit) {},
+                ToolbarAction.Text("Save") {}
+            )
         state.actions = actions
 
         assertEquals(2, state.actions.size)

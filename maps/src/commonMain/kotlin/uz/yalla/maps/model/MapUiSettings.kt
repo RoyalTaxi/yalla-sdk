@@ -19,7 +19,7 @@ class MapUiSettings(
     val scrollGesturesEnabledDuringRotateOrZoom: Boolean = true,
     val tiltGesturesEnabled: Boolean = true,
     val zoomControlsEnabled: Boolean = true,
-    val zoomGesturesEnabled: Boolean = true,
+    val zoomGesturesEnabled: Boolean = true
 ) {
     override fun toString(): String =
         "MapUiSettings(" +
@@ -72,7 +72,7 @@ class MapUiSettings(
         scrollGesturesEnabledDuringRotateOrZoom: Boolean = this.scrollGesturesEnabledDuringRotateOrZoom,
         tiltGesturesEnabled: Boolean = this.tiltGesturesEnabled,
         zoomControlsEnabled: Boolean = this.zoomControlsEnabled,
-        zoomGesturesEnabled: Boolean = this.zoomGesturesEnabled,
+        zoomGesturesEnabled: Boolean = this.zoomGesturesEnabled
     ): MapUiSettings =
         MapUiSettings(
             compassEnabled = compassEnabled,
@@ -84,6 +84,6 @@ class MapUiSettings(
             scrollGesturesEnabledDuringRotateOrZoom = scrollGesturesEnabledDuringRotateOrZoom,
             tiltGesturesEnabled = tiltGesturesEnabled,
             zoomControlsEnabled = zoomControlsEnabled,
-            zoomGesturesEnabled = zoomGesturesEnabled,
+            zoomGesturesEnabled = zoomGesturesEnabled
         )
 }

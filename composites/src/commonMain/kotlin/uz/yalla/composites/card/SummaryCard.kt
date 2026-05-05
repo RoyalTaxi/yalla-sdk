@@ -26,7 +26,7 @@ import uz.yalla.design.theme.System
  */
 @Immutable
 data class SummaryCardColors(
-    val container: Color,
+    val container: Color
 )
 
 /**
@@ -37,23 +37,21 @@ data class SummaryCardDimens(
     val shape: Shape,
     val contentPadding: PaddingValues,
     val headerSpacing: Dp,
-    val trailingSpacing: Dp,
+    val trailingSpacing: Dp
 )
 
 /**
  * Default configuration values for [SummaryCard].
  */
 object SummaryCardDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
     @Composable
-    fun colors(
-        container: Color = System.color.background.secondary,
-    ): SummaryCardColors = SummaryCardColors(
-        container = container,
-    )
+    fun colors(container: Color = System.color.background.secondary): SummaryCardColors =
+        SummaryCardColors(
+            container = container
+        )
 
     /**
      * Creates default dimensions.
@@ -62,13 +60,14 @@ object SummaryCardDefaults {
         shape: Shape = RoundedCornerShape(16.dp),
         contentPadding: PaddingValues = PaddingValues(16.dp),
         headerSpacing: Dp = 8.dp,
-        trailingSpacing: Dp = 16.dp,
-    ): SummaryCardDimens = SummaryCardDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-        headerSpacing = headerSpacing,
-        trailingSpacing = trailingSpacing,
-    )
+        trailingSpacing: Dp = 16.dp
+    ): SummaryCardDimens =
+        SummaryCardDimens(
+            shape = shape,
+            contentPadding = contentPadding,
+            headerSpacing = headerSpacing,
+            trailingSpacing = trailingSpacing
+        )
 }
 
 /**
@@ -113,27 +112,30 @@ fun SummaryCard(
     dimens: SummaryCardDimens = SummaryCardDefaults.dimens(),
     header: @Composable (() -> Unit)? = null,
     trailing: @Composable (() -> Unit)? = null,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ContentCard(
         modifier = modifier,
         onClick = onClick,
         colors = ContentCardDefaults.colors(container = colors.container),
-        dimens = ContentCardDefaults.dimens(
-            shape = dimens.shape,
-            contentPadding = dimens.contentPadding,
-        ),
+        dimens =
+            ContentCardDefaults.dimens(
+                shape = dimens.shape,
+                contentPadding = dimens.contentPadding
+            )
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min)
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1f),
+                modifier =
+                    Modifier
+                        .fillMaxHeight()
+                        .weight(1f)
             ) {
                 if (header != null) {
                     header()

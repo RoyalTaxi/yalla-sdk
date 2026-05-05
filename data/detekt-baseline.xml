@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>CyclomaticComplexMethod:SafeApiCall.kt$suspend inline fun &lt;reified T> safeApiCall( isIdempotent: Boolean = false, crossinline call: suspend () -> HttpResponse ): Either&lt;DataError.Network, T></ID>
+    <ID>LongMethod:HttpClientFactory.kt$fun createHttpClient( config: NetworkConfig, sessionPrefs: SessionPreferences, interfacePrefs: InterfacePreferences, positionPrefs: PositionPreferences, scope: CoroutineScope, inspektifySetup: (HttpClientConfig&lt;*>.() -> Unit)? = null, engine: HttpClientEngine? = null ): HttpClient</ID>
+    <ID>MagicNumber:SafeApiCall.kt$200</ID>
+    <ID>MagicNumber:SafeApiCall.kt$299</ID>
+    <ID>MagicNumber:SafeApiCall.kt$300</ID>
+    <ID>MagicNumber:SafeApiCall.kt$399</ID>
+    <ID>MagicNumber:SafeApiCall.kt$400</ID>
+    <ID>MagicNumber:SafeApiCall.kt$499</ID>
+    <ID>MagicNumber:SafeApiCall.kt$500</ID>
+    <ID>MagicNumber:SafeApiCall.kt$599</ID>
+    <ID>MatchingDeclarationName:GuestModeGuard.kt$GuestBlockedException : RuntimeException</ID>
+  </CurrentIssues>
+</SmellBaseline>

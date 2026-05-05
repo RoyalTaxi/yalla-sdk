@@ -35,7 +35,7 @@ import kotlin.math.abs
  */
 internal class SheetPresenter(
     private val factory: SheetPresenterFactory,
-    private val onDismissedByUser: () -> Unit,
+    private val onDismissedByUser: () -> Unit
 ) {
     private var controller: UIViewController? = null
     private var isProgrammaticDismiss = false
@@ -62,7 +62,7 @@ internal class SheetPresenter(
         themeProvider: ThemeProvider?,
         backgroundColor: Long = 0xFFFFFFFF,
         onPresented: () -> Unit = {},
-        content: @Composable () -> Unit,
+        content: @Composable () -> Unit
     ) {
         controller?.let { dismiss(animated = false) }
         resetMeasurements()
@@ -71,7 +71,7 @@ internal class SheetPresenter(
         val host =
             createComposeController(
                 themeProvider = themeProvider,
-                content = content,
+                content = content
             )
 
         controller = host
@@ -126,7 +126,7 @@ internal class SheetPresenter(
      */
     fun updateDismissBehavior(
         dismissEnabled: Boolean,
-        onDismissAttempt: () -> Unit,
+        onDismissAttempt: () -> Unit
     ) {
         this.dismissEnabled = dismissEnabled
         this.onDismissAttempt = onDismissAttempt
@@ -135,10 +135,10 @@ internal class SheetPresenter(
 
     private fun createComposeController(
         themeProvider: ThemeProvider?,
-        content: @Composable () -> Unit,
+        content: @Composable () -> Unit
     ): UIViewController =
         ComposeUIViewController(
-            configure = { opaque = false },
+            configure = { opaque = false }
         ) {
             val themedContent: @Composable () -> Unit = { MeasuredContent(content) }
             if (themeProvider != null) {
@@ -176,7 +176,7 @@ internal class SheetPresenter(
                         hasMeasuredHeight = true
                         controller?.let { factory.updateHeight(it, heightPt) }
                     }
-                },
+                }
         ) {
             content()
         }

@@ -11,7 +11,6 @@ private class FakePlatformConfig : PlatformConfig
 private class OtherPlatformConfig : PlatformConfig
 
 class YallaPlatformTest {
-
     private fun resetPlatform() {
         YallaPlatform.reset()
     }
@@ -42,9 +41,10 @@ class YallaPlatformTest {
     @Test
     fun shouldThrowOnRequireConfigWhenNotInstalled() {
         resetPlatform()
-        val exception = assertFailsWith<IllegalStateException> {
-            YallaPlatform.requireConfig<FakePlatformConfig>()
-        }
+        val exception =
+            assertFailsWith<IllegalStateException> {
+                YallaPlatform.requireConfig<FakePlatformConfig>()
+            }
         assertTrue(exception.message!!.contains("YallaPlatform not installed"))
     }
 
@@ -61,9 +61,10 @@ class YallaPlatformTest {
     fun shouldThrowOnRequireConfigWithWrongType() {
         resetPlatform()
         YallaPlatform.install(FakePlatformConfig())
-        val exception = assertFailsWith<IllegalStateException> {
-            YallaPlatform.requireConfig<OtherPlatformConfig>()
-        }
+        val exception =
+            assertFailsWith<IllegalStateException> {
+                YallaPlatform.requireConfig<OtherPlatformConfig>()
+            }
         assertTrue(exception.message!!.contains("YallaPlatform not installed"))
     }
 

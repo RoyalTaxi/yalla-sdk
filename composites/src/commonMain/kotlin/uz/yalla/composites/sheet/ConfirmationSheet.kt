@@ -33,7 +33,7 @@ import uz.yalla.primitives.button.PrimaryButton
 data class ConfirmationSheetColors(
     val container: Color,
     val title: Color,
-    val description: Color,
+    val description: Color
 )
 
 /**
@@ -51,7 +51,7 @@ data class ConfirmationSheetDimens(
     val titleDescriptionSpacing: Dp,
     val actionTopSpacing: Dp,
     val actionHorizontalPadding: Dp,
-    val actionBottomSpacing: Dp,
+    val actionBottomSpacing: Dp
 )
 
 /**
@@ -67,21 +67,21 @@ object ConfirmationSheetDefaults {
     fun colors(
         container: Color = System.color.background.base,
         title: Color = System.color.text.base,
-        description: Color = System.color.text.subtle,
+        description: Color = System.color.text.subtle
     ): ConfirmationSheetColors =
         ConfirmationSheetColors(
             container = container,
             title = title,
-            description = description,
+            description = description
         )
 
     /**
      * Creates default dimensions.
      */
     fun dimens(
-        shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
-        headerTopPadding: Dp = 10.dp,
-        headerHorizontalPadding: Dp = 10.dp,
+        shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+        headerTopPadding: Dp = 16.dp,
+        headerHorizontalPadding: Dp = 16.dp,
         contentTopPadding: Dp = 44.dp,
         contentHorizontalPadding: Dp = 36.dp,
         imageWidthFraction: Float = 0.6f,
@@ -89,7 +89,7 @@ object ConfirmationSheetDefaults {
         titleDescriptionSpacing: Dp = 12.dp,
         actionTopSpacing: Dp = 64.dp,
         actionHorizontalPadding: Dp = 20.dp,
-        actionBottomSpacing: Dp = 12.dp,
+        actionBottomSpacing: Dp = 12.dp
     ): ConfirmationSheetDimens =
         ConfirmationSheetDimens(
             shape = shape,
@@ -102,7 +102,7 @@ object ConfirmationSheetDefaults {
             titleDescriptionSpacing = titleDescriptionSpacing,
             actionTopSpacing = actionTopSpacing,
             actionHorizontalPadding = actionHorizontalPadding,
-            actionBottomSpacing = actionBottomSpacing,
+            actionBottomSpacing = actionBottomSpacing
         )
 }
 
@@ -154,7 +154,7 @@ fun ConfirmationSheet(
     dimens: ConfirmationSheetDimens = ConfirmationSheetDefaults.dimens(),
     dismissEnabled: Boolean = true,
     onDismissAttempt: () -> Unit = {},
-    actionLoading: Boolean = false,
+    actionLoading: Boolean = false
 ) {
     Sheet(
         isVisible = isVisible,
@@ -164,7 +164,7 @@ fun ConfirmationSheet(
         dimens = SheetDefaults.dimens(shape = dimens.shape),
         dragHandle = null,
         dismissEnabled = dismissEnabled,
-        onDismissAttempt = onDismissAttempt,
+        onDismissAttempt = onDismissAttempt
     ) {
         Column(modifier = Modifier.background(colors.container)) {
             Spacer(Modifier.height(dimens.headerTopPadding))
@@ -173,9 +173,10 @@ fun ConfirmationSheet(
                 SheetHeader(
                     onClose = onDismissRequest,
                     title = sheetName,
-                    dimens = SheetHeaderDefaults.dimens(
-                        contentPadding = PaddingValues(horizontal = dimens.headerHorizontalPadding),
-                    ),
+                    dimens =
+                        SheetHeaderDefaults.dimens(
+                            contentPadding = PaddingValues(horizontal = dimens.headerHorizontalPadding)
+                        )
                 )
             }
 
@@ -183,15 +184,19 @@ fun ConfirmationSheet(
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(horizontal = dimens.contentHorizontalPadding),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = dimens.contentHorizontalPadding)
             ) {
                 Image(
                     painter = image,
                     contentDescription = null,
                     contentScale = ContentScale.Inside,
-                    modifier = Modifier
-                        .fillMaxWidth(dimens.imageWidthFraction)
-                        .aspectRatio(1f),
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(dimens.imageWidthFraction)
+                            .aspectRatio(1f)
                 )
 
                 Spacer(Modifier.height(dimens.imageBottomSpacing))
@@ -201,6 +206,7 @@ fun ConfirmationSheet(
                     style = System.font.title.base,
                     color = colors.title,
                     textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(Modifier.height(dimens.titleDescriptionSpacing))
@@ -210,6 +216,7 @@ fun ConfirmationSheet(
                     style = System.font.body.base.medium,
                     color = colors.description,
                     textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
 
@@ -217,10 +224,11 @@ fun ConfirmationSheet(
 
             PrimaryButton(
                 onClick = onAction,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = dimens.actionHorizontalPadding),
-                loading = actionLoading,
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = dimens.actionHorizontalPadding),
+                loading = actionLoading
             ) {
                 Text(actionText)
             }

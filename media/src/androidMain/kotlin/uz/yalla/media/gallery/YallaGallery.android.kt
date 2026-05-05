@@ -27,7 +27,7 @@ import kotlinx.coroutines.withContext
 @Composable
 actual fun YallaGallery(
     modifier: Modifier,
-    onImageSelected: (ByteArray?) -> Unit,
+    onImageSelected: (ByteArray?) -> Unit
 ) {
     val context = LocalContext.current
     // null = not yet resolved, Unit = resolved to null (cancelled), Uri = resolved to selection

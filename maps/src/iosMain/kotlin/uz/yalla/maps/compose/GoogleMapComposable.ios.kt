@@ -15,6 +15,6 @@ import androidx.compose.runtime.ComposableTargetMarker
     AnnotationTarget.FUNCTION,
     AnnotationTarget.PROPERTY_GETTER,
     AnnotationTarget.TYPE,
-    AnnotationTarget.TYPE_PARAMETER,
+    AnnotationTarget.TYPE_PARAMETER
 )
 actual annotation class GoogleMapComposable

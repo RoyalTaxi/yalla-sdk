@@ -18,69 +18,75 @@ import kotlin.test.assertEquals
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class PositionPreferencesImplTest {
+    @Test
+    fun shouldDefaultLastMapPositionToZeroOnColdRead() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
+
+            assertEquals(GeoPoint.Zero, impl.lastMapPosition.first())
+        }
 
     @Test
-    fun shouldDefaultLastMapPositionToZeroOnColdRead() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
+    fun shouldPersistLastMapPositionAsLatLngString() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
 
-        assertEquals(GeoPoint.Zero, impl.lastMapPosition.first())
-    }
+            impl.setLastMapPosition(GeoPoint(lat = 41.3111, lng = 69.2797))
 
-    @Test
-    fun shouldPersistLastMapPositionAsLatLngString() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
-
-        impl.setLastMapPosition(GeoPoint(lat = 41.3111, lng = 69.2797))
-
-        val stored = impl.lastMapPosition.first()
-        assertEquals(41.3111, stored.lat)
-        assertEquals(69.2797, stored.lng)
-    }
+            val stored = impl.lastMapPosition.first()
+            assertEquals(41.3111, stored.lat)
+            assertEquals(69.2797, stored.lng)
+        }
 
     @Test
-    fun shouldDefaultLastGpsPositionToZeroWhenBothKeysAreUnset() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
+    fun shouldDefaultLastGpsPositionToZeroWhenBothKeysAreUnset() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
 
-        assertEquals(GeoPoint.Zero, impl.lastGpsPosition.first())
-    }
-
-    @Test
-    fun shouldFallBackToLastMapPositionWhenGpsUnset() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
-        impl.setLastMapPosition(GeoPoint(lat = 41.0, lng = 69.0))
-
-        val gps = impl.lastGpsPosition.first()
-
-        assertEquals(41.0, gps.lat)
-        assertEquals(69.0, gps.lng)
-    }
+            assertEquals(GeoPoint.Zero, impl.lastGpsPosition.first())
+        }
 
     @Test
-    fun shouldPreferGpsValueOverMapFallbackWhenBothSet() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
-        impl.setLastMapPosition(GeoPoint(lat = 41.0, lng = 69.0))
-        impl.setLastGpsPosition(GeoPoint(lat = 41.9, lng = 69.9))
+    fun shouldFallBackToLastMapPositionWhenGpsUnset() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
+            impl.setLastMapPosition(GeoPoint(lat = 41.0, lng = 69.0))
 
-        val gps = impl.lastGpsPosition.first()
+            val gps = impl.lastGpsPosition.first()
 
-        assertEquals(41.9, gps.lat)
-        assertEquals(69.9, gps.lng)
-    }
+            assertEquals(41.0, gps.lat)
+            assertEquals(69.0, gps.lng)
+        }
 
     @Test
-    fun shouldOverwritePreviousMapPositionOnSuccessiveSets() = runTest(UnconfinedTestDispatcher()) {
-        val impl = newImpl(this)
-        impl.setLastMapPosition(GeoPoint(lat = 1.0, lng = 2.0))
+    fun shouldPreferGpsValueOverMapFallbackWhenBothSet() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
+            impl.setLastMapPosition(GeoPoint(lat = 41.0, lng = 69.0))
+            impl.setLastGpsPosition(GeoPoint(lat = 41.9, lng = 69.9))
 
-        impl.setLastMapPosition(GeoPoint(lat = 3.0, lng = 4.0))
+            val gps = impl.lastGpsPosition.first()
 
-        val stored = impl.lastMapPosition.first()
-        assertEquals(3.0, stored.lat)
-        assertEquals(4.0, stored.lng)
-    }
+            assertEquals(41.9, gps.lat)
+            assertEquals(69.9, gps.lng)
+        }
 
-    private fun newImpl(scope: TestScope): PositionPreferencesImpl = PositionPreferencesImpl(
-        dataStore = InMemoryDataStore(),
-        scope = scope.backgroundScope,
-    )
+    @Test
+    fun shouldOverwritePreviousMapPositionOnSuccessiveSets() =
+        runTest(UnconfinedTestDispatcher()) {
+            val impl = newImpl(this)
+            impl.setLastMapPosition(GeoPoint(lat = 1.0, lng = 2.0))
+
+            impl.setLastMapPosition(GeoPoint(lat = 3.0, lng = 4.0))
+
+            val stored = impl.lastMapPosition.first()
+            assertEquals(3.0, stored.lat)
+            assertEquals(4.0, stored.lng)
+        }
+
+    private fun newImpl(scope: TestScope): PositionPreferencesImpl =
+        PositionPreferencesImpl(
+            dataStore = InMemoryDataStore(),
+            scope = scope.backgroundScope
+        )
 }

@@ -6,7 +6,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class SpaceSchemeTest {
-
     @Test
     fun standard_returnsExpectedSemanticValues() {
         val scheme = standardSpaceScheme()

@@ -36,7 +36,7 @@ data class DateFieldColors(
     val containerColor: Color,
     val textColor: Color,
     val placeholderColor: Color,
-    val iconColor: Color,
+    val iconColor: Color
 )
 
 /**
@@ -47,7 +47,7 @@ data class DateFieldColors(
 @Immutable
 data class DateFieldDimens(
     val shape: Shape,
-    val contentPadding: PaddingValues,
+    val contentPadding: PaddingValues
 )
 
 /**
@@ -56,20 +56,20 @@ data class DateFieldDimens(
  * Provides theme-aware defaults for [colors], [textStyle], and [dimens].
  */
 object DateFieldDefaults {
-
     /** Creates theme-aware color configuration for [DateField]. */
     @Composable
     fun colors(
         containerColor: Color = Color.Transparent,
         textColor: Color = System.color.text.base,
         placeholderColor: Color = System.color.text.subtle,
-        iconColor: Color = System.color.icon.base,
-    ): DateFieldColors = DateFieldColors(
-        containerColor = containerColor,
-        textColor = textColor,
-        placeholderColor = placeholderColor,
-        iconColor = iconColor,
-    )
+        iconColor: Color = System.color.icon.base
+    ): DateFieldColors =
+        DateFieldColors(
+            containerColor = containerColor,
+            textColor = textColor,
+            placeholderColor = placeholderColor,
+            iconColor = iconColor
+        )
 
     /** Creates theme-aware text style for [DateField]. */
     @Composable
@@ -78,11 +78,12 @@ object DateFieldDefaults {
     /** Creates dimension configuration for [DateField]. */
     fun dimens(
         shape: Shape = RoundedCornerShape(8.dp),
-        contentPadding: PaddingValues = PaddingValues(16.dp),
-    ): DateFieldDimens = DateFieldDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-    )
+        contentPadding: PaddingValues = PaddingValues(16.dp)
+    ): DateFieldDimens =
+        DateFieldDimens(
+            shape = shape,
+            contentPadding = contentPadding
+        )
 }
 
 /**
@@ -127,7 +128,7 @@ fun DateField(
     borderStroke: BorderStroke? = null,
     colors: DateFieldColors = DateFieldDefaults.colors(),
     textStyle: TextStyle = DateFieldDefaults.textStyle(),
-    dimens: DateFieldDimens = DateFieldDefaults.dimens(),
+    dimens: DateFieldDimens = DateFieldDefaults.dimens()
 ) {
     Card(
         modifier = modifier,
@@ -135,18 +136,19 @@ fun DateField(
         enabled = enabled,
         shape = dimens.shape,
         colors = CardDefaults.cardColors(colors.containerColor),
-        border = borderStroke,
+        border = borderStroke
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimens.contentPadding),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(dimens.contentPadding)
         ) {
             Text(
                 text = date?.formatDisplay() ?: placeholder,
                 style = textStyle,
-                color = if (date != null) colors.textColor else colors.placeholderColor,
+                color = if (date != null) colors.textColor else colors.placeholderColor
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -154,7 +156,7 @@ fun DateField(
             Icon(
                 painter = rememberVectorPainter(YallaIcons.Calendar),
                 contentDescription = null,
-                tint = colors.iconColor,
+                tint = colors.iconColor
             )
         }
     }

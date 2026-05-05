@@ -9,26 +9,27 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ActionPickerColorsTest {
-
-    private val colors = ActionPickerColors(
-        container = Color.White,
-        title = Color.Black,
-        itemBackground = Color.LightGray,
-        itemIcon = Color.DarkGray,
-        itemText = Color.Black,
-        destructiveItemIcon = Color.Red,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = ActionPickerColors(
+    private val colors =
+        ActionPickerColors(
             container = Color.White,
             title = Color.Black,
             itemBackground = Color.LightGray,
             itemIcon = Color.DarkGray,
             itemText = Color.Black,
-            destructiveItemIcon = Color.Red,
+            destructiveItemIcon = Color.Red
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            ActionPickerColors(
+                container = Color.White,
+                title = Color.Black,
+                itemBackground = Color.LightGray,
+                itemIcon = Color.DarkGray,
+                itemText = Color.Black,
+                destructiveItemIcon = Color.Red
+            )
         assertEquals(colors, other)
     }
 
@@ -51,12 +52,11 @@ class ActionPickerColorsTest {
 }
 
 class ActionPickerDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = ActionPickerDefaults.dimens()
-        assertEquals(RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp), dimens.shape)
-        assertEquals(PaddingValues(10.dp), dimens.contentPadding)
+        assertEquals(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp), dimens.shape)
+        assertEquals(PaddingValues(horizontal = 16.dp), dimens.contentPadding)
         assertEquals(24.dp, dimens.titleItemsSpacing)
         assertEquals(10.dp, dimens.itemSpacing)
         assertEquals(RoundedCornerShape(16.dp), dimens.itemShape)
@@ -66,15 +66,16 @@ class ActionPickerDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = ActionPickerDefaults.dimens(
-            shape = RoundedCornerShape(16.dp),
-            contentPadding = PaddingValues(24.dp),
-            titleItemsSpacing = 32.dp,
-            itemSpacing = 16.dp,
-            itemShape = RoundedCornerShape(8.dp),
-            itemPadding = PaddingValues(12.dp),
-            itemIconTextSpacing = 8.dp,
-        )
+        val dimens =
+            ActionPickerDefaults.dimens(
+                shape = RoundedCornerShape(16.dp),
+                contentPadding = PaddingValues(24.dp),
+                titleItemsSpacing = 32.dp,
+                itemSpacing = 16.dp,
+                itemShape = RoundedCornerShape(8.dp),
+                itemPadding = PaddingValues(12.dp),
+                itemIconTextSpacing = 8.dp
+            )
         assertEquals(RoundedCornerShape(16.dp), dimens.shape)
         assertEquals(PaddingValues(24.dp), dimens.contentPadding)
         assertEquals(32.dp, dimens.titleItemsSpacing)

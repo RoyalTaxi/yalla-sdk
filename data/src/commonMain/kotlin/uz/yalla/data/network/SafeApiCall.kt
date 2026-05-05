@@ -51,7 +51,7 @@ private const val RETRY_BACKOFF_FACTOR = 2.0
  */
 suspend inline fun <reified T> safeApiCall(
     isIdempotent: Boolean = false,
-    crossinline call: suspend () -> HttpResponse,
+    crossinline call: suspend () -> HttpResponse
 ): Either<DataError.Network, T> =
     try {
         val response = retryWithBackoff(isIdempotent = isIdempotent) { call() }
@@ -145,7 +145,7 @@ internal suspend fun <T> retryWithBackoff(
     maxDelay: Long = MAX_RETRY_DELAY_MS,
     factor: Double = RETRY_BACKOFF_FACTOR,
     isIdempotent: Boolean,
-    block: suspend () -> T,
+    block: suspend () -> T
 ): T {
     var currentDelay = initialDelay
     repeat(times - 1) {

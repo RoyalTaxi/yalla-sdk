@@ -33,7 +33,9 @@ import uz.yalla.design.theme.System
  * Color configuration for [ExpandableSheet].
  */
 @Immutable
-data class ExpandableSheetColors(val container: Color)
+data class ExpandableSheetColors(
+    val container: Color
+)
 
 /**
  * Dimension configuration for [ExpandableSheet].
@@ -63,7 +65,7 @@ object ExpandableSheetDefaults {
      * Creates default dimensions.
      */
     fun dimens(
-        cornerRadius: Dp = 38.dp,
+        cornerRadius: Dp = 28.dp,
         shape: Shape = RoundedCornerShape(topStart = cornerRadius, topEnd = cornerRadius)
     ) = ExpandableSheetDimens(
         shape = shape,

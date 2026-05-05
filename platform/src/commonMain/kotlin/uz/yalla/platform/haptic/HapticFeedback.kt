@@ -25,7 +25,7 @@ enum class HapticType {
     ErrorRepeat,
 
     /** Warning notification pattern. */
-    Warning,
+    Warning
 }
 
 /**

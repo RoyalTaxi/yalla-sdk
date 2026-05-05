@@ -30,5 +30,5 @@ expect fun Polyline(
     endCap: Cap = Cap.Butt,
     jointType: JointType = JointType.Default,
     startCap: Cap = Cap.Butt,
-    width: Float = 10f,
+    width: Float = 10f
 )

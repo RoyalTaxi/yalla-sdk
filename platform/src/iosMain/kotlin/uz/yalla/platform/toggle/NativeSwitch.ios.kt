@@ -29,7 +29,7 @@ actual fun NativeSwitch(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier,
-    enabled: Boolean,
+    enabled: Boolean
 ) {
     val handler = remember { SwitchEventHandler() }
     handler.callback = onCheckedChange
@@ -42,7 +42,7 @@ actual fun NativeSwitch(
             uiSwitch.addTarget(
                 target = handler,
                 action = sel_registerName("handleValueChanged"),
-                forControlEvents = UIControlEventValueChanged,
+                forControlEvents = UIControlEventValueChanged
             )
             uiSwitch
         },
@@ -56,8 +56,8 @@ actual fun NativeSwitch(
             UIKitInteropProperties(
                 interactionMode = UIKitInteropInteractionMode.NonCooperative,
                 isNativeAccessibilityEnabled = false,
-                placedAsOverlay = true,
-            ),
+                placedAsOverlay = true
+            )
     )
 }
 

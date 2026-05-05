@@ -26,74 +26,77 @@ import kotlin.test.assertTrue
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class LocationManagerTrackingTest {
-
     private val fakePermissionsController = FakePermissionsController()
 
-    private fun makeTracker() = LocationTracker(
-        permissionsController = fakePermissionsController,
-    )
+    private fun makeTracker() =
+        LocationTracker(
+            permissionsController = fakePermissionsController
+        )
 
     // --- startTracking() idempotence ---
 
     @Test
-    fun startTrackingIdempotence_secondCallIsNoOp() = runTest {
-        val tracker = makeTracker()
-        val scope = TestScope(UnconfinedTestDispatcher(testScheduler))
-        val lm = LocationManager(tracker, scope)
+    fun startTrackingIdempotence_secondCallIsNoOp() =
+        runTest {
+            val tracker = makeTracker()
+            val scope = TestScope(UnconfinedTestDispatcher(testScheduler))
+            val lm = LocationManager(tracker, scope)
 
-        // First call: coroutine launches, calls tracker.startTracking() (providePermission no-op +
-        // CLLocationManager.startUpdatingLocation()), then sets _isTracking = true, then suspends
-        // collecting locations (never delivered on simulator).
-        lm.startTracking()
-        advanceUntilIdle()
+            // First call: coroutine launches, calls tracker.startTracking() (providePermission no-op +
+            // CLLocationManager.startUpdatingLocation()), then sets _isTracking = true, then suspends
+            // collecting locations (never delivered on simulator).
+            lm.startTracking()
+            advanceUntilIdle()
 
-        assertTrue(lm.isTracking.value, "Expected isTracking=true after first startTracking()")
+            assertTrue(lm.isTracking.value, "Expected isTracking=true after first startTracking()")
 
-        // Second call: the guard `if (_isTracking.value) return` fires — no new coroutine launched.
-        lm.startTracking()
-        advanceUntilIdle()
+            // Second call: the guard `if (_isTracking.value) return` fires — no new coroutine launched.
+            lm.startTracking()
+            advanceUntilIdle()
 
-        assertTrue(lm.isTracking.value, "Expected isTracking=true after idempotent second call")
+            assertTrue(lm.isTracking.value, "Expected isTracking=true after idempotent second call")
 
-        scope.cancel()
-    }
+            scope.cancel()
+        }
 
     // --- stopTracking() before start is a no-op ---
 
     @Test
-    fun stopTrackingBeforeStartIsNoOp() = runTest {
-        val tracker = makeTracker()
-        val scope = TestScope(UnconfinedTestDispatcher(testScheduler))
-        val lm = LocationManager(tracker, scope)
+    fun stopTrackingBeforeStartIsNoOp() =
+        runTest {
+            val tracker = makeTracker()
+            val scope = TestScope(UnconfinedTestDispatcher(testScheduler))
+            val lm = LocationManager(tracker, scope)
 
-        // Guard: if (!_isTracking.value) return — no tracker.stopTracking() call.
-        lm.stopTracking()
-        advanceUntilIdle()
+            // Guard: if (!_isTracking.value) return — no tracker.stopTracking() call.
+            lm.stopTracking()
+            advanceUntilIdle()
 
-        assertFalse(lm.isTracking.value, "isTracking must stay false when stopTracking called before start")
+            assertFalse(lm.isTracking.value, "isTracking must stay false when stopTracking called before start")
 
-        scope.cancel()
-    }
+            scope.cancel()
+        }
 
     // --- scope cancellation stops tracking ---
 
     @Test
-    fun scopeCancellationStopsTracking() = runTest {
-        val tracker = makeTracker()
-        val scope = TestScope(UnconfinedTestDispatcher(testScheduler))
-        val lm = LocationManager(tracker, scope)
+    fun scopeCancellationStopsTracking() =
+        runTest {
+            val tracker = makeTracker()
+            val scope = TestScope(UnconfinedTestDispatcher(testScheduler))
+            val lm = LocationManager(tracker, scope)
 
-        lm.startTracking()
-        advanceUntilIdle()
-        assertTrue(lm.isTracking.value, "Precondition: isTracking=true after startTracking()")
+            lm.startTracking()
+            advanceUntilIdle()
+            assertTrue(lm.isTracking.value, "Precondition: isTracking=true after startTracking()")
 
-        // Cancel the owner scope: the launched coroutine receives CancellationException,
-        // caught by runCatching.onFailure → _isTracking.value = false.
-        scope.cancel()
-        advanceUntilIdle()
+            // Cancel the owner scope: the launched coroutine receives CancellationException,
+            // caught by runCatching.onFailure → _isTracking.value = false.
+            scope.cancel()
+            advanceUntilIdle()
 
-        assertFalse(lm.isTracking.value, "isTracking must be false after owner scope is cancelled")
-    }
+            assertFalse(lm.isTracking.value, "isTracking must be false after owner scope is cancelled")
+        }
 
     // --- updatePermissionState propagates to permissionState flow ---
 

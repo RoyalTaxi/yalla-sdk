@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
  * @property m 12.dp — cards, list items.
  * @property l 16.dp — buttons, selectable items (the de-facto standard).
  * @property xl 24.dp — large feature cards.
- * @property sheet 40.dp — bottom-sheet top corner.
+ * @property sheet 28.dp — bottom-sheet top corner (Material 3 spec).
  */
 @Immutable
 data class RadiusScheme(
@@ -45,7 +45,7 @@ data class RadiusScheme(
     val m: Dp,
     val l: Dp,
     val xl: Dp,
-    val sheet: Dp,
+    val sheet: Dp
 )
 
 /**
@@ -54,14 +54,15 @@ data class RadiusScheme(
  * Override at the theme level when white-labeling or experimenting with a
  * sharper/softer aesthetic.
  */
-fun standardRadiusScheme(): RadiusScheme = RadiusScheme(
-    xs = 4.dp,
-    s = 8.dp,
-    m = 12.dp,
-    l = 16.dp,
-    xl = 24.dp,
-    sheet = 40.dp,
-)
+fun standardRadiusScheme(): RadiusScheme =
+    RadiusScheme(
+        xs = 4.dp,
+        s = 8.dp,
+        m = 12.dp,
+        l = 16.dp,
+        xl = 24.dp,
+        sheet = 28.dp
+    )
 
 /**
  * [CompositionLocal][androidx.compose.runtime.CompositionLocal] for providing

@@ -22,29 +22,32 @@ import platform.darwin.dispatch_time
  * via `dispatch_after` on the main queue.
  */
 @Composable
-actual fun rememberHapticController(): HapticController {
-    return remember {
+actual fun rememberHapticController(): HapticController =
+    remember {
         object : HapticController {
             override fun perform(type: HapticType) {
                 when (type) {
                     HapticType.Light -> {
-                        val generator = UIImpactFeedbackGenerator(
-                            style = UIImpactFeedbackStyle.UIImpactFeedbackStyleLight
-                        )
+                        val generator =
+                            UIImpactFeedbackGenerator(
+                                style = UIImpactFeedbackStyle.UIImpactFeedbackStyleLight
+                            )
                         generator.prepare()
                         generator.impactOccurred()
                     }
                     HapticType.Medium -> {
-                        val generator = UIImpactFeedbackGenerator(
-                            style = UIImpactFeedbackStyle.UIImpactFeedbackStyleMedium
-                        )
+                        val generator =
+                            UIImpactFeedbackGenerator(
+                                style = UIImpactFeedbackStyle.UIImpactFeedbackStyleMedium
+                            )
                         generator.prepare()
                         generator.impactOccurred()
                     }
                     HapticType.Heavy -> {
-                        val generator = UIImpactFeedbackGenerator(
-                            style = UIImpactFeedbackStyle.UIImpactFeedbackStyleHeavy
-                        )
+                        val generator =
+                            UIImpactFeedbackGenerator(
+                                style = UIImpactFeedbackStyle.UIImpactFeedbackStyleHeavy
+                            )
                         generator.prepare()
                         generator.impactOccurred()
                     }
@@ -85,4 +88,3 @@ actual fun rememberHapticController(): HapticController {
             }
         }
     }
-}

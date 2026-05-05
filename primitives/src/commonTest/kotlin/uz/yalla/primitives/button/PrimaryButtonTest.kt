@@ -9,13 +9,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class PrimaryButtonColorsTest {
-
-    private val colors = PrimaryButtonColors(
-        containerColor = Color.Red,
-        contentColor = Color.White,
-        disabledContainerColor = Color.Gray,
-        disabledContentColor = Color.DarkGray,
-    )
+    private val colors =
+        PrimaryButtonColors(
+            containerColor = Color.Red,
+            contentColor = Color.White,
+            disabledContainerColor = Color.Gray,
+            disabledContentColor = Color.DarkGray
+        )
 
     @Test
     fun containerColor_whenEnabled_returnsContainerColor() {
@@ -49,12 +49,13 @@ class PrimaryButtonColorsTest {
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = PrimaryButtonColors(
-            containerColor = Color.Red,
-            contentColor = Color.White,
-            disabledContainerColor = Color.Gray,
-            disabledContentColor = Color.DarkGray,
-        )
+        val other =
+            PrimaryButtonColors(
+                containerColor = Color.Red,
+                contentColor = Color.White,
+                disabledContainerColor = Color.Gray,
+                disabledContentColor = Color.DarkGray
+            )
         assertEquals(colors, other)
     }
 
@@ -80,7 +81,6 @@ class PrimaryButtonColorsTest {
 }
 
 class PrimaryButtonDimensTest {
-
     @Test
     fun defaults_minHeight_is60dp() {
         val dimens = PrimaryButtonDefaults.dimens()
@@ -132,12 +132,13 @@ class PrimaryButtonDimensTest {
     fun allCustomValues_overrideAllDefaults() {
         val customPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
         val customShape = RoundedCornerShape(4.dp)
-        val dimens = PrimaryButtonDefaults.dimens(
-            minHeight = 40.dp,
-            contentPadding = customPadding,
-            shape = customShape,
-            iconSpacing = 4.dp,
-        )
+        val dimens =
+            PrimaryButtonDefaults.dimens(
+                minHeight = 40.dp,
+                contentPadding = customPadding,
+                shape = customShape,
+                iconSpacing = 4.dp
+            )
         assertEquals(40.dp, dimens.minHeight)
         assertEquals(customPadding, dimens.contentPadding)
         assertEquals(customShape, dimens.shape)

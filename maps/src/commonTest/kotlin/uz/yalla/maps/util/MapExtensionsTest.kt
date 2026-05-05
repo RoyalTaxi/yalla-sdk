@@ -7,7 +7,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class MapExtensionsTest {
-
     // --- Position Conversions ---
 
     @Test
@@ -95,11 +94,12 @@ class MapExtensionsTest {
 
     @Test
     fun toBoundingBoxShouldEncloseAllPoints() {
-        val points = listOf(
-            GeoPoint(40.0, 68.0),
-            GeoPoint(42.0, 70.0),
-            GeoPoint(41.0, 69.0),
-        )
+        val points =
+            listOf(
+                GeoPoint(40.0, 68.0),
+                GeoPoint(42.0, 70.0),
+                GeoPoint(41.0, 69.0)
+            )
         val box = points.toBoundingBox()
         assertEquals(68.0, box.southwest.longitude)
         assertEquals(40.0, box.southwest.latitude)

@@ -21,13 +21,12 @@ import kotlin.test.assertTrue
  * This placeholder ensures the file exists in the test source set so the pair is tracked.
  */
 class SystemBarColorsTest {
-
     @Test
     fun compileVerify_systemBarColorsSignatureExists() {
         // Confirms the post-ADR-015b single-overload expect declaration compiles from commonTest.
         assertTrue(
             true,
-            "SystemBarColors(darkIcons: Boolean) expect declaration compiles and is visible from commonTest",
+            "SystemBarColors(darkIcons: Boolean) expect declaration compiles and is visible from commonTest"
         )
     }
 }

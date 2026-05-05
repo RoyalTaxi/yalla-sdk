@@ -8,16 +8,17 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ExpandableSheetColorsTest {
-
-    private val colors = ExpandableSheetColors(
-        container = Color.White,
-    )
+    private val colors =
+        ExpandableSheetColors(
+            container = Color.White
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = ExpandableSheetColors(
-            container = Color.White,
-        )
+        val other =
+            ExpandableSheetColors(
+                container = Color.White
+            )
         assertEquals(colors, other)
     }
 
@@ -35,19 +36,19 @@ class ExpandableSheetColorsTest {
 }
 
 class ExpandableSheetDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = ExpandableSheetDefaults.dimens()
-        assertEquals(38.dp, dimens.cornerRadius)
-        assertEquals(RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp), dimens.shape)
+        assertEquals(28.dp, dimens.cornerRadius)
+        assertEquals(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp), dimens.shape)
     }
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = ExpandableSheetDefaults.dimens(
-            cornerRadius = 16.dp,
-        )
+        val dimens =
+            ExpandableSheetDefaults.dimens(
+                cornerRadius = 16.dp
+            )
         assertEquals(16.dp, dimens.cornerRadius)
         assertEquals(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp), dimens.shape)
     }

@@ -19,7 +19,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory as GoogleBitmap
 @GoogleMapComposable
 actual fun rememberComposeBitmapDescriptor(
     vararg keys: Any,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ): BitmapDescriptor {
     val parent = LocalView.current as ViewGroup
     val compositionContext = rememberCompositionContext()
@@ -45,14 +45,14 @@ private val measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.U
 private fun renderComposableToBitmapDescriptor(
     parent: ViewGroup,
     compositionContext: CompositionContext,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ): BitmapDescriptor {
     val composeView =
         ComposeView(parent.context).apply {
             layoutParams =
                 ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
                 )
             setBackgroundColor(AndroidColor.TRANSPARENT)
             setParentCompositionContext(compositionContext)

@@ -10,5 +10,4 @@ import platform.Foundation.NSUserDefaults
  * Wraps [NSUserDefaults.standardUserDefaults] via
  * [NSUserDefaultsSettings] for synchronous key-value access.
  */
-actual fun createSettings(): Settings =
-    NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)
+actual fun createSettings(): Settings = NSUserDefaultsSettings(NSUserDefaults.standardUserDefaults)

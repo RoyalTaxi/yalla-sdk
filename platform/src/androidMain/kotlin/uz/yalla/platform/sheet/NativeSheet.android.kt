@@ -60,13 +60,14 @@ actual fun NativeSheet(
     val properties =
         ModalBottomSheetProperties(
             isAppearanceLightStatusBars = !darkMode,
-            isAppearanceLightNavigationBars = !darkMode,
+            isAppearanceLightNavigationBars = !darkMode
         )
 
     val density = LocalDensity.current
-    val statusBarTopDp = with(density) {
-        WindowInsets.statusBars.getTop(this).toDp()
-    }
+    val statusBarTopDp =
+        with(density) {
+            WindowInsets.statusBars.getTop(this).toDp()
+        }
 
     var shouldShow by remember { mutableStateOf(false) }
     val currentDismissEnabled by rememberUpdatedState(dismissEnabled)
@@ -85,7 +86,7 @@ actual fun NativeSheet(
                 } else {
                     true
                 }
-            },
+            }
         )
 
     LaunchedEffect(isVisible) {
@@ -126,14 +127,15 @@ actual fun NativeSheet(
             },
             content = {
                 Column(
-                    modifier = Modifier
-                        .padding(top = statusBarTopDp)
-                        .background(color = containerColor, shape = shape)
-                        .navigationBarsPadding(),
+                    modifier =
+                        Modifier
+                            .padding(top = statusBarTopDp)
+                            .background(color = containerColor, shape = shape)
+                            .navigationBarsPadding()
                 ) {
                     content()
                 }
-            },
+            }
         )
     }
 }

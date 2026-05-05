@@ -5,14 +5,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class ThemedImageTest {
-
     @Test
     fun shouldHaveDistinctLightAndDarkResourcesForAllEntries() {
         ThemedImage.entries.forEach { image ->
             assertNotEquals(
                 image.light,
                 image.dark,
-                "Expected distinct resources for ${image.name}: light and dark should differ",
+                "Expected distinct resources for ${image.name}: light and dark should differ"
             )
         }
     }

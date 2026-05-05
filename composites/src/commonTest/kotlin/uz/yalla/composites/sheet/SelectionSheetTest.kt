@@ -7,24 +7,24 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class SelectionSheetDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = SelectionSheetDefaults.dimens()
-        assertEquals(RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp), dimens.shape)
-        assertEquals(PaddingValues(10.dp), dimens.contentPadding)
+        assertEquals(RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp), dimens.shape)
+        assertEquals(PaddingValues(horizontal = 16.dp), dimens.contentPadding)
         assertEquals(24.dp, dimens.headerContentSpacing)
-        assertEquals(10.dp, dimens.itemSpacing)
+        assertEquals(8.dp, dimens.itemSpacing)
     }
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = SelectionSheetDefaults.dimens(
-            shape = RoundedCornerShape(16.dp),
-            contentPadding = PaddingValues(24.dp),
-            headerContentSpacing = 32.dp,
-            itemSpacing = 16.dp,
-        )
+        val dimens =
+            SelectionSheetDefaults.dimens(
+                shape = RoundedCornerShape(16.dp),
+                contentPadding = PaddingValues(24.dp),
+                headerContentSpacing = 32.dp,
+                itemSpacing = 16.dp
+            )
         assertEquals(RoundedCornerShape(16.dp), dimens.shape)
         assertEquals(PaddingValues(24.dp), dimens.contentPadding)
         assertEquals(32.dp, dimens.headerContentSpacing)

@@ -27,5 +27,5 @@ import androidx.compose.ui.Modifier
 expect fun <C : Route> NativeNavHost(
     rootComponent: NativeRootComponent<C>,
     screenProvider: ScreenProvider<C>,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 )

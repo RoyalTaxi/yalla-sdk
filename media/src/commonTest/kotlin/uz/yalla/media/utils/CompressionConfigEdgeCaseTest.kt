@@ -90,7 +90,7 @@ class CompressionConfigEdgeCaseTest {
             setOf(
                 CompressionConfig.Default.hashCode(),
                 CompressionConfig.ProfilePhoto.hashCode(),
-                CompressionConfig.ChatImage.hashCode(),
+                CompressionConfig.ChatImage.hashCode()
             )
         assertEquals(3, hashCodes.size)
     }
@@ -183,7 +183,7 @@ class CompressionConfigEdgeCaseTest {
             CompressionConfig(
                 maxFileSize = 1024 * 1024,
                 maxDimension = 1024,
-                quality = 80,
+                quality = 80
             )
         assertEquals(CompressionConfig.Default, custom)
     }
@@ -194,7 +194,7 @@ class CompressionConfigEdgeCaseTest {
             CompressionConfig(
                 maxFileSize = 512 * 1024,
                 maxDimension = 512,
-                quality = 85,
+                quality = 85
             )
         assertEquals(CompressionConfig.ProfilePhoto, custom)
     }
@@ -205,7 +205,7 @@ class CompressionConfigEdgeCaseTest {
             CompressionConfig(
                 maxFileSize = 2 * 1024 * 1024,
                 maxDimension = 1920,
-                quality = 75,
+                quality = 75
             )
         assertEquals(CompressionConfig.ChatImage, custom)
     }

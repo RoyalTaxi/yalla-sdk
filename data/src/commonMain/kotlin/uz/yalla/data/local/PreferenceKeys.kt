@@ -27,7 +27,6 @@ import androidx.datastore.preferences.core.stringPreferencesKey
  * @see PositionPreferencesImpl
  */
 internal object PreferenceKeys {
-
     // region Session
 
     /** OAuth access token for authenticated API requests. */
@@ -106,33 +105,34 @@ internal object PreferenceKeys {
      * [SessionPreferencesImpl.clearSession] removes exactly these keys on logout,
      * while interface and position keys survive.
      */
-    val SESSION_KEYS: List<Preferences.Key<*>> = listOf(
-        // Session
-        ACCESS_TOKEN,
-        FIREBASE_TOKEN,
-        IS_GUEST_MODE,
-        IS_DEVICE_REGISTERED,
-        // User
-        FIRST_NAME,
-        LAST_NAME,
-        NUMBER,
-        PAYMENT_TYPE,
-        CARD_ID,
-        CARD_NUMBER,
-        // Config
-        SUPPORT_NUMBER,
-        SUPPORT_TELEGRAM,
-        INFO_INSTAGRAM,
-        INFO_TELEGRAM,
-        PRIVACY_POLICY_RU,
-        PRIVACY_POLICY_UZ,
-        MAX_BONUS,
-        MIN_BONUS,
-        BALANCE,
-        IS_BONUS_ENABLED,
-        IS_CARD_ENABLED,
-        ORDER_CANCEL_TIME,
-    )
+    val SESSION_KEYS: List<Preferences.Key<*>> =
+        listOf(
+            // Session
+            ACCESS_TOKEN,
+            FIREBASE_TOKEN,
+            IS_GUEST_MODE,
+            IS_DEVICE_REGISTERED,
+            // User
+            FIRST_NAME,
+            LAST_NAME,
+            NUMBER,
+            PAYMENT_TYPE,
+            CARD_ID,
+            CARD_NUMBER,
+            // Config
+            SUPPORT_NUMBER,
+            SUPPORT_TELEGRAM,
+            INFO_INSTAGRAM,
+            INFO_TELEGRAM,
+            PRIVACY_POLICY_RU,
+            PRIVACY_POLICY_UZ,
+            MAX_BONUS,
+            MIN_BONUS,
+            BALANCE,
+            IS_BONUS_ENABLED,
+            IS_CARD_ENABLED,
+            ORDER_CANCEL_TIME
+        )
 
     // region Interface
 

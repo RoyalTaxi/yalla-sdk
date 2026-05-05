@@ -27,12 +27,14 @@ object PaymentKindSerializer : KSerializer<PaymentKind> {
     override val descriptor: SerialDescriptor =
         PrimitiveSerialDescriptor("PaymentKind", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: PaymentKind) {
+    override fun serialize(
+        encoder: Encoder,
+        value: PaymentKind
+    ) {
         encoder.encodeString(value.id)
     }
 
-    override fun deserialize(decoder: Decoder): PaymentKind =
-        PaymentKind.from(decoder.decodeString())
+    override fun deserialize(decoder: Decoder): PaymentKind = PaymentKind.from(decoder.decodeString())
 }
 
 /**
@@ -48,7 +50,9 @@ object PaymentKindSerializer : KSerializer<PaymentKind> {
  * @property id Wire-format identifier ("cash" or "card")
  */
 @Serializable(with = PaymentKindSerializer::class)
-sealed class PaymentKind(val id: String) {
+sealed class PaymentKind(
+    val id: String
+) {
     /** Cash payment. */
     data object Cash : PaymentKind("cash")
 

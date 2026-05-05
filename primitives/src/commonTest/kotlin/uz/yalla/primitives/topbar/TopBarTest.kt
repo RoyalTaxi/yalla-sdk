@@ -9,18 +9,19 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 
 class TopBarColorsTest {
-
-    private val colors = TopBarColors(
-        container = Color.White,
-        title = Color.Black,
-    )
+    private val colors =
+        TopBarColors(
+            container = Color.White,
+            title = Color.Black
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = TopBarColors(
-            container = Color.White,
-            title = Color.Black,
-        )
+        val other =
+            TopBarColors(
+                container = Color.White,
+                title = Color.Black
+            )
         assertEquals(colors, other)
     }
 
@@ -50,7 +51,6 @@ class TopBarColorsTest {
 }
 
 class TopBarDimensTest {
-
     @Test
     fun defaults_areNonNull() {
         val dimens = TopBarDefaults.dimens()

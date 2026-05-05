@@ -20,7 +20,6 @@ import androidx.compose.ui.graphics.painter.Painter
  * @see uz.yalla.maps.provider.common.MapDimens.UserLocationSize
  */
 internal object UserLocationPainter : Painter() {
-
     /** Canvas dimension in pixels. */
     private const val SIZE = 48f
 
@@ -39,22 +38,24 @@ internal object UserLocationPainter : Painter() {
 
         // Fill gradient: top to bottom #3400FF → #886BFF
         drawCircle(
-            brush = Brush.verticalGradient(
-                colors = listOf(gradientStart, gradientEnd),
-                startY = 0f,
-                endY = size.height
-            ),
+            brush =
+                Brush.verticalGradient(
+                    colors = listOf(gradientStart, gradientEnd),
+                    startY = 0f,
+                    endY = size.height
+                ),
             radius = radius,
             center = drawCenter
         )
 
         // Stroke gradient: top to bottom #886BFF → #3400FF (reversed)
         drawCircle(
-            brush = Brush.verticalGradient(
-                colors = listOf(gradientEnd, gradientStart),
-                startY = 0f,
-                endY = size.height
-            ),
+            brush =
+                Brush.verticalGradient(
+                    colors = listOf(gradientEnd, gradientStart),
+                    startY = 0f,
+                    endY = size.height
+                ),
             radius = radius,
             center = drawCenter,
             style = Stroke(width = STROKE_WIDTH)

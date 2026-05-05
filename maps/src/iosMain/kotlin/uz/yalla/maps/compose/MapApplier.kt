@@ -1,5 +1,5 @@
 @file:Suppress(
-    "EmptyFunctionBlock", // MapApplier overrides use move/remove/etc.; insertTopDown is intentionally a no-op
+    "EmptyFunctionBlock" // MapApplier overrides use move/remove/etc.; insertTopDown is intentionally a no-op
 )
 
 package uz.yalla.maps.compose

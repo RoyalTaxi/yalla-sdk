@@ -25,12 +25,12 @@ actual fun GoogleMap(
     content: (
         @Composable
         @GoogleMapComposable () -> Unit
-    )?,
+    )?
 ) {
     val googleCameraPositionState =
         rememberSyncedGoogleCameraPositionState(
             cameraPositionState = cameraPositionState,
-            contentPadding = contentPadding,
+            contentPadding = contentPadding
         )
 
     val googleMapType =
@@ -61,7 +61,7 @@ actual fun GoogleMap(
                 isTrafficEnabled = properties.isTrafficEnabled,
                 mapType = googleMapType,
                 minZoomPreference = properties.minZoomPreference,
-                maxZoomPreference = properties.maxZoomPreference,
+                maxZoomPreference = properties.maxZoomPreference
             ),
         uiSettings =
             GoogleMapUiSettings(
@@ -74,11 +74,11 @@ actual fun GoogleMap(
                 scrollGesturesEnabledDuringRotateOrZoom = uiSettings.scrollGesturesEnabledDuringRotateOrZoom,
                 tiltGesturesEnabled = uiSettings.tiltGesturesEnabled,
                 zoomControlsEnabled = uiSettings.zoomControlsEnabled,
-                zoomGesturesEnabled = uiSettings.zoomGesturesEnabled,
+                zoomGesturesEnabled = uiSettings.zoomGesturesEnabled
             ),
         onMapLoaded = onMapLoaded,
         content = {
             content?.invoke()
-        },
+        }
     )
 }

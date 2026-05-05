@@ -25,9 +25,8 @@ import uz.yalla.core.settings.LocaleKind
  * @see createSettings
  */
 internal class StaticPreferencesImpl(
-    private val settings: Settings,
+    private val settings: Settings
 ) : StaticPreferences {
-
     override val localeCode: String
         get() = settings[KEY_LOCALE, LocaleKind.Uz.code]
 

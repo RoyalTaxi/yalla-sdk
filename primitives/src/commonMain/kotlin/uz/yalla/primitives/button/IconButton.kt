@@ -27,15 +27,13 @@ data class IconButtonColors(
     val containerColor: Color,
     val contentColor: Color,
     val disabledContainerColor: Color,
-    val disabledContentColor: Color,
+    val disabledContentColor: Color
 ) {
     /** Resolves container color based on [enabled] state. */
-    fun containerColor(enabled: Boolean): Color =
-        if (enabled) containerColor else disabledContainerColor
+    fun containerColor(enabled: Boolean): Color = if (enabled) containerColor else disabledContainerColor
 
     /** Resolves content color based on [enabled] state. */
-    fun contentColor(enabled: Boolean): Color =
-        if (enabled) contentColor else disabledContentColor
+    fun contentColor(enabled: Boolean): Color = if (enabled) contentColor else disabledContentColor
 }
 
 /**
@@ -47,7 +45,7 @@ data class IconButtonColors(
 data class IconButtonDimens(
     val size: Dp,
     val iconSize: Dp,
-    val shape: Shape,
+    val shape: Shape
 )
 
 /**
@@ -92,7 +90,7 @@ fun IconButton(
     enabled: Boolean = true,
     colors: IconButtonColors = IconButtonDefaults.colors(),
     dimens: IconButtonDimens = IconButtonDefaults.dimens(),
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     Surface(
         onClick = onClick,
@@ -100,7 +98,7 @@ fun IconButton(
         enabled = enabled,
         shape = dimens.shape,
         color = colors.containerColor(enabled),
-        contentColor = colors.contentColor(enabled),
+        contentColor = colors.contentColor(enabled)
     ) {
         Box(contentAlignment = Alignment.Center) {
             content()
@@ -128,15 +126,17 @@ object IconButtonDefaults {
     fun colors(
         containerColor: Color = System.color.background.tertiary,
         contentColor: Color = System.color.icon.base,
-        disabledContainerColor: Color = System.color.background.tertiary
-            .copy(alpha = 0.5f),
-        disabledContentColor: Color = System.color.icon.disabled,
-    ): IconButtonColors = IconButtonColors(
-        containerColor = containerColor,
-        contentColor = contentColor,
-        disabledContainerColor = disabledContainerColor,
-        disabledContentColor = disabledContentColor,
-    )
+        disabledContainerColor: Color =
+            System.color.background.tertiary
+                .copy(alpha = 0.5f),
+        disabledContentColor: Color = System.color.icon.disabled
+    ): IconButtonColors =
+        IconButtonColors(
+            containerColor = containerColor,
+            contentColor = contentColor,
+            disabledContainerColor = disabledContainerColor,
+            disabledContentColor = disabledContentColor
+        )
 
     /**
      * Creates filled/prominent [IconButtonColors] with theme-aware defaults.
@@ -148,24 +148,26 @@ object IconButtonDefaults {
         containerColor: Color = System.color.button.active,
         contentColor: Color = System.color.icon.white,
         disabledContainerColor: Color = System.color.button.disabled,
-        disabledContentColor: Color = System.color.icon.white,
-    ): IconButtonColors = IconButtonColors(
-        containerColor = containerColor,
-        contentColor = contentColor,
-        disabledContainerColor = disabledContainerColor,
-        disabledContentColor = disabledContentColor,
-    )
+        disabledContentColor: Color = System.color.icon.white
+    ): IconButtonColors =
+        IconButtonColors(
+            containerColor = containerColor,
+            contentColor = contentColor,
+            disabledContainerColor = disabledContainerColor,
+            disabledContentColor = disabledContentColor
+        )
 
     /** Creates [IconButtonDimens] with standard values. */
     fun dimens(
         size: Dp = Size,
         iconSize: Dp = IconSize,
-        shape: Shape = IconButtonDefaults.Shape,
-    ): IconButtonDimens = IconButtonDimens(
-        size = size,
-        iconSize = iconSize,
-        shape = shape,
-    )
+        shape: Shape = IconButtonDefaults.Shape
+    ): IconButtonDimens =
+        IconButtonDimens(
+            size = size,
+            iconSize = iconSize,
+            shape = shape
+        )
 }
 
 @Preview

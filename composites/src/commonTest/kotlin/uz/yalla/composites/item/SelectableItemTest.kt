@@ -9,22 +9,23 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class SelectableItemColorsTest {
-
-    private val colors = SelectableItemColors(
-        selectedContainer = Color.LightGray,
-        unselectedContainer = Color.Transparent,
-        border = Color.Gray,
-        text = Color.Black,
-    )
-
-    @Test
-    fun equality_sameValues_areEqual() {
-        val other = SelectableItemColors(
+    private val colors =
+        SelectableItemColors(
             selectedContainer = Color.LightGray,
             unselectedContainer = Color.Transparent,
             border = Color.Gray,
-            text = Color.Black,
+            text = Color.Black
         )
+
+    @Test
+    fun equality_sameValues_areEqual() {
+        val other =
+            SelectableItemColors(
+                selectedContainer = Color.LightGray,
+                unselectedContainer = Color.Transparent,
+                border = Color.Gray,
+                text = Color.Black
+            )
         assertEquals(colors, other)
     }
 
@@ -45,7 +46,6 @@ class SelectableItemColorsTest {
 }
 
 class SelectableItemDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = SelectableItemDefaults.dimens()
@@ -57,11 +57,12 @@ class SelectableItemDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = SelectableItemDefaults.dimens(
-            shape = RoundedCornerShape(8.dp),
-            iconSpacing = 16.dp,
-            borderWidth = 2.dp,
-        )
+        val dimens =
+            SelectableItemDefaults.dimens(
+                shape = RoundedCornerShape(8.dp),
+                iconSpacing = 16.dp,
+                borderWidth = 2.dp
+            )
         assertEquals(RoundedCornerShape(8.dp), dimens.shape)
         assertEquals(16.dp, dimens.iconSpacing)
         assertEquals(2.dp, dimens.borderWidth)

@@ -6,7 +6,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class RadiusSchemeTest {
-
     @Test
     fun standard_returnsExpectedValues() {
         val scheme = standardRadiusScheme()
@@ -15,7 +14,7 @@ class RadiusSchemeTest {
         assertEquals(12.dp, scheme.m)
         assertEquals(16.dp, scheme.l)
         assertEquals(24.dp, scheme.xl)
-        assertEquals(40.dp, scheme.sheet)
+        assertEquals(28.dp, scheme.sheet)
     }
 
     @Test

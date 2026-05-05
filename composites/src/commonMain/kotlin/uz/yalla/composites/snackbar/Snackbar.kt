@@ -34,7 +34,7 @@ enum class SnackbarVariant {
     Success,
 
     /** Red error styling. */
-    Error,
+    Error
 }
 
 /**
@@ -44,7 +44,7 @@ data class SnackbarState(
     val message: String,
     val variant: SnackbarVariant,
     val icon: Painter,
-    val dismissIcon: Painter,
+    val dismissIcon: Painter
 )
 
 /**
@@ -56,7 +56,7 @@ data class SnackbarColors(
     val iconBackground: Color,
     val icon: Color,
     val text: Color,
-    val dismissIcon: Color,
+    val dismissIcon: Color
 )
 
 /**
@@ -72,7 +72,7 @@ data class SnackbarDimens(
     val iconPadding: Dp,
     val iconBackgroundRadius: Dp,
     val dismissIconSize: Dp,
-    val messageMaxLines: Int,
+    val messageMaxLines: Int
 )
 
 /**
@@ -109,15 +109,15 @@ fun Snackbar(
     modifier: Modifier = Modifier,
     messageStyle: TextStyle = System.font.body.small.medium,
     colors: SnackbarColors = SnackbarDefaults.colors(state.variant),
-    dimens: SnackbarDimens = SnackbarDefaults.dimens(),
+    dimens: SnackbarDimens = SnackbarDefaults.dimens()
 ) {
     Card(
         modifier = modifier,
         shape = dimens.shape,
         colors =
             CardDefaults.cardColors(
-                containerColor = colors.container,
-            ),
+                containerColor = colors.container
+            )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -127,16 +127,16 @@ fun Snackbar(
                     .fillMaxWidth()
                     .padding(
                         vertical = dimens.verticalPadding,
-                        horizontal = dimens.horizontalPadding,
-                    ),
+                        horizontal = dimens.horizontalPadding
+                    )
         ) {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier =
                     Modifier.background(
                         color = colors.iconBackground,
-                        shape = RoundedCornerShape(dimens.iconBackgroundRadius),
-                    ),
+                        shape = RoundedCornerShape(dimens.iconBackgroundRadius)
+                    )
             ) {
                 Icon(
                     painter = state.icon,
@@ -145,7 +145,7 @@ fun Snackbar(
                     modifier =
                         Modifier
                             .padding(dimens.iconPadding)
-                            .size(dimens.iconSize),
+                            .size(dimens.iconSize)
                 )
             }
 
@@ -155,7 +155,7 @@ fun Snackbar(
                 color = colors.text,
                 modifier = Modifier.weight(1f),
                 maxLines = dimens.messageMaxLines,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
 
             Icon(
@@ -165,7 +165,7 @@ fun Snackbar(
                 modifier =
                     Modifier
                         .size(dimens.dismissIconSize)
-                        .clickable(onClick = onDismiss),
+                        .clickable(onClick = onDismiss)
             )
         }
     }
@@ -188,7 +188,7 @@ object SnackbarDefaults {
                     iconBackground = Color.White.copy(alpha = 0.2f),
                     icon = System.color.icon.white,
                     text = System.color.icon.white,
-                    dismissIcon = System.color.icon.white,
+                    dismissIcon = System.color.icon.white
                 )
             SnackbarVariant.Error ->
                 SnackbarColors(
@@ -196,7 +196,7 @@ object SnackbarDefaults {
                     iconBackground = Color.White.copy(alpha = 0.2f),
                     icon = System.color.icon.white,
                     text = System.color.icon.white,
-                    dismissIcon = System.color.icon.white,
+                    dismissIcon = System.color.icon.white
                 )
         }
 
@@ -209,14 +209,15 @@ object SnackbarDefaults {
         iconBackground: Color = Color.White.copy(alpha = 0.2f),
         icon: Color = System.color.icon.white,
         text: Color = System.color.icon.white,
-        dismissIcon: Color = System.color.icon.white,
-    ): SnackbarColors = SnackbarColors(
-        container = container,
-        iconBackground = iconBackground,
-        icon = icon,
-        text = text,
-        dismissIcon = dismissIcon,
-    )
+        dismissIcon: Color = System.color.icon.white
+    ): SnackbarColors =
+        SnackbarColors(
+            container = container,
+            iconBackground = iconBackground,
+            icon = icon,
+            text = text,
+            dismissIcon = dismissIcon
+        )
 
     /**
      * Creates default dimensions.
@@ -230,16 +231,17 @@ object SnackbarDefaults {
         iconPadding: Dp = 6.dp,
         iconBackgroundRadius: Dp = 36.dp,
         dismissIconSize: Dp = 20.dp,
-        messageMaxLines: Int = 2,
-    ): SnackbarDimens = SnackbarDimens(
-        shape = shape,
-        contentSpacing = contentSpacing,
-        verticalPadding = verticalPadding,
-        horizontalPadding = horizontalPadding,
-        iconSize = iconSize,
-        iconPadding = iconPadding,
-        iconBackgroundRadius = iconBackgroundRadius,
-        dismissIconSize = dismissIconSize,
-        messageMaxLines = messageMaxLines,
-    )
+        messageMaxLines: Int = 2
+    ): SnackbarDimens =
+        SnackbarDimens(
+            shape = shape,
+            contentSpacing = contentSpacing,
+            verticalPadding = verticalPadding,
+            horizontalPadding = horizontalPadding,
+            iconSize = iconSize,
+            iconPadding = iconPadding,
+            iconBackgroundRadius = iconBackgroundRadius,
+            dismissIconSize = dismissIconSize,
+            messageMaxLines = messageMaxLines
+        )
 }

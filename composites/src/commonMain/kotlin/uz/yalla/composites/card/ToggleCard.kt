@@ -27,7 +27,7 @@ import uz.yalla.platform.toggle.NativeSwitch
 @Immutable
 data class ToggleCardColors(
     val container: Color,
-    val iconBackground: Color,
+    val iconBackground: Color
 )
 
 /**
@@ -40,25 +40,25 @@ data class ToggleCardDimens(
     val iconShape: Shape,
     val iconPadding: Dp,
     val iconSpacing: Dp,
-    val trailingSpacing: Dp,
+    val trailingSpacing: Dp
 )
 
 /**
  * Default configuration values for [ToggleCard].
  */
 object ToggleCardDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
     @Composable
     fun colors(
         container: Color = Color.Transparent,
-        iconBackground: Color = System.color.background.secondary,
-    ): ToggleCardColors = ToggleCardColors(
-        container = container,
-        iconBackground = iconBackground,
-    )
+        iconBackground: Color = System.color.background.secondary
+    ): ToggleCardColors =
+        ToggleCardColors(
+            container = container,
+            iconBackground = iconBackground
+        )
 
     /**
      * Creates default dimensions.
@@ -69,15 +69,16 @@ object ToggleCardDefaults {
         iconShape: Shape = RoundedCornerShape(10.dp),
         iconPadding: Dp = 10.dp,
         iconSpacing: Dp = 16.dp,
-        trailingSpacing: Dp = 28.dp,
-    ): ToggleCardDimens = ToggleCardDimens(
-        contentPadding = contentPadding,
-        iconSize = iconSize,
-        iconShape = iconShape,
-        iconPadding = iconPadding,
-        iconSpacing = iconSpacing,
-        trailingSpacing = trailingSpacing,
-    )
+        trailingSpacing: Dp = 28.dp
+    ): ToggleCardDimens =
+        ToggleCardDimens(
+            contentPadding = contentPadding,
+            iconSize = iconSize,
+            iconShape = iconShape,
+            iconPadding = iconPadding,
+            iconSpacing = iconSpacing,
+            trailingSpacing = trailingSpacing
+        )
 }
 
 /**
@@ -116,27 +117,30 @@ fun ToggleCard(
     colors: ToggleCardColors = ToggleCardDefaults.colors(),
     dimens: ToggleCardDimens = ToggleCardDefaults.dimens(),
     leadingIcon: @Composable (() -> Unit)? = null,
-    content: @Composable () -> Unit,
+    content: @Composable () -> Unit
 ) {
     ContentCard(
         modifier = modifier,
-        colors = ContentCardDefaults.colors(
-            container = colors.container,
-            disabledContainer = colors.container,
-        ),
-        dimens = ContentCardDefaults.dimens(
-            contentPadding = dimens.contentPadding,
-        ),
+        colors =
+            ContentCardDefaults.colors(
+                container = colors.container,
+                disabledContainer = colors.container
+            ),
+        dimens =
+            ContentCardDefaults.dimens(
+                contentPadding = dimens.contentPadding
+            )
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (leadingIcon != null) {
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(dimens.iconSize)
-                        .clip(dimens.iconShape)
-                        .background(colors.iconBackground)
-                        .padding(dimens.iconPadding),
+                    modifier =
+                        Modifier
+                            .size(dimens.iconSize)
+                            .clip(dimens.iconShape)
+                            .background(colors.iconBackground)
+                            .padding(dimens.iconPadding)
                 ) {
                     leadingIcon()
                 }
@@ -153,7 +157,7 @@ fun ToggleCard(
             NativeSwitch(
                 checked = checked,
                 onCheckedChange = onCheckedChange,
-                enabled = enabled,
+                enabled = enabled
             )
         }
     }

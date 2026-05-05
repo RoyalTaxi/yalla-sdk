@@ -33,7 +33,7 @@ data class ActionPickerItem(
     val title: String,
     val icon: Painter,
     val onClick: () -> Unit,
-    val isDestructive: Boolean = false,
+    val isDestructive: Boolean = false
 )
 
 /**
@@ -46,7 +46,7 @@ data class ActionPickerColors(
     val itemBackground: Color,
     val itemIcon: Color,
     val itemText: Color,
-    val destructiveItemIcon: Color,
+    val destructiveItemIcon: Color
 )
 
 /**
@@ -60,7 +60,7 @@ data class ActionPickerDimens(
     val itemSpacing: Dp,
     val itemShape: Shape,
     val itemPadding: PaddingValues,
-    val itemIconTextSpacing: Dp,
+    val itemIconTextSpacing: Dp
 )
 
 /**
@@ -79,7 +79,7 @@ object ActionPickerDefaults {
         itemBackground: Color = System.color.background.secondary,
         itemIcon: Color = System.color.icon.base,
         itemText: Color = System.color.text.base,
-        destructiveItemIcon: Color = System.color.icon.red,
+        destructiveItemIcon: Color = System.color.icon.red
     ): ActionPickerColors =
         ActionPickerColors(
             container = container,
@@ -87,20 +87,20 @@ object ActionPickerDefaults {
             itemBackground = itemBackground,
             itemIcon = itemIcon,
             itemText = itemText,
-            destructiveItemIcon = destructiveItemIcon,
+            destructiveItemIcon = destructiveItemIcon
         )
 
     /**
      * Creates default dimensions.
      */
     fun dimens(
-        shape: Shape = RoundedCornerShape(topStart = 38.dp, topEnd = 38.dp),
-        contentPadding: PaddingValues = PaddingValues(10.dp),
+        shape: Shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
+        contentPadding: PaddingValues = PaddingValues(horizontal = 16.dp),
         titleItemsSpacing: Dp = 24.dp,
         itemSpacing: Dp = 10.dp,
         itemShape: Shape = RoundedCornerShape(16.dp),
         itemPadding: PaddingValues = PaddingValues(18.dp),
-        itemIconTextSpacing: Dp = 12.dp,
+        itemIconTextSpacing: Dp = 12.dp
     ): ActionPickerDimens =
         ActionPickerDimens(
             shape = shape,
@@ -109,7 +109,7 @@ object ActionPickerDefaults {
             itemSpacing = itemSpacing,
             itemShape = itemShape,
             itemPadding = itemPadding,
-            itemIconTextSpacing = itemIconTextSpacing,
+            itemIconTextSpacing = itemIconTextSpacing
         )
 }
 
@@ -155,30 +155,33 @@ fun ActionPickerSheet(
     items: List<ActionPickerItem>,
     modifier: Modifier = Modifier,
     colors: ActionPickerColors = ActionPickerDefaults.colors(),
-    dimens: ActionPickerDimens = ActionPickerDefaults.dimens(),
+    dimens: ActionPickerDimens = ActionPickerDefaults.dimens()
 ) {
     Sheet(
         isVisible = isVisible,
         onDismissRequest = onDismissRequest,
         modifier = modifier,
         colors = SheetDefaults.colors(container = colors.container),
-        dimens = SheetDefaults.dimens(shape = dimens.shape),
+        dimens = SheetDefaults.dimens(shape = dimens.shape)
     ) {
-        Column(modifier = Modifier.padding(dimens.contentPadding)) {
+        Column {
             SheetHeader(
                 onClose = onDismissRequest,
                 title = title,
-                colors = SheetHeaderDefaults.colors(title = colors.title),
+                colors = SheetHeaderDefaults.colors(title = colors.title)
             )
 
             Spacer(modifier = Modifier.height(dimens.titleItemsSpacing))
 
-            LazyColumn(verticalArrangement = Arrangement.spacedBy(dimens.itemSpacing)) {
+            LazyColumn(
+                modifier = Modifier.padding(dimens.contentPadding),
+                verticalArrangement = Arrangement.spacedBy(dimens.itemSpacing)
+            ) {
                 items(items) { item ->
                     ActionPickerItemRow(
                         item = item,
                         colors = colors,
-                        dimens = dimens,
+                        dimens = dimens
                     )
                 }
             }
@@ -191,19 +194,19 @@ private fun ActionPickerItemRow(
     item: ActionPickerItem,
     colors: ActionPickerColors,
     dimens: ActionPickerDimens,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Button(
         onClick = item.onClick,
         shape = dimens.itemShape,
         contentPadding = dimens.itemPadding,
         colors = ButtonDefaults.buttonColors(colors.itemBackground),
-        modifier = modifier,
+        modifier = modifier
     ) {
         Icon(
             painter = item.icon,
             contentDescription = null,
-            tint = if (item.isDestructive) colors.destructiveItemIcon else colors.itemIcon,
+            tint = if (item.isDestructive) colors.destructiveItemIcon else colors.itemIcon
         )
 
         Spacer(modifier = Modifier.width(dimens.itemIconTextSpacing))
@@ -212,7 +215,7 @@ private fun ActionPickerItemRow(
             text = item.title,
             color = colors.itemText,
             style = System.font.body.base.medium,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }

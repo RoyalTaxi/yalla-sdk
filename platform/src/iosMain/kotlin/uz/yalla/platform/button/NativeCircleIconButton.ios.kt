@@ -37,6 +37,6 @@ actual fun NativeCircleIconButton(
             config.circleButton.create(icon, click, borderWidth, borderColor)
         },
         alpha = alpha,
-        useKey = true,
+        useKey = true
     )
 }

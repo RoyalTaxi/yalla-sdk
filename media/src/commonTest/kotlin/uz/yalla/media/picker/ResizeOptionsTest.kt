@@ -127,7 +127,7 @@ class ResizeOptionsTest {
     fun differentResizeThresholdShouldNotBeEqual() {
         assertNotEquals(
             ResizeOptions(resizeThresholdBytes = 100L),
-            ResizeOptions(resizeThresholdBytes = 200L),
+            ResizeOptions(resizeThresholdBytes = 200L)
         )
     }
 
@@ -135,7 +135,7 @@ class ResizeOptionsTest {
     fun differentCompressionQualityShouldNotBeEqual() {
         assertNotEquals(
             ResizeOptions(compressionQuality = 0.5),
-            ResizeOptions(compressionQuality = 0.9),
+            ResizeOptions(compressionQuality = 0.9)
         )
     }
 

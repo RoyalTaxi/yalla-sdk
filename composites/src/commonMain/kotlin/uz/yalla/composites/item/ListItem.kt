@@ -30,7 +30,7 @@ data class ListItemColors(
     val subtitle: Color,
     val disabledContainer: Color,
     val disabledTitle: Color,
-    val disabledSubtitle: Color,
+    val disabledSubtitle: Color
 )
 
 /**
@@ -45,7 +45,7 @@ data class ListItemDimens(
     val contentSpacing: Dp,
     val titleSubtitleSpacing: Dp,
     val titleMaxLines: Int,
-    val subtitleMaxLines: Int,
+    val subtitleMaxLines: Int
 )
 
 /**
@@ -93,24 +93,24 @@ fun ListItem(
     leadingContent: @Composable (() -> Unit)? = null,
     trailingContent: @Composable (() -> Unit)? = null,
     colors: ListItemColors = ListItemDefaults.colors(),
-    dimens: ListItemDimens = ListItemDefaults.dimens(),
+    dimens: ListItemDimens = ListItemDefaults.dimens()
 ) {
     val content: @Composable () -> Unit = {
         Row(
             modifier = Modifier.fillMaxWidth().padding(dimens.contentPadding),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing),
+            horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing)
         ) {
             leadingContent?.invoke()
 
             Column(
                 modifier = Modifier.weight(1f),
-                verticalArrangement = Arrangement.spacedBy(dimens.titleSubtitleSpacing),
+                verticalArrangement = Arrangement.spacedBy(dimens.titleSubtitleSpacing)
             ) {
                 ProvideTextStyle(
                     System.font.body.base.bold.copy(
-                        color = if (enabled) colors.title else colors.disabledTitle,
-                    ),
+                        color = if (enabled) colors.title else colors.disabledTitle
+                    )
                 ) {
                     title()
                 }
@@ -118,8 +118,8 @@ fun ListItem(
                 if (subtitle != null) {
                     ProvideTextStyle(
                         System.font.body.small.medium.copy(
-                            color = if (enabled) colors.subtitle else colors.disabledSubtitle,
-                        ),
+                            color = if (enabled) colors.subtitle else colors.disabledSubtitle
+                        )
                     ) {
                         subtitle()
                     }
@@ -135,10 +135,11 @@ fun ListItem(
         modifier = modifier,
         enabled = onClick != null && enabled,
         shape = dimens.shape,
-        colors = CardDefaults.cardColors(
-            containerColor = colors.container,
-            disabledContainerColor = if (onClick != null) colors.disabledContainer else colors.container,
-        ),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = colors.container,
+                disabledContainerColor = if (onClick != null) colors.disabledContainer else colors.container
+            )
     ) {
         content()
     }
@@ -148,7 +149,6 @@ fun ListItem(
  * Default configuration values for [ListItem].
  */
 object ListItemDefaults {
-
     /**
      * Creates theme-aware default colors.
      */
@@ -158,18 +158,21 @@ object ListItemDefaults {
         title: Color = System.color.text.base,
         subtitle: Color = System.color.text.subtle,
         disabledContainer: Color = Color.Transparent,
-        disabledTitle: Color = System.color.text.subtle
-            .copy(alpha = 0.5f),
-        disabledSubtitle: Color = System.color.text.subtle
-            .copy(alpha = 0.5f),
-    ): ListItemColors = ListItemColors(
-        container = container,
-        title = title,
-        subtitle = subtitle,
-        disabledContainer = disabledContainer,
-        disabledTitle = disabledTitle,
-        disabledSubtitle = disabledSubtitle,
-    )
+        disabledTitle: Color =
+            System.color.text.subtle
+                .copy(alpha = 0.5f),
+        disabledSubtitle: Color =
+            System.color.text.subtle
+                .copy(alpha = 0.5f)
+    ): ListItemColors =
+        ListItemColors(
+            container = container,
+            title = title,
+            subtitle = subtitle,
+            disabledContainer = disabledContainer,
+            disabledTitle = disabledTitle,
+            disabledSubtitle = disabledSubtitle
+        )
 
     /**
      * Creates default dimensions.
@@ -180,13 +183,14 @@ object ListItemDefaults {
         contentSpacing: Dp = 12.dp,
         titleSubtitleSpacing: Dp = 4.dp,
         titleMaxLines: Int = 1,
-        subtitleMaxLines: Int = 2,
-    ): ListItemDimens = ListItemDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-        contentSpacing = contentSpacing,
-        titleSubtitleSpacing = titleSubtitleSpacing,
-        titleMaxLines = titleMaxLines,
-        subtitleMaxLines = subtitleMaxLines,
-    )
+        subtitleMaxLines: Int = 2
+    ): ListItemDimens =
+        ListItemDimens(
+            shape = shape,
+            contentPadding = contentPadding,
+            contentSpacing = contentSpacing,
+            titleSubtitleSpacing = titleSubtitleSpacing,
+            titleMaxLines = titleMaxLines,
+            subtitleMaxLines = subtitleMaxLines
+        )
 }

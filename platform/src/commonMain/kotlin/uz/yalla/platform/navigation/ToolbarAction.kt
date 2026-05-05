@@ -15,7 +15,7 @@ sealed interface ToolbarAction {
      */
     data class Text(
         val label: String,
-        override val onClick: () -> Unit,
+        override val onClick: () -> Unit
     ) : ToolbarAction
 
     /**
@@ -23,7 +23,7 @@ sealed interface ToolbarAction {
      */
     data class Icon(
         val icon: ToolbarIcon,
-        override val onClick: () -> Unit,
+        override val onClick: () -> Unit
     ) : ToolbarAction
 }
 
@@ -43,5 +43,5 @@ enum class ToolbarIcon {
     More,
 
     /** Plus / add icon. SF Symbol: `plus`. */
-    Add,
+    Add
 }

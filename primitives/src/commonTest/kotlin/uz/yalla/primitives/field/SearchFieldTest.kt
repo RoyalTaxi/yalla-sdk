@@ -9,20 +9,21 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
 class SearchFieldColorsTest {
-
-    private val colors = SearchFieldColors(
-        container = Color.LightGray,
-        text = Color.Black,
-        placeholder = Color.Gray,
-    )
+    private val colors =
+        SearchFieldColors(
+            container = Color.LightGray,
+            text = Color.Black,
+            placeholder = Color.Gray
+        )
 
     @Test
     fun equality_sameValues_areEqual() {
-        val other = SearchFieldColors(
-            container = Color.LightGray,
-            text = Color.Black,
-            placeholder = Color.Gray,
-        )
+        val other =
+            SearchFieldColors(
+                container = Color.LightGray,
+                text = Color.Black,
+                placeholder = Color.Gray
+            )
         assertEquals(colors, other)
     }
 
@@ -42,7 +43,6 @@ class SearchFieldColorsTest {
 }
 
 class SearchFieldDimensTest {
-
     @Test
     fun defaults_haveExpectedValues() {
         val dimens = SearchFieldDefaults.dimens()
@@ -54,11 +54,12 @@ class SearchFieldDimensTest {
 
     @Test
     fun dimens_overridesWork() {
-        val dimens = SearchFieldDefaults.dimens(
-            shape = RoundedCornerShape(8.dp),
-            iconSpacing = 12.dp,
-            minHeight = 56.dp,
-        )
+        val dimens =
+            SearchFieldDefaults.dimens(
+                shape = RoundedCornerShape(8.dp),
+                iconSpacing = 12.dp,
+                minHeight = 56.dp
+            )
         assertEquals(RoundedCornerShape(8.dp), dimens.shape)
         assertEquals(12.dp, dimens.iconSpacing)
         assertEquals(56.dp, dimens.minHeight)

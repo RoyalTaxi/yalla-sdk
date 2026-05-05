@@ -452,6 +452,7 @@
     <string name="no_internet_title">Интернетга уланиш йўқ</string>
     <string name="no_internet_description">Интернетга уланишни текширинг</string>
     <string name="no_internet_action">Янгилаш</string>
+    <string name="no_internet_action_menu">Менюга ўтиш</string>
 
 
     <!-- ═══════════════════════════════════════════════════════════════════════════════
