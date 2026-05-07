@@ -26,3 +26,8 @@ DerivedData/
 
 # Local tool caches
 .code-graph/
+
+# Kotlin/JS + Kotlin/Wasm yarn lock + node_modules cache (created by KGP wasmJs target
+# during the component-catalog build). Generated, not source.
+kotlin-js-store/
+node_modules/
