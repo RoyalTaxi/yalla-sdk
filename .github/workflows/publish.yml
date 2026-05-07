@@ -83,7 +83,13 @@ jobs:
       # triggered. Skipping framework linking cuts 4×N tasks (Debug/
       # Release × Arm64/SimArm64 × every module) and the memory pressure
       # that hung the runner indefinitely on prior runs.
+      #
+      # Gated on commits whose message starts with `release(` so docs-only
+      # commits don't try to re-publish an already-published version
+      # (GitHub Packages returns 409 Conflict on the same coordinates and
+      # would block the Dokka + Pages deploy that follows).
       - name: Publish to GitHub Packages
+        if: startsWith(github.event.head_commit.message, 'release(')
         run: ./gradlew publish --max-workers=2 --no-parallel
         env:
           GITHUB_ACTOR: ${{ github.actor }}
