@@ -1,3 +1,5 @@
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package uz.yalla.core.util
 
 import kotlinx.datetime.TimeZone
