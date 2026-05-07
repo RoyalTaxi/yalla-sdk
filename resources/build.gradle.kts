@@ -20,6 +20,15 @@ valkyrie {
 }
 
 kotlin {
+    // wasmJs target exists so :component-catalog (Storytale gallery) can consume the SDK's
+    // shared resources (icons, fonts, strings) without source duplication. This module has no
+    // expect declarations and no platform-specific code in commonMain, so the target is safe
+    // to add. The wasmJs Maven publication that results is harmless to existing Android/iOS
+    // consumers — they continue to resolve the variant matching their platform attributes.
+    wasmJs {
+        browser()
+    }
+
     sourceSets {
         commonMain.dependencies {
             implementation(compose.runtime)

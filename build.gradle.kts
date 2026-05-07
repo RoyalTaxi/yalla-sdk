@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.android.multiplatform.library) apply false
     alias(libs.plugins.dokka)
+    alias(libs.plugins.storytale) apply false
     // Binary Compatibility Validator — gates accidental ABI breaks via .api
     // baselines per module. `./gradlew apiDump` regenerates baselines (commit
     // them); `./gradlew apiCheck` runs in CI and fails on drift.
@@ -14,6 +15,8 @@ plugins {
 apiValidation {
     // BOM is a java-platform module — no compiled API surface to validate.
     ignoredProjects.add("bom")
+    // component-catalog is the docs-only Storytale wasmJs gallery, not published.
+    ignoredProjects.add("component-catalog")
     // Convention plugins live in an included build, not a project — already excluded.
 
     // Validate the .klib ABI for native targets (iosArm64 / iosSimulatorArm64).

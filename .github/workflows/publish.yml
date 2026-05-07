@@ -83,7 +83,13 @@ jobs:
       # triggered. Skipping framework linking cuts 4×N tasks (Debug/
       # Release × Arm64/SimArm64 × every module) and the memory pressure
       # that hung the runner indefinitely on prior runs.
+      #
+      # Gated on commits whose message starts with `release(` so docs-only
+      # commits don't try to re-publish an already-published version
+      # (GitHub Packages returns 409 Conflict on the same coordinates and
+      # would block the Dokka + Pages deploy that follows).
       - name: Publish to GitHub Packages
+        if: startsWith(github.event.head_commit.message, 'release(')
         run: ./gradlew publish --max-workers=2 --no-parallel
         env:
           GITHUB_ACTOR: ${{ github.actor }}
@@ -92,14 +98,20 @@ jobs:
       - name: Generate Dokka docs
         run: ./gradlew dokkaGenerate --max-workers=2 --no-parallel
 
+      - name: Generate Storytale component catalog (wasmJs)
+        # `--no-configuration-cache` because KGP's KotlinWebpack task isn't config-cache
+        # compatible on JDK 21 (SoftReference reflection + project-state captures).
+        run: ./gradlew :component-catalog:wasmJsBrowserStoriesProductionExecutableDistribution --max-workers=2 --no-parallel --no-configuration-cache
+
       - name: Assemble GitHub Pages site
-        # Landing page + static component catalog at /, Dokka API reference at /api.
-        # Component catalog is hand-curated under docs/pages/components/ for now; the live
-        # Storytale-powered wasmJs gallery is tracked as a follow-up (see catalog status section).
+        # / — landing page (docs/pages/index.html)
+        # /api — Dokka API reference
+        # /components — live Storytale wasmJs gallery rendering SDK primitives
         run: |
           rm -rf build/pages
-          mkdir -p build/pages/api
+          mkdir -p build/pages/api build/pages/components
           cp -R docs/pages/. build/pages/
+          cp -R component-catalog/build/dist/wasmJs/StoriesProductionExecutable/. build/pages/components/
           cp -R build/dokka/. build/pages/api/
 
       - uses: actions/upload-pages-artifact@v3

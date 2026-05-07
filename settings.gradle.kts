@@ -8,6 +8,8 @@ pluginManagement {
         google()
         gradlePluginPortal()
         mavenCentral()
+        // Storytale dev builds (no Maven Central release yet)
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -15,6 +17,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
 
@@ -31,4 +34,5 @@ include(
     ":media",
     ":firebase",
     ":bom",
+    ":component-catalog",
 )
