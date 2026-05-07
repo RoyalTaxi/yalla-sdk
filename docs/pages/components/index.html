@@ -39,7 +39,9 @@
           <article class="component"><h4>System.motion</h4><p>Animation specs and easings — keeps timing consistent across SDK and client.</p><code>uz.yalla.design.theme.System.motion</code></article>
           <article class="component"><h4>System.stroke</h4><p>Border thicknesses for dividers, focus rings, and outline buttons.</p><code>uz.yalla.design.theme.System.stroke</code></article>
           <article class="component"><h4>System.elevation</h4><p>Shadow tokens for sheets, cards, and floating elements.</p><code>uz.yalla.design.theme.System.elevation</code></article>
-          <article class="component"><h4>YallaTheme</h4><p>Provides the design system to every composable subtree. Wraps light/dark resolution.</p><code>uz.yalla.design.theme.YallaTheme</code></article>
+          <article class="component"><h4>System.touchTarget</h4><p>Minimum tap-surface sizes for accessibility-compliant hit areas.</p><code>uz.yalla.design.theme.System.touchTarget</code></article>
+          <article class="component"><h4>System.haptic</h4><p>Haptic controller — call <code>System.haptic.perform(Haptic.Confirm)</code> for tactile feedback.</p><code>uz.yalla.design.theme.System.haptic</code></article>
+          <article class="component"><h4>YallaTheme</h4><p>Provides the design system to every composable subtree. Wraps light/dark resolution and Material3 bridging.</p><code>uz.yalla.design.theme.YallaTheme</code></article>
         </div>
       </div>
     </section>
@@ -96,7 +98,7 @@
       <div class="group">
         <h3>OTP, rating, map pins</h3>
         <div class="components">
-          <article class="component"><h4>PinRow</h4><p>OTP code input with auto-focus and paste support.</p><code>uz.yalla.primitives.otp.PinRow</code></article>
+          <article class="component"><h4>PinRow</h4><p>OTP code input — controlled by <code>value</code> + <code>onValueChange</code> with a fixed digit length.</p><code>uz.yalla.primitives.otp.PinRow</code></article>
           <article class="component"><h4>RatingRow</h4><p>Star rating selector — 1-to-5 trip rating after order completion.</p><code>uz.yalla.primitives.rating.RatingRow</code></article>
           <article class="component"><h4>LocationPin</h4><p>Map pickup/dropoff pin marker; layered header, content, and stick.</p><code>uz.yalla.primitives.pin.LocationPin</code></article>
           <article class="component"><h4>SearchPin</h4><p>Animated map pin for active place search (Lottie-driven).</p><code>uz.yalla.primitives.pin.SearchPin</code></article>
@@ -133,7 +135,8 @@
           <article class="component"><h4>PlaceButton</h4><p>Tappable place row with leading marker + chevron — pickup/dropoff slots.</p><code>uz.yalla.composites.item.PlaceButton</code></article>
           <article class="component"><h4>PricingItem</h4><p>Tariff/fare row with price + selection state — used in tariff picker.</p><code>uz.yalla.composites.item.PricingItem</code></article>
           <article class="component"><h4>IconItem</h4><p>Icon + label item used in dense menus and action grids.</p><code>uz.yalla.composites.item.IconItem</code></article>
-          <article class="component"><h4>ValueItem</h4><p>Label + numeric value row (bonus balance, points, fare breakdown).</p><code>uz.yalla.composites.item.ValueItemView</code></article>
+          <article class="component"><h4>ValueItemView</h4><p>Label + numeric value row (bonus balance, points, fare breakdown). Read-only.</p><code>uz.yalla.composites.item.ValueItemView</code></article>
+          <article class="component"><h4>ClickableValueItem</h4><p>Tappable variant of <code>ValueItemView</code> — used when the value row navigates to detail.</p><code>uz.yalla.composites.item.ClickableValueItem</code></article>
         </div>
       </div>
 
@@ -153,7 +156,6 @@
           <article class="component"><h4>SheetHeader</h4><p>Reusable header slot for sheet titles, drag-handle, and trailing actions.</p><code>uz.yalla.composites.sheet.SheetHeader</code></article>
           <article class="component"><h4>SheetSnackbarHost</h4><p>Snackbar host that sits inside a sheet, above the keyboard.</p><code>uz.yalla.composites.sheet.SheetSnackbarHost</code></article>
           <article class="component"><h4>BottomSheetCard</h4><p>Card-styled sheet variant for non-modal bottom presentations.</p><code>uz.yalla.composites.sheet.BottomSheetCard</code></article>
-          <article class="component"><h4>DeviceConnectivityState</h4><p>State holder + remember helper for device connectivity inside sheets.</p><code>uz.yalla.composites.sheet.DeviceConnectivityState</code></article>
         </div>
       </div>
 
@@ -162,7 +164,16 @@
         <div class="components">
           <article class="component"><h4>Snackbar</h4><p>Brand-styled snackbar with status icon and action slot.</p><code>uz.yalla.composites.snackbar.Snackbar</code></article>
           <article class="component"><h4>SnackbarHost</h4><p>Composable host that observes a controller and displays queued snackbars.</p><code>uz.yalla.composites.snackbar.SnackbarHost</code></article>
-          <article class="component"><h4>SnackbarController</h4><p>Stateful controller that queues snackbar messages from anywhere in the app.</p><code>uz.yalla.composites.snackbar.SnackbarController</code></article>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>State holders &amp; controllers</h3>
+        <div class="components">
+          <article class="component"><h4>SnackbarController</h4><p>Queues snackbar messages from anywhere in the app — pair with <code>SnackbarHost</code>.</p><code>uz.yalla.composites.snackbar.SnackbarController</code></article>
+          <article class="component"><h4>DeviceConnectivityState</h4><p>State holder for device connectivity. <code>rememberDeviceConnectivityState(connectivity)</code> drives offline sheets.</p><code>uz.yalla.composites.sheet.DeviceConnectivityState</code></article>
+          <article class="component"><h4>ExpandableSheetState</h4><p>State for <code>ExpandableSheet</code> — controls half/full expansion programmatically.</p><code>uz.yalla.composites.sheet.ExpandableSheetState</code></article>
+          <article class="component"><h4>HeaderableSheetState</h4><p>State for <code>HeaderableSheet</code> — exposes scroll offset for sticky-header behavior.</p><code>uz.yalla.composites.sheet.HeaderableSheetState</code></article>
         </div>
       </div>
 
@@ -180,7 +191,7 @@
         <div class="components">
           <article class="component"><h4>RouteView</h4><p>Origin → stops → destination route summary with brand connectors.</p><code>uz.yalla.composites.view.RouteView</code></article>
           <article class="component"><h4>LocationPoint</h4><p>Single labeled location row — pairs well with <code>RouteView</code>.</p><code>uz.yalla.composites.view.LocationPoint</code></article>
-          <article class="component"><h4>EmptyState</h4><p>Image + title + description block for empty list/error states.</p><code>uz.yalla.composites.view.EmptyState</code></article>
+          <article class="component"><h4>EmptyState</h4><p>Image + title slot, with optional description and action slots — for empty lists, errors, and offline states.</p><code>uz.yalla.composites.view.EmptyState</code></article>
           <article class="component"><h4>CarNumber</h4><p>License-plate-styled view used in driver assignment cards.</p><code>uz.yalla.composites.view.CarNumber</code></article>
         </div>
       </div>
@@ -188,21 +199,63 @@
 
     <section class="section" id="maps">
       <h2>Maps &amp; media</h2>
-      <p>Heavyweight platform integrations from <code>:maps</code> and <code>:media</code>. These are provider-agnostic and can be wired against MapLibre, Google Maps, native pickers, or camera.</p>
+      <p>Provider-agnostic platform integrations from <code>:maps</code> and <code>:media</code>. The maps API abstracts over Google Maps and MapLibre with runtime switching; media wraps native camera, gallery, and image pipelines.</p>
+
       <div class="group">
-        <h3>Maps</h3>
+        <h3>Map surfaces</h3>
         <div class="components">
-          <article class="component"><h4>MapHost</h4><p>Provider-agnostic Compose map surface — switches between Google and MapLibre.</p><code>uz.yalla.maps.host.MapHost</code></article>
-          <article class="component"><h4>MapMarker</h4><p>Marker overlay with branded glyph; supports clusters and live updates.</p><code>uz.yalla.maps.marker.MapMarker</code></article>
-          <article class="component"><h4>RouteLayer</h4><p>Polyline route rendering with progress and ETA tracking.</p><code>uz.yalla.maps.route.RouteLayer</code></article>
+          <article class="component"><h4>ExtendedMap</h4><p>Fully interactive map composable — gestures, overlays, camera control. Use for the home/order map.</p><code>uz.yalla.maps.api.ExtendedMap</code></article>
+          <article class="component"><h4>LiteMap</h4><p>Lightweight non-interactive map for previews and list rows. Cheaper than ExtendedMap.</p><code>uz.yalla.maps.api.LiteMap</code></article>
+          <article class="component"><h4>StaticMap</h4><p>Fully static map (no gestures, no live tiles) — for receipts, history rows, and snapshots.</p><code>uz.yalla.maps.api.StaticMap</code></article>
+          <article class="component"><h4>MapController</h4><p>Imperative control surface for an interactive map — animate camera, set bounds, query state.</p><code>uz.yalla.maps.api.MapController</code></article>
+          <article class="component"><h4>MapScope</h4><p>Composition scope inside a map — provides the controller and overlay slot helpers.</p><code>uz.yalla.maps.api.MapScope</code></article>
         </div>
       </div>
+
       <div class="group">
-        <h3>Media</h3>
+        <h3>Overlays</h3>
         <div class="components">
-          <article class="component"><h4>CameraCapture</h4><p>Compose-friendly camera capture flow with permission handling.</p><code>uz.yalla.media.camera.CameraCapture</code></article>
-          <article class="component"><h4>GalleryPicker</h4><p>Photo/video picker abstraction over native iOS and Android pickers.</p><code>uz.yalla.media.picker.GalleryPicker</code></article>
-          <article class="component"><h4>MediaCompression</h4><p>Image compression utilities for upload pipelines.</p><code>uz.yalla.media.compress.Compression</code></article>
+          <article class="component"><h4>LocationIndicatorOverlay</h4><p>User location dot with heading and accuracy circle. Driven by location updates from <code>:foundation</code>.</p><code>uz.yalla.maps.api.overlay.LocationIndicatorOverlay</code></article>
+          <article class="component"><h4>LocationsOverlay</h4><p>Renders a list of markers (drivers, places, stops) with custom icons and click handling.</p><code>uz.yalla.maps.api.overlay.LocationsOverlay</code></article>
+          <article class="component"><h4>RouteOverlay</h4><p>Polyline route rendering — origin → destination with optional intermediate stops.</p><code>uz.yalla.maps.api.overlay.RouteOverlay</code></article>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>Map model &amp; provider switching</h3>
+        <div class="components">
+          <article class="component"><h4>CameraPosition</h4><p>Lat/lng + zoom + bearing + tilt — the position type used by every map composable and controller.</p><code>uz.yalla.maps.api.model.CameraPosition</code></article>
+          <article class="component"><h4>MarkerState</h4><p>Holds a marker's lat/lng and visibility — the state primitive for <code>LocationsOverlay</code>.</p><code>uz.yalla.maps.api.model.MarkerState</code></article>
+          <article class="component"><h4>MapStyle</h4><p>Map style descriptor — light, dark, branded; consumed by both Google and Libre providers.</p><code>uz.yalla.maps.api.model.MapStyle</code></article>
+          <article class="component"><h4>MapCapabilities</h4><p>Feature flags reported by the active provider (gestures, indoor, traffic).</p><code>uz.yalla.maps.api.model.MapCapabilities</code></article>
+          <article class="component"><h4>SwitchingMapProvider</h4><p>Runtime switcher between Google Maps and MapLibre — set provider once, every map honors it.</p><code>uz.yalla.maps.provider.SwitchingMapProvider</code></article>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>Camera</h3>
+        <div class="components">
+          <article class="component"><h4>YallaCamera</h4><p>Compose camera surface with built-in capture controls and permission flow.</p><code>uz.yalla.media.camera.YallaCamera</code></article>
+          <article class="component"><h4>YallaCameraState</h4><p>State holder for <code>YallaCamera</code> — controls torch, lens flip, capture.</p><code>uz.yalla.media.camera.YallaCameraState</code></article>
+          <article class="component"><h4>SystemCameraLauncher</h4><p>Launches the platform's native camera app — for one-shot photo capture without embedding.</p><code>uz.yalla.media.camera.SystemCameraLauncher</code></article>
+          <article class="component"><h4>CameraMode</h4><p>Photo / video / scan modes for <code>YallaCamera</code>.</p><code>uz.yalla.media.camera.CameraMode</code></article>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>Gallery &amp; pickers</h3>
+        <div class="components">
+          <article class="component"><h4>YallaGallery</h4><p>In-app gallery composable — browse, multi-select, return picked items as bytes.</p><code>uz.yalla.media.gallery.YallaGallery</code></article>
+          <article class="component"><h4>GalleryPickerState</h4><p>State for <code>YallaGallery</code> — exposes selection, filter, and load progress.</p><code>uz.yalla.media.gallery.GalleryPickerState</code></article>
+          <article class="component"><h4>ImagePickerLauncher</h4><p>Native picker abstraction (system photo picker on iOS/Android). Returns bytes ready for upload.</p><code>uz.yalla.media.picker.ImagePickerLauncher</code></article>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>Image processing</h3>
+        <div class="components">
+          <article class="component"><h4>ImageCompressor</h4><p>Compresses images to a target size before upload — used by avatar, document, and chat media flows.</p><code>uz.yalla.media.utils.ImageCompressor</code></article>
+          <article class="component"><h4>CompressionConfig</h4><p>Tunable compression parameters (quality, max dimension, format) consumed by <code>ImageCompressor</code>.</p><code>uz.yalla.media.utils.CompressionConfig</code></article>
         </div>
       </div>
     </section>
@@ -215,12 +268,14 @@
         parameter lists, slot APIs, and modifier defaults, follow the link to <a href="../api/">/api/</a>.
       </div>
       <div class="note">
-        <strong>Coming next: live catalog.</strong> A Storytale-powered Compose Multiplatform/wasm
-        gallery is the planned next step — it will render every component live with controls for
-        states (selected, loading, dark, RTL) under <code>/components/</code>. Blockers tracked in
-        <code>:component-catalog</code> include Kotlin&nbsp;2.3&nbsp;+&nbsp;KGP wasmJs / detekt
-        compiler-embeddable alignment, and a wasmJs publication for the connectivity dependency
-        consumed by <code>:composites</code>.
+        <strong>Coming next: live catalog (Phase&nbsp;2).</strong> A Storytale-powered Compose
+        Multiplatform/wasm gallery will replace this page at the same URL — rendering every
+        component live with controls for states (selected, loading, dark, RTL). Three known
+        blockers gate the work: (1)&nbsp;Kotlin&nbsp;2.3 + KGP wasmJs vs detekt/dokka's transitive
+        <code>kotlin-compiler-embeddable</code> on the buildscript classpath; (2)&nbsp;no wasmJs
+        publication for <code>dev.jordond.connectivity:connectivity-device</code>, consumed by
+        <code>:composites</code>'s <code>DeviceConnectivityState</code> from <code>commonMain</code>;
+        (3)&nbsp;Storytale itself is alpha and its API may shift before 0.1.
       </div>
       <div class="note">
         <strong>For new services (e.g. intercity).</strong> Before adding a screen, check this page
