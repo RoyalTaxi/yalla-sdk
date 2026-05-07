@@ -92,9 +92,19 @@ jobs:
       - name: Generate Dokka docs
         run: ./gradlew dokkaGenerate --max-workers=2 --no-parallel
 
+      - name: Assemble GitHub Pages site
+        # Landing page + static component catalog at /, Dokka API reference at /api.
+        # Component catalog is hand-curated under docs/pages/components/ for now; the live
+        # Storytale-powered wasmJs gallery is tracked as a follow-up (see catalog status section).
+        run: |
+          rm -rf build/pages
+          mkdir -p build/pages/api
+          cp -R docs/pages/. build/pages/
+          cp -R build/dokka/. build/pages/api/
+
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: build/dokka
+          path: build/pages
 
       - id: pages
         uses: actions/deploy-pages@v4
