@@ -3,18 +3,18 @@
 // Strategy:
 //   - Use raw plugins (NOT yalla.sdk.kmp convention) so detekt/dokka don't enter the
 //     buildscript classpath and risk kotlin-compiler-embeddable skew.
-//   - srcDir SDK source files (primitives/design/core) directly into the catalog's
+//   - srcDir SDK source files (primitives/composites/design/core) directly into the catalog's
 //     wasmJs compilation, so SDK modules don't need their own wasmJs targets and
 //     their published artifacts stay Android+iOS only.
 //   - :resources is the one exception — it added `wasmJs { browser() }` so the
 //     catalog can consume Compose Resources (icons/fonts/strings) via a normal
 //     project dependency, avoiding the gnarly cross-module composeResources copy.
-//   - :primitives only references one platform expect (`NativeLoadingIndicator`) from
-//     commonMain. Provided here as a non-expect Compose Material3 spinner stub.
-//   - :composites is intentionally excluded — its commonMain depends on
-//     `dev.jordond.connectivity:connectivity-device`, which has no wasmJs publication.
-//   - :primitives/pin is excluded — it pulls compottie + constraintlayout, which
-//     would broaden the toolchain surface for the catalog spike.
+//   - Platform-native seams used by primitives/composites keep the same expect/actual
+//     shape as :platform. The catalog supplies wasmJs actuals that mirror Android's
+//     Material implementations where the web target exposes the same APIs.
+//   - The one composite source excluded is DeviceConnectivityState: its backing
+//     library has no wasmJs publication. DatePickerSheet is also excluded because
+//     it is expect-only in common source.
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.compose.multiplatform)
@@ -65,9 +65,21 @@ kotlin {
                 "../primitives/src/commonMain/kotlin/uz/yalla/primitives/skeleton",
                 "../primitives/src/commonMain/kotlin/uz/yalla/primitives/topbar",
                 "../primitives/src/commonMain/kotlin/uz/yalla/primitives/otp",
+                "../primitives/src/commonMain/kotlin/uz/yalla/primitives/pin",
                 "../primitives/src/commonMain/kotlin/uz/yalla/primitives/rating",
                 "../primitives/src/commonMain/kotlin/uz/yalla/primitives/transformation",
                 "../primitives/src/commonMain/kotlin/uz/yalla/primitives/util",
+                "../composites/src/commonMain/kotlin/uz/yalla/composites/card",
+                "../composites/src/commonMain/kotlin/uz/yalla/composites/drawer",
+                "../composites/src/commonMain/kotlin/uz/yalla/composites/item",
+                "../composites/src/commonMain/kotlin/uz/yalla/composites/sheet",
+                "../composites/src/commonMain/kotlin/uz/yalla/composites/snackbar",
+                "../composites/src/commonMain/kotlin/uz/yalla/composites/util",
+                "../composites/src/commonMain/kotlin/uz/yalla/composites/view",
+            )
+            kotlin.exclude(
+                "**/DatePickerSheet.kt",
+                "**/DeviceConnectivityState.kt",
             )
 
             dependencies {
@@ -77,12 +89,16 @@ kotlin {
                 implementation(compose.foundation)
                 implementation(compose.ui)
                 implementation(compose.material3)
+                implementation(compose.materialIconsExtended)
                 implementation(compose.components.resources)
                 implementation(libs.compose.ui.tooling.preview)
 
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.kotlinx.coroutines.core)
                 implementation(libs.kotlinx.serialization.json)
+                implementation(libs.compottie)
+                implementation(libs.compottie.resources)
+                implementation(libs.constraintlayout)
 
                 // primitives' SensitiveButton uses repeatOnLifecycle + LocalLifecycleOwner
                 // from the multiplatform Jetpack Lifecycle artifact.

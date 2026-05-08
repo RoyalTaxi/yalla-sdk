@@ -1,45 +1,189 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Yalla SDK Documentation</title>
+  <title>Yalla SDK</title>
+  <link rel="icon" type="image/svg+xml" href="api/images/logo-icon.svg">
+  <link rel="stylesheet" href="api/styles/font-jb-sans-auto.css">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    document.documentElement.classList.replace("no-js", "js");
+    const storedTheme = localStorage.getItem("dokka-dark-mode");
+    const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if ((storedTheme == null && prefersDark) || storedTheme === "true") {
+      document.documentElement.classList.add("theme-dark");
+    }
+  </script>
 </head>
 <body>
-  <main class="shell">
-    <section class="hero">
-      <p class="eyebrow">Yalla SDK</p>
-      <h1>Foundation, API, and component system for Yalla mobility products.</h1>
-      <p class="lead">
-        Use API docs for exact Kotlin surfaces and the component catalog to discover existing
-        primitives and composites before building new product flows.
-      </p>
-      <div class="actions">
-        <a class="card primary" href="api/">
-          <span>API Reference</span>
-          <strong>Dokka docs for every SDK module</strong>
-        </a>
-        <a class="card" href="components/">
-          <span>Component Catalog</span>
-          <strong>Live Storytale gallery — primitives rendered in your browser</strong>
-        </a>
+  <div class="root">
+    <nav class="navigation theme-dark" aria-label="Primary">
+      <a class="library-name--link" href="./">Yalla SDK</a>
+      <span class="library-version">Documentation</span>
+      <div class="navigation-links" aria-label="Documentation sections">
+        <a href="api/">API</a>
+        <a href="components/">Components</a>
       </div>
-    </section>
-    <section class="grid" aria-label="Documentation sections">
-      <article>
-        <h2>Design Tokens</h2>
-        <p>Color, type, spacing, radius, motion, stroke, elevation, touch targets, and haptics.</p>
-      </article>
-      <article>
-        <h2>Primitives</h2>
-        <p>Buttons, fields, indicators, OTP, top bars, rating rows, pins, and skeleton states.</p>
-      </article>
-      <article>
-        <h2>Composites</h2>
-        <p>Cards, list items, sheets, snackbars, empty states, route views, and location patterns.</p>
-      </article>
-    </section>
-  </main>
+      <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--btn_theme" id="theme-toggle-button" type="button">
+          Switch theme
+        </button>
+      </div>
+    </nav>
+
+    <div id="container">
+      <aside class="sidebar" aria-label="Table of contents">
+        <div class="sidebar--inner">
+          <div class="toc--part">
+            <div class="toc--row toc--row_active">
+              <a class="toc--link" href="./">Overview</a>
+            </div>
+          </div>
+          <div class="toc--part">
+            <div class="toc--row">
+              <a class="toc--link" href="api/">API Reference</a>
+            </div>
+          </div>
+          <div class="toc--part">
+            <div class="toc--row">
+              <a class="toc--link" href="components/">Component Catalog</a>
+            </div>
+          </div>
+          <div class="toc--section">Modules</div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/core/">core</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/design/">design</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/primitives/">primitives</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/composites/">composites</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/platform/">platform</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/resources/">resources</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/foundation/">foundation</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/data/">data</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/maps/">maps</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/media/">media</a></div></div>
+          <div class="toc--part"><div class="toc--row"><a class="toc--link" href="api/firebase/">firebase</a></div></div>
+        </div>
+      </aside>
+
+      <main id="main">
+        <div class="main-content" id="content">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="./">Yalla SDK</a>
+            <span>/</span>
+            <span>Overview</span>
+          </nav>
+
+          <section class="cover">
+            <h1>Yalla SDK</h1>
+            <p class="paragraph lead">
+              Kotlin Multiplatform modules for Yalla product surfaces: domain contracts,
+              transport, design tokens, primitives, composites, platform bridges, maps,
+              media, and Firebase facades.
+            </p>
+
+            <div class="tools">
+              <label class="search-box" for="docs-filter">
+                <span>Search</span>
+                <input id="docs-filter" type="search" placeholder="Filter modules and sections">
+              </label>
+            </div>
+
+            <h2>Documentation</h2>
+            <div class="table" data-filter-group>
+              <a class="table-row table-row_link" href="api/" data-filter-row="api reference dokka modules kotlin">
+                <span class="row-title">API Reference</span>
+                <span class="brief-comment">Generated Dokka reference for every public SDK module.</span>
+              </a>
+              <a class="table-row table-row_link" href="components/" data-filter-row="component catalog storytale primitives composites wasm">
+                <span class="row-title">Component Catalog</span>
+                <span class="brief-comment">Live Storytale wasmJs gallery for UI primitives, composites, and interaction states.</span>
+              </a>
+            </div>
+
+            <h2>All modules</h2>
+            <div class="table" data-filter-group>
+              <a class="table-row table-row_link" href="api/composites/" data-filter-row="composites cards items sheets drawers snackbars views">
+                <span class="row-title">composites</span>
+                <span class="brief-comment">Screen-ready assemblies built from primitives: cards, items, sheets, drawers, snackbars, and views.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/core/" data-filter-row="core either dataerror domain enums utilities">
+                <span class="row-title">core</span>
+                <span class="brief-comment">Domain atoms, result types, identity, payment, settings, order, location, and utility contracts.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/data/" data-filter-row="data network persistence datastore ktor preferences">
+                <span class="row-title">data</span>
+                <span class="brief-comment">HTTP, retry, guest-mode guards, settings, and persistence plumbing for SDK consumers.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/design/" data-filter-row="design color font theme space radius stroke motion haptic tokens">
+                <span class="row-title">design</span>
+                <span class="brief-comment">The visual system: color, typography, spacing, radius, stroke, elevation, motion, touch, and haptics.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/firebase/" data-filter-row="firebase analytics crashlytics messaging logging">
+                <span class="row-title">firebase</span>
+                <span class="brief-comment">Consumer-facing Firebase facade for analytics, crash reporting, messaging, and logging.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/foundation/" data-filter-row="foundation viewmodel location locale settings loading controller">
+                <span class="row-title">foundation</span>
+                <span class="brief-comment">ViewModel infrastructure, location, locale, settings, event observation, and loading coordination.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/maps/" data-filter-row="maps maplibre google compose controller overlays routes">
+                <span class="row-title">maps</span>
+                <span class="brief-comment">Provider-agnostic Compose maps with MapLibre defaults, Google adapters, overlays, and controllers.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/media/" data-filter-row="media camera image picker gallery compression">
+                <span class="row-title">media</span>
+                <span class="brief-comment">Cross-platform camera, image picker, gallery, and compression APIs.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/platform/" data-filter-row="platform native sheet switch picker navigation system bars haptic">
+                <span class="row-title">platform</span>
+                <span class="brief-comment">Native host bridge for sheets, toggles, pickers, navigation, system bars, haptics, and app updates.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/primitives/" data-filter-row="primitives buttons fields indicators pins top bars otp rating skeleton">
+                <span class="row-title">primitives</span>
+                <span class="brief-comment">Stateless Compose UI bricks: buttons, fields, indicators, dialogs, pins, top bars, OTP, rating, and skeletons.</span>
+              </a>
+              <a class="table-row table-row_link" href="api/resources/" data-filter-row="resources icons strings drawables fonts compose resources">
+                <span class="row-title">resources</span>
+                <span class="brief-comment">Shared Compose resources: generated icons, strings, drawables, Lottie files, and fonts.</span>
+              </a>
+            </div>
+          </section>
+        </div>
+
+        <footer class="footer">
+          <a href="#content" class="footer--button footer--button_go-to-top" aria-label="Go to top"></a>
+          <span>2026 Yalla SDK</span>
+          <span class="pull-right">
+            <span>Generated with </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">dokka</a>
+          </span>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const toggle = document.getElementById("theme-toggle-button");
+    toggle.addEventListener("click", () => {
+      const isDark = document.documentElement.classList.toggle("theme-dark");
+      localStorage.setItem("dokka-dark-mode", JSON.stringify(isDark));
+    });
+
+    const filter = document.getElementById("docs-filter");
+    const rows = Array.from(document.querySelectorAll("[data-filter-row]"));
+    filter.addEventListener("input", () => {
+      const query = filter.value.trim().toLowerCase();
+      rows.forEach((row) => {
+        row.hidden = query.length > 0 && !row.dataset.filterRow.includes(query);
+      });
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "/" && document.activeElement !== filter) {
+        event.preventDefault();
+        filter.focus();
+      }
+    });
+  </script>
 </body>
 </html>

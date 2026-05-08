@@ -1,18 +1,18 @@
-package uz.yalla.platform.indicator
+package uz.yalla.platform.toggle
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 
 /**
- * Platform-native loading/progress indicator.
+ * Platform-native toggle switch.
  *
  * The component catalog compiles this expect declaration for wasmJs and provides
  * a Material implementation that mirrors the Android actual.
  */
 @Composable
-expect fun NativeLoadingIndicator(
+expect fun NativeSwitch(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
-    color: Color = Color.Unspecified,
-    backgroundColor: Color = Color.Unspecified,
+    enabled: Boolean = true,
 )
