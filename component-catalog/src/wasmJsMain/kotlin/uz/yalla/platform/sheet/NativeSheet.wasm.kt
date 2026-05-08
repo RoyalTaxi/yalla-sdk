@@ -1,0 +1,120 @@
+package uz.yalla.platform.sheet
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.SheetValue
+import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalDensity
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+
+// Mirrors :platform's Android actual; wasm Material3 does not expose Android
+// status/navigation bar appearance flags, so those properties are the only omission.
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+actual fun NativeSheet(
+    isVisible: Boolean,
+    shape: Shape,
+    containerColor: Color,
+    onDismissRequest: () -> Unit,
+    dismissEnabled: Boolean,
+    onDismissAttempt: () -> Unit,
+    isDark: Boolean?,
+    skipPartiallyExpanded: Boolean,
+    onFullyExpanded: (() -> Unit)?,
+    content: @Composable () -> Unit,
+) {
+    val density = LocalDensity.current
+    val statusBarTopDp =
+        with(density) {
+            WindowInsets.statusBars.getTop(this).toDp()
+        }
+
+    var shouldShow by remember { mutableStateOf(false) }
+    val currentDismissEnabled by rememberUpdatedState(dismissEnabled)
+    val currentIsVisible by rememberUpdatedState(isVisible)
+    val currentOnDismissAttempt by rememberUpdatedState(onDismissAttempt)
+    val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
+
+    val sheetState =
+        rememberModalBottomSheetState(
+            skipPartiallyExpanded = skipPartiallyExpanded,
+            confirmValueChange = { value ->
+                val isHiding = value == SheetValue.Hidden
+                if (!currentDismissEnabled && currentIsVisible && isHiding) {
+                    currentOnDismissAttempt()
+                    false
+                } else {
+                    true
+                }
+            },
+        )
+
+    LaunchedEffect(isVisible) {
+        if (isVisible) {
+            shouldShow = true
+        } else if (shouldShow) {
+            try {
+                sheetState.hide()
+            } finally {
+                shouldShow = false
+            }
+        }
+    }
+
+    LaunchedEffect(sheetState, onFullyExpanded) {
+        if (onFullyExpanded == null) return@LaunchedEffect
+        snapshotFlow { sheetState.currentValue to sheetState.targetValue }
+            .distinctUntilChanged()
+            .filter { (current, target) -> current == SheetValue.Expanded && current == target }
+            .collect { onFullyExpanded() }
+    }
+
+    if (shouldShow) {
+        ModalBottomSheet(
+            sheetState = sheetState,
+            shape = RectangleShape,
+            containerColor = Color.Transparent,
+            dragHandle = null,
+            contentWindowInsets = { WindowInsets.ime },
+            onDismissRequest = {
+                if (currentDismissEnabled) {
+                    shouldShow = false
+                    currentOnDismissRequest()
+                } else {
+                    currentOnDismissAttempt()
+                }
+            },
+            content = {
+                Column(
+                    modifier =
+                        Modifier
+                            .padding(top = statusBarTopDp)
+                            .background(color = containerColor, shape = shape)
+                            .navigationBarsPadding(),
+                ) {
+                    content()
+                }
+            },
+        )
+    }
+}
