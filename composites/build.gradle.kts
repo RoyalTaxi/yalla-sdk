@@ -18,12 +18,12 @@ kotlin {
             // *Colors / *Dimens data class; layout primitives + RowScope in
             // public slots; Surface / Icon / Text / TextField from Material3
             // in many public composables.
-            api(compose.runtime)
-            api(compose.ui)
-            api(compose.foundation)
-            api(compose.material3)
-            implementation(compose.materialIconsExtended)
-            implementation(compose.components.resources)
+            api(libs.compose.runtime)
+            api(libs.compose.ui)
+            api(libs.compose.foundation)
+            api(libs.compose.material3)
+            implementation(libs.compose.material.icons.extended)
+            implementation(libs.compose.components.resources)
             implementation(libs.compose.ui.tooling.preview)
 
             // Datetime — LocalDate fields on DatePickerSheetState

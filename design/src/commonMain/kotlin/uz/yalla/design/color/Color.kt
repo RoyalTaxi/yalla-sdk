@@ -1,22 +1,11 @@
-/**
- * Raw color token definitions for the Yalla design system.
- *
- * This file contains the primitive hex color values used by [ColorScheme] to build
- * semantic color groups. Tokens are organized by theme (light / dark), followed by
- * shared accent colors and gradient brushes.
- *
- * These values should not be referenced directly from UI code — use [ColorScheme]
- * via `System.color` instead, so theme switching works automatically.
- *
- * @see ColorScheme
- * @see light
- * @see dark
- */
 package uz.yalla.design.color
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+
+// Raw color token definitions. UI code should use semantic ColorScheme values
+// through System.color so theme switching stays centralized.
 
 // region Light Theme Colors
 

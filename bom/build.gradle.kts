@@ -12,6 +12,7 @@ dependencies {
         api("uz.yalla.sdk:foundation:${project.version}")
         api("uz.yalla.sdk:primitives:${project.version}")
         api("uz.yalla.sdk:composites:${project.version}")
+        api("uz.yalla.sdk:components:${project.version}")
         api("uz.yalla.sdk:maps:${project.version}")
         api("uz.yalla.sdk:media:${project.version}")
         api("uz.yalla.sdk:firebase:${project.version}")

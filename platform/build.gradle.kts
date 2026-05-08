@@ -12,11 +12,11 @@ kotlin {
             // Compose — public types: every NativeXxx is @Composable +
             // takes Modifier; Color / Shape / Dp / TextStyle in public
             // signatures (e.g. NativeSheet, NativeCircleIconButton).
-            api(compose.runtime)
-            api(compose.ui)
-            api(compose.foundation)
-            api(compose.material3)
-            implementation(compose.components.resources)
+            api(libs.compose.runtime)
+            api(libs.compose.ui)
+            api(libs.compose.foundation)
+            api(libs.compose.material3)
+            implementation(libs.compose.components.resources)
 
             // Datetime — kotlinx-datetime types appear in NativeWheelDatePicker
             // (LocalDate). Wheel-picker library is android-only impl, demoted.

@@ -98,20 +98,13 @@ jobs:
       - name: Generate Dokka docs
         run: ./gradlew dokkaGenerate --max-workers=2 --no-parallel
 
-      - name: Generate Storytale component catalog (wasmJs)
-        # `--no-configuration-cache` because KGP's KotlinWebpack task isn't config-cache
-        # compatible on JDK 21 (SoftReference reflection + project-state captures).
-        run: ./gradlew :component-catalog:wasmJsBrowserStoriesProductionExecutableDistribution --max-workers=2 --no-parallel --no-configuration-cache
-
       - name: Assemble GitHub Pages site
         # / — landing page (docs/pages/index.html)
         # /api — Dokka API reference
-        # /components — live Storytale wasmJs gallery rendering SDK primitives
         run: |
           rm -rf build/pages
-          mkdir -p build/pages/api build/pages/components
+          mkdir -p build/pages/api
           cp -R docs/pages/. build/pages/
-          cp -R component-catalog/build/dist/wasmJs/StoriesProductionExecutable/. build/pages/components/
           cp -R build/dokka/. build/pages/api/
 
       - uses: actions/upload-pages-artifact@v3

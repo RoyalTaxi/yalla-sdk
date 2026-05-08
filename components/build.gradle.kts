@@ -5,17 +5,24 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            api(projects.design)
             api(projects.resources)
+
             api(libs.compose.runtime)
             api(libs.compose.ui)
-            implementation(libs.compose.foundation)
-            implementation(libs.compose.material3)
-            implementation(libs.compose.components.resources)
+            api(libs.compose.foundation)
+            api(libs.compose.material3)
+            api(libs.compose.material.icons.extended)
+
+            implementation(libs.compose.ui.tooling.preview)
         }
 
         commonTest.dependencies {
             implementation(kotlin("test"))
-            implementation(libs.compose.ui.test)
         }
     }
+}
+
+dependencies {
+    androidRuntimeClasspath(libs.compose.ui.tooling)
 }

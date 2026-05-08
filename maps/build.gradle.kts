@@ -16,11 +16,11 @@ kotlin {
             // Compose — every Yalla*Map composable is @Composable + Modifier-
             // taking; CameraPosition / MarkerState are Color/Dp-shaped so
             // compose.ui types end up in our public surface.
-            api(compose.runtime)
-            api(compose.ui)
-            api(compose.foundation)
-            implementation(compose.material3)
-            implementation(compose.components.resources)
+            api(libs.compose.runtime)
+            api(libs.compose.ui)
+            api(libs.compose.foundation)
+            implementation(libs.compose.material3)
+            implementation(libs.compose.components.resources)
 
             // Core — GeoPoint and Address types appear in MapController
             // signatures (cameraPosition, markerState, fitBounds).

@@ -11,10 +11,10 @@ kotlin {
 
             // Compose — public types: @Composable + ProvidableCompositionLocal
             // (compose.runtime), Modifier on Modifier.staggerReveal (compose.ui)
-            api(compose.runtime)
-            api(compose.ui)
-            implementation(compose.animation)
-            implementation(compose.components.resources)
+            api(libs.compose.runtime)
+            api(libs.compose.ui)
+            implementation(libs.compose.animation)
+            implementation(libs.compose.components.resources)
 
             // Architecture — public types (BaseViewModel : ViewModel,
             // Lifecycle.State in ObserveAsEvents, StateFlow/CoroutineScope
