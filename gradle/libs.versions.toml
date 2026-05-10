@@ -1,6 +1,6 @@
 [versions]
 # Core
-agp = "9.0.0"
+agp = "9.2.1"
 # NOTE: pinned to 2.2.21 (was 2.3.0) so Storytale dev22's compiler plugin can load.
 # Storytale 0.0.4-alpha01+dev22 is built against KGP 2.2.21; CMP 1.10 supports >=2.1
 # (>=2.2.20 recommended for web); AGP 9.0 requires KGP >=2.2.10 — 2.2.21 satisfies
