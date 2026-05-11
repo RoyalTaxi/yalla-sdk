@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
 
 @Immutable
 data class PrimaryButtonColors(
@@ -41,7 +42,8 @@ data class PrimaryButtonColors(
     )
 
     @Composable
-    fun contentColorFor(enabled: Boolean) = if (enabled) contentColor else disabledContentColor
+    fun contentColorFor(enabled: Boolean) =
+        if (enabled) contentColor else disabledContentColor
 }
 
 @Immutable
@@ -68,7 +70,7 @@ object PrimaryButtonDefaults {
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(System.radius.l),
-        contentSpacing: Dp = System.space.scale.xxs,
+        contentSpacing: Dp = System.space.scale.m,
         contentPadding: PaddingValues = PaddingValues(
             vertical = System.space.scale.l,
             horizontal = System.space.scale.xxl
@@ -118,7 +120,7 @@ fun PrimaryButton(
 
 @Preview
 @Composable
-private fun Preview() {
+private fun Preview() = YallaTheme {
     Column(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
