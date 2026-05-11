@@ -7,12 +7,14 @@ kotlin {
         commonMain.dependencies {
             api(projects.design)
             api(projects.resources)
+            implementation(projects.core)
 
             api(libs.compose.runtime)
             api(libs.compose.ui)
             api(libs.compose.foundation)
             api(libs.compose.material3)
             api(libs.compose.material.icons.extended)
+            implementation(libs.compose.components.resources)
 
             implementation(libs.compose.ui.tooling.preview)
         }
