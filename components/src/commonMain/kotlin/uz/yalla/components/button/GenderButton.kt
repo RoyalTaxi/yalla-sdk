@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,12 +34,11 @@ import uz.yalla.resources.register_gender_female
 import uz.yalla.resources.register_gender_male
 
 private val GenderKind.resource: StringResource?
-    get() =
-        when (this) {
-            GenderKind.Male -> Res.string.register_gender_male
-            GenderKind.Female -> Res.string.register_gender_female
-            GenderKind.NotSelected -> null
-        }
+    get() = when (this) {
+        GenderKind.Male -> Res.string.register_gender_male
+        GenderKind.Female -> Res.string.register_gender_female
+        GenderKind.NotSelected -> null
+    }
 
 @Immutable
 data class GenderButtonColors(
