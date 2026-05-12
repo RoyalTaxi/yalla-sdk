@@ -1,4 +1,4 @@
-package uz.yalla.components.button
+package uz.yalla.components.item
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,26 +26,26 @@ import uz.yalla.resources.icons.Gallery
 import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
-data class ActionButtonColors(
+data class ActionableItemColors(
     val iconColor: Color,
 )
 
-object ActionButtonDefaults {
+object ActionableItemDefaults {
     @Composable
     fun colors(
         iconColor: Color = System.color.button.tertiary
-    ) = ActionButtonColors(
+    ) = ActionableItemColors(
         iconColor = iconColor
     )
 }
 
 @Composable
-fun ActionButton(
+fun ActionableItem(
     text: String,
     painter: Painter,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    colors: ActionButtonColors = ActionButtonDefaults.colors()
+    colors: ActionableItemColors = ActionableItemDefaults.colors()
 ) {
     Surface(
         modifier = modifier,
@@ -82,19 +82,19 @@ private fun Preview() = YallaTheme {
         verticalArrangement = Arrangement.spacedBy(10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ActionButton(
+        ActionableItem(
             text = "Take a picture",
             modifier = Modifier.fillMaxWidth(),
             painter = rememberVectorPainter(YallaIcons.Camera),
             onClick = {}
         )
 
-        ActionButton(
+        ActionableItem(
             text = "Choose from gallery",
             modifier = Modifier.fillMaxWidth(),
             painter = rememberVectorPainter(YallaIcons.Gallery),
             onClick = {},
-            colors = ActionButtonDefaults.colors(System.color.icon.red)
+            colors = ActionableItemDefaults.colors(System.color.icon.red)
         )
     }
 }
