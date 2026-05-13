@@ -5,7 +5,7 @@
 ## What's here
 
 - **Icons** — 70+ SVGs under `src/commonMain/valkyrieResources/`, compiled to `YallaIcons` via Valkyrie.
-- **Strings** — `src/commonMain/composeResources/values*/strings.xml`. Locales: default, `en`, `ru`, `uz` (Latin), `be` (Uzbek Cyrillic, see Notes).
+- **Strings** — generated from [`RoyalTaxi/yalla-resources`](https://github.com/RoyalTaxi/yalla-resources) into `src/commonMain/composeResources/values*/strings.xml`. Locales: default, `en`, `ru`, `uz` (Latin), `be` (Uzbek Cyrillic, see Notes).
 - **Fonts** — Inter, Roboto, SFPro, Nummernschild under `src/commonMain/composeResources/font/`.
 - **Drawables** — PNG assets under `src/commonMain/composeResources/drawable/`.
 
@@ -18,9 +18,12 @@ Auto-generated:
 
 ## Adding a new string
 
-1. Add key + default translation to `values/strings.xml`.
-2. Add translation to each `values-*` variant.
-3. Rebuild; `Res.string.<key>` available in dependent modules.
+1. Add the key and translations to `strings/catalog.json` in `yalla-resources`.
+2. Run `python3 tools/yalla_resources.py sync` from the `yalla-resources` checkout.
+3. Commit the generated `values*/strings.xml` changes here.
+4. Rebuild; `Res.string.<key>` is available in dependent modules.
+
+Do not edit generated `strings.xml` files by hand.
 
 ## Adding a new icon
 
