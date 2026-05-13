@@ -4,7 +4,7 @@
 
 ## What's here
 
-- **Icons** — 70+ SVGs under `src/commonMain/valkyrieResources/`, compiled to `YallaIcons` via Valkyrie.
+- **Icons** — synced from [`RoyalTaxi/yalla-resources`](https://github.com/RoyalTaxi/yalla-resources) into `src/commonMain/valkyrieResources/`, then compiled to `YallaIcons` via Valkyrie.
 - **Strings** — generated from [`RoyalTaxi/yalla-resources`](https://github.com/RoyalTaxi/yalla-resources) into `src/commonMain/composeResources/values*/strings.xml`. Locales: default, `en`, `ru`, `uz` (Latin), `be` (Uzbek Cyrillic, see Notes).
 - **Fonts** — Inter, Roboto, SFPro, Nummernschild under `src/commonMain/composeResources/font/`.
 - **Drawables** — PNG assets under `src/commonMain/composeResources/drawable/`.
@@ -27,8 +27,12 @@ Do not edit generated `strings.xml` files by hand.
 
 ## Adding a new icon
 
-1. Drop SVG into `valkyrieResources/`.
-2. Rebuild; `YallaIcons.<PascalCaseName>` available. Valkyrie regenerates from the directory.
+1. Drop SVG into `assets/icons/` in `yalla-resources`.
+2. Run `python3 tools/yalla_resources.py sync` from the `yalla-resources` checkout.
+3. Commit the synced `valkyrieResources/` changes here.
+4. Rebuild; `YallaIcons.<PascalCaseName>` is available. Valkyrie regenerates from the directory.
+
+Do not edit synced icon files by hand.
 
 ## Notes
 
