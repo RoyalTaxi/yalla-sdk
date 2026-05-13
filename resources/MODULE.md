@@ -6,8 +6,9 @@
 
 - **Icons** — synced from [`RoyalTaxi/yalla-resources`](https://github.com/RoyalTaxi/yalla-resources) into `src/commonMain/valkyrieResources/`, then compiled to `YallaIcons` via Valkyrie.
 - **Strings** — generated from [`RoyalTaxi/yalla-resources`](https://github.com/RoyalTaxi/yalla-resources) into `src/commonMain/composeResources/values*/strings.xml`. Locales: default, `en`, `ru`, `uz` (Latin), `be` (Uzbek Cyrillic, see Notes).
-- **Fonts** — Inter, Roboto, SFPro, Nummernschild under `src/commonMain/composeResources/font/`.
-- **Drawables** — PNG assets under `src/commonMain/composeResources/drawable/`.
+- **Fonts** — synced from [`RoyalTaxi/yalla-resources`](https://github.com/RoyalTaxi/yalla-resources) into `src/commonMain/composeResources/font/`.
+- **Drawables** — synced PNG assets under `src/commonMain/composeResources/drawable/`.
+- **Files** — synced JSON assets under `src/commonMain/composeResources/files/`.
 
 ## Public API
 
@@ -33,6 +34,15 @@ Do not edit generated `strings.xml` files by hand.
 4. Rebuild; `YallaIcons.<PascalCaseName>` is available. Valkyrie regenerates from the directory.
 
 Do not edit synced icon files by hand.
+
+## Adding a new drawable, font, or file
+
+1. Add the source file under `assets/drawable/`, `assets/font/`, or `assets/files/` in `yalla-resources`.
+2. Run `python3 tools/yalla_resources.py sync` from the `yalla-resources` checkout.
+3. Commit the synced `composeResources/` changes here.
+4. Rebuild; Compose Resources regenerates the corresponding `Res.drawable`, `Res.font`, or `Res.getUri()` accessors.
+
+Do not edit synced asset files by hand.
 
 ## Notes
 

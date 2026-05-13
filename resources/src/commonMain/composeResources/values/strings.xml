@@ -2,6 +2,7 @@
 <!-- Generated from RoyalTaxi/yalla-resources. Do not edit by hand. -->
 <resources>
     <string name="app_name" translatable="false">Yalla</string>
+    <string name="sdk_android_module_name" translatable="false">YallaSDKAndroid</string>
     <string name="language_english" translatable="false">English</string>
     <string name="language_russian" translatable="false">Русский</string>
     <string name="language_uzbek_cyrillic" translatable="false">Ўзбек</string>
