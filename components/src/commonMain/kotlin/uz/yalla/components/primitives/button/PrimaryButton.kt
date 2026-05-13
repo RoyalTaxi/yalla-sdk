@@ -1,4 +1,4 @@
-package uz.yalla.components.button
+package uz.yalla.components.primitives.button
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

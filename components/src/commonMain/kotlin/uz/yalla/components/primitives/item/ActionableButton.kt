@@ -1,4 +1,4 @@
-package uz.yalla.components.item
+package uz.yalla.components.primitives.item
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
