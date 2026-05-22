@@ -64,7 +64,7 @@ camerax = "1.5.1"
 
 # Paging
 paging-common = "3.3.0-alpha02-0.5.1"
-paging-compose-common = "3.3.0-alpha02-0.4.0"
+paging-compose-common = "3.3.0-alpha02-0.5.1"
 
 # Documentation
 dokka = "2.0.0"
