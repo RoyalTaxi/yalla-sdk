@@ -3,19 +3,9 @@ package uz.yalla.maps.api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.maps.api.model.MarkerState
+import uz.yalla.maps.api.model.CenterPinState
 
-/**
- * Full-featured map composable with route display, location markers, and custom content.
- *
- * Used for active ride screens, order tracking, and other scenarios that require
- * route polylines, multiple location pins, and programmatic camera control.
- * Supports an additional [MapScope]-scoped content lambda for custom overlays.
- */
 interface ExtendedMap {
-    /**
-     * Renders the extended map composable.
-     */
     @Composable
     fun Content(
         controller: MapController,
@@ -29,7 +19,7 @@ interface ExtendedMap {
         endMarkerLabel: String? = null,
         isInteractionEnabled: Boolean = true,
         useInternalCameraInitialization: Boolean = true,
-        onMarkerChanged: ((MarkerState) -> Unit)? = null,
+        onCenterPinChanged: ((CenterPinState) -> Unit)? = null,
         onMapReady: (() -> Unit)? = null,
         content: @Composable MapScope.() -> Unit = {}
     )

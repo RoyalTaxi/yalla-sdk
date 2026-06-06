@@ -1,0 +1,113 @@
+package uz.yalla.components.primitives.field
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.selection.TextSelectionColors
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import uz.yalla.resources.icons.Calendar
+import uz.yalla.resources.icons.YallaIcons
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import uz.yalla.design.theme.System
+import uz.yalla.design.theme.YallaTheme
+
+@Composable
+fun PrimaryField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    enabled: Boolean = true,
+    placeholder: String = "",
+    textAlign: TextAlign = TextAlign.Start,
+    trailingIcon: @Composable (() -> Unit)? = null,
+    onClick: (() -> Unit)? = null,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = onValueChange,
+            readOnly = !enabled,
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(10.dp),
+            textStyle = System.font.body.base.medium.copy(textAlign = textAlign),
+            trailingIcon = trailingIcon,
+            placeholder = {
+                Text(
+                    text = placeholder,
+                    color = System.color.text.subtle,
+                    style = System.font.body.base.medium,
+                    textAlign = textAlign
+                )
+            },
+            keyboardOptions = KeyboardOptions.Default,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = System.color.text.base,
+                unfocusedTextColor = System.color.text.base,
+                focusedBorderColor = System.color.border.filled,
+                unfocusedBorderColor = System.color.border.disabled,
+                focusedPlaceholderColor = System.color.text.subtle,
+                unfocusedPlaceholderColor = System.color.text.subtle,
+                cursorColor = System.color.text.link,
+                selectionColors = TextSelectionColors(
+                    handleColor = System.color.text.link,
+                    backgroundColor = System.color.text.link.copy(.3f)
+                )
+            )
+        )
+
+        if (onClick != null) {
+            Box(
+                modifier = Modifier
+                    .matchParentSize()
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = onClick
+                    )
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun Preview() = YallaTheme {
+    Column {
+        var valu1 by remember { mutableStateOf("") }
+        PrimaryField(
+            value = valu1,
+            modifier = Modifier.padding(16.dp),
+            onValueChange = { valu1 = it }
+        )
+
+        var value2 by remember { mutableStateOf("") }
+        PrimaryField(
+            value = value2,
+            modifier = Modifier.padding(16.dp),
+            onValueChange = { value2 = it },
+            enabled = false,
+            trailingIcon = {
+                Icon(
+                    imageVector = YallaIcons.Calendar,
+                    contentDescription = null
+                )
+            }
+        )
+    }
+}

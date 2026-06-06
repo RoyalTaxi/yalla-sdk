@@ -7,7 +7,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
@@ -37,7 +37,7 @@ fun ProgressButton(
     modifier: Modifier = Modifier
 ) {
     Surface(
-        shape = RoundedCornerShape(System.radius.l),
+        shape = RoundedCornerShape(16.dp),
         enabled = enabled,
         modifier = modifier,
         onClick = onClick
@@ -65,12 +65,7 @@ fun ProgressButton(
                 text = text,
                 color = System.color.text.white,
                 style = System.font.body.large.bold,
-                modifier = Modifier.padding(
-                    PaddingValues(
-                        vertical = System.space.scale.l,
-                        horizontal = System.space.scale.xxl
-                    )
-                )
+                modifier = Modifier.padding(20.dp)
             )
         }
     }
@@ -96,7 +91,7 @@ private fun Preview() = YallaTheme {
         progress = progress.value,
         enabled = progress.isRunning.not(),
         onClick = {
-
-        }
+        },
+        modifier = Modifier.fillMaxWidth()
     )
 }

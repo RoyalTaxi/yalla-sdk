@@ -1,4 +1,0 @@
-language = Objective-C
-headers = CoreVideo/CoreVideo.h
-compilerOpts = -framework CoreVideo
-linkerOpts = -framework CoreVideo

@@ -237,6 +237,7 @@
     <string name="driver_become_error">Something went wrong. Please try again.</string>
     <string name="driver_become_select_region">Your region</string>
     <string name="driver_become_region_title">Your region</string>
+    <string name="driver_region_search">Search</string>
     <string name="service_taxi">Taxi</string>
     <string name="service_delivery">Delivery</string>
     <string name="service_intercity">Intercity</string>

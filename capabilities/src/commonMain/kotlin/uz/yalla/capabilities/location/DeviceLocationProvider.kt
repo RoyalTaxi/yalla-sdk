@@ -1,0 +1,44 @@
+package uz.yalla.capabilities.location
+
+import dev.icerock.moko.geo.LocationTracker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.location.LocationProvider
+
+class DeviceLocationProvider(
+    val locationTracker: LocationTracker,
+    private val scope: CoroutineScope
+) : LocationProvider {
+    private val _currentLocation = MutableStateFlow<GeoPoint?>(null)
+    override val currentLocation: StateFlow<GeoPoint?> = _currentLocation.asStateFlow()
+
+    private val _permissionState = MutableStateFlow<LocationPermissionState?>(null)
+    val permissionState: StateFlow<LocationPermissionState?> = _permissionState.asStateFlow()
+
+    private var job: Job? = null
+
+    override fun startTracking() {
+        if (job != null) return
+        job = scope.launch {
+            locationTracker.startTracking()
+            locationTracker.getLocationsFlow().collect { location ->
+                _currentLocation.value = GeoPoint(location.latitude, location.longitude)
+            }
+        }
+    }
+
+    override fun stopTracking() {
+        job?.cancel()
+        job = null
+        locationTracker.stopTracking()
+    }
+
+    fun updatePermissionState(state: LocationPermissionState?) {
+        _permissionState.value = state
+    }
+}

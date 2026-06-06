@@ -36,10 +36,10 @@ object BonusCardDefaults {
     fun dimens(
         shape: Shape = CircleShape,
         contentPadding: PaddingValues = PaddingValues(
-            start = System.space.scale.xxs,
-            top = System.space.scale.xxs,
-            end = System.space.scale.m,
-            bottom = System.space.scale.xxs
+            start = 4.dp,
+            top = 4.dp,
+            end = 8.dp,
+            bottom = 4.dp
         )
     ) = BonusCardDimens(
         shape = shape,
@@ -64,7 +64,7 @@ fun BonusCard(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(System.space.scale.xxs),
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier
                 .background(System.color.gradient.sunsetNight)
                 .padding(dimens.contentPadding)
@@ -101,8 +101,8 @@ private fun Preview() = YallaTheme {
             onClick = { },
             dimens = BonusCardDefaults.dimens(
                 contentPadding = PaddingValues(
-                    vertical = System.space.scale.xs,
-                    horizontal = System.space.scale.s
+                    vertical = 6.dp,
+                    horizontal = 8.dp
                 )
             )
         )

@@ -1,48 +1,21 @@
 package uz.yalla.core.settings
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-/**
- * Supported app locales for string resource selection.
- *
- * Determines which language and script variant is used throughout the app.
- * The [code] follows BCP 47 conventions (e.g. `"uz"`, `"ru"`).
- *
- * Narrowed in Phase 3 (ADR-014) to production-ready locales only; `En` and
- * `UzCyrillic` cases were removed. Unknown codes fall back to [Uz] via [from].
- *
- * @property code BCP 47 locale code used for resource lookup.
- * @see uz.yalla.core.preferences.InterfacePreferences.localeType
- */
-@Serializable
 enum class LocaleKind(
-    val code: String
+    val code: String,
+    val displayName: String
 ) {
-    /** Uzbek (Latin script). Default locale. */
-    @SerialName("uz")
-    Uz("uz"),
+    Uz("uz", "O'zbekcha"),
 
-    @SerialName("ru")
-    Ru("ru");
+    Ru("ru", "Русский");
 
     companion object {
-        /**
-         * Parses a locale code into the corresponding [LocaleKind].
-         *
-         * Normalizes input by trimming, lowercasing, and replacing underscores
-         * with hyphens. Returns [Uz] for `null`, unrecognized, or removed codes
-         * (e.g. stored `"en"` or `"uz-Cyrl"` from before ADR-014 fall through here).
-         *
-         * @return Matching [LocaleKind], defaulting to [Uz].
-         */
         fun from(code: String?): LocaleKind {
-            val normalized =
-                code
-                    ?.trim()
-                    ?.replace('_', '-')
-                    ?.lowercase()
-                    .orEmpty()
+            val normalized = code
+                ?.trim()
+                ?.replace('_', '-')
+                ?.lowercase()
+                .orEmpty()
             return entries.find { it.code.lowercase() == normalized } ?: Uz
         }
     }

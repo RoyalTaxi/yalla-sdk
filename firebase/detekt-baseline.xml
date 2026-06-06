@@ -1,9 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<SmellBaseline>
-  <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>TooGenericExceptionCaught:YallaAnalytics.kt$YallaAnalytics$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:YallaCrashlytics.kt$YallaCrashlytics$e: Exception</ID>
-    <ID>TooGenericExceptionCaught:YallaMessaging.kt$YallaMessaging$e: Exception</ID>
-  </CurrentIssues>
-</SmellBaseline>

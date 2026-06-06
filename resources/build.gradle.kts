@@ -21,10 +21,16 @@ valkyrie {
 
 kotlin {
     sourceSets {
-        commonMain.dependencies {
-            implementation(libs.compose.runtime)
-            implementation(libs.compose.components.resources)
-            implementation(libs.compose.ui)
+        commonMain {
+            kotlin.srcDir(
+                layout.buildDirectory.dir("generated/sources/valkyrie/commonMain/kotlin")
+            )
+
+            dependencies {
+                implementation(libs.compose.runtime)
+                implementation(libs.compose.components.resources)
+                implementation(libs.compose.ui)
+            }
         }
     }
 }
@@ -33,10 +39,9 @@ val valkyrieTask = "generateValkyrieImageVectorCommonMain"
 
 tasks.configureEach {
     if (name != valkyrieTask && !name.startsWith("generateValkyrie")) {
-        val usesValkyrieOutput =
-            name.startsWith("compileKotlin") ||
-                name.contains("SourcesJar", ignoreCase = true) ||
-                name.contains("sourcesJar", ignoreCase = true)
+        val usesValkyrieOutput = name.startsWith("compileKotlin") ||
+            name.contains("SourcesJar", ignoreCase = true) ||
+            name.contains("sourcesJar", ignoreCase = true)
         if (usesValkyrieOutput) {
             dependsOn(valkyrieTask)
         }

@@ -14,84 +14,20 @@ import uz.yalla.design.color.ColorScheme
 import uz.yalla.design.color.LocalColorScheme
 import uz.yalla.design.color.dark
 import uz.yalla.design.color.light
-import uz.yalla.design.elevation.ElevationScheme
-import uz.yalla.design.elevation.LocalElevationScheme
-import uz.yalla.design.elevation.standardElevationScheme
 import uz.yalla.design.font.FontScheme
 import uz.yalla.design.font.LocalFontScheme
 import uz.yalla.design.font.rememberFontScheme
-import uz.yalla.design.haptic.HapticController
-import uz.yalla.design.haptic.LocalHapticController
-import uz.yalla.design.motion.LocalMotionScheme
-import uz.yalla.design.motion.MotionScheme
-import uz.yalla.design.motion.standardMotionScheme
-import uz.yalla.design.radius.LocalRadiusScheme
-import uz.yalla.design.radius.RadiusScheme
-import uz.yalla.design.radius.standardRadiusScheme
-import uz.yalla.design.space.LocalSpaceScheme
-import uz.yalla.design.space.SpaceScheme
-import uz.yalla.design.space.standardSpaceScheme
-import uz.yalla.design.stroke.LocalStrokeScheme
-import uz.yalla.design.stroke.StrokeScheme
-import uz.yalla.design.stroke.standardStrokeScheme
-import uz.yalla.design.touchTarget.LocalTouchTargetScheme
-import uz.yalla.design.touchTarget.TouchTargetScheme
-import uz.yalla.design.touchTarget.standardTouchTargetScheme
 import androidx.compose.material3.darkColorScheme as materialDarkColorScheme
 import androidx.compose.material3.lightColorScheme as materialLightColorScheme
 
-/** CompositionLocal tracking whether the current theme is dark mode. */
-private val LocalIsDark = staticCompositionLocalOf { false }
+internal val LocalIsDark = staticCompositionLocalOf { false }
 
-/**
- * Root composable that applies the Yalla design system.
- *
- * Sets up [ColorScheme], [FontScheme], and ripple configuration, then bridges them
- * into Material3's [MaterialTheme] so both Yalla tokens (`System.color.*`) and M3
- * components work correctly. Wrap your app or screen content with this composable.
- *
- * The Material3 color scheme mapping exists so standard M3 components (TextField,
- * Button, etc.) pick up Yalla brand colors without additional configuration.
- *
- * ## Usage
- *
- * ```kotlin
- * @Composable
- * fun App() {
- *     YallaTheme {
- *         // Yalla tokens available here:
- *         Text(
- *             text = "Hello Yalla",
- *             color = System.color.text.base,
- *             style = System.font.body.base.medium,
- *         )
- *     }
- * }
- * ```
- *
- * @param isDark Whether to use dark color scheme. Defaults to system setting.
- * @param colorScheme Color tokens to apply. Defaults to [light] or [dark] based on [isDark].
- * @param fontScheme Typography tokens to apply. Defaults to [rememberFontScheme].
- * @param spaceScheme Spacing tokens to apply. Defaults to [standardSpaceScheme].
- * @param radiusScheme Corner-radius tokens to apply. Defaults to [standardRadiusScheme].
- * @param elevationScheme Elevation tier tokens to apply. Defaults to [standardElevationScheme].
- * @param strokeScheme Stroke-width tokens to apply. Defaults to [standardStrokeScheme].
- * @param touchTargetScheme Minimum tap-surface tokens to apply. Defaults to [standardTouchTargetScheme].
- * @param content Composable content wrapped by the theme.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun YallaTheme(
     isDark: Boolean = isSystemInDarkTheme(),
     colorScheme: ColorScheme = if (isDark) dark() else light(),
     fontScheme: FontScheme = rememberFontScheme(),
-    spaceScheme: SpaceScheme = standardSpaceScheme(),
-    radiusScheme: RadiusScheme = standardRadiusScheme(),
-    motionScheme: MotionScheme = standardMotionScheme(),
-    elevationScheme: ElevationScheme = standardElevationScheme(),
-    strokeScheme: StrokeScheme = standardStrokeScheme(),
-    touchTargetScheme: TouchTargetScheme = standardTouchTargetScheme(),
-    hapticController: HapticController = LocalHapticController.current,
     content: @Composable () -> Unit
 ) {
     val rippleConfiguration =
@@ -137,13 +73,6 @@ fun YallaTheme(
         LocalIsDark provides isDark,
         LocalColorScheme provides colorScheme,
         LocalFontScheme provides fontScheme,
-        LocalSpaceScheme provides spaceScheme,
-        LocalRadiusScheme provides radiusScheme,
-        LocalMotionScheme provides motionScheme,
-        LocalElevationScheme provides elevationScheme,
-        LocalStrokeScheme provides strokeScheme,
-        LocalTouchTargetScheme provides touchTargetScheme,
-        LocalHapticController provides hapticController,
         LocalRippleConfiguration provides rippleConfiguration
     ) {
         MaterialTheme(
@@ -153,83 +82,15 @@ fun YallaTheme(
     }
 }
 
-/**
- * Accessor for Yalla design tokens inside a composable scope.
- *
- * Provides convenient access to color, font, and dark-mode state without
- * manually reading CompositionLocals. Must be used within a [YallaTheme].
- *
- * ## Usage
- *
- * ```kotlin
- * val textColor = System.color.text.base
- * val bodyStyle = System.font.body.base.medium
- * val isDarkMode = System.isDark
- * ```
- */
 object System {
-    /** Current [ColorScheme] provided by the nearest [YallaTheme]. */
     val color: ColorScheme
         @Composable
         get() = LocalColorScheme.current
 
-    /**
-     * Current [FontScheme] provided by the nearest [YallaTheme].
-     *
-     * Throws [IllegalStateException] if read outside a [YallaTheme] composition —
-     * unlike [color]/[space]/[radius]/[motion]/[isDark], `font` has no static
-     * default because font loading needs a composable context. Wrap previews in
-     * [YallaTheme] or provide via `LocalFontScheme` explicitly.
-     */
     val font: FontScheme
         @Composable
         get() = LocalFontScheme.current
 
-    /** Current [SpaceScheme] provided by the nearest [YallaTheme]. */
-    val space: SpaceScheme
-        @Composable
-        get() = LocalSpaceScheme.current
-
-    /** Current [RadiusScheme] provided by the nearest [YallaTheme]. */
-    val radius: RadiusScheme
-        @Composable
-        get() = LocalRadiusScheme.current
-
-    /** Current [MotionScheme] provided by the nearest [YallaTheme]. */
-    val motion: MotionScheme
-        @Composable
-        get() = LocalMotionScheme.current
-
-    /** Current [ElevationScheme] provided by the nearest [YallaTheme]. */
-    val elevation: ElevationScheme
-        @Composable
-        get() = LocalElevationScheme.current
-
-    /** Current [StrokeScheme] provided by the nearest [YallaTheme]. */
-    val stroke: StrokeScheme
-        @Composable
-        get() = LocalStrokeScheme.current
-
-    /** Current [TouchTargetScheme] provided by the nearest [YallaTheme]. */
-    val touchTarget: TouchTargetScheme
-        @Composable
-        get() = LocalTouchTargetScheme.current
-
-    /**
-     * Current [HapticController] provided by the nearest [YallaTheme].
-     *
-     * Unlike other token accessors, this is a controller, not a value:
-     * `System.haptic.perform(Haptic.Confirm)`.
-     *
-     * Defaults to a no-op outside `YallaTheme` (so previews don't crash). Wire a
-     * real implementation by passing `rememberNativeHapticController()` (from the
-     * `platform` module) to `YallaTheme(hapticController = …)`.
-     */
-    val haptic: HapticController
-        @Composable
-        get() = LocalHapticController.current
-
-    /** Whether the current theme is dark mode. */
     val isDark: Boolean
         @Composable
         get() = LocalIsDark.current

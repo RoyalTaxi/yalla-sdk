@@ -9,7 +9,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.settings.MapKind
 import uz.yalla.maps.api.ExtendedMap
 import uz.yalla.maps.api.LiteMap
@@ -19,52 +18,24 @@ import uz.yalla.maps.api.MapScope
 import uz.yalla.maps.api.StaticMap
 import uz.yalla.maps.api.model.MapCapabilities
 import uz.yalla.maps.api.model.MapStyle
-import uz.yalla.maps.api.model.MarkerState
-import uz.yalla.maps.provider.google.GoogleExtendedMap
-import uz.yalla.maps.provider.google.GoogleLiteMap
-import uz.yalla.maps.provider.google.GoogleStaticMap
-import uz.yalla.maps.provider.libre.LibreExtendedMap
-import uz.yalla.maps.provider.libre.LibreLiteMap
-import uz.yalla.maps.provider.libre.LibreStaticMap
+import uz.yalla.maps.api.model.CenterPinState
+import uz.yalla.maps.config.requireMaps
 
-/**
- * [MapProvider] that delegates to Google or Libre at runtime based on user preference.
- *
- * Observes [InterfacePreferences.mapKind] and switches the active backend accordingly.
- * Map composables it creates also observe the preference and swap implementations in place.
- *
- * ## Lifecycle
- *
- * The provider does not own its coroutine scope. Pass a [CoroutineScope] whose lifetime
- * matches the desired observation window (typically a process-lifetime scope in the Koin
- * graph). When that scope is cancelled the preference observation stops automatically.
- * No explicit cleanup call is required on the provider itself.
- *
- * Controllers created via [createController] inherit the same scope so their
- * internal preference observation is also tied to the caller-managed lifetime.
- *
- * @param scope Caller-owned scope that governs the lifetime of preference observation
- *   inside this provider and any controllers it creates. Cancelling this scope stops
- *   all coroutines launched by this provider.
- * @see SwitchingMapController
- */
-class SwitchingMapProvider(
+internal class SwitchingMapProvider(
     private val googleProvider: MapProvider,
-    private val libreProvider: MapProvider,
-    private val interfacePreferences: InterfacePreferences,
-    private val scope: CoroutineScope
+    private val libreProvider: MapProvider
 ) : MapProvider {
+    private val config = requireMaps()
     private var userSelectedProvider: MapProvider? = null
     private val currentProvider: MapProvider get() = userSelectedProvider ?: googleProvider
 
     init {
-        scope.launch {
-            interfacePreferences.mapKind.collectLatest { type ->
-                userSelectedProvider =
-                    when (type) {
-                        MapKind.Google -> googleProvider
-                        MapKind.Libre -> libreProvider
-                    }
+        config.scope.launch {
+            config.mapKindPreference.collectLatest { type ->
+                userSelectedProvider = when (type) {
+                    MapKind.Google -> googleProvider
+                    MapKind.Libre -> libreProvider
+                }
             }
         }
     }
@@ -76,20 +47,20 @@ class SwitchingMapProvider(
     override val style: MapStyle
         get() = currentProvider.style
 
-    override fun createLiteMap(): LiteMap = SwitchingLiteMap(interfacePreferences)
+    override fun createLiteMap(): LiteMap = SwitchingLiteMap()
 
-    override fun createExtendedMap(): ExtendedMap = SwitchingExtendedMap(interfacePreferences)
+    override fun createExtendedMap(): ExtendedMap = SwitchingExtendedMap()
 
-    override fun createStaticMap(): StaticMap = SwitchingStaticMap(interfacePreferences)
+    override fun createStaticMap(): StaticMap = SwitchingStaticMap()
 
-    override fun createController(): MapController = SwitchingMapController(interfacePreferences, scope)
+    override fun createController(): MapController = SwitchingMapController()
 }
 
-private class SwitchingLiteMap(
-    private val interfacePreferences: InterfacePreferences
-) : LiteMap {
-    private val google by lazy { GoogleLiteMap() }
-    private val libre by lazy { LibreLiteMap() }
+private class SwitchingLiteMap : LiteMap {
+    private val config = requireMaps()
+    private val mapKindPreference = config.mapKindPreference
+    private val google by lazy { requireNotNull(config.factory).createGoogleProvider().createLiteMap() }
+    private val libre by lazy { requireNotNull(config.factory).createLibreProvider().createLiteMap() }
 
     @Composable
     override fun Content(
@@ -98,10 +69,10 @@ private class SwitchingLiteMap(
         initialPoint: GeoPoint?,
         showLocationIndicator: Boolean,
         bindLocationTracker: Boolean,
-        onMarkerChanged: ((MarkerState) -> Unit)?,
+        onCenterPinChanged: ((CenterPinState) -> Unit)?,
         onMapReady: (() -> Unit)?
     ) {
-        val mapType by interfacePreferences.mapKind.collectAsStateWithLifecycle(MapKind.Google)
+        val mapType by mapKindPreference.collectAsStateWithLifecycle(MapKind.Google)
         key(mapType) {
             when (mapType) {
                 MapKind.Google ->
@@ -111,7 +82,7 @@ private class SwitchingLiteMap(
                         initialPoint = initialPoint,
                         showLocationIndicator = showLocationIndicator,
                         bindLocationTracker = bindLocationTracker,
-                        onMarkerChanged = onMarkerChanged,
+                        onCenterPinChanged = onCenterPinChanged,
                         onMapReady = onMapReady
                     )
                 MapKind.Libre ->
@@ -121,7 +92,7 @@ private class SwitchingLiteMap(
                         initialPoint = initialPoint,
                         showLocationIndicator = showLocationIndicator,
                         bindLocationTracker = bindLocationTracker,
-                        onMarkerChanged = onMarkerChanged,
+                        onCenterPinChanged = onCenterPinChanged,
                         onMapReady = onMapReady
                     )
             }
@@ -129,11 +100,11 @@ private class SwitchingLiteMap(
     }
 }
 
-private class SwitchingExtendedMap(
-    private val interfacePreferences: InterfacePreferences
-) : ExtendedMap {
-    private val google by lazy { GoogleExtendedMap() }
-    private val libre by lazy { LibreExtendedMap() }
+private class SwitchingExtendedMap : ExtendedMap {
+    private val config = requireMaps()
+    private val mapKindPreference = config.mapKindPreference
+    private val google by lazy { requireNotNull(config.factory).createGoogleProvider().createExtendedMap() }
+    private val libre by lazy { requireNotNull(config.factory).createLibreProvider().createExtendedMap() }
 
     @Composable
     override fun Content(
@@ -148,11 +119,11 @@ private class SwitchingExtendedMap(
         endMarkerLabel: String?,
         isInteractionEnabled: Boolean,
         useInternalCameraInitialization: Boolean,
-        onMarkerChanged: ((MarkerState) -> Unit)?,
+        onCenterPinChanged: ((CenterPinState) -> Unit)?,
         onMapReady: (() -> Unit)?,
         content: @Composable MapScope.() -> Unit
     ) {
-        val mapType by interfacePreferences.mapKind.collectAsStateWithLifecycle(MapKind.Google)
+        val mapType by mapKindPreference.collectAsStateWithLifecycle(MapKind.Google)
         key(mapType) {
             when (mapType) {
                 MapKind.Google ->
@@ -168,7 +139,7 @@ private class SwitchingExtendedMap(
                         endMarkerLabel = endMarkerLabel,
                         isInteractionEnabled = isInteractionEnabled,
                         useInternalCameraInitialization = useInternalCameraInitialization,
-                        onMarkerChanged = onMarkerChanged,
+                        onCenterPinChanged = onCenterPinChanged,
                         onMapReady = onMapReady,
                         content = content
                     )
@@ -185,7 +156,7 @@ private class SwitchingExtendedMap(
                         endMarkerLabel = endMarkerLabel,
                         isInteractionEnabled = isInteractionEnabled,
                         useInternalCameraInitialization = useInternalCameraInitialization,
-                        onMarkerChanged = onMarkerChanged,
+                        onCenterPinChanged = onCenterPinChanged,
                         onMapReady = onMapReady,
                         content = content
                     )
@@ -194,11 +165,11 @@ private class SwitchingExtendedMap(
     }
 }
 
-private class SwitchingStaticMap(
-    private val interfacePreferences: InterfacePreferences
-) : StaticMap {
-    private val google by lazy { GoogleStaticMap() }
-    private val libre by lazy { LibreStaticMap() }
+private class SwitchingStaticMap : StaticMap {
+    private val config = requireMaps()
+    private val mapKindPreference = config.mapKindPreference
+    private val google by lazy { requireNotNull(config.factory).createGoogleProvider().createStaticMap() }
+    private val libre by lazy { requireNotNull(config.factory).createLibreProvider().createStaticMap() }
 
     @Composable
     override fun Content(
@@ -209,7 +180,7 @@ private class SwitchingStaticMap(
         endLabel: String?,
         onMapReady: (() -> Unit)?
     ) {
-        val mapType by interfacePreferences.mapKind.collectAsStateWithLifecycle(MapKind.Google)
+        val mapType by mapKindPreference.collectAsStateWithLifecycle(MapKind.Google)
         key(mapType) {
             when (mapType) {
                 MapKind.Google ->

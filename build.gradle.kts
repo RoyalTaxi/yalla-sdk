@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
     alias(libs.plugins.compose.multiplatform) apply false
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.kotlin.serialization) apply false
@@ -10,17 +11,15 @@ plugins {
 
 dependencies {
     dokka(project(":core"))
-    dokka(project(":data"))
+    dokka(project(":network"))
+    dokka(project(":datastore"))
     dokka(project(":resources"))
     dokka(project(":design"))
     dokka(project(":foundation"))
-    dokka(project(":platform"))
-    dokka(project(":primitives"))
-    dokka(project(":composites"))
     dokka(project(":components"))
     dokka(project(":maps"))
     dokka(project(":media"))
-    dokka(project(":firebase"))
+    dokka(project(":telemetry"))
 }
 
 dokka {

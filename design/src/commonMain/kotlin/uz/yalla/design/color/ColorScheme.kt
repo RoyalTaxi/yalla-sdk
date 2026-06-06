@@ -5,30 +5,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-/**
- * Semantic color scheme for the Yalla design system.
- *
- * Organizes raw color tokens into purpose-based groups (text, background, border, etc.)
- * so UI components reference colors by intent rather than literal value. Each group is
- * a nested immutable data class, enabling structured access like `System.color.text.base`.
- *
- * Two factory functions create the built-in variants: [light] and [dark].
- * Custom schemes can be constructed directly for previews or white-labeling.
- *
- * ## Usage
- *
- * ```kotlin
- * // Inside a @Composable wrapped by YallaTheme:
- * Text(
- *     text = "Hello",
- *     color = System.color.text.base,
- *     style = System.font.body.base.medium,
- * )
- *
- * Box(modifier = Modifier.background(System.color.background.base))
- * ```
- *
- */
 @Immutable
 data class ColorScheme(
     val text: Text,
@@ -45,7 +21,7 @@ data class ColorScheme(
         val subtle: Color,
         val link: Color,
         val red: Color,
-        val white: Color
+        val white: Color,
     )
 
     @Immutable
@@ -53,7 +29,7 @@ data class ColorScheme(
         val base: Color,
         val brand: Color,
         val secondary: Color,
-        val tertiary: Color
+        val tertiary: Color,
     )
 
     @Immutable
@@ -61,7 +37,7 @@ data class ColorScheme(
         val disabled: Color,
         val filled: Color,
         val white: Color,
-        val error: Color
+        val error: Color,
     )
 
     @Immutable
@@ -70,7 +46,7 @@ data class ColorScheme(
         val disabled: Color,
         val secondary: Color,
         val tertiary: Color,
-        val disabledTertiary: Color
+        val disabledTertiary: Color,
     )
 
     @Immutable
@@ -80,17 +56,9 @@ data class ColorScheme(
         val secondary: Color,
         val disabled: Color,
         val red: Color,
-        val subtle: Color
+        val subtle: Color,
     )
 
-    /**
-     * Accent palette — brand-adjacent colors for data viz, badges, and decorative elements.
-     *
-     * `pinkSun` is the primary action-accent (error-adjacent pink); prefer it for destructive
-     * or alert accents. `color1`–`color5` are palette slots without semantic names by design:
-     * meaning is context-assigned (driver-status badges, map-pin categories, etc.). Don't
-     * hardcode assumptions about which slot maps to which meaning across screens.
-     */
     @Immutable
     data class Accent(
         val pinkSun: Color,
@@ -98,24 +66,16 @@ data class ColorScheme(
         val color2: Color,
         val color3: Color,
         val color4: Color,
-        val color5: Color
+        val color5: Color,
     )
 
     @Immutable
     data class Gradient(
         val splash: Brush,
-        val sunsetNight: Brush
+        val sunsetNight: Brush,
     )
 }
 
-/**
- * Returns the built-in light [ColorScheme].
- *
- * Accent + gradient tokens are theme-invariant — they're identical to [dark]'s. Only
- * `text`, `background`, `border`, `button`, and `icon` differ between themes. Pass
- * the result to `YallaTheme(colorScheme = light())` to force light mode, or `light().copy(...)`
- * for white-labeling without rebuilding every group.
- */
 fun light() =
     ColorScheme(
         text =
@@ -124,21 +84,21 @@ fun light() =
                 subtle = LightTextSubtle,
                 link = LightTextLink,
                 red = LightTextRed,
-                white = LightTextWhite
+                white = LightTextWhite,
             ),
         background =
             ColorScheme.Background(
                 base = LightBackgroundBase,
                 brand = LightBackgroundBrandBase,
                 secondary = LightBackgroundSecondary,
-                tertiary = LightBackgroundTertiary
+                tertiary = LightBackgroundTertiary,
             ),
         border =
             ColorScheme.Border(
                 disabled = LightBorderDisabled,
                 filled = LightBorderFilled,
                 white = LightBorderWhite,
-                error = LightBorderError
+                error = LightBorderError,
             ),
         button =
             ColorScheme.Button(
@@ -146,7 +106,7 @@ fun light() =
                 disabled = LightButtonDisabled,
                 secondary = LightButtonSecondary,
                 tertiary = LightButtonTertiary,
-                disabledTertiary = LightButtonDisabledTertiary
+                disabledTertiary = LightButtonDisabledTertiary,
             ),
         icon =
             ColorScheme.Icon(
@@ -155,7 +115,7 @@ fun light() =
                 secondary = LightIconSecondary,
                 disabled = LightIconDisabled,
                 red = LightIconRed,
-                subtle = LightIconSubtle
+                subtle = LightIconSubtle,
             ),
         accent =
             ColorScheme.Accent(
@@ -164,22 +124,15 @@ fun light() =
                 color2 = Color2,
                 color3 = Color3,
                 color4 = Color4,
-                color5 = Color5
+                color5 = Color5,
             ),
         gradient =
             ColorScheme.Gradient(
                 splash = SplashBackground,
-                sunsetNight = SunsetNight
+                sunsetNight = SunsetNight,
             )
     )
 
-/**
- * Returns the built-in dark [ColorScheme].
- *
- * Mirrors [light] in shape; differs in `text` (inverted), `background` (near-black surfaces),
- * and `button`/`icon` disabled states (opacity achieved with dark fills, not lightened tints).
- * Accent and gradient tokens are identical to [light] — they are theme-invariant by design.
- */
 fun dark() =
     ColorScheme(
         text =
@@ -188,21 +141,21 @@ fun dark() =
                 subtle = DarkTextSubtle,
                 link = DarkTextLink,
                 red = DarkTextRed,
-                white = DarkTextWhite
+                white = DarkTextWhite,
             ),
         background =
             ColorScheme.Background(
                 base = DarkBackgroundBase,
                 brand = DarkBackgroundBrandBase,
                 secondary = DarkBackgroundSecondary,
-                tertiary = DarkBackgroundTertiary
+                tertiary = DarkBackgroundTertiary,
             ),
         border =
             ColorScheme.Border(
                 disabled = DarkBorderDisabled,
                 filled = DarkBorderFilled,
                 white = DarkBorderWhite,
-                error = DarkBorderError
+                error = DarkBorderError,
             ),
         button =
             ColorScheme.Button(
@@ -210,7 +163,7 @@ fun dark() =
                 disabled = DarkButtonDisabled,
                 secondary = DarkButtonSecondary,
                 tertiary = DarkButtonTertiary,
-                disabledTertiary = DarkButtonDisabledTertiary
+                disabledTertiary = DarkButtonDisabledTertiary,
             ),
         icon =
             ColorScheme.Icon(
@@ -219,7 +172,7 @@ fun dark() =
                 secondary = DarkIconSecondary,
                 disabled = DarkIconDisabled,
                 red = DarkIconRed,
-                subtle = DarkIconSubtle
+                subtle = DarkIconSubtle,
             ),
         accent =
             ColorScheme.Accent(
@@ -228,19 +181,13 @@ fun dark() =
                 color2 = Color2,
                 color3 = Color3,
                 color4 = Color4,
-                color5 = Color5
+                color5 = Color5,
             ),
         gradient =
             ColorScheme.Gradient(
                 splash = SplashBackground,
-                sunsetNight = SunsetNight
+                sunsetNight = SunsetNight,
             )
     )
 
-/**
- * [CompositionLocal][androidx.compose.runtime.CompositionLocal] for providing [ColorScheme].
- *
- * Defaults to [light] theme. Overridden by [YallaTheme][uz.yalla.design.theme.YallaTheme]
- * to supply the appropriate color scheme based on the current dark/light mode.
- */
 val LocalColorScheme = staticCompositionLocalOf { light() }

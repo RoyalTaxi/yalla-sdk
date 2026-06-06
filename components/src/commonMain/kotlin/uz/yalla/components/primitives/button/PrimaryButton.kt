@@ -7,9 +7,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -17,12 +16,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
+import uz.yalla.resources.icons.Add
+import uz.yalla.resources.icons.YallaIcons
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import uz.yalla.components.primitives.indicator.LoadingIndicator
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
@@ -42,8 +45,7 @@ data class PrimaryButtonColors(
     )
 
     @Composable
-    fun contentColorFor(enabled: Boolean) =
-        if (enabled) contentColor else disabledContentColor
+    fun contentColorFor(enabled: Boolean) = if (enabled) contentColor else disabledContentColor
 }
 
 @Immutable
@@ -51,6 +53,11 @@ data class PrimaryButtonDimens(
     val shape: Shape,
     val contentSpacing: Dp,
     val contentPadding: PaddingValues
+)
+
+@Immutable
+data class PrimaryButtonStyles(
+    val textStyle: TextStyle
 )
 
 object PrimaryButtonDefaults {
@@ -69,50 +76,63 @@ object PrimaryButtonDefaults {
 
     @Composable
     fun dimens(
-        shape: Shape = RoundedCornerShape(System.radius.l),
-        contentSpacing: Dp = System.space.scale.m,
-        contentPadding: PaddingValues = PaddingValues(
-            vertical = System.space.scale.l,
-            horizontal = System.space.scale.xxl
-        )
+        shape: Shape = RoundedCornerShape(16.dp),
+        contentSpacing: Dp = 12.dp,
+        contentPadding: PaddingValues = PaddingValues(20.dp)
     ) = PrimaryButtonDimens(
         shape = shape,
         contentSpacing = contentSpacing,
         contentPadding = contentPadding
+    )
+
+    @Composable
+    fun styles(
+        textStyle: TextStyle = System.font.body.base.medium
+    ) = PrimaryButtonStyles(
+        textStyle = textStyle
     )
 }
 
 @Composable
 fun PrimaryButton(
     enabled: Boolean = true,
+    loading: Boolean = false,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     colors: PrimaryButtonColors = PrimaryButtonDefaults.colors(),
     dimens: PrimaryButtonDimens = PrimaryButtonDefaults.dimens(),
+    styles: PrimaryButtonStyles = PrimaryButtonDefaults.styles(),
     leading: @Composable ((PrimaryButtonColors, PrimaryButtonDimens) -> Unit)? = null,
     trailing: @Composable ((PrimaryButtonColors, PrimaryButtonDimens) -> Unit)? = null,
-    content: @Composable RowScope.(PrimaryButtonColors, PrimaryButtonDimens) -> Unit
+    content: @Composable RowScope.(PrimaryButtonColors, PrimaryButtonDimens, PrimaryButtonStyles) -> Unit
 ) {
     Button(
-        enabled = enabled,
+        enabled = enabled && !loading,
         modifier = modifier,
         onClick = onClick,
         colors = colors.asButtonColors(),
         shape = dimens.shape,
         contentPadding = dimens.contentPadding,
         content = {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(
-                    space = dimens.contentSpacing,
-                    alignment = Alignment.CenterHorizontally
+            if (loading) {
+                LoadingIndicator(
+                    color = colors.contentColor,
+                    modifier = Modifier.size(24.dp)
                 )
-            ) {
-                leading?.invoke(colors, dimens)
+            } else {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(
+                        space = dimens.contentSpacing,
+                        alignment = Alignment.CenterHorizontally
+                    )
+                ) {
+                    leading?.invoke(colors, dimens)
 
-                content(colors, dimens)
+                    content(colors, dimens, styles)
 
-                trailing?.invoke(colors, dimens)
+                    trailing?.invoke(colors, dimens)
+                }
             }
         }
     )
@@ -129,7 +149,7 @@ private fun Preview() = YallaTheme {
         PrimaryButton(
             modifier = Modifier.fillMaxWidth(),
             onClick = { },
-            content = { colors, _ ->
+            content = { colors, _, _ ->
                 Text(
                     text = "Button",
                     color = colors.contentColorFor(true)
@@ -141,7 +161,7 @@ private fun Preview() = YallaTheme {
             enabled = false,
             modifier = Modifier.fillMaxWidth(),
             onClick = { },
-            content = { colors, _ ->
+            content = { colors, _, _ ->
                 Text(
                     text = "Button",
                     color = colors.contentColorFor(true)
@@ -154,12 +174,12 @@ private fun Preview() = YallaTheme {
             onClick = { },
             leading = { colors, _ ->
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    imageVector = YallaIcons.Add,
                     tint = colors.contentColorFor(true),
                     contentDescription = null
                 )
             },
-            content = { colors, _ ->
+            content = { colors, _, _ ->
                 Text(
                     text = "Button",
                     color = colors.contentColorFor(true)
@@ -173,12 +193,12 @@ private fun Preview() = YallaTheme {
             onClick = { },
             leading = { colors, _ ->
                 Icon(
-                    imageVector = Icons.Default.Add,
+                    imageVector = YallaIcons.Add,
                     tint = colors.contentColorFor(false),
                     contentDescription = null
                 )
             },
-            content = { colors, _ ->
+            content = { colors, _, _ ->
                 Text(
                     text = "Button",
                     color = colors.contentColorFor(true)

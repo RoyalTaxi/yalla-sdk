@@ -252,6 +252,7 @@
     <string name="driver_become_error">Nimadir xato ketdi. Qayta urinib ko'ring.</string>
     <string name="driver_become_select_region">Viloyatingiz</string>
     <string name="driver_become_region_title">Viloyatingiz</string>
+    <string name="driver_region_search">Qidirish</string>
     <string name="service_taxi">Taksi</string>
     <string name="service_delivery">Yetkazib berish</string>
     <string name="service_intercity">Shaharlararo</string>

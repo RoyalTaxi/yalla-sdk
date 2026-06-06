@@ -24,18 +24,12 @@ play-services-maps = "20.0.0"
 kotlinx-coroutines = "1.11.0"
 kotlinx-datetime = "0.8.0-0.6.x-compat"
 kotlinx-serialization = "1.11.0"
-turbine = "1.2.1"
 
 # Networking
 connectivity = "2.4.1"
 ktor = "3.4.3"
 
-# Firebase
-firebase-bom = "34.13.0"
-firebase-gitlive = "2.4.0"
-
 # Architecture / DI / Logging
-decompose = "3.5.0"
 kermit = "2.1.0"
 koin = "4.2.1"
 
@@ -59,22 +53,24 @@ paging = "3.3.0-alpha02-0.5.1"
 # Documentation / catalog
 dokka = "2.2.0"
 valkyrie = "0.4.0"
+coil = "3.4.0"
 
 [libraries]
 # Build tools
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+compose-compiler-gradle-plugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 dokka-gradle-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 
 # Compose
 compose-animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "compose" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
+coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
 compose-material3 = { module = "org.jetbrains.compose.material3:material3", version.ref = "compose-material3" }
-compose-material-icons-extended = { module = "org.jetbrains.compose.material:material-icons-extended", version.ref = "compose-material-icons" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose" }
-compose-ui-test = { module = "org.jetbrains.compose.ui:ui-test", version.ref = "compose" }
 compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
@@ -99,10 +95,8 @@ play-services-maps = { module = "com.google.android.gms:play-services-maps", ver
 # KotlinX
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava", version.ref = "kotlinx-coroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 # Networking
 connectivity-device = { module = "dev.jordond.connectivity:connectivity-device", version.ref = "connectivity" }
@@ -112,19 +106,9 @@ ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negoti
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
-ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
-# Firebase
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
-firebase-gitlive-analytics = { module = "dev.gitlive:firebase-analytics", version.ref = "firebase-gitlive" }
-firebase-gitlive-app = { module = "dev.gitlive:firebase-app", version.ref = "firebase-gitlive" }
-firebase-gitlive-crashlytics = { module = "dev.gitlive:firebase-crashlytics", version.ref = "firebase-gitlive" }
-firebase-gitlive-messaging = { module = "dev.gitlive:firebase-messaging", version.ref = "firebase-gitlive" }
-
 # Architecture / DI / Logging
-decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
-decompose-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decompose" }
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
@@ -132,7 +116,6 @@ koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 
 # Storage
 multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
-multiplatform-settings-test = { module = "com.russhwolf:multiplatform-settings-test", version.ref = "multiplatform-settings" }
 
 # UI helpers
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
@@ -151,6 +134,7 @@ paging-compose-common = { module = "app.cash.paging:paging-compose-common", vers
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 android-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }
@@ -160,5 +144,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 valkyrie = { id = "io.github.composegears.valkyrie", version.ref = "valkyrie" }
 
 # Local convention plugins
+yalla-sdk-android-library = { id = "yalla.sdk.android.library" }
 yalla-sdk-kmp = { id = "yalla.sdk.kmp" }
 yalla-sdk-kmp-compose = { id = "yalla.sdk.kmp.compose" }

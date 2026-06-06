@@ -237,6 +237,7 @@
     <string name="driver_become_error">Нимадир хато кетди. Қайтадан уриниб кўринг.</string>
     <string name="driver_become_select_region">Вилоятингиз</string>
     <string name="driver_become_region_title">Вилоятингиз</string>
+    <string name="driver_region_search">Қидириш</string>
     <string name="service_taxi">Такси</string>
     <string name="service_delivery">Етказиб бериш</string>
     <string name="service_intercity">Шаҳарлараро</string>

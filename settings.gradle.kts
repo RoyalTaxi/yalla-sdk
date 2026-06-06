@@ -20,17 +20,16 @@ dependencyResolutionManagement {
 
 include(
     ":core",
-    ":data",
+    ":network",
+    ":datastore",
     ":resources",
     ":design",
-    ":platform",
     ":foundation",
-    ":primitives",
-    ":composites",
+    ":capabilities",
     ":components",
     ":maps",
     ":media",
-    ":firebase",
+    ":telemetry",
     ":bom",
-    ":demo",
+    ":demo"
 )

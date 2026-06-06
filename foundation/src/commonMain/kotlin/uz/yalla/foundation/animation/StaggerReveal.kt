@@ -11,31 +11,6 @@ private const val DEFAULT_STAGGER_MS = 100
 private const val DEFAULT_DURATION_MS = 300
 private const val DEFAULT_SLIDE_PX = 40f
 
-/**
- * Draw-phase-only stagger reveal modifier.
- *
- * Content is always composed and measured (takes space in layout),
- * but visually hidden until [visible] becomes true. Each [index]
- * adds [staggerMs] delay. Uses [graphicsLayer] so animation
- * triggers zero recomposition and zero relayout.
- *
- * ## Usage
- *
- * ```kotlin
- * Column {
- *     items.forEachIndexed { index, item ->
- *         Text(
- *             text = item.title,
- *             modifier = Modifier.staggerReveal(
- *                 visible = isRevealed,
- *                 index = index,
- *             ),
- *         )
- *     }
- * }
- * ```
- *
- */
 @Composable
 fun Modifier.staggerReveal(
     visible: Boolean,

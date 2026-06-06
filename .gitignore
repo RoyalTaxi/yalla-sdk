@@ -15,6 +15,7 @@ local.properties
 # iOS
 Pods/
 DerivedData/
+.build/
 *.xcworkspace
 *.xcuserdata/
 

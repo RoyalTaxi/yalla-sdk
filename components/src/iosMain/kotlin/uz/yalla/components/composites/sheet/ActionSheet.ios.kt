@@ -1,0 +1,42 @@
+package uz.yalla.components.composites.sheet
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
+import uz.yalla.components.composites.item.ActionableItemModel
+import uz.yalla.components.config.requireConfig
+import uz.yalla.components.platform.findKeyWindowRootController
+
+@Composable
+actual fun ActionSheet(
+    isVisible: Boolean,
+    title: String,
+    items: List<ActionableItemModel>,
+    onAction: (id: String) -> Unit,
+    onDismissRequest: () -> Unit
+) {
+    val currentOnAction by rememberUpdatedState(onAction)
+    val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
+
+    val handle = remember {
+        requireConfig().sheet.createAction(
+            title = title,
+            items = items,
+            onAction = { currentOnAction(it) },
+            onDismissRequest = { currentOnDismissRequest() }
+        )
+    }
+
+    DisposableEffect(isVisible) {
+        if (!isVisible) {
+            return@DisposableEffect onDispose {}
+        }
+
+        val parent = findKeyWindowRootController() ?: return@DisposableEffect onDispose {}
+        handle.present(parent)
+
+        onDispose { handle.dismiss() }
+    }
+}

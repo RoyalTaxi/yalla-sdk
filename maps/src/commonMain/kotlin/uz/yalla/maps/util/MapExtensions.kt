@@ -12,146 +12,58 @@ import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-// ============================================
-// Position Conversions
-// ============================================
-
-/**
- * Converts this [GeoPoint] to a spatial-k [Position].
- *
- * @return A [Position] with matching latitude and longitude.
- */
 fun GeoPoint.toPosition(): Position = Position(longitude = lng, latitude = lat)
 
-/**
- * Converts this spatial-k [Position] to a [GeoPoint].
- *
- * @return A [GeoPoint] with matching latitude and longitude.
- */
 fun Position.toGeoPoint(): GeoPoint = GeoPoint(latitude, longitude)
 
-/**
- * Converts a (latitude, longitude) pair to a spatial-k [Position].
- *
- * @return A [Position] from the pair values.
- */
 fun Pair<Double, Double>.toPosition(): Position = Position(latitude = first, longitude = second)
 
-/**
- * Converts a (latitude, longitude) pair to a [GeoPoint].
- *
- * @return A [GeoPoint] from the pair values.
- */
 fun Pair<Double, Double>.toGeoPoint(): GeoPoint = GeoPoint(first, second)
 
-/**
- * Returns `true` if neither component is zero, indicating a non-sentinel coordinate.
- *
- * This checks for the (0, 0) sentinel value, not geographic validity.
- * Note: a coordinate like (0.0, 30.0) on the equator is geographically valid but returns `false`.
- *
- * @return `true` when both first and second are non-zero.
- */
 fun Pair<Double, Double>.isNonZero(): Boolean = first != 0.0 && second != 0.0
 
-/**
- * Returns `true` if the coordinate pair represents a valid geographic location.
- *
- * Latitude must be in [-90, 90] and longitude must be in [-180, 180].
- *
- * @return `true` when both components are within valid geographic ranges.
- */
 fun Pair<Double, Double>.isValid(): Boolean = first in -90.0..90.0 && second in -180.0..180.0
 
-/**
- * Returns `true` if neither latitude nor longitude is zero, indicating a non-sentinel coordinate.
- *
- * This checks for the [GeoPoint.Zero] sentinel value, not geographic validity.
- * Note: a coordinate like (0.0, 30.0) on the equator is geographically valid but returns `false`.
- *
- * @return `true` when both lat and lng are non-zero.
- */
 fun GeoPoint.isNonZero(): Boolean = lat != 0.0 && lng != 0.0
 
-// ============================================
-// Bounding Box
-// ============================================
+fun List<GeoPoint>.toBoundingBox(): BoundingBox = when {
+    isEmpty() -> BoundingBox(emptyList())
+    else ->
+        BoundingBox(
+            west = minOf { it.lng },
+            south = minOf { it.lat },
+            east = maxOf { it.lng },
+            north = maxOf { it.lat }
+        )
+}
 
-/**
- * Computes a [BoundingBox] enclosing all points in this list.
- *
- * @return A [BoundingBox] spanning the min/max lat/lng, or an empty box if the list is empty.
- */
-fun List<GeoPoint>.toBoundingBox(): BoundingBox =
-    when {
-        isEmpty() -> BoundingBox(emptyList())
-        else ->
-            BoundingBox(
-                west = minOf { it.lng },
-                south = minOf { it.lat },
-                east = maxOf { it.lng },
-                north = maxOf { it.lat }
-            )
-    }
+infix operator fun PaddingValues.plus(other: PaddingValues): PaddingValues = PaddingValues(
+    top = calculateTopPadding() + other.calculateTopPadding(),
+    bottom = calculateBottomPadding() + other.calculateBottomPadding(),
+    start = calculateLeftPadding(LayoutDirection.Ltr) + other.calculateLeftPadding(LayoutDirection.Ltr),
+    end = calculateRightPadding(LayoutDirection.Ltr) + other.calculateRightPadding(LayoutDirection.Ltr)
+)
 
-// ============================================
-// Padding Operations
-// ============================================
-
-/**
- * Adds two [PaddingValues] component-wise (top+top, bottom+bottom, start+start, end+end).
- *
- * @return A new [PaddingValues] with summed components.
- */
-infix operator fun PaddingValues.plus(other: PaddingValues): PaddingValues =
-    PaddingValues(
-        top = calculateTopPadding() + other.calculateTopPadding(),
-        bottom = calculateBottomPadding() + other.calculateBottomPadding(),
-        start = calculateLeftPadding(LayoutDirection.Ltr) + other.calculateLeftPadding(LayoutDirection.Ltr),
-        end = calculateRightPadding(LayoutDirection.Ltr) + other.calculateRightPadding(LayoutDirection.Ltr)
-    )
-
-/**
- * Compares two [PaddingValues] by their resolved pixel values.
- *
- * @return `true` if all four sides are equal.
- */
 fun PaddingValues.hasSameValues(
     other: PaddingValues,
     layoutDirection: LayoutDirection = LayoutDirection.Ltr
-): Boolean =
-    calculateTopPadding() == other.calculateTopPadding() &&
-        calculateBottomPadding() == other.calculateBottomPadding() &&
-        calculateLeftPadding(layoutDirection) == other.calculateLeftPadding(layoutDirection) &&
-        calculateRightPadding(layoutDirection) == other.calculateRightPadding(layoutDirection)
-
-// ============================================
-// Geo Calculations
-// ============================================
+): Boolean = calculateTopPadding() == other.calculateTopPadding() &&
+    calculateBottomPadding() == other.calculateBottomPadding() &&
+    calculateLeftPadding(layoutDirection) == other.calculateLeftPadding(layoutDirection) &&
+    calculateRightPadding(layoutDirection) == other.calculateRightPadding(layoutDirection)
 
 private const val EARTH_RADIUS_KM = 6371.0
 
-/**
- * Calculates the great-circle distance between two [GeoPoint]s using the Haversine formula.
- *
- * @return Distance in kilometers.
- */
 fun haversineDistance(
     from: GeoPoint,
     to: GeoPoint
-): Double =
-    haversineDistance(
-        lat1 = from.lat,
-        lng1 = from.lng,
-        lat2 = to.lat,
-        lng2 = to.lng
-    )
+): Double = haversineDistance(
+    lat1 = from.lat,
+    lng1 = from.lng,
+    lat2 = to.lat,
+    lng2 = to.lng
+)
 
-/**
- * Calculates the great-circle distance between two coordinate pairs using the Haversine formula.
- *
- * @return Distance in kilometers.
- */
 fun haversineDistance(
     lat1: Double,
     lng1: Double,
@@ -160,32 +72,19 @@ fun haversineDistance(
 ): Double {
     val dLat = (lat2 - lat1).toRadians()
     val dLng = (lng2 - lng1).toRadians()
-    val a =
-        (
-            sin(dLat / 2).pow(2) +
-                cos(lat1.toRadians()) * cos(lat2.toRadians()) *
-                sin(dLng / 2).pow(2)
-        ).coerceIn(0.0, 1.0)
+    val a = (
+        sin(dLat / 2).pow(2) +
+            cos(lat1.toRadians()) * cos(lat2.toRadians()) *
+            sin(dLng / 2).pow(2)
+    ).coerceIn(0.0, 1.0)
     return EARTH_RADIUS_KM * 2 * atan2(sqrt(a), sqrt(1 - a))
 }
 
-/**
- * Normalizes a heading to the range [0, 360).
- *
- * @return Heading normalized to [0, 360).
- */
 fun normalizeHeading(heading: Float): Float {
     val normalized = heading % 360
     return if (normalized < 0) normalized + 360 else normalized
 }
 
-/**
- * Computes the target heading that represents the shortest rotational path from [current] to [target].
- *
- * Ensures animations rotate through the minimal arc (never more than 180 degrees).
- *
- * @return Adjusted target heading that produces the shortest rotation from [current].
- */
 fun shortestHeadingPath(
     current: Float,
     target: Float
