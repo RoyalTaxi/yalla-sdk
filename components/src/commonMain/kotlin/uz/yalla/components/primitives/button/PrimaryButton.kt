@@ -18,10 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
-import uz.yalla.resources.icons.Add
-import uz.yalla.resources.icons.YallaIcons
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
@@ -31,6 +28,8 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.components.primitives.indicator.LoadingIndicator
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
+import uz.yalla.resources.icons.Add
+import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
 data class PrimaryButtonColors(
