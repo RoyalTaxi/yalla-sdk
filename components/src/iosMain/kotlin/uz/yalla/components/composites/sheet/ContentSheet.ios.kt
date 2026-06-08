@@ -131,7 +131,14 @@ private fun ContentSheetScaffold(
         Modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .onSizeChanged { onContentHeightChanged(with(density) { it.height.toDp() }) }
+            .onSizeChanged {
+                // The Compose Box wraps content INCLUDING our safeAreaBottom padding, but
+                // the iOS custom detent expects a value that EXCLUDES the bottom safe area
+                // (UIKit adds it itself). Subtract here so UIKit doesn't double-count.
+                val raw = with(density) { it.height.toDp() }
+                val reported = (raw - safeAreaBottom).coerceAtLeast(0.dp)
+                onContentHeightChanged(reported)
+            }
     }
 
     Box(modifier = outerModifier) {
