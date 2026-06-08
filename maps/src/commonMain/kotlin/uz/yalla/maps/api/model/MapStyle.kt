@@ -3,19 +3,17 @@ package uz.yalla.maps.api.model
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class MapStyle(
-    val lightStyleUrl: String,
-    val darkStyleUrl: String
-) {
-    companion object {
-        val CARTO = MapStyle(
-            lightStyleUrl = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
-            darkStyleUrl = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
-        )
+sealed class MapStyle {
+    data class Url(val lightUrl: String, val darkUrl: String) : MapStyle()
 
-        val GOOGLE = MapStyle(
-            lightStyleUrl = "",
-            darkStyleUrl = ""
+    data class InlineJson(val lightJson: String, val darkJson: String) : MapStyle()
+
+    data object PlatformDefault : MapStyle()
+
+    companion object {
+        val CARTO = Url(
+            lightUrl = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+            darkUrl = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
         )
     }
 }

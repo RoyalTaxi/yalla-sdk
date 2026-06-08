@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.LayoutDirection
 import uz.yalla.core.geo.GeoPoint
-import uz.yalla.maps.util.hasSameValues
 
 @Immutable
 data class CameraPosition(
@@ -21,7 +20,7 @@ data class CameraPosition(
             zoom == other.zoom &&
             bearing == other.bearing &&
             tilt == other.tilt &&
-            padding.hasSameValues(other.padding)
+            padding.equalsByValue(other.padding)
     }
 
     override fun hashCode(): Int {
@@ -42,4 +41,11 @@ data class CameraPosition(
             zoom = 15f
         )
     }
+}
+
+private fun PaddingValues.equalsByValue(other: PaddingValues): Boolean {
+    return calculateTopPadding() == other.calculateTopPadding() &&
+        calculateBottomPadding() == other.calculateBottomPadding() &&
+        calculateLeftPadding(LayoutDirection.Ltr) == other.calculateLeftPadding(LayoutDirection.Ltr) &&
+        calculateRightPadding(LayoutDirection.Ltr) == other.calculateRightPadding(LayoutDirection.Ltr)
 }

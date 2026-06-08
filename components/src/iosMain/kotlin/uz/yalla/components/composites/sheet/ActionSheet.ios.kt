@@ -3,7 +3,6 @@ package uz.yalla.components.composites.sheet
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import uz.yalla.components.composites.item.ActionableItemModel
 import uz.yalla.components.config.requireConfig
@@ -20,21 +19,18 @@ actual fun ActionSheet(
     val currentOnAction by rememberUpdatedState(onAction)
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
 
-    val handle = remember {
-        requireConfig().sheet.createAction(
-            title = title,
-            items = items,
-            onAction = { currentOnAction(it) },
-            onDismissRequest = { currentOnDismissRequest() }
-        )
-    }
-
     DisposableEffect(isVisible) {
         if (!isVisible) {
             return@DisposableEffect onDispose {}
         }
 
         val parent = findKeyWindowRootController() ?: return@DisposableEffect onDispose {}
+        val handle = requireConfig().sheet.createAction(
+            title = title,
+            items = items,
+            onAction = { currentOnAction(it) },
+            onDismissRequest = { currentOnDismissRequest() }
+        )
         handle.present(parent)
 
         onDispose { handle.dismiss() }

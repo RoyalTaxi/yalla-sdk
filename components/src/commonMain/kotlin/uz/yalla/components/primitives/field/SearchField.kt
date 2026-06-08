@@ -3,29 +3,38 @@ package uz.yalla.components.primitives.field
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
@@ -41,10 +50,10 @@ fun SearchField(
     placeholder: String = "",
     leadingPainter: Painter? = null,
     trailingPainter: Painter? = null,
-    onClickTrailingPainter: (() -> Unit)? = null
+    onClickTrailingPainter: (() -> Unit)? = null,
+    focusRequester: FocusRequester? = null
 ) {
     val interactionSource = remember { MutableInteractionSource() }
-    val isFocusing by interactionSource.collectIsFocusedAsState()
 
     Surface(
         shape = RoundedCornerShape(16.dp),
@@ -53,65 +62,75 @@ fun SearchField(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.height(60.dp).padding(10.dp)
         ) {
             leadingPainter?.let { painter ->
-                Surface(
-                    color = if (isFocusing) System.color.background.brand else Color.Transparent,
-                    shape = RoundedCornerShape(10.dp)
-                ) {
-                    Icon(
-                        painter = painter,
-                        contentDescription = null,
-                        tint = if (isFocusing) System.color.icon.white else System.color.background.brand,
-                        modifier = Modifier
-                            .padding(10.dp)
-                            .size(24.dp)
-                    )
-                }
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier.size(42.dp)
+                )
             }
 
-            TextField(
-                value = value,
-                onValueChange = onValueChange,
-                modifier = Modifier.weight(1f),
-                textStyle = System.font.body.base.bold,
-                maxLines = 1,
-                placeholder = {
-                    Text(
-                        text = placeholder,
-                        color = System.color.text.subtle,
-                        style = System.font.body.base.bold
-                    )
-                },
-                colors = TextFieldDefaults.colors(
-                    focusedTextColor = System.color.text.base,
-                    unfocusedTextColor = System.color.text.base,
-                    focusedContainerColor = Color.Transparent,
-                    unfocusedContainerColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    cursorColor = System.color.text.link,
-                    selectionColors = TextSelectionColors(
-                        handleColor = System.color.text.link,
-                        backgroundColor = System.color.text.link.copy(.3f)
-                    )
-                )
+            val selectionColors = TextSelectionColors(
+                handleColor = System.color.text.link,
+                backgroundColor = System.color.text.link.copy(.3f)
             )
+            CompositionLocalProvider(LocalTextSelectionColors provides selectionColors) {
+                var fieldValue by remember { mutableStateOf(TextFieldValue(value, TextRange(value.length))) }
+                LaunchedEffect(value) {
+                    if (fieldValue.text != value) {
+                        fieldValue = fieldValue.copy(text = value, selection = TextRange(value.length))
+                    }
+                }
+                BasicTextField(
+                    value = fieldValue,
+                    onValueChange = { fv ->
+                        val textChanged = fv.text != fieldValue.text
+                        fieldValue = fv
+                        if (textChanged) onValueChange(fv.text)
+                    },
+                    modifier = Modifier
+                        .weight(1f)
+                        .let { if (focusRequester != null) it.focusRequester(focusRequester) else it },
+                    textStyle = System.font.body.base.bold.copy(color = System.color.text.base),
+                    maxLines = 1,
+                    singleLine = true,
+                    cursorBrush = SolidColor(System.color.text.link),
+                    interactionSource = interactionSource,
+                    decorationBox = { innerTextField ->
+                        Box(contentAlignment = Alignment.CenterStart) {
+                            if (fieldValue.text.isEmpty()) {
+                                Text(
+                                    text = placeholder,
+                                    color = System.color.text.subtle,
+                                    style = System.font.body.base.bold
+                                )
+                            }
+                            innerTextField()
+                        }
+                    }
+                )
+            }
 
             trailingPainter?.let { painter ->
                 Surface(
-                    shape = RoundedCornerShape(10.dp),
+                    shape = RoundedCornerShape(11.dp),
                     color = System.color.background.tertiary,
-                    onClick = onClickTrailingPainter ?: { }
+                    onClick = onClickTrailingPainter ?: { },
+                    modifier = Modifier.size(42.dp)
                 ) {
-                    Image(
-                        painter = painter,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .padding(10.dp)
-                            .size(24.dp)
-                    )
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Icon(
+                            painter = painter,
+                            contentDescription = null,
+                            tint = System.color.icon.base,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
                 }
             }
         }

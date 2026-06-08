@@ -1,90 +1,152 @@
 package uz.yalla.components.composites.pin
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.EaseInOut
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.resources.stringResource
-import uz.yalla.core.util.or0
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
-import uz.yalla.resources.Res
-import uz.yalla.resources.common_status_loading
-import uz.yalla.resources.format_time_min_short
 import uz.yalla.resources.icons.FocusOrigin
 import uz.yalla.resources.icons.PinShadow
 import uz.yalla.resources.icons.YallaIcons
-import uz.yalla.resources.img_spinner
 
-private val ShadowWidth = 18.dp
-private val ShadowHeight = 4.dp
-private val StickWidth = 6.dp
-private val StickHeight = 12.dp
-private val JumpHeight = 6.dp
-private val ContentSize = 40.dp
-private val ContentShape = RoundedCornerShape(14.dp)
-private val HeaderShape = RoundedCornerShape(16.dp)
 private val IconSize = 18.dp
 
 private const val ShadowExpandedScale = 1.5f
 private const val ShadowShrinkDurationMs = 400
-private const val JumpCycleDurationMs = 700
+internal const val JumpCycleDurationMs = 700
+
+@Immutable
+data class LocationPinColors(
+    val background: Color,
+    val border: Brush,
+    val stick: Color,
+    val stickBorder: Color,
+    val header: Color,
+    val headerText: Color,
+    val icon: Color,
+    val text: Color
+)
+
+@Immutable
+data class LocationPinDimens(
+    val stickHeight: Dp,
+    val stickWidth: Dp,
+    val jumpHeight: Dp,
+    val contentSize: Dp,
+    val contentShape: Shape,
+    val borderWidth: Dp,
+    val shadowSize: Dp,
+    val headerShape: Shape,
+    val headerVerticalPadding: Dp,
+    val headerHorizontalPadding: Dp,
+    val contentBottomOffset: Dp,
+    val headerBottomOffset: Dp
+)
+
+object LocationPinDefaults {
+    @Composable
+    fun colors(
+        background: Color = System.color.background.base,
+        border: Brush = System.color.gradient.sunsetNight,
+        stick: Color = System.color.background.brand,
+        stickBorder: Color = System.color.background.base,
+        header: Color = System.color.icon.base,
+        headerText: Color = System.color.background.base,
+        icon: Color = System.color.icon.base,
+        text: Color = System.color.text.base
+    ): LocationPinColors = LocationPinColors(
+        background = background,
+        border = border,
+        stick = stick,
+        stickBorder = stickBorder,
+        header = header,
+        headerText = headerText,
+        icon = icon,
+        text = text
+    )
+
+    @Composable
+    fun dimens(
+        stickHeight: Dp = 12.dp,
+        stickWidth: Dp = 6.dp,
+        jumpHeight: Dp = 6.dp,
+        contentSize: Dp = 40.dp,
+        contentShape: Shape = RoundedCornerShape(14.dp),
+        borderWidth: Dp = 2.dp,
+        shadowSize: Dp = 12.dp,
+        headerShape: Shape = RoundedCornerShape(16.dp),
+        headerVerticalPadding: Dp = 6.dp,
+        headerHorizontalPadding: Dp = 12.dp,
+        contentBottomOffset: Dp = 6.dp,
+        headerBottomOffset: Dp = 2.dp
+    ): LocationPinDimens = LocationPinDimens(
+        stickHeight = stickHeight,
+        stickWidth = stickWidth,
+        jumpHeight = jumpHeight,
+        contentSize = contentSize,
+        contentShape = contentShape,
+        borderWidth = borderWidth,
+        shadowSize = shadowSize,
+        headerShape = headerShape,
+        headerVerticalPadding = headerVerticalPadding,
+        headerHorizontalPadding = headerHorizontalPadding,
+        contentBottomOffset = contentBottomOffset,
+        headerBottomOffset = headerBottomOffset
+    )
+}
 
 @Composable
 fun LocationPin(
+    modifier: Modifier = Modifier,
     address: String? = null,
     timeout: Int? = null,
     jumping: Boolean = false,
-    icon: @Composable () -> Unit = {
+    icon: (@Composable () -> Unit)? = null,
+    timeoutStyle: TextStyle = System.font.body.base.bold,
+    timeoutLabelStyle: TextStyle = System.font.body.small.bold,
+    headerStyle: TextStyle = System.font.body.caption,
+    colors: LocationPinColors = LocationPinDefaults.colors(),
+    dimens: LocationPinDimens = LocationPinDefaults.dimens()
+) {
+    val density = LocalDensity.current
+    val jumpHeightPx = with(density) { dimens.jumpHeight.toPx() }
+    val stickHeightPx = with(density) { dimens.stickHeight.toPx() }
+    val jumpOffset = remember { Animatable(0f) }
+    val stickVisibleHeight = remember { Animatable(stickHeightPx) }
+    val shadowScale = remember { Animatable(1f) }
+    val stickClipHeightDp = with(density) { stickVisibleHeight.value.toDp() }
+    val resolvedIcon: @Composable () -> Unit = icon ?: {
         Icon(
             painter = rememberVectorPainter(YallaIcons.FocusOrigin),
             contentDescription = null,
-            tint = System.color.icon.base,
+            tint = colors.icon,
             modifier = Modifier.size(IconSize)
         )
-    },
-    modifier: Modifier = Modifier
-) {
-    val jumpHeightPx = with(LocalDensity.current) { JumpHeight.toPx() }
-    val jumpOffset = remember { Animatable(0f) }
-    val shadowScale = remember { Animatable(1f) }
+    }
 
     LaunchedEffect(jumping) {
         if (jumping) {
@@ -124,7 +186,7 @@ fun LocationPin(
             painter = rememberVectorPainter(YallaIcons.PinShadow),
             contentDescription = null,
             modifier = Modifier
-                .size(width = ShadowWidth, height = ShadowHeight)
+                .size(dimens.shadowSize)
                 .graphicsLayer {
                     scaleX = shadowScale.value
                     scaleY = shadowScale.value
@@ -135,130 +197,46 @@ fun LocationPin(
                 }
         )
 
-        Box(
+        PinStick(
+            clipHeight = stickClipHeightDp,
+            colors = colors,
+            dimens = dimens,
             modifier = Modifier
-                .width(StickWidth)
-                .height(StickHeight)
-                .background(shape = CircleShape, color = System.color.background.brand)
-                .border(width = 1.dp, shape = CircleShape, color = System.color.background.base)
                 .graphicsLayer { translationY = jumpOffset.value }
                 .constrainAs(stick) {
-                    bottom.linkTo(shadow.bottom, margin = ShadowHeight / 2)
-                    linkTo(start = shadow.start, end = shadow.end)
+                    top.linkTo(content.bottom)
+                    linkTo(start = parent.start, end = parent.end)
                 }
         )
 
         PinContent(
             timeout = timeout,
             jumping = jumping,
-            icon = icon,
+            icon = resolvedIcon,
+            timeoutStyle = timeoutStyle,
+            timeoutLabelStyle = timeoutLabelStyle,
+            colors = colors,
+            dimens = dimens,
             modifier = Modifier
                 .graphicsLayer { translationY = jumpOffset.value }
                 .constrainAs(content) {
-                    bottom.linkTo(stick.top)
-                    linkTo(start = stick.start, end = stick.end)
+                    bottom.linkTo(shadow.bottom, margin = dimens.stickHeight + dimens.contentBottomOffset)
+                    linkTo(start = parent.start, end = parent.end)
                 }
         )
 
         address?.let { addr ->
             PinHeader(
                 address = addr,
+                headerStyle = headerStyle,
+                colors = colors,
+                dimens = dimens,
                 modifier = Modifier.constrainAs(header) {
-                    bottom.linkTo(content.top, margin = JumpHeight + 2.dp)
-                    linkTo(start = content.start, end = content.end)
+                    bottom.linkTo(content.top, margin = dimens.jumpHeight + dimens.headerBottomOffset)
+                    linkTo(start = parent.start, end = parent.end)
                 }
             )
         }
-    }
-}
-
-@Composable
-private fun PinContent(
-    timeout: Int?,
-    jumping: Boolean,
-    icon: @Composable () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val transition = rememberInfiniteTransition()
-    val rotation by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            repeatMode = RepeatMode.Restart,
-            animation = tween(
-                durationMillis = JumpCycleDurationMs * 2,
-                easing = FastOutSlowInEasing
-            )
-        )
-    )
-
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .size(ContentSize)
-            .background(shape = ContentShape, color = System.color.background.base)
-            .border(
-                width = 2.dp,
-                shape = ContentShape,
-                brush = System.color.gradient.sunsetNight
-            )
-    ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            when {
-                jumping -> Image(
-                    painter = painterResource(Res.drawable.img_spinner),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(System.color.icon.base, BlendMode.SrcIn),
-                    modifier = Modifier
-                        .size(IconSize)
-                        .graphicsLayer { rotationZ = rotation }
-                )
-                timeout == null -> icon()
-                else -> {
-                    Text(
-                        text = timeout.or0().coerceAtLeast(1).toString(),
-                        color = System.color.text.base,
-                        style = System.font.body.base.bold
-                    )
-                    Text(
-                        text = stringResource(Res.string.format_time_min_short),
-                        color = System.color.text.base,
-                        style = System.font.body.small.bold.copy(
-                            fontSize = 9.sp,
-                            lineHeight = 8.sp
-                        )
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun PinHeader(
-    address: String,
-    modifier: Modifier = Modifier
-) {
-    Surface(
-        shape = HeaderShape,
-        color = System.color.icon.base,
-        modifier = modifier
-    ) {
-        Text(
-            text = address.takeIf { it.isNotBlank() } ?: stringResource(Res.string.common_status_loading),
-            color = System.color.background.base,
-            style = System.font.body.caption,
-            maxLines = 1,
-            modifier = Modifier
-                .animateContentSize(
-                    alignment = Alignment.Center,
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioNoBouncy,
-                        stiffness = Spring.StiffnessMedium
-                    )
-                )
-                .padding(vertical = 6.dp, horizontal = 12.dp)
-        )
     }
 }
 

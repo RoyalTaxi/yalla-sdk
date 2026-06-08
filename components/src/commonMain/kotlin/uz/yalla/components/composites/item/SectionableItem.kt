@@ -1,6 +1,7 @@
 package uz.yalla.components.composites.item
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -150,12 +151,20 @@ fun SectionableItem(
             modifier = Modifier.padding(dimens.contentPadding)
         ) {
             iconPainter?.let { painter ->
-                Icon(
-                    painter = painter,
-                    contentDescription = null,
-                    tint = colors.iconColor,
-                    modifier = Modifier.size(dimens.iconSize)
-                )
+                if (colors.iconColor == Color.Unspecified) {
+                    Image(
+                        painter = painter,
+                        contentDescription = null,
+                        modifier = Modifier.size(dimens.iconSize)
+                    )
+                } else {
+                    Icon(
+                        painter = painter,
+                        contentDescription = null,
+                        tint = colors.iconColor,
+                        modifier = Modifier.size(dimens.iconSize)
+                    )
+                }
             }
 
             Column(

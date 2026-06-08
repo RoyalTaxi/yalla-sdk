@@ -1,9 +1,9 @@
 package uz.yalla.maps.config
 
-import uz.yalla.maps.api.MapProvider
+import uz.yalla.maps.api.MapController
 
 interface MapFactory {
-    fun createGoogleProvider(): MapProvider
+    fun createGoogleController(): MapController
 
-    fun createLibreProvider(): MapProvider
+    fun createLibreController(): MapController
 }

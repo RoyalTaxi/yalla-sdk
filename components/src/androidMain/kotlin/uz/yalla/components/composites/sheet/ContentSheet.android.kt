@@ -1,0 +1,31 @@
+package uz.yalla.components.composites.sheet
+
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import uz.yalla.components.config.requireConfig
+
+@Composable
+actual fun ContentSheet(
+    isVisible: Boolean,
+    onDismissRequest: () -> Unit,
+    modifier: Modifier,
+    title: String?,
+    onClose: (() -> Unit)?,
+    fullHeight: Boolean,
+    sheetSwipeEnabled: Boolean,
+    footer: (@Composable () -> Unit)?,
+    content: @Composable (padding: PaddingValues) -> Unit
+) {
+    requireConfig().sheet.ContentContent(
+        isVisible = isVisible,
+        onDismissRequest = onDismissRequest,
+        modifier = modifier,
+        title = title,
+        onClose = onClose,
+        fullHeight = fullHeight,
+        sheetSwipeEnabled = sheetSwipeEnabled,
+        footer = footer,
+        content = content
+    )
+}

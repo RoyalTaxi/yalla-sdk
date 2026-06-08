@@ -2,11 +2,12 @@ package uz.yalla.components.composites.sheet
 
 import androidx.compose.runtime.Composable
 import uz.yalla.components.config.requireConfig
+import uz.yalla.design.image.ThemedImage
 
 @Composable
 actual fun ConfirmationSheet(
     isVisible: Boolean,
-    imageResource: String,
+    image: ThemedImage,
     title: String,
     description: String,
     actionText: String,
@@ -16,7 +17,7 @@ actual fun ConfirmationSheet(
 ) {
     requireConfig().sheet.ConfirmationContent(
         isVisible = isVisible,
-        imageResource = imageResource,
+        image = image,
         title = title,
         description = description,
         actionText = actionText,

@@ -5,13 +5,15 @@ import kotlinx.coroutines.flow.Flow
 import uz.yalla.core.location.LocationProvider
 import uz.yalla.core.settings.MapKind
 import uz.yalla.core.settings.ThemeKind
+import uz.yalla.maps.api.MapsTelemetry
 
 class MapsConfig private constructor(
-    val factory: MapFactory?,
+    val factory: MapFactory,
     val locationProvider: LocationProvider,
     val themePreference: Flow<ThemeKind>,
     val mapKindPreference: Flow<MapKind>,
-    val scope: CoroutineScope
+    val scope: CoroutineScope,
+    val telemetry: MapsTelemetry?
 ) {
     class Builder {
         var factory: MapFactory? = null
@@ -24,12 +26,15 @@ class MapsConfig private constructor(
 
         var scope: CoroutineScope? = null
 
+        var telemetry: MapsTelemetry? = null
+
         fun build() = MapsConfig(
-            factory = factory,
+            factory = requireNotNull(factory) { "MapsConfig.factory required" },
             locationProvider = requireNotNull(locationProvider) { "MapsConfig.locationProvider required" },
             themePreference = requireNotNull(themePreference) { "MapsConfig.themePreference required" },
             mapKindPreference = requireNotNull(mapKindPreference) { "MapsConfig.mapKindPreference required" },
-            scope = requireNotNull(scope) { "MapsConfig.scope required" }
+            scope = requireNotNull(scope) { "MapsConfig.scope required" },
+            telemetry = telemetry
         )
     }
 }

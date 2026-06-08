@@ -1,15 +1,31 @@
 package uz.yalla.components.config.composites
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import kotlinx.datetime.LocalDate
 import uz.yalla.components.composites.item.ActionableItemModel
 import uz.yalla.components.composites.item.SelectableItemModel
+import uz.yalla.design.image.ThemedImage
 
 interface SheetFactory {
     @Composable
+    fun ContentContent(
+        isVisible: Boolean,
+        onDismissRequest: () -> Unit,
+        modifier: Modifier,
+        title: String?,
+        onClose: (() -> Unit)?,
+        fullHeight: Boolean,
+        sheetSwipeEnabled: Boolean,
+        footer: (@Composable () -> Unit)?,
+        content: @Composable (padding: PaddingValues) -> Unit
+    )
+
+    @Composable
     fun ConfirmationContent(
         isVisible: Boolean,
-        imageResource: String,
+        image: ThemedImage,
         title: String,
         description: String,
         actionText: String,

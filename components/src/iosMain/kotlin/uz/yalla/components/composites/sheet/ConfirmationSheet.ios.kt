@@ -7,11 +7,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import uz.yalla.components.config.requireConfig
 import uz.yalla.components.platform.findKeyWindowRootController
+import uz.yalla.design.image.ThemedImage
+import uz.yalla.design.theme.System
 
 @Composable
 actual fun ConfirmationSheet(
     isVisible: Boolean,
-    imageResource: String,
+    image: ThemedImage,
     title: String,
     description: String,
     actionText: String,
@@ -21,10 +23,13 @@ actual fun ConfirmationSheet(
 ) {
     val currentOnAction by rememberUpdatedState(onAction)
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
+    val isDark = System.isDark
+    val assetName = image.assetName
 
     val handle = remember {
         requireConfig().sheet.createConfirmation(
-            imageResource = imageResource,
+            imageResource = assetName,
+            isDark = isDark,
             title = title,
             description = description,
             actionText = actionText,

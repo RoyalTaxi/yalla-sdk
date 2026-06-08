@@ -1,11 +1,12 @@
 package uz.yalla.components.composites.sheet
 
 import androidx.compose.runtime.Composable
+import uz.yalla.design.image.ThemedImage
 
 @Composable
 expect fun ConfirmationSheet(
     isVisible: Boolean,
-    imageResource: String,
+    image: ThemedImage,
     title: String,
     description: String,
     actionText: String,

@@ -7,30 +7,32 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
 import uz.yalla.components.resource.asImageVector
-import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
 class ActionableItemController(
     text: String,
     icon: String,
+    trailingIcon: String? = null,
     isDestructive: Boolean = false,
     onClick: () -> Unit
 ) {
+    private val model = ActionableItemModel(
+        id = "",
+        text = text,
+        icon = icon,
+        trailingIcon = trailingIcon,
+        isDestructive = isDestructive
+    )
+
     @OptIn(ExperimentalComposeUiApi::class)
     val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
         YallaTheme {
             ActionableItem(
-                text = text,
-                painter = icon.asImageVector()?.let { rememberVectorPainter(it) },
+                text = model.text,
+                painter = model.icon.asImageVector()?.let { rememberVectorPainter(it) },
+                trailingPainter = model.trailingIcon?.asImageVector()?.let { rememberVectorPainter(it) },
                 onClick = onClick,
-                colors = if (isDestructive) {
-                    ActionableItemDefaults.colors(
-                        iconColor = System.color.icon.red,
-                        textColor = System.color.text.red
-                    )
-                } else {
-                    ActionableItemDefaults.colors()
-                },
+                colors = ActionableItemDefaults.colorsFor(model),
                 modifier = Modifier.fillMaxWidth()
             )
         }

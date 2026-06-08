@@ -1,6 +1,7 @@
 package uz.yalla.capabilities.location
 
 import dev.icerock.moko.geo.LocationTracker
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,9 +26,15 @@ class DeviceLocationProvider(
     override fun startTracking() {
         if (job != null) return
         job = scope.launch {
-            locationTracker.startTracking()
-            locationTracker.getLocationsFlow().collect { location ->
-                _currentLocation.value = GeoPoint(location.latitude, location.longitude)
+            try {
+                locationTracker.startTracking()
+                locationTracker.getLocationsFlow().collect { location ->
+                    _currentLocation.value = GeoPoint(location.latitude, location.longitude)
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                job = null
             }
         }
     }

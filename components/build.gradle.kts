@@ -11,6 +11,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.design)
             api(projects.resources)
+            api(projects.maps)
             implementation(projects.core)
 
             api(libs.kotlinx.datetime)
@@ -37,6 +38,10 @@ kotlin.targets
     .withType(KotlinNativeTarget::class.java)
     .configureEach {
         binaries.withType(Framework::class.java).configureEach {
+            export(projects.maps)
+            export(projects.design)
+            export(projects.resources)
+            export(projects.core)
             yallaComponentsXcf.add(this)
         }
     }

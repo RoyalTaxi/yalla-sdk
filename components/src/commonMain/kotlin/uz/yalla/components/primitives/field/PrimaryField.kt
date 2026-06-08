@@ -14,6 +14,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import uz.yalla.resources.icons.Calendar
 import uz.yalla.resources.icons.YallaIcons
 import androidx.compose.runtime.getValue
@@ -21,6 +22,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,10 +41,20 @@ fun PrimaryField(
     onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
+    var fieldValue by remember { mutableStateOf(TextFieldValue(value, TextRange(value.length))) }
+    LaunchedEffect(value) {
+        if (fieldValue.text != value) {
+            fieldValue = fieldValue.copy(text = value, selection = TextRange(value.length))
+        }
+    }
     Box(modifier = modifier) {
         OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
+            value = fieldValue,
+            onValueChange = { fv ->
+                val textChanged = fv.text != fieldValue.text
+                fieldValue = fv
+                if (textChanged) onValueChange(fv.text)
+            },
             readOnly = !enabled,
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(10.dp),

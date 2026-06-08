@@ -6,8 +6,16 @@ import uz.yalla.components.composites.item.ActionableItemModel
 import uz.yalla.components.composites.item.SelectableItemModel
 
 interface SheetFactory {
+    fun createContent(
+        fullHeight: Boolean,
+        sheetSwipeEnabled: Boolean,
+        contentController: UIViewController,
+        onDismissRequest: () -> Unit
+    ): ContentSheetHandle
+
     fun createConfirmation(
         imageResource: String,
+        isDark: Boolean,
         title: String,
         description: String,
         actionText: String,
@@ -60,6 +68,13 @@ interface SheetFactory {
         onDismissRequest: () -> Unit
     ): VerificationSheetHandle
 }
+
+class ContentSheetHandle(
+    val viewController: UIViewController,
+    val present: (parent: UIViewController) -> Unit,
+    val dismiss: () -> Unit,
+    val updateContentHeight: (height: Double) -> Unit
+)
 
 class ConfirmationSheetHandle(
     val viewController: UIViewController,

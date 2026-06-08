@@ -1,18 +1,27 @@
 package uz.yalla.maps.api
 
 import androidx.compose.foundation.layout.PaddingValues
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.maps.api.model.CameraPosition
 import uz.yalla.maps.api.model.CenterPinState
+import uz.yalla.maps.api.model.MapCircle
+import uz.yalla.maps.api.model.MapEvent
+import uz.yalla.maps.api.model.MapMarker
+import uz.yalla.maps.api.model.MapRoute
+import uz.yalla.maps.api.model.MapStyle
 import uz.yalla.maps.config.MapConstants
 
 interface MapController {
+
     val cameraPosition: StateFlow<CameraPosition>
 
     val centerPin: StateFlow<CenterPinState>
 
     val isReady: StateFlow<Boolean>
+
+    val events: SharedFlow<MapEvent>
 
     suspend fun moveTo(
         point: GeoPoint,
@@ -32,11 +41,7 @@ interface MapController {
         durationMs: Int = ANIMATION_DURATION
     )
 
-    suspend fun fitBounds(
-        points: List<GeoPoint>,
-        padding: PaddingValues = PaddingValues(),
-        animate: Boolean = true
-    )
+    suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean = true)
 
     suspend fun zoomIn()
 
@@ -44,21 +49,33 @@ interface MapController {
 
     suspend fun setZoom(zoom: Float)
 
+    suspend fun setStyle(style: MapStyle, isDark: Boolean)
+
     fun setDesiredPadding(padding: PaddingValues)
 
-    suspend fun updatePadding(padding: PaddingValues)
+    fun setMarkers(markers: List<MapMarker>)
 
-    fun updateCenterPin(state: CenterPinState)
+    fun setRoutes(routes: List<MapRoute>)
 
-    fun setCenterPin(point: GeoPoint)
+    fun setCircles(circles: List<MapCircle>)
 
-    fun clearCenterPin()
+    fun lockTarget(point: GeoPoint, zoom: Float? = null)
 
-    fun onMapReady()
+    fun unlockTarget()
 
-    fun reset()
+    fun snapshotScene(): SceneSnapshot
 
-    fun close() {}
+    fun close()
+
+    data class SceneSnapshot(
+        val cameraPosition: CameraPosition,
+        val markers: List<MapMarker>,
+        val routes: List<MapRoute>,
+        val circles: List<MapCircle>,
+        val padding: PaddingValues,
+        val lockedTarget: GeoPoint?,
+        val lockedZoom: Float?
+    )
 
     companion object {
         const val ANIMATION_DURATION = 1000

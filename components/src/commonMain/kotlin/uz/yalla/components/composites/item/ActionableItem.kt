@@ -30,24 +30,42 @@ data class ActionableItemModel(
     val id: String,
     val text: String,
     val icon: String,
+    val trailingIcon: String? = null,
     val isDestructive: Boolean = false
 )
 
 @Immutable
 data class ActionableItemColors(
     val iconColor: Color,
-    val textColor: Color
+    val textColor: Color,
+    val trailingIconColor: Color
 )
 
 object ActionableItemDefaults {
     @Composable
     fun colors(
         iconColor: Color = System.color.icon.base,
-        textColor: Color = System.color.text.base
+        textColor: Color = System.color.text.base,
+        trailingIconColor: Color = System.color.icon.base
     ) = ActionableItemColors(
         iconColor = iconColor,
-        textColor = textColor
+        textColor = textColor,
+        trailingIconColor = trailingIconColor
     )
+
+    @Composable
+    fun colorsFor(model: ActionableItemModel): ActionableItemColors {
+        if (!model.isDestructive) return colors()
+        val redIcon = System.color.icon.red
+        val redText = System.color.text.red
+        val hasLeading = model.icon.isNotEmpty()
+        val hasTrailing = !model.trailingIcon.isNullOrEmpty()
+        return when {
+            hasTrailing -> colors(trailingIconColor = redIcon)
+            hasLeading -> colors(iconColor = redIcon)
+            else -> colors(textColor = redText)
+        }
+    }
 }
 
 @Composable
@@ -56,6 +74,7 @@ fun ActionableItem(
     painter: Painter?,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
+    trailingPainter: Painter? = null,
     colors: ActionableItemColors = ActionableItemDefaults.colors()
 ) {
     Surface(
@@ -81,8 +100,18 @@ fun ActionableItem(
             Text(
                 text = text,
                 color = colors.textColor,
-                style = System.font.body.base.medium
+                style = System.font.body.base.medium,
+                modifier = Modifier.weight(1f)
             )
+
+            trailingPainter?.let {
+                Icon(
+                    painter = it,
+                    tint = colors.trailingIconColor,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
     }
 }

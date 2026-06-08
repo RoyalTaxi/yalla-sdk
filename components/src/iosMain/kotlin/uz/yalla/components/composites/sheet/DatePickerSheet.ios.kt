@@ -25,8 +25,6 @@ actual fun DatePickerSheet(
     val currentOnSelect by rememberUpdatedState(onSelect)
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
 
-    // Keyed on the date params: the handle bakes in startDate at creation, so it must be rebuilt when
-    // startDate changes — e.g. once the saved birthday loads after the initial (default) composition.
     val handle = remember(startDate, minDate, maxDate, title, dismissEnabled) {
         requireConfig().sheet.createDatePicker(
             startDate = startDate.toNSDate(),

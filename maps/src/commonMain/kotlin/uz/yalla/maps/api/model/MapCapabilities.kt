@@ -11,6 +11,8 @@ data class MapCapabilities(
     val supportsCustomStyles: Boolean = true,
     val supportsRotation: Boolean = false,
     val supportsTilt: Boolean = false,
+    val supportsCircles: Boolean = true,
+    val supportsRoutePatterns: Boolean = true,
     val maxZoom: Float = 21f,
     val minZoom: Float = 1f
 ) {
@@ -20,6 +22,8 @@ data class MapCapabilities(
             supportsCustomStyles = true,
             supportsRotation = true,
             supportsTilt = true,
+            supportsCircles = false,
+            supportsRoutePatterns = false,
             maxZoom = 21f,
             minZoom = 4f
         )
@@ -29,6 +33,8 @@ data class MapCapabilities(
             supportsRotation = true,
             supportsTilt = true,
             supportsCustomStyles = false,
+            supportsCircles = true,
+            supportsRoutePatterns = true,
             maxZoom = 21f,
             minZoom = 4f
         )

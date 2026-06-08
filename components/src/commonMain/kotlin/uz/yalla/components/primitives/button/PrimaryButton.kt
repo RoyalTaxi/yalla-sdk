@@ -1,11 +1,13 @@
 package uz.yalla.components.primitives.button
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -19,6 +21,7 @@ import androidx.compose.ui.Alignment
 import uz.yalla.resources.icons.Add
 import uz.yalla.resources.icons.YallaIcons
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
@@ -51,6 +54,7 @@ data class PrimaryButtonColors(
 @Immutable
 data class PrimaryButtonDimens(
     val shape: Shape,
+    val minHeight: Dp,
     val contentSpacing: Dp,
     val contentPadding: PaddingValues
 )
@@ -77,10 +81,12 @@ object PrimaryButtonDefaults {
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
+        minHeight: Dp = 24.dp,
         contentSpacing: Dp = 12.dp,
         contentPadding: PaddingValues = PaddingValues(20.dp)
     ) = PrimaryButtonDimens(
         shape = shape,
+        minHeight = minHeight,
         contentSpacing = contentSpacing,
         contentPadding = contentPadding
     )
@@ -114,24 +120,29 @@ fun PrimaryButton(
         shape = dimens.shape,
         contentPadding = dimens.contentPadding,
         content = {
-            if (loading) {
-                LoadingIndicator(
-                    color = colors.contentColor,
-                    modifier = Modifier.size(24.dp)
-                )
-            } else {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(
-                        space = dimens.contentSpacing,
-                        alignment = Alignment.CenterHorizontally
+            Box(
+                modifier = Modifier.heightIn(min = dimens.minHeight),
+                contentAlignment = Alignment.Center
+            ) {
+                if (loading) {
+                    LoadingIndicator(
+                        color = colors.contentColor,
+                        modifier = Modifier.size(24.dp)
                     )
-                ) {
-                    leading?.invoke(colors, dimens)
+                } else {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(
+                            space = dimens.contentSpacing,
+                            alignment = Alignment.CenterHorizontally
+                        )
+                    ) {
+                        leading?.invoke(colors, dimens)
 
-                    content(colors, dimens, styles)
+                        content(colors, dimens, styles)
 
-                    trailing?.invoke(colors, dimens)
+                        trailing?.invoke(colors, dimens)
+                    }
                 }
             }
         }
