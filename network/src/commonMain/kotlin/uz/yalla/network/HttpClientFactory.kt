@@ -35,7 +35,8 @@ fun createHttpClient(
     onUnauthorized: suspend () -> Unit,
     scope: CoroutineScope,
     inspektifySetup: (HttpClientConfig<*>.() -> Unit)? = null,
-    engine: HttpClientEngine? = null
+    engine: HttpClientEngine? = null,
+    loggingEnabled: Boolean = false
 ): HttpClient {
     val localeCache = MutableStateFlow("")
     val guestModeCache = MutableStateFlow(false)
@@ -48,8 +49,10 @@ fun createHttpClient(
     return HttpClient(engine ?: createHttpEngine()) {
         inspektifySetup?.invoke(this)
 
-        install(Logging) {
-            level = LogLevel.BODY
+        if (loggingEnabled) {
+            install(Logging) {
+                level = LogLevel.BODY
+            }
         }
 
         install(Auth) {
