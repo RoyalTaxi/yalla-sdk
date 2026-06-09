@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated from RoyalTaxi/yalla-resources. Do not edit by hand. -->
 <resources>
+    <string name="language_title">Til</string>
+    <string name="onboarding_title">Xush kelibsiz</string>
+    <string name="permission_title">Ruxsatlar</string>
+    <string name="menu_title">Menyu</string>
     <string name="common_action_activate">Faollashtirish</string>
     <string name="common_action_all">Barchasi</string>
     <string name="common_action_allow">Ruxsat berish</string>
@@ -25,6 +29,7 @@
     <string name="format_time_min">{0} daq</string>
     <string name="format_time_min_short">daq</string>
     <string name="format_percent_up_to">{0}% gacha</string>
+    <string name="auth_login_title">Kirish</string>
     <string name="auth_welcome_title">Xush kelibsiz!</string>
     <string name="auth_welcome_description">Davom etish uchun telefon raqamingizni kiriting.</string>
     <string name="auth_welcome_sms_hint">Raqamingizga tasdiqlash kodi bilan SMS yuboriladi.</string>

@@ -1,5 +1,6 @@
 package uz.yalla.components.primitives.field
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -7,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
 import uz.yalla.design.theme.YallaTheme
@@ -17,6 +19,7 @@ class PinFieldController(
     code: String = "",
     error: Boolean = false,
     autoFocus: Boolean = true,
+    horizontalPadding: Double = 0.0,
     onValueChange: (String) -> Unit
 ) {
     private var codeState by mutableStateOf(code)
@@ -37,7 +40,8 @@ class PinFieldController(
                 },
                 length = length,
                 error = errorState,
-                focusRequester = if (autoFocus) focusRequester else null
+                focusRequester = if (autoFocus) focusRequester else null,
+                contentPadding = PaddingValues(horizontal = horizontalPadding.dp)
             )
         }
     }

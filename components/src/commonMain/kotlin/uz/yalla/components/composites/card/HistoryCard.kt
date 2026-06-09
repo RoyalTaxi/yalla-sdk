@@ -2,7 +2,6 @@ package uz.yalla.components.composites.card
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,16 +39,15 @@ fun HistoryCard(
     time: String,
     status: String,
     price: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    statusColor: Color = System.color.text.base,
-    onClick: (() -> Unit)? = null
+    statusColor: Color = System.color.text.base
 ) {
     Card(
+        onClick = onClick,
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(System.color.background.secondary),
-        modifier = modifier.then(
-            if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier
-        )
+        modifier = modifier
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -213,7 +211,8 @@ private fun Preview() = YallaTheme {
             destination = "Yunusobod, 19-mavze, 42-uy",
             time = "14:32",
             status = "Completed",
-            price = "45 000 sum"
+            price = "45 000 sum",
+            onClick = {}
         )
 
         HistoryCard(
@@ -221,7 +220,8 @@ private fun Preview() = YallaTheme {
             destination = "Hilton Tashkent City",
             time = "09:15",
             status = "Cancelled",
-            price = "62 000 sum"
+            price = "62 000 sum",
+            onClick = {}
         )
     }
 }

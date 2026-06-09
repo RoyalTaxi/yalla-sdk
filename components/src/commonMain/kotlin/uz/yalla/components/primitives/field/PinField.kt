@@ -5,6 +5,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,7 +39,8 @@ fun PinField(
     length: Int,
     modifier: Modifier = Modifier,
     focusRequester: FocusRequester? = null,
-    error: Boolean = false
+    error: Boolean = false,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     val shakeOffset = remember { Animatable(0f) }
 
@@ -67,7 +69,9 @@ fun PinField(
         singleLine = true,
         decorationBox = {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(contentPadding),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
