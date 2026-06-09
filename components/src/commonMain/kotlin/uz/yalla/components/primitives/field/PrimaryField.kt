@@ -65,7 +65,8 @@ fun PrimaryField(
                     text = placeholder,
                     color = System.color.text.subtle,
                     style = System.font.body.base.medium,
-                    textAlign = textAlign
+                    textAlign = textAlign,
+                    modifier = Modifier.fillMaxWidth()
                 )
             },
             keyboardOptions = KeyboardOptions.Default,

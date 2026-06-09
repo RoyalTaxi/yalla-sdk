@@ -8,6 +8,7 @@ import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
 import uz.yalla.components.resource.asImageVector
 import uz.yalla.design.theme.YallaTheme
+import uz.yalla.foundation.theme.rememberIsDarkTheme
 
 class ActionableItemController(
     text: String,
@@ -26,7 +27,7 @@ class ActionableItemController(
 
     @OptIn(ExperimentalComposeUiApi::class)
     val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
-        YallaTheme {
+        YallaTheme(isDark = rememberIsDarkTheme()) {
             ActionableItem(
                 text = model.text,
                 painter = model.icon.asImageVector()?.let { rememberVectorPainter(it) },

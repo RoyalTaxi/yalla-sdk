@@ -10,6 +10,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
 import uz.yalla.design.theme.YallaTheme
+import uz.yalla.foundation.theme.rememberIsDarkTheme
 
 class PinFieldController(
     length: Int,
@@ -23,7 +24,7 @@ class PinFieldController(
 
     @OptIn(ExperimentalComposeUiApi::class)
     val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
-        YallaTheme {
+        YallaTheme(isDark = rememberIsDarkTheme()) {
             val focusRequester = remember { FocusRequester() }
             if (autoFocus) {
                 LaunchedEffect(Unit) { runCatching { focusRequester.requestFocus() } }

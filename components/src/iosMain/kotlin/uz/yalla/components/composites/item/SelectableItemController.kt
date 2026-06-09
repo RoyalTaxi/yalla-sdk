@@ -14,6 +14,7 @@ import platform.UIKit.UIViewController
 import uz.yalla.components.resource.asImageVector
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
+import uz.yalla.foundation.theme.rememberIsDarkTheme
 
 class SelectableItemController(
     text: String,
@@ -26,7 +27,7 @@ class SelectableItemController(
 
     @OptIn(ExperimentalComposeUiApi::class)
     val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
-        YallaTheme {
+        YallaTheme(isDark = rememberIsDarkTheme()) {
             SelectableItem(
                 text = text,
                 selected = selectedState,

@@ -38,9 +38,11 @@ fun DriverCard(
     painter: Painter,
     firstName: String,
     lastName: String,
-    rating: String
+    rating: String,
+    modifier: Modifier = Modifier
 ) {
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box {
@@ -114,12 +116,14 @@ fun DriverCard(
     imageUrl: String,
     firstName: String,
     lastName: String,
-    rating: String
+    rating: String,
+    modifier: Modifier = Modifier
 ) = DriverCard(
     painter = rememberAsyncImagePainter(model = imageUrl),
     firstName = firstName,
     lastName = lastName,
-    rating = rating
+    rating = rating,
+    modifier = modifier
 )
 
 @Preview

@@ -2,6 +2,7 @@ package uz.yalla.components.composites.card
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,11 +39,17 @@ fun HistoryCard(
     destination: String,
     time: String,
     status: String,
-    price: String
+    price: String,
+    modifier: Modifier = Modifier,
+    statusColor: Color = System.color.text.base,
+    onClick: (() -> Unit)? = null
 ) {
     Card(
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(System.color.background.secondary)
+        colors = CardDefaults.cardColors(System.color.background.secondary),
+        modifier = modifier.then(
+            if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier
+        )
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -62,7 +69,8 @@ fun HistoryCard(
 
                 Details(
                     time = time,
-                    status = status
+                    status = status,
+                    statusColor = statusColor
                 )
             }
 
@@ -152,6 +160,7 @@ private fun Locations(
 private fun Details(
     time: String,
     status: String,
+    statusColor: Color,
     modifier: Modifier = Modifier
 ) {
     PairLayout(
@@ -166,7 +175,7 @@ private fun Details(
         content = {
             Text(
                 text = status,
-                color = System.color.text.base,
+                color = statusColor,
                 style = System.font.body.caption,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
