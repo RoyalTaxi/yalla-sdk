@@ -124,8 +124,8 @@ class SwitchingMapController internal constructor(
         active.value?.animateToWithBearing(point, bearing, zoom, durationMs)
     }
 
-    override suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean) {
-        active.value?.fitBounds(points, animate)
+    override suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean, padding: PaddingValues?) {
+        active.value?.fitBounds(points, animate, padding)
     }
 
     override suspend fun zoomIn() { active.value?.zoomIn() }

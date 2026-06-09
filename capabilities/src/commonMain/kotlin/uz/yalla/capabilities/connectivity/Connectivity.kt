@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import dev.jordond.connectivity.Connectivity
+import dev.jordond.connectivity.ConnectivityOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -36,4 +37,14 @@ fun rememberConnectivityState(
     scope: CoroutineScope = rememberCoroutineScope()
 ): ConnectivityState = remember(connectivity, scope) {
     ConnectivityState(connectivity, scope)
+}
+
+@Composable
+fun rememberConnectivityState(
+    scope: CoroutineScope = rememberCoroutineScope()
+): ConnectivityState {
+    val connectivity = remember(scope) {
+        Connectivity(options = ConnectivityOptions.build { autoStart = true }, scope = scope)
+    }
+    return rememberConnectivityState(connectivity, scope)
 }

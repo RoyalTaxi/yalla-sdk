@@ -104,14 +104,15 @@ internal class IosMapControllerWrapper(
         renderer.animateToWithBearing(point, bearing, zoom, durationMs)
     }
 
-    override suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean) {
+    override suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean, padding: PaddingValues?) {
         if (closed) return
+        val effective = padding ?: pendingPadding
         renderer.fitBounds(
             points = points,
-            leftPt = pendingPadding.calculateLeftPadding(LayoutDirection.Ltr).value,
-            topPt = pendingPadding.calculateTopPadding().value,
-            rightPt = pendingPadding.calculateRightPadding(LayoutDirection.Ltr).value,
-            bottomPt = pendingPadding.calculateBottomPadding().value,
+            leftPt = effective.calculateLeftPadding(LayoutDirection.Ltr).value,
+            topPt = effective.calculateTopPadding().value,
+            rightPt = effective.calculateRightPadding(LayoutDirection.Ltr).value,
+            bottomPt = effective.calculateBottomPadding().value,
             animate = animate
         )
     }

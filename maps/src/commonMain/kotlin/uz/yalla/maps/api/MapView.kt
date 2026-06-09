@@ -1,6 +1,7 @@
 package uz.yalla.maps.api
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -10,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import uz.yalla.core.settings.MapKind
 import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.api.model.CameraPosition
@@ -95,19 +97,36 @@ fun StaticMapView(
     modifier: Modifier = Modifier,
     routes: List<MapRoute> = emptyList(),
     markers: List<MapMarker> = emptyList(),
+    circles: List<MapCircle> = emptyList(),
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val controller = rememberMapController()
-    MapView(
-        controller = controller,
-        modifier = modifier,
-        markers = markers,
-        routes = routes,
-        contentPadding = contentPadding,
-        onReady = null
-    )
+    Box(modifier = modifier) {
+        MapView(
+            controller = controller,
+            modifier = Modifier.matchParentSize(),
+            markers = markers,
+            routes = routes,
+            circles = circles,
+            onReady = null
+        )
+
+        Box(
+            modifier = Modifier
+                .matchParentSize()
+                .pointerInput(Unit) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            awaitPointerEvent().changes.forEach { it.consume() }
+                        }
+                    }
+                }
+        )
+    }
     val ready by controller.isReady.collectAsState()
-    LaunchedEffect(ready, points) {
-        if (ready && points.isNotEmpty()) controller.fitBounds(points, animate = false)
+    LaunchedEffect(ready, points, contentPadding) {
+        if (ready && points.isNotEmpty()) {
+            controller.fitBounds(points, animate = false, padding = contentPadding)
+        }
     }
 }

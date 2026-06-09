@@ -41,7 +41,7 @@ interface MapController {
         durationMs: Int = ANIMATION_DURATION
     )
 
-    suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean = true)
+    suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean = true, padding: PaddingValues? = null)
 
     suspend fun zoomIn()
 

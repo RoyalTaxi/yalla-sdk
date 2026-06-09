@@ -41,7 +41,6 @@ actual fun rememberAppUpdateState(
 }
 
 @OptIn(ExperimentalForeignApi::class)
-
 @Suppress("UNCHECKED_CAST")
 private suspend fun fetchStoreInfo(
     bundleId: String,
