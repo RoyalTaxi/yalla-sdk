@@ -5,6 +5,7 @@
     <string name="onboarding_title">Xush kelibsiz</string>
     <string name="permission_title">Ruxsatlar</string>
     <string name="menu_title">Menyu</string>
+    <string name="home_title">Bosh sahifa</string>
     <string name="common_action_activate">Faollashtirish</string>
     <string name="common_action_all">Barchasi</string>
     <string name="common_action_allow">Ruxsat berish</string>
