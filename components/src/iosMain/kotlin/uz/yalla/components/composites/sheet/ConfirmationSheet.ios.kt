@@ -19,7 +19,8 @@ actual fun ConfirmationSheet(
     actionText: String,
     onAction: () -> Unit,
     onDismissRequest: () -> Unit,
-    dismissEnabled: Boolean
+    dismissEnabled: Boolean,
+    header: String?
 ) {
     val currentOnAction by rememberUpdatedState(onAction)
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
@@ -30,6 +31,7 @@ actual fun ConfirmationSheet(
         requireConfig().sheet.createConfirmation(
             imageResource = assetName,
             isDark = isDark,
+            header = header,
             title = title,
             description = description,
             actionText = actionText,

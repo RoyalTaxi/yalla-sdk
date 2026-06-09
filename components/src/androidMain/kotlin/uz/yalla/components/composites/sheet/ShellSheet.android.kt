@@ -6,22 +6,18 @@ import androidx.compose.ui.Modifier
 import uz.yalla.components.config.requireConfig
 
 @Composable
-actual fun ContentSheet(
+actual fun ShellSheet(
     isVisible: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier,
-    title: String?,
-    onClose: (() -> Unit)?,
     fullHeight: Boolean,
     sheetSwipeEnabled: Boolean,
     content: @Composable (padding: PaddingValues) -> Unit
 ) {
-    requireConfig().sheet.ContentContent(
+    requireConfig().sheet.ShellContent(
         isVisible = isVisible,
         onDismissRequest = onDismissRequest,
         modifier = modifier,
-        title = title,
-        onClose = onClose,
         fullHeight = fullHeight,
         sheetSwipeEnabled = sheetSwipeEnabled,
         content = content

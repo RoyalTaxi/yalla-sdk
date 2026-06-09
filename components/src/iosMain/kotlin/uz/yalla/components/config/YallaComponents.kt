@@ -8,4 +8,4 @@ object YallaComponents {
     }
 }
 
-internal fun requireConfig(): ComponentsConfig = YallaComponents.config ?: error("YallaComponents not installed.")
+fun requireConfig(): ComponentsConfig = YallaComponents.config ?: error("YallaComponents not installed.")

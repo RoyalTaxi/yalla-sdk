@@ -25,6 +25,7 @@ actual fun IconButton(
 ) {
     val iconArgb = if (iconColor.isSpecified) iconColor.toArgb().toLong() else 0L
     val containerArgb = if (containerColor.isSpecified) containerColor.toArgb().toLong() else 0L
+    val borderArgb = if (borderColor.isSpecified) borderColor.toArgb().toLong() else 0L
     val onClickState = rememberUpdatedState(onClick)
 
     val handle = remember {
@@ -33,6 +34,7 @@ actual fun IconButton(
             shape = shape,
             iconArgb = iconArgb,
             containerArgb = containerArgb,
+            borderArgb = borderArgb,
             onClick = { onClickState.value() }
         )
     }

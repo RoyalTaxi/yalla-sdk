@@ -9,6 +9,7 @@ interface IconButtonFactory {
         shape: IconButtonShape,
         iconArgb: Long,
         containerArgb: Long,
+        borderArgb: Long,
         onClick: () -> Unit
     ): IconButtonHandle
 }

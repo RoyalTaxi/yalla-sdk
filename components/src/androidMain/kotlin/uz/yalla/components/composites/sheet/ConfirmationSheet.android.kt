@@ -13,7 +13,8 @@ actual fun ConfirmationSheet(
     actionText: String,
     onAction: () -> Unit,
     onDismissRequest: () -> Unit,
-    dismissEnabled: Boolean
+    dismissEnabled: Boolean,
+    header: String?
 ) {
     requireConfig().sheet.ConfirmationContent(
         isVisible = isVisible,
@@ -23,6 +24,7 @@ actual fun ConfirmationSheet(
         actionText = actionText,
         onAction = onAction,
         onDismissRequest = onDismissRequest,
-        dismissEnabled = dismissEnabled
+        dismissEnabled = dismissEnabled,
+        header = header
     )
 }

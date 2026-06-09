@@ -12,5 +12,6 @@ expect fun ConfirmationSheet(
     actionText: String,
     onAction: () -> Unit,
     onDismissRequest: () -> Unit,
-    dismissEnabled: Boolean = true
+    dismissEnabled: Boolean = true,
+    header: String? = null
 )

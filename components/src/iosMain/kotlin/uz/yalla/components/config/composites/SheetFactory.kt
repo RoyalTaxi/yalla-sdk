@@ -6,9 +6,18 @@ import uz.yalla.components.composites.item.ActionableItemModel
 import uz.yalla.components.composites.item.SelectableItemModel
 
 interface SheetFactory {
+    fun createShell(
+        fullHeight: Boolean,
+        sheetSwipeEnabled: Boolean,
+        contentController: UIViewController,
+        onDismissRequest: () -> Unit
+    ): ContentSheetHandle
+
     fun createContent(
         fullHeight: Boolean,
         sheetSwipeEnabled: Boolean,
+        title: String?,
+        showClose: Boolean,
         contentController: UIViewController,
         onDismissRequest: () -> Unit
     ): ContentSheetHandle
@@ -16,6 +25,7 @@ interface SheetFactory {
     fun createConfirmation(
         imageResource: String,
         isDark: Boolean,
+        header: String?,
         title: String,
         description: String,
         actionText: String,
@@ -67,6 +77,42 @@ interface SheetFactory {
         onCodeComplete: (String) -> Unit,
         onDismissRequest: () -> Unit
     ): VerificationSheetHandle
+
+    fun createPromoCode(
+        code: String,
+        title: String,
+        headline: String,
+        placeholder: String,
+        hint: String,
+        confirmText: String,
+        isLoading: Boolean,
+        onCodeChange: (String) -> Unit,
+        onSubmit: () -> Unit,
+        onDismissRequest: () -> Unit
+    ): PromoCodeSheetHandle
+
+    fun createNotificationDetail(
+        title: String,
+        date: String,
+        body: String,
+        imageUrl: String?,
+        onDismissRequest: () -> Unit
+    ): NotificationDetailSheetHandle
+
+    fun createAddCard(
+        cardNumber: String,
+        cardExpiry: String,
+        title: String,
+        cardNumberPlaceholder: String,
+        expiryPlaceholder: String,
+        confirmText: String,
+        isError: Boolean,
+        isLoading: Boolean,
+        onCardNumberChange: (String) -> Unit,
+        onExpiryChange: (String) -> Unit,
+        onSubmit: () -> Unit,
+        onDismissRequest: () -> Unit
+    ): AddCardSheetHandle
 }
 
 class ContentSheetHandle(
@@ -111,5 +157,25 @@ class VerificationSheetHandle(
         resendText: String,
         resendEnabled: Boolean
     ) -> Unit,
+    val dismiss: () -> Unit
+)
+
+class PromoCodeSheetHandle(
+    val viewController: UIViewController,
+    val present: (parent: UIViewController) -> Unit,
+    val update: (code: String, isLoading: Boolean) -> Unit,
+    val dismiss: () -> Unit
+)
+
+class NotificationDetailSheetHandle(
+    val viewController: UIViewController,
+    val present: (parent: UIViewController) -> Unit,
+    val dismiss: () -> Unit
+)
+
+class AddCardSheetHandle(
+    val viewController: UIViewController,
+    val present: (parent: UIViewController) -> Unit,
+    val update: (cardNumber: String, cardExpiry: String, isError: Boolean, isLoading: Boolean) -> Unit,
     val dismiss: () -> Unit
 )

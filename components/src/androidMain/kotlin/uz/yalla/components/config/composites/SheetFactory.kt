@@ -10,6 +10,16 @@ import uz.yalla.design.image.ThemedImage
 
 interface SheetFactory {
     @Composable
+    fun ShellContent(
+        isVisible: Boolean,
+        onDismissRequest: () -> Unit,
+        modifier: Modifier,
+        fullHeight: Boolean,
+        sheetSwipeEnabled: Boolean,
+        content: @Composable (padding: PaddingValues) -> Unit
+    )
+
+    @Composable
     fun ContentContent(
         isVisible: Boolean,
         onDismissRequest: () -> Unit,
@@ -18,7 +28,6 @@ interface SheetFactory {
         onClose: (() -> Unit)?,
         fullHeight: Boolean,
         sheetSwipeEnabled: Boolean,
-        footer: (@Composable () -> Unit)?,
         content: @Composable (padding: PaddingValues) -> Unit
     )
 
@@ -31,7 +40,8 @@ interface SheetFactory {
         actionText: String,
         onAction: () -> Unit,
         onDismissRequest: () -> Unit,
-        dismissEnabled: Boolean
+        dismissEnabled: Boolean,
+        header: String?
     )
 
     @Composable
