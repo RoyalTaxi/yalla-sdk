@@ -29,6 +29,8 @@ kotlin {
             api(libs.coil.compose)
             implementation(libs.coil.network.ktor3)
 
+            implementation(libs.androidx.lifecycle.runtime.compose)
+
             implementation(libs.compose.ui.tooling.preview)
         }
     }
