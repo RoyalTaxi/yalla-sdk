@@ -12,6 +12,7 @@ import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
+import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.settings.MapKind
 import uz.yalla.core.settings.ThemeKind
 import uz.yalla.maps.api.model.CameraPosition
@@ -19,6 +20,7 @@ import uz.yalla.maps.api.model.MapCircle
 import uz.yalla.maps.api.model.MapMarker
 import uz.yalla.maps.api.model.MapRoute
 import uz.yalla.maps.api.model.MapStyle
+import uz.yalla.maps.config.MapConstants
 import uz.yalla.maps.config.YallaMaps
 
 @Composable
@@ -33,7 +35,7 @@ fun rememberMapController(
         if (overrideKind != null) kotlinx.coroutines.flow.flowOf(overrideKind) else config.mapKindPreference
     }
     val themeFlow = remember { config.themePreference }
-    val kind by kindFlow.collectAsState(initial = MapKind.Libre)
+    val kind by kindFlow.collectAsState(initial = MapKind.Google)
     val theme by themeFlow.collectAsState(initial = ThemeKind.System)
     val systemDark = isSystemInDarkTheme()
     val isDark = when (theme) {
@@ -51,6 +53,12 @@ fun rememberMapController(
 
     LaunchedEffect(style, isDark) {
         switching.applyStyle(style, isDark)
+    }
+
+    LaunchedEffect(switching) {
+        config.locationProvider.currentLocation.collect { point ->
+            switching.setUserLocation(point?.takeIf { it != GeoPoint.Zero })
+        }
     }
 
     DisposableEffect(switching) {
@@ -126,7 +134,12 @@ fun StaticMapView(
     val ready by controller.isReady.collectAsState()
     LaunchedEffect(ready, points, contentPadding) {
         if (ready && points.isNotEmpty()) {
-            controller.fitBounds(points, animate = false, padding = contentPadding)
+            val valid = points.filterNot { it == uz.yalla.core.geo.GeoPoint.Zero }.distinctBy { it.lat to it.lng }
+            if (valid.size == 1) {
+                controller.moveTo(valid.first(), MapConstants.DEFAULT_ZOOM.toFloat())
+            } else {
+                controller.fitBounds(valid, animate = false, padding = contentPadding)
+            }
         }
     }
 }

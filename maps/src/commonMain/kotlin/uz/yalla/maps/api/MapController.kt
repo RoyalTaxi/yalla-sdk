@@ -53,11 +53,15 @@ interface MapController {
 
     fun setDesiredPadding(padding: PaddingValues)
 
+    fun setInteractionEnabled(enabled: Boolean)
+
     fun setMarkers(markers: List<MapMarker>)
 
     fun setRoutes(routes: List<MapRoute>)
 
     fun setCircles(circles: List<MapCircle>)
+
+    fun setUserLocation(point: GeoPoint?)
 
     fun lockTarget(point: GeoPoint, zoom: Float? = null)
 

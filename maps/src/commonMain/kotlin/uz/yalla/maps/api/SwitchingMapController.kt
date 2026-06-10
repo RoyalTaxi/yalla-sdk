@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.settings.MapKind
 import uz.yalla.maps.api.model.CameraPosition
@@ -26,6 +27,8 @@ import uz.yalla.maps.api.model.MapMarker
 import uz.yalla.maps.api.model.MapRoute
 import uz.yalla.maps.api.model.MapStyle
 import uz.yalla.maps.config.MapFactory
+
+private const val PROVIDER_READY_TIMEOUT_MS = 5_000L
 
 class SwitchingMapController internal constructor(
     private val factory: MapFactory,
@@ -54,6 +57,8 @@ class SwitchingMapController internal constructor(
     private var pendingMarkers: List<MapMarker> = emptyList()
     private var pendingRoutes: List<MapRoute> = emptyList()
     private var pendingCircles: List<MapCircle> = emptyList()
+    private var interactionEnabled: Boolean = true
+    private var userLocation: GeoPoint? = null
     private var lockedTarget: GeoPoint? = null
     private var lockedZoom: Float? = null
 
@@ -94,19 +99,36 @@ class SwitchingMapController internal constructor(
 
     private fun wireObservers(controller: MapController) {
         observerJobs.forEach { it.cancel() }
+        var cameraSeeded = false
+        var centerPinSeeded = false
         observerJobs = listOf(
-            controller.cameraPosition.onEach { _cameraPosition.value = it }.launchIn(scope),
-            controller.centerPin.onEach { _centerPin.value = it }.launchIn(scope),
+            controller.cameraPosition.onEach {
+                if (!cameraSeeded) {
+                    cameraSeeded = true
+                    if (it == CameraPosition.DEFAULT && _cameraPosition.value != CameraPosition.DEFAULT) return@onEach
+                }
+                _cameraPosition.value = it
+            }.launchIn(scope),
+            controller.centerPin.onEach {
+                if (!centerPinSeeded) {
+                    centerPinSeeded = true
+                    if (it == CenterPinState.INITIAL && _centerPin.value != CenterPinState.INITIAL) return@onEach
+                }
+                _centerPin.value = it
+            }.launchIn(scope),
             controller.isReady.onEach { _isReady.value = it }.launchIn(scope),
             controller.events.onEach { _events.emit(it) }.launchIn(scope)
         )
     }
 
     private suspend fun applySnapshot(controller: MapController, snapshot: MapController.SceneSnapshot) {
+        withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { controller.isReady.first { it } }
         controller.setDesiredPadding(snapshot.padding)
         controller.setMarkers(snapshot.markers)
         controller.setRoutes(snapshot.routes)
         controller.setCircles(snapshot.circles)
+        controller.setInteractionEnabled(interactionEnabled)
+        controller.setUserLocation(userLocation)
         controller.setStyle(currentStyle, currentIsDark)
         controller.moveTo(snapshot.cameraPosition.target, snapshot.cameraPosition.zoom)
         snapshot.lockedTarget?.let { controller.lockTarget(it, snapshot.lockedZoom) }
@@ -145,6 +167,11 @@ class SwitchingMapController internal constructor(
         active.value?.setDesiredPadding(padding)
     }
 
+    override fun setInteractionEnabled(enabled: Boolean) {
+        interactionEnabled = enabled
+        active.value?.setInteractionEnabled(enabled)
+    }
+
     override fun setMarkers(markers: List<MapMarker>) {
         pendingMarkers = markers
         active.value?.setMarkers(markers)
@@ -158,6 +185,11 @@ class SwitchingMapController internal constructor(
     override fun setCircles(circles: List<MapCircle>) {
         pendingCircles = circles
         active.value?.setCircles(circles)
+    }
+
+    override fun setUserLocation(point: GeoPoint?) {
+        userLocation = point
+        active.value?.setUserLocation(point)
     }
 
     override fun lockTarget(point: GeoPoint, zoom: Float?) {

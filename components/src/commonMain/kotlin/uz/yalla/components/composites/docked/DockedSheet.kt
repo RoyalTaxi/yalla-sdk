@@ -48,10 +48,12 @@ fun DockedSheet(
 
     val currentOnPaddingChanged by rememberUpdatedState(onPaddingChanged)
     LaunchedEffect(statusBarTopPx) {
+        var seeded = false
         snapshotFlow { heightPx }
             .filter { it > 0 }
-            .debounce(100)
+            .debounce { if (seeded) 100L else 0L }
             .collect { measuredHeight ->
+                seeded = true
                 currentOnPaddingChanged?.invoke(
                     PaddingValues(
                         top = with(density) { statusBarTopPx.toDp() },

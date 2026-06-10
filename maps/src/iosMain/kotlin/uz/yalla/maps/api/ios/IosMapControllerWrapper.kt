@@ -134,6 +134,7 @@ internal class IosMapControllerWrapper(
 
     override suspend fun setStyle(style: MapStyle, isDark: Boolean) {
         if (closed) return
+        renderer.setColorScheme(isDark)
         when (style) {
             is MapStyle.Url -> renderer.setStyleUrl(if (isDark) style.darkUrl else style.lightUrl)
             is MapStyle.InlineJson -> renderer.setStyleJson(if (isDark) style.darkJson else style.lightJson)
@@ -153,6 +154,11 @@ internal class IosMapControllerWrapper(
         replayLockedTarget()
     }
 
+    override fun setInteractionEnabled(enabled: Boolean) {
+        if (closed) return
+        renderer.setInteractionEnabled(enabled)
+    }
+
     override fun setMarkers(markers: List<MapMarker>) {
         if (closed) return
         pendingMarkers = markers
@@ -169,6 +175,11 @@ internal class IosMapControllerWrapper(
         if (closed) return
         pendingCircles = circles
         renderer.setCircles(circles)
+    }
+
+    override fun setUserLocation(point: GeoPoint?) {
+        if (closed) return
+        renderer.setUserLocation(point)
     }
 
     override fun lockTarget(point: GeoPoint, zoom: Float?) {

@@ -36,13 +36,19 @@ interface IosMapRenderer {
 
     fun setStyleJson(json: String)
 
+    fun setColorScheme(isDark: Boolean)
+
     fun setPaddingPt(leftPt: Float, topPt: Float, rightPt: Float, bottomPt: Float)
+
+    fun setInteractionEnabled(enabled: Boolean)
 
     fun setMarkers(markers: List<MapMarker>)
 
     fun setRoutes(routes: List<MapRoute>)
 
     fun setCircles(circles: List<MapCircle>)
+
+    fun setUserLocation(point: GeoPoint?)
 
     fun close()
 }
