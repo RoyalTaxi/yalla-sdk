@@ -180,8 +180,9 @@ object LocationButtonDefaults {
             itemVerticalAlignment = Alignment.CenterVertically
         ) { index ->
             if (index % 2 == 0) {
+                val title = titles.getOrNull(index / 2) ?: return@ContextualFlowRow
                 Text(
-                    text = titles[index / 2],
+                    text = title,
                     color = colors.titleColor,
                     style = styles.titleStyle
                 )

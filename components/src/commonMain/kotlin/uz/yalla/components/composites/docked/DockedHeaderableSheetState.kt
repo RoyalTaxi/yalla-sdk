@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 
 enum class DockedHeaderableSheetValue {
     Collapsed,
-    Expanded,
+    Expanded
 }
 
 @OptIn(ExperimentalFoundationApi::class)
