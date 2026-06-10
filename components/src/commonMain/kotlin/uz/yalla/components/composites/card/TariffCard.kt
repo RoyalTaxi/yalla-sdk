@@ -43,10 +43,12 @@ fun TariffCard(
         modifier = modifier.widthIn(140.dp),
         shape = RoundedCornerShape(20.dp),
         color = if (selected) System.color.background.base else System.color.background.secondary,
-        border = BorderStroke(
-            brush = System.color.gradient.sunsetNight,
-            width = 2.dp
-        )
+        border = if (selected) {
+            BorderStroke(
+                brush = System.color.gradient.sunsetNight,
+                width = 2.dp
+            )
+        } else null
     ) {
         Column(
             modifier = Modifier.padding(12.dp)
