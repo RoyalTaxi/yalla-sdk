@@ -7,7 +7,8 @@ data class ExtraService(
     val id: ExtraServiceId,
     val cost: Int,
     val name: String,
-    val costType: CostType
+    val costType: CostType,
+    val icon: String? = null
 ) {
     enum class CostType(val id: String) {
         Fixed("cost"),
