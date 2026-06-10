@@ -48,6 +48,7 @@ import uz.yalla.resources.icons.YallaIcons
 fun SearchField(
     value: String,
     onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
     placeholder: String = "",
     leadingPainter: Painter? = null,
     leading: (@Composable () -> Unit)? = null,
@@ -60,7 +61,8 @@ fun SearchField(
 
     Surface(
         shape = RoundedCornerShape(16.dp),
-        color = System.color.background.secondary
+        color = System.color.background.secondary,
+        modifier = modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
