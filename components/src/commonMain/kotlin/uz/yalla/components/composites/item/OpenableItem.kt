@@ -2,6 +2,7 @@ package uz.yalla.components.composites.item
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -105,6 +106,28 @@ fun OpenableItem(
     colors: OpenableItemColors = OpenableItemDefaults.colors(),
     dimens: OpenableItemDimens = OpenableItemDefaults.dimens(),
     styles: OpenableItemStyles = OpenableItemDefaults.styles()
+) = OpenableItem(
+    onClick = onClick,
+    modifier = modifier,
+    leadingIcon = leadingIcon,
+    colors = colors,
+    dimens = dimens
+) {
+    Text(
+        text = text,
+        style = styles.textStyle,
+        color = colors.textColor
+    )
+}
+
+@Composable
+fun OpenableItem(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    leadingIcon: ImageVector? = null,
+    colors: OpenableItemColors = OpenableItemDefaults.colors(),
+    dimens: OpenableItemDimens = OpenableItemDefaults.dimens(),
+    content: @Composable () -> Unit
 ) {
     Surface(
         shape = dimens.shape,
@@ -127,12 +150,9 @@ fun OpenableItem(
                 )
             }
 
-            Text(
-                text = text,
-                style = styles.textStyle,
-                color = colors.textColor,
-                modifier = Modifier.weight(1f)
-            )
+            Box(modifier = Modifier.weight(1f)) {
+                content()
+            }
 
             Icon(
                 imageVector = YallaIcons.ArrowRight,
