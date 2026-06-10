@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.painter.Painter
@@ -49,9 +50,11 @@ fun SearchField(
     onValueChange: (String) -> Unit,
     placeholder: String = "",
     leadingPainter: Painter? = null,
+    leading: (@Composable () -> Unit)? = null,
     trailingPainter: Painter? = null,
     onClickTrailingPainter: (() -> Unit)? = null,
-    focusRequester: FocusRequester? = null
+    focusRequester: FocusRequester? = null,
+    onFocusChanged: ((Boolean) -> Unit)? = null
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -64,9 +67,11 @@ fun SearchField(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.height(60.dp).padding(10.dp)
         ) {
-            leadingPainter?.let { painter ->
-                Image(
-                    painter = painter,
+            when {
+                leading != null -> leading()
+
+                leadingPainter != null -> Image(
+                    painter = leadingPainter,
                     contentDescription = null,
                     modifier = Modifier.size(42.dp)
                 )
@@ -92,7 +97,8 @@ fun SearchField(
                     },
                     modifier = Modifier
                         .weight(1f)
-                        .let { if (focusRequester != null) it.focusRequester(focusRequester) else it },
+                        .let { if (focusRequester != null) it.focusRequester(focusRequester) else it }
+                        .let { m -> if (onFocusChanged != null) m.onFocusChanged { onFocusChanged(it.isFocused) } else m },
                     textStyle = System.font.body.base.bold.copy(color = System.color.text.base),
                     maxLines = 1,
                     singleLine = true,
