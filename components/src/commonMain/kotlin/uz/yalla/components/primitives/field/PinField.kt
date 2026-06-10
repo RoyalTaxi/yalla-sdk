@@ -40,6 +40,7 @@ fun PinField(
     modifier: Modifier = Modifier,
     focusRequester: FocusRequester? = null,
     error: Boolean = false,
+    alphanumeric: Boolean = false,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ) {
     val shakeOffset = remember { Animatable(0f) }
@@ -60,12 +61,15 @@ fun PinField(
 
     BasicTextField(
         value = value,
-        onValueChange = { onValueChange(it.filter(Char::isDigit).take(length)) },
+        onValueChange = { raw ->
+            val filtered = if (alphanumeric) raw.filter(Char::isLetterOrDigit) else raw.filter(Char::isDigit)
+            onValueChange(filtered.take(length))
+        },
         modifier = modifier
             .fillMaxWidth()
             .graphicsLayer { translationX = shakeOffset.value }
             .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = if (alphanumeric) KeyboardType.Ascii else KeyboardType.Number),
         singleLine = true,
         decorationBox = {
             Row(

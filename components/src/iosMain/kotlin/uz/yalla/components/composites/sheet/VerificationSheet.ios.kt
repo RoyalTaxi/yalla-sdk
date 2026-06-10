@@ -26,6 +26,7 @@ actual fun VerificationSheet(
     isError: Boolean,
     isLoading: Boolean,
     resendEnabled: Boolean,
+    alphanumeric: Boolean,
     onCodeComplete: (String) -> Unit,
     dismissEnabled: Boolean
 ) {

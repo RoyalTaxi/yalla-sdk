@@ -20,6 +20,7 @@ actual fun VerificationSheet(
     isError: Boolean,
     isLoading: Boolean,
     resendEnabled: Boolean,
+    alphanumeric: Boolean,
     onCodeComplete: (String) -> Unit,
     dismissEnabled: Boolean
 ) {
@@ -39,6 +40,7 @@ actual fun VerificationSheet(
         isError = isError,
         isLoading = isLoading,
         resendEnabled = resendEnabled,
+        alphanumeric = alphanumeric,
         onCodeComplete = onCodeComplete,
         dismissEnabled = dismissEnabled
     )

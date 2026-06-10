@@ -19,6 +19,7 @@ expect fun VerificationSheet(
     isError: Boolean = false,
     isLoading: Boolean = false,
     resendEnabled: Boolean = true,
+    alphanumeric: Boolean = false,
     onCodeComplete: (String) -> Unit = {},
     dismissEnabled: Boolean = true
 )
