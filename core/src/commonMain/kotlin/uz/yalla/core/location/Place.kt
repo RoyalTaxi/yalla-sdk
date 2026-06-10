@@ -8,5 +8,6 @@ data class Place(
     val name: String,
     val address: Address,
     val point: GeoPoint,
-    val kind: PlaceKind
+    val kind: PlaceKind,
+    val duration: Double? = null
 )
