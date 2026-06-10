@@ -3,6 +3,7 @@ package uz.yalla.components.primitives.field
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -51,13 +52,14 @@ fun SearchField(
     modifier: Modifier = Modifier,
     placeholder: String = "",
     leadingPainter: Painter? = null,
-    leading: (@Composable () -> Unit)? = null,
+    leading: (@Composable (focused: Boolean) -> Unit)? = null,
     trailingPainter: Painter? = null,
     onClickTrailingPainter: (() -> Unit)? = null,
     focusRequester: FocusRequester? = null,
     onFocusChanged: ((Boolean) -> Unit)? = null
 ) {
     val interactionSource = remember { MutableInteractionSource() }
+    val isFocused by interactionSource.collectIsFocusedAsState()
 
     Surface(
         shape = RoundedCornerShape(16.dp),
@@ -70,13 +72,23 @@ fun SearchField(
             modifier = Modifier.height(60.dp).padding(10.dp)
         ) {
             when {
-                leading != null -> leading()
+                leading != null -> leading(isFocused)
 
-                leadingPainter != null -> Image(
-                    painter = leadingPainter,
-                    contentDescription = null,
-                    modifier = Modifier.size(42.dp)
-                )
+                leadingPainter != null -> Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .size(42.dp)
+                        .background(
+                            color = if (isFocused) System.color.background.brand else Color.Transparent,
+                            shape = RoundedCornerShape(11.dp)
+                        )
+                ) {
+                    Image(
+                        painter = leadingPainter,
+                        contentDescription = null,
+                        modifier = Modifier.size(42.dp)
+                    )
+                }
             }
 
             val selectionColors = TextSelectionColors(
