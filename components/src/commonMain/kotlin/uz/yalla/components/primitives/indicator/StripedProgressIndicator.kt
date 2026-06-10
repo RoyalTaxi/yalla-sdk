@@ -32,8 +32,8 @@ import kotlin.math.hypot
 private val TrackHeight = 16.dp
 private val CornerRadius = 40.dp
 private val TrackShape = RoundedCornerShape(CornerRadius)
-private val StripeWidth = 8.dp
-private val StripeGap = 8.dp
+private val StripeWidth = 7.dp
+private val StripeGap = 7.dp
 private const val StripeAngle = 30f
 private const val StripeAlpha = 0.2f
 private const val AnimationDurationMs = 250
