@@ -153,6 +153,32 @@ fun CarPaletteCard(
     }
 }
 
+@Composable
+fun CarPaletteCard(
+    stateNumber: String,
+    modifier: Modifier = Modifier,
+    dimens: CarPaletteCardDimens = CarPaletteCardDefaults.dimens()
+) {
+    val code = remember(stateNumber) { stateNumber.take(2) }
+    val number = remember(stateNumber) { parsePlateBody(stateNumber) }
+    CarPaletteCard(
+        code = code,
+        number = number,
+        modifier = modifier,
+        dimens = dimens
+    )
+}
+
+private val PlateBodyRegex = Regex("(\\d+|[A-Za-z]+)")
+
+private fun parsePlateBody(stateNumber: String): List<String> {
+    if (stateNumber.length <= 2) return emptyList()
+    return PlateBodyRegex
+        .findAll(stateNumber.substring(2))
+        .map { it.value }
+        .toList()
+}
+
 @Preview
 @Composable
 private fun Preview() = YallaTheme {

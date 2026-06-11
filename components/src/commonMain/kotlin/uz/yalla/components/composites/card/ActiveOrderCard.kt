@@ -108,8 +108,7 @@ fun ActiveOrderCard(
     photoUrl: String?,
     driverName: String,
     vehicleLabel: String,
-    plateCode: String,
-    plateNumber: List<String>,
+    stateNumber: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     colors: ActiveOrderCardColors = ActiveOrderCardDefaults.colors(),
@@ -165,8 +164,7 @@ fun ActiveOrderCard(
 
             Box(modifier = Modifier.fillMaxHeight()) {
                 CarPaletteCard(
-                    code = plateCode,
-                    number = plateNumber,
+                    stateNumber = stateNumber,
                     modifier = Modifier.align(Alignment.TopEnd)
                 )
 
@@ -193,8 +191,7 @@ private fun ActiveOrderCardPreview() {
             photoUrl = null,
             driverName = "Islom",
             vehicleLabel = "Серый Song Plus",
-            plateCode = "60",
-            plateNumber = listOf("LBP", "SH", "7"),
+            stateNumber = "60LBPSH7",
             onClick = {}
         )
     }
