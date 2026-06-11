@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -85,7 +86,9 @@ data class SelectableItemDimens(
 
 @Immutable
 data class SelectableItemStyles(
-    val textStyle: TextStyle
+    val textStyle: TextStyle,
+    val textMaxLines: Int,
+    val textOverflow: TextOverflow
 )
 
 object SelectableItemDefaults {
@@ -136,9 +139,13 @@ object SelectableItemDefaults {
 
     @Composable
     fun styles(
-        textStyle: TextStyle = System.font.body.small.medium
+        textStyle: TextStyle = System.font.body.small.medium,
+        textMaxLines: Int = Int.MAX_VALUE,
+        textOverflow: TextOverflow = TextOverflow.Clip
     ) = SelectableItemStyles(
-        textStyle = textStyle
+        textStyle = textStyle,
+        textMaxLines = textMaxLines,
+        textOverflow = textOverflow
     )
 }
 
@@ -183,6 +190,8 @@ fun SelectableItem(
                 text = text,
                 color = colors.textColorFor(selected),
                 style = styles.textStyle,
+                maxLines = styles.textMaxLines,
+                overflow = styles.textOverflow,
                 modifier = Modifier.weight(1f)
             )
 
