@@ -129,7 +129,7 @@ fun CarPaletteCard(
                 Image(
                     painter = painterResource(Res.drawable.img_flag_uz_square),
                     contentDescription = null,
-                    modifier = Modifier.height(3.dp.scaled())
+                    modifier = Modifier.height(4.dp.scaled())
                 )
 
                 Text(

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import uz.yalla.design.theme.System
@@ -27,6 +29,7 @@ import uz.yalla.resources.img_banner_bonus
 @Immutable
 data class BonusBannerCardDimens(
     val shape: Shape,
+    val height: Dp,
     val contentPadding: PaddingValues
 )
 
@@ -34,9 +37,11 @@ object BonusBannerCardDefaults {
     @Composable
     fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
-        contentPadding: PaddingValues = PaddingValues(20.dp)
+        height: Dp = 148.dp,
+        contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 20.dp)
     ) = BonusBannerCardDimens(
         shape = shape,
+        height = height,
         contentPadding = contentPadding
     )
 }
@@ -51,13 +56,15 @@ fun BonusBannerCard(
     dimens: BonusBannerCardDimens = BonusBannerCardDefaults.dimens()
 ) {
     Box(
-        modifier = modifier.clip(dimens.shape)
+        modifier = modifier
+            .height(dimens.height)
+            .clip(dimens.shape)
     ) {
         Image(
             painter = background,
             contentDescription = null,
-            contentScale = ContentScale.FillWidth,
-            modifier = Modifier.fillMaxWidth()
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.matchParentSize()
         )
 
         Column(
