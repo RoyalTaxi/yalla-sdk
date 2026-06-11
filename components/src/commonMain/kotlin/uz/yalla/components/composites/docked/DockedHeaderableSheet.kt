@@ -49,7 +49,7 @@ fun DockedHeaderableSheet(
 
     val currentOnPaddingChanged by rememberUpdatedState(onPaddingChanged)
     LaunchedEffect(statusBarTopPx) {
-        snapshotFlow { state.collapsedSheetHeight + state.bodyHeight * state.fraction }
+        snapshotFlow { state.collapsedSheetHeight }
             .filter { it > 0.dp }
             .distinctUntilChanged()
             .collect { height ->
