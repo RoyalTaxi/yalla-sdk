@@ -7,12 +7,10 @@ fun normalizeHeading(headingDegrees: Float): Float {
 }
 
 fun shortestHeadingPath(fromDegrees: Float, toDegrees: Float): Float {
-    val from = normalizeHeading(fromDegrees)
-    val to = normalizeHeading(toDegrees)
-    var delta = to - from
+    var delta = normalizeHeading(toDegrees) - normalizeHeading(fromDegrees)
     if (delta > 180f) delta -= 360f
     if (delta < -180f) delta += 360f
-    return from + delta
+    return fromDegrees + delta
 }
 
 fun interpolateHeading(fromDegrees: Float, toDegrees: Float, fraction: Float): Float {
