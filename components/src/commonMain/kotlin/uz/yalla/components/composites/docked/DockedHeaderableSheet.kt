@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import uz.yalla.design.theme.System
 import kotlin.math.roundToInt
@@ -48,13 +49,14 @@ fun DockedHeaderableSheet(
 
     val currentOnPaddingChanged by rememberUpdatedState(onPaddingChanged)
     LaunchedEffect(statusBarTopPx) {
-        snapshotFlow { state.collapsedSheetHeight }
+        snapshotFlow { state.collapsedSheetHeight + state.bodyHeight * state.fraction }
             .filter { it > 0.dp }
-            .collect { collapsed ->
+            .distinctUntilChanged()
+            .collect { height ->
                 currentOnPaddingChanged?.invoke(
                     PaddingValues(
                         top = with(density) { statusBarTopPx.toDp() },
-                        bottom = collapsed
+                        bottom = height
                     )
                 )
             }
