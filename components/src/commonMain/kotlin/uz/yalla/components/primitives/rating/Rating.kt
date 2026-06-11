@@ -3,8 +3,10 @@ package uz.yalla.components.primitives.rating
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -20,7 +22,6 @@ import uz.yalla.design.theme.YallaTheme
 import uz.yalla.resources.icons.Star
 import uz.yalla.resources.icons.YallaIcons
 
-private val StarSize = 50.dp
 private val StarPadding = 10.dp
 private val StarSpacing = 6.dp
 
@@ -31,7 +32,7 @@ fun Rating(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(StarSpacing)
     ) {
@@ -41,7 +42,10 @@ fun Rating(
             Surface(
                 shape = CircleShape,
                 color = Color.Transparent,
-                onClick = { onRatingChange(index + 1) }
+                onClick = { onRatingChange(index + 1) },
+                modifier = Modifier
+                    .weight(1f)
+                    .aspectRatio(1f)
             ) {
                 Image(
                     painter = rememberVectorPainter(YallaIcons.Star),
@@ -51,8 +55,8 @@ fun Rating(
                         else System.color.icon.disabled
                     ),
                     modifier = Modifier
+                        .fillMaxSize()
                         .padding(StarPadding)
-                        .size(StarSize)
                 )
             }
         }
