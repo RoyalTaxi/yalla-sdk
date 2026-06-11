@@ -3,12 +3,11 @@ name: Publish
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
   packages: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: publish
@@ -16,16 +15,14 @@ concurrency:
 
 jobs:
   publish:
-    runs-on: macos-latest
-    timeout-minutes: 90
-    environment:
-      name: github-pages
-      url: ${{ steps.pages.outputs.page_url }}
-    # macos-latest = 3 cores, ~14 GB RAM. Kotlin/Native iOS framework
-    # linking + Gradle daemon + Kotlin daemon all want several GB each.
-    # Cap parallelism so multiple linker subprocesses don't OOM the runner.
+    name: Publish android artifacts to GitHub Packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
     env:
-      GRADLE_OPTS: "-Dorg.gradle.workers.max=2 -Dorg.gradle.parallel=false"
+      GITHUB_ACTOR: ${{ github.actor }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     steps:
       - uses: actions/checkout@v4
 
@@ -36,80 +33,24 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: CocoaPods install (maps + media native deps)
-        run: ./gradlew podInstall
-
-      # Three modules need native iOS frameworks at test-executable link
-      # time that aren't on CI's linker search path:
-      #   - :firebase — gitlive KMP wrappers cinterop to
-      #     FirebaseCore.framework (no cocoapods integration in this
-      #     module).
-      #   - :foundation — moko-geo cinterops to _LocationEssentials.framework.
-      #   - :maps — GoogleMaps/Apple Maps cocoapod symbols.
-      # Strategy: run :allTests on the 7 modules whose iOS test executables
-      # link cleanly, plus run foundation's Android unit tests (it has
-      # ~56 valuable Android-side tests we don't want to lose). Verify
-      # firebase/maps/foundation iOS klib compiles, but skip the iOS
-      # test executable link.
-      - name: Tests (modules with clean iOS test link)
-        run: |
-          ./gradlew \
-            :core:allTests \
-            :data:allTests \
-            :design:allTests \
-            :primitives:allTests \
-            :composites:allTests \
-            :media:allTests \
-            :platform:allTests \
-            --max-workers=2 --no-parallel
-
-      - name: Tests (foundation — Android only; iOS test link blocked by moko-geo)
-        run: |
-          ./gradlew \
-            :foundation:allTests \
-            -x :foundation:iosSimulatorArm64Test \
-            -x :foundation:linkDebugTestIosSimulatorArm64 \
-            --max-workers=2 --no-parallel
-
-      - name: Compile firebase + maps (no iOS test link)
-        run: |
-          ./gradlew \
-            :firebase:compileKotlinIosSimulatorArm64 :firebase:compileAndroidMain \
-            :maps:compileKotlinIosSimulatorArm64 :maps:compileAndroidMain \
-            --max-workers=2 --no-parallel
-
-      # Publish — only needs Kotlin compile (klib) + Android library
-      # (AAR), NOT the .framework binaries that `./gradlew build`
-      # triggered. Skipping framework linking cuts 4×N tasks (Debug/
-      # Release × Arm64/SimArm64 × every module) and the memory pressure
-      # that hung the runner indefinitely on prior runs.
+      # Android + common-metadata publications only. The SDK's iOS native deps
+      # moved from CocoaPods to SwiftPM (consumed by the iOS app directly), so
+      # no podInstall / Kotlin-Native linking is needed to publish the android
+      # AARs the client resolves. The per-module task names are run at the root
+      # so every module that declares them is published, no hardcoded list.
       #
-      # Gated on commits whose message starts with `release(` so docs-only
-      # commits don't try to re-publish an already-published version
-      # (GitHub Packages returns 409 Conflict on the same coordinates and
-      # would block the Dokka + Pages deploy that follows).
-      - name: Publish to GitHub Packages
-        if: startsWith(github.event.head_commit.message, 'release(')
-        run: ./gradlew publish --max-workers=2 --no-parallel
-        env:
-          GITHUB_ACTOR: ${{ github.actor }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Generate Dokka docs
-        run: ./gradlew dokkaGenerate --max-workers=2 --no-parallel
-
-      - name: Assemble GitHub Pages site
-        # / — landing page (docs/pages/index.html)
-        # /api — Dokka API reference
+      # Gated on commits whose message starts with `release(` so non-release
+      # pushes to main don't republish the same version (GitHub Packages
+      # returns 409 on identical coordinates).
+      - name: Publish
+        if: startsWith(github.event.head_commit.message, 'release(') || github.event_name == 'workflow_dispatch'
         run: |
-          rm -rf build/pages
-          mkdir -p build/pages/api
-          cp -R docs/pages/. build/pages/
-          cp -R build/dokka/. build/pages/api/
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: build/pages
-
-      - id: pages
-        uses: actions/deploy-pages@v4
+          ./gradlew \
+            publishAndroidPublicationToGitHubPackagesRepository \
+            publishKotlinMultiplatformPublicationToGitHubPackagesRepository \
+            --no-daemon \
+            --no-configuration-cache \
+            --stacktrace \
+            -Dorg.gradle.workers.max=2 \
+            "-Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g -Dfile.encoding=UTF-8" \
+            "-Dkotlin.daemon.jvmargs=-Xmx2g -XX:MaxMetaspaceSize=512m"
