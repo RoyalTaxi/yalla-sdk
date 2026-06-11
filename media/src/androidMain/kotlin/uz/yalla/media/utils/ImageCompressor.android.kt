@@ -3,6 +3,8 @@ package uz.yalla.media.utils
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import androidx.exifinterface.media.ExifInterface
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import kotlin.math.min
 
@@ -44,7 +46,11 @@ actual fun compressImage(
     val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, decodedOptions)
         ?: return imageBytes
 
-    val resizedBitmap = if (bitmap.width != newWidth || bitmap.height != newHeight) {
+    val rotationDegrees = runCatching {
+        ExifInterface(ByteArrayInputStream(imageBytes)).rotationDegrees
+    }.getOrDefault(0)
+
+    val resizedBitmap = if (bitmap.width != newWidth || bitmap.height != newHeight || rotationDegrees != 0) {
         val exactWidth = newWidth.toFloat()
         val exactHeight = newHeight.toFloat()
         val scaleX = exactWidth / bitmap.width
@@ -52,6 +58,7 @@ actual fun compressImage(
 
         val matrix = Matrix().apply {
             postScale(scaleX, scaleY)
+            if (rotationDegrees != 0) postRotate(rotationDegrees.toFloat())
         }
 
         Bitmap
