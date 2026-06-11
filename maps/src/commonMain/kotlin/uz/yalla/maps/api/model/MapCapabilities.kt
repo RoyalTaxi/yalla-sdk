@@ -22,8 +22,8 @@ data class MapCapabilities(
             supportsCustomStyles = true,
             supportsRotation = true,
             supportsTilt = true,
-            supportsCircles = false,
-            supportsRoutePatterns = false,
+            supportsCircles = true,
+            supportsRoutePatterns = true,
             maxZoom = 21f,
             minZoom = 4f
         )
