@@ -50,6 +50,8 @@ internal class IosMapControllerWrapper(
     private var closed = false
     private var lockedTarget: GeoPoint? = null
     private var lockedZoom: Float? = null
+    private var userLocation: GeoPoint? = null
+    private var userLocationEnabled = true
 
     private val internalListener = object : IosMapListener {
         override fun onCameraMove(target: GeoPoint, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean) {
@@ -179,7 +181,14 @@ internal class IosMapControllerWrapper(
 
     override fun setUserLocation(point: GeoPoint?) {
         if (closed) return
-        renderer.setUserLocation(point)
+        userLocation = point
+        renderer.setUserLocation(point.takeIf { userLocationEnabled })
+    }
+
+    override fun setUserLocationEnabled(enabled: Boolean) {
+        if (closed) return
+        userLocationEnabled = enabled
+        renderer.setUserLocation(userLocation.takeIf { enabled })
     }
 
     override fun lockTarget(point: GeoPoint, zoom: Float?) {

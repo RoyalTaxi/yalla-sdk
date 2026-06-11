@@ -63,6 +63,8 @@ interface MapController {
 
     fun setUserLocation(point: GeoPoint?)
 
+    fun setUserLocationEnabled(enabled: Boolean)
+
     fun lockTarget(point: GeoPoint, zoom: Float? = null)
 
     fun unlockTarget()

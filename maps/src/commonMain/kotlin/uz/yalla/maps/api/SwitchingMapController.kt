@@ -59,6 +59,7 @@ class SwitchingMapController internal constructor(
     private var pendingCircles: List<MapCircle> = emptyList()
     private var interactionEnabled: Boolean = true
     private var userLocation: GeoPoint? = null
+    private var userLocationEnabled = true
     private var lockedTarget: GeoPoint? = null
     private var lockedZoom: Float? = null
 
@@ -128,6 +129,7 @@ class SwitchingMapController internal constructor(
         controller.setRoutes(snapshot.routes)
         controller.setCircles(snapshot.circles)
         controller.setInteractionEnabled(interactionEnabled)
+        controller.setUserLocationEnabled(userLocationEnabled)
         controller.setUserLocation(userLocation)
         controller.setStyle(currentStyle, currentIsDark)
         controller.moveTo(snapshot.cameraPosition.target, snapshot.cameraPosition.zoom)
@@ -190,6 +192,11 @@ class SwitchingMapController internal constructor(
     override fun setUserLocation(point: GeoPoint?) {
         userLocation = point
         active.value?.setUserLocation(point)
+    }
+
+    override fun setUserLocationEnabled(enabled: Boolean) {
+        userLocationEnabled = enabled
+        active.value?.setUserLocationEnabled(enabled)
     }
 
     override fun lockTarget(point: GeoPoint, zoom: Float?) {
