@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -21,6 +22,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -153,7 +155,8 @@ fun TariffCard(
             Image(
                 painter = painter,
                 contentDescription = null,
-                modifier = Modifier.weight(1f)
+                contentScale = ContentScale.Fit,
+                modifier = Modifier.weight(1f).fillMaxWidth()
             )
         }
     }
@@ -170,17 +173,26 @@ fun TariffCard(
     colors: TariffCardColors = TariffCardDefaults.colors(),
     dimens: TariffCardDimens = TariffCardDefaults.dimens(),
     styles: TariffCardStyles = TariffCardDefaults.styles()
-) = TariffCard(
-    title = title,
-    description = description,
-    selected = selected,
-    painter = rememberAsyncImagePainter(model = imageUrl),
-    onClick = onClick,
-    modifier = modifier,
-    colors = colors,
-    dimens = dimens,
-    styles = styles
-)
+) {
+    val fallback = painterResource(Res.drawable.img_car_comfort)
+
+    TariffCard(
+        title = title,
+        description = description,
+        selected = selected,
+        painter = rememberAsyncImagePainter(
+            model = imageUrl,
+            placeholder = fallback,
+            error = fallback,
+            fallback = fallback
+        ),
+        onClick = onClick,
+        modifier = modifier,
+        colors = colors,
+        dimens = dimens,
+        styles = styles
+    )
+}
 
 @Preview
 @Composable

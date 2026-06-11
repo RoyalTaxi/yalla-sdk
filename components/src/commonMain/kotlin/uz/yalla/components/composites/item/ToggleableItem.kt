@@ -12,8 +12,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,10 +21,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
+import org.jetbrains.compose.resources.painterResource
 import uz.yalla.components.primitives.toggle.Toggle
 import uz.yalla.design.theme.System
+import uz.yalla.resources.Res
+import uz.yalla.resources.img_toggle
 
 @Immutable
 data class ToggleableItemColors(
@@ -180,24 +180,19 @@ fun ToggleableItem(
     dimens: ToggleableItemDimens = ToggleableItemDefaults.dimens(),
     styles: ToggleableItemStyles = ToggleableItemDefaults.styles()
 ) {
-    val painter = imageUrl?.let { rememberAsyncImagePainter(model = it) }
-    val painterState by painter?.state?.collectAsState() ?: return ToggleableItem(
-        title = title,
-        description = description,
-        painter = null,
-        checked = checked,
-        onToggle = onToggle,
-        modifier = modifier,
-        enabled = enabled,
-        colors = colors,
-        dimens = dimens,
-        styles = styles
-    )
+    val fallback = painterResource(Res.drawable.img_toggle)
 
     ToggleableItem(
         title = title,
         description = description,
-        painter = painter.takeIf { painterState is AsyncImagePainter.State.Success },
+        painter = imageUrl?.takeIf { it.isNotBlank() }?.let { url ->
+            rememberAsyncImagePainter(
+                model = url,
+                placeholder = fallback,
+                error = fallback,
+                fallback = fallback
+            )
+        } ?: fallback,
         checked = checked,
         onToggle = onToggle,
         modifier = modifier,
