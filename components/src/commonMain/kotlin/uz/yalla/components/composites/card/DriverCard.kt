@@ -118,13 +118,22 @@ fun DriverCard(
     lastName: String,
     rating: String,
     modifier: Modifier = Modifier
-) = DriverCard(
-    painter = rememberAsyncImagePainter(model = imageUrl),
-    firstName = firstName,
-    lastName = lastName,
-    rating = rating,
-    modifier = modifier
-)
+) {
+    val fallback = painterResource(Res.drawable.img_avatar_placeholder)
+
+    DriverCard(
+        painter = rememberAsyncImagePainter(
+            model = imageUrl,
+            placeholder = fallback,
+            error = fallback,
+            fallback = fallback
+        ),
+        firstName = firstName,
+        lastName = lastName,
+        rating = rating,
+        modifier = modifier
+    )
+}
 
 @Preview
 @Composable
