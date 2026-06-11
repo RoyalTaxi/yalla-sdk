@@ -2,7 +2,9 @@ package uz.yalla.components.composites.item
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -36,6 +38,7 @@ import uz.yalla.design.theme.YallaTheme
 @Immutable
 data class SectionableItemColors(
     val iconColor: Color,
+    val iconBackgroundColor: Color,
     val topDescriptionColor: Color,
     val titleColor: Color,
     val bottomDescriptionColor: Color,
@@ -52,6 +55,9 @@ data class SectionableItemDimens(
     val contentInlineSpacing: Dp,
     val contentPadding: PaddingValues,
     val iconSize: Dp,
+    val iconContainerSize: Dp,
+    val iconContainerShape: Shape,
+    val iconPadding: Dp,
     val openIconSize: Dp,
     val borderWidth: Dp
 )
@@ -67,6 +73,7 @@ object SectionableItemDefaults {
     @Composable
     fun colors(
         iconColor: Color = System.color.icon.base,
+        iconBackgroundColor: Color = Color.Transparent,
         topDescriptionColor: Color = System.color.text.subtle,
         titleColor: Color = System.color.text.base,
         bottomDescriptionColor: Color = System.color.text.base,
@@ -76,6 +83,7 @@ object SectionableItemDefaults {
         containerColor: Color = Color.Transparent
     ) = SectionableItemColors(
         iconColor = iconColor,
+        iconBackgroundColor = iconBackgroundColor,
         topDescriptionColor = topDescriptionColor,
         titleColor = titleColor,
         bottomDescriptionColor = bottomDescriptionColor,
@@ -97,6 +105,9 @@ object SectionableItemDefaults {
             bottom = 20.dp
         ),
         iconSize: Dp = 24.dp,
+        iconContainerSize: Dp = 24.dp,
+        iconContainerShape: Shape = RectangleShape,
+        iconPadding: Dp = 0.dp,
         openIconSize: Dp = 24.dp,
         borderWidth: Dp = 0.dp
     ) = SectionableItemDimens(
@@ -105,6 +116,9 @@ object SectionableItemDefaults {
         contentInlineSpacing = contentInlineSpacing,
         contentPadding = contentPadding,
         iconSize = iconSize,
+        iconContainerSize = iconContainerSize,
+        iconContainerShape = iconContainerShape,
+        iconPadding = iconPadding,
         openIconSize = openIconSize,
         borderWidth = borderWidth
     )
@@ -151,19 +165,27 @@ fun SectionableItem(
             modifier = Modifier.padding(dimens.contentPadding)
         ) {
             iconPainter?.let { painter ->
-                if (colors.iconColor == Color.Unspecified) {
-                    Image(
-                        painter = painter,
-                        contentDescription = null,
-                        modifier = Modifier.size(dimens.iconSize)
-                    )
-                } else {
-                    Icon(
-                        painter = painter,
-                        contentDescription = null,
-                        tint = colors.iconColor,
-                        modifier = Modifier.size(dimens.iconSize)
-                    )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .size(dimens.iconContainerSize)
+                        .background(colors.iconBackgroundColor, dimens.iconContainerShape)
+                        .padding(dimens.iconPadding)
+                ) {
+                    if (colors.iconColor == Color.Unspecified) {
+                        Image(
+                            painter = painter,
+                            contentDescription = null,
+                            modifier = Modifier.size(dimens.iconSize)
+                        )
+                    } else {
+                        Icon(
+                            painter = painter,
+                            contentDescription = null,
+                            tint = colors.iconColor,
+                            modifier = Modifier.size(dimens.iconSize)
+                        )
+                    }
                 }
             }
 
