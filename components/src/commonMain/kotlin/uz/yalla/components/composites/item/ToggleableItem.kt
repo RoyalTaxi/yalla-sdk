@@ -3,6 +3,7 @@ package uz.yalla.components.composites.item
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -10,18 +11,90 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
 import uz.yalla.components.primitives.toggle.Toggle
 import uz.yalla.design.theme.System
+
+@Immutable
+data class ToggleableItemColors(
+    val titleColor: Color,
+    val descriptionColor: Color,
+    val iconBackgroundColor: Color,
+    val containerColor: Color
+)
+
+@Immutable
+data class ToggleableItemDimens(
+    val contentSpacing: Dp,
+    val contentPadding: PaddingValues,
+    val iconShape: Shape,
+    val iconPadding: Dp,
+    val iconSize: Dp,
+    val textSpacing: Dp
+)
+
+@Immutable
+data class ToggleableItemStyles(
+    val titleStyle: TextStyle,
+    val descriptionStyle: TextStyle
+)
+
+object ToggleableItemDefaults {
+    @Composable
+    fun colors(
+        titleColor: Color = System.color.text.base,
+        descriptionColor: Color = System.color.text.subtle,
+        iconBackgroundColor: Color = System.color.background.secondary,
+        containerColor: Color = Color.Transparent
+    ) = ToggleableItemColors(
+        titleColor = titleColor,
+        descriptionColor = descriptionColor,
+        iconBackgroundColor = iconBackgroundColor,
+        containerColor = containerColor
+    )
+
+    @Composable
+    fun dimens(
+        contentSpacing: Dp = 16.dp,
+        contentPadding: PaddingValues = PaddingValues(
+            vertical = 4.dp,
+            horizontal = 20.dp
+        ),
+        iconShape: Shape = RoundedCornerShape(10.dp),
+        iconPadding: Dp = 16.dp,
+        iconSize: Dp = 24.dp,
+        textSpacing: Dp = 8.dp
+    ) = ToggleableItemDimens(
+        contentSpacing = contentSpacing,
+        contentPadding = contentPadding,
+        iconShape = iconShape,
+        iconPadding = iconPadding,
+        iconSize = iconSize,
+        textSpacing = textSpacing
+    )
+
+    @Composable
+    fun styles(
+        titleStyle: TextStyle = System.font.body.base.bold,
+        descriptionStyle: TextStyle = System.font.body.small.medium
+    ) = ToggleableItemStyles(
+        titleStyle = titleStyle,
+        descriptionStyle = descriptionStyle
+    )
+}
 
 @Composable
 fun ToggleableItem(
@@ -30,44 +103,46 @@ fun ToggleableItem(
     painter: Painter? = null,
     checked: Boolean,
     onToggle: (checked: Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    colors: ToggleableItemColors = ToggleableItemDefaults.colors(),
+    dimens: ToggleableItemDimens = ToggleableItemDefaults.dimens(),
+    styles: ToggleableItemStyles = ToggleableItemDefaults.styles()
 ) {
     Surface(
         modifier = modifier,
-        color = Color.Transparent,
+        color = colors.containerColor,
+        enabled = enabled,
         onClick = { onToggle(checked.not()) }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier.padding(
-                vertical = 4.dp,
-                horizontal = 20.dp
-            )
+            horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing),
+            modifier = Modifier.padding(dimens.contentPadding)
         ) {
             painter?.let {
                 Surface(
-                    shape = RoundedCornerShape(10.dp),
-                    color = System.color.background.secondary
+                    shape = dimens.iconShape,
+                    color = colors.iconBackgroundColor
                 ) {
                     Image(
                         painter = painter,
                         contentDescription = null,
                         modifier = Modifier
-                            .padding(16.dp)
-                            .size(24.dp)
+                            .padding(dimens.iconPadding)
+                            .size(dimens.iconSize)
                     )
                 }
             }
 
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                verticalArrangement = Arrangement.spacedBy(dimens.textSpacing, Alignment.CenterVertically),
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
                     text = title,
-                    color = System.color.text.base,
-                    style = System.font.body.base.bold,
+                    color = colors.titleColor,
+                    style = styles.titleStyle,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -75,8 +150,8 @@ fun ToggleableItem(
                 description?.let { desc ->
                     Text(
                         text = desc,
-                        color = System.color.text.subtle,
-                        style = System.font.body.small.medium,
+                        color = colors.descriptionColor,
+                        style = styles.descriptionStyle,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -85,7 +160,8 @@ fun ToggleableItem(
 
             Toggle(
                 checked = checked,
-                onCheckedChange = onToggle
+                onCheckedChange = onToggle,
+                enabled = enabled
             )
         }
     }
@@ -98,7 +174,11 @@ fun ToggleableItem(
     imageUrl: String?,
     checked: Boolean,
     onToggle: (checked: Boolean) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    colors: ToggleableItemColors = ToggleableItemDefaults.colors(),
+    dimens: ToggleableItemDimens = ToggleableItemDefaults.dimens(),
+    styles: ToggleableItemStyles = ToggleableItemDefaults.styles()
 ) {
     val painter = imageUrl?.let { rememberAsyncImagePainter(model = it) }
     val painterState by painter?.state?.collectAsState() ?: return ToggleableItem(
@@ -107,7 +187,11 @@ fun ToggleableItem(
         painter = null,
         checked = checked,
         onToggle = onToggle,
-        modifier = modifier
+        modifier = modifier,
+        enabled = enabled,
+        colors = colors,
+        dimens = dimens,
+        styles = styles
     )
 
     ToggleableItem(
@@ -116,6 +200,10 @@ fun ToggleableItem(
         painter = painter.takeIf { painterState is AsyncImagePainter.State.Success },
         checked = checked,
         onToggle = onToggle,
-        modifier = modifier
+        modifier = modifier,
+        enabled = enabled,
+        colors = colors,
+        dimens = dimens,
+        styles = styles
     )
 }

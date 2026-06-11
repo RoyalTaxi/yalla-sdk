@@ -5,6 +5,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -22,10 +23,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
@@ -39,6 +43,10 @@ fun PrimaryField(
     textAlign: TextAlign = TextAlign.Start,
     trailingIcon: @Composable (() -> Unit)? = null,
     onClick: (() -> Unit)? = null,
+    singleLine: Boolean = false,
+    minHeight: Dp? = null,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    focusRequester: FocusRequester? = null,
     modifier: Modifier = Modifier
 ) {
     var fieldValue by remember { mutableStateOf(TextFieldValue(value, TextRange(value.length))) }
@@ -56,7 +64,11 @@ fun PrimaryField(
                 if (textChanged) onValueChange(fv.text)
             },
             readOnly = !enabled,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .then(if (minHeight != null) Modifier.heightIn(min = minHeight) else Modifier)
+                .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
+            singleLine = singleLine,
             shape = RoundedCornerShape(10.dp),
             textStyle = System.font.body.base.medium.copy(textAlign = textAlign),
             trailingIcon = trailingIcon,
@@ -69,7 +81,7 @@ fun PrimaryField(
                     modifier = Modifier.fillMaxWidth()
                 )
             },
-            keyboardOptions = KeyboardOptions.Default,
+            keyboardOptions = keyboardOptions,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedTextColor = System.color.text.base,
                 unfocusedTextColor = System.color.text.base,

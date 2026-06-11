@@ -7,20 +7,23 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
 import org.jetbrains.compose.resources.painterResource
@@ -29,6 +32,77 @@ import uz.yalla.design.theme.YallaTheme
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_car_comfort
 
+@Immutable
+data class TariffCardColors(
+    val containerColor: Color,
+    val selectedContainerColor: Color,
+    val titleColor: Color,
+    val descriptionColor: Color,
+    val selectedBorder: Brush
+)
+
+@Immutable
+data class TariffCardDimens(
+    val shape: Shape,
+    val height: Dp,
+    val minWidth: Dp,
+    val contentPadding: PaddingValues,
+    val selectedBorderWidth: Dp,
+    val titleDescriptionSpacing: Dp,
+    val descriptionImageSpacing: Dp
+)
+
+@Immutable
+data class TariffCardStyles(
+    val titleStyle: TextStyle,
+    val descriptionStyle: TextStyle
+)
+
+object TariffCardDefaults {
+    @Composable
+    fun colors(
+        containerColor: Color = System.color.background.secondary,
+        selectedContainerColor: Color = System.color.background.base,
+        titleColor: Color = System.color.text.base,
+        descriptionColor: Color = System.color.text.base,
+        selectedBorder: Brush = System.color.gradient.sunsetNight
+    ) = TariffCardColors(
+        containerColor = containerColor,
+        selectedContainerColor = selectedContainerColor,
+        titleColor = titleColor,
+        descriptionColor = descriptionColor,
+        selectedBorder = selectedBorder
+    )
+
+    @Composable
+    fun dimens(
+        shape: Shape = RoundedCornerShape(20.dp),
+        height: Dp = 120.dp,
+        minWidth: Dp = 140.dp,
+        contentPadding: PaddingValues = PaddingValues(12.dp),
+        selectedBorderWidth: Dp = 2.dp,
+        titleDescriptionSpacing: Dp = 6.dp,
+        descriptionImageSpacing: Dp = 10.dp
+    ) = TariffCardDimens(
+        shape = shape,
+        height = height,
+        minWidth = minWidth,
+        contentPadding = contentPadding,
+        selectedBorderWidth = selectedBorderWidth,
+        titleDescriptionSpacing = titleDescriptionSpacing,
+        descriptionImageSpacing = descriptionImageSpacing
+    )
+
+    @Composable
+    fun styles(
+        titleStyle: TextStyle = System.font.body.base.bold,
+        descriptionStyle: TextStyle = System.font.body.base.bold
+    ) = TariffCardStyles(
+        titleStyle = titleStyle,
+        descriptionStyle = descriptionStyle
+    )
+}
+
 @Composable
 fun TariffCard(
     title: String,
@@ -36,50 +110,50 @@ fun TariffCard(
     selected: Boolean,
     painter: Painter = painterResource(Res.drawable.img_car_comfort),
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    colors: TariffCardColors = TariffCardDefaults.colors(),
+    dimens: TariffCardDimens = TariffCardDefaults.dimens(),
+    styles: TariffCardStyles = TariffCardDefaults.styles()
 ) {
     Surface(
         onClick = onClick,
-        modifier = modifier.widthIn(140.dp),
-        shape = RoundedCornerShape(20.dp),
-        color = if (selected) System.color.background.base else System.color.background.secondary,
+        modifier = modifier
+            .height(dimens.height)
+            .widthIn(min = dimens.minWidth),
+        shape = dimens.shape,
+        color = if (selected) colors.selectedContainerColor else colors.containerColor,
         border = if (selected) {
             BorderStroke(
-                brush = System.color.gradient.sunsetNight,
-                width = 2.dp
+                brush = colors.selectedBorder,
+                width = dimens.selectedBorderWidth
             )
         } else null
     ) {
         Column(
-            modifier = Modifier.padding(12.dp)
+            modifier = Modifier.padding(dimens.contentPadding)
         ) {
             Text(
                 text = title,
-                color = System.color.text.base,
-                style = System.font.body.base.bold
+                color = colors.titleColor,
+                style = styles.titleStyle
             )
 
-            Spacer(modifier = Modifier.heightIn(4.dp))
-
             description?.let { desc ->
+                Spacer(modifier = Modifier.height(dimens.titleDescriptionSpacing))
+
                 Text(
                     text = desc,
-                    color = System.color.text.base,
-                    style = System.font.body.small.medium
+                    color = colors.descriptionColor,
+                    style = styles.descriptionStyle
                 )
-
-                Spacer(modifier = Modifier.heightIn(8.dp))
             }
 
-            Spacer(modifier = Modifier.heightIn(4.dp))
+            Spacer(modifier = Modifier.height(dimens.descriptionImageSpacing))
 
             Image(
                 painter = painter,
                 contentDescription = null,
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier
-                    .width(96.dp)
-                    .height(44.dp)
+                modifier = Modifier.weight(1f)
             )
         }
     }
@@ -92,14 +166,20 @@ fun TariffCard(
     selected: Boolean,
     imageUrl: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    colors: TariffCardColors = TariffCardDefaults.colors(),
+    dimens: TariffCardDimens = TariffCardDefaults.dimens(),
+    styles: TariffCardStyles = TariffCardDefaults.styles()
 ) = TariffCard(
     title = title,
     description = description,
     selected = selected,
     painter = rememberAsyncImagePainter(model = imageUrl),
     onClick = onClick,
-    modifier = modifier
+    modifier = modifier,
+    colors = colors,
+    dimens = dimens,
+    styles = styles
 )
 
 @Preview

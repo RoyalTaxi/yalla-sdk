@@ -28,6 +28,7 @@ interface SheetFactory {
         onClose: (() -> Unit)?,
         fullHeight: Boolean,
         sheetSwipeEnabled: Boolean,
+        onFullyExpanded: (() -> Unit)?,
         content: @Composable (padding: PaddingValues) -> Unit
     )
 

@@ -13,5 +13,6 @@ expect fun ContentSheet(
     onClose: (() -> Unit)? = null,
     fullHeight: Boolean = false,
     sheetSwipeEnabled: Boolean = true,
+    onFullyExpanded: (() -> Unit)? = null,
     content: @Composable (padding: PaddingValues) -> Unit
 )

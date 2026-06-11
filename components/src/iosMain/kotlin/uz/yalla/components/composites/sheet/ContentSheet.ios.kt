@@ -24,11 +24,14 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeUIViewController
+import kotlinx.coroutines.delay
 import uz.yalla.components.config.composites.ContentSheetHandle
 import uz.yalla.components.config.requireConfig
 import uz.yalla.components.platform.findKeyWindowRootController
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
+
+private const val PresentationPollMillis = 16L
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -40,6 +43,7 @@ actual fun ContentSheet(
     onClose: (() -> Unit)?,
     fullHeight: Boolean,
     sheetSwipeEnabled: Boolean,
+    onFullyExpanded: (() -> Unit)?,
     content: @Composable (padding: PaddingValues) -> Unit
 ) {
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
@@ -71,7 +75,7 @@ actual fun ContentSheet(
         ).also { handleRef.value = it }
     }
 
-    PresentationLifecycle(handle = handle, isVisible = isVisible)
+    PresentationLifecycle(handle = handle, isVisible = isVisible, onFullyExpanded = onFullyExpanded)
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -105,9 +109,11 @@ internal fun SheetBody(
 @Composable
 internal fun PresentationLifecycle(
     handle: ContentSheetHandle,
-    isVisible: Boolean
+    isVisible: Boolean,
+    onFullyExpanded: (() -> Unit)? = null
 ) {
     var isPresented by remember { mutableStateOf(false) }
+    val currentOnFullyExpanded by rememberUpdatedState(onFullyExpanded)
 
     LaunchedEffect(isVisible, isPresented) {
         if (isVisible && !isPresented) {
@@ -118,6 +124,15 @@ internal fun PresentationLifecycle(
             isPresented = false
             handle.dismiss()
         }
+    }
+
+    LaunchedEffect(isPresented) {
+        if (!isPresented) return@LaunchedEffect
+        val onPresented = currentOnFullyExpanded ?: return@LaunchedEffect
+        while (handle.viewController.isBeingPresented()) {
+            delay(PresentationPollMillis)
+        }
+        onPresented()
     }
 
     DisposableEffect(Unit) {
