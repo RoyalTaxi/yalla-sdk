@@ -1,6 +1,11 @@
 package uz.yalla.components.composites.sheet
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import uz.yalla.capabilities.sms.ObserveSmsCode
 import uz.yalla.components.config.requireConfig
 
 @Composable
@@ -24,6 +29,18 @@ actual fun VerificationSheet(
     onCodeComplete: (String) -> Unit,
     dismissEnabled: Boolean
 ) {
+    var smsArmKey by remember { mutableIntStateOf(0) }
+
+    ObserveSmsCode(
+        enabled = isVisible,
+        codeLength = codeLength,
+        alphanumeric = alphanumeric,
+        restartKey = smsArmKey
+    ) { smsCode ->
+        onCodeChange(smsCode)
+        if (smsCode.length == codeLength) onCodeComplete(smsCode)
+    }
+
     requireConfig().sheet.VerificationContent(
         isVisible = isVisible,
         code = code,
@@ -34,7 +51,10 @@ actual fun VerificationSheet(
         confirmText = confirmText,
         onConfirm = onConfirm,
         resendText = resendText,
-        onResend = onResend,
+        onResend = {
+            smsArmKey++
+            onResend()
+        },
         onDismissRequest = onDismissRequest,
         title = title,
         isError = isError,

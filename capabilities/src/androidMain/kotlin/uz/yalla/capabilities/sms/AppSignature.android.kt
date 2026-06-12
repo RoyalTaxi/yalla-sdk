@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Base64
+import org.koin.core.context.GlobalContext
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.util.Arrays
@@ -14,7 +15,7 @@ private const val NUM_HASHED_BYTES = 9
 
 private const val NUM_BASE64_CHAR = 11
 
-actual fun getAppSignature(): String? = null
+actual fun getAppSignature(): String? = runCatching { GlobalContext.get().get<Context>() }.getOrNull()?.let(::getAppSignature)
 
 fun getAppSignature(context: Context): String? = runCatching {
     val packageName = context.packageName

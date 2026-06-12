@@ -34,6 +34,10 @@ kotlin {
 
             implementation(libs.compose.ui.tooling.preview)
         }
+
+        androidMain.dependencies {
+            implementation(projects.capabilities)
+        }
     }
 }
 

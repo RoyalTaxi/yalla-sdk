@@ -22,9 +22,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.autofill.ContentType
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.semantics.contentType
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -68,6 +71,7 @@ fun PinField(
         modifier = modifier
             .fillMaxWidth()
             .graphicsLayer { translationX = shakeOffset.value }
+            .semantics { contentType = ContentType.SmsOtpCode }
             .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
         keyboardOptions = KeyboardOptions(keyboardType = if (alphanumeric) KeyboardType.Ascii else KeyboardType.Number),
         singleLine = true,

@@ -24,9 +24,14 @@ kotlin {
             implementation(libs.androidx.core.ktx)
             implementation(libs.koin.android)
 
+            implementation(libs.androidx.activity.compose)
             implementation(libs.androidx.browser)
             implementation(libs.google.play.app.update)
             implementation(libs.play.services.auth.api.phone)
+        }
+
+        commonTest.dependencies {
+            implementation(kotlin("test"))
         }
     }
 }

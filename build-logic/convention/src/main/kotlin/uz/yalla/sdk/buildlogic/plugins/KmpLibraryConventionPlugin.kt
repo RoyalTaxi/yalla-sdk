@@ -43,6 +43,10 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                         compilerOptions {
                             jvmTarget.set(JvmTarget.JVM_11)
                         }
+
+                        withHostTestBuilder {}.configure {
+                            isIncludeAndroidResources = true
+                        }
                     }
 
                 iosArm64()
