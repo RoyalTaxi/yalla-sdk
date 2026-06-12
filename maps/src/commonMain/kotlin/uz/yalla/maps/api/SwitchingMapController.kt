@@ -83,10 +83,17 @@ class SwitchingMapController internal constructor(
         active.value = next
         if (snapshot != null) {
             applySnapshot(next, snapshot)
-        } else if (seedSource.target != GeoPoint.Zero) {
+        } else {
             scope.launch {
-                next.isReady.first { it }
-                next.moveTo(seedSource.target, seedSource.zoom)
+                withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { next.isReady.first { it } }
+                next.setDesiredPadding(pendingPadding)
+                next.setMarkers(pendingMarkers)
+                next.setRoutes(pendingRoutes)
+                next.setCircles(pendingCircles)
+                next.setInteractionEnabled(interactionEnabled)
+                next.setUserLocationEnabled(userLocationEnabled)
+                next.setUserLocation(userLocation)
+                if (seedSource.target != GeoPoint.Zero) next.moveTo(seedSource.target, seedSource.zoom)
             }
         }
         previous?.close()

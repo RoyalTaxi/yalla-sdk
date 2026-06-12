@@ -109,6 +109,7 @@ fun StaticMapView(
     contentPadding: PaddingValues = PaddingValues()
 ) {
     val controller = rememberMapController()
+    LaunchedEffect(controller) { controller.setUserLocationEnabled(false) }
     Box(modifier = modifier) {
         MapView(
             controller = controller,
@@ -132,14 +133,12 @@ fun StaticMapView(
         )
     }
     val ready by controller.isReady.collectAsState()
-    LaunchedEffect(ready, points, contentPadding) {
-        if (ready && points.isNotEmpty()) {
-            val valid = points.filterNot { it == uz.yalla.core.geo.GeoPoint.Zero }.distinctBy { it.lat to it.lng }
-            if (valid.size == 1) {
-                controller.moveTo(valid.first(), MapConstants.DEFAULT_ZOOM.toFloat())
-            } else {
-                controller.fitBounds(valid, animate = false, padding = contentPadding)
-            }
+    LaunchedEffect(ready, points, routes, contentPadding) {
+        if (!ready) return@LaunchedEffect
+        val framed = (points + routes.flatMap { it.points }).filterNot { it == GeoPoint.Zero }.distinctBy { it.lat to it.lng }
+        when {
+            framed.size > 1 -> controller.fitBounds(framed, animate = false, padding = contentPadding)
+            framed.size == 1 -> controller.moveTo(framed.first(), MapConstants.DEFAULT_ZOOM.toFloat())
         }
     }
 }
