@@ -11,6 +11,13 @@ sealed class MapMarkerIcon {
         val label: String? = null
     ) : MapMarkerIcon()
 
+    data class Dot(
+        val fillColorArgb: Int,
+        val strokeColorArgb: Int,
+        val diameterDp: Float = 14f,
+        val strokeWidthDp: Float = 4f
+    ) : MapMarkerIcon()
+
     class Bytes(val data: ByteArray) : MapMarkerIcon() {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
