@@ -62,6 +62,7 @@ class SwitchingMapController internal constructor(
     private var userLocationEnabled = true
     private var lockedTarget: GeoPoint? = null
     private var lockedZoom: Float? = null
+    private var cameraCommanded = false
 
     private var currentKind: MapKind? = null
     private var currentStyle: MapStyle = MapStyle.CARTO
@@ -93,7 +94,7 @@ class SwitchingMapController internal constructor(
                 next.setInteractionEnabled(interactionEnabled)
                 next.setUserLocationEnabled(userLocationEnabled)
                 next.setUserLocation(userLocation)
-                if (seedSource.target != GeoPoint.Zero) next.moveTo(seedSource.target, seedSource.zoom)
+                if (!cameraCommanded && seedSource.target != GeoPoint.Zero) next.moveTo(seedSource.target, seedSource.zoom)
             }
         }
         previous?.close()
@@ -144,18 +145,22 @@ class SwitchingMapController internal constructor(
     }
 
     override suspend fun moveTo(point: GeoPoint, zoom: Float) {
+        cameraCommanded = true
         active.value?.moveTo(point, zoom)
     }
 
     override suspend fun animateTo(point: GeoPoint, zoom: Float, durationMs: Int) {
+        cameraCommanded = true
         active.value?.animateTo(point, zoom, durationMs)
     }
 
     override suspend fun animateToWithBearing(point: GeoPoint, bearing: Float, zoom: Float, durationMs: Int) {
+        cameraCommanded = true
         active.value?.animateToWithBearing(point, bearing, zoom, durationMs)
     }
 
     override suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean, padding: PaddingValues?) {
+        cameraCommanded = true
         active.value?.fitBounds(points, animate, padding)
     }
 
