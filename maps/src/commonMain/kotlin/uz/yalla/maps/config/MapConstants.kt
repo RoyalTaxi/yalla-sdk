@@ -10,6 +10,8 @@ object MapConstants {
 
     const val ZOOM_MAX = 21.0
 
+    const val FIT_ZOOM_MAX = 17.0
+
     const val SEARCH_MIN_ZOOM = 13f
 
     const val EXECUTORS_VISIBLE_MIN_ZOOM = 8.0

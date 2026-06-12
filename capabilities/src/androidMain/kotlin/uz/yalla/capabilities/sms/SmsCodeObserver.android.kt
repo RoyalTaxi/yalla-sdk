@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.compose.LocalActivityResultRegistryOwner
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
@@ -23,6 +26,8 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
+
+private const val CONSENT_GRACE_MS = 400L
 
 @Composable
 actual fun ObserveSmsCode(
@@ -39,8 +44,12 @@ actual fun ObserveSmsCode(
     val currentLength = rememberUpdatedState(codeLength)
     val currentAlphanumeric = rememberUpdatedState(alphanumeric)
     var armNonce by remember { mutableIntStateOf(0) }
+    var delivered by remember(restartKey) { mutableStateOf(false) }
+    var seenResume by remember { mutableStateOf(false) }
 
-    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) { armNonce++ }
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        if (seenResume) armNonce++ else seenResume = true
+    }
 
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -50,10 +59,10 @@ actual fun ObserveSmsCode(
         armNonce++
     }
 
-    DisposableEffect(enabled, restartKey, armNonce) {
+    DisposableEffect(restartKey, armNonce) {
         runCatching { SmsRetriever.getClient(context).startSmsRetriever() }
         runCatching { SmsRetriever.getClient(context).startSmsUserConsent(null) }
-        var delivered = false
+        val handler = Handler(Looper.getMainLooper())
 
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(
@@ -80,7 +89,11 @@ actual fun ObserveSmsCode(
                             @Suppress("DEPRECATION")
                             extras.getParcelable(SmsRetriever.EXTRA_CONSENT_INTENT)
                         }
-                        consentIntent?.let { runCatching { launcher.launch(it) }.onFailure { armNonce++ } }
+                        consentIntent?.let { consent ->
+                            handler.postDelayed({
+                                if (!delivered) runCatching { launcher.launch(consent) }.onFailure { armNonce++ }
+                            }, CONSENT_GRACE_MS)
+                        }
                     }
                     CommonStatusCodes.TIMEOUT -> armNonce++
                 }
@@ -97,6 +110,7 @@ actual fun ObserveSmsCode(
         )
 
         onDispose {
+            handler.removeCallbacksAndMessages(null)
             runCatching { context.unregisterReceiver(receiver) }
         }
     }

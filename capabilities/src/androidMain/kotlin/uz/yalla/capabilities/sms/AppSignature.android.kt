@@ -15,7 +15,11 @@ private const val NUM_HASHED_BYTES = 9
 
 private const val NUM_BASE64_CHAR = 11
 
-actual fun getAppSignature(): String? = runCatching { GlobalContext.get().get<Context>() }.getOrNull()?.let(::getAppSignature)
+private val cachedSignature by lazy {
+    runCatching { GlobalContext.get().get<Context>() }.getOrNull()?.let(::getAppSignature)
+}
+
+actual fun getAppSignature(): String? = cachedSignature
 
 fun getAppSignature(context: Context): String? = runCatching {
     val packageName = context.packageName

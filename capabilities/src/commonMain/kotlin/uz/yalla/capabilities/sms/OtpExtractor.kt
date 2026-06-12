@@ -1,5 +1,7 @@
 package uz.yalla.capabilities.sms
 
+private val CodeKeyword = Regex("(?:kod|code|код)", RegexOption.IGNORE_CASE)
+
 fun extractOtp(
     message: String,
     length: Int,
@@ -10,5 +12,6 @@ fun extractOtp(
     } else {
         Regex("(?<!\\d)\\d{$length}(?!\\d)")
     }
-    return pattern.find(message)?.value
+    val anchor = CodeKeyword.find(message)
+    return anchor?.let { pattern.find(message, it.range.last + 1)?.value } ?: pattern.find(message)?.value
 }

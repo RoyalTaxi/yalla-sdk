@@ -51,8 +51,18 @@ class OtpExtractorTest {
     }
 
     @Test
-    fun documentOrderIsTheDefinedHeuristicWhenAmountPrecedesCode() {
-        assertEquals("100000", extractOtp("Amount: 100000. Code: A1B2C3", 6, true))
+    fun codeKeywordAnchorsExtractionWhenAmountPrecedesCode() {
+        assertEquals("A1B2C3", extractOtp("Amount: 100000. Code: A1B2C3", 6, true))
+    }
+
+    @Test
+    fun amountBeforeKeywordNeverWinsOnDigitRunSurface() {
+        assertEquals("482913", extractOtp("Summa 100000. Kod: 482913", 6, true))
+    }
+
+    @Test
+    fun keywordAfterCodeFallsBackToFirstMatch() {
+        assertEquals("482913", extractOtp("482913 is your kod", 6, true))
     }
 
     @Test
