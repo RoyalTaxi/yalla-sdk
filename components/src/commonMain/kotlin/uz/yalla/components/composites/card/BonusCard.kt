@@ -52,15 +52,15 @@ fun BonusCard(
     bonus: String,
     enabled: Boolean = true,
     leadingPainter: Painter? = painterResource(Res.drawable.img_coin),
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     dimens: BonusCardDimens = BonusCardDefaults.dimens()
 ) {
     Surface(
-        enabled = enabled,
+        enabled = enabled && onClick != null,
         shape = dimens.shape,
         modifier = modifier,
-        onClick = onClick
+        onClick = onClick ?: {}
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

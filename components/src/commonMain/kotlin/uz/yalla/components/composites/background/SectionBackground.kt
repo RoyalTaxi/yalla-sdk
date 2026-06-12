@@ -27,7 +27,7 @@ fun SectionBackground(
 }
 
 @Composable
-fun SectionDivider(startIndent: Dp = 70.dp) {
+fun SectionDivider(startIndent: Dp = 60.dp) {
     HorizontalDivider(
         color = System.color.border.disabled,
         thickness = 1.dp,
