@@ -51,7 +51,9 @@ actual fun ObserveSmsCode(
     }
 
     DisposableEffect(enabled, restartKey, armNonce) {
+        runCatching { SmsRetriever.getClient(context).startSmsRetriever() }
         runCatching { SmsRetriever.getClient(context).startSmsUserConsent(null) }
+        var delivered = false
 
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(
@@ -63,6 +65,15 @@ actual fun ObserveSmsCode(
                 val status = extras.get(SmsRetriever.EXTRA_STATUS) as? Status ?: return
                 when (status.statusCode) {
                     CommonStatusCodes.SUCCESS -> {
+                        val message = extras.getString(SmsRetriever.EXTRA_SMS_MESSAGE)
+                        if (message != null) {
+                            extractOtp(message, currentLength.value, currentAlphanumeric.value)?.let { code ->
+                                delivered = true
+                                currentOnCode.value(code)
+                            }
+                            return
+                        }
+                        if (delivered) return
                         val consentIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                             extras.getParcelable(SmsRetriever.EXTRA_CONSENT_INTENT, Intent::class.java)
                         } else {
