@@ -60,13 +60,15 @@ public value class UzPhone private constructor(
          */
         public fun of(input: String): UzPhone? {
             val digits = input.filter { it in '0'..'9' }
-            val national =
-                if (digits.length == COUNTRY_CODE.length + NATIONAL_LENGTH && digits.startsWith(COUNTRY_CODE)) {
-                    digits.substring(COUNTRY_CODE.length)
-                } else {
-                    digits
-                }
+            val national = stripCountryCode(digits)
             return if (isValidNational(national)) UzPhone(national) else null
         }
+
+        private fun stripCountryCode(digits: String): String =
+            if (digits.length == COUNTRY_CODE.length + NATIONAL_LENGTH && digits.startsWith(COUNTRY_CODE)) {
+                digits.substring(COUNTRY_CODE.length)
+            } else {
+                digits
+            }
     }
 }
