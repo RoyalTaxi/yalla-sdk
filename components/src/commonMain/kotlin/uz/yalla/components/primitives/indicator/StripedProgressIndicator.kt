@@ -39,7 +39,7 @@ private const val StripeAlpha = 0.2f
 private const val AnimationDurationMs = 250
 
 @Composable
-fun StripedProgressIndicator(
+public fun StripedProgressIndicator(
     progress: Float,
     modifier: Modifier = Modifier
 ) {

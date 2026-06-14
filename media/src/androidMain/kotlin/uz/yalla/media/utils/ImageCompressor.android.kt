@@ -8,7 +8,7 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import kotlin.math.min
 
-actual fun compressImage(
+public actual fun compressImage(
     imageBytes: ByteArray,
     config: CompressionConfig
 ): ByteArray {

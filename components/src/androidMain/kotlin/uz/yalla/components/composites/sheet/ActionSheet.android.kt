@@ -5,7 +5,7 @@ import uz.yalla.components.composites.item.ActionableItemModel
 import uz.yalla.components.config.requireConfig
 
 @Composable
-actual fun ActionSheet(
+public actual fun ActionSheet(
     isVisible: Boolean,
     title: String,
     items: List<ActionableItemModel>,

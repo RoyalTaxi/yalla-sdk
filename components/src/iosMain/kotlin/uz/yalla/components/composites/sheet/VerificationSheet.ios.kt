@@ -10,7 +10,7 @@ import uz.yalla.components.config.requireConfig
 import uz.yalla.components.platform.findKeyWindowRootController
 
 @Composable
-actual fun VerificationSheet(
+public actual fun VerificationSheet(
     isVisible: Boolean,
     code: String,
     onCodeChange: (String) -> Unit,

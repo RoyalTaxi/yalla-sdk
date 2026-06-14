@@ -7,7 +7,7 @@ import kotlinx.datetime.number
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Instant
 
-fun Long?.toLocalFormattedDate(): String {
+public fun Long?.toLocalFormattedDate(): String {
     val localDateTime = this.toLocalDateTimeOrNull() ?: return ""
     val day = localDateTime.day.toString().padStart(2, '0')
     val month = localDateTime.month.number
@@ -16,7 +16,7 @@ fun Long?.toLocalFormattedDate(): String {
     return "$day.$month.${localDateTime.year}"
 }
 
-fun Long?.toLocalFormattedTime(): String {
+public fun Long?.toLocalFormattedTime(): String {
     val localDateTime = this.toLocalDateTimeOrNull() ?: return ""
     val hour = localDateTime.hour.toString().padStart(2, '0')
     val minute = localDateTime.minute.toString().padStart(2, '0')
@@ -32,7 +32,7 @@ private fun Long?.toLocalDateTimeOrNull() = this
             .toLocalDateTime(TimeZone.currentSystemDefault())
     }
 
-fun Long.normalizedEpochSeconds(): Long = if (this > 10_000_000_000L) {
+public fun Long.normalizedEpochSeconds(): Long = if (this > 10_000_000_000L) {
     this / 1000
 } else {
     this

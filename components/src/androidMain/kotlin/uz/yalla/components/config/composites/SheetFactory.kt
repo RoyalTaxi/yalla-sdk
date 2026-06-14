@@ -8,9 +8,9 @@ import uz.yalla.components.composites.item.ActionableItemModel
 import uz.yalla.components.composites.item.SelectableItemModel
 import uz.yalla.design.image.ThemedImage
 
-interface SheetFactory {
+public interface SheetFactory {
     @Composable
-    fun ShellContent(
+    public fun ShellContent(
         isVisible: Boolean,
         onDismissRequest: () -> Unit,
         modifier: Modifier,
@@ -20,7 +20,7 @@ interface SheetFactory {
     )
 
     @Composable
-    fun ContentContent(
+    public fun ContentContent(
         isVisible: Boolean,
         onDismissRequest: () -> Unit,
         modifier: Modifier,
@@ -33,7 +33,7 @@ interface SheetFactory {
     )
 
     @Composable
-    fun ConfirmationContent(
+    public fun ConfirmationContent(
         isVisible: Boolean,
         image: ThemedImage,
         title: String,
@@ -46,7 +46,7 @@ interface SheetFactory {
     )
 
     @Composable
-    fun SelectionContent(
+    public fun SelectionContent(
         isVisible: Boolean,
         title: String,
         items: List<SelectableItemModel>,
@@ -56,7 +56,7 @@ interface SheetFactory {
     )
 
     @Composable
-    fun ActionContent(
+    public fun ActionContent(
         isVisible: Boolean,
         title: String,
         items: List<ActionableItemModel>,
@@ -65,7 +65,7 @@ interface SheetFactory {
     )
 
     @Composable
-    fun DatePickerContent(
+    public fun DatePickerContent(
         isVisible: Boolean,
         startDate: LocalDate,
         minDate: LocalDate?,
@@ -77,7 +77,7 @@ interface SheetFactory {
     )
 
     @Composable
-    fun VerificationContent(
+    public fun VerificationContent(
         isVisible: Boolean,
         code: String,
         onCodeChange: (String) -> Unit,

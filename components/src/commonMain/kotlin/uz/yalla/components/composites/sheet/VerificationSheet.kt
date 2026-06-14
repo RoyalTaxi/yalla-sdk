@@ -3,7 +3,7 @@ package uz.yalla.components.composites.sheet
 import androidx.compose.runtime.Composable
 
 @Composable
-expect fun VerificationSheet(
+public expect fun VerificationSheet(
     isVisible: Boolean,
     code: String,
     onCodeChange: (String) -> Unit,

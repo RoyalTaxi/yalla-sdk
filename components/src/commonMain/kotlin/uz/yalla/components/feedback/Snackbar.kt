@@ -1,13 +1,13 @@
 package uz.yalla.components.feedback
 
-object Snackbar {
-    fun show(message: String, isError: Boolean = false) = yallaShowSnackbar(message, isError)
+public object Snackbar {
+    public fun show(message: String, isError: Boolean = false): Unit = yallaShowSnackbar(message, isError)
 
-    fun showSuccess(message: String) = show(message, isError = false)
+    public fun showSuccess(message: String): Unit = show(message, isError = false)
 
-    fun showError(message: String) = show(message, isError = true)
+    public fun showError(message: String): Unit = show(message, isError = true)
 
-    fun dismiss() = yallaDismissSnackbar()
+    public fun dismiss(): Unit = yallaDismissSnackbar()
 }
 
 internal expect fun yallaShowSnackbar(message: String, isError: Boolean)

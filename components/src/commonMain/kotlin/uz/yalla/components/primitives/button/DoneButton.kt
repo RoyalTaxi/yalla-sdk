@@ -6,10 +6,10 @@ import androidx.compose.ui.graphics.Color
 import uz.yalla.design.theme.System
 
 @Composable
-fun DoneButton(
+public fun DoneButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
-) = IconButton(
+): Unit = IconButton(
     icon = "ic_check",
     onClick = onClick,
     modifier = modifier,

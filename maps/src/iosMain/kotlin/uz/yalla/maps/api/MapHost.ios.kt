@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.UIKitViewController
 
 @Composable
-actual fun MapHost(controller: MapController, modifier: Modifier) {
+public actual fun MapHost(controller: MapController, modifier: Modifier) {
     val iosController = controller as? IosMapController
         ?: error("MapController on iOS must implement IosMapController. Got: ${controller::class.simpleName}")
     UIKitViewController(

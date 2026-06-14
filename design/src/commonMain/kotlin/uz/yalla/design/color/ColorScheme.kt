@@ -1,12 +1,13 @@
 package uz.yalla.design.color
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 @Immutable
-data class ColorScheme(
+public data class ColorScheme(
     val text: Text,
     val background: Background,
     val border: Border,
@@ -16,7 +17,7 @@ data class ColorScheme(
     val gradient: Gradient
 ) {
     @Immutable
-    data class Text(
+    public data class Text(
         val base: Color,
         val subtle: Color,
         val link: Color,
@@ -25,7 +26,7 @@ data class ColorScheme(
     )
 
     @Immutable
-    data class Background(
+    public data class Background(
         val base: Color,
         val brand: Color,
         val secondary: Color,
@@ -33,7 +34,7 @@ data class ColorScheme(
     )
 
     @Immutable
-    data class Border(
+    public data class Border(
         val disabled: Color,
         val filled: Color,
         val white: Color,
@@ -41,7 +42,7 @@ data class ColorScheme(
     )
 
     @Immutable
-    data class Button(
+    public data class Button(
         val active: Color,
         val disabled: Color,
         val secondary: Color,
@@ -50,7 +51,7 @@ data class ColorScheme(
     )
 
     @Immutable
-    data class Icon(
+    public data class Icon(
         val white: Color,
         val base: Color,
         val secondary: Color,
@@ -60,7 +61,7 @@ data class ColorScheme(
     )
 
     @Immutable
-    data class Accent(
+    public data class Accent(
         val pinkSun: Color,
         val color1: Color,
         val color2: Color,
@@ -70,13 +71,13 @@ data class ColorScheme(
     )
 
     @Immutable
-    data class Gradient(
+    public data class Gradient(
         val splash: Brush,
         val sunsetNight: Brush,
     )
 }
 
-fun light() =
+public fun light(): ColorScheme =
     ColorScheme(
         text =
             ColorScheme.Text(
@@ -133,7 +134,7 @@ fun light() =
             )
     )
 
-fun dark() =
+public fun dark(): ColorScheme =
     ColorScheme(
         text =
             ColorScheme.Text(
@@ -190,4 +191,4 @@ fun dark() =
             )
     )
 
-val LocalColorScheme = staticCompositionLocalOf { light() }
+public val LocalColorScheme: ProvidableCompositionLocal<ColorScheme> = staticCompositionLocalOf { light() }

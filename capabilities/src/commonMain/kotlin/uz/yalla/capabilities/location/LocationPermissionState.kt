@@ -1,6 +1,6 @@
 package uz.yalla.capabilities.location
 
-enum class LocationPermissionState {
+public enum class LocationPermissionState {
     NOT_DETERMINED,
     GRANTED,
     DENIED,

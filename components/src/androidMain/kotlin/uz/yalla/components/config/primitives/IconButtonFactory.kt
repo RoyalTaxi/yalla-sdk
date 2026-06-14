@@ -5,9 +5,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import uz.yalla.components.primitives.button.IconButtonShape
 
-interface IconButtonFactory {
+public interface IconButtonFactory {
     @Composable
-    fun Content(
+    public fun Content(
         icon: String,
         shape: IconButtonShape,
         iconColor: Color,

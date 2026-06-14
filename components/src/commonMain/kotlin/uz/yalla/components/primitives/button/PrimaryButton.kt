@@ -32,7 +32,7 @@ import uz.yalla.resources.icons.Add
 import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
-data class PrimaryButtonColors(
+public data class PrimaryButtonColors(
     val contentColor: Color,
     val containerColor: Color,
     val disabledContentColor: Color,
@@ -47,11 +47,11 @@ data class PrimaryButtonColors(
     )
 
     @Composable
-    fun contentColorFor(enabled: Boolean) = if (enabled) contentColor else disabledContentColor
+    public fun contentColorFor(enabled: Boolean): Color = if (enabled) contentColor else disabledContentColor
 }
 
 @Immutable
-data class PrimaryButtonDimens(
+public data class PrimaryButtonDimens(
     val shape: Shape,
     val minHeight: Dp,
     val contentSpacing: Dp,
@@ -59,18 +59,18 @@ data class PrimaryButtonDimens(
 )
 
 @Immutable
-data class PrimaryButtonStyles(
+public data class PrimaryButtonStyles(
     val textStyle: TextStyle
 )
 
-object PrimaryButtonDefaults {
+public object PrimaryButtonDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         contentColor: Color = System.color.text.white,
         containerColor: Color = System.color.button.active,
         disabledContentColor: Color = System.color.text.white,
         disabledContainerColor: Color = System.color.button.disabled
-    ) = PrimaryButtonColors(
+    ): PrimaryButtonColors = PrimaryButtonColors(
         contentColor = contentColor,
         containerColor = containerColor,
         disabledContentColor = disabledContentColor,
@@ -78,12 +78,12 @@ object PrimaryButtonDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         minHeight: Dp = 24.dp,
         contentSpacing: Dp = 12.dp,
         contentPadding: PaddingValues = PaddingValues(20.dp)
-    ) = PrimaryButtonDimens(
+    ): PrimaryButtonDimens = PrimaryButtonDimens(
         shape = shape,
         minHeight = minHeight,
         contentSpacing = contentSpacing,
@@ -91,15 +91,15 @@ object PrimaryButtonDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         textStyle: TextStyle = System.font.body.base.medium
-    ) = PrimaryButtonStyles(
+    ): PrimaryButtonStyles = PrimaryButtonStyles(
         textStyle = textStyle
     )
 }
 
 @Composable
-fun PrimaryButton(
+public fun PrimaryButton(
     enabled: Boolean = true,
     loading: Boolean = false,
     modifier: Modifier = Modifier,

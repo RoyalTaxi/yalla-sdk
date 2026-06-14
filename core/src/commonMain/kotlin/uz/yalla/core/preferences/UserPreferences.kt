@@ -3,32 +3,32 @@ package uz.yalla.core.preferences
 import kotlinx.coroutines.flow.Flow
 import uz.yalla.core.payment.PaymentMethod
 
-interface UserPreferences {
-    val firstName: Flow<String>
+public interface UserPreferences {
+    public val firstName: Flow<String>
 
-    fun setFirstName(value: String)
+    public fun setFirstName(value: String)
 
-    val lastName: Flow<String>
+    public val lastName: Flow<String>
 
-    fun setLastName(value: String)
+    public fun setLastName(value: String)
 
-    val number: Flow<String>
+    public val number: Flow<String>
 
-    fun setNumber(value: String)
+    public fun setNumber(value: String)
 
-    val image: Flow<String>
+    public val image: Flow<String>
 
-    fun setImage(value: String)
+    public fun setImage(value: String)
 
-    val gender: Flow<String>
+    public val gender: Flow<String>
 
-    fun setGender(value: String)
+    public fun setGender(value: String)
 
-    val birthday: Flow<String>
+    public val birthday: Flow<String>
 
-    fun setBirthday(value: String)
+    public fun setBirthday(value: String)
 
-    val paymentMethod: Flow<PaymentMethod>
+    public val paymentMethod: Flow<PaymentMethod>
 
-    fun setPaymentMethod(value: PaymentMethod)
+    public fun setPaymentMethod(value: PaymentMethod)
 }

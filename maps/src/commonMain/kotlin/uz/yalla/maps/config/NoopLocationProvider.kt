@@ -6,10 +6,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.location.LocationProvider
 
-object NoopLocationProvider : LocationProvider {
+public object NoopLocationProvider : LocationProvider {
     override val currentLocation: StateFlow<GeoPoint?> = MutableStateFlow<GeoPoint?>(null).asStateFlow()
 
-    override fun startTracking() = Unit
+    override fun startTracking(): Unit = Unit
 
-    override fun stopTracking() = Unit
+    override fun stopTracking(): Unit = Unit
 }

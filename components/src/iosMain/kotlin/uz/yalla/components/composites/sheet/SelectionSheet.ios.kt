@@ -9,7 +9,7 @@ import uz.yalla.components.config.requireConfig
 import uz.yalla.components.platform.findKeyWindowRootController
 
 @Composable
-actual fun SelectionSheet(
+public actual fun SelectionSheet(
     isVisible: Boolean,
     title: String,
     items: List<SelectableItemModel>,

@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import uz.yalla.components.composites.item.ActionableItemModel
 
 @Composable
-expect fun ActionSheet(
+public expect fun ActionSheet(
     isVisible: Boolean,
     title: String,
     items: List<ActionableItemModel>,

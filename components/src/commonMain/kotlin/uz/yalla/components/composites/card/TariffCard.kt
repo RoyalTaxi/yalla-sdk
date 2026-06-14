@@ -35,7 +35,7 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_car_comfort
 
 @Immutable
-data class TariffCardColors(
+public data class TariffCardColors(
     val containerColor: Color,
     val selectedContainerColor: Color,
     val titleColor: Color,
@@ -44,7 +44,7 @@ data class TariffCardColors(
 )
 
 @Immutable
-data class TariffCardDimens(
+public data class TariffCardDimens(
     val shape: Shape,
     val height: Dp,
     val minWidth: Dp,
@@ -55,20 +55,20 @@ data class TariffCardDimens(
 )
 
 @Immutable
-data class TariffCardStyles(
+public data class TariffCardStyles(
     val titleStyle: TextStyle,
     val descriptionStyle: TextStyle
 )
 
-object TariffCardDefaults {
+public object TariffCardDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         containerColor: Color = System.color.background.secondary,
         selectedContainerColor: Color = System.color.background.base,
         titleColor: Color = System.color.text.base,
         descriptionColor: Color = System.color.text.base,
         selectedBorder: Brush = System.color.gradient.sunsetNight
-    ) = TariffCardColors(
+    ): TariffCardColors = TariffCardColors(
         containerColor = containerColor,
         selectedContainerColor = selectedContainerColor,
         titleColor = titleColor,
@@ -77,7 +77,7 @@ object TariffCardDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RoundedCornerShape(20.dp),
         height: Dp = 120.dp,
         minWidth: Dp = 140.dp,
@@ -85,7 +85,7 @@ object TariffCardDefaults {
         selectedBorderWidth: Dp = 2.dp,
         titleDescriptionSpacing: Dp = 6.dp,
         descriptionImageSpacing: Dp = 10.dp
-    ) = TariffCardDimens(
+    ): TariffCardDimens = TariffCardDimens(
         shape = shape,
         height = height,
         minWidth = minWidth,
@@ -96,17 +96,17 @@ object TariffCardDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         titleStyle: TextStyle = System.font.body.base.bold,
         descriptionStyle: TextStyle = System.font.body.base.bold
-    ) = TariffCardStyles(
+    ): TariffCardStyles = TariffCardStyles(
         titleStyle = titleStyle,
         descriptionStyle = descriptionStyle
     )
 }
 
 @Composable
-fun TariffCard(
+public fun TariffCard(
     title: String,
     description: String? = null,
     selected: Boolean,
@@ -163,7 +163,7 @@ fun TariffCard(
 }
 
 @Composable
-fun TariffCard(
+public fun TariffCard(
     title: String,
     description: String? = null,
     selected: Boolean,

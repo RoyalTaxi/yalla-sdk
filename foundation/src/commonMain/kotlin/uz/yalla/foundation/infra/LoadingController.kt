@@ -17,7 +17,7 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.TimeSource
 
 @OptIn(ExperimentalCoroutinesApi::class)
-class LoadingController(
+public class LoadingController(
     scope: CoroutineScope,
     private val gracePeriod: Duration = GRACE_PERIOD,
     private val minVisible: Duration = MIN_VISIBLE
@@ -25,7 +25,7 @@ class LoadingController(
     private val active = MutableStateFlow(0)
     private var shownAt: TimeSource.Monotonic.ValueTimeMark? = null
 
-    val loading: StateFlow<Boolean> = active
+    public val loading: StateFlow<Boolean> = active
         .map { it > 0 }
         .distinctUntilChanged()
         .transformLatest { busy ->
@@ -42,7 +42,7 @@ class LoadingController(
         }
         .stateIn(scope, SharingStarted.Eagerly, false)
 
-    suspend fun <T> withLoading(block: suspend () -> T): T {
+    public suspend fun <T> withLoading(block: suspend () -> T): T {
         active.update { it + 1 }
         try {
             return block()
@@ -51,8 +51,8 @@ class LoadingController(
         }
     }
 
-    companion object {
-        val GRACE_PERIOD: Duration = 200.milliseconds
-        val MIN_VISIBLE: Duration = 500.milliseconds
+    public companion object {
+        public val GRACE_PERIOD: Duration = 200.milliseconds
+        public val MIN_VISIBLE: Duration = 500.milliseconds
     }
 }

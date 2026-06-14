@@ -1,15 +1,15 @@
 package uz.yalla.core.preferences
 
-interface StaticPreferences {
-    val localeCode: String
+public interface StaticPreferences {
+    public val localeCode: String
 
-    val isDeviceRegistered: Boolean
+    public val isDeviceRegistered: Boolean
 
-    val isGuestMode: Boolean
+    public val isGuestMode: Boolean
 
-    fun setLocaleCode(value: String)
+    public fun setLocaleCode(value: String)
 
-    fun setDeviceRegistered(value: Boolean)
+    public fun setDeviceRegistered(value: Boolean)
 
-    fun setGuestMode(value: Boolean)
+    public fun setGuestMode(value: Boolean)
 }

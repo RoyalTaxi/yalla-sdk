@@ -28,7 +28,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
 @Immutable
-data class ReasonChipColors(
+public data class ReasonChipColors(
     val containerColor: Color,
     val selectedContainerColor: Color,
     val textColor: Color,
@@ -36,7 +36,7 @@ data class ReasonChipColors(
 )
 
 @Immutable
-data class ReasonChipDimens(
+public data class ReasonChipDimens(
     val shape: Shape,
     val contentPadding: PaddingValues,
     val contentSpacing: Dp,
@@ -44,18 +44,18 @@ data class ReasonChipDimens(
 )
 
 @Immutable
-data class ReasonChipStyles(
+public data class ReasonChipStyles(
     val textStyle: TextStyle
 )
 
-object ReasonChipDefaults {
+public object ReasonChipDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         containerColor: Color = System.color.background.secondary,
         selectedContainerColor: Color = System.color.background.brand,
         textColor: Color = System.color.text.base,
         selectedTextColor: Color = System.color.background.base
-    ) = ReasonChipColors(
+    ): ReasonChipColors = ReasonChipColors(
         containerColor = containerColor,
         selectedContainerColor = selectedContainerColor,
         textColor = textColor,
@@ -63,12 +63,12 @@ object ReasonChipDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RoundedCornerShape(12.dp),
         contentPadding: PaddingValues = PaddingValues(12.dp),
         contentSpacing: Dp = 12.dp,
         iconSize: Dp = 24.dp
-    ) = ReasonChipDimens(
+    ): ReasonChipDimens = ReasonChipDimens(
         shape = shape,
         contentPadding = contentPadding,
         contentSpacing = contentSpacing,
@@ -76,15 +76,15 @@ object ReasonChipDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         textStyle: TextStyle = System.font.body.small.bold
-    ) = ReasonChipStyles(
+    ): ReasonChipStyles = ReasonChipStyles(
         textStyle = textStyle
     )
 }
 
 @Composable
-fun ReasonChip(
+public fun ReasonChip(
     text: String,
     selected: Boolean,
     onClick: () -> Unit,
@@ -124,7 +124,7 @@ fun ReasonChip(
 }
 
 @Composable
-fun ReasonChip(
+public fun ReasonChip(
     text: String,
     selected: Boolean,
     imageUrl: String?,

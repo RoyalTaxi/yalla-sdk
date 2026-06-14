@@ -3,19 +3,19 @@ package uz.yalla.core.order
 import uz.yalla.core.identity.ExtraServiceId
 import uz.yalla.core.util.normalizedId
 
-data class ExtraService(
+public data class ExtraService(
     val id: ExtraServiceId,
     val cost: Int,
     val name: String,
     val costType: CostType,
     val icon: String? = null
 ) {
-    enum class CostType(val id: String) {
+    public enum class CostType(public val id: String) {
         Fixed("cost"),
         Percent("percent");
 
-        companion object {
-            fun from(id: String?): CostType = entries.find { it.id == id.normalizedId() } ?: Fixed
+        public companion object {
+            public fun from(id: String?): CostType = entries.find { it.id == id.normalizedId() } ?: Fixed
         }
     }
 }

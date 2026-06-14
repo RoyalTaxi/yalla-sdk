@@ -5,20 +5,20 @@ import uz.yalla.core.settings.LocaleKind
 import uz.yalla.core.settings.MapKind
 import uz.yalla.core.settings.ThemeKind
 
-interface InterfacePreferences {
-    val localeType: Flow<LocaleKind>
+public interface InterfacePreferences {
+    public val localeType: Flow<LocaleKind>
 
-    fun setLocaleType(value: LocaleKind)
+    public fun setLocaleType(value: LocaleKind)
 
-    val themeType: Flow<ThemeKind>
+    public val themeType: Flow<ThemeKind>
 
-    fun setThemeType(value: ThemeKind)
+    public fun setThemeType(value: ThemeKind)
 
-    val mapKind: Flow<MapKind>
+    public val mapKind: Flow<MapKind>
 
-    fun setMapKind(value: MapKind)
+    public fun setMapKind(value: MapKind)
 
-    val skipOnboarding: Flow<Boolean>
+    public val skipOnboarding: Flow<Boolean>
 
-    fun setSkipOnboarding(value: Boolean)
+    public fun setSkipOnboarding(value: Boolean)
 }

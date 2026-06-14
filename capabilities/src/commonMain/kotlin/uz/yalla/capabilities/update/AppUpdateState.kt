@@ -6,13 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 @Stable
-class AppUpdateState {
-    var isUpdateAvailable by mutableStateOf(false)
+public class AppUpdateState {
+    public var isUpdateAvailable: Boolean by mutableStateOf(false)
         internal set
 
-    var storeUrl by mutableStateOf("")
+    public var storeUrl: String by mutableStateOf("")
         internal set
 
-    var isChecking by mutableStateOf(true)
+    public var isChecking: Boolean by mutableStateOf(true)
         internal set
 }

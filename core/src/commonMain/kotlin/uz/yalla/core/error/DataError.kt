@@ -1,22 +1,22 @@
 package uz.yalla.core.error
 
-sealed class DataError {
-    sealed class Network : DataError() {
-        data object Connection : Network()
+public sealed class DataError {
+    public sealed class Network : DataError() {
+        public data object Connection : Network()
 
-        data object Timeout : Network()
+        public data object Timeout : Network()
 
-        data object Server : Network()
+        public data object Server : Network()
 
-        data object Client : Network()
+        public data object Client : Network()
 
-        data object Serialization : Network()
+        public data object Serialization : Network()
 
-        data object Guest : Network()
+        public data object Guest : Network()
 
-        data object Unknown : Network()
+        public data object Unknown : Network()
 
-        data class Api(
+        public data class Api(
             val code: Int? = null,
             val message: String? = null,
             val errorCode: String? = null,

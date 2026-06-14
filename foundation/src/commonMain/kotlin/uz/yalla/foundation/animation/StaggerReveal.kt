@@ -12,7 +12,7 @@ private const val DEFAULT_DURATION_MS = 300
 private const val DEFAULT_SLIDE_PX = 40f
 
 @Composable
-fun Modifier.staggerReveal(
+public fun Modifier.staggerReveal(
     visible: Boolean,
     index: Int,
     staggerMs: Int = DEFAULT_STAGGER_MS,

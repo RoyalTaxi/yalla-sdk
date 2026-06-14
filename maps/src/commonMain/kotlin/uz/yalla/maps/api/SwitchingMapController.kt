@@ -30,7 +30,7 @@ import uz.yalla.maps.config.MapFactory
 
 private const val PROVIDER_READY_TIMEOUT_MS = 5_000L
 
-class SwitchingMapController internal constructor(
+public class SwitchingMapController internal constructor(
     private val factory: MapFactory,
     private val initialPosition: CameraPosition? = null
 ) : MapController {
@@ -39,7 +39,7 @@ class SwitchingMapController internal constructor(
 
     private val active = MutableStateFlow<MapController?>(null)
 
-    val activeBackend: StateFlow<MapController?> = active
+    public val activeBackend: StateFlow<MapController?> = active
 
     private val _cameraPosition = MutableStateFlow(initialPosition ?: CameraPosition.DEFAULT)
     override val cameraPosition: StateFlow<CameraPosition> = _cameraPosition

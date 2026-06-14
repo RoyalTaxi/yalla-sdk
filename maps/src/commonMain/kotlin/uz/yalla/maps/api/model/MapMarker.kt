@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import uz.yalla.core.geo.GeoPoint
 
 @Immutable
-data class MapMarker(
+public data class MapMarker(
     val id: String,
     val point: GeoPoint,
     val icon: MapMarkerIcon? = null,

@@ -2,16 +2,16 @@ package uz.yalla.maps.api.ios
 
 import uz.yalla.core.geo.GeoPoint
 
-interface IosMapListener {
-    fun onCameraMove(target: GeoPoint, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean)
+public interface IosMapListener {
+    public fun onCameraMove(target: GeoPoint, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean)
 
-    fun onCameraIdle(target: GeoPoint, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean)
+    public fun onCameraIdle(target: GeoPoint, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean)
 
-    fun onReady()
+    public fun onReady()
 
-    fun onMarkerTapped(id: String)
+    public fun onMarkerTapped(id: String)
 
-    fun onMapTapped(point: GeoPoint)
+    public fun onMapTapped(point: GeoPoint)
 
-    fun onMapLongPressed(point: GeoPoint)
+    public fun onMapLongPressed(point: GeoPoint)
 }

@@ -11,7 +11,7 @@ import java.io.File
 
 private const val DATASTORE_FILE = "prefs.preferences_pb"
 
-actual fun createDataStore(): DataStore<Preferences> = object : KoinComponent {
+public actual fun createDataStore(): DataStore<Preferences> = object : KoinComponent {
     val context: Context by inject()
 }.run {
     PreferenceDataStoreFactory.createWithPath(

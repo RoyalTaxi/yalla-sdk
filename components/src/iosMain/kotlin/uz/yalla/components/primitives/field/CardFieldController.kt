@@ -30,12 +30,12 @@ import uz.yalla.foundation.theme.rememberIsDarkTheme
 import uz.yalla.resources.icons.Scan
 import uz.yalla.resources.icons.YallaIcons
 
-enum class CardFieldMask {
+public enum class CardFieldMask {
     CARD_NUMBER,
     EXPIRY
 }
 
-class CardFieldController(
+public class CardFieldController(
     value: String = "",
     placeholder: String = "",
     mask: CardFieldMask = CardFieldMask.CARD_NUMBER,
@@ -49,7 +49,7 @@ class CardFieldController(
     private val maxLength = if (mask == CardFieldMask.CARD_NUMBER) 16 else 4
 
     @OptIn(ExperimentalComposeUiApi::class)
-    val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
+    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
         YallaTheme(isDark = rememberIsDarkTheme()) {
             Box(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
@@ -102,11 +102,11 @@ class CardFieldController(
         }
     }
 
-    fun setValue(value: String) {
+    public fun setValue(value: String) {
         valueState = value
     }
 
-    fun setError(isError: Boolean) {
+    public fun setError(isError: Boolean) {
         errorState = isError
     }
 }

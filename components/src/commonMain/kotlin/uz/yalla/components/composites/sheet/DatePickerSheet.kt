@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import kotlinx.datetime.LocalDate
 
 @Composable
-expect fun DatePickerSheet(
+public expect fun DatePickerSheet(
     isVisible: Boolean,
     startDate: LocalDate,
     minDate: LocalDate? = null,

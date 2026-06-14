@@ -2,8 +2,8 @@ package uz.yalla.core.settings
 
 import uz.yalla.core.util.normalizedId
 
-enum class ThemeKind(
-    val id: String
+public enum class ThemeKind(
+    public val id: String
 ) {
     Light("light"),
 
@@ -11,8 +11,8 @@ enum class ThemeKind(
 
     System("system");
 
-    companion object {
-        fun from(id: String?): ThemeKind {
+    public companion object {
+        public fun from(id: String?): ThemeKind {
             val normalizedId = id.normalizedId()
             return entries.find { it.id == normalizedId } ?: System
         }

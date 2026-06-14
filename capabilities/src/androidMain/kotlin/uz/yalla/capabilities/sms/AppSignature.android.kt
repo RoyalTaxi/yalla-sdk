@@ -19,9 +19,9 @@ private val cachedSignature by lazy {
     runCatching { GlobalContext.get().get<Context>() }.getOrNull()?.let(::getAppSignature)
 }
 
-actual fun getAppSignature(): String? = cachedSignature
+public actual fun getAppSignature(): String? = cachedSignature
 
-fun getAppSignature(context: Context): String? = runCatching {
+public fun getAppSignature(context: Context): String? = runCatching {
     val packageName = context.packageName
     val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         context.packageManager

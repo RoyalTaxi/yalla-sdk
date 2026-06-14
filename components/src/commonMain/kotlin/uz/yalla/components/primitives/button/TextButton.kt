@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
 @Composable
-fun TextButton(
+public fun TextButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,

@@ -41,7 +41,7 @@ import uz.yalla.resources.icons.ArrowRight
 import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
-data class LocationButtonColors(
+public data class LocationButtonColors(
     val dotColor: Color,
     val titleColor: Color,
     val descriptionColor: Color,
@@ -50,27 +50,27 @@ data class LocationButtonColors(
 )
 
 @Immutable
-data class LocationButtonDimens(
+public data class LocationButtonDimens(
     val shape: Shape,
     val contentSpacing: Dp,
     val contentPadding: PaddingValues
 )
 
 @Immutable
-data class LocationButtonStyles(
+public data class LocationButtonStyles(
     val titleStyle: TextStyle,
     val descriptionStyle: TextStyle
 )
 
-object LocationButtonDefaults {
+public object LocationButtonDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         dotColor: Color = System.color.background.brand,
         titleColor: Color = System.color.text.base,
         descriptionColor: Color = System.color.text.base,
         iconColor: Color = System.color.icon.base,
         containerColor: Color = System.color.background.secondary
-    ) = LocationButtonColors(
+    ): LocationButtonColors = LocationButtonColors(
         dotColor = dotColor,
         titleColor = titleColor,
         descriptionColor = descriptionColor,
@@ -79,30 +79,30 @@ object LocationButtonDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RectangleShape,
         contentSpacing: Dp = 12.dp,
         contentPadding: PaddingValues = PaddingValues(
             vertical = 12.dp,
             horizontal = 16.dp
         )
-    ) = LocationButtonDimens(
+    ): LocationButtonDimens = LocationButtonDimens(
         shape = shape,
         contentSpacing = contentSpacing,
         contentPadding = contentPadding
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         titleStyle: TextStyle = System.font.body.base.bold,
         descriptionStyle: TextStyle = System.font.body.small.medium
-    ) = LocationButtonStyles(
+    ): LocationButtonStyles = LocationButtonStyles(
         titleStyle = titleStyle,
         descriptionStyle = descriptionStyle
     )
 
     @Composable
-    fun LeadingView(
+    public fun LeadingView(
         color: Color
     ) {
         Box(
@@ -121,7 +121,7 @@ object LocationButtonDefaults {
     }
 
     @Composable
-    fun Content(
+    public fun Content(
         title: String,
         description: String?,
         modifier: Modifier = Modifier,
@@ -153,7 +153,7 @@ object LocationButtonDefaults {
     @Suppress("DEPRECATION")
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
-    fun Content(
+    public fun Content(
         vararg titles: String,
         modifier: Modifier = Modifier,
         colors: LocationButtonColors,
@@ -198,7 +198,7 @@ object LocationButtonDefaults {
     }
 
     @Composable
-    fun TrailingView(
+    public fun TrailingView(
         color: Color,
         onClick: () -> Unit
     ) {
@@ -247,7 +247,7 @@ private fun LocationButtonContainer(
 }
 
 @Composable
-fun LocationButton(
+public fun LocationButton(
     title: String,
     description: String? = null,
     onClick: () -> Unit,
@@ -267,7 +267,7 @@ fun LocationButton(
             onClick = it
         )
     }
-) = LocationButtonContainer(
+): Unit = LocationButtonContainer(
     onClick = onClick,
     onTrailingViewClick = onTrailingViewClick,
     modifier = modifier,
@@ -286,7 +286,7 @@ fun LocationButton(
 }
 
 @Composable
-fun LocationButton(
+public fun LocationButton(
     vararg titles: String,
     onClick: () -> Unit,
     onTrailingViewClick: (() -> Unit)? = null,
@@ -305,7 +305,7 @@ fun LocationButton(
             onClick = it
         )
     }
-) = LocationButtonContainer(
+): Unit = LocationButtonContainer(
     onClick = onClick,
     onTrailingViewClick = onTrailingViewClick,
     modifier = modifier,

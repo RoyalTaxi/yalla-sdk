@@ -1,6 +1,6 @@
 package uz.yalla.core.profile
 
-data class Client(
+public data class Client(
     val phone: String,
     val name: String,
     val surname: String,

@@ -15,7 +15,7 @@ import uz.yalla.resources.icons.Trash
 import uz.yalla.resources.icons.Uzcard
 import uz.yalla.resources.icons.YallaIcons
 
-fun String.asImageVector(): ImageVector? = when (this) {
+public fun String.asImageVector(): ImageVector? = when (this) {
     "camera" -> YallaIcons.Camera
     "gallery" -> YallaIcons.Gallery
     "trash" -> YallaIcons.Trash

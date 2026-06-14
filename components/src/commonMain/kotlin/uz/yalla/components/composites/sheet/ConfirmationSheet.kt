@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import uz.yalla.design.image.ThemedImage
 
 @Composable
-expect fun ConfirmationSheet(
+public expect fun ConfirmationSheet(
     isVisible: Boolean,
     image: ThemedImage,
     title: String,

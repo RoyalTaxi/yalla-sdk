@@ -5,13 +5,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import uz.yalla.design.theme.System
 
-enum class IconButtonShape {
+public enum class IconButtonShape {
     CIRCLE,
     SQUIRCLE,
 }
 
 @Composable
-expect fun IconButton(
+public expect fun IconButton(
     icon: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,

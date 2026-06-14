@@ -35,7 +35,7 @@ private const val PresentationPollMillis = 16L
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-actual fun ContentSheet(
+public actual fun ContentSheet(
     isVisible: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier,

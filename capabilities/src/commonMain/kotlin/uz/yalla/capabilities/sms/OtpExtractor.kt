@@ -2,7 +2,7 @@ package uz.yalla.capabilities.sms
 
 private val CodeKeyword = Regex("(?:kod|code|код)", RegexOption.IGNORE_CASE)
 
-fun extractOtp(
+public fun extractOtp(
     message: String,
     length: Int,
     alphanumeric: Boolean

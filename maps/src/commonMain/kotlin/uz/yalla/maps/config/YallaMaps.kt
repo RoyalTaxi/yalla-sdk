@@ -1,13 +1,13 @@
 package uz.yalla.maps.config
 
-object YallaMaps {
+public object YallaMaps {
     @PublishedApi internal var config: MapsConfig? = null
 
-    fun install(config: MapsConfig) {
+    public fun install(config: MapsConfig) {
         this.config = config
     }
 
-    fun current(): MapsConfig = config
+    public fun current(): MapsConfig = config
         ?: error("YallaMaps not installed. Call YallaMaps.install(...) at app start.")
 }
 

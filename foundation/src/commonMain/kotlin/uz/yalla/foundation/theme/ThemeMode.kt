@@ -10,7 +10,7 @@ import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.settings.ThemeKind
 
 @Composable
-fun rememberIsDarkTheme(): Boolean {
+public fun rememberIsDarkTheme(): Boolean {
     val preferences = remember { KoinPlatform.getKoin().get<InterfacePreferences>() }
     val theme by preferences.themeType.collectAsState(ThemeKind.System)
     return when (theme) {

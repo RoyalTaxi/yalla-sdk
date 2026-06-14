@@ -7,7 +7,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 
 @Composable
-fun Modifier.clearFocusOnTap(): Modifier {
+public fun Modifier.clearFocusOnTap(): Modifier {
     val focusManager = LocalFocusManager.current
     return this.pointerInput(Unit) {
         detectTapGestures(onTap = { focusManager.clearFocus() })

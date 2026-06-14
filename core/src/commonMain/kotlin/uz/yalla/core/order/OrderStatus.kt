@@ -1,28 +1,28 @@
 package uz.yalla.core.order
 
-sealed class OrderStatus(val id: String) {
-    data object New : OrderStatus("new")
+public sealed class OrderStatus(public val id: String) {
+    public data object New : OrderStatus("new")
 
-    data object Sending : OrderStatus("sending")
+    public data object Sending : OrderStatus("sending")
 
-    data object UserSending : OrderStatus("user_sending")
+    public data object UserSending : OrderStatus("user_sending")
 
-    data object NonStopSending : OrderStatus("nonstop_sending")
+    public data object NonStopSending : OrderStatus("nonstop_sending")
 
-    data object Appointed : OrderStatus("appointed")
+    public data object Appointed : OrderStatus("appointed")
 
-    data object AtAddress : OrderStatus("at_address")
+    public data object AtAddress : OrderStatus("at_address")
 
-    data object InProgress : OrderStatus("in_progress")
+    public data object InProgress : OrderStatus("in_progress")
 
-    data object Completed : OrderStatus("completed")
+    public data object Completed : OrderStatus("completed")
 
-    data object Canceled : OrderStatus("canceled")
+    public data object Canceled : OrderStatus("canceled")
 
-    data class Unknown(val originalId: String) : OrderStatus("unknown")
+    public data class Unknown(val originalId: String) : OrderStatus("unknown")
 
-    companion object {
-        fun from(id: String?): OrderStatus = when (id?.trim()?.lowercase()) {
+    public companion object {
+        public fun from(id: String?): OrderStatus = when (id?.trim()?.lowercase()) {
             "new" -> New
             "sending" -> Sending
             "user_sending" -> UserSending
@@ -39,7 +39,7 @@ sealed class OrderStatus(val id: String) {
         // Building these sets eagerly in the companion `<clinit>` re-enters each object's
         // initializer while `OrderStatus` is still being class-initialized on the same thread,
         // which leaves the first such reference (Appointed) as a `null` element in the set.
-        val active: Set<OrderStatus> by lazy {
+        public val active: Set<OrderStatus> by lazy {
             setOf(
                 Appointed,
                 AtAddress,
@@ -47,7 +47,7 @@ sealed class OrderStatus(val id: String) {
             )
         }
 
-        val ongoing: Set<OrderStatus> by lazy {
+        public val ongoing: Set<OrderStatus> by lazy {
             setOf(
                 New,
                 Sending,
@@ -59,7 +59,7 @@ sealed class OrderStatus(val id: String) {
             )
         }
 
-        val nonInteractive: Set<OrderStatus> by lazy {
+        public val nonInteractive: Set<OrderStatus> by lazy {
             setOf(
                 New,
                 Sending,

@@ -11,7 +11,7 @@ import uz.yalla.design.image.ThemedImage
 import uz.yalla.design.theme.System
 
 @Composable
-actual fun ConfirmationSheet(
+public actual fun ConfirmationSheet(
     isVisible: Boolean,
     image: ThemedImage,
     title: String,

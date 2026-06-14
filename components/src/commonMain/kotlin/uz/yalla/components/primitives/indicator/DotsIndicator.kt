@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
 @Composable
-fun DotsIndicator(
+public fun DotsIndicator(
     pageCount: Int,
     currentPage: Int,
     onPageChange: (Int) -> Unit,

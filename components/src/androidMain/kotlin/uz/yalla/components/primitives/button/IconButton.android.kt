@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 import uz.yalla.components.config.requireConfig
 
 @Composable
-actual fun IconButton(
+public actual fun IconButton(
     icon: String,
     onClick: () -> Unit,
     modifier: Modifier,

@@ -5,15 +5,15 @@ import platform.UIKit.UIViewController
 import uz.yalla.components.composites.item.ActionableItemModel
 import uz.yalla.components.composites.item.SelectableItemModel
 
-interface SheetFactory {
-    fun createShell(
+public interface SheetFactory {
+    public fun createShell(
         fullHeight: Boolean,
         sheetSwipeEnabled: Boolean,
         contentController: UIViewController,
         onDismissRequest: () -> Unit
     ): ContentSheetHandle
 
-    fun createContent(
+    public fun createContent(
         fullHeight: Boolean,
         sheetSwipeEnabled: Boolean,
         title: String?,
@@ -22,7 +22,7 @@ interface SheetFactory {
         onDismissRequest: () -> Unit
     ): ContentSheetHandle
 
-    fun createConfirmation(
+    public fun createConfirmation(
         imageResource: String,
         isDark: Boolean,
         header: String?,
@@ -34,7 +34,7 @@ interface SheetFactory {
         onDismissRequest: () -> Unit
     ): ConfirmationSheetHandle
 
-    fun createSelection(
+    public fun createSelection(
         title: String,
         items: List<SelectableItemModel>,
         selectedId: String?,
@@ -42,14 +42,14 @@ interface SheetFactory {
         onDismissRequest: () -> Unit
     ): SelectionSheetHandle
 
-    fun createAction(
+    public fun createAction(
         title: String,
         items: List<ActionableItemModel>,
         onAction: (id: String) -> Unit,
         onDismissRequest: () -> Unit
     ): ActionSheetHandle
 
-    fun createDatePicker(
+    public fun createDatePicker(
         startDate: NSDate,
         minDate: NSDate?,
         maxDate: NSDate?,
@@ -59,7 +59,7 @@ interface SheetFactory {
         onDismissRequest: () -> Unit
     ): DatePickerSheetHandle
 
-    fun createVerification(
+    public fun createVerification(
         code: String,
         codeLength: Int,
         headline: String,
@@ -78,7 +78,7 @@ interface SheetFactory {
         onDismissRequest: () -> Unit
     ): VerificationSheetHandle
 
-    fun createPromoCode(
+    public fun createPromoCode(
         code: String,
         title: String,
         headline: String,
@@ -91,7 +91,7 @@ interface SheetFactory {
         onDismissRequest: () -> Unit
     ): PromoCodeSheetHandle
 
-    fun createNotificationDetail(
+    public fun createNotificationDetail(
         title: String,
         date: String,
         body: String,
@@ -99,7 +99,7 @@ interface SheetFactory {
         onDismissRequest: () -> Unit
     ): NotificationDetailSheetHandle
 
-    fun createAddCard(
+    public fun createAddCard(
         cardNumber: String,
         cardExpiry: String,
         title: String,
@@ -115,41 +115,41 @@ interface SheetFactory {
     ): AddCardSheetHandle
 }
 
-class ContentSheetHandle(
-    val viewController: UIViewController,
-    val present: (parent: UIViewController) -> Unit,
-    val dismiss: () -> Unit,
-    val updateContentHeight: (height: Double) -> Unit
+public class ContentSheetHandle(
+    public val viewController: UIViewController,
+    public val present: (parent: UIViewController) -> Unit,
+    public val dismiss: () -> Unit,
+    public val updateContentHeight: (height: Double) -> Unit
 )
 
-class ConfirmationSheetHandle(
-    val viewController: UIViewController,
-    val present: (parent: UIViewController) -> Unit,
-    val dismiss: () -> Unit
+public class ConfirmationSheetHandle(
+    public val viewController: UIViewController,
+    public val present: (parent: UIViewController) -> Unit,
+    public val dismiss: () -> Unit
 )
 
-class SelectionSheetHandle(
-    val viewController: UIViewController,
-    val present: (parent: UIViewController) -> Unit,
-    val dismiss: () -> Unit
+public class SelectionSheetHandle(
+    public val viewController: UIViewController,
+    public val present: (parent: UIViewController) -> Unit,
+    public val dismiss: () -> Unit
 )
 
-class ActionSheetHandle(
-    val viewController: UIViewController,
-    val present: (parent: UIViewController) -> Unit,
-    val dismiss: () -> Unit
+public class ActionSheetHandle(
+    public val viewController: UIViewController,
+    public val present: (parent: UIViewController) -> Unit,
+    public val dismiss: () -> Unit
 )
 
-class DatePickerSheetHandle(
-    val viewController: UIViewController,
-    val present: (parent: UIViewController) -> Unit,
-    val dismiss: () -> Unit
+public class DatePickerSheetHandle(
+    public val viewController: UIViewController,
+    public val present: (parent: UIViewController) -> Unit,
+    public val dismiss: () -> Unit
 )
 
-class VerificationSheetHandle(
-    val viewController: UIViewController,
-    val present: (parent: UIViewController) -> Unit,
-    val update: (
+public class VerificationSheetHandle(
+    public val viewController: UIViewController,
+    public val present: (parent: UIViewController) -> Unit,
+    public val update: (
         code: String,
         description: String,
         isError: Boolean,
@@ -157,25 +157,25 @@ class VerificationSheetHandle(
         resendText: String,
         resendEnabled: Boolean
     ) -> Unit,
-    val dismiss: () -> Unit
+    public val dismiss: () -> Unit
 )
 
-class PromoCodeSheetHandle(
-    val viewController: UIViewController,
-    val present: (parent: UIViewController) -> Unit,
-    val update: (code: String, isLoading: Boolean) -> Unit,
-    val dismiss: () -> Unit
+public class PromoCodeSheetHandle(
+    public val viewController: UIViewController,
+    public val present: (parent: UIViewController) -> Unit,
+    public val update: (code: String, isLoading: Boolean) -> Unit,
+    public val dismiss: () -> Unit
 )
 
-class NotificationDetailSheetHandle(
-    val viewController: UIViewController,
-    val present: (parent: UIViewController) -> Unit,
-    val dismiss: () -> Unit
+public class NotificationDetailSheetHandle(
+    public val viewController: UIViewController,
+    public val present: (parent: UIViewController) -> Unit,
+    public val dismiss: () -> Unit
 )
 
-class AddCardSheetHandle(
-    val viewController: UIViewController,
-    val present: (parent: UIViewController) -> Unit,
-    val update: (cardNumber: String, cardExpiry: String, isError: Boolean, isLoading: Boolean) -> Unit,
-    val dismiss: () -> Unit
+public class AddCardSheetHandle(
+    public val viewController: UIViewController,
+    public val present: (parent: UIViewController) -> Unit,
+    public val update: (cardNumber: String, cardExpiry: String, isError: Boolean, isLoading: Boolean) -> Unit,
+    public val dismiss: () -> Unit
 )

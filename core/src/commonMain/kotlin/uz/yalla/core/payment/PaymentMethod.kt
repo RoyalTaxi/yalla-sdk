@@ -3,13 +3,13 @@ package uz.yalla.core.payment
 import uz.yalla.core.identity.CardId
 import uz.yalla.core.util.normalizedId
 
-sealed class PaymentMethod(val id: String) {
-    data object Cash : PaymentMethod("cash")
+public sealed class PaymentMethod(public val id: String) {
+    public data object Cash : PaymentMethod("cash")
 
-    data class Card(val cardId: CardId, val maskedNumber: String) : PaymentMethod("card")
+    public data class Card(val cardId: CardId, val maskedNumber: String) : PaymentMethod("card")
 
-    companion object {
-        fun from(
+    public companion object {
+        public fun from(
             id: String?,
             cardId: CardId? = null,
             maskedNumber: String? = null

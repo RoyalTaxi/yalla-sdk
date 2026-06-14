@@ -38,7 +38,7 @@ import uz.yalla.resources.icons.Unchecked
 import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
-data class SelectableItemModel(
+public data class SelectableItemModel(
     val id: String,
     val text: String,
     val icon: String? = null,
@@ -46,7 +46,7 @@ data class SelectableItemModel(
 )
 
 @Immutable
-data class SelectableItemColors(
+public data class SelectableItemColors(
     val iconColor: Color,
     val textColor: Color,
     val containerColor: Color,
@@ -59,23 +59,23 @@ data class SelectableItemColors(
     val selectedIndicatorColor: Color
 ) {
     @Composable
-    fun iconColorFor(selected: Boolean) = if (selected) selectedIconColor else iconColor
+    public fun iconColorFor(selected: Boolean): Color = if (selected) selectedIconColor else iconColor
 
     @Composable
-    fun textColorFor(selected: Boolean) = if (selected) selectedTextColor else textColor
+    public fun textColorFor(selected: Boolean): Color = if (selected) selectedTextColor else textColor
 
     @Composable
-    fun containerColorFor(selected: Boolean) = if (selected) selectedContainerColor else containerColor
+    public fun containerColorFor(selected: Boolean): Color = if (selected) selectedContainerColor else containerColor
 
     @Composable
-    fun borderColorFor(selected: Boolean) = if (selected) selectedBorderColor else borderColor
+    public fun borderColorFor(selected: Boolean): Color = if (selected) selectedBorderColor else borderColor
 
     @Composable
-    fun indicatorColorFor(selected: Boolean) = if (selected) selectedIndicatorColor else indicatorColor
+    public fun indicatorColorFor(selected: Boolean): Color = if (selected) selectedIndicatorColor else indicatorColor
 }
 
 @Immutable
-data class SelectableItemDimens(
+public data class SelectableItemDimens(
     val shape: Shape,
     val contentSpacing: Dp,
     val contentPadding: PaddingValues,
@@ -85,15 +85,15 @@ data class SelectableItemDimens(
 )
 
 @Immutable
-data class SelectableItemStyles(
+public data class SelectableItemStyles(
     val textStyle: TextStyle,
     val textMaxLines: Int,
     val textOverflow: TextOverflow
 )
 
-object SelectableItemDefaults {
+public object SelectableItemDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         iconColor: Color = Color.Unspecified,
         textColor: Color = System.color.text.base,
         containerColor: Color = Color.Transparent,
@@ -104,7 +104,7 @@ object SelectableItemDefaults {
         selectedBorderColor: Color = Color.Transparent,
         indicatorColor: Color = Color.Unspecified,
         selectedIndicatorColor: Color = Color.Unspecified
-    ) = SelectableItemColors(
+    ): SelectableItemColors = SelectableItemColors(
         iconColor = iconColor,
         textColor = textColor,
         containerColor = containerColor,
@@ -118,7 +118,7 @@ object SelectableItemDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         contentSpacing: Dp = 8.dp,
         contentPadding: PaddingValues = PaddingValues(
@@ -128,7 +128,7 @@ object SelectableItemDefaults {
         iconSize: Dp = 34.dp,
         indicatorSize: Dp = 24.dp,
         borderWidth: Dp = 1.dp
-    ) = SelectableItemDimens(
+    ): SelectableItemDimens = SelectableItemDimens(
         shape = shape,
         contentSpacing = contentSpacing,
         contentPadding = contentPadding,
@@ -138,11 +138,11 @@ object SelectableItemDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         textStyle: TextStyle = System.font.body.small.medium,
         textMaxLines: Int = Int.MAX_VALUE,
         textOverflow: TextOverflow = TextOverflow.Clip
-    ) = SelectableItemStyles(
+    ): SelectableItemStyles = SelectableItemStyles(
         textStyle = textStyle,
         textMaxLines = textMaxLines,
         textOverflow = textOverflow
@@ -150,7 +150,7 @@ object SelectableItemDefaults {
 }
 
 @Composable
-fun SelectableItem(
+public fun SelectableItem(
     text: String,
     selected: Boolean,
     onClick: () -> Unit,
@@ -216,7 +216,7 @@ fun SelectableItem(
 }
 
 @Composable
-fun SelectableItem(
+public fun SelectableItem(
     text: String,
     selected: Boolean,
     imageVector: ImageVector,
@@ -227,7 +227,7 @@ fun SelectableItem(
     colors: SelectableItemColors = SelectableItemDefaults.colors(),
     dimens: SelectableItemDimens = SelectableItemDefaults.dimens(),
     styles: SelectableItemStyles = SelectableItemDefaults.styles()
-) = SelectableItem(
+): Unit = SelectableItem(
     text = text,
     selected = selected,
     onClick = onClick,
@@ -241,7 +241,7 @@ fun SelectableItem(
 )
 
 @Composable
-fun SelectableItem(
+public fun SelectableItem(
     text: String,
     selected: Boolean,
     leadingImageUrl: String,
@@ -252,7 +252,7 @@ fun SelectableItem(
     colors: SelectableItemColors = SelectableItemDefaults.colors(),
     dimens: SelectableItemDimens = SelectableItemDefaults.dimens(),
     styles: SelectableItemStyles = SelectableItemDefaults.styles()
-) = SelectableItem(
+): Unit = SelectableItem(
     text = text,
     selected = selected,
     onClick = onClick,

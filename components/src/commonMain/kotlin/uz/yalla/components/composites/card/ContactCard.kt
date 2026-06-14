@@ -24,7 +24,7 @@ import uz.yalla.resources.icons.Telegram
 import uz.yalla.resources.icons.YallaIcons
 
 @Composable
-fun ContactCard(
+public fun ContactCard(
     title: String,
     painter: Painter,
     modifier: Modifier = Modifier,

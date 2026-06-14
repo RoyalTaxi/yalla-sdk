@@ -2,8 +2,8 @@ package uz.yalla.core.profile
 
 import uz.yalla.core.util.normalizedId
 
-enum class GenderKind(
-    val id: String
+public enum class GenderKind(
+    public val id: String
 ) {
     Male("male"),
 
@@ -11,8 +11,8 @@ enum class GenderKind(
 
     NotSelected("not_selected");
 
-    companion object {
-        fun from(id: String?): GenderKind {
+    public companion object {
+        public fun from(id: String?): GenderKind {
             val normalizedId = id.normalizedId()
             return entries.find { it.id == normalizedId } ?: NotSelected
         }

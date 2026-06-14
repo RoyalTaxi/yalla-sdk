@@ -1,6 +1,6 @@
 package uz.yalla.core.util
 
-fun Long.formatMoney(): String {
+public fun Long.formatMoney(): String {
     val isNegative = this < 0
     val absValue = if (isNegative) -this else this
     val str = absValue.toString()
@@ -13,4 +13,4 @@ fun Long.formatMoney(): String {
     return if (isNegative) "-$result" else result
 }
 
-fun Long?.formatMoney(): String = (this ?: 0L).formatMoney()
+public fun Long?.formatMoney(): String = (this ?: 0L).formatMoney()

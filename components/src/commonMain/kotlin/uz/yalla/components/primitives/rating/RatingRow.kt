@@ -6,7 +6,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import uz.yalla.design.theme.YallaTheme
 
 @Composable
-fun RatingRow(
+public fun RatingRow(
     rating: Int,
     onRatingChange: (Int) -> Unit,
     modifier: Modifier = Modifier

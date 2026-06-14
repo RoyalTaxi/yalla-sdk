@@ -6,7 +6,7 @@ import org.jetbrains.compose.resources.painterResource
 import uz.yalla.design.theme.LocalIsDark
 
 @Composable
-fun themedPainter(image: ThemedImage): Painter {
+public fun themedPainter(image: ThemedImage): Painter {
     val resource = if (LocalIsDark.current) image.dark else image.light
     return painterResource(resource)
 }

@@ -2,24 +2,24 @@ package uz.yalla.core.preferences
 
 import kotlinx.coroutines.flow.Flow
 
-interface SessionPreferences {
-    val accessToken: Flow<String>
+public interface SessionPreferences {
+    public val accessToken: Flow<String>
 
-    fun setAccessToken(value: String)
+    public fun setAccessToken(value: String)
 
-    val firebaseToken: Flow<String>
+    public val firebaseToken: Flow<String>
 
-    fun setFirebaseToken(value: String)
+    public fun setFirebaseToken(value: String)
 
-    val isGuestMode: Flow<Boolean>
+    public val isGuestMode: Flow<Boolean>
 
-    fun setGuestMode(value: Boolean)
+    public fun setGuestMode(value: Boolean)
 
-    val isDeviceRegistered: Flow<Boolean>
+    public val isDeviceRegistered: Flow<Boolean>
 
-    fun setDeviceRegistered(value: Boolean)
+    public fun setDeviceRegistered(value: Boolean)
 
-    fun clearSession()
+    public fun clearSession()
 
-    fun clearAll()
+    public fun clearAll()
 }

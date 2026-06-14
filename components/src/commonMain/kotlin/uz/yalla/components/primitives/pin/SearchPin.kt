@@ -18,7 +18,7 @@ private const val LottieResourcePath = "files/lottie_order_search.json"
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-fun SearchPin(
+public fun SearchPin(
     modifier: Modifier = Modifier
 ) {
     val composition by rememberLottieComposition {

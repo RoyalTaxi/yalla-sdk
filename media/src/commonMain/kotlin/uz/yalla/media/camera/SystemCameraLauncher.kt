@@ -4,13 +4,13 @@ import androidx.compose.runtime.Composable
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-expect fun rememberSystemCameraLauncher(
+public expect fun rememberSystemCameraLauncher(
     scope: CoroutineScope,
     onResult: (ByteArray?) -> Unit
 ): SystemCameraLauncher
 
-class SystemCameraLauncher internal constructor(
+public class SystemCameraLauncher internal constructor(
     private val onLaunch: () -> Unit
 ) {
-    fun launch() = onLaunch()
+    public fun launch(): Unit = onLaunch()
 }

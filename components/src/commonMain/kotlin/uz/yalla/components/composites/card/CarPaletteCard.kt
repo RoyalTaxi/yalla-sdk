@@ -37,23 +37,23 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_flag_uz_square
 
 @Immutable
-data class CarPaletteCardDimens(
+public data class CarPaletteCardDimens(
     val height: Dp,
     val cornerRadius: Dp,
     val borderWidth: Dp,
     val dotSize: Dp
 )
 
-object CarPaletteCardDefaults {
+public object CarPaletteCardDefaults {
     internal const val BASE_HEIGHT: Float = 24f
 
     @Composable
-    fun dimens(
+    public fun dimens(
         height: Dp = 24.dp,
         cornerRadius: Dp = 4.dp,
         borderWidth: Dp = 1.dp,
         dotSize: Dp = 2.dp
-    ) = CarPaletteCardDimens(
+    ): CarPaletteCardDimens = CarPaletteCardDimens(
         height = height,
         cornerRadius = cornerRadius,
         borderWidth = borderWidth,
@@ -62,7 +62,7 @@ object CarPaletteCardDefaults {
 }
 
 @Composable
-fun CarPaletteCard(
+public fun CarPaletteCard(
     code: String,
     number: List<String>,
     modifier: Modifier = Modifier,
@@ -154,7 +154,7 @@ fun CarPaletteCard(
 }
 
 @Composable
-fun CarPaletteCard(
+public fun CarPaletteCard(
     stateNumber: String,
     modifier: Modifier = Modifier,
     dimens: CarPaletteCardDimens = CarPaletteCardDefaults.dimens()

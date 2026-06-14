@@ -26,7 +26,7 @@ import uz.yalla.resources.icons.Gallery
 import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
-data class ActionableItemModel(
+public data class ActionableItemModel(
     val id: String,
     val text: String,
     val icon: String,
@@ -35,26 +35,26 @@ data class ActionableItemModel(
 )
 
 @Immutable
-data class ActionableItemColors(
+public data class ActionableItemColors(
     val iconColor: Color,
     val textColor: Color,
     val trailingIconColor: Color
 )
 
-object ActionableItemDefaults {
+public object ActionableItemDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         iconColor: Color = System.color.icon.base,
         textColor: Color = System.color.text.base,
         trailingIconColor: Color = System.color.icon.base
-    ) = ActionableItemColors(
+    ): ActionableItemColors = ActionableItemColors(
         iconColor = iconColor,
         textColor = textColor,
         trailingIconColor = trailingIconColor
     )
 
     @Composable
-    fun colorsFor(model: ActionableItemModel): ActionableItemColors {
+    public fun colorsFor(model: ActionableItemModel): ActionableItemColors {
         if (!model.isDestructive) return colors()
         val redIcon = System.color.icon.red
         val redText = System.color.text.red
@@ -69,7 +69,7 @@ object ActionableItemDefaults {
 }
 
 @Composable
-fun ActionableItem(
+public fun ActionableItem(
     text: String,
     painter: Painter?,
     modifier: Modifier = Modifier,

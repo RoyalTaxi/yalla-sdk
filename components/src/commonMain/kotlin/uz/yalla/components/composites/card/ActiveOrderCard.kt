@@ -39,14 +39,14 @@ import uz.yalla.resources.img_avatar_placeholder
 import uz.yalla.resources.img_car_economy
 
 @Immutable
-data class ActiveOrderCardColors(
+public data class ActiveOrderCardColors(
     val containerColor: Color,
     val titleColor: Color,
     val subtitleColor: Color
 )
 
 @Immutable
-data class ActiveOrderCardDimens(
+public data class ActiveOrderCardDimens(
     val shape: Shape,
     val contentPadding: PaddingValues,
     val photoSize: Dp,
@@ -57,25 +57,25 @@ data class ActiveOrderCardDimens(
 )
 
 @Immutable
-data class ActiveOrderCardStyles(
+public data class ActiveOrderCardStyles(
     val titleStyle: TextStyle,
     val subtitleStyle: TextStyle
 )
 
-object ActiveOrderCardDefaults {
+public object ActiveOrderCardDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         containerColor: Color = System.color.background.secondary,
         titleColor: Color = System.color.text.base,
         subtitleColor: Color = System.color.text.base
-    ) = ActiveOrderCardColors(
+    ): ActiveOrderCardColors = ActiveOrderCardColors(
         containerColor = containerColor,
         titleColor = titleColor,
         subtitleColor = subtitleColor
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         contentPadding: PaddingValues = PaddingValues(16.dp),
         photoSize: Dp = 48.dp,
@@ -83,7 +83,7 @@ object ActiveOrderCardDefaults {
         contentSpacing: Dp = 16.dp,
         carImageWidth: Dp = 64.dp,
         carImageHeight: Dp = 40.dp
-    ) = ActiveOrderCardDimens(
+    ): ActiveOrderCardDimens = ActiveOrderCardDimens(
         shape = shape,
         contentPadding = contentPadding,
         photoSize = photoSize,
@@ -94,17 +94,17 @@ object ActiveOrderCardDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         titleStyle: TextStyle = System.font.body.large.bold,
         subtitleStyle: TextStyle = System.font.body.small.medium
-    ) = ActiveOrderCardStyles(
+    ): ActiveOrderCardStyles = ActiveOrderCardStyles(
         titleStyle = titleStyle,
         subtitleStyle = subtitleStyle
     )
 }
 
 @Composable
-fun ActiveOrderCard(
+public fun ActiveOrderCard(
     photoUrl: String?,
     driverName: String,
     vehicleLabel: String,

@@ -6,18 +6,18 @@ import uz.yalla.maps.api.model.MapCircle
 import uz.yalla.maps.api.model.MapMarker
 import uz.yalla.maps.api.model.MapRoute
 
-interface IosMapRenderer {
-    fun createViewController(): UIViewController
+public interface IosMapRenderer {
+    public fun createViewController(): UIViewController
 
-    fun setListener(listener: IosMapListener?)
+    public fun setListener(listener: IosMapListener?)
 
-    fun moveTo(target: GeoPoint, zoom: Float)
+    public fun moveTo(target: GeoPoint, zoom: Float)
 
-    fun animateTo(target: GeoPoint, zoom: Float, durationMs: Int)
+    public fun animateTo(target: GeoPoint, zoom: Float, durationMs: Int)
 
-    fun animateToWithBearing(target: GeoPoint, bearing: Float, zoom: Float, durationMs: Int)
+    public fun animateToWithBearing(target: GeoPoint, bearing: Float, zoom: Float, durationMs: Int)
 
-    fun fitBounds(
+    public fun fitBounds(
         points: List<GeoPoint>,
         leftPt: Float,
         topPt: Float,
@@ -26,29 +26,29 @@ interface IosMapRenderer {
         animate: Boolean
     )
 
-    fun zoomIn()
+    public fun zoomIn()
 
-    fun zoomOut()
+    public fun zoomOut()
 
-    fun setZoom(zoom: Float)
+    public fun setZoom(zoom: Float)
 
-    fun setStyleUrl(url: String)
+    public fun setStyleUrl(url: String)
 
-    fun setStyleJson(json: String)
+    public fun setStyleJson(json: String)
 
-    fun setColorScheme(isDark: Boolean)
+    public fun setColorScheme(isDark: Boolean)
 
-    fun setPaddingPt(leftPt: Float, topPt: Float, rightPt: Float, bottomPt: Float)
+    public fun setPaddingPt(leftPt: Float, topPt: Float, rightPt: Float, bottomPt: Float)
 
-    fun setInteractionEnabled(enabled: Boolean)
+    public fun setInteractionEnabled(enabled: Boolean)
 
-    fun setMarkers(markers: List<MapMarker>)
+    public fun setMarkers(markers: List<MapMarker>)
 
-    fun setRoutes(routes: List<MapRoute>)
+    public fun setRoutes(routes: List<MapRoute>)
 
-    fun setCircles(circles: List<MapCircle>)
+    public fun setCircles(circles: List<MapCircle>)
 
-    fun setUserLocation(point: GeoPoint?)
+    public fun setUserLocation(point: GeoPoint?)
 
-    fun close()
+    public fun close()
 }

@@ -5,11 +5,11 @@ import platform.Foundation.NSUserDefaults
 import platform.Foundation.currentLocale
 import platform.Foundation.languageCode
 
-actual fun changeLanguage(languageCode: String) {
+public actual fun changeLanguage(languageCode: String) {
     NSUserDefaults.standardUserDefaults.setObject(
         listOf(languageCode),
         forKey = "AppleLanguages"
     )
 }
 
-actual fun getCurrentLanguage(): String = NSLocale.currentLocale.languageCode ?: "uz"
+public actual fun getCurrentLanguage(): String = NSLocale.currentLocale.languageCode ?: "uz"

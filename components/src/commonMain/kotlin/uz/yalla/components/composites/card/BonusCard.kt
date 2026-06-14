@@ -26,14 +26,14 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_coin
 
 @Immutable
-data class BonusCardDimens(
+public data class BonusCardDimens(
     val shape: Shape,
     val contentPadding: PaddingValues
 )
 
-object BonusCardDefaults {
+public object BonusCardDefaults {
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = CircleShape,
         contentPadding: PaddingValues = PaddingValues(
             start = 4.dp,
@@ -41,14 +41,14 @@ object BonusCardDefaults {
             end = 8.dp,
             bottom = 4.dp
         )
-    ) = BonusCardDimens(
+    ): BonusCardDimens = BonusCardDimens(
         shape = shape,
         contentPadding = contentPadding
     )
 }
 
 @Composable
-fun BonusCard(
+public fun BonusCard(
     bonus: String,
     enabled: Boolean = true,
     leadingPainter: Painter? = painterResource(Res.drawable.img_coin),

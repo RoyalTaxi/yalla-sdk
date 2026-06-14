@@ -2,8 +2,8 @@ package uz.yalla.core.location
 
 import uz.yalla.core.util.normalizedId
 
-enum class PlaceKind(
-    val id: String
+public enum class PlaceKind(
+    public val id: String
 ) {
     Home("home"),
 
@@ -12,8 +12,8 @@ enum class PlaceKind(
     Other("other")
     ;
 
-    companion object {
-        fun from(id: String?): PlaceKind {
+    public companion object {
+        public fun from(id: String?): PlaceKind {
             val normalizedId = id.normalizedId()
             return entries.find { it.id == normalizedId } ?: Other
         }

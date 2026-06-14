@@ -19,7 +19,7 @@ import uz.yalla.foundation.theme.rememberIsDarkTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-actual fun ShellSheet(
+public actual fun ShellSheet(
     isVisible: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier,

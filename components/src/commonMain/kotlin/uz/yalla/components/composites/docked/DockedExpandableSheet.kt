@@ -34,7 +34,7 @@ import uz.yalla.design.theme.System
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DockedExpandableSheet(
+public fun DockedExpandableSheet(
     state: DockedExpandableSheetState,
     collapsedContent: @Composable () -> Unit,
     expandedContent: @Composable () -> Unit,

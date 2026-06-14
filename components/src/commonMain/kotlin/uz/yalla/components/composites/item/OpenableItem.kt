@@ -31,7 +31,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
 @Immutable
-data class OpenableItemColors(
+public data class OpenableItemColors(
     val textColor: Color,
     val containerColor: Color,
     val openIconColor: Color,
@@ -40,7 +40,7 @@ data class OpenableItemColors(
 )
 
 @Immutable
-data class OpenableItemDimens(
+public data class OpenableItemDimens(
     val shape: Shape,
     val iconSize: Dp,
     val contentPadding: PaddingValues,
@@ -49,19 +49,19 @@ data class OpenableItemDimens(
 )
 
 @Immutable
-data class OpenableItemStyles(
+public data class OpenableItemStyles(
     val textStyle: TextStyle
 )
 
-object OpenableItemDefaults {
+public object OpenableItemDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         textColor: Color = System.color.text.base,
         containerColor: Color = System.color.background.secondary,
         openIconColor: Color = System.color.icon.subtle,
         leadingIconColor: Color = System.color.icon.base,
         borderColor: Color = Color.Transparent
-    ) = OpenableItemColors(
+    ): OpenableItemColors = OpenableItemColors(
         textColor = textColor,
         containerColor = containerColor,
         openIconColor = openIconColor,
@@ -70,7 +70,7 @@ object OpenableItemDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         iconSize: Dp = 18.dp,
         contentPadding: PaddingValues = PaddingValues(
@@ -81,7 +81,7 @@ object OpenableItemDefaults {
         ),
         contentSpacing: Dp = 12.dp,
         borderWidth: Dp = 0.dp
-    ) = OpenableItemDimens(
+    ): OpenableItemDimens = OpenableItemDimens(
         shape = shape,
         iconSize = iconSize,
         contentPadding = contentPadding,
@@ -90,15 +90,15 @@ object OpenableItemDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         textStyle: TextStyle = System.font.body.base.medium
-    ) = OpenableItemStyles(
+    ): OpenableItemStyles = OpenableItemStyles(
         textStyle = textStyle
     )
 }
 
 @Composable
-fun OpenableItem(
+public fun OpenableItem(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -106,7 +106,7 @@ fun OpenableItem(
     colors: OpenableItemColors = OpenableItemDefaults.colors(),
     dimens: OpenableItemDimens = OpenableItemDefaults.dimens(),
     styles: OpenableItemStyles = OpenableItemDefaults.styles()
-) = OpenableItem(
+): Unit = OpenableItem(
     onClick = onClick,
     modifier = modifier,
     leadingIcon = leadingIcon,
@@ -121,7 +121,7 @@ fun OpenableItem(
 }
 
 @Composable
-fun OpenableItem(
+public fun OpenableItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     leadingIcon: ImageVector? = null,

@@ -2,7 +2,7 @@ package uz.yalla.telemetry.sink
 
 import uz.yalla.telemetry.event.AnalyticsEvent
 
-class DebugLogSink : TelemetrySink {
+public class DebugLogSink : TelemetrySink {
     override fun track(event: AnalyticsEvent) {
         val params = if (event.params.isEmpty()) "" else " ${event.params}"
         println("[Telemetry] ${event.name}$params")

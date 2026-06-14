@@ -32,7 +32,7 @@ import uz.yalla.resources.icons.FocusLocation
 import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
-data class SearchableItemModel(
+public data class SearchableItemModel(
     val id: String,
     val title: String,
     val description: String? = null,
@@ -40,7 +40,7 @@ data class SearchableItemModel(
 )
 
 @Immutable
-data class SearchableItemColors(
+public data class SearchableItemColors(
     val titleColor: Color,
     val descriptionColor: Color,
     val badgeColor: Color,
@@ -49,7 +49,7 @@ data class SearchableItemColors(
 )
 
 @Immutable
-data class SearchableItemDimens(
+public data class SearchableItemDimens(
     val contentSpacing: Dp,
     val contentInlineSpacing: Dp,
     val titleBadgeSpacing: Dp,
@@ -60,22 +60,22 @@ data class SearchableItemDimens(
 )
 
 @Immutable
-data class SearchableItemStyles(
+public data class SearchableItemStyles(
     val titleStyle: TextStyle,
     val descriptionStyle: TextStyle,
     val badgeStyle: TextStyle,
     val descriptionMaxLines: Int
 )
 
-object SearchableItemDefaults {
+public object SearchableItemDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         titleColor: Color = System.color.text.base,
         descriptionColor: Color = System.color.text.subtle,
         badgeColor: Color = System.color.text.subtle,
         iconColor: Color = Color.Unspecified,
         iconBackgroundColor: Color = Color.Transparent
-    ) = SearchableItemColors(
+    ): SearchableItemColors = SearchableItemColors(
         titleColor = titleColor,
         descriptionColor = descriptionColor,
         badgeColor = badgeColor,
@@ -84,7 +84,7 @@ object SearchableItemDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         contentSpacing: Dp = 16.dp,
         contentInlineSpacing: Dp = 8.dp,
         titleBadgeSpacing: Dp = 12.dp,
@@ -97,7 +97,7 @@ object SearchableItemDefaults {
         iconSize: Dp = 44.dp,
         iconContainerSize: Dp = 44.dp,
         iconContainerShape: Shape = RectangleShape
-    ) = SearchableItemDimens(
+    ): SearchableItemDimens = SearchableItemDimens(
         contentSpacing = contentSpacing,
         contentInlineSpacing = contentInlineSpacing,
         titleBadgeSpacing = titleBadgeSpacing,
@@ -108,12 +108,12 @@ object SearchableItemDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         titleStyle: TextStyle = System.font.body.base.bold,
         descriptionStyle: TextStyle = System.font.body.small.medium,
         badgeStyle: TextStyle = System.font.body.small.medium,
         descriptionMaxLines: Int = 2
-    ) = SearchableItemStyles(
+    ): SearchableItemStyles = SearchableItemStyles(
         titleStyle = titleStyle,
         descriptionStyle = descriptionStyle,
         badgeStyle = badgeStyle,
@@ -122,7 +122,7 @@ object SearchableItemDefaults {
 }
 
 @Composable
-fun SearchableItem(
+public fun SearchableItem(
     title: String,
     description: String? = null,
     badge: String? = null,

@@ -14,7 +14,7 @@ import uz.yalla.components.config.requireConfig
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
-actual fun IconButton(
+public actual fun IconButton(
     icon: String,
     onClick: () -> Unit,
     modifier: Modifier,

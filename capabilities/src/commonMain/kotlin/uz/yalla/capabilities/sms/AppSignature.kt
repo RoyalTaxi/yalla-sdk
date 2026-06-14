@@ -1,3 +1,3 @@
 package uz.yalla.capabilities.sms
 
-expect fun getAppSignature(): String?
+public expect fun getAppSignature(): String?

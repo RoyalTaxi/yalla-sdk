@@ -24,7 +24,7 @@ import uz.yalla.maps.config.MapConstants
 import uz.yalla.maps.config.YallaMaps
 
 @Composable
-fun rememberMapController(
+public fun rememberMapController(
     overrideKind: MapKind? = null,
     style: MapStyle = MapStyle.CARTO,
     initialPosition: CameraPosition? = null
@@ -69,7 +69,7 @@ fun rememberMapController(
 }
 
 @Composable
-fun MapView(
+public fun MapView(
     controller: MapController,
     modifier: Modifier = Modifier,
     markers: List<MapMarker> = emptyList(),
@@ -100,7 +100,7 @@ fun MapView(
 }
 
 @Composable
-fun StaticMapView(
+public fun StaticMapView(
     points: List<uz.yalla.core.geo.GeoPoint>,
     modifier: Modifier = Modifier,
     routes: List<MapRoute> = emptyList(),

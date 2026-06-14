@@ -1,24 +1,24 @@
 package uz.yalla.media.utils
 
-data class CompressionConfig(
+public data class CompressionConfig(
     val maxFileSize: Int,
     val maxDimension: Int,
     val quality: Int
 ) {
-    companion object {
-        val Default = CompressionConfig(
+    public companion object {
+        public val Default: CompressionConfig = CompressionConfig(
             maxFileSize = 1024 * 1024,
             maxDimension = 1024,
             quality = 80
         )
 
-        val ProfilePhoto = CompressionConfig(
+        public val ProfilePhoto: CompressionConfig = CompressionConfig(
             maxFileSize = 512 * 1024,
             maxDimension = 512,
             quality = 85
         )
 
-        val ChatImage = CompressionConfig(
+        public val ChatImage: CompressionConfig = CompressionConfig(
             maxFileSize = 2 * 1024 * 1024,
             maxDimension = 1920,
             quality = 75

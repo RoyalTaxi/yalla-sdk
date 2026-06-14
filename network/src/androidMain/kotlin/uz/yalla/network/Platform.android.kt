@@ -1,3 +1,3 @@
 package uz.yalla.network
 
-actual val platformName: String = "android"
+public actual val platformName: String = "android"

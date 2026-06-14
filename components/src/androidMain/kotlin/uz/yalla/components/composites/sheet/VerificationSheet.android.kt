@@ -9,7 +9,7 @@ import uz.yalla.capabilities.sms.ObserveSmsCode
 import uz.yalla.components.config.requireConfig
 
 @Composable
-actual fun VerificationSheet(
+public actual fun VerificationSheet(
     isVisible: Boolean,
     code: String,
     onCodeChange: (String) -> Unit,
