@@ -7,6 +7,7 @@ import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import uz.yalla.sdk.buildlogic.extensions.configureAndroidAbiValidation
 import uz.yalla.sdk.buildlogic.extensions.configureDokkaModuleDoc
 import uz.yalla.sdk.buildlogic.extensions.configureYallaCoordinates
 import uz.yalla.sdk.buildlogic.extensions.configureYallaPublishing
@@ -68,6 +69,7 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
 
             configureDokkaModuleDoc()
             configureYallaPublishing()
+            configureAndroidAbiValidation()
         }
     }
 }

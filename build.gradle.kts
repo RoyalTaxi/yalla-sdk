@@ -15,11 +15,17 @@ plugins {
 // alters the published binary surface without an accompanying, reviewed update to
 // the committed `<module>/api/*.api` baselines. Regenerate intentionally with
 // `./gradlew apiDump` and commit the diff.
+//
+// Each published module ships TWO linkable artifacts and both are gated:
+//   - the iOS native klibs   -> `<module>/api/<module>.klib.api`, validated by the
+//     BCV `klib` block below;
+//   - the Android `.aar`     -> `<module>/api/android/<module>.api`, validated by the
+//     `androidApiCheck` task the KMP convention plugin wires into each module's
+//     `apiCheck` (see build-logic .../extensions/AndroidAbiValidation.kt). BCV 0.18.1
+//     does not understand the `com.android.kotlin.multiplatform.library` target, so
+//     the Android surface needs that dedicated path — without it, Android-only public
+//     symbols (e.g. getAppSignature(context: Context)) changed silently.
 apiValidation {
-    // The SDK ships no JVM/standard-Android artifacts — every published module is a
-    // Kotlin Multiplatform library (Android KMP target + iOS native). The binary
-    // surface that downstream consumers link against lives in the klibs, so klib ABI
-    // validation is the surface that matters here.
     @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
     klib {
         enabled = true

@@ -15,6 +15,9 @@ dependencies {
     compileOnly(libs.kotlin.gradle.plugin)
     compileOnly(libs.compose.compiler.gradle.plugin)
     compileOnly(libs.dokka.gradle.plugin)
+    // BCV task types (KotlinApiBuildTask/KotlinApiCompareTask) reused by the
+    // Android ABI gate; the plugin itself is applied at the SDK root.
+    compileOnly(libs.binary.compatibility.validator.gradle.plugin)
 }
 
 gradlePlugin {
