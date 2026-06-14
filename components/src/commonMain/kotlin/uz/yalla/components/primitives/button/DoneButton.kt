@@ -9,12 +9,13 @@ import uz.yalla.design.theme.System
 public fun DoneButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
-): Unit = IconButton(
-    icon = "ic_check",
-    onClick = onClick,
-    modifier = modifier,
-    shape = IconButtonShape.CIRCLE,
-    iconColor = System.color.icon.base,
-    containerColor = Color.Transparent,
-    borderColor = System.color.border.disabled
-)
+): Unit =
+    IconButton(
+        icon = "ic_check",
+        onClick = onClick,
+        modifier = modifier,
+        shape = IconButtonShape.CIRCLE,
+        iconColor = System.color.icon.base,
+        containerColor = Color.Transparent,
+        borderColor = System.color.border.disabled
+    )

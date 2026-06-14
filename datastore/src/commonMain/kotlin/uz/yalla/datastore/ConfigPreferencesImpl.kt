@@ -88,8 +88,9 @@ internal class ConfigPreferencesImpl(
     }
 }
 
-private fun Preferences.getLongSafe(key: Preferences.Key<Long>): Long = try {
-    this[key] ?: 0L
-} catch (_: ClassCastException) {
-    0L
-}
+private fun Preferences.getLongSafe(key: Preferences.Key<Long>): Long =
+    try {
+        this[key] ?: 0L
+    } catch (_: ClassCastException) {
+        0L
+    }

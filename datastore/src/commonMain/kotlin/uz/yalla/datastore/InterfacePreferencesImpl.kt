@@ -32,9 +32,10 @@ internal class InterfacePreferencesImpl(
         scope.launch { dataStore.edit { it[PreferenceKeys.THEME_TYPE] = value.id } }
     }
 
-    override val mapKind: Flow<MapKind> = dataStore.data.map { prefs ->
-        MapKind.from(prefs[PreferenceKeys.MAP_TYPE] ?: MapKind.Google.id)
-    }
+    override val mapKind: Flow<MapKind> =
+        dataStore.data.map { prefs ->
+            MapKind.from(prefs[PreferenceKeys.MAP_TYPE] ?: MapKind.Google.id)
+        }
 
     override fun setMapKind(value: MapKind) {
         scope.launch { dataStore.edit { it[PreferenceKeys.MAP_TYPE] = value.id } }

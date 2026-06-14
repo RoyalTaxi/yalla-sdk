@@ -12,7 +12,6 @@ import kotlin.test.assertEquals
  * the "cost" id would silently turn fixed fees into the fallback while still landing on Fixed.
  */
 class CostTypeTest {
-
     @Test
     fun decodesKnownWireIds() {
         assertEquals(ExtraService.CostType.Fixed, ExtraService.CostType.from("cost"))

@@ -27,25 +27,26 @@ public class ConnectivityState(
         }
     }
 
-    public fun refresh(): Job = scope.launch {
-        isOnline = connectivity.status() is Connectivity.Status.Connected
-    }
+    public fun refresh(): Job =
+        scope.launch {
+            isOnline = connectivity.status() is Connectivity.Status.Connected
+        }
 }
 
 @Composable
 public fun rememberConnectivityState(
     connectivity: Connectivity,
     scope: CoroutineScope = rememberCoroutineScope()
-): ConnectivityState = remember(connectivity, scope) {
-    ConnectivityState(connectivity, scope)
-}
+): ConnectivityState =
+    remember(connectivity, scope) {
+        ConnectivityState(connectivity, scope)
+    }
 
 @Composable
-public fun rememberConnectivityState(
-    scope: CoroutineScope = rememberCoroutineScope()
-): ConnectivityState {
-    val connectivity = remember(scope) {
-        Connectivity(options = ConnectivityOptions.build { autoStart = true }, scope = scope)
-    }
+public fun rememberConnectivityState(scope: CoroutineScope = rememberCoroutineScope()): ConnectivityState {
+    val connectivity =
+        remember(scope) {
+            Connectivity(options = ConnectivityOptions.build { autoStart = true }, scope = scope)
+        }
     return rememberConnectivityState(connectivity, scope)
 }

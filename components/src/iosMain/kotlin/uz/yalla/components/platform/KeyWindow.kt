@@ -10,13 +10,15 @@ import platform.UIKit.UIWindowScene
 public fun findKeyWindowRootController(): UIViewController? {
     val scenes = UIApplication.sharedApplication.connectedScenes
 
-    val activeScene = scenes.firstOrNull { scene ->
-        (scene as? UIWindowScene)?.activationState == UISceneActivationStateForegroundActive
-    } as? UIWindowScene
+    val activeScene =
+        scenes.firstOrNull { scene ->
+            (scene as? UIWindowScene)?.activationState == UISceneActivationStateForegroundActive
+        } as? UIWindowScene
 
-    val keyWindow = activeScene?.windows?.firstOrNull { window ->
-        (window as? UIWindow)?.isKeyWindow() == true
-    } as? UIWindow ?: UIApplication.sharedApplication.keyWindow
+    val keyWindow =
+        activeScene?.windows?.firstOrNull { window ->
+            (window as? UIWindow)?.isKeyWindow() == true
+        } as? UIWindow ?: UIApplication.sharedApplication.keyWindow
 
     return keyWindow?.rootViewController
 }

@@ -29,29 +29,31 @@ public class PrimaryFieldController(
     private var enabledState by mutableStateOf(enabled)
 
     @OptIn(ExperimentalComposeUiApi::class)
-    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
-        YallaTheme(isDark = rememberIsDarkTheme()) {
-            val focusRequester = remember { FocusRequester() }
-            if (autoFocus) {
-                LaunchedEffect(Unit) { runCatching { focusRequester.requestFocus() } }
-            }
-            PrimaryField(
-                value = valueState,
-                onValueChange = { new ->
-                    valueState = new
-                    onValueChange(new)
-                },
-                enabled = enabledState,
-                placeholder = placeholderState,
-                textAlign = if (centered) TextAlign.Center else TextAlign.Start,
-                modifier = if (autoFocus) {
-                    Modifier.fillMaxWidth().focusRequester(focusRequester)
-                } else {
-                    Modifier.fillMaxWidth()
+    public val viewController: UIViewController =
+        ComposeUIViewController(configure = { opaque = false }) {
+            YallaTheme(isDark = rememberIsDarkTheme()) {
+                val focusRequester = remember { FocusRequester() }
+                if (autoFocus) {
+                    LaunchedEffect(Unit) { runCatching { focusRequester.requestFocus() } }
                 }
-            )
+                PrimaryField(
+                    value = valueState,
+                    onValueChange = { new ->
+                        valueState = new
+                        onValueChange(new)
+                    },
+                    enabled = enabledState,
+                    placeholder = placeholderState,
+                    textAlign = if (centered) TextAlign.Center else TextAlign.Start,
+                    modifier =
+                        if (autoFocus) {
+                            Modifier.fillMaxWidth().focusRequester(focusRequester)
+                        } else {
+                            Modifier.fillMaxWidth()
+                        }
+                )
+            }
         }
-    }
 
     public fun setValue(value: String) {
         valueState = value

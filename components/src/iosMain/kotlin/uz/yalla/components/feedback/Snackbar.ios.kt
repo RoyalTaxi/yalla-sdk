@@ -2,7 +2,10 @@ package uz.yalla.components.feedback
 
 import uz.yalla.components.config.requireConfig
 
-internal actual fun yallaShowSnackbar(message: String, isError: Boolean) {
+internal actual fun yallaShowSnackbar(
+    message: String,
+    isError: Boolean
+) {
     requireConfig().snackbar.show(message, isError)
 }
 

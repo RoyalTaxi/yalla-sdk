@@ -57,36 +57,34 @@ internal object PreferenceKeys {
 
     val ORDER_CANCEL_TIME = intPreferencesKey("orderCancelTime")
 
-    val SESSION_KEYS: List<Preferences.Key<*>> = listOf(
-
-        ACCESS_TOKEN,
-        FIREBASE_TOKEN,
-        IS_GUEST_MODE,
-        IS_DEVICE_REGISTERED,
-
-        FIRST_NAME,
-        LAST_NAME,
-        NUMBER,
-        IMAGE,
-        GENDER,
-        BIRTHDAY,
-        PAYMENT_TYPE,
-        CARD_ID,
-        CARD_NUMBER,
-
-        SUPPORT_NUMBER,
-        SUPPORT_TELEGRAM,
-        INFO_INSTAGRAM,
-        INFO_TELEGRAM,
-        PRIVACY_POLICY_RU,
-        PRIVACY_POLICY_UZ,
-        MAX_BONUS,
-        MIN_BONUS,
-        BALANCE,
-        IS_BONUS_ENABLED,
-        IS_CARD_ENABLED,
-        ORDER_CANCEL_TIME
-    )
+    val SESSION_KEYS: List<Preferences.Key<*>> =
+        listOf(
+            ACCESS_TOKEN,
+            FIREBASE_TOKEN,
+            IS_GUEST_MODE,
+            IS_DEVICE_REGISTERED,
+            FIRST_NAME,
+            LAST_NAME,
+            NUMBER,
+            IMAGE,
+            GENDER,
+            BIRTHDAY,
+            PAYMENT_TYPE,
+            CARD_ID,
+            CARD_NUMBER,
+            SUPPORT_NUMBER,
+            SUPPORT_TELEGRAM,
+            INFO_INSTAGRAM,
+            INFO_TELEGRAM,
+            PRIVACY_POLICY_RU,
+            PRIVACY_POLICY_UZ,
+            MAX_BONUS,
+            MIN_BONUS,
+            BALANCE,
+            IS_BONUS_ENABLED,
+            IS_CARD_ENABLED,
+            ORDER_CANCEL_TIME
+        )
 
     val LOCALE_TYPE = stringPreferencesKey("localeType")
 

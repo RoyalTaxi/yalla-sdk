@@ -54,11 +54,12 @@ public fun ProgressButton(
             )
 
             Box(
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .fillMaxHeight()
-                    .fillMaxWidth(progress)
-                    .background(System.color.background.brand)
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterStart)
+                        .fillMaxHeight()
+                        .fillMaxWidth(progress)
+                        .background(System.color.background.brand)
             )
 
             Text(
@@ -73,25 +74,27 @@ public fun ProgressButton(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    val progress = remember { Animatable(0f) }
+private fun Preview() =
+    YallaTheme {
+        val progress = remember { Animatable(0f) }
 
-    LaunchedEffect(Unit) {
-        progress.animateTo(
-            targetValue = 1f,
-            animationSpec = tween(
-                durationMillis = 3000,
-                easing = LinearEasing
+        LaunchedEffect(Unit) {
+            progress.animateTo(
+                targetValue = 1f,
+                animationSpec =
+                    tween(
+                        durationMillis = 3000,
+                        easing = LinearEasing
+                    )
             )
+        }
+
+        ProgressButton(
+            text = "Yes, cancel my trip",
+            progress = progress.value,
+            enabled = progress.isRunning.not(),
+            onClick = {
+            },
+            modifier = Modifier.fillMaxWidth()
         )
     }
-
-    ProgressButton(
-        text = "Yes, cancel my trip",
-        progress = progress.value,
-        enabled = progress.isRunning.not(),
-        onClick = {
-        },
-        modifier = Modifier.fillMaxWidth()
-    )
-}

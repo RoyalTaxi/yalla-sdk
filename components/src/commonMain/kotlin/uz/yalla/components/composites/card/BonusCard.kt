@@ -35,16 +35,18 @@ public object BonusCardDefaults {
     @Composable
     public fun dimens(
         shape: Shape = CircleShape,
-        contentPadding: PaddingValues = PaddingValues(
-            start = 4.dp,
-            top = 4.dp,
-            end = 8.dp,
-            bottom = 4.dp
+        contentPadding: PaddingValues =
+            PaddingValues(
+                start = 4.dp,
+                top = 4.dp,
+                end = 8.dp,
+                bottom = 4.dp
+            )
+    ): BonusCardDimens =
+        BonusCardDimens(
+            shape = shape,
+            contentPadding = contentPadding
         )
-    ): BonusCardDimens = BonusCardDimens(
-        shape = shape,
-        contentPadding = contentPadding
-    )
 }
 
 @Composable
@@ -65,9 +67,10 @@ public fun BonusCard(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(4.dp),
-            modifier = Modifier
-                .background(System.color.gradient.sunsetNight)
-                .padding(dimens.contentPadding)
+            modifier =
+                Modifier
+                    .background(System.color.gradient.sunsetNight)
+                    .padding(dimens.contentPadding)
         ) {
             leadingPainter?.let { painter ->
                 Image(
@@ -88,28 +91,31 @@ public fun BonusCard(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        BonusCard(
-            bonus = "0",
-            enabled = false,
-            leadingPainter = null,
-            onClick = { },
-            dimens = BonusCardDefaults.dimens(
-                contentPadding = PaddingValues(
-                    vertical = 6.dp,
-                    horizontal = 8.dp
-                )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            BonusCard(
+                bonus = "0",
+                enabled = false,
+                leadingPainter = null,
+                onClick = { },
+                dimens =
+                    BonusCardDefaults.dimens(
+                        contentPadding =
+                            PaddingValues(
+                                vertical = 6.dp,
+                                horizontal = 8.dp
+                            )
+                    )
             )
-        )
 
-        BonusCard(
-            bonus = "30000",
-            onClick = { }
-        )
+            BonusCard(
+                bonus = "30000",
+                onClick = { }
+            )
+        }
     }
-}

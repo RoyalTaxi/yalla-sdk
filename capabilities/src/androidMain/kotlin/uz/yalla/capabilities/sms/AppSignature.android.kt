@@ -21,33 +21,36 @@ private val cachedSignature by lazy {
 
 public actual fun getAppSignature(): String? = cachedSignature
 
-public fun getAppSignature(context: Context): String? = runCatching {
-    val packageName = context.packageName
-    val signatures = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-        context.packageManager
-            .getPackageInfo(
-                packageName,
-                PackageManager.GET_SIGNING_CERTIFICATES
-            ).signingInfo
-            ?.apkContentsSigners
-    } else {
-        @Suppress("DEPRECATION")
-        context.packageManager
-            .getPackageInfo(
-                packageName,
-                PackageManager.GET_SIGNATURES
-            ).signatures
-    }
+public fun getAppSignature(context: Context): String? =
+    runCatching {
+        val packageName = context.packageName
+        val signatures =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                context.packageManager
+                    .getPackageInfo(
+                        packageName,
+                        PackageManager.GET_SIGNING_CERTIFICATES
+                    ).signingInfo
+                    ?.apkContentsSigners
+            } else {
+                @Suppress("DEPRECATION")
+                context.packageManager
+                    .getPackageInfo(
+                        packageName,
+                        PackageManager.GET_SIGNATURES
+                    ).signatures
+            }
 
-    signatures?.firstNotNullOfOrNull { signature ->
-        val hash = MessageDigest.getInstance(HASH_TYPE).run {
-            update("$packageName ${signature.toCharsString()}".toByteArray(StandardCharsets.UTF_8))
-            digest()
+        signatures?.firstNotNullOfOrNull { signature ->
+            val hash =
+                MessageDigest.getInstance(HASH_TYPE).run {
+                    update("$packageName ${signature.toCharsString()}".toByteArray(StandardCharsets.UTF_8))
+                    digest()
+                }
+            val truncatedHash = Arrays.copyOfRange(hash, 0, NUM_HASHED_BYTES)
+            Base64
+                .encodeToString(truncatedHash, Base64.NO_PADDING or Base64.NO_WRAP)
+                .takeIf { it.length >= NUM_BASE64_CHAR }
+                ?.substring(0, NUM_BASE64_CHAR)
         }
-        val truncatedHash = Arrays.copyOfRange(hash, 0, NUM_HASHED_BYTES)
-        Base64
-            .encodeToString(truncatedHash, Base64.NO_PADDING or Base64.NO_WRAP)
-            .takeIf { it.length >= NUM_BASE64_CHAR }
-            ?.substring(0, NUM_BASE64_CHAR)
-    }
-}.getOrNull()
+    }.getOrNull()

@@ -29,25 +29,75 @@ public fun rememberFontScheme(): FontScheme =
                 caption = TextStyle(fontSize = 13.sp, lineHeight = 15.6.sp, fontFamily = FontFamily(Font(mediumFont))),
                 large =
                     FontScheme.Body.Weighty(
-                        regular = TextStyle(fontSize = 18.sp, lineHeight = 21.6.sp, fontFamily = FontFamily(Font(normalFont))),
-                        medium = TextStyle(fontSize = 18.sp, lineHeight = 21.6.sp, fontFamily = FontFamily(Font(mediumFont))),
-                        bold = TextStyle(fontSize = 18.sp, lineHeight = 21.6.sp, fontFamily = FontFamily(Font(boldFont)))
+                        regular =
+                            TextStyle(
+                                fontSize = 18.sp,
+                                lineHeight = 21.6.sp,
+                                fontFamily = FontFamily(Font(normalFont))
+                            ),
+                        medium =
+                            TextStyle(
+                                fontSize = 18.sp,
+                                lineHeight = 21.6.sp,
+                                fontFamily = FontFamily(Font(mediumFont))
+                            ),
+                        bold =
+                            TextStyle(
+                                fontSize = 18.sp,
+                                lineHeight = 21.6.sp,
+                                fontFamily = FontFamily(Font(boldFont))
+                            )
                     ),
                 base =
                     FontScheme.Body.Weighty(
-                        regular = TextStyle(fontSize = 16.sp, lineHeight = 20.8.sp, fontFamily = FontFamily(Font(normalFont))),
-                        medium = TextStyle(fontSize = 16.sp, lineHeight = 20.8.sp, fontFamily = FontFamily(Font(mediumFont))),
-                        bold = TextStyle(fontSize = 16.sp, lineHeight = 20.8.sp, fontFamily = FontFamily(Font(boldFont)))
+                        regular =
+                            TextStyle(
+                                fontSize = 16.sp,
+                                lineHeight = 20.8.sp,
+                                fontFamily = FontFamily(Font(normalFont))
+                            ),
+                        medium =
+                            TextStyle(
+                                fontSize = 16.sp,
+                                lineHeight = 20.8.sp,
+                                fontFamily = FontFamily(Font(mediumFont))
+                            ),
+                        bold =
+                            TextStyle(
+                                fontSize = 16.sp,
+                                lineHeight = 20.8.sp,
+                                fontFamily = FontFamily(Font(boldFont))
+                            )
                     ),
                 small =
                     FontScheme.Body.Weighty(
-                        regular = TextStyle(fontSize = 14.sp, lineHeight = 15.4.sp, fontFamily = FontFamily(Font(normalFont))),
-                        medium = TextStyle(fontSize = 14.sp, lineHeight = 15.4.sp, fontFamily = FontFamily(Font(mediumFont))),
-                        bold = TextStyle(fontSize = 14.sp, lineHeight = 15.4.sp, fontFamily = FontFamily(Font(boldFont)))
+                        regular =
+                            TextStyle(
+                                fontSize = 14.sp,
+                                lineHeight = 15.4.sp,
+                                fontFamily = FontFamily(Font(normalFont))
+                            ),
+                        medium =
+                            TextStyle(
+                                fontSize = 14.sp,
+                                lineHeight = 15.4.sp,
+                                fontFamily = FontFamily(Font(mediumFont))
+                            ),
+                        bold =
+                            TextStyle(
+                                fontSize = 14.sp,
+                                lineHeight = 15.4.sp,
+                                fontFamily = FontFamily(Font(boldFont))
+                            )
                     )
             ),
         custom =
             FontScheme.Custom(
-                carNumber = TextStyle(fontSize = 12.sp, lineHeight = 16.sp, fontFamily = FontFamily(Font(Res.font.nummernschild)))
+                carNumber =
+                    TextStyle(
+                        fontSize = 12.sp,
+                        lineHeight = 16.sp,
+                        fontFamily = FontFamily(Font(Res.font.nummernschild))
+                    )
             )
     )

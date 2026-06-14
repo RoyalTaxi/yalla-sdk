@@ -2,7 +2,6 @@
 
 package uz.yalla.components.platform
 
-import kotlin.time.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
@@ -10,6 +9,7 @@ import kotlinx.datetime.toLocalDateTime
 import platform.Foundation.NSDate
 import platform.Foundation.dateWithTimeIntervalSince1970
 import platform.Foundation.timeIntervalSince1970
+import kotlin.time.Instant
 
 internal fun LocalDate.toNSDate(): NSDate {
     val epochMillis = atStartOfDayIn(TimeZone.UTC).toEpochMilliseconds()

@@ -69,9 +69,10 @@ public data class Order(
     }
 }
 
-public fun Order.Driver.toDriverPosition(): DriverPosition = DriverPosition(
-    id = id,
-    point = point,
-    heading = heading,
-    distance = 0.0
-)
+public fun Order.Driver.toDriverPosition(): DriverPosition =
+    DriverPosition(
+        id = id,
+        point = point,
+        heading = heading,
+        distance = 0.0
+    )

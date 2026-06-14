@@ -18,10 +18,11 @@ public actual fun rememberImagePickerLauncher(
     onResult: (List<ByteArray>) -> Unit
 ): ImagePickerLauncher {
     val latestOnResult by rememberUpdatedState(onResult)
-    val selectionLimit = when (selectionMode) {
-        SelectionMode.Single -> 1
-        is SelectionMode.Multiple -> selectionMode.maxSelection
-    }
+    val selectionLimit =
+        when (selectionMode) {
+            SelectionMode.Single -> 1
+            is SelectionMode.Multiple -> selectionMode.maxSelection
+        }
     return remember {
         ImagePickerLauncher {
             requireMedia().factory.pickImages(selectionLimit) { dataList ->

@@ -99,10 +99,11 @@ public class DockedHeaderableSheetState internal constructor(
 
         val newMaxOffset = this.bodyHeightPx.coerceAtLeast(0f)
         if (newMaxOffset > 0f) {
-            val anchors = DraggableAnchors {
-                DockedHeaderableSheetValue.Expanded at 0f
-                DockedHeaderableSheetValue.Collapsed at newMaxOffset
-            }
+            val anchors =
+                DraggableAnchors {
+                    DockedHeaderableSheetValue.Expanded at 0f
+                    DockedHeaderableSheetValue.Collapsed at newMaxOffset
+                }
             anchoredDraggableState.updateAnchors(anchors, currentValue)
         }
     }
@@ -111,15 +112,17 @@ public class DockedHeaderableSheetState internal constructor(
 @Composable
 public fun rememberDockedHeaderableSheetState(
     initialValue: DockedHeaderableSheetValue = DockedHeaderableSheetValue.Collapsed,
-    snapAnimationSpec: AnimationSpec<Float> = spring(
-        dampingRatio = Spring.DampingRatioMediumBouncy,
-        stiffness = Spring.StiffnessMedium
-    ),
+    snapAnimationSpec: AnimationSpec<Float> =
+        spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessMedium
+        ),
     density: Density = LocalDensity.current
-): DockedHeaderableSheetState = remember {
-    DockedHeaderableSheetState(
-        initialValue = initialValue,
-        snapAnimationSpec = snapAnimationSpec,
-        density = density
-    )
-}
+): DockedHeaderableSheetState =
+    remember {
+        DockedHeaderableSheetState(
+            initialValue = initialValue,
+            snapAnimationSpec = snapAnimationSpec,
+            density = density
+        )
+    }

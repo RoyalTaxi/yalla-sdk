@@ -10,9 +10,10 @@ import kotlin.time.Instant
 public fun Long?.toLocalFormattedDate(): String {
     val localDateTime = this.toLocalDateTimeOrNull() ?: return ""
     val day = localDateTime.day.toString().padStart(2, '0')
-    val month = localDateTime.month.number
-        .toString()
-        .padStart(2, '0')
+    val month =
+        localDateTime.month.number
+            .toString()
+            .padStart(2, '0')
     return "$day.$month.${localDateTime.year}"
 }
 
@@ -23,17 +24,19 @@ public fun Long?.toLocalFormattedTime(): String {
     return "$hour:$minute"
 }
 
-private fun Long?.toLocalDateTimeOrNull() = this
-    ?.normalizedEpochSeconds()
-    ?.takeIf { it > 0L }
-    ?.let { epochSeconds ->
-        Instant
-            .fromEpochSeconds(epochSeconds)
-            .toLocalDateTime(TimeZone.currentSystemDefault())
-    }
-
-public fun Long.normalizedEpochSeconds(): Long = if (this > 10_000_000_000L) {
-    this / 1000
-} else {
+private fun Long?.toLocalDateTimeOrNull() =
     this
-}
+        ?.normalizedEpochSeconds()
+        ?.takeIf { it > 0L }
+        ?.let { epochSeconds ->
+            Instant
+                .fromEpochSeconds(epochSeconds)
+                .toLocalDateTime(TimeZone.currentSystemDefault())
+        }
+
+public fun Long.normalizedEpochSeconds(): Long =
+    if (this > 10_000_000_000L) {
+        this / 1000
+    } else {
+        this
+    }

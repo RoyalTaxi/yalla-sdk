@@ -4,7 +4,9 @@ import androidx.compose.runtime.Immutable
 
 @Immutable
 public sealed class MapMarkerIcon {
-    public data class Resource(val name: String) : MapMarkerIcon()
+    public data class Resource(
+        val name: String
+    ) : MapMarkerIcon()
 
     public data class Pin(
         val colorArgb: Int,
@@ -18,7 +20,9 @@ public sealed class MapMarkerIcon {
         val strokeWidthDp: Float = 4f
     ) : MapMarkerIcon()
 
-    public class Bytes(public val data: ByteArray) : MapMarkerIcon() {
+    public class Bytes(
+        public val data: ByteArray
+    ) : MapMarkerIcon() {
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
             if (other !is Bytes) return false

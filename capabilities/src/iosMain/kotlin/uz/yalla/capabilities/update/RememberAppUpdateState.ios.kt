@@ -24,8 +24,9 @@ public actual fun rememberAppUpdateState(
         try {
             val storeInfo = fetchStoreInfo(appId, countryCode)
             if (storeInfo != null) {
-                val installedVersion = NSBundle.mainBundle.infoDictionary
-                    ?.get("CFBundleShortVersionString") as? String ?: ""
+                val installedVersion =
+                    NSBundle.mainBundle.infoDictionary
+                        ?.get("CFBundleShortVersionString") as? String ?: ""
                 if (VersionComparator.isNewer(storeInfo.first, installedVersion)) {
                     state.isUpdateAvailable = true
                     state.storeUrl = storeInfo.second
@@ -45,30 +46,32 @@ public actual fun rememberAppUpdateState(
 private suspend fun fetchStoreInfo(
     bundleId: String,
     countryCode: String
-): Pair<String, String>? = suspendCancellableCoroutine { cont ->
-    val urlString = "https://itunes.apple.com/lookup?bundleId=$bundleId&country=$countryCode"
-    val url = NSURL(string = urlString)
+): Pair<String, String>? =
+    suspendCancellableCoroutine { cont ->
+        val urlString = "https://itunes.apple.com/lookup?bundleId=$bundleId&country=$countryCode"
+        val url = NSURL(string = urlString)
 
-    val task = NSURLSession.sharedSession.dataTaskWithURL(url) { data: NSData?, _, error ->
-        if (error != null || data == null) {
-            cont.resume(null)
-            return@dataTaskWithURL
-        }
-        try {
-            val json = NSJSONSerialization.JSONObjectWithData(data, 0u, null) as? Map<Any?, *>
-            val results = json?.get("results") as? List<Map<Any?, *>>
-            val first = results?.firstOrNull()
-            val version = first?.get("version") as? String
-            val trackViewUrl = first?.get("trackViewUrl") as? String
-            if (version != null && trackViewUrl != null) {
-                cont.resume(version to trackViewUrl)
-            } else {
-                cont.resume(null)
+        val task =
+            NSURLSession.sharedSession.dataTaskWithURL(url) { data: NSData?, _, error ->
+                if (error != null || data == null) {
+                    cont.resume(null)
+                    return@dataTaskWithURL
+                }
+                try {
+                    val json = NSJSONSerialization.JSONObjectWithData(data, 0u, null) as? Map<Any?, *>
+                    val results = json?.get("results") as? List<Map<Any?, *>>
+                    val first = results?.firstOrNull()
+                    val version = first?.get("version") as? String
+                    val trackViewUrl = first?.get("trackViewUrl") as? String
+                    if (version != null && trackViewUrl != null) {
+                        cont.resume(version to trackViewUrl)
+                    } else {
+                        cont.resume(null)
+                    }
+                } catch (_: Exception) {
+                    cont.resume(null)
+                }
             }
-        } catch (_: Exception) {
-            cont.resume(null)
-        }
+        task.resume()
+        cont.invokeOnCancellation { task.cancel() }
     }
-    task.resume()
-    cont.invokeOnCancellation { task.cancel() }
-}

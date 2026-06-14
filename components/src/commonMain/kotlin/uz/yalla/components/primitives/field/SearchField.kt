@@ -74,27 +74,32 @@ public fun SearchField(
             when {
                 leading != null -> leading(isFocused)
 
-                leadingPainter != null -> Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(42.dp)
-                        .background(
-                            color = if (isFocused) System.color.background.brand else Color.Transparent,
-                            shape = RoundedCornerShape(11.dp)
+                leadingPainter != null ->
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier =
+                            Modifier
+                                .size(42.dp)
+                                .background(
+                                    color = if (isFocused) System.color.background.brand else Color.Transparent,
+                                    shape = RoundedCornerShape(11.dp)
+                                )
+                    ) {
+                        Image(
+                            painter = leadingPainter,
+                            contentDescription = null,
+                            modifier = Modifier.size(42.dp)
                         )
-                ) {
-                    Image(
-                        painter = leadingPainter,
-                        contentDescription = null,
-                        modifier = Modifier.size(42.dp)
-                    )
-                }
+                    }
             }
 
-            val selectionColors = TextSelectionColors(
-                handleColor = System.color.text.link,
-                backgroundColor = System.color.text.link.copy(.3f)
-            )
+            val selectionColors =
+                TextSelectionColors(
+                    handleColor = System.color.text.link,
+                    backgroundColor =
+                        System.color.text.link
+                            .copy(.3f)
+                )
             CompositionLocalProvider(LocalTextSelectionColors provides selectionColors) {
                 var fieldValue by remember { mutableStateOf(TextFieldValue(value, TextRange(value.length))) }
                 LaunchedEffect(value) {
@@ -109,11 +114,16 @@ public fun SearchField(
                         fieldValue = fv
                         if (textChanged) onValueChange(fv.text)
                     },
-                    modifier = Modifier
-                        .weight(1f)
-                        .let { if (focusRequester != null) it.focusRequester(focusRequester) else it }
-                        .let { m -> if (onFocusChanged != null) m.onFocusChanged { onFocusChanged(it.isFocused) } else m },
-                    textStyle = System.font.body.base.bold.copy(color = System.color.text.base),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .let { if (focusRequester != null) it.focusRequester(focusRequester) else it }
+                            .let { m ->
+                                if (onFocusChanged != null) m.onFocusChanged { onFocusChanged(it.isFocused) } else m
+                            },
+                    textStyle =
+                        System.font.body.base.bold
+                            .copy(color = System.color.text.base),
                     maxLines = 1,
                     singleLine = true,
                     cursorBrush = SolidColor(System.color.text.link),
@@ -159,36 +169,38 @@ public fun SearchField(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier
-            .background(System.color.background.base)
-            .padding(16.dp)
-    ) {
-        var value1 by remember { mutableStateOf("") }
-        SearchField(
-            value = value1,
-            onValueChange = { value1 = it },
-            placeholder = "Search..."
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier =
+                Modifier
+                    .background(System.color.background.base)
+                    .padding(16.dp)
+        ) {
+            var value1 by remember { mutableStateOf("") }
+            SearchField(
+                value = value1,
+                onValueChange = { value1 = it },
+                placeholder = "Search..."
+            )
 
-        var value2 by remember { mutableStateOf("Tashkent") }
-        SearchField(
-            value = value2,
-            onValueChange = { value2 = it },
-            placeholder = "Where to?",
-            leadingPainter = rememberVectorPainter(YallaIcons.Location)
-        )
+            var value2 by remember { mutableStateOf("Tashkent") }
+            SearchField(
+                value = value2,
+                onValueChange = { value2 = it },
+                placeholder = "Where to?",
+                leadingPainter = rememberVectorPainter(YallaIcons.Location)
+            )
 
-        var value3 by remember { mutableStateOf("Samarkand") }
-        SearchField(
-            value = value3,
-            onValueChange = { value3 = it },
-            placeholder = "Search destination",
-            leadingPainter = rememberVectorPainter(YallaIcons.Flag),
-            trailingPainter = rememberVectorPainter(YallaIcons.Location),
-            onClickTrailingPainter = { value3 = "" }
-        )
+            var value3 by remember { mutableStateOf("Samarkand") }
+            SearchField(
+                value = value3,
+                onValueChange = { value3 = it },
+                placeholder = "Search destination",
+                leadingPainter = rememberVectorPainter(YallaIcons.Flag),
+                trailingPainter = rememberVectorPainter(YallaIcons.Location),
+                onClickTrailingPainter = { value3 = "" }
+            )
+        }
     }
-}

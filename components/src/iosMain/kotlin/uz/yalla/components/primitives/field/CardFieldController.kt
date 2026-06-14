@@ -45,62 +45,78 @@ public class CardFieldController(
 ) {
     private var valueState by mutableStateOf(value)
     private var errorState by mutableStateOf(isError)
-    private val transformation = if (mask == CardFieldMask.CARD_NUMBER) CardNumberVisualTransformation else ExpiryDateVisualTransformation
+    private val transformation =
+        if (mask ==
+            CardFieldMask.CARD_NUMBER
+        ) {
+            CardNumberVisualTransformation
+        } else {
+            ExpiryDateVisualTransformation
+        }
     private val maxLength = if (mask == CardFieldMask.CARD_NUMBER) 16 else 4
 
     @OptIn(ExperimentalComposeUiApi::class)
-    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
-        YallaTheme(isDark = rememberIsDarkTheme()) {
-            Box(modifier = Modifier.fillMaxWidth()) {
-                OutlinedTextField(
-                    value = valueState,
-                    onValueChange = { raw ->
-                        val filtered = raw.filter(Char::isDigit).take(maxLength)
-                        if (filtered != valueState) {
-                            valueState = filtered
-                            onValueChange(filtered)
-                        }
-                    },
-                    textStyle = System.font.body.base.medium,
-                    singleLine = true,
-                    shape = RoundedCornerShape(10.dp),
-                    visualTransformation = transformation,
-                    trailingIcon = if (showScanIcon) {
-                        {
-                            Icon(
-                                painter = rememberVectorPainter(YallaIcons.Scan),
-                                contentDescription = null,
-                                tint = System.color.icon.base
+    public val viewController: UIViewController =
+        ComposeUIViewController(configure = { opaque = false }) {
+            YallaTheme(isDark = rememberIsDarkTheme()) {
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    OutlinedTextField(
+                        value = valueState,
+                        onValueChange = { raw ->
+                            val filtered = raw.filter(Char::isDigit).take(maxLength)
+                            if (filtered != valueState) {
+                                valueState = filtered
+                                onValueChange(filtered)
+                            }
+                        },
+                        textStyle = System.font.body.base.medium,
+                        singleLine = true,
+                        shape = RoundedCornerShape(10.dp),
+                        visualTransformation = transformation,
+                        trailingIcon =
+                            if (showScanIcon) {
+                                {
+                                    Icon(
+                                        painter = rememberVectorPainter(YallaIcons.Scan),
+                                        contentDescription = null,
+                                        tint = System.color.icon.base
+                                    )
+                                }
+                            } else {
+                                null
+                            },
+                        keyboardOptions =
+                            KeyboardOptions(
+                                keyboardType = KeyboardType.Number,
+                                imeAction = ImeAction.Done
+                            ),
+                        placeholder = {
+                            Text(
+                                text = placeholder,
+                                style = System.font.body.base.medium,
+                                color = System.color.text.subtle
                             )
-                        }
-                    } else null,
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
-                        imeAction = ImeAction.Done
-                    ),
-                    placeholder = {
-                        Text(
-                            text = placeholder,
-                            style = System.font.body.base.medium,
-                            color = System.color.text.subtle
-                        )
-                    },
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedTextColor = if (errorState) System.color.text.red else System.color.text.base,
-                        unfocusedTextColor = if (errorState) System.color.text.red else System.color.text.base,
-                        focusedBorderColor = System.color.border.filled,
-                        unfocusedBorderColor = System.color.border.disabled,
-                        cursorColor = System.color.text.link,
-                        selectionColors = TextSelectionColors(
-                            handleColor = System.color.text.link,
-                            backgroundColor = System.color.text.link.copy(.3f)
-                        )
-                    ),
-                    modifier = Modifier.fillMaxWidth()
-                )
+                        },
+                        colors =
+                            OutlinedTextFieldDefaults.colors(
+                                focusedTextColor = if (errorState) System.color.text.red else System.color.text.base,
+                                unfocusedTextColor = if (errorState) System.color.text.red else System.color.text.base,
+                                focusedBorderColor = System.color.border.filled,
+                                unfocusedBorderColor = System.color.border.disabled,
+                                cursorColor = System.color.text.link,
+                                selectionColors =
+                                    TextSelectionColors(
+                                        handleColor = System.color.text.link,
+                                        backgroundColor =
+                                            System.color.text.link
+                                                .copy(.3f)
+                                    )
+                            ),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
             }
         }
-    }
 
     public fun setValue(value: String) {
         valueState = value
@@ -137,7 +153,10 @@ private object ExpiryDateVisualTransformation : VisualTransformation {
     }
 }
 
-private fun applyMask(text: String, mask: String): String {
+private fun applyMask(
+    text: String,
+    mask: String
+): String {
     if (text.isEmpty()) return ""
     val result = StringBuilder()
     var textIndex = 0

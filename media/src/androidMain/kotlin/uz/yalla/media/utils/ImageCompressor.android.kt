@@ -15,69 +15,76 @@ public actual fun compressImage(
     val maxDimension = config.maxDimension
     val maxSizeBytes = config.maxFileSize
 
-    val options = BitmapFactory.Options().apply {
-        inJustDecodeBounds = true
-    }
+    val options =
+        BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+        }
     BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, options)
 
     val originalWidth = options.outWidth
     val originalHeight = options.outHeight
 
-    val scale = if (
-        originalWidth > maxDimension ||
-        originalHeight > maxDimension
-    ) {
-        min(
-            maxDimension.toDouble() / originalWidth,
-            maxDimension.toDouble() / originalHeight
-        )
-    } else {
-        1.0
-    }
+    val scale =
+        if (
+            originalWidth > maxDimension ||
+            originalHeight > maxDimension
+        ) {
+            min(
+                maxDimension.toDouble() / originalWidth,
+                maxDimension.toDouble() / originalHeight
+            )
+        } else {
+            1.0
+        }
 
     val newWidth = (originalWidth * scale).toInt()
     val newHeight = (originalHeight * scale).toInt()
 
-    val decodedOptions = BitmapFactory.Options().apply {
-        inJustDecodeBounds = false
-        inSampleSize = calculateInSampleSize(options, newWidth, newHeight)
-    }
-
-    val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, decodedOptions)
-        ?: return imageBytes
-
-    val rotationDegrees = runCatching {
-        ExifInterface(ByteArrayInputStream(imageBytes)).rotationDegrees
-    }.getOrDefault(0)
-
-    val resizedBitmap = if (bitmap.width != newWidth || bitmap.height != newHeight || rotationDegrees != 0) {
-        val exactWidth = newWidth.toFloat()
-        val exactHeight = newHeight.toFloat()
-        val scaleX = exactWidth / bitmap.width
-        val scaleY = exactHeight / bitmap.height
-
-        val matrix = Matrix().apply {
-            postScale(scaleX, scaleY)
-            if (rotationDegrees != 0) postRotate(rotationDegrees.toFloat())
+    val decodedOptions =
+        BitmapFactory.Options().apply {
+            inJustDecodeBounds = false
+            inSampleSize = calculateInSampleSize(options, newWidth, newHeight)
         }
 
-        Bitmap
-            .createBitmap(
-                bitmap,
-                0,
-                0,
-                bitmap.width,
-                bitmap.height,
-                matrix,
-                true
-            ).also {
-                if (it != bitmap) {
-                    bitmap.recycle()
+    val bitmap =
+        BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, decodedOptions)
+            ?: return imageBytes
+
+    val rotationDegrees =
+        runCatching {
+            ExifInterface(ByteArrayInputStream(imageBytes)).rotationDegrees
+        }.getOrDefault(0)
+
+    val resizedBitmap =
+        if (bitmap.width != newWidth || bitmap.height != newHeight || rotationDegrees != 0) {
+            val exactWidth = newWidth.toFloat()
+            val exactHeight = newHeight.toFloat()
+            val scaleX = exactWidth / bitmap.width
+            val scaleY = exactHeight / bitmap.height
+
+            val matrix =
+                Matrix().apply {
+                    postScale(scaleX, scaleY)
+                    if (rotationDegrees != 0) postRotate(rotationDegrees.toFloat())
                 }
-            }
-    } else {
-        bitmap
-    }
+
+            Bitmap
+                .createBitmap(
+                    bitmap,
+                    0,
+                    0,
+                    bitmap.width,
+                    bitmap.height,
+                    matrix,
+                    true
+                ).also {
+                    if (it != bitmap) {
+                        bitmap.recycle()
+                    }
+                }
+        } else {
+            bitmap
+        }
 
     var lo = 10
     var hi = config.quality
@@ -97,12 +104,13 @@ public actual fun compressImage(
     }
 
     if (bestBytes == null) {
-        val smaller = Bitmap.createScaledBitmap(
-            resizedBitmap,
-            resizedBitmap.width / 2,
-            resizedBitmap.height / 2,
-            true
-        )
+        val smaller =
+            Bitmap.createScaledBitmap(
+                resizedBitmap,
+                resizedBitmap.width / 2,
+                resizedBitmap.height / 2,
+                true
+            )
         val stream = ByteArrayOutputStream()
         smaller.compress(Bitmap.CompressFormat.JPEG, 10, stream)
         bestBytes = stream.toByteArray()

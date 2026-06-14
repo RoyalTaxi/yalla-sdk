@@ -22,7 +22,7 @@ public data class ColorScheme(
         val subtle: Color,
         val link: Color,
         val red: Color,
-        val white: Color,
+        val white: Color
     )
 
     @Immutable
@@ -30,7 +30,7 @@ public data class ColorScheme(
         val base: Color,
         val brand: Color,
         val secondary: Color,
-        val tertiary: Color,
+        val tertiary: Color
     )
 
     @Immutable
@@ -38,7 +38,7 @@ public data class ColorScheme(
         val disabled: Color,
         val filled: Color,
         val white: Color,
-        val error: Color,
+        val error: Color
     )
 
     @Immutable
@@ -47,7 +47,7 @@ public data class ColorScheme(
         val disabled: Color,
         val secondary: Color,
         val tertiary: Color,
-        val disabledTertiary: Color,
+        val disabledTertiary: Color
     )
 
     @Immutable
@@ -57,7 +57,7 @@ public data class ColorScheme(
         val secondary: Color,
         val disabled: Color,
         val red: Color,
-        val subtle: Color,
+        val subtle: Color
     )
 
     @Immutable
@@ -67,13 +67,13 @@ public data class ColorScheme(
         val color2: Color,
         val color3: Color,
         val color4: Color,
-        val color5: Color,
+        val color5: Color
     )
 
     @Immutable
     public data class Gradient(
         val splash: Brush,
-        val sunsetNight: Brush,
+        val sunsetNight: Brush
     )
 }
 
@@ -85,21 +85,21 @@ public fun light(): ColorScheme =
                 subtle = LightTextSubtle,
                 link = LightTextLink,
                 red = LightTextRed,
-                white = LightTextWhite,
+                white = LightTextWhite
             ),
         background =
             ColorScheme.Background(
                 base = LightBackgroundBase,
                 brand = LightBackgroundBrandBase,
                 secondary = LightBackgroundSecondary,
-                tertiary = LightBackgroundTertiary,
+                tertiary = LightBackgroundTertiary
             ),
         border =
             ColorScheme.Border(
                 disabled = LightBorderDisabled,
                 filled = LightBorderFilled,
                 white = LightBorderWhite,
-                error = LightBorderError,
+                error = LightBorderError
             ),
         button =
             ColorScheme.Button(
@@ -107,7 +107,7 @@ public fun light(): ColorScheme =
                 disabled = LightButtonDisabled,
                 secondary = LightButtonSecondary,
                 tertiary = LightButtonTertiary,
-                disabledTertiary = LightButtonDisabledTertiary,
+                disabledTertiary = LightButtonDisabledTertiary
             ),
         icon =
             ColorScheme.Icon(
@@ -116,7 +116,7 @@ public fun light(): ColorScheme =
                 secondary = LightIconSecondary,
                 disabled = LightIconDisabled,
                 red = LightIconRed,
-                subtle = LightIconSubtle,
+                subtle = LightIconSubtle
             ),
         accent =
             ColorScheme.Accent(
@@ -125,12 +125,12 @@ public fun light(): ColorScheme =
                 color2 = Color2,
                 color3 = Color3,
                 color4 = Color4,
-                color5 = Color5,
+                color5 = Color5
             ),
         gradient =
             ColorScheme.Gradient(
                 splash = SplashBackground,
-                sunsetNight = SunsetNight,
+                sunsetNight = SunsetNight
             )
     )
 
@@ -142,21 +142,21 @@ public fun dark(): ColorScheme =
                 subtle = DarkTextSubtle,
                 link = DarkTextLink,
                 red = DarkTextRed,
-                white = DarkTextWhite,
+                white = DarkTextWhite
             ),
         background =
             ColorScheme.Background(
                 base = DarkBackgroundBase,
                 brand = DarkBackgroundBrandBase,
                 secondary = DarkBackgroundSecondary,
-                tertiary = DarkBackgroundTertiary,
+                tertiary = DarkBackgroundTertiary
             ),
         border =
             ColorScheme.Border(
                 disabled = DarkBorderDisabled,
                 filled = DarkBorderFilled,
                 white = DarkBorderWhite,
-                error = DarkBorderError,
+                error = DarkBorderError
             ),
         button =
             ColorScheme.Button(
@@ -164,7 +164,7 @@ public fun dark(): ColorScheme =
                 disabled = DarkButtonDisabled,
                 secondary = DarkButtonSecondary,
                 tertiary = DarkButtonTertiary,
-                disabledTertiary = DarkButtonDisabledTertiary,
+                disabledTertiary = DarkButtonDisabledTertiary
             ),
         icon =
             ColorScheme.Icon(
@@ -173,7 +173,7 @@ public fun dark(): ColorScheme =
                 secondary = DarkIconSecondary,
                 disabled = DarkIconDisabled,
                 red = DarkIconRed,
-                subtle = DarkIconSubtle,
+                subtle = DarkIconSubtle
             ),
         accent =
             ColorScheme.Accent(
@@ -182,12 +182,12 @@ public fun dark(): ColorScheme =
                 color2 = Color2,
                 color3 = Color3,
                 color4 = Color4,
-                color5 = Color5,
+                color5 = Color5
             ),
         gradient =
             ColorScheme.Gradient(
                 splash = SplashBackground,
-                sunsetNight = SunsetNight,
+                sunsetNight = SunsetNight
             )
     )
 

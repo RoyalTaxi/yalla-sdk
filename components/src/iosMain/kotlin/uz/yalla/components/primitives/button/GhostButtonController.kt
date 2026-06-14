@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
 import uz.yalla.design.theme.YallaTheme
@@ -22,20 +22,21 @@ public class GhostButtonController(
     private var enabledState by mutableStateOf(enabled)
 
     @OptIn(ExperimentalComposeUiApi::class)
-    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
-        YallaTheme(isDark = rememberIsDarkTheme()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                GhostButton(
-                    text = textState,
-                    onClick = onClick,
-                    enabled = enabledState
-                )
+    public val viewController: UIViewController =
+        ComposeUIViewController(configure = { opaque = false }) {
+            YallaTheme(isDark = rememberIsDarkTheme()) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    GhostButton(
+                        text = textState,
+                        onClick = onClick,
+                        enabled = enabledState
+                    )
+                }
             }
         }
-    }
 
     public fun setText(text: String) {
         textState = text

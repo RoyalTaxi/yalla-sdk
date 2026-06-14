@@ -6,9 +6,15 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 
 @Composable
-public actual fun MapHost(controller: MapController, modifier: Modifier) {
-    val androidController = controller as? AndroidMapController
-        ?: error("MapController on Android must implement AndroidMapController. Got: ${controller::class.simpleName}")
+public actual fun MapHost(
+    controller: MapController,
+    modifier: Modifier
+) {
+    val androidController =
+        controller as? AndroidMapController
+            ?: error(
+                "MapController on Android must implement AndroidMapController. Got: ${controller::class.simpleName}"
+            )
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     AndroidView(
         factory = { ctx -> androidController.createView(ctx, lifecycle) },

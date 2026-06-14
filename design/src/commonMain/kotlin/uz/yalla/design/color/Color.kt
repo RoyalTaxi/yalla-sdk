@@ -77,11 +77,12 @@ internal val Color5 = Color(0xFFD6C8FF)
 
 // region Gradients
 
-internal val SplashBackground = Brush.linearGradient(
-    colors = listOf(Color(0xFF7957FF), Color(0xFF562DF8), Color(0xFF3812CE)),
-    start = Offset(0f, 0f),
-    end = Offset(1000f, 1000f)
-)
+internal val SplashBackground =
+    Brush.linearGradient(
+        colors = listOf(Color(0xFF7957FF), Color(0xFF562DF8), Color(0xFF3812CE)),
+        start = Offset(0f, 0f),
+        end = Offset(1000f, 1000f)
+    )
 internal val SunsetNight = Brush.linearGradient(listOf(Color(0xFFFF234B), Color(0xFF2F00EC)))
 
 // endregion

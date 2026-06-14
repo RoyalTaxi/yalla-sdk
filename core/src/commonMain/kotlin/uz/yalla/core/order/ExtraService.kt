@@ -10,7 +10,9 @@ public data class ExtraService(
     val costType: CostType,
     val icon: String? = null
 ) {
-    public enum class CostType(public val id: String) {
+    public enum class CostType(
+        public val id: String
+    ) {
         Fixed("cost"),
         Percent("percent");
 

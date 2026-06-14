@@ -31,26 +31,30 @@ public actual fun ShellSheet(
     val currentContent by rememberUpdatedState(content)
     val handleRef = remember { mutableStateOf<ContentSheetHandle?>(null) }
 
-    val handle = remember {
-        val rootController = ComposeUIViewController(configure = { opaque = false }) {
-            YallaTheme(isDark = rememberIsDarkTheme()) {
-                SheetBody(
+    val handle =
+        remember {
+            val rootController =
+                ComposeUIViewController(configure = { opaque = false }) {
+                    YallaTheme(isDark = rememberIsDarkTheme()) {
+                        SheetBody(
+                            fullHeight = fullHeight,
+                            padding = WindowInsets.safeDrawing.asPaddingValues(),
+                            onContentHeightChanged = { height ->
+                                handleRef.value?.updateContentHeight(height.value.toDouble())
+                            },
+                            content = currentContent
+                        )
+                    }
+                }
+            requireConfig()
+                .sheet
+                .createShell(
                     fullHeight = fullHeight,
-                    padding = WindowInsets.safeDrawing.asPaddingValues(),
-                    onContentHeightChanged = { height ->
-                        handleRef.value?.updateContentHeight(height.value.toDouble())
-                    },
-                    content = currentContent
-                )
-            }
+                    sheetSwipeEnabled = sheetSwipeEnabled,
+                    contentController = rootController,
+                    onDismissRequest = { currentOnDismissRequest() }
+                ).also { handleRef.value = it }
         }
-        requireConfig().sheet.createShell(
-            fullHeight = fullHeight,
-            sheetSwipeEnabled = sheetSwipeEnabled,
-            contentController = rootController,
-            onDismissRequest = { currentOnDismissRequest() }
-        ).also { handleRef.value = it }
-    }
 
     PresentationLifecycle(handle = handle, isVisible = isVisible)
 }

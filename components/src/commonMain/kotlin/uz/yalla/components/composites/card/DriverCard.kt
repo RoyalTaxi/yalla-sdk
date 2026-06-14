@@ -49,28 +49,31 @@ public fun DriverCard(
             Image(
                 painter = painter,
                 contentDescription = null,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(80.dp)
-                    .padding(bottom = 12.dp)
+                modifier =
+                    Modifier
+                        .clip(CircleShape)
+                        .size(80.dp)
+                        .padding(bottom = 12.dp)
             )
 
             Box(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .background(
-                        shape = CircleShape,
-                        brush = System.color.gradient.sunsetNight
-                    )
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .background(
+                            shape = CircleShape,
+                            brush = System.color.gradient.sunsetNight
+                        )
             ) {
                 Text(
                     text = stringResource(Res.string.driver_label_title),
                     color = System.color.text.white,
                     style = System.font.body.small.medium,
-                    modifier = Modifier.padding(
-                        vertical = 4.dp,
-                        horizontal = 10.dp
-                    )
+                    modifier =
+                        Modifier.padding(
+                            vertical = 4.dp,
+                            horizontal = 10.dp
+                        )
                 )
             }
         }
@@ -122,12 +125,13 @@ public fun DriverCard(
     val fallback = painterResource(Res.drawable.img_avatar_placeholder)
 
     DriverCard(
-        painter = rememberAsyncImagePainter(
-            model = imageUrl,
-            placeholder = fallback,
-            error = fallback,
-            fallback = fallback
-        ),
+        painter =
+            rememberAsyncImagePainter(
+                model = imageUrl,
+                placeholder = fallback,
+                error = fallback,
+                fallback = fallback
+            ),
         firstName = firstName,
         lastName = lastName,
         rating = rating,
@@ -137,31 +141,32 @@ public fun DriverCard(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        DriverCard(
-            painter = painterResource(Res.drawable.img_avatar_placeholder),
-            firstName = "Sherzod",
-            lastName = "Karimov",
-            rating = "4.92"
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            DriverCard(
+                painter = painterResource(Res.drawable.img_avatar_placeholder),
+                firstName = "Sherzod",
+                lastName = "Karimov",
+                rating = "4.92"
+            )
 
-        DriverCard(
-            painter = painterResource(Res.drawable.img_avatar_placeholder),
-            firstName = "Konstantin",
-            lastName = "Aleksandrovich",
-            rating = "5.00"
-        )
+            DriverCard(
+                painter = painterResource(Res.drawable.img_avatar_placeholder),
+                firstName = "Konstantin",
+                lastName = "Aleksandrovich",
+                rating = "5.00"
+            )
 
-        DriverCard(
-            painter = painterResource(Res.drawable.img_avatar_placeholder),
-            firstName = "Ali",
-            lastName = "Vali",
-            rating = "3.7"
-        )
+            DriverCard(
+                painter = painterResource(Res.drawable.img_avatar_placeholder),
+                firstName = "Ali",
+                lastName = "Vali",
+                rating = "3.7"
+            )
+        }
     }
-}

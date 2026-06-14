@@ -37,21 +37,23 @@ public object LoadingDialogDefaults {
     public fun colors(
         container: Color = System.color.background.base,
         indicator: Color = System.color.background.brand
-    ): LoadingDialogColors = LoadingDialogColors(
-        container = container,
-        indicator = indicator
-    )
+    ): LoadingDialogColors =
+        LoadingDialogColors(
+            container = container,
+            indicator = indicator
+        )
 
     @Composable
     public fun dimens(
         shape: Shape = CircleShape,
         contentPadding: Dp = 20.dp,
         indicatorSize: Dp = 40.dp
-    ): LoadingDialogDimens = LoadingDialogDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-        indicatorSize = indicatorSize
-    )
+    ): LoadingDialogDimens =
+        LoadingDialogDimens(
+            shape = shape,
+            contentPadding = contentPadding,
+            indicatorSize = indicatorSize
+        )
 }
 
 @Composable
@@ -65,10 +67,11 @@ public fun LoadingDialog(
 
     Dialog(
         onDismissRequest = { },
-        properties = DialogProperties(
-            dismissOnBackPress = false,
-            dismissOnClickOutside = false
-        )
+        properties =
+            DialogProperties(
+                dismissOnBackPress = false,
+                dismissOnClickOutside = false
+            )
     ) {
         Surface(
             shape = dimens.shape,
@@ -77,9 +80,10 @@ public fun LoadingDialog(
         ) {
             LoadingIndicator(
                 color = colors.indicator,
-                modifier = Modifier
-                    .padding(dimens.contentPadding)
-                    .size(dimens.indicatorSize)
+                modifier =
+                    Modifier
+                        .padding(dimens.contentPadding)
+                        .size(dimens.indicatorSize)
             )
         }
     }
@@ -87,15 +91,17 @@ public fun LoadingDialog(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Surface(
-        shape = CircleShape,
-        color = System.color.background.base
-    ) {
-        Box(
-            modifier = Modifier
-                .padding(20.dp)
-                .size(40.dp)
-        )
+private fun Preview() =
+    YallaTheme {
+        Surface(
+            shape = CircleShape,
+            color = System.color.background.base
+        ) {
+            Box(
+                modifier =
+                    Modifier
+                        .padding(20.dp)
+                        .size(40.dp)
+            )
+        }
     }
-}

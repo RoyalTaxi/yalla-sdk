@@ -14,11 +14,14 @@ import kotlin.test.assertTrue
  * from the same spherical model (R = 6 371 000 m) the implementation uses.
  */
 class GeoDistanceTest {
-
     private val tashkent = GeoPoint(41.2995, 69.2401)
     private val samarkand = GeoPoint(39.6270, 66.9750)
 
-    private fun assertClose(expected: Double, actual: Double, tolerance: Double) {
+    private fun assertClose(
+        expected: Double,
+        actual: Double,
+        tolerance: Double
+    ) {
         assertTrue(
             abs(expected - actual) <= tolerance,
             "expected $expected within $tolerance of actual $actual (delta ${abs(expected - actual)})"

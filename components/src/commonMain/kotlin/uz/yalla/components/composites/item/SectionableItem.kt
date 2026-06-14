@@ -17,10 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
-import uz.yalla.resources.icons.ArrowRight
-import uz.yalla.resources.icons.Messages
-import uz.yalla.resources.icons.Setting
-import uz.yalla.resources.icons.YallaIcons
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -34,6 +30,10 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
+import uz.yalla.resources.icons.ArrowRight
+import uz.yalla.resources.icons.Messages
+import uz.yalla.resources.icons.Setting
+import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
 public data class SectionableItemColors(
@@ -81,58 +81,62 @@ public object SectionableItemDefaults {
         openIconColor: Color = System.color.icon.base,
         borderColor: Color = Color.Transparent,
         containerColor: Color = Color.Transparent
-    ): SectionableItemColors = SectionableItemColors(
-        iconColor = iconColor,
-        iconBackgroundColor = iconBackgroundColor,
-        topDescriptionColor = topDescriptionColor,
-        titleColor = titleColor,
-        bottomDescriptionColor = bottomDescriptionColor,
-        descriptionColor = descriptionColor,
-        openIconColor = openIconColor,
-        borderColor = borderColor,
-        containerColor = containerColor
-    )
+    ): SectionableItemColors =
+        SectionableItemColors(
+            iconColor = iconColor,
+            iconBackgroundColor = iconBackgroundColor,
+            topDescriptionColor = topDescriptionColor,
+            titleColor = titleColor,
+            bottomDescriptionColor = bottomDescriptionColor,
+            descriptionColor = descriptionColor,
+            openIconColor = openIconColor,
+            borderColor = borderColor,
+            containerColor = containerColor
+        )
 
     @Composable
     public fun dimens(
         shape: Shape = RectangleShape,
         contentSpacing: Dp = 16.dp,
         contentInlineSpacing: Dp = 4.dp,
-        contentPadding: PaddingValues = PaddingValues(
-            start = 20.dp,
-            top = 20.dp,
-            end = 8.dp,
-            bottom = 20.dp
-        ),
+        contentPadding: PaddingValues =
+            PaddingValues(
+                start = 20.dp,
+                top = 20.dp,
+                end = 8.dp,
+                bottom = 20.dp
+            ),
         iconSize: Dp = 24.dp,
         iconContainerSize: Dp = 24.dp,
         iconContainerShape: Shape = RectangleShape,
         iconPadding: Dp = 0.dp,
         openIconSize: Dp = 24.dp,
         borderWidth: Dp = 0.dp
-    ): SectionableItemDimens = SectionableItemDimens(
-        shape = shape,
-        contentSpacing = contentSpacing,
-        contentInlineSpacing = contentInlineSpacing,
-        contentPadding = contentPadding,
-        iconSize = iconSize,
-        iconContainerSize = iconContainerSize,
-        iconContainerShape = iconContainerShape,
-        iconPadding = iconPadding,
-        openIconSize = openIconSize,
-        borderWidth = borderWidth
-    )
+    ): SectionableItemDimens =
+        SectionableItemDimens(
+            shape = shape,
+            contentSpacing = contentSpacing,
+            contentInlineSpacing = contentInlineSpacing,
+            contentPadding = contentPadding,
+            iconSize = iconSize,
+            iconContainerSize = iconContainerSize,
+            iconContainerShape = iconContainerShape,
+            iconPadding = iconPadding,
+            openIconSize = openIconSize,
+            borderWidth = borderWidth
+        )
 
     @Composable
     public fun styles(
         topDescriptionStyle: TextStyle = System.font.body.base.medium,
         titleStyle: TextStyle = System.font.body.large.medium,
         bottomDescriptionStyle: TextStyle = System.font.body.caption
-    ): SectionableItemStyles = SectionableItemStyles(
-        topDescriptionStyle = topDescriptionStyle,
-        titleStyle = titleStyle,
-        bottomDescriptionStyle = bottomDescriptionStyle
-    )
+    ): SectionableItemStyles =
+        SectionableItemStyles(
+            topDescriptionStyle = topDescriptionStyle,
+            titleStyle = titleStyle,
+            bottomDescriptionStyle = bottomDescriptionStyle
+        )
 }
 
 @Composable
@@ -154,10 +158,11 @@ public fun SectionableItem(
         color = colors.containerColor,
         shape = dimens.shape,
         onClick = onClick,
-        border = BorderStroke(
-            color = colors.borderColor,
-            width = dimens.borderWidth
-        )
+        border =
+            BorderStroke(
+                color = colors.borderColor,
+                width = dimens.borderWidth
+            )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -167,10 +172,11 @@ public fun SectionableItem(
             iconPainter?.let { painter ->
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(dimens.iconContainerSize)
-                        .background(colors.iconBackgroundColor, dimens.iconContainerShape)
-                        .padding(dimens.iconPadding)
+                    modifier =
+                        Modifier
+                            .size(dimens.iconContainerSize)
+                            .background(colors.iconBackgroundColor, dimens.iconContainerShape)
+                            .padding(dimens.iconPadding)
                 ) {
                     if (colors.iconColor == Color.Unspecified) {
                         Image(
@@ -238,54 +244,59 @@ public fun SectionableItem(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Surface(
-            color = System.color.background.secondary,
-            shape = RoundedCornerShape(16.dp)
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column {
-                SectionableItem(
-                    iconPainter = rememberVectorPainter(YallaIcons.Setting),
-                    title = "Notifications",
-                    onClick = { }
-                )
+            Surface(
+                color = System.color.background.secondary,
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column {
+                    SectionableItem(
+                        iconPainter = rememberVectorPainter(YallaIcons.Setting),
+                        title = "Notifications",
+                        onClick = { }
+                    )
 
-                SectionableItem(
-                    iconPainter = rememberVectorPainter(YallaIcons.Setting),
-                    title = "Notifications",
-                    bottomDescription = "You have new notification",
-                    dimens = SectionableItemDefaults.dimens(
-                        contentPadding = PaddingValues(
-                            start = 20.dp,
-                            top = 8.dp,
-                            end = 8.dp,
-                            bottom = 8.dp
-                        )
-                    ),
-                    onClick = { }
-                )
+                    SectionableItem(
+                        iconPainter = rememberVectorPainter(YallaIcons.Setting),
+                        title = "Notifications",
+                        bottomDescription = "You have new notification",
+                        dimens =
+                            SectionableItemDefaults.dimens(
+                                contentPadding =
+                                    PaddingValues(
+                                        start = 20.dp,
+                                        top = 8.dp,
+                                        end = 8.dp,
+                                        bottom = 8.dp
+                                    )
+                            ),
+                        onClick = { }
+                    )
 
-                SectionableItem(
-                    iconPainter = rememberVectorPainter(YallaIcons.Messages),
-                    topDescription = "You have new notification",
-                    title = "Notifications",
-                    dimens = SectionableItemDefaults.dimens(
-                        contentInlineSpacing = 0.dp,
-                        contentPadding = PaddingValues(
-                            start = 20.dp,
-                            top = 8.dp,
-                            end = 8.dp,
-                            bottom = 8.dp
-                        )
-                    ),
-                    onClick = { }
-                )
+                    SectionableItem(
+                        iconPainter = rememberVectorPainter(YallaIcons.Messages),
+                        topDescription = "You have new notification",
+                        title = "Notifications",
+                        dimens =
+                            SectionableItemDefaults.dimens(
+                                contentInlineSpacing = 0.dp,
+                                contentPadding =
+                                    PaddingValues(
+                                        start = 20.dp,
+                                        top = 8.dp,
+                                        end = 8.dp,
+                                        bottom = 8.dp
+                                    )
+                            ),
+                        onClick = { }
+                    )
+                }
             }
         }
     }
-}

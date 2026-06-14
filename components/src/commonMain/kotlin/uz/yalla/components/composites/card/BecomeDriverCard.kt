@@ -82,9 +82,10 @@ public fun BecomeDriverCard(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    BecomeDriverCard(
-        onClick = {},
-        modifier = Modifier.padding(16.dp)
-    )
-}
+private fun Preview() =
+    YallaTheme {
+        BecomeDriverCard(
+            onClick = {},
+            modifier = Modifier.padding(16.dp)
+        )
+    }

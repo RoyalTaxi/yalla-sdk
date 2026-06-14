@@ -47,11 +47,12 @@ public object ActionableItemDefaults {
         iconColor: Color = System.color.icon.base,
         textColor: Color = System.color.text.base,
         trailingIconColor: Color = System.color.icon.base
-    ): ActionableItemColors = ActionableItemColors(
-        iconColor = iconColor,
-        textColor = textColor,
-        trailingIconColor = trailingIconColor
-    )
+    ): ActionableItemColors =
+        ActionableItemColors(
+            iconColor = iconColor,
+            textColor = textColor,
+            trailingIconColor = trailingIconColor
+        )
 
     @Composable
     public fun colorsFor(model: ActionableItemModel): ActionableItemColors {
@@ -118,25 +119,26 @@ public fun ActionableItem(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        ActionableItem(
-            text = "Take a picture",
-            modifier = Modifier.fillMaxWidth(),
-            painter = rememberVectorPainter(YallaIcons.Camera),
-            onClick = {}
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            ActionableItem(
+                text = "Take a picture",
+                modifier = Modifier.fillMaxWidth(),
+                painter = rememberVectorPainter(YallaIcons.Camera),
+                onClick = {}
+            )
 
-        ActionableItem(
-            text = "Choose from gallery",
-            modifier = Modifier.fillMaxWidth(),
-            painter = rememberVectorPainter(YallaIcons.Gallery),
-            onClick = {},
-            colors = ActionableItemDefaults.colors(System.color.icon.red)
-        )
+            ActionableItem(
+                text = "Choose from gallery",
+                modifier = Modifier.fillMaxWidth(),
+                painter = rememberVectorPainter(YallaIcons.Gallery),
+                onClick = {},
+                colors = ActionableItemDefaults.colors(System.color.icon.red)
+            )
+        }
     }
-}

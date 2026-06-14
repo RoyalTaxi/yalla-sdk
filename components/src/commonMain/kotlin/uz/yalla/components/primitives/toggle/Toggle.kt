@@ -17,10 +17,22 @@ public expect fun Toggle(
     uncheckedThumbColor: Color = System.color.icon.white,
     uncheckedTrackColor: Color = System.color.icon.subtle,
     uncheckedBorderColor: Color = System.color.icon.subtle,
-    disabledCheckedThumbColor: Color = System.color.icon.white.copy(alpha = 0.7f),
-    disabledCheckedTrackColor: Color = System.color.background.brand.copy(alpha = 0.5f),
-    disabledCheckedBorderColor: Color = System.color.background.brand.copy(alpha = 0.5f),
-    disabledUncheckedThumbColor: Color = System.color.icon.white.copy(alpha = 0.7f),
-    disabledUncheckedTrackColor: Color = System.color.icon.subtle.copy(alpha = 0.5f),
-    disabledUncheckedBorderColor: Color = System.color.icon.subtle.copy(alpha = 0.5f)
+    disabledCheckedThumbColor: Color =
+        System.color.icon.white
+            .copy(alpha = 0.7f),
+    disabledCheckedTrackColor: Color =
+        System.color.background.brand
+            .copy(alpha = 0.5f),
+    disabledCheckedBorderColor: Color =
+        System.color.background.brand
+            .copy(alpha = 0.5f),
+    disabledUncheckedThumbColor: Color =
+        System.color.icon.white
+            .copy(alpha = 0.7f),
+    disabledUncheckedTrackColor: Color =
+        System.color.icon.subtle
+            .copy(alpha = 0.5f),
+    disabledUncheckedBorderColor: Color =
+        System.color.icon.subtle
+            .copy(alpha = 0.5f)
 )

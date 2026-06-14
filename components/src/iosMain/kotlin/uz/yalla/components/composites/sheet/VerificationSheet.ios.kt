@@ -36,26 +36,27 @@ public actual fun VerificationSheet(
     val currentOnCodeComplete by rememberUpdatedState(onCodeComplete)
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
 
-    val handle = remember {
-        requireConfig().sheet.createVerification(
-            code = code,
-            codeLength = codeLength,
-            headline = headline,
-            description = description,
-            confirmText = confirmText,
-            resendText = resendText,
-            title = title,
-            isError = isError,
-            isLoading = isLoading,
-            resendEnabled = resendEnabled,
-            dismissEnabled = dismissEnabled,
-            onCodeChange = { currentOnCodeChange(it) },
-            onConfirm = { currentOnConfirm() },
-            onResend = { currentOnResend() },
-            onCodeComplete = { currentOnCodeComplete(it) },
-            onDismissRequest = { currentOnDismissRequest() }
-        )
-    }
+    val handle =
+        remember {
+            requireConfig().sheet.createVerification(
+                code = code,
+                codeLength = codeLength,
+                headline = headline,
+                description = description,
+                confirmText = confirmText,
+                resendText = resendText,
+                title = title,
+                isError = isError,
+                isLoading = isLoading,
+                resendEnabled = resendEnabled,
+                dismissEnabled = dismissEnabled,
+                onCodeChange = { currentOnCodeChange(it) },
+                onConfirm = { currentOnConfirm() },
+                onResend = { currentOnResend() },
+                onCodeComplete = { currentOnCodeComplete(it) },
+                onDismissRequest = { currentOnDismissRequest() }
+            )
+        }
 
     LaunchedEffect(code, description, isError, isLoading, resendText, resendEnabled) {
         handle.update(code, description, isError, isLoading, resendText, resendEnabled)

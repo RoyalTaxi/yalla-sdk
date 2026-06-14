@@ -11,7 +11,6 @@ import kotlin.test.assertEquals
  * not validate digits), so the boundary at 16 and the default-to-Uzcard behavior are what matter.
  */
 class CardBrandTest {
-
     @Test
     fun sixteenCharacterIdsAreHumo() {
         assertEquals(CardBrand.Humo, CardBrand.of("9860000000000000"))

@@ -39,11 +39,12 @@ public object BonusBannerCardDefaults {
         shape: Shape = RoundedCornerShape(16.dp),
         height: Dp = 148.dp,
         contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 20.dp)
-    ): BonusBannerCardDimens = BonusBannerCardDimens(
-        shape = shape,
-        height = height,
-        contentPadding = contentPadding
-    )
+    ): BonusBannerCardDimens =
+        BonusBannerCardDimens(
+            shape = shape,
+            height = height,
+            contentPadding = contentPadding
+        )
 }
 
 @Composable
@@ -56,9 +57,10 @@ public fun BonusBannerCard(
     dimens: BonusBannerCardDimens = BonusBannerCardDefaults.dimens()
 ) {
     Box(
-        modifier = modifier
-            .height(dimens.height)
-            .clip(dimens.shape)
+        modifier =
+            modifier
+                .height(dimens.height)
+                .clip(dimens.shape)
     ) {
         Image(
             painter = background,
@@ -68,9 +70,10 @@ public fun BonusBannerCard(
         )
 
         Column(
-            modifier = Modifier
-                .matchParentSize()
-                .padding(dimens.contentPadding)
+            modifier =
+                Modifier
+                    .matchParentSize()
+                    .padding(dimens.contentPadding)
         ) {
             Text(
                 text = title,
@@ -96,13 +99,15 @@ public fun BonusBannerCard(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    BonusBannerCard(
-        title = "Bonuslar",
-        subtitle = "1 tanga = 1 so'm",
-        amount = "30000",
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    )
-}
+private fun Preview() =
+    YallaTheme {
+        BonusBannerCard(
+            title = "Bonuslar",
+            subtitle = "1 tanga = 1 so'm",
+            amount = "30000",
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+        )
+    }

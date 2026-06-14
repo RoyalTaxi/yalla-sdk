@@ -66,9 +66,10 @@ public fun DockedSheet(
     Card(
         shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
         colors = CardDefaults.cardColors(containerColor = System.color.background.base),
-        modifier = modifier
-            .graphicsLayer { translationY = offset }
-            .onSizeChanged { heightPx = it.height }
+        modifier =
+            modifier
+                .graphicsLayer { translationY = offset }
+                .onSizeChanged { heightPx = it.height }
     ) {
         content()
     }

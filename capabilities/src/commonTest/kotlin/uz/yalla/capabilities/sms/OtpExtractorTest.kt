@@ -72,7 +72,8 @@ class OtpExtractorTest {
 
     @Test
     fun extractsCodeFromCyrillicText() {
-        assertEquals("48613", extractOtp("Ваш код подтверждения 48613. Никому не сообщайте его", 5, false))
+        val message = "Ваш код подтверждения 48613. Никому не сообщайте его"
+        assertEquals("48613", extractOtp(message, 5, false))
     }
 
     @Test

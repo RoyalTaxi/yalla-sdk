@@ -1,6 +1,5 @@
 package uz.yalla.core.geo
 
-
 public data class GeoPoint(
     val lat: Double,
     val lng: Double

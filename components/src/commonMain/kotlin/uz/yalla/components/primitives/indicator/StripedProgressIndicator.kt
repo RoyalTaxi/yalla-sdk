@@ -51,33 +51,38 @@ public fun StripedProgressIndicator(
     val offset by transition.animateFloat(
         initialValue = 0f,
         targetValue = periodPx,
-        animationSpec = infiniteRepeatable(
-            repeatMode = RepeatMode.Restart,
-            animation = tween(
-                durationMillis = AnimationDurationMs,
-                easing = LinearEasing
+        animationSpec =
+            infiniteRepeatable(
+                repeatMode = RepeatMode.Restart,
+                animation =
+                    tween(
+                        durationMillis = AnimationDurationMs,
+                        easing = LinearEasing
+                    )
             )
-        )
     )
 
     Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(TrackHeight)
-            .clip(TrackShape)
-            .background(System.color.background.secondary)
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(TrackHeight)
+                .clip(TrackShape)
+                .background(System.color.background.secondary)
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxHeight()
-                .fillMaxWidth(clamped)
-                .clip(TrackShape)
-                .background(System.color.gradient.sunsetNight)
+            modifier =
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(clamped)
+                    .clip(TrackShape)
+                    .background(System.color.gradient.sunsetNight)
         ) {
             Canvas(
-                modifier = Modifier
-                    .matchParentSize()
-                    .graphicsLayer { translationX = offset }
+                modifier =
+                    Modifier
+                        .matchParentSize()
+                        .graphicsLayer { translationX = offset }
             ) {
                 val gap = StripeGap.toPx()
                 val stripeWidth = StripeWidth.toPx()
@@ -101,6 +106,7 @@ public fun StripedProgressIndicator(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    StripedProgressIndicator(progress = 0.5f)
-}
+private fun Preview() =
+    YallaTheme {
+        StripedProgressIndicator(progress = 0.5f)
+    }

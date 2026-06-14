@@ -22,17 +22,19 @@ internal fun PinStick(
 ) {
     Box(
         contentAlignment = Alignment.TopCenter,
-        modifier = modifier
-            .width(dimens.stickWidth)
-            .height(dimens.stickHeight)
+        modifier =
+            modifier
+                .width(dimens.stickWidth)
+                .height(dimens.stickHeight)
     ) {
         Box(
-            modifier = Modifier
-                .width(dimens.stickWidth)
-                .height(clipHeight)
-                .clipToBounds()
-                .background(shape = CircleShape, color = colors.stick)
-                .border(width = 1.dp, shape = CircleShape, color = colors.stickBorder)
+            modifier =
+                Modifier
+                    .width(dimens.stickWidth)
+                    .height(clipHeight)
+                    .clipToBounds()
+                    .background(shape = CircleShape, color = colors.stick)
+                    .border(width = 1.dp, shape = CircleShape, color = colors.stickBorder)
         )
     }
 }

@@ -29,9 +29,10 @@ public actual fun LoadingIndicator(
     UIKitViewController(
         factory = { handle.viewController },
         modifier = modifier,
-        properties = UIKitInteropProperties(
-            placedAsOverlay = true,
-            isNativeAccessibilityEnabled = false
-        )
+        properties =
+            UIKitInteropProperties(
+                placedAsOverlay = true,
+                isNativeAccessibilityEnabled = false
+            )
     )
 }

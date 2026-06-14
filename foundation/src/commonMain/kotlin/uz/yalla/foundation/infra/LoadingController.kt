@@ -25,22 +25,22 @@ public class LoadingController(
     private val active = MutableStateFlow(0)
     private var shownAt: TimeSource.Monotonic.ValueTimeMark? = null
 
-    public val loading: StateFlow<Boolean> = active
-        .map { it > 0 }
-        .distinctUntilChanged()
-        .transformLatest { busy ->
-            if (busy) {
-                delay(gracePeriod)
-                shownAt = TimeSource.Monotonic.markNow()
-                emit(true)
-                awaitCancellation()
-            } else {
-                shownAt?.let { delay(minVisible - it.elapsedNow()) }
-                shownAt = null
-                emit(false)
-            }
-        }
-        .stateIn(scope, SharingStarted.Eagerly, false)
+    public val loading: StateFlow<Boolean> =
+        active
+            .map { it > 0 }
+            .distinctUntilChanged()
+            .transformLatest { busy ->
+                if (busy) {
+                    delay(gracePeriod)
+                    shownAt = TimeSource.Monotonic.markNow()
+                    emit(true)
+                    awaitCancellation()
+                } else {
+                    shownAt?.let { delay(minVisible - it.elapsedNow()) }
+                    shownAt = null
+                    emit(false)
+                }
+            }.stateIn(scope, SharingStarted.Eagerly, false)
 
     public suspend fun <T> withLoading(block: suspend () -> T): T {
         active.update { it + 1 }

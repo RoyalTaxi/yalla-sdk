@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.ComposeUIViewController
 import platform.UIKit.UIViewController
@@ -26,25 +26,26 @@ public class PinFieldController(
     private var errorState by mutableStateOf(error)
 
     @OptIn(ExperimentalComposeUiApi::class)
-    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
-        YallaTheme(isDark = rememberIsDarkTheme()) {
-            val focusRequester = remember { FocusRequester() }
-            if (autoFocus) {
-                LaunchedEffect(Unit) { runCatching { focusRequester.requestFocus() } }
+    public val viewController: UIViewController =
+        ComposeUIViewController(configure = { opaque = false }) {
+            YallaTheme(isDark = rememberIsDarkTheme()) {
+                val focusRequester = remember { FocusRequester() }
+                if (autoFocus) {
+                    LaunchedEffect(Unit) { runCatching { focusRequester.requestFocus() } }
+                }
+                PinField(
+                    value = codeState,
+                    onValueChange = { new ->
+                        codeState = new
+                        onValueChange(new)
+                    },
+                    length = length,
+                    error = errorState,
+                    focusRequester = if (autoFocus) focusRequester else null,
+                    contentPadding = PaddingValues(horizontal = horizontalPadding.dp)
+                )
             }
-            PinField(
-                value = codeState,
-                onValueChange = { new ->
-                    codeState = new
-                    onValueChange(new)
-                },
-                length = length,
-                error = errorState,
-                focusRequester = if (autoFocus) focusRequester else null,
-                contentPadding = PaddingValues(horizontal = horizontalPadding.dp)
-            )
         }
-    }
 
     public fun setCode(code: String) {
         codeState = code

@@ -17,26 +17,28 @@ public data class MapCapabilities(
     val minZoom: Float = 1f
 ) {
     public companion object {
-        public val LIBRE: MapCapabilities = MapCapabilities(
-            supportsOffline = true,
-            supportsCustomStyles = true,
-            supportsRotation = true,
-            supportsTilt = true,
-            supportsCircles = true,
-            supportsRoutePatterns = true,
-            maxZoom = 21f,
-            minZoom = 4f
-        )
+        public val LIBRE: MapCapabilities =
+            MapCapabilities(
+                supportsOffline = true,
+                supportsCustomStyles = true,
+                supportsRotation = true,
+                supportsTilt = true,
+                supportsCircles = true,
+                supportsRoutePatterns = true,
+                maxZoom = 21f,
+                minZoom = 4f
+            )
 
-        public val GOOGLE: MapCapabilities = MapCapabilities(
-            supportsTraffic = true,
-            supportsRotation = true,
-            supportsTilt = true,
-            supportsCustomStyles = false,
-            supportsCircles = true,
-            supportsRoutePatterns = true,
-            maxZoom = 21f,
-            minZoom = 4f
-        )
+        public val GOOGLE: MapCapabilities =
+            MapCapabilities(
+                supportsTraffic = true,
+                supportsRotation = true,
+                supportsTilt = true,
+                supportsCustomStyles = false,
+                supportsCircles = true,
+                supportsRoutePatterns = true,
+                maxZoom = 21f,
+                minZoom = 4f
+            )
     }
 }

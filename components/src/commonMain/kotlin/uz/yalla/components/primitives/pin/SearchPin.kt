@@ -18,9 +18,7 @@ private const val LottieResourcePath = "files/lottie_order_search.json"
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
-public fun SearchPin(
-    modifier: Modifier = Modifier
-) {
+public fun SearchPin(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition {
         LottieCompositionSpec.JsonString(Res.readBytes(LottieResourcePath).decodeToString())
     }

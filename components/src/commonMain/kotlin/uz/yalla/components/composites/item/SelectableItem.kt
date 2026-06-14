@@ -1,7 +1,6 @@
 package uz.yalla.components.composites.item
 
 import androidx.compose.foundation.BorderStroke
-import coil3.compose.rememberAsyncImagePainter
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -27,6 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.resources.icons.Checked
@@ -104,49 +104,53 @@ public object SelectableItemDefaults {
         selectedBorderColor: Color = Color.Transparent,
         indicatorColor: Color = Color.Unspecified,
         selectedIndicatorColor: Color = Color.Unspecified
-    ): SelectableItemColors = SelectableItemColors(
-        iconColor = iconColor,
-        textColor = textColor,
-        containerColor = containerColor,
-        borderColor = borderColor,
-        selectedIconColor = selectedIconColor,
-        selectedTextColor = selectedTextColor,
-        selectedContainerColor = selectedContainerColor,
-        selectedBorderColor = selectedBorderColor,
-        indicatorColor = indicatorColor,
-        selectedIndicatorColor = selectedIndicatorColor
-    )
+    ): SelectableItemColors =
+        SelectableItemColors(
+            iconColor = iconColor,
+            textColor = textColor,
+            containerColor = containerColor,
+            borderColor = borderColor,
+            selectedIconColor = selectedIconColor,
+            selectedTextColor = selectedTextColor,
+            selectedContainerColor = selectedContainerColor,
+            selectedBorderColor = selectedBorderColor,
+            indicatorColor = indicatorColor,
+            selectedIndicatorColor = selectedIndicatorColor
+        )
 
     @Composable
     public fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         contentSpacing: Dp = 8.dp,
-        contentPadding: PaddingValues = PaddingValues(
-            vertical = 12.dp,
-            horizontal = 16.dp
-        ),
+        contentPadding: PaddingValues =
+            PaddingValues(
+                vertical = 12.dp,
+                horizontal = 16.dp
+            ),
         iconSize: Dp = 34.dp,
         indicatorSize: Dp = 24.dp,
         borderWidth: Dp = 1.dp
-    ): SelectableItemDimens = SelectableItemDimens(
-        shape = shape,
-        contentSpacing = contentSpacing,
-        contentPadding = contentPadding,
-        iconSize = iconSize,
-        indicatorSize = indicatorSize,
-        borderWidth = borderWidth
-    )
+    ): SelectableItemDimens =
+        SelectableItemDimens(
+            shape = shape,
+            contentSpacing = contentSpacing,
+            contentPadding = contentPadding,
+            iconSize = iconSize,
+            indicatorSize = indicatorSize,
+            borderWidth = borderWidth
+        )
 
     @Composable
     public fun styles(
         textStyle: TextStyle = System.font.body.small.medium,
         textMaxLines: Int = Int.MAX_VALUE,
         textOverflow: TextOverflow = TextOverflow.Clip
-    ): SelectableItemStyles = SelectableItemStyles(
-        textStyle = textStyle,
-        textMaxLines = textMaxLines,
-        textOverflow = textOverflow
-    )
+    ): SelectableItemStyles =
+        SelectableItemStyles(
+            textStyle = textStyle,
+            textMaxLines = textMaxLines,
+            textOverflow = textOverflow
+        )
 }
 
 @Composable
@@ -167,10 +171,11 @@ public fun SelectableItem(
         shape = dimens.shape,
         onClick = onClick,
         modifier = modifier,
-        border = BorderStroke(
-            width = dimens.borderWidth,
-            color = colors.borderColorFor(selected)
-        )
+        border =
+            BorderStroke(
+                width = dimens.borderWidth,
+                color = colors.borderColorFor(selected)
+            )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -195,21 +200,24 @@ public fun SelectableItem(
                 modifier = Modifier.weight(1f)
             )
 
-            if (selected) selectedIndicatorPainter?.let { painter ->
-                Icon(
-                    painter = painter,
-                    contentDescription = null,
-                    tint = colors.indicatorColorFor(selected),
-                    modifier = Modifier.size(dimens.indicatorSize)
-                )
-            }
-            else unselectedIndicatorPainter?.let { painter ->
-                Icon(
-                    painter = painter,
-                    contentDescription = null,
-                    tint = colors.indicatorColorFor(selected),
-                    modifier = Modifier.size(dimens.indicatorSize)
-                )
+            if (selected) {
+                selectedIndicatorPainter?.let { painter ->
+                    Icon(
+                        painter = painter,
+                        contentDescription = null,
+                        tint = colors.indicatorColorFor(selected),
+                        modifier = Modifier.size(dimens.indicatorSize)
+                    )
+                }
+            } else {
+                unselectedIndicatorPainter?.let { painter ->
+                    Icon(
+                        painter = painter,
+                        contentDescription = null,
+                        tint = colors.indicatorColorFor(selected),
+                        modifier = Modifier.size(dimens.indicatorSize)
+                    )
+                }
             }
         }
     }
@@ -227,18 +235,19 @@ public fun SelectableItem(
     colors: SelectableItemColors = SelectableItemDefaults.colors(),
     dimens: SelectableItemDimens = SelectableItemDefaults.dimens(),
     styles: SelectableItemStyles = SelectableItemDefaults.styles()
-): Unit = SelectableItem(
-    text = text,
-    selected = selected,
-    onClick = onClick,
-    modifier = modifier,
-    leadingPainter = rememberVectorPainter(imageVector),
-    selectedIndicatorPainter = selectedIndicatorPainter,
-    unselectedIndicatorPainter = unselectedIndicatorPainter,
-    colors = colors,
-    dimens = dimens,
-    styles = styles
-)
+): Unit =
+    SelectableItem(
+        text = text,
+        selected = selected,
+        onClick = onClick,
+        modifier = modifier,
+        leadingPainter = rememberVectorPainter(imageVector),
+        selectedIndicatorPainter = selectedIndicatorPainter,
+        unselectedIndicatorPainter = unselectedIndicatorPainter,
+        colors = colors,
+        dimens = dimens,
+        styles = styles
+    )
 
 @Composable
 public fun SelectableItem(
@@ -252,163 +261,177 @@ public fun SelectableItem(
     colors: SelectableItemColors = SelectableItemDefaults.colors(),
     dimens: SelectableItemDimens = SelectableItemDefaults.dimens(),
     styles: SelectableItemStyles = SelectableItemDefaults.styles()
-): Unit = SelectableItem(
-    text = text,
-    selected = selected,
-    onClick = onClick,
-    modifier = modifier,
-    leadingPainter = rememberAsyncImagePainter(model = leadingImageUrl),
-    selectedIndicatorPainter = selectedIndicatorPainter,
-    unselectedIndicatorPainter = unselectedIndicatorPainter,
-    colors = colors,
-    dimens = dimens,
-    styles = styles
-)
+): Unit =
+    SelectableItem(
+        text = text,
+        selected = selected,
+        onClick = onClick,
+        modifier = modifier,
+        leadingPainter = rememberAsyncImagePainter(model = leadingImageUrl),
+        selectedIndicatorPainter = selectedIndicatorPainter,
+        unselectedIndicatorPainter = unselectedIndicatorPainter,
+        colors = colors,
+        dimens = dimens,
+        styles = styles
+    )
 
 @Composable
 @Preview
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+private fun Preview() =
+    YallaTheme {
         Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(32.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            SelectableItem(
-                text = "O'zbek tili",
-                selected = false,
-                imageVector = YallaIcons.FlagUz,
-                onClick = { },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            SelectableItem(
-                text = "Day mode",
-                selected = true,
-                leadingPainter = rememberVectorPainter(YallaIcons.ThemeLight),
-                onClick = { },
-                modifier = Modifier.fillMaxWidth(),
-                dimens = SelectableItemDefaults.dimens(iconSize = 24.dp)
-            )
-
-            SelectableItem(
-                text = "Day mode",
-                selected = true,
-                onClick = { },
-                modifier = Modifier.fillMaxWidth(),
-                dimens = SelectableItemDefaults.dimens(iconSize = 24.dp)
-            )
-        }
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            SelectableItem(
-                text = "Male",
-                selected = true,
-                onClick = {},
-                modifier = Modifier.weight(1f),
-                unselectedIndicatorPainter = rememberVectorPainter(YallaIcons.Unchecked),
-                colors = SelectableItemDefaults.colors(
-                    textColor = System.color.text.subtle,
-                    containerColor = System.color.background.secondary,
-                    selectedContainerColor = System.color.background.base,
-                    borderColor = Color.Transparent
-                ),
-                dimens = SelectableItemDefaults.dimens(
-                    contentSpacing = 4.dp,
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 12.dp,
-                        end = 12.dp,
-                        bottom = 12.dp
-                    ),
-                    iconSize = 24.dp,
-                    borderWidth = 0.dp
+            Column(
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                SelectableItem(
+                    text = "O'zbek tili",
+                    selected = false,
+                    imageVector = YallaIcons.FlagUz,
+                    onClick = { },
+                    modifier = Modifier.fillMaxWidth()
                 )
-            )
 
-            SelectableItem(
-                text = "Female",
-                selected = false,
-                onClick = {},
-                modifier = Modifier.weight(1f),
-                unselectedIndicatorPainter = rememberVectorPainter(YallaIcons.Unchecked),
-                colors = SelectableItemDefaults.colors(
-                    textColor = System.color.text.subtle,
-                    containerColor = System.color.background.secondary,
-                    selectedContainerColor = System.color.background.base,
-                    borderColor = Color.Transparent
-                ),
-                dimens = SelectableItemDefaults.dimens(
-                    contentSpacing = 4.dp,
-                    contentPadding = PaddingValues(
-                        start = 20.dp,
-                        top = 12.dp,
-                        end = 12.dp,
-                        bottom = 12.dp
-                    ),
-                    iconSize = 24.dp,
-                    borderWidth = 0.dp
+                SelectableItem(
+                    text = "Day mode",
+                    selected = true,
+                    leadingPainter = rememberVectorPainter(YallaIcons.ThemeLight),
+                    onClick = { },
+                    modifier = Modifier.fillMaxWidth(),
+                    dimens = SelectableItemDefaults.dimens(iconSize = 24.dp)
                 )
-            )
-        }
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            SelectableItem(
-                text = "Baggage",
-                selected = true,
-                onClick = {},
-                modifier = Modifier.weight(1f),
-                leadingPainter = rememberVectorPainter(YallaIcons.FocusOrigin),
-                unselectedIndicatorPainter = rememberVectorPainter(YallaIcons.Unchecked),
-                colors = SelectableItemDefaults.colors(
-                    textColor = System.color.text.subtle,
-                    containerColor = System.color.background.secondary,
-                    selectedContainerColor = System.color.background.base,
-                    borderColor = Color.Transparent
-                ),
-                dimens = SelectableItemDefaults.dimens(
-                    contentSpacing = 4.dp,
-                    contentPadding = PaddingValues(
-                        vertical = 8.dp,
-                        horizontal = 12.dp
-                    ),
-                    iconSize = 24.dp,
-                    borderWidth = 0.dp
+                SelectableItem(
+                    text = "Day mode",
+                    selected = true,
+                    onClick = { },
+                    modifier = Modifier.fillMaxWidth(),
+                    dimens = SelectableItemDefaults.dimens(iconSize = 24.dp)
                 )
-            )
+            }
 
-            SelectableItem(
-                text = "Conditioner",
-                selected = false,
-                onClick = {},
-                modifier = Modifier.weight(1f),
-                leadingPainter = rememberVectorPainter(YallaIcons.FocusDestination),
-                unselectedIndicatorPainter = rememberVectorPainter(YallaIcons.Unchecked),
-                colors = SelectableItemDefaults.colors(
-                    textColor = System.color.text.subtle,
-                    containerColor = System.color.background.secondary,
-                    selectedContainerColor = System.color.background.base,
-                    borderColor = Color.Transparent
-                ),
-                dimens = SelectableItemDefaults.dimens(
-                    contentSpacing = 4.dp,
-                    contentPadding = PaddingValues(
-                        vertical = 8.dp,
-                        horizontal = 12.dp
-                    ),
-                    iconSize = 24.dp,
-                    borderWidth = 0.dp
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                SelectableItem(
+                    text = "Male",
+                    selected = true,
+                    onClick = {},
+                    modifier = Modifier.weight(1f),
+                    unselectedIndicatorPainter = rememberVectorPainter(YallaIcons.Unchecked),
+                    colors =
+                        SelectableItemDefaults.colors(
+                            textColor = System.color.text.subtle,
+                            containerColor = System.color.background.secondary,
+                            selectedContainerColor = System.color.background.base,
+                            borderColor = Color.Transparent
+                        ),
+                    dimens =
+                        SelectableItemDefaults.dimens(
+                            contentSpacing = 4.dp,
+                            contentPadding =
+                                PaddingValues(
+                                    start = 20.dp,
+                                    top = 12.dp,
+                                    end = 12.dp,
+                                    bottom = 12.dp
+                                ),
+                            iconSize = 24.dp,
+                            borderWidth = 0.dp
+                        )
                 )
-            )
+
+                SelectableItem(
+                    text = "Female",
+                    selected = false,
+                    onClick = {},
+                    modifier = Modifier.weight(1f),
+                    unselectedIndicatorPainter = rememberVectorPainter(YallaIcons.Unchecked),
+                    colors =
+                        SelectableItemDefaults.colors(
+                            textColor = System.color.text.subtle,
+                            containerColor = System.color.background.secondary,
+                            selectedContainerColor = System.color.background.base,
+                            borderColor = Color.Transparent
+                        ),
+                    dimens =
+                        SelectableItemDefaults.dimens(
+                            contentSpacing = 4.dp,
+                            contentPadding =
+                                PaddingValues(
+                                    start = 20.dp,
+                                    top = 12.dp,
+                                    end = 12.dp,
+                                    bottom = 12.dp
+                                ),
+                            iconSize = 24.dp,
+                            borderWidth = 0.dp
+                        )
+                )
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                SelectableItem(
+                    text = "Baggage",
+                    selected = true,
+                    onClick = {},
+                    modifier = Modifier.weight(1f),
+                    leadingPainter = rememberVectorPainter(YallaIcons.FocusOrigin),
+                    unselectedIndicatorPainter = rememberVectorPainter(YallaIcons.Unchecked),
+                    colors =
+                        SelectableItemDefaults.colors(
+                            textColor = System.color.text.subtle,
+                            containerColor = System.color.background.secondary,
+                            selectedContainerColor = System.color.background.base,
+                            borderColor = Color.Transparent
+                        ),
+                    dimens =
+                        SelectableItemDefaults.dimens(
+                            contentSpacing = 4.dp,
+                            contentPadding =
+                                PaddingValues(
+                                    vertical = 8.dp,
+                                    horizontal = 12.dp
+                                ),
+                            iconSize = 24.dp,
+                            borderWidth = 0.dp
+                        )
+                )
+
+                SelectableItem(
+                    text = "Conditioner",
+                    selected = false,
+                    onClick = {},
+                    modifier = Modifier.weight(1f),
+                    leadingPainter = rememberVectorPainter(YallaIcons.FocusDestination),
+                    unselectedIndicatorPainter = rememberVectorPainter(YallaIcons.Unchecked),
+                    colors =
+                        SelectableItemDefaults.colors(
+                            textColor = System.color.text.subtle,
+                            containerColor = System.color.background.secondary,
+                            selectedContainerColor = System.color.background.base,
+                            borderColor = Color.Transparent
+                        ),
+                    dimens =
+                        SelectableItemDefaults.dimens(
+                            contentSpacing = 4.dp,
+                            contentPadding =
+                                PaddingValues(
+                                    vertical = 8.dp,
+                                    horizontal = 12.dp
+                                ),
+                            iconSize = 24.dp,
+                            borderWidth = 0.dp
+                        )
+                )
+            }
         }
     }
-}

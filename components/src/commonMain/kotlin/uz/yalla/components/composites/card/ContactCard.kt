@@ -42,15 +42,18 @@ public fun ContactCard(
         ) {
             Surface(
                 shape = RoundedCornerShape(12.dp),
-                color = System.color.background.brand.copy(.15f)
+                color =
+                    System.color.background.brand
+                        .copy(.15f)
             ) {
                 Icon(
                     painter = painter,
                     contentDescription = null,
                     tint = System.color.background.brand,
-                    modifier = Modifier
-                        .padding(10.dp)
-                        .size(24.dp)
+                    modifier =
+                        Modifier
+                            .padding(10.dp)
+                            .size(24.dp)
                 )
             }
 
@@ -65,22 +68,23 @@ public fun ContactCard(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        ContactCard(
-            title = "Telegram",
-            painter = rememberVectorPainter(YallaIcons.Telegram),
-            modifier = Modifier.weight(1f),
-            onClick = {}
-        )
+private fun Preview() =
+    YallaTheme {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            ContactCard(
+                title = "Telegram",
+                painter = rememberVectorPainter(YallaIcons.Telegram),
+                modifier = Modifier.weight(1f),
+                onClick = {}
+            )
 
-        ContactCard(
-            title = "Phone Call",
-            painter = rememberVectorPainter(YallaIcons.Phone),
-            modifier = Modifier.weight(1f),
-            onClick = {}
-        )
+            ContactCard(
+                title = "Phone Call",
+                painter = rememberVectorPainter(YallaIcons.Phone),
+                modifier = Modifier.weight(1f),
+                onClick = {}
+            )
+        }
     }
-}

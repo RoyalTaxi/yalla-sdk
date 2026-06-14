@@ -15,18 +15,19 @@ import uz.yalla.resources.icons.Trash
 import uz.yalla.resources.icons.Uzcard
 import uz.yalla.resources.icons.YallaIcons
 
-public fun String.asImageVector(): ImageVector? = when (this) {
-    "camera" -> YallaIcons.Camera
-    "gallery" -> YallaIcons.Gallery
-    "trash" -> YallaIcons.Trash
-    "brush" -> YallaIcons.Brush
-    "logout" -> YallaIcons.Logout
-    "theme_light" -> YallaIcons.ThemeLight
-    "theme_dark" -> YallaIcons.ThemeDark
-    "theme_system" -> YallaIcons.ThemeSystem
-    "flag_uz" -> YallaIcons.FlagUz
-    "flag_ru" -> YallaIcons.FlagRu
-    "humo" -> YallaIcons.Humo
-    "uzcard" -> YallaIcons.Uzcard
-    else -> null
-}
+public fun String.asImageVector(): ImageVector? =
+    when (this) {
+        "camera" -> YallaIcons.Camera
+        "gallery" -> YallaIcons.Gallery
+        "trash" -> YallaIcons.Trash
+        "brush" -> YallaIcons.Brush
+        "logout" -> YallaIcons.Logout
+        "theme_light" -> YallaIcons.ThemeLight
+        "theme_dark" -> YallaIcons.ThemeDark
+        "theme_system" -> YallaIcons.ThemeSystem
+        "flag_uz" -> YallaIcons.FlagUz
+        "flag_ru" -> YallaIcons.FlagRu
+        "humo" -> YallaIcons.Humo
+        "uzcard" -> YallaIcons.Uzcard
+        else -> null
+    }

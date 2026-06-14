@@ -1,6 +1,8 @@
 package uz.yalla.core.order
 
-public sealed class OrderStatus(public val id: String) {
+public sealed class OrderStatus(
+    public val id: String
+) {
     public data object New : OrderStatus("new")
 
     public data object Sending : OrderStatus("sending")
@@ -19,21 +21,24 @@ public sealed class OrderStatus(public val id: String) {
 
     public data object Canceled : OrderStatus("canceled")
 
-    public data class Unknown(val originalId: String) : OrderStatus("unknown")
+    public data class Unknown(
+        val originalId: String
+    ) : OrderStatus("unknown")
 
     public companion object {
-        public fun from(id: String?): OrderStatus = when (id?.trim()?.lowercase()) {
-            "new" -> New
-            "sending" -> Sending
-            "user_sending" -> UserSending
-            "nonstop_sending" -> NonStopSending
-            "appointed" -> Appointed
-            "at_address" -> AtAddress
-            "in_progress", "in_fetters" -> InProgress
-            "completed" -> Completed
-            "canceled" -> Canceled
-            else -> Unknown(id ?: "null")
-        }
+        public fun from(id: String?): OrderStatus =
+            when (id?.trim()?.lowercase()) {
+                "new" -> New
+                "sending" -> Sending
+                "user_sending" -> UserSending
+                "nonstop_sending" -> NonStopSending
+                "appointed" -> Appointed
+                "at_address" -> AtAddress
+                "in_progress", "in_fetters" -> InProgress
+                "completed" -> Completed
+                "canceled" -> Canceled
+                else -> Unknown(id ?: "null")
+            }
 
         // Lazy so the nested `data object`s are fully initialized before the set is built.
         // Building these sets eagerly in the companion `<clinit>` re-enters each object's

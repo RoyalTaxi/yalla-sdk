@@ -39,12 +39,13 @@ public data class PrimaryButtonColors(
     val disabledContainerColor: Color
 ) {
     @Composable
-    internal fun asButtonColors() = ButtonDefaults.buttonColors(
-        contentColor = contentColor,
-        containerColor = containerColor,
-        disabledContentColor = disabledContentColor,
-        disabledContainerColor = disabledContainerColor
-    )
+    internal fun asButtonColors() =
+        ButtonDefaults.buttonColors(
+            contentColor = contentColor,
+            containerColor = containerColor,
+            disabledContentColor = disabledContentColor,
+            disabledContainerColor = disabledContainerColor
+        )
 
     @Composable
     public fun contentColorFor(enabled: Boolean): Color = if (enabled) contentColor else disabledContentColor
@@ -70,12 +71,13 @@ public object PrimaryButtonDefaults {
         containerColor: Color = System.color.button.active,
         disabledContentColor: Color = System.color.text.white,
         disabledContainerColor: Color = System.color.button.disabled
-    ): PrimaryButtonColors = PrimaryButtonColors(
-        contentColor = contentColor,
-        containerColor = containerColor,
-        disabledContentColor = disabledContentColor,
-        disabledContainerColor = disabledContainerColor
-    )
+    ): PrimaryButtonColors =
+        PrimaryButtonColors(
+            contentColor = contentColor,
+            containerColor = containerColor,
+            disabledContentColor = disabledContentColor,
+            disabledContainerColor = disabledContainerColor
+        )
 
     @Composable
     public fun dimens(
@@ -83,19 +85,19 @@ public object PrimaryButtonDefaults {
         minHeight: Dp = 24.dp,
         contentSpacing: Dp = 12.dp,
         contentPadding: PaddingValues = PaddingValues(20.dp)
-    ): PrimaryButtonDimens = PrimaryButtonDimens(
-        shape = shape,
-        minHeight = minHeight,
-        contentSpacing = contentSpacing,
-        contentPadding = contentPadding
-    )
+    ): PrimaryButtonDimens =
+        PrimaryButtonDimens(
+            shape = shape,
+            minHeight = minHeight,
+            contentSpacing = contentSpacing,
+            contentPadding = contentPadding
+        )
 
     @Composable
-    public fun styles(
-        textStyle: TextStyle = System.font.body.base.medium
-    ): PrimaryButtonStyles = PrimaryButtonStyles(
-        textStyle = textStyle
-    )
+    public fun styles(textStyle: TextStyle = System.font.body.base.medium): PrimaryButtonStyles =
+        PrimaryButtonStyles(
+            textStyle = textStyle
+        )
 }
 
 @Composable
@@ -131,10 +133,11 @@ public fun PrimaryButton(
                 } else {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(
-                            space = dimens.contentSpacing,
-                            alignment = Alignment.CenterHorizontally
-                        )
+                        horizontalArrangement =
+                            Arrangement.spacedBy(
+                                space = dimens.contentSpacing,
+                                alignment = Alignment.CenterHorizontally
+                            )
                     ) {
                         leading?.invoke(colors, dimens)
 
@@ -150,70 +153,71 @@ public fun PrimaryButton(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        PrimaryButton(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { },
-            content = { colors, _, _ ->
-                Text(
-                    text = "Button",
-                    color = colors.contentColorFor(true)
-                )
-            }
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            PrimaryButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { },
+                content = { colors, _, _ ->
+                    Text(
+                        text = "Button",
+                        color = colors.contentColorFor(true)
+                    )
+                }
+            )
 
-        PrimaryButton(
-            enabled = false,
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { },
-            content = { colors, _, _ ->
-                Text(
-                    text = "Button",
-                    color = colors.contentColorFor(true)
-                )
-            }
-        )
+            PrimaryButton(
+                enabled = false,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { },
+                content = { colors, _, _ ->
+                    Text(
+                        text = "Button",
+                        color = colors.contentColorFor(true)
+                    )
+                }
+            )
 
-        PrimaryButton(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { },
-            leading = { colors, _ ->
-                Icon(
-                    imageVector = YallaIcons.Add,
-                    tint = colors.contentColorFor(true),
-                    contentDescription = null
-                )
-            },
-            content = { colors, _, _ ->
-                Text(
-                    text = "Button",
-                    color = colors.contentColorFor(true)
-                )
-            }
-        )
+            PrimaryButton(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { },
+                leading = { colors, _ ->
+                    Icon(
+                        imageVector = YallaIcons.Add,
+                        tint = colors.contentColorFor(true),
+                        contentDescription = null
+                    )
+                },
+                content = { colors, _, _ ->
+                    Text(
+                        text = "Button",
+                        color = colors.contentColorFor(true)
+                    )
+                }
+            )
 
-        PrimaryButton(
-            enabled = false,
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { },
-            leading = { colors, _ ->
-                Icon(
-                    imageVector = YallaIcons.Add,
-                    tint = colors.contentColorFor(false),
-                    contentDescription = null
-                )
-            },
-            content = { colors, _, _ ->
-                Text(
-                    text = "Button",
-                    color = colors.contentColorFor(true)
-                )
-            }
-        )
+            PrimaryButton(
+                enabled = false,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { },
+                leading = { colors, _ ->
+                    Icon(
+                        imageVector = YallaIcons.Add,
+                        tint = colors.contentColorFor(false),
+                        contentDescription = null
+                    )
+                },
+                content = { colors, _, _ ->
+                    Text(
+                        text = "Button",
+                        color = colors.contentColorFor(true)
+                    )
+                }
+            )
+        }
     }
-}
