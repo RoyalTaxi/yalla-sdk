@@ -32,6 +32,12 @@ public inline fun <E, D, R> Either<E, D>.mapFailure(transform: (E) -> R): Either
         is Either.Success -> Either.Success(data)
     }
 
+public inline fun <E, D, R> Either<E, D>.flatMap(transform: (D) -> Either<E, R>): Either<E, R> =
+    when (this) {
+        is Either.Failure -> Either.Failure(error)
+        is Either.Success -> transform(data)
+    }
+
 public inline fun <E, D> Either<E, D>.getOrNull(): D? =
     when (this) {
         is Either.Success -> data
@@ -42,6 +48,12 @@ public inline fun <E, D> Either<E, D>.getOrThrow(): D =
     when (this) {
         is Either.Success -> data
         is Either.Failure -> error("Either.Failure: $error")
+    }
+
+public inline fun <E, D> Either<E, D>.getOrElse(fallback: (E) -> D): D =
+    when (this) {
+        is Either.Success -> data
+        is Either.Failure -> fallback(error)
     }
 
 public inline fun <E, D, R> Either<E, D>.fold(

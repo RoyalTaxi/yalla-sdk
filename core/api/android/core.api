@@ -804,7 +804,9 @@ public final class uz/yalla/core/result/Either$Success : uz/yalla/core/result/Ei
 }
 
 public final class uz/yalla/core/result/EitherKt {
+	public static final fun flatMap (Luz/yalla/core/result/Either;Lkotlin/jvm/functions/Function1;)Luz/yalla/core/result/Either;
 	public static final fun fold (Luz/yalla/core/result/Either;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static final fun getOrElse (Luz/yalla/core/result/Either;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public static final fun getOrNull (Luz/yalla/core/result/Either;)Ljava/lang/Object;
 	public static final fun getOrThrow (Luz/yalla/core/result/Either;)Ljava/lang/Object;
 	public static final fun mapFailure (Luz/yalla/core/result/Either;Lkotlin/jvm/functions/Function1;)Luz/yalla/core/result/Either;
