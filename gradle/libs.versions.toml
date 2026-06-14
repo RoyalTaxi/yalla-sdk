@@ -59,6 +59,9 @@ coil = "3.4.0"
 konsist = "0.17.3"
 junit-jupiter = "5.11.4"
 
+# Binary compatibility gate (G3): ABI surface validation
+binary-compatibility-validator = "0.18.1"
+
 [libraries]
 # Build tools
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -152,6 +155,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 valkyrie = { id = "io.github.composegears.valkyrie", version.ref = "valkyrie" }
+binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "binary-compatibility-validator" }
 
 # Local convention plugins
 yalla-sdk-android-library = { id = "yalla.sdk.android.library" }

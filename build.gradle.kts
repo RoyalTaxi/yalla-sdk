@@ -8,6 +8,26 @@ plugins {
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.android.multiplatform.library) apply false
     alias(libs.plugins.dokka)
+    alias(libs.plugins.binary.compatibility.validator)
+}
+
+// G3 — public ABI gate. `apiCheck` (wired into CI) fails the build when a change
+// alters the published binary surface without an accompanying, reviewed update to
+// the committed `<module>/api/*.api` baselines. Regenerate intentionally with
+// `./gradlew apiDump` and commit the diff.
+apiValidation {
+    // The SDK ships no JVM/standard-Android artifacts — every published module is a
+    // Kotlin Multiplatform library (Android KMP target + iOS native). The binary
+    // surface that downstream consumers link against lives in the klibs, so klib ABI
+    // validation is the surface that matters here.
+    @OptIn(kotlinx.validation.ExperimentalBCVApi::class)
+    klib {
+        enabled = true
+    }
+
+    // Not published: the demo app, the JVM-only architecture-test module, and the BOM
+    // (a constraints-only platform with no code surface).
+    ignoredProjects.addAll(listOf("demo", "konsistTest", "bom"))
 }
 
 dependencies {
