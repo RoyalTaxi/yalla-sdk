@@ -10,10 +10,11 @@ public data class CenterPinState(
     val isByUser: Boolean
 ) {
     public companion object {
-        public val INITIAL: CenterPinState = CenterPinState(
-            point = GeoPoint.Zero,
-            isMoving = false,
-            isByUser = false
-        )
+        public val INITIAL: CenterPinState =
+            CenterPinState(
+                point = GeoPoint.Zero,
+                isMoving = false,
+                isByUser = false
+            )
     }
 }

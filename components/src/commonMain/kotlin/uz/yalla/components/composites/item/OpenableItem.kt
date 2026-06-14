@@ -16,9 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
-import uz.yalla.resources.icons.ArrowRight
-import uz.yalla.resources.icons.Trash
-import uz.yalla.resources.icons.YallaIcons
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -29,6 +26,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
+import uz.yalla.resources.icons.ArrowRight
+import uz.yalla.resources.icons.Trash
+import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
 public data class OpenableItemColors(
@@ -61,40 +61,42 @@ public object OpenableItemDefaults {
         openIconColor: Color = System.color.icon.subtle,
         leadingIconColor: Color = System.color.icon.base,
         borderColor: Color = Color.Transparent
-    ): OpenableItemColors = OpenableItemColors(
-        textColor = textColor,
-        containerColor = containerColor,
-        openIconColor = openIconColor,
-        leadingIconColor = leadingIconColor,
-        borderColor = borderColor
-    )
+    ): OpenableItemColors =
+        OpenableItemColors(
+            textColor = textColor,
+            containerColor = containerColor,
+            openIconColor = openIconColor,
+            leadingIconColor = leadingIconColor,
+            borderColor = borderColor
+        )
 
     @Composable
     public fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         iconSize: Dp = 18.dp,
-        contentPadding: PaddingValues = PaddingValues(
-            start = 16.dp,
-            top = 16.dp,
-            end = 12.dp,
-            bottom = 16.dp
-        ),
+        contentPadding: PaddingValues =
+            PaddingValues(
+                start = 16.dp,
+                top = 16.dp,
+                end = 12.dp,
+                bottom = 16.dp
+            ),
         contentSpacing: Dp = 12.dp,
         borderWidth: Dp = 0.dp
-    ): OpenableItemDimens = OpenableItemDimens(
-        shape = shape,
-        iconSize = iconSize,
-        contentPadding = contentPadding,
-        contentSpacing = contentSpacing,
-        borderWidth = borderWidth
-    )
+    ): OpenableItemDimens =
+        OpenableItemDimens(
+            shape = shape,
+            iconSize = iconSize,
+            contentPadding = contentPadding,
+            contentSpacing = contentSpacing,
+            borderWidth = borderWidth
+        )
 
     @Composable
-    public fun styles(
-        textStyle: TextStyle = System.font.body.base.medium
-    ): OpenableItemStyles = OpenableItemStyles(
-        textStyle = textStyle
-    )
+    public fun styles(textStyle: TextStyle = System.font.body.base.medium): OpenableItemStyles =
+        OpenableItemStyles(
+            textStyle = textStyle
+        )
 }
 
 @Composable
@@ -106,19 +108,20 @@ public fun OpenableItem(
     colors: OpenableItemColors = OpenableItemDefaults.colors(),
     dimens: OpenableItemDimens = OpenableItemDefaults.dimens(),
     styles: OpenableItemStyles = OpenableItemDefaults.styles()
-): Unit = OpenableItem(
-    onClick = onClick,
-    modifier = modifier,
-    leadingIcon = leadingIcon,
-    colors = colors,
-    dimens = dimens
-) {
-    Text(
-        text = text,
-        style = styles.textStyle,
-        color = colors.textColor
-    )
-}
+): Unit =
+    OpenableItem(
+        onClick = onClick,
+        modifier = modifier,
+        leadingIcon = leadingIcon,
+        colors = colors,
+        dimens = dimens
+    ) {
+        Text(
+            text = text,
+            style = styles.textStyle,
+            color = colors.textColor
+        )
+    }
 
 @Composable
 public fun OpenableItem(
@@ -166,31 +169,33 @@ public fun OpenableItem(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        OpenableItem(
-            text = "Andijan region",
-            onClick = {},
-            modifier = Modifier.fillMaxWidth()
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            OpenableItem(
+                text = "Andijan region",
+                onClick = {},
+                modifier = Modifier.fillMaxWidth()
+            )
 
-        OpenableItem(
-            text = "Delete trip",
-            onClick = {},
-            leadingIcon = YallaIcons.Trash,
-            colors = OpenableItemDefaults.colors(
-                textColor = System.color.text.red,
-                containerColor = Color.Transparent,
-                openIconColor = System.color.icon.red,
-                leadingIconColor = System.color.icon.red,
-                borderColor = System.color.border.disabled
-            ),
-            dimens = OpenableItemDefaults.dimens(borderWidth = 1.dp),
-            modifier = Modifier.fillMaxWidth()
-        )
+            OpenableItem(
+                text = "Delete trip",
+                onClick = {},
+                leadingIcon = YallaIcons.Trash,
+                colors =
+                    OpenableItemDefaults.colors(
+                        textColor = System.color.text.red,
+                        containerColor = Color.Transparent,
+                        openIconColor = System.color.icon.red,
+                        leadingIconColor = System.color.icon.red,
+                        borderColor = System.color.border.disabled
+                    ),
+                dimens = OpenableItemDefaults.dimens(borderWidth = 1.dp),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
-}

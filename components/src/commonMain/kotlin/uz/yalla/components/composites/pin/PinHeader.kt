@@ -38,18 +38,19 @@ internal fun PinHeader(
             style = headerStyle,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier
-                .animateContentSize(
-                    alignment = Alignment.Center,
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioNoBouncy,
-                        stiffness = Spring.StiffnessMedium
+            modifier =
+                Modifier
+                    .animateContentSize(
+                        alignment = Alignment.Center,
+                        animationSpec =
+                            spring(
+                                dampingRatio = Spring.DampingRatioNoBouncy,
+                                stiffness = Spring.StiffnessMedium
+                            )
+                    ).padding(
+                        vertical = dimens.headerVerticalPadding,
+                        horizontal = dimens.headerHorizontalPadding
                     )
-                )
-                .padding(
-                    vertical = dimens.headerVerticalPadding,
-                    horizontal = dimens.headerHorizontalPadding
-                )
         )
     }
 }

@@ -59,41 +59,45 @@ public object ToggleableItemDefaults {
         descriptionColor: Color = System.color.text.subtle,
         iconBackgroundColor: Color = System.color.background.secondary,
         containerColor: Color = Color.Transparent
-    ): ToggleableItemColors = ToggleableItemColors(
-        titleColor = titleColor,
-        descriptionColor = descriptionColor,
-        iconBackgroundColor = iconBackgroundColor,
-        containerColor = containerColor
-    )
+    ): ToggleableItemColors =
+        ToggleableItemColors(
+            titleColor = titleColor,
+            descriptionColor = descriptionColor,
+            iconBackgroundColor = iconBackgroundColor,
+            containerColor = containerColor
+        )
 
     @Composable
     public fun dimens(
         contentSpacing: Dp = 16.dp,
-        contentPadding: PaddingValues = PaddingValues(
-            vertical = 4.dp,
-            horizontal = 20.dp
-        ),
+        contentPadding: PaddingValues =
+            PaddingValues(
+                vertical = 4.dp,
+                horizontal = 20.dp
+            ),
         iconShape: Shape = RoundedCornerShape(10.dp),
         iconPadding: Dp = 16.dp,
         iconSize: Dp = 24.dp,
         textSpacing: Dp = 8.dp
-    ): ToggleableItemDimens = ToggleableItemDimens(
-        contentSpacing = contentSpacing,
-        contentPadding = contentPadding,
-        iconShape = iconShape,
-        iconPadding = iconPadding,
-        iconSize = iconSize,
-        textSpacing = textSpacing
-    )
+    ): ToggleableItemDimens =
+        ToggleableItemDimens(
+            contentSpacing = contentSpacing,
+            contentPadding = contentPadding,
+            iconShape = iconShape,
+            iconPadding = iconPadding,
+            iconSize = iconSize,
+            textSpacing = textSpacing
+        )
 
     @Composable
     public fun styles(
         titleStyle: TextStyle = System.font.body.base.bold,
         descriptionStyle: TextStyle = System.font.body.small.medium
-    ): ToggleableItemStyles = ToggleableItemStyles(
-        titleStyle = titleStyle,
-        descriptionStyle = descriptionStyle
-    )
+    ): ToggleableItemStyles =
+        ToggleableItemStyles(
+            titleStyle = titleStyle,
+            descriptionStyle = descriptionStyle
+        )
 }
 
 @Composable
@@ -128,9 +132,10 @@ public fun ToggleableItem(
                     Image(
                         painter = painter,
                         contentDescription = null,
-                        modifier = Modifier
-                            .padding(dimens.iconPadding)
-                            .size(dimens.iconSize)
+                        modifier =
+                            Modifier
+                                .padding(dimens.iconPadding)
+                                .size(dimens.iconSize)
                     )
                 }
             }
@@ -185,14 +190,15 @@ public fun ToggleableItem(
     ToggleableItem(
         title = title,
         description = description,
-        painter = imageUrl?.takeIf { it.isNotBlank() }?.let { url ->
-            rememberAsyncImagePainter(
-                model = url,
-                placeholder = fallback,
-                error = fallback,
-                fallback = fallback
-            )
-        } ?: fallback,
+        painter =
+            imageUrl?.takeIf { it.isNotBlank() }?.let { url ->
+                rememberAsyncImagePainter(
+                    model = url,
+                    placeholder = fallback,
+                    error = fallback,
+                    fallback = fallback
+                )
+            } ?: fallback,
         checked = checked,
         onToggle = onToggle,
         modifier = modifier,

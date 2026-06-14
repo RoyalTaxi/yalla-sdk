@@ -25,12 +25,13 @@ public actual fun ActionSheet(
         }
 
         val parent = findKeyWindowRootController() ?: return@DisposableEffect onDispose {}
-        val handle = requireConfig().sheet.createAction(
-            title = title,
-            items = items,
-            onAction = { currentOnAction(it) },
-            onDismissRequest = { currentOnDismissRequest() }
-        )
+        val handle =
+            requireConfig().sheet.createAction(
+                title = title,
+                items = items,
+                onAction = { currentOnAction(it) },
+                onDismissRequest = { currentOnDismissRequest() }
+            )
         handle.present(parent)
 
         onDispose { handle.dismiss() }

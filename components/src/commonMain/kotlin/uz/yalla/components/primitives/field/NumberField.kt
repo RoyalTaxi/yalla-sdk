@@ -52,10 +52,11 @@ public fun NumberField(
         modifier = modifier,
         color = System.color.background.base,
         shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(
-            width = 1.dp,
-            color = if (isFocused) System.color.border.filled else System.color.border.disabled
-        )
+        border =
+            BorderStroke(
+                width = 1.dp,
+                color = if (isFocused) System.color.border.filled else System.color.border.disabled
+            )
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -90,25 +91,29 @@ public fun NumberField(
                         style = System.font.body.base.medium
                     )
                 },
-                colors = TextFieldDefaults.colors(
-                    focusedContainerColor = System.color.background.base,
-                    unfocusedContainerColor = System.color.background.base,
-                    disabledContainerColor = System.color.background.base,
-                    errorContainerColor = System.color.background.base,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent,
-                    focusedTextColor = System.color.text.base,
-                    unfocusedTextColor = System.color.text.base,
-                    disabledTextColor = System.color.text.base,
-                    errorTextColor = System.color.text.base,
-                    cursorColor = System.color.text.link,
-                    selectionColors = TextSelectionColors(
-                        handleColor = System.color.text.link,
-                        backgroundColor = System.color.text.link.copy(.3f)
+                colors =
+                    TextFieldDefaults.colors(
+                        focusedContainerColor = System.color.background.base,
+                        unfocusedContainerColor = System.color.background.base,
+                        disabledContainerColor = System.color.background.base,
+                        errorContainerColor = System.color.background.base,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent,
+                        errorIndicatorColor = Color.Transparent,
+                        focusedTextColor = System.color.text.base,
+                        unfocusedTextColor = System.color.text.base,
+                        disabledTextColor = System.color.text.base,
+                        errorTextColor = System.color.text.base,
+                        cursorColor = System.color.text.link,
+                        selectionColors =
+                            TextSelectionColors(
+                                handleColor = System.color.text.link,
+                                backgroundColor =
+                                    System.color.text.link
+                                        .copy(.3f)
+                            )
                     )
-                )
             )
         }
     }
@@ -130,25 +135,28 @@ private object PhoneVisualTransformation : VisualTransformation {
         )
     }
 
-    private fun String.format() = buildString {
-        this@format.forEachIndexed { index, digit ->
-            when (index) {
-                0 -> append('(')
-                2 -> append(") ")
-                5, 7 -> append(' ')
-            }
+    private fun String.format() =
+        buildString {
+            this@format.forEachIndexed { index, digit ->
+                when (index) {
+                    0 -> append('(')
+                    2 -> append(") ")
+                    5, 7 -> append(' ')
+                }
 
-            append(digit)
+                append(digit)
+            }
         }
-    }
 
     private fun offsetMapping(
         digitsLength: Int,
         formattedText: String
     ) = object : OffsetMapping {
-        override fun originalToTransformed(offset: Int) = offset.coerceIn(0, digitsLength).phoneOffset().coerceAtMost(formattedText.length)
+        override fun originalToTransformed(offset: Int) =
+            offset.coerceIn(0, digitsLength).phoneOffset().coerceAtMost(formattedText.length)
 
-        override fun transformedToOriginal(offset: Int) = formattedText.take(offset.coerceIn(0, formattedText.length)).count(Char::isDigit)
+        override fun transformedToOriginal(offset: Int) =
+            formattedText.take(offset.coerceIn(0, formattedText.length)).count(Char::isDigit)
     }
 
     private fun Int.phoneOffset(): Int {
@@ -162,11 +170,12 @@ private object PhoneVisualTransformation : VisualTransformation {
 
 @Preview(showSystemUi = true)
 @Composable
-private fun NumberFieldPreview() = YallaTheme {
-    var value by remember { mutableStateOf("") }
-    NumberField(
-        value = value,
-        onValueChange = { value = it },
-        modifier = Modifier.padding(16.dp)
-    )
-}
+private fun NumberFieldPreview() =
+    YallaTheme {
+        var value by remember { mutableStateOf("") }
+        NumberField(
+            value = value,
+            onValueChange = { value = it },
+            modifier = Modifier.padding(16.dp)
+        )
+    }

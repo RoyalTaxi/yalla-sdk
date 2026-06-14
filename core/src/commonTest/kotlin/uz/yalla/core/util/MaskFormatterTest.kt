@@ -13,7 +13,6 @@ import kotlin.test.assertEquals
  * input, so a regression silently corrupts every masked field.
  */
 class MaskFormatterTest {
-
     @Test
     fun emptyTextReturnsEmptyRegardlessOfMask() {
         assertEquals("", MaskFormatter.format("", "+___"))

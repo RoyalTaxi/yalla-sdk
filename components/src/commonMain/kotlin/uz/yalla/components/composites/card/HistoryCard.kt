@@ -51,9 +51,10 @@ public fun HistoryCard(
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(6.dp),
-            modifier = Modifier
-                .height(IntrinsicSize.Min)
-                .padding(16.dp)
+            modifier =
+                Modifier
+                    .height(IntrinsicSize.Min)
+                    .padding(16.dp)
         ) {
             Column(
                 modifier = Modifier.weight(1f)
@@ -88,10 +89,11 @@ public fun HistoryCard(
                     painter = painterResource(Res.drawable.img_car_business),
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth,
-                    modifier = Modifier
-                        .height(56.dp)
-                        .width(128.dp)
-                        .graphicsLayer { rotationY = 180f }
+                    modifier =
+                        Modifier
+                            .height(56.dp)
+                            .width(128.dp)
+                            .graphicsLayer { rotationY = 180f }
                 )
             }
         }
@@ -185,43 +187,44 @@ private fun Details(
 @Composable
 private fun LocationPoint(color: Color) {
     Box(
-        modifier = Modifier
-            .size(14.dp)
-            .background(
-                color = color,
-                shape = CircleShape
-            )
-            .padding(4.dp)
-            .background(
-                shape = CircleShape,
-                color = System.color.icon.white
-            )
+        modifier =
+            Modifier
+                .size(14.dp)
+                .background(
+                    color = color,
+                    shape = CircleShape
+                ).padding(4.dp)
+                .background(
+                    shape = CircleShape,
+                    color = System.color.icon.white
+                )
     )
 }
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        HistoryCard(
-            origin = "Mustaqillik avenue, 12",
-            destination = "Yunusobod, 19-mavze, 42-uy",
-            time = "14:32",
-            status = "Completed",
-            price = "45 000 sum",
-            onClick = {}
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            HistoryCard(
+                origin = "Mustaqillik avenue, 12",
+                destination = "Yunusobod, 19-mavze, 42-uy",
+                time = "14:32",
+                status = "Completed",
+                price = "45 000 sum",
+                onClick = {}
+            )
 
-        HistoryCard(
-            origin = "Tashkent International Airport",
-            destination = "Hilton Tashkent City",
-            time = "09:15",
-            status = "Cancelled",
-            price = "62 000 sum",
-            onClick = {}
-        )
+            HistoryCard(
+                origin = "Tashkent International Airport",
+                destination = "Hilton Tashkent City",
+                time = "09:15",
+                status = "Cancelled",
+                price = "62 000 sum",
+                onClick = {}
+            )
+        }
     }
-}

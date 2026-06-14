@@ -16,8 +16,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import uz.yalla.resources.icons.Calendar
-import uz.yalla.resources.icons.YallaIcons
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +31,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
+import uz.yalla.resources.icons.Calendar
+import uz.yalla.resources.icons.YallaIcons
 
 @Composable
 public fun PrimaryField(
@@ -64,13 +64,16 @@ public fun PrimaryField(
                 if (textChanged) onValueChange(fv.text)
             },
             readOnly = !enabled,
-            modifier = Modifier
-                .fillMaxWidth()
-                .then(if (minHeight != null) Modifier.heightIn(min = minHeight) else Modifier)
-                .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .then(if (minHeight != null) Modifier.heightIn(min = minHeight) else Modifier)
+                    .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
             singleLine = singleLine,
             shape = RoundedCornerShape(10.dp),
-            textStyle = System.font.body.base.medium.copy(textAlign = textAlign),
+            textStyle =
+                System.font.body.base.medium
+                    .copy(textAlign = textAlign),
             trailingIcon = trailingIcon,
             placeholder = {
                 Text(
@@ -82,30 +85,35 @@ public fun PrimaryField(
                 )
             },
             keyboardOptions = keyboardOptions,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedTextColor = System.color.text.base,
-                unfocusedTextColor = System.color.text.base,
-                focusedBorderColor = System.color.border.filled,
-                unfocusedBorderColor = System.color.border.disabled,
-                focusedPlaceholderColor = System.color.text.subtle,
-                unfocusedPlaceholderColor = System.color.text.subtle,
-                cursorColor = System.color.text.link,
-                selectionColors = TextSelectionColors(
-                    handleColor = System.color.text.link,
-                    backgroundColor = System.color.text.link.copy(.3f)
+            colors =
+                OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = System.color.text.base,
+                    unfocusedTextColor = System.color.text.base,
+                    focusedBorderColor = System.color.border.filled,
+                    unfocusedBorderColor = System.color.border.disabled,
+                    focusedPlaceholderColor = System.color.text.subtle,
+                    unfocusedPlaceholderColor = System.color.text.subtle,
+                    cursorColor = System.color.text.link,
+                    selectionColors =
+                        TextSelectionColors(
+                            handleColor = System.color.text.link,
+                            backgroundColor =
+                                System.color.text.link
+                                    .copy(.3f)
+                        )
                 )
-            )
         )
 
         if (onClick != null) {
             Box(
-                modifier = Modifier
-                    .matchParentSize()
-                    .clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        onClick = onClick
-                    )
+                modifier =
+                    Modifier
+                        .matchParentSize()
+                        .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = onClick
+                        )
             )
         }
     }
@@ -113,27 +121,28 @@ public fun PrimaryField(
 
 @Preview(showBackground = true)
 @Composable
-private fun Preview() = YallaTheme {
-    Column {
-        var valu1 by remember { mutableStateOf("") }
-        PrimaryField(
-            value = valu1,
-            modifier = Modifier.padding(16.dp),
-            onValueChange = { valu1 = it }
-        )
+private fun Preview() =
+    YallaTheme {
+        Column {
+            var valu1 by remember { mutableStateOf("") }
+            PrimaryField(
+                value = valu1,
+                modifier = Modifier.padding(16.dp),
+                onValueChange = { valu1 = it }
+            )
 
-        var value2 by remember { mutableStateOf("") }
-        PrimaryField(
-            value = value2,
-            modifier = Modifier.padding(16.dp),
-            onValueChange = { value2 = it },
-            enabled = false,
-            trailingIcon = {
-                Icon(
-                    imageVector = YallaIcons.Calendar,
-                    contentDescription = null
-                )
-            }
-        )
+            var value2 by remember { mutableStateOf("") }
+            PrimaryField(
+                value = value2,
+                modifier = Modifier.padding(16.dp),
+                onValueChange = { value2 = it },
+                enabled = false,
+                trailingIcon = {
+                    Icon(
+                        imageVector = YallaIcons.Calendar,
+                        contentDescription = null
+                    )
+                }
+            )
+        }
     }
-}

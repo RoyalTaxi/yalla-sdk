@@ -25,18 +25,20 @@ public class DeviceLocationProvider(
 
     override fun startTracking() {
         if (job != null) return
-        job = scope.launch {
-            try {
-                locationTracker.startTracking()
-                locationTracker.getLocationsFlow().collect { location ->
-                    _currentLocation.value = GeoPoint(location.latitude, location.longitude)
+        job =
+            scope.launch {
+                try {
+                    locationTracker.startTracking()
+                    locationTracker.getLocationsFlow().collect { location ->
+                        _currentLocation.value = GeoPoint(location.latitude, location.longitude)
+                    }
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (ignored: Exception) {
+                    // Location tracking failed; clear the job so a later start retries.
+                    job = null
                 }
-            } catch (e: CancellationException) {
-                throw e
-            } catch (e: Exception) {
-                job = null
             }
-        }
     }
 
     override fun stopTracking() {

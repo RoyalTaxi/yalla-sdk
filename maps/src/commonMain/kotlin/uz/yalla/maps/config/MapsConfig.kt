@@ -28,13 +28,14 @@ public class MapsConfig private constructor(
 
         public var telemetry: MapsTelemetry? = null
 
-        public fun build(): MapsConfig = MapsConfig(
-            factory = requireNotNull(factory) { "MapsConfig.factory required" },
-            locationProvider = requireNotNull(locationProvider) { "MapsConfig.locationProvider required" },
-            themePreference = requireNotNull(themePreference) { "MapsConfig.themePreference required" },
-            mapKindPreference = requireNotNull(mapKindPreference) { "MapsConfig.mapKindPreference required" },
-            scope = requireNotNull(scope) { "MapsConfig.scope required" },
-            telemetry = telemetry
-        )
+        public fun build(): MapsConfig =
+            MapsConfig(
+                factory = requireNotNull(factory) { "MapsConfig.factory required" },
+                locationProvider = requireNotNull(locationProvider) { "MapsConfig.locationProvider required" },
+                themePreference = requireNotNull(themePreference) { "MapsConfig.themePreference required" },
+                mapKindPreference = requireNotNull(mapKindPreference) { "MapsConfig.mapKindPreference required" },
+                scope = requireNotNull(scope) { "MapsConfig.scope required" },
+                telemetry = telemetry
+            )
     }
 }

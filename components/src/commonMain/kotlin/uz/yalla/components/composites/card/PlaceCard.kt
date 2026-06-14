@@ -37,47 +37,64 @@ public fun PlaceCard(
         onClick = onClick,
         shape = RoundedCornerShape(20.dp),
         color = System.color.background.secondary,
-        modifier = modifier
-            .heightIn(120.dp)
+        modifier =
+            modifier
+                .heightIn(120.dp)
     ) {
         Box {
             Text(
                 text = title,
                 color = System.color.text.base,
                 style = System.font.title.base,
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(16.dp)
+                modifier =
+                    Modifier
+                        .align(Alignment.TopStart)
+                        .padding(16.dp)
             )
 
             Surface(
                 shape = RoundedCornerShape(12.dp),
-                color = if (location == null) System.color.background.tertiary
-                else System.color.background.brand.copy(.15f),
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(10.dp)
+                color =
+                    if (location == null) {
+                        System.color.background.tertiary
+                    } else {
+                        System.color.background.brand
+                            .copy(.15f)
+                    },
+                modifier =
+                    Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(10.dp)
             ) {
                 Icon(
                     painter = painter,
                     contentDescription = null,
-                    tint = if (location == null) System.color.icon.subtle
-                    else System.color.background.brand,
+                    tint =
+                        if (location == null) {
+                            System.color.icon.subtle
+                        } else {
+                            System.color.background.brand
+                        },
                     modifier = Modifier.padding(10.dp)
                 )
             }
 
             Text(
                 text = location ?: stringResource(Res.string.places_add_hint),
-                color = if (location == null) System.color.text.subtle
-                else System.color.text.base,
+                color =
+                    if (location == null) {
+                        System.color.text.subtle
+                    } else {
+                        System.color.text.base
+                    },
                 style = System.font.body.caption,
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(
-                        vertical = 8.dp,
-                        horizontal = 16.dp
-                    )
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomStart)
+                        .padding(
+                            vertical = 8.dp,
+                            horizontal = 16.dp
+                        )
             )
         }
     }
@@ -85,24 +102,25 @@ public fun PlaceCard(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Row(
-        modifier = Modifier.padding(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        PlaceCard(
-            title = "Home",
-            painter = rememberVectorPainter(YallaIcons.Home),
-            location = "Andijan Region, Asaka City, Chirvon 8",
-            onClick = {},
-            modifier = Modifier.weight(1f)
-        )
+private fun Preview() =
+    YallaTheme {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            PlaceCard(
+                title = "Home",
+                painter = rememberVectorPainter(YallaIcons.Home),
+                location = "Andijan Region, Asaka City, Chirvon 8",
+                onClick = {},
+                modifier = Modifier.weight(1f)
+            )
 
-        PlaceCard(
-            title = "Work",
-            painter = rememberVectorPainter(YallaIcons.Case),
-            onClick = {},
-            modifier = Modifier.weight(1f)
-        )
+            PlaceCard(
+                title = "Work",
+                painter = rememberVectorPainter(YallaIcons.Case),
+                onClick = {},
+                modifier = Modifier.weight(1f)
+            )
+        }
     }
-}

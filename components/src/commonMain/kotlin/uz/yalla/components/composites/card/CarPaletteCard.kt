@@ -53,12 +53,13 @@ public object CarPaletteCardDefaults {
         cornerRadius: Dp = 4.dp,
         borderWidth: Dp = 1.dp,
         dotSize: Dp = 2.dp
-    ): CarPaletteCardDimens = CarPaletteCardDimens(
-        height = height,
-        cornerRadius = cornerRadius,
-        borderWidth = borderWidth,
-        dotSize = dotSize
-    )
+    ): CarPaletteCardDimens =
+        CarPaletteCardDimens(
+            height = height,
+            cornerRadius = cornerRadius,
+            borderWidth = borderWidth,
+            dotSize = dotSize
+        )
 }
 
 @Composable
@@ -86,23 +87,26 @@ public fun CarPaletteCard(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .height(IntrinsicSize.Min)
-                .padding(horizontal = 4.dp.scaled())
+            modifier =
+                Modifier
+                    .height(IntrinsicSize.Min)
+                    .padding(horizontal = 4.dp.scaled())
         ) {
             Box(
-                modifier = Modifier
-                    .size(dimens.dotSize.scaled())
-                    .background(shape = CircleShape, color = Color.Black)
+                modifier =
+                    Modifier
+                        .size(dimens.dotSize.scaled())
+                        .background(shape = CircleShape, color = Color.Black)
             )
 
             Text(
                 text = code,
                 color = Color.Black,
-                style = numberStyle.copy(
-                    fontSize = baseFontSize.scaled(),
-                    lineHeight = baseLineHeight.scaled()
-                ),
+                style =
+                    numberStyle.copy(
+                        fontSize = baseFontSize.scaled(),
+                        lineHeight = baseLineHeight.scaled()
+                    ),
                 modifier = Modifier.padding(3.dp.scaled())
             )
 
@@ -114,10 +118,11 @@ public fun CarPaletteCard(
             Text(
                 text = number.joinToString(" "),
                 color = Color.Black,
-                style = numberStyle.copy(
-                    fontSize = baseFontSize.scaled(),
-                    lineHeight = baseLineHeight.scaled()
-                ),
+                style =
+                    numberStyle.copy(
+                        fontSize = baseFontSize.scaled(),
+                        lineHeight = baseLineHeight.scaled()
+                    ),
                 modifier = Modifier.padding(3.dp.scaled())
             )
 
@@ -135,19 +140,21 @@ public fun CarPaletteCard(
                 Text(
                     text = "Uz",
                     color = Color(0xFF029BB7),
-                    style = numberStyle.copy(
-                        fontSize = 8.sp.scaled(),
-                        lineHeight = 8.sp.scaled()
-                    )
+                    style =
+                        numberStyle.copy(
+                            fontSize = 8.sp.scaled(),
+                            lineHeight = 8.sp.scaled()
+                        )
                 )
             }
 
             Spacer(modifier = Modifier.width(3.dp.scaled()))
 
             Box(
-                modifier = Modifier
-                    .size(dimens.dotSize.scaled())
-                    .background(shape = CircleShape, color = Color.Black)
+                modifier =
+                    Modifier
+                        .size(dimens.dotSize.scaled())
+                        .background(shape = CircleShape, color = Color.Black)
             )
         }
     }
@@ -181,27 +188,28 @@ private fun parsePlateBody(stateNumber: String): List<String> {
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        CarPaletteCard(
-            code = "01",
-            number = listOf("A", "123", "BC")
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            CarPaletteCard(
+                code = "01",
+                number = listOf("A", "123", "BC")
+            )
 
-        CarPaletteCard(
-            code = "10",
-            number = listOf("M", "777", "MM"),
-            dimens = CarPaletteCardDefaults.dimens(height = 48.dp)
-        )
+            CarPaletteCard(
+                code = "10",
+                number = listOf("M", "777", "MM"),
+                dimens = CarPaletteCardDefaults.dimens(height = 48.dp)
+            )
 
-        CarPaletteCard(
-            code = "30",
-            number = listOf("A", "001", "AA"),
-            dimens = CarPaletteCardDefaults.dimens(height = 64.dp)
-        )
+            CarPaletteCard(
+                code = "30",
+                number = listOf("A", "001", "AA"),
+                dimens = CarPaletteCardDefaults.dimens(height = 64.dp)
+            )
+        }
     }
-}

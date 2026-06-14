@@ -40,35 +40,39 @@ public fun NotificationCard(
         colors = CardDefaults.cardColors(System.color.background.secondary),
         onClick = onClick,
         modifier = modifier,
-        border = BorderStroke(
-            width = 1.dp,
-            color = System.color.border.disabled
-        )
+        border =
+            BorderStroke(
+                width = 1.dp,
+                color = System.color.border.disabled
+            )
     ) {
         Box {
             if (!isRead) {
                 Box(modifier = Modifier.matchParentSize()) {
                     Box(
-                        modifier = Modifier
-                            .align(Alignment.CenterStart)
-                            .padding(vertical = 24.dp)
-                            .fillMaxHeight()
-                            .width(4.dp)
-                            .background(
-                                color = System.color.background.brand,
-                                shape = RoundedCornerShape(
-                                    topEnd = 100.dp,
-                                    bottomEnd = 100.dp
+                        modifier =
+                            Modifier
+                                .align(Alignment.CenterStart)
+                                .padding(vertical = 24.dp)
+                                .fillMaxHeight()
+                                .width(4.dp)
+                                .background(
+                                    color = System.color.background.brand,
+                                    shape =
+                                        RoundedCornerShape(
+                                            topEnd = 100.dp,
+                                            bottomEnd = 100.dp
+                                        )
                                 )
-                            )
                     )
                 }
             }
 
             Column(
-                modifier = Modifier
-                    .padding(vertical = 12.dp)
-                    .padding(start = 16.dp, end = 6.dp)
+                modifier =
+                    Modifier
+                        .padding(vertical = 12.dp)
+                        .padding(start = 16.dp, end = 6.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -116,24 +120,29 @@ public fun NotificationCard(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
-    ) {
-        NotificationCard(
-            title = "Ваш заказ отменён водителем",
-            date = "30 Апреля, 2022",
-            description = "К сожалению, водитель отменил заказ. Попробуйте вызвать снова",
-            onClick = {}
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            NotificationCard(
+                title = "Ваш заказ отменён водителем",
+                date = "30 Апреля, 2022",
+                description =
+                    "К сожалению, водитель отменил заказ. " +
+                        "Попробуйте вызвать снова",
+                onClick = {}
+            )
 
-        NotificationCard(
-            title = "Скидка 20% на ваш следующий заказ",
-            date = "12 Мая, 2026",
-            description = "Используйте промокод SPRING20 при оформлении поездки",
-            onClick = {},
-            isRead = true
-        )
+            NotificationCard(
+                title = "Скидка 20% на ваш следующий заказ",
+                date = "12 Мая, 2026",
+                description =
+                    "Используйте промокод SPRING20 " +
+                        "при оформлении поездки",
+                onClick = {},
+                isRead = true
+            )
+        }
     }
-}

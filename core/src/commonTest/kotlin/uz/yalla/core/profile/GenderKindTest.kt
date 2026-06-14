@@ -8,7 +8,6 @@ import kotlin.test.assertEquals
  * [GenderKind.NotSelected] fallback for unknown and null input.
  */
 class GenderKindTest {
-
     @Test
     fun decodesKnownIds() {
         assertEquals(GenderKind.Male, GenderKind.from("male"))

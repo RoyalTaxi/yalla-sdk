@@ -55,12 +55,13 @@ public object ReasonChipDefaults {
         selectedContainerColor: Color = System.color.background.brand,
         textColor: Color = System.color.text.base,
         selectedTextColor: Color = System.color.background.base
-    ): ReasonChipColors = ReasonChipColors(
-        containerColor = containerColor,
-        selectedContainerColor = selectedContainerColor,
-        textColor = textColor,
-        selectedTextColor = selectedTextColor
-    )
+    ): ReasonChipColors =
+        ReasonChipColors(
+            containerColor = containerColor,
+            selectedContainerColor = selectedContainerColor,
+            textColor = textColor,
+            selectedTextColor = selectedTextColor
+        )
 
     @Composable
     public fun dimens(
@@ -68,19 +69,19 @@ public object ReasonChipDefaults {
         contentPadding: PaddingValues = PaddingValues(12.dp),
         contentSpacing: Dp = 12.dp,
         iconSize: Dp = 24.dp
-    ): ReasonChipDimens = ReasonChipDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-        contentSpacing = contentSpacing,
-        iconSize = iconSize
-    )
+    ): ReasonChipDimens =
+        ReasonChipDimens(
+            shape = shape,
+            contentPadding = contentPadding,
+            contentSpacing = contentSpacing,
+            iconSize = iconSize
+        )
 
     @Composable
-    public fun styles(
-        textStyle: TextStyle = System.font.body.small.bold
-    ): ReasonChipStyles = ReasonChipStyles(
-        textStyle = textStyle
-    )
+    public fun styles(textStyle: TextStyle = System.font.body.small.bold): ReasonChipStyles =
+        ReasonChipStyles(
+            textStyle = textStyle
+        )
 }
 
 @Composable
@@ -160,21 +161,22 @@ public fun ReasonChip(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
-        modifier = Modifier.padding(16.dp)
-    ) {
-        ReasonChip(
-            text = "Clean car",
-            selected = true,
-            onClick = {}
-        )
+private fun Preview() =
+    YallaTheme {
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier.padding(16.dp)
+        ) {
+            ReasonChip(
+                text = "Clean car",
+                selected = true,
+                onClick = {}
+            )
 
-        ReasonChip(
-            text = "Polite driver",
-            selected = false,
-            onClick = {}
-        )
+            ReasonChip(
+                text = "Polite driver",
+                selected = false,
+                onClick = {}
+            )
+        }
     }
-}

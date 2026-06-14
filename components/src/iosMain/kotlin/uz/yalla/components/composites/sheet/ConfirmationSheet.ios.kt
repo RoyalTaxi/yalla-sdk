@@ -27,19 +27,20 @@ public actual fun ConfirmationSheet(
     val isDark = System.isDark
     val assetName = image.assetName
 
-    val handle = remember {
-        requireConfig().sheet.createConfirmation(
-            imageResource = assetName,
-            isDark = isDark,
-            header = header,
-            title = title,
-            description = description,
-            actionText = actionText,
-            dismissEnabled = dismissEnabled,
-            onAction = { currentOnAction() },
-            onDismissRequest = { currentOnDismissRequest() }
-        )
-    }
+    val handle =
+        remember {
+            requireConfig().sheet.createConfirmation(
+                imageResource = assetName,
+                isDark = isDark,
+                header = header,
+                title = title,
+                description = description,
+                actionText = actionText,
+                dismissEnabled = dismissEnabled,
+                onAction = { currentOnAction() },
+                onDismissRequest = { currentOnDismissRequest() }
+            )
+        }
 
     DisposableEffect(isVisible) {
         if (!isVisible) {

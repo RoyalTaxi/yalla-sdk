@@ -10,7 +10,10 @@ public object Telemetry {
     public var crash: CrashReporter = CrashReporter.Noop
         private set
 
-    public fun install(sinks: List<TelemetrySink>, crash: CrashReporter = CrashReporter.Noop) {
+    public fun install(
+        sinks: List<TelemetrySink>,
+        crash: CrashReporter = CrashReporter.Noop
+    ) {
         this.sinks = sinks
         this.crash = crash
     }

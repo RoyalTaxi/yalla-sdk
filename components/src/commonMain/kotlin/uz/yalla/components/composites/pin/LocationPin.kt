@@ -78,16 +78,17 @@ public object LocationPinDefaults {
         headerText: Color = System.color.background.base,
         icon: Color = System.color.icon.base,
         text: Color = System.color.text.base
-    ): LocationPinColors = LocationPinColors(
-        background = background,
-        border = border,
-        stick = stick,
-        stickBorder = stickBorder,
-        header = header,
-        headerText = headerText,
-        icon = icon,
-        text = text
-    )
+    ): LocationPinColors =
+        LocationPinColors(
+            background = background,
+            border = border,
+            stick = stick,
+            stickBorder = stickBorder,
+            header = header,
+            headerText = headerText,
+            icon = icon,
+            text = text
+        )
 
     @Composable
     public fun dimens(
@@ -103,20 +104,21 @@ public object LocationPinDefaults {
         headerHorizontalPadding: Dp = 12.dp,
         contentBottomOffset: Dp = 6.dp,
         headerBottomOffset: Dp = 2.dp
-    ): LocationPinDimens = LocationPinDimens(
-        stickHeight = stickHeight,
-        stickWidth = stickWidth,
-        jumpHeight = jumpHeight,
-        contentSize = contentSize,
-        contentShape = contentShape,
-        borderWidth = borderWidth,
-        shadowSize = shadowSize,
-        headerShape = headerShape,
-        headerVerticalPadding = headerVerticalPadding,
-        headerHorizontalPadding = headerHorizontalPadding,
-        contentBottomOffset = contentBottomOffset,
-        headerBottomOffset = headerBottomOffset
-    )
+    ): LocationPinDimens =
+        LocationPinDimens(
+            stickHeight = stickHeight,
+            stickWidth = stickWidth,
+            jumpHeight = jumpHeight,
+            contentSize = contentSize,
+            contentShape = contentShape,
+            borderWidth = borderWidth,
+            shadowSize = shadowSize,
+            headerShape = headerShape,
+            headerVerticalPadding = headerVerticalPadding,
+            headerHorizontalPadding = headerHorizontalPadding,
+            contentBottomOffset = contentBottomOffset,
+            headerBottomOffset = headerBottomOffset
+        )
 }
 
 @Composable
@@ -139,14 +141,15 @@ public fun LocationPin(
     val stickVisibleHeight = remember { Animatable(stickHeightPx) }
     val shadowScale = remember { Animatable(1f) }
     val stickClipHeightDp = with(density) { stickVisibleHeight.value.toDp() }
-    val resolvedIcon: @Composable () -> Unit = icon ?: {
-        Icon(
-            painter = rememberVectorPainter(YallaIcons.FocusOrigin),
-            contentDescription = null,
-            tint = colors.icon,
-            modifier = Modifier.size(IconSize)
-        )
-    }
+    val resolvedIcon: @Composable () -> Unit =
+        icon ?: {
+            Icon(
+                painter = rememberVectorPainter(YallaIcons.FocusOrigin),
+                contentDescription = null,
+                tint = colors.icon,
+                modifier = Modifier.size(IconSize)
+            )
+        }
 
     LaunchedEffect(jumping) {
         if (jumping) {
@@ -166,10 +169,11 @@ public fun LocationPin(
         if (jumping) {
             jumpOffset.animateTo(
                 targetValue = -jumpHeightPx,
-                animationSpec = infiniteRepeatable(
-                    animation = tween(JumpCycleDurationMs, easing = EaseInOut),
-                    repeatMode = RepeatMode.Reverse
-                )
+                animationSpec =
+                    infiniteRepeatable(
+                        animation = tween(JumpCycleDurationMs, easing = EaseInOut),
+                        repeatMode = RepeatMode.Reverse
+                    )
             )
         } else {
             jumpOffset.animateTo(
@@ -185,28 +189,29 @@ public fun LocationPin(
         Image(
             painter = rememberVectorPainter(YallaIcons.PinShadow),
             contentDescription = null,
-            modifier = Modifier
-                .size(dimens.shadowSize)
-                .graphicsLayer {
-                    scaleX = shadowScale.value
-                    scaleY = shadowScale.value
-                }
-                .constrainAs(shadow) {
-                    linkTo(top = parent.top, bottom = parent.bottom)
-                    linkTo(start = parent.start, end = parent.end)
-                }
+            modifier =
+                Modifier
+                    .size(dimens.shadowSize)
+                    .graphicsLayer {
+                        scaleX = shadowScale.value
+                        scaleY = shadowScale.value
+                    }.constrainAs(shadow) {
+                        linkTo(top = parent.top, bottom = parent.bottom)
+                        linkTo(start = parent.start, end = parent.end)
+                    }
         )
 
         PinStick(
             clipHeight = stickClipHeightDp,
             colors = colors,
             dimens = dimens,
-            modifier = Modifier
-                .graphicsLayer { translationY = jumpOffset.value }
-                .constrainAs(stick) {
-                    top.linkTo(content.bottom)
-                    linkTo(start = parent.start, end = parent.end)
-                }
+            modifier =
+                Modifier
+                    .graphicsLayer { translationY = jumpOffset.value }
+                    .constrainAs(stick) {
+                        top.linkTo(content.bottom)
+                        linkTo(start = parent.start, end = parent.end)
+                    }
         )
 
         PinContent(
@@ -217,12 +222,13 @@ public fun LocationPin(
             timeoutLabelStyle = timeoutLabelStyle,
             colors = colors,
             dimens = dimens,
-            modifier = Modifier
-                .graphicsLayer { translationY = jumpOffset.value }
-                .constrainAs(content) {
-                    bottom.linkTo(shadow.bottom, margin = dimens.stickHeight + dimens.contentBottomOffset)
-                    linkTo(start = parent.start, end = parent.end)
-                }
+            modifier =
+                Modifier
+                    .graphicsLayer { translationY = jumpOffset.value }
+                    .constrainAs(content) {
+                        bottom.linkTo(shadow.bottom, margin = dimens.stickHeight + dimens.contentBottomOffset)
+                        linkTo(start = parent.start, end = parent.end)
+                    }
         )
 
         address?.let { addr ->
@@ -231,10 +237,11 @@ public fun LocationPin(
                 headerStyle = headerStyle,
                 colors = colors,
                 dimens = dimens,
-                modifier = Modifier.constrainAs(header) {
-                    bottom.linkTo(content.top, margin = dimens.jumpHeight + dimens.headerBottomOffset)
-                    linkTo(start = parent.start, end = parent.end)
-                }
+                modifier =
+                    Modifier.constrainAs(header) {
+                        bottom.linkTo(content.top, margin = dimens.jumpHeight + dimens.headerBottomOffset)
+                        linkTo(start = parent.start, end = parent.end)
+                    }
             )
         }
     }
@@ -242,6 +249,7 @@ public fun LocationPin(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    LocationPin(address = "Tashkent, Amir Temur 1")
-}
+private fun Preview() =
+    YallaTheme {
+        LocationPin(address = "Tashkent, Amir Temur 1")
+    }

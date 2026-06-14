@@ -43,20 +43,26 @@ public fun Rating(
                 shape = CircleShape,
                 color = Color.Transparent,
                 onClick = { onRatingChange(index + 1) },
-                modifier = Modifier
-                    .weight(1f)
-                    .aspectRatio(1f)
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .aspectRatio(1f)
             ) {
                 Image(
                     painter = rememberVectorPainter(YallaIcons.Star),
                     contentDescription = null,
-                    colorFilter = ColorFilter.tint(
-                        if (isFilled) System.color.background.brand
-                        else System.color.icon.disabled
-                    ),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(StarPadding)
+                    colorFilter =
+                        ColorFilter.tint(
+                            if (isFilled) {
+                                System.color.background.brand
+                            } else {
+                                System.color.icon.disabled
+                            }
+                        ),
+                    modifier =
+                        Modifier
+                            .fillMaxSize()
+                            .padding(StarPadding)
                 )
             }
         }
@@ -65,6 +71,7 @@ public fun Rating(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Rating(rating = 3, onRatingChange = {})
-}
+private fun Preview() =
+    YallaTheme {
+        Rating(rating = 3, onRatingChange = {})
+    }

@@ -41,11 +41,12 @@ public fun DockedHeaderableSheet(
 ) {
     val density = LocalDensity.current
     val statusBarTopPx = WindowInsets.statusBars.getTop(density)
-    val flingBehavior = AnchoredDraggableDefaults.flingBehavior(
-        state = state.anchoredDraggableState,
-        positionalThreshold = state.positionalThreshold,
-        animationSpec = state.snapAnimationSpec
-    )
+    val flingBehavior =
+        AnchoredDraggableDefaults.flingBehavior(
+            state = state.anchoredDraggableState,
+            positionalThreshold = state.positionalThreshold,
+            animationSpec = state.snapAnimationSpec
+        )
 
     val currentOnPaddingChanged by rememberUpdatedState(onPaddingChanged)
     LaunchedEffect(statusBarTopPx) {
@@ -66,11 +67,12 @@ public fun DockedHeaderableSheet(
         Card(
             shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
             colors = CardDefaults.cardColors(containerColor = System.color.background.base),
-            modifier = Modifier.anchoredDraggable(
-                state = state.anchoredDraggableState,
-                orientation = Orientation.Vertical,
-                flingBehavior = flingBehavior
-            )
+            modifier =
+                Modifier.anchoredDraggable(
+                    state = state.anchoredDraggableState,
+                    orientation = Orientation.Vertical,
+                    flingBehavior = flingBehavior
+                )
         ) {
             DockedHeaderableSheetLayout(
                 state = state,
@@ -103,8 +105,9 @@ private fun DockedHeaderableSheetLayout(
         val headerPlaceable = measurables[0].measure(loose)
         val footerPlaceable = measurables[2].measure(loose)
 
-        val maxBodyHeight = (constraints.maxHeight - statusBarTopPx - headerPlaceable.height - footerPlaceable.height)
-            .coerceAtLeast(0)
+        val maxBodyHeight =
+            (constraints.maxHeight - statusBarTopPx - headerPlaceable.height - footerPlaceable.height)
+                .coerceAtLeast(0)
 
         val bodyPlaceable = measurables[1].measure(loose.copy(maxHeight = maxBodyHeight))
 

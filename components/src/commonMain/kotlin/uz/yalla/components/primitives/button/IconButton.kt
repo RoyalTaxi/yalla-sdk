@@ -7,7 +7,7 @@ import uz.yalla.design.theme.System
 
 public enum class IconButtonShape {
     CIRCLE,
-    SQUIRCLE,
+    SQUIRCLE
 }
 
 @Composable

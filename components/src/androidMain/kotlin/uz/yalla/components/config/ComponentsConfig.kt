@@ -20,12 +20,13 @@ public class ComponentsConfig private constructor(
         public var snackbar: SnackbarFactory? = null
         public var sheet: SheetFactory? = null
 
-        public fun build(): ComponentsConfig = ComponentsConfig(
-            loadingIndicator = requireNotNull(loadingIndicator) { "loadingIndicator required" },
-            iconButton = requireNotNull(iconButton) { "iconButton required" },
-            toggle = requireNotNull(toggle) { "toggle required" },
-            snackbar = requireNotNull(snackbar) { "snackbar required" },
-            sheet = requireNotNull(sheet) { "sheet required" }
-        )
+        public fun build(): ComponentsConfig =
+            ComponentsConfig(
+                loadingIndicator = requireNotNull(loadingIndicator) { "loadingIndicator required" },
+                iconButton = requireNotNull(iconButton) { "iconButton required" },
+                toggle = requireNotNull(toggle) { "toggle required" },
+                snackbar = requireNotNull(snackbar) { "snackbar required" },
+                sheet = requireNotNull(sheet) { "sheet required" }
+            )
     }
 }

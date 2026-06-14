@@ -13,7 +13,6 @@ import kotlin.test.assertEquals
  *    would change routing decode behavior, so its case-sensitivity is pinned explicitly.
  */
 class LocationKindTest {
-
     // --- PointKind: EXACT match, default POINT, no normalization ---
 
     @Test

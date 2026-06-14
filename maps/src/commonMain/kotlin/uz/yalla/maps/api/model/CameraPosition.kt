@@ -36,10 +36,11 @@ public data class CameraPosition(
     }
 
     public companion object {
-        public val DEFAULT: CameraPosition = CameraPosition(
-            target = GeoPoint.Zero,
-            zoom = 15f
-        )
+        public val DEFAULT: CameraPosition =
+            CameraPosition(
+                target = GeoPoint.Zero,
+                zoom = 15f
+            )
     }
 }
 

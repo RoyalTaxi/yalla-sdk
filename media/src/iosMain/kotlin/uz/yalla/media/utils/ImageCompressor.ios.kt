@@ -23,39 +23,42 @@ public actual fun compressImage(
     val maxDimension = config.maxDimension
     val maxSizeBytes = config.maxFileSize
 
-    val nsData = imageBytes.usePinned { pinned ->
-        NSData.dataWithBytes(bytes = pinned.addressOf(0), length = imageBytes.size.toULong())
-    }
+    val nsData =
+        imageBytes.usePinned { pinned ->
+            NSData.dataWithBytes(bytes = pinned.addressOf(0), length = imageBytes.size.toULong())
+        }
 
     val originalImage = UIImage(nsData) ?: return imageBytes
 
     val originalWidth = originalImage.size.useContents { this.width }
     val originalHeight = originalImage.size.useContents { this.height }
 
-    val scale = if (
-        originalWidth.toDouble() > maxDimension ||
-        originalHeight.toDouble() > maxDimension
-    ) {
-        min(
-            maxDimension.toDouble() / originalWidth.toDouble(),
-            maxDimension.toDouble() / originalHeight.toDouble()
-        )
-    } else {
-        1.0
-    }
+    val scale =
+        if (
+            originalWidth.toDouble() > maxDimension ||
+            originalHeight.toDouble() > maxDimension
+        ) {
+            min(
+                maxDimension.toDouble() / originalWidth.toDouble(),
+                maxDimension.toDouble() / originalHeight.toDouble()
+            )
+        } else {
+            1.0
+        }
 
     val newWidth = originalWidth.toDouble() * scale
     val newHeight = originalHeight.toDouble() * scale
     val newSize = CGSizeMake(newWidth, newHeight)
 
-    val resizedImage = if (scale < 1.0) {
-        val renderer = UIGraphicsImageRenderer(size = newSize)
-        renderer.imageWithActions { _ ->
-            originalImage.drawInRect(CGRectMake(0.0, 0.0, newWidth, newHeight))
+    val resizedImage =
+        if (scale < 1.0) {
+            val renderer = UIGraphicsImageRenderer(size = newSize)
+            renderer.imageWithActions { _ ->
+                originalImage.drawInRect(CGRectMake(0.0, 0.0, newWidth, newHeight))
+            }
+        } else {
+            originalImage
         }
-    } else {
-        originalImage
-    }
 
     var lo = MIN_QUALITY_INT
     var hi = config.quality
@@ -77,9 +80,10 @@ public actual fun compressImage(
     if (bestData == null) {
         val smallerSize = CGSizeMake(newWidth / 2.0, newHeight / 2.0)
         val renderer = UIGraphicsImageRenderer(size = smallerSize)
-        val smallerImage = renderer.imageWithActions { _ ->
-            resizedImage.drawInRect(CGRectMake(0.0, 0.0, newWidth / 2.0, newHeight / 2.0))
-        }
+        val smallerImage =
+            renderer.imageWithActions { _ ->
+                resizedImage.drawInRect(CGRectMake(0.0, 0.0, newWidth / 2.0, newHeight / 2.0))
+            }
         val minQuality = MIN_QUALITY_INT.toDouble() / 100.0
         bestData = UIImageJPEGRepresentation(smallerImage, minQuality)
             ?: return imageBytes

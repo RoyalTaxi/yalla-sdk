@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test
  * Test-only; it ships no runtime code. The gate runs in CI under `:konsistTest:test`.
  */
 class CorePurityKonsistTest {
-
     @Test
     fun coreDependsOnNoOtherSdkLayer() {
         Konsist
@@ -81,11 +80,12 @@ class CorePurityKonsistTest {
         // android.* / androidx.*  -> Android platform (must not leak into common/pure core)
         // io.ktor.*               -> networking framework belongs in :network, not :core
         // platform.*              -> Kotlin/Native Apple platform APIs break commonMain portability
-        val FORBIDDEN_IMPORT_PREFIXES = listOf(
-            "android.",
-            "androidx.",
-            "io.ktor.",
-            "platform."
-        )
+        val FORBIDDEN_IMPORT_PREFIXES =
+            listOf(
+                "android.",
+                "androidx.",
+                "io.ktor.",
+                "platform."
+            )
     }
 }

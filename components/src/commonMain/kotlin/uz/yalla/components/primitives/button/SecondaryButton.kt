@@ -40,12 +40,13 @@ public data class SecondaryButtonColors(
     val disabledContainerColor: Color
 ) {
     @Composable
-    internal fun asButtonColors() = ButtonDefaults.buttonColors(
-        contentColor = contentColor,
-        containerColor = containerColor,
-        disabledContentColor = disabledContentColor,
-        disabledContainerColor = disabledContainerColor
-    )
+    internal fun asButtonColors() =
+        ButtonDefaults.buttonColors(
+            contentColor = contentColor,
+            containerColor = containerColor,
+            disabledContentColor = disabledContentColor,
+            disabledContainerColor = disabledContainerColor
+        )
 
     @Composable
     public fun contentColorFor(enabled: Boolean): Color = if (enabled) contentColor else disabledContentColor
@@ -71,12 +72,13 @@ public object SecondaryButtonDefaults {
         containerColor: Color = System.color.button.tertiary,
         disabledContentColor: Color = System.color.text.white,
         disabledContainerColor: Color = System.color.button.disabled
-    ): SecondaryButtonColors = SecondaryButtonColors(
-        contentColor = contentColor,
-        containerColor = containerColor,
-        disabledContentColor = disabledContentColor,
-        disabledContainerColor = disabledContainerColor
-    )
+    ): SecondaryButtonColors =
+        SecondaryButtonColors(
+            contentColor = contentColor,
+            containerColor = containerColor,
+            disabledContentColor = disabledContentColor,
+            disabledContainerColor = disabledContainerColor
+        )
 
     @Composable
     public fun dimens(
@@ -84,19 +86,19 @@ public object SecondaryButtonDefaults {
         minHeight: Dp = 24.dp,
         contentSpacing: Dp = 12.dp,
         contentPadding: PaddingValues = PaddingValues(20.dp)
-    ): SecondaryButtonDimens = SecondaryButtonDimens(
-        shape = shape,
-        minHeight = minHeight,
-        contentSpacing = contentSpacing,
-        contentPadding = contentPadding
-    )
+    ): SecondaryButtonDimens =
+        SecondaryButtonDimens(
+            shape = shape,
+            minHeight = minHeight,
+            contentSpacing = contentSpacing,
+            contentPadding = contentPadding
+        )
 
     @Composable
-    public fun styles(
-        textStyle: TextStyle = System.font.body.base.medium
-    ): SecondaryButtonStyles = SecondaryButtonStyles(
-        textStyle = textStyle
-    )
+    public fun styles(textStyle: TextStyle = System.font.body.base.medium): SecondaryButtonStyles =
+        SecondaryButtonStyles(
+            textStyle = textStyle
+        )
 }
 
 @Composable
@@ -132,10 +134,11 @@ public fun SecondaryButton(
                 } else {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(
-                            space = dimens.contentSpacing,
-                            alignment = Alignment.CenterHorizontally
-                        )
+                        horizontalArrangement =
+                            Arrangement.spacedBy(
+                                space = dimens.contentSpacing,
+                                alignment = Alignment.CenterHorizontally
+                            )
                     ) {
                         leadingIcon?.invoke()
 
@@ -157,45 +160,49 @@ public fun SecondaryButton(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(10.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        SecondaryButton(
-            text = "Cancel",
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { }
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            SecondaryButton(
+                text = "Cancel",
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { }
+            )
 
-        SecondaryButton(
-            text = "Cancel",
-            enabled = false,
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { }
-        )
+            SecondaryButton(
+                text = "Cancel",
+                enabled = false,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { }
+            )
 
-        SecondaryButton(
-            text = "Enable location",
-            onClick = { },
-            colors = SecondaryButtonDefaults.colors(
-                contentColor = System.color.icon.white,
-                containerColor = System.color.icon.red
-            ),
-            dimens = SecondaryButtonDefaults.dimens(
-                shape = CircleShape,
-                contentPadding = PaddingValues(start = 22.dp, end = 12.dp)
-            ),
-            styles = SecondaryButtonDefaults.styles(
-                textStyle = System.font.body.caption
-            ),
-            trailingIcon = {
-                Icon(
-                    imageVector = YallaIcons.FocusLocation,
-                    contentDescription = null
-                )
-            }
-        )
+            SecondaryButton(
+                text = "Enable location",
+                onClick = { },
+                colors =
+                    SecondaryButtonDefaults.colors(
+                        contentColor = System.color.icon.white,
+                        containerColor = System.color.icon.red
+                    ),
+                dimens =
+                    SecondaryButtonDefaults.dimens(
+                        shape = CircleShape,
+                        contentPadding = PaddingValues(start = 22.dp, end = 12.dp)
+                    ),
+                styles =
+                    SecondaryButtonDefaults.styles(
+                        textStyle = System.font.body.caption
+                    ),
+                trailingIcon = {
+                    Icon(
+                        imageVector = YallaIcons.FocusLocation,
+                        contentDescription = null
+                    )
+                }
+            )
+        }
     }
-}

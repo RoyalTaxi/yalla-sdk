@@ -20,6 +20,7 @@ public fun RatingRow(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    RatingRow(rating = 3, onRatingChange = {})
-}
+private fun Preview() =
+    YallaTheme {
+        RatingRow(rating = 3, onRatingChange = {})
+    }

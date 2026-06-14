@@ -7,11 +7,11 @@ import coil3.svg.SvgDecoder
 
 public fun installImageLoader() {
     SingletonImageLoader.setSafe { context ->
-        ImageLoader.Builder(context)
+        ImageLoader
+            .Builder(context)
             .components {
                 add(KtorNetworkFetcherFactory())
                 add(SvgDecoder.Factory())
-            }
-            .build()
+            }.build()
     }
 }

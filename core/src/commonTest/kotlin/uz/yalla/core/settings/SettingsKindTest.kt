@@ -13,7 +13,6 @@ import kotlin.test.assertEquals
  * canonicalizes `_` to `-` before matching, which is pinned separately.
  */
 class SettingsKindTest {
-
     // --- MapKind: default Google ---
 
     @Test

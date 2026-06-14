@@ -6,9 +6,10 @@ public class MediaConfig private constructor(
     public class Builder {
         public var factory: MediaFactory? = null
 
-        public fun build(): MediaConfig = MediaConfig(
-            factory = requireNotNull(factory) { "MediaConfig.factory required" }
-        )
+        public fun build(): MediaConfig =
+            MediaConfig(
+                factory = requireNotNull(factory) { "MediaConfig.factory required" }
+            )
     }
 }
 

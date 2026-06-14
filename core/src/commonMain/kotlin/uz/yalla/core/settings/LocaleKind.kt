@@ -1,6 +1,5 @@
 package uz.yalla.core.settings
 
-
 public enum class LocaleKind(
     public val code: String,
     public val displayName: String
@@ -11,11 +10,12 @@ public enum class LocaleKind(
 
     public companion object {
         public fun from(code: String?): LocaleKind {
-            val normalized = code
-                ?.trim()
-                ?.replace('_', '-')
-                ?.lowercase()
-                .orEmpty()
+            val normalized =
+                code
+                    ?.trim()
+                    ?.replace('_', '-')
+                    ?.lowercase()
+                    .orEmpty()
             return entries.find { it.code.lowercase() == normalized } ?: Uz
         }
     }

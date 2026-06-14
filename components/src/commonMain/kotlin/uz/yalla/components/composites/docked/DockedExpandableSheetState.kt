@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.Dp
 
 public enum class DockedExpandableSheetValue {
     Collapsed,
-    Expanded,
+    Expanded
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -38,7 +38,8 @@ public class DockedExpandableSheetState internal constructor(
     private val maxOffsetPx: Float get() = (expandedHeightPx - collapsedHeightPx).coerceAtLeast(0f)
     private val hasOffset: Boolean get() = maxOffsetPx > 0f
 
-    internal val anchoredDraggableState: AnchoredDraggableState<DockedExpandableSheetValue> = AnchoredDraggableState(initialValue = initialValue)
+    internal val anchoredDraggableState: AnchoredDraggableState<DockedExpandableSheetValue> =
+        AnchoredDraggableState(initialValue = initialValue)
 
     public val collapsedHeight: Dp get() = with(density) { collapsedHeightPx.toDp() }
     public val expandedHeight: Dp get() = with(density) { expandedHeightPx.toDp() }
@@ -103,29 +104,32 @@ public class DockedExpandableSheetState internal constructor(
 
         val newMaxOffset = (this.expandedHeightPx - this.collapsedHeightPx).coerceAtLeast(0f)
         if (newMaxOffset > 0f) {
-            val newAnchors = DraggableAnchors {
-                DockedExpandableSheetValue.Expanded at 0f
-                DockedExpandableSheetValue.Collapsed at newMaxOffset
-            }
+            val newAnchors =
+                DraggableAnchors {
+                    DockedExpandableSheetValue.Expanded at 0f
+                    DockedExpandableSheetValue.Collapsed at newMaxOffset
+                }
             anchoredDraggableState.updateAnchors(newAnchors, currentValue)
         }
     }
 
     internal suspend fun settle(velocity: Float) {
-        val target = when {
-            velocity < -500f -> DockedExpandableSheetValue.Expanded
-            velocity > 500f -> DockedExpandableSheetValue.Collapsed
-            fraction > 0.5f -> DockedExpandableSheetValue.Expanded
-            else -> DockedExpandableSheetValue.Collapsed
-        }
+        val target =
+            when {
+                velocity < -500f -> DockedExpandableSheetValue.Expanded
+                velocity > 500f -> DockedExpandableSheetValue.Collapsed
+                fraction > 0.5f -> DockedExpandableSheetValue.Expanded
+                else -> DockedExpandableSheetValue.Collapsed
+            }
         anchoredDraggableState.animateTo(target)
     }
 }
 
-public val DockedExpandableSheetSpringSpec: AnimationSpec<Float> = spring(
-    dampingRatio = Spring.DampingRatioNoBouncy,
-    stiffness = Spring.StiffnessMedium
-)
+public val DockedExpandableSheetSpringSpec: AnimationSpec<Float> =
+    spring(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMedium
+    )
 
 @Composable
 public fun rememberDockedExpandableSheetState(
@@ -133,11 +137,12 @@ public fun rememberDockedExpandableSheetState(
     snapAnimationSpec: AnimationSpec<Float> = DockedExpandableSheetSpringSpec,
     density: Density = LocalDensity.current,
     positionalThreshold: (totalDistance: Float) -> Float = { it * 0.5f }
-): DockedExpandableSheetState = remember {
-    DockedExpandableSheetState(
-        initialValue = initialValue,
-        snapAnimationSpec = snapAnimationSpec,
-        density = density,
-        positionalThreshold = positionalThreshold
-    )
-}
+): DockedExpandableSheetState =
+    remember {
+        DockedExpandableSheetState(
+            initialValue = initialValue,
+            snapAnimationSpec = snapAnimationSpec,
+            density = density,
+            positionalThreshold = positionalThreshold
+        )
+    }

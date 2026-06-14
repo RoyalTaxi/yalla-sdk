@@ -36,15 +36,16 @@ public actual fun Toggle(
     val trackArgb = checkedTrackColor.toArgbOrZero()
     val onCheckedChangeState = rememberUpdatedState(onCheckedChange)
 
-    val handle = remember {
-        requireConfig().toggle.create(
-            initialChecked = checked,
-            initialEnabled = enabled,
-            thumbArgb = thumbArgb,
-            trackArgb = trackArgb,
-            onCheckedChange = { onCheckedChangeState.value(it) }
-        )
-    }
+    val handle =
+        remember {
+            requireConfig().toggle.create(
+                initialChecked = checked,
+                initialEnabled = enabled,
+                thumbArgb = thumbArgb,
+                trackArgb = trackArgb,
+                onCheckedChange = { onCheckedChangeState.value(it) }
+            )
+        }
 
     LaunchedEffect(checked) { handle.setChecked(checked) }
     LaunchedEffect(enabled) { handle.setEnabled(enabled) }

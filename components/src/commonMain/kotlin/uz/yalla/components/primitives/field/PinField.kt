@@ -68,18 +68,23 @@ public fun PinField(
             val filtered = if (alphanumeric) raw.filter(Char::isLetterOrDigit) else raw.filter(Char::isDigit)
             onValueChange(filtered.take(length))
         },
-        modifier = modifier
-            .fillMaxWidth()
-            .graphicsLayer { translationX = shakeOffset.value }
-            .semantics { contentType = ContentType.SmsOtpCode }
-            .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
-        keyboardOptions = KeyboardOptions(keyboardType = if (alphanumeric) KeyboardType.Ascii else KeyboardType.Number),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .graphicsLayer { translationX = shakeOffset.value }
+                .semantics { contentType = ContentType.SmsOtpCode }
+                .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier),
+        keyboardOptions =
+            KeyboardOptions(
+                keyboardType = if (alphanumeric) KeyboardType.Ascii else KeyboardType.Number
+            ),
         singleLine = true,
         decorationBox = {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(contentPadding),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(contentPadding),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -101,16 +106,18 @@ private fun PinBox(
     error: Boolean,
     modifier: Modifier = Modifier
 ) {
-    val borderColor = when {
-        error -> System.color.text.red
-        value != null -> System.color.border.filled
-        else -> System.color.border.disabled
-    }
+    val borderColor =
+        when {
+            error -> System.color.text.red
+            value != null -> System.color.border.filled
+            else -> System.color.border.disabled
+        }
 
     Box(
-        modifier = modifier
-            .aspectRatio(1f)
-            .border(1.dp, borderColor, RoundedCornerShape(12.dp)),
+        modifier =
+            modifier
+                .aspectRatio(1f)
+                .border(1.dp, borderColor, RoundedCornerShape(12.dp)),
         contentAlignment = Alignment.Center
     ) {
         value?.let {
@@ -126,12 +133,13 @@ private fun PinBox(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    var value by remember { mutableStateOf("12") }
-    PinField(
-        value = value,
-        onValueChange = { value = it },
-        length = 5,
-        modifier = Modifier.padding(16.dp)
-    )
-}
+private fun Preview() =
+    YallaTheme {
+        var value by remember { mutableStateOf("12") }
+        PinField(
+            value = value,
+            onValueChange = { value = it },
+            length = 5,
+            modifier = Modifier.padding(16.dp)
+        )
+    }

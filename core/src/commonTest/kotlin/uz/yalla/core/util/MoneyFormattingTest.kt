@@ -12,7 +12,6 @@ import kotlin.test.assertEquals
  * grouping or sign regression is high cost.
  */
 class MoneyFormattingTest {
-
     @Test
     fun formatsZero() {
         assertEquals("0", 0L.formatMoney())

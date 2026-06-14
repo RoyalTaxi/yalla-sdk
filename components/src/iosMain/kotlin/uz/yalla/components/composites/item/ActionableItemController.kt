@@ -17,25 +17,27 @@ public class ActionableItemController(
     isDestructive: Boolean = false,
     onClick: () -> Unit
 ) {
-    private val model = ActionableItemModel(
-        id = "",
-        text = text,
-        icon = icon,
-        trailingIcon = trailingIcon,
-        isDestructive = isDestructive
-    )
+    private val model =
+        ActionableItemModel(
+            id = "",
+            text = text,
+            icon = icon,
+            trailingIcon = trailingIcon,
+            isDestructive = isDestructive
+        )
 
     @OptIn(ExperimentalComposeUiApi::class)
-    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
-        YallaTheme(isDark = rememberIsDarkTheme()) {
-            ActionableItem(
-                text = model.text,
-                painter = model.icon.asImageVector()?.let { rememberVectorPainter(it) },
-                trailingPainter = model.trailingIcon?.asImageVector()?.let { rememberVectorPainter(it) },
-                onClick = onClick,
-                colors = ActionableItemDefaults.colorsFor(model),
-                modifier = Modifier.fillMaxWidth()
-            )
+    public val viewController: UIViewController =
+        ComposeUIViewController(configure = { opaque = false }) {
+            YallaTheme(isDark = rememberIsDarkTheme()) {
+                ActionableItem(
+                    text = model.text,
+                    painter = model.icon.asImageVector()?.let { rememberVectorPainter(it) },
+                    trailingPainter = model.trailingIcon?.asImageVector()?.let { rememberVectorPainter(it) },
+                    onClick = onClick,
+                    colors = ActionableItemDefaults.colorsFor(model),
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
-    }
 }

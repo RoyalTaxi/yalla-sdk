@@ -26,8 +26,8 @@ import uz.yalla.maps.api.model.MapStyle
 
 internal class IosMapControllerWrapper(
     private val renderer: IosMapRenderer
-) : MapController, IosMapController {
-
+) : MapController,
+    IosMapController {
     private val _cameraPosition = MutableStateFlow(CameraPosition.DEFAULT)
     override val cameraPosition = _cameraPosition.asStateFlow()
 
@@ -37,7 +37,8 @@ internal class IosMapControllerWrapper(
     private val _isReady = MutableStateFlow(false)
     override val isReady = _isReady.asStateFlow()
 
-    private val _events = MutableSharedFlow<MapEvent>(replay = 0, extraBufferCapacity = 16, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _events =
+        MutableSharedFlow<MapEvent>(replay = 0, extraBufferCapacity = 16, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     override val events = _events.asSharedFlow()
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
@@ -53,37 +54,50 @@ internal class IosMapControllerWrapper(
     private var userLocation: GeoPoint? = null
     private var userLocationEnabled = true
 
-    private val internalListener = object : IosMapListener {
-        override fun onCameraMove(target: GeoPoint, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean) {
-            emitCamera(target, zoom, bearing, tilt)
-            _centerPin.value = _centerPin.value.copy(point = target, isMoving = true, isByUser = isByUser)
-            if (isByUser) {
-                lockedTarget = null
-                lockedZoom = null
+    private val internalListener =
+        object : IosMapListener {
+            override fun onCameraMove(
+                target: GeoPoint,
+                zoom: Float,
+                bearing: Float,
+                tilt: Float,
+                isByUser: Boolean
+            ) {
+                emitCamera(target, zoom, bearing, tilt)
+                _centerPin.value = _centerPin.value.copy(point = target, isMoving = true, isByUser = isByUser)
+                if (isByUser) {
+                    lockedTarget = null
+                    lockedZoom = null
+                }
+            }
+
+            override fun onCameraIdle(
+                target: GeoPoint,
+                zoom: Float,
+                bearing: Float,
+                tilt: Float,
+                isByUser: Boolean
+            ) {
+                emitCamera(target, zoom, bearing, tilt)
+                _centerPin.value = CenterPinState(point = target, isMoving = false, isByUser = isByUser)
+            }
+
+            override fun onReady() {
+                _isReady.value = true
+            }
+
+            override fun onMarkerTapped(id: String) {
+                scope.launch { _events.emit(MapEvent.MarkerTapped(id)) }
+            }
+
+            override fun onMapTapped(point: GeoPoint) {
+                scope.launch { _events.emit(MapEvent.MapTapped(point)) }
+            }
+
+            override fun onMapLongPressed(point: GeoPoint) {
+                scope.launch { _events.emit(MapEvent.MapLongPressed(point)) }
             }
         }
-
-        override fun onCameraIdle(target: GeoPoint, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean) {
-            emitCamera(target, zoom, bearing, tilt)
-            _centerPin.value = CenterPinState(point = target, isMoving = false, isByUser = isByUser)
-        }
-
-        override fun onReady() {
-            _isReady.value = true
-        }
-
-        override fun onMarkerTapped(id: String) {
-            scope.launch { _events.emit(MapEvent.MarkerTapped(id)) }
-        }
-
-        override fun onMapTapped(point: GeoPoint) {
-            scope.launch { _events.emit(MapEvent.MapTapped(point)) }
-        }
-
-        override fun onMapLongPressed(point: GeoPoint) {
-            scope.launch { _events.emit(MapEvent.MapLongPressed(point)) }
-        }
-    }
 
     init {
         renderer.setListener(internalListener)
@@ -91,22 +105,38 @@ internal class IosMapControllerWrapper(
 
     override fun createViewController(): UIViewController = renderer.createViewController()
 
-    override suspend fun moveTo(point: GeoPoint, zoom: Float) {
+    override suspend fun moveTo(
+        point: GeoPoint,
+        zoom: Float
+    ) {
         if (closed) return
         renderer.moveTo(point, zoom)
     }
 
-    override suspend fun animateTo(point: GeoPoint, zoom: Float, durationMs: Int) {
+    override suspend fun animateTo(
+        point: GeoPoint,
+        zoom: Float,
+        durationMs: Int
+    ) {
         if (closed) return
         renderer.animateTo(point, zoom, durationMs)
     }
 
-    override suspend fun animateToWithBearing(point: GeoPoint, bearing: Float, zoom: Float, durationMs: Int) {
+    override suspend fun animateToWithBearing(
+        point: GeoPoint,
+        bearing: Float,
+        zoom: Float,
+        durationMs: Int
+    ) {
         if (closed) return
         renderer.animateToWithBearing(point, bearing, zoom, durationMs)
     }
 
-    override suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean, padding: PaddingValues?) {
+    override suspend fun fitBounds(
+        points: List<GeoPoint>,
+        animate: Boolean,
+        padding: PaddingValues?
+    ) {
         if (closed) return
         val effective = padding ?: pendingPadding
         renderer.fitBounds(
@@ -134,7 +164,10 @@ internal class IosMapControllerWrapper(
         renderer.setZoom(zoom)
     }
 
-    override suspend fun setStyle(style: MapStyle, isDark: Boolean) {
+    override suspend fun setStyle(
+        style: MapStyle,
+        isDark: Boolean
+    ) {
         if (closed) return
         renderer.setColorScheme(isDark)
         when (style) {
@@ -191,7 +224,10 @@ internal class IosMapControllerWrapper(
         renderer.setUserLocation(userLocation.takeIf { enabled })
     }
 
-    override fun lockTarget(point: GeoPoint, zoom: Float?) {
+    override fun lockTarget(
+        point: GeoPoint,
+        zoom: Float?
+    ) {
         if (closed) return
         lockedTarget = point
         lockedZoom = zoom
@@ -203,15 +239,16 @@ internal class IosMapControllerWrapper(
         lockedZoom = null
     }
 
-    override fun snapshotScene(): MapController.SceneSnapshot = MapController.SceneSnapshot(
-        cameraPosition = _cameraPosition.value,
-        markers = pendingMarkers,
-        routes = pendingRoutes,
-        circles = pendingCircles,
-        padding = pendingPadding,
-        lockedTarget = lockedTarget,
-        lockedZoom = lockedZoom
-    )
+    override fun snapshotScene(): MapController.SceneSnapshot =
+        MapController.SceneSnapshot(
+            cameraPosition = _cameraPosition.value,
+            markers = pendingMarkers,
+            routes = pendingRoutes,
+            circles = pendingCircles,
+            padding = pendingPadding,
+            lockedTarget = lockedTarget,
+            lockedZoom = lockedZoom
+        )
 
     override fun close() {
         if (closed) return
@@ -229,7 +266,12 @@ internal class IosMapControllerWrapper(
         }
     }
 
-    private fun emitCamera(target: GeoPoint, zoom: Float, bearing: Float, tilt: Float) {
+    private fun emitCamera(
+        target: GeoPoint,
+        zoom: Float,
+        bearing: Float,
+        tilt: Float
+    ) {
         val next = CameraPosition(target, zoom, bearing, tilt, pendingPadding)
         val prev = lastEmittedCamera
         if (prev != null && cameraEpsilonEqual(prev, next)) return
@@ -237,7 +279,10 @@ internal class IosMapControllerWrapper(
         _cameraPosition.value = next
     }
 
-    private fun cameraEpsilonEqual(a: CameraPosition, b: CameraPosition): Boolean {
+    private fun cameraEpsilonEqual(
+        a: CameraPosition,
+        b: CameraPosition
+    ): Boolean {
         return kotlin.math.abs(a.target.lat - b.target.lat) < 1e-6 &&
             kotlin.math.abs(a.target.lng - b.target.lng) < 1e-6 &&
             kotlin.math.abs(a.zoom - b.zoom) < 1e-3 &&

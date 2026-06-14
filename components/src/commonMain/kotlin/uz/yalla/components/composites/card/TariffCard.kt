@@ -68,13 +68,14 @@ public object TariffCardDefaults {
         titleColor: Color = System.color.text.base,
         descriptionColor: Color = System.color.text.base,
         selectedBorder: Brush = System.color.gradient.sunsetNight
-    ): TariffCardColors = TariffCardColors(
-        containerColor = containerColor,
-        selectedContainerColor = selectedContainerColor,
-        titleColor = titleColor,
-        descriptionColor = descriptionColor,
-        selectedBorder = selectedBorder
-    )
+    ): TariffCardColors =
+        TariffCardColors(
+            containerColor = containerColor,
+            selectedContainerColor = selectedContainerColor,
+            titleColor = titleColor,
+            descriptionColor = descriptionColor,
+            selectedBorder = selectedBorder
+        )
 
     @Composable
     public fun dimens(
@@ -85,24 +86,26 @@ public object TariffCardDefaults {
         selectedBorderWidth: Dp = 2.dp,
         titleDescriptionSpacing: Dp = 6.dp,
         descriptionImageSpacing: Dp = 10.dp
-    ): TariffCardDimens = TariffCardDimens(
-        shape = shape,
-        height = height,
-        minWidth = minWidth,
-        contentPadding = contentPadding,
-        selectedBorderWidth = selectedBorderWidth,
-        titleDescriptionSpacing = titleDescriptionSpacing,
-        descriptionImageSpacing = descriptionImageSpacing
-    )
+    ): TariffCardDimens =
+        TariffCardDimens(
+            shape = shape,
+            height = height,
+            minWidth = minWidth,
+            contentPadding = contentPadding,
+            selectedBorderWidth = selectedBorderWidth,
+            titleDescriptionSpacing = titleDescriptionSpacing,
+            descriptionImageSpacing = descriptionImageSpacing
+        )
 
     @Composable
     public fun styles(
         titleStyle: TextStyle = System.font.body.base.bold,
         descriptionStyle: TextStyle = System.font.body.base.bold
-    ): TariffCardStyles = TariffCardStyles(
-        titleStyle = titleStyle,
-        descriptionStyle = descriptionStyle
-    )
+    ): TariffCardStyles =
+        TariffCardStyles(
+            titleStyle = titleStyle,
+            descriptionStyle = descriptionStyle
+        )
 }
 
 @Composable
@@ -119,17 +122,21 @@ public fun TariffCard(
 ) {
     Surface(
         onClick = onClick,
-        modifier = modifier
-            .height(dimens.height)
-            .widthIn(min = dimens.minWidth),
+        modifier =
+            modifier
+                .height(dimens.height)
+                .widthIn(min = dimens.minWidth),
         shape = dimens.shape,
         color = if (selected) colors.selectedContainerColor else colors.containerColor,
-        border = if (selected) {
-            BorderStroke(
-                brush = colors.selectedBorder,
-                width = dimens.selectedBorderWidth
-            )
-        } else null
+        border =
+            if (selected) {
+                BorderStroke(
+                    brush = colors.selectedBorder,
+                    width = dimens.selectedBorderWidth
+                )
+            } else {
+                null
+            }
     ) {
         Column(
             modifier = Modifier.padding(dimens.contentPadding)
@@ -180,12 +187,13 @@ public fun TariffCard(
         title = title,
         description = description,
         selected = selected,
-        painter = rememberAsyncImagePainter(
-            model = imageUrl,
-            placeholder = fallback,
-            error = fallback,
-            fallback = fallback
-        ),
+        painter =
+            rememberAsyncImagePainter(
+                model = imageUrl,
+                placeholder = fallback,
+                error = fallback,
+                fallback = fallback
+            ),
         onClick = onClick,
         modifier = modifier,
         colors = colors,
@@ -196,21 +204,22 @@ public fun TariffCard(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    LazyRow(
-        contentPadding = PaddingValues(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        repeat(2) { order ->
-            item {
-                TariffCard(
-                    title = "Tariff ${order + 1}",
-                    description = if (order % 2 == 0) "15 000 sum" else null,
-                    selected = order % 2 == 0,
-                    onClick = {}
-                )
+private fun Preview() =
+    YallaTheme {
+        LazyRow(
+            contentPadding = PaddingValues(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            repeat(2) { order ->
+                item {
+                    TariffCard(
+                        title = "Tariff ${order + 1}",
+                        description = if (order % 2 == 0) "15 000 sum" else null,
+                        selected = order % 2 == 0,
+                        onClick = {}
+                    )
+                }
             }
         }
     }
-}

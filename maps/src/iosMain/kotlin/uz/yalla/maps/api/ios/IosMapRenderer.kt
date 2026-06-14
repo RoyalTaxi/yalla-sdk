@@ -11,11 +11,23 @@ public interface IosMapRenderer {
 
     public fun setListener(listener: IosMapListener?)
 
-    public fun moveTo(target: GeoPoint, zoom: Float)
+    public fun moveTo(
+        target: GeoPoint,
+        zoom: Float
+    )
 
-    public fun animateTo(target: GeoPoint, zoom: Float, durationMs: Int)
+    public fun animateTo(
+        target: GeoPoint,
+        zoom: Float,
+        durationMs: Int
+    )
 
-    public fun animateToWithBearing(target: GeoPoint, bearing: Float, zoom: Float, durationMs: Int)
+    public fun animateToWithBearing(
+        target: GeoPoint,
+        bearing: Float,
+        zoom: Float,
+        durationMs: Int
+    )
 
     public fun fitBounds(
         points: List<GeoPoint>,
@@ -38,7 +50,12 @@ public interface IosMapRenderer {
 
     public fun setColorScheme(isDark: Boolean)
 
-    public fun setPaddingPt(leftPt: Float, topPt: Float, rightPt: Float, bottomPt: Float)
+    public fun setPaddingPt(
+        leftPt: Float,
+        topPt: Float,
+        rightPt: Float,
+        bottomPt: Float
+    )
 
     public fun setInteractionEnabled(enabled: Boolean)
 

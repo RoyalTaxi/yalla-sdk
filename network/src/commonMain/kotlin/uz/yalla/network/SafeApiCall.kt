@@ -24,56 +24,58 @@ private const val RETRY_BACKOFF_FACTOR = 2.0
 public suspend inline fun <reified T> safeApiCall(
     isIdempotent: Boolean = false,
     crossinline call: suspend () -> HttpResponse
-): Either<DataError.Network, T> = try {
-    val response = retryWithBackoff(isIdempotent = isIdempotent) { call() }
-    when (response.status.value) {
-        in 200..299 -> {
-            if (T::class == Unit::class) {
-                Either.Success(Unit as T)
-            } else {
-                Either.Success(response.body())
+): Either<DataError.Network, T> =
+    try {
+        val response = retryWithBackoff(isIdempotent = isIdempotent) { call() }
+        when (response.status.value) {
+            in 200..299 -> {
+                if (T::class == Unit::class) {
+                    Either.Success(Unit as T)
+                } else {
+                    Either.Success(response.body())
+                }
             }
-        }
 
-        in 300..399 -> Either.Failure(parseApiError(response) ?: DataError.Network.Client)
-        in 400..499 -> Either.Failure(parseApiError(response) ?: DataError.Network.Client)
-        in 500..599 -> Either.Failure(parseApiError(response) ?: DataError.Network.Server)
-        else -> Either.Failure(parseApiError(response) ?: DataError.Network.Unknown)
+            in 300..399 -> Either.Failure(parseApiError(response) ?: DataError.Network.Client)
+            in 400..499 -> Either.Failure(parseApiError(response) ?: DataError.Network.Client)
+            in 500..599 -> Either.Failure(parseApiError(response) ?: DataError.Network.Server)
+            else -> Either.Failure(parseApiError(response) ?: DataError.Network.Unknown)
+        }
+    } catch (_: ServerResponseException) {
+        Either.Failure(DataError.Network.Server)
+    } catch (_: ClientRequestException) {
+        Either.Failure(DataError.Network.Client)
+    } catch (_: RedirectResponseException) {
+        Either.Failure(DataError.Network.Client)
+    } catch (_: HttpRequestTimeoutException) {
+        Either.Failure(DataError.Network.Timeout)
+    } catch (_: SocketTimeoutException) {
+        Either.Failure(DataError.Network.Timeout)
+    } catch (_: IOException) {
+        Either.Failure(DataError.Network.Connection)
+    } catch (_: ContentConvertException) {
+        Either.Failure(DataError.Network.Serialization)
+    } catch (_: SerializationException) {
+        Either.Failure(DataError.Network.Serialization)
+    } catch (_: ResponseException) {
+        Either.Failure(DataError.Network.Unknown)
+    } catch (_: GuestBlockedException) {
+        Either.Failure(DataError.Network.Guest)
     }
-} catch (_: ServerResponseException) {
-    Either.Failure(DataError.Network.Server)
-} catch (_: ClientRequestException) {
-    Either.Failure(DataError.Network.Client)
-} catch (_: RedirectResponseException) {
-    Either.Failure(DataError.Network.Client)
-} catch (_: HttpRequestTimeoutException) {
-    Either.Failure(DataError.Network.Timeout)
-} catch (_: SocketTimeoutException) {
-    Either.Failure(DataError.Network.Timeout)
-} catch (_: IOException) {
-    Either.Failure(DataError.Network.Connection)
-} catch (_: ContentConvertException) {
-    Either.Failure(DataError.Network.Serialization)
-} catch (_: SerializationException) {
-    Either.Failure(DataError.Network.Serialization)
-} catch (_: ResponseException) {
-    Either.Failure(DataError.Network.Unknown)
-} catch (_: GuestBlockedException) {
-    Either.Failure(DataError.Network.Guest)
-}
 
 @PublishedApi
-internal suspend fun parseApiError(response: HttpResponse): DataError.Network.Api? = runCatching { response.body<ApiErrorEnvelope>() }
-    .getOrNull()
-    ?.takeIf { it.message != null || it.error != null }
-    ?.let { envelope ->
-        DataError.Network.Api(
-            code = envelope.code,
-            message = envelope.message,
-            errorCode = envelope.error?.errorCode,
-            retryAfter = envelope.error?.retryAfter
-        )
-    }
+internal suspend fun parseApiError(response: HttpResponse): DataError.Network.Api? =
+    runCatching { response.body<ApiErrorEnvelope>() }
+        .getOrNull()
+        ?.takeIf { it.message != null || it.error != null }
+        ?.let { envelope ->
+            DataError.Network.Api(
+                code = envelope.code,
+                message = envelope.message,
+                errorCode = envelope.error?.errorCode,
+                retryAfter = envelope.error?.retryAfter
+            )
+        }
 
 @PublishedApi
 internal suspend fun <T> retryWithBackoff(

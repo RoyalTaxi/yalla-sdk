@@ -50,30 +50,35 @@ public actual fun ContentSheet(
     val currentContent by rememberUpdatedState(content)
     val handleRef = remember { mutableStateOf<ContentSheetHandle?>(null) }
 
-    val handle = remember {
-        val rootController = ComposeUIViewController(configure = { opaque = false }) {
-            YallaTheme(isDark = rememberIsDarkTheme()) {
-                SheetBody(
+    val handle =
+        remember {
+            val rootController =
+                ComposeUIViewController(configure = { opaque = false }) {
+                    YallaTheme(isDark = rememberIsDarkTheme()) {
+                        SheetBody(
+                            fullHeight = fullHeight,
+                            padding =
+                                PaddingValues(
+                                    bottom = WindowInsets.safeDrawing.asPaddingValues().calculateBottomPadding()
+                                ),
+                            onContentHeightChanged = { height ->
+                                handleRef.value?.updateContentHeight(height.value.toDouble())
+                            },
+                            content = currentContent
+                        )
+                    }
+                }
+            requireConfig()
+                .sheet
+                .createContent(
                     fullHeight = fullHeight,
-                    padding = PaddingValues(
-                        bottom = WindowInsets.safeDrawing.asPaddingValues().calculateBottomPadding()
-                    ),
-                    onContentHeightChanged = { height ->
-                        handleRef.value?.updateContentHeight(height.value.toDouble())
-                    },
-                    content = currentContent
-                )
-            }
+                    sheetSwipeEnabled = sheetSwipeEnabled,
+                    title = title,
+                    showClose = onClose != null,
+                    contentController = rootController,
+                    onDismissRequest = { currentOnDismissRequest() }
+                ).also { handleRef.value = it }
         }
-        requireConfig().sheet.createContent(
-            fullHeight = fullHeight,
-            sheetSwipeEnabled = sheetSwipeEnabled,
-            title = title,
-            showClose = onClose != null,
-            contentController = rootController,
-            onDismissRequest = { currentOnDismissRequest() }
-        ).also { handleRef.value = it }
-    }
 
     PresentationLifecycle(handle = handle, isVisible = isVisible, onFullyExpanded = onFullyExpanded)
 }
@@ -89,17 +94,18 @@ internal fun SheetBody(
     val density = LocalDensity.current
     val safeAreaBottom = WindowInsets.safeDrawing.asPaddingValues().calculateBottomPadding()
 
-    val outerModifier = if (fullHeight) {
-        Modifier.fillMaxSize()
-    } else {
-        Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(align = Alignment.Top, unbounded = true)
-            .onSizeChanged {
-                val raw = with(density) { it.height.toDp() }
-                onContentHeightChanged((raw - safeAreaBottom).coerceAtLeast(0.dp))
-            }
-    }
+    val outerModifier =
+        if (fullHeight) {
+            Modifier.fillMaxSize()
+        } else {
+            Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(align = Alignment.Top, unbounded = true)
+                .onSizeChanged {
+                    val raw = with(density) { it.height.toDp() }
+                    onContentHeightChanged((raw - safeAreaBottom).coerceAtLeast(0.dp))
+                }
+        }
 
     Box(modifier = outerModifier) {
         content(padding)

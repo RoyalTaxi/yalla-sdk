@@ -46,11 +46,12 @@ public fun DockedExpandableSheet(
     val statusBarTopPx = WindowInsets.statusBars.getTop(density)
     val draggableState = state.anchoredDraggableState
 
-    val flingBehavior = AnchoredDraggableDefaults.flingBehavior(
-        state = draggableState,
-        positionalThreshold = state.positionalThreshold,
-        animationSpec = state.snapAnimationSpec
-    )
+    val flingBehavior =
+        AnchoredDraggableDefaults.flingBehavior(
+            state = draggableState,
+            positionalThreshold = state.positionalThreshold,
+            animationSpec = state.snapAnimationSpec
+        )
 
     val currentOnPaddingChanged by rememberUpdatedState(onPaddingChanged)
     LaunchedEffect(statusBarTopPx) {
@@ -73,39 +74,43 @@ public fun DockedExpandableSheet(
         Card(
             shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
             colors = CardDefaults.cardColors(containerColor = System.color.background.base),
-            modifier = Modifier.anchoredDraggable(
-                state = draggableState,
-                orientation = Orientation.Vertical,
-                flingBehavior = flingBehavior
-            )
+            modifier =
+                Modifier.anchoredDraggable(
+                    state = draggableState,
+                    orientation = Orientation.Vertical,
+                    flingBehavior = flingBehavior
+                )
         ) {
             SubcomposeLayout { constraints ->
                 val looseConstraints = constraints.loosen()
 
-                val footerPlaceable = footer?.let {
-                    subcomposeMeasured(
-                        slotId = "footer",
-                        constraints = looseConstraints,
-                        content = { Box(Modifier.fillMaxWidth()) { it() } }
-                    )
-                }
+                val footerPlaceable =
+                    footer?.let {
+                        subcomposeMeasured(
+                            slotId = "footer",
+                            constraints = looseConstraints,
+                            content = { Box(Modifier.fillMaxWidth()) { it() } }
+                        )
+                    }
                 val footerHeightPx = footerPlaceable?.height ?: 0
 
                 val maxExpandedHeightPx = constraints.maxHeight - statusBarTopPx - footerHeightPx
 
-                val collapsedPlaceable = subcomposeMeasured(
-                    slotId = "collapsed",
-                    constraints = looseConstraints,
-                    content = { Box(Modifier.fillMaxWidth()) { collapsedContent() } }
-                )
+                val collapsedPlaceable =
+                    subcomposeMeasured(
+                        slotId = "collapsed",
+                        constraints = looseConstraints,
+                        content = { Box(Modifier.fillMaxWidth()) { collapsedContent() } }
+                    )
 
                 val expandedConstraints = looseConstraints.copy(maxHeight = maxExpandedHeightPx.coerceAtLeast(0))
 
-                val expandedPlaceable = subcomposeMeasured(
-                    slotId = "expanded",
-                    constraints = expandedConstraints,
-                    content = { Box(Modifier.fillMaxWidth()) { expandedContent() } }
-                )
+                val expandedPlaceable =
+                    subcomposeMeasured(
+                        slotId = "expanded",
+                        constraints = expandedConstraints,
+                        content = { Box(Modifier.fillMaxWidth()) { expandedContent() } }
+                    )
 
                 state.updateHeights(
                     collapsedHeightPx = collapsedPlaceable.height,
@@ -159,16 +164,18 @@ private fun SubcomposeMeasureScope.subcomposeMeasuredWithAlpha(
     contentHeightPx: Int,
     alpha: Float,
     content: @Composable () -> Unit
-): Placeable? = if (alpha <= 0f) {
-    null
-} else {
-    subcompose(slotId) {
-        Box(
-            content = { content() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(contentHeight)
-                .graphicsLayer { this.alpha = alpha }
-        )
-    }.first().measure(Constraints.fixed(width, contentHeightPx))
-}
+): Placeable? =
+    if (alpha <= 0f) {
+        null
+    } else {
+        subcompose(slotId) {
+            Box(
+                content = { content() },
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .height(contentHeight)
+                        .graphicsLayer { this.alpha = alpha }
+            )
+        }.first().measure(Constraints.fixed(width, contentHeightPx))
+    }

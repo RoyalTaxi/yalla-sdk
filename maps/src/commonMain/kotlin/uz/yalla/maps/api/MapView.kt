@@ -31,18 +31,20 @@ public fun rememberMapController(
 ): MapController {
     val config = remember { YallaMaps.current() }
     val factory = remember { config.factory }
-    val kindFlow = remember(overrideKind) {
-        if (overrideKind != null) kotlinx.coroutines.flow.flowOf(overrideKind) else config.mapKindPreference
-    }
+    val kindFlow =
+        remember(overrideKind) {
+            if (overrideKind != null) kotlinx.coroutines.flow.flowOf(overrideKind) else config.mapKindPreference
+        }
     val themeFlow = remember { config.themePreference }
     val kind by kindFlow.collectAsState(initial = MapKind.Google)
     val theme by themeFlow.collectAsState(initial = ThemeKind.System)
     val systemDark = isSystemInDarkTheme()
-    val isDark = when (theme) {
-        ThemeKind.Light -> false
-        ThemeKind.Dark -> true
-        ThemeKind.System -> systemDark
-    }
+    val isDark =
+        when (theme) {
+            ThemeKind.Light -> false
+            ThemeKind.Dark -> true
+            ThemeKind.System -> systemDark
+        }
 
     val switching = remember { SwitchingMapController(factory, initialPosition) }
 
@@ -88,9 +90,12 @@ public fun MapView(
         if (ready && onReady != null) onReady()
     }
 
-    val hosted: MapController? = if (controller is SwitchingMapController) {
-        controller.activeBackend.collectAsState().value
-    } else controller
+    val hosted: MapController? =
+        if (controller is SwitchingMapController) {
+            controller.activeBackend.collectAsState().value
+        } else {
+            controller
+        }
 
     if (hosted != null) {
         key(hosted) {
@@ -121,21 +126,26 @@ public fun StaticMapView(
         )
 
         Box(
-            modifier = Modifier
-                .matchParentSize()
-                .pointerInput(Unit) {
-                    awaitPointerEventScope {
-                        while (true) {
-                            awaitPointerEvent().changes.forEach { it.consume() }
+            modifier =
+                Modifier
+                    .matchParentSize()
+                    .pointerInput(Unit) {
+                        awaitPointerEventScope {
+                            while (true) {
+                                awaitPointerEvent().changes.forEach { it.consume() }
+                            }
                         }
                     }
-                }
         )
     }
     val ready by controller.isReady.collectAsState()
     LaunchedEffect(ready, points, routes, contentPadding) {
         if (!ready) return@LaunchedEffect
-        val framed = (points + routes.flatMap { it.points }).filterNot { it == GeoPoint.Zero }.distinctBy { it.lat to it.lng }
+        val framed =
+            (points + routes.flatMap { it.points }).filterNot { it == GeoPoint.Zero }.distinctBy {
+                it.lat to
+                    it.lng
+            }
         when {
             framed.size > 1 -> controller.fitBounds(framed, animate = false, padding = contentPadding)
             framed.size == 1 -> controller.moveTo(framed.first(), MapConstants.DEFAULT_ZOOM.toFloat())

@@ -1,6 +1,5 @@
 package uz.yalla.components.composites.item
 
-import androidx.compose.runtime.Immutable
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,6 +13,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -75,37 +75,40 @@ public object SearchableItemDefaults {
         badgeColor: Color = System.color.text.subtle,
         iconColor: Color = Color.Unspecified,
         iconBackgroundColor: Color = Color.Transparent
-    ): SearchableItemColors = SearchableItemColors(
-        titleColor = titleColor,
-        descriptionColor = descriptionColor,
-        badgeColor = badgeColor,
-        iconColor = iconColor,
-        iconBackgroundColor = iconBackgroundColor
-    )
+    ): SearchableItemColors =
+        SearchableItemColors(
+            titleColor = titleColor,
+            descriptionColor = descriptionColor,
+            badgeColor = badgeColor,
+            iconColor = iconColor,
+            iconBackgroundColor = iconBackgroundColor
+        )
 
     @Composable
     public fun dimens(
         contentSpacing: Dp = 16.dp,
         contentInlineSpacing: Dp = 8.dp,
         titleBadgeSpacing: Dp = 12.dp,
-        contentPadding: PaddingValues = PaddingValues(
-            start = 20.dp,
-            top = 10.dp,
-            end = 30.dp,
-            bottom = 10.dp
-        ),
+        contentPadding: PaddingValues =
+            PaddingValues(
+                start = 20.dp,
+                top = 10.dp,
+                end = 30.dp,
+                bottom = 10.dp
+            ),
         iconSize: Dp = 44.dp,
         iconContainerSize: Dp = 44.dp,
         iconContainerShape: Shape = RectangleShape
-    ): SearchableItemDimens = SearchableItemDimens(
-        contentSpacing = contentSpacing,
-        contentInlineSpacing = contentInlineSpacing,
-        titleBadgeSpacing = titleBadgeSpacing,
-        contentPadding = contentPadding,
-        iconSize = iconSize,
-        iconContainerSize = iconContainerSize,
-        iconContainerShape = iconContainerShape
-    )
+    ): SearchableItemDimens =
+        SearchableItemDimens(
+            contentSpacing = contentSpacing,
+            contentInlineSpacing = contentInlineSpacing,
+            titleBadgeSpacing = titleBadgeSpacing,
+            contentPadding = contentPadding,
+            iconSize = iconSize,
+            iconContainerSize = iconContainerSize,
+            iconContainerShape = iconContainerShape
+        )
 
     @Composable
     public fun styles(
@@ -113,12 +116,13 @@ public object SearchableItemDefaults {
         descriptionStyle: TextStyle = System.font.body.small.medium,
         badgeStyle: TextStyle = System.font.body.small.medium,
         descriptionMaxLines: Int = 2
-    ): SearchableItemStyles = SearchableItemStyles(
-        titleStyle = titleStyle,
-        descriptionStyle = descriptionStyle,
-        badgeStyle = badgeStyle,
-        descriptionMaxLines = descriptionMaxLines
-    )
+    ): SearchableItemStyles =
+        SearchableItemStyles(
+            titleStyle = titleStyle,
+            descriptionStyle = descriptionStyle,
+            badgeStyle = badgeStyle,
+            descriptionMaxLines = descriptionMaxLines
+        )
 }
 
 @Composable
@@ -147,9 +151,10 @@ public fun SearchableItem(
             leadingPainter?.let { painter ->
                 Box(
                     contentAlignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(dimens.iconContainerSize)
-                        .background(colors.iconBackgroundColor, dimens.iconContainerShape)
+                    modifier =
+                        Modifier
+                            .size(dimens.iconContainerSize)
+                            .background(colors.iconBackgroundColor, dimens.iconContainerShape)
                 ) {
                     if (colors.iconColor == Color.Unspecified) {
                         Image(
@@ -209,33 +214,36 @@ public fun SearchableItem(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.background(System.color.background.base)
-    ) {
-        SearchableItem(
-            title = "Andijan region",
-            description = "Place for youth affeice and growth under ministory of Information Technology and something something something",
-            badge = "10 km",
-            leadingPainter = rememberVectorPainter(YallaIcons.FocusLocation),
-            onClick = {}
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(4.dp),
+            modifier = Modifier.background(System.color.background.base)
+        ) {
+            SearchableItem(
+                title = "Andijan region",
+                description =
+                    "Place for youth affeice and growth under ministory of " +
+                        "Information Technology and something something something",
+                badge = "10 km",
+                leadingPainter = rememberVectorPainter(YallaIcons.FocusLocation),
+                onClick = {}
+            )
 
-        SearchableItem(
-            title = "Andijan region",
-            description = "Launch Bar",
-            badge = "10 km",
-            leadingPainter = rememberVectorPainter(YallaIcons.FocusLocation),
-            onClick = {}
-        )
+            SearchableItem(
+                title = "Andijan region",
+                description = "Launch Bar",
+                badge = "10 km",
+                leadingPainter = rememberVectorPainter(YallaIcons.FocusLocation),
+                onClick = {}
+            )
 
-        SearchableItem(
-            title = "Andijan region, Andijan region, Andijan region, Andijan region",
-            description = "Launch Bar",
-            badge = "10 km",
-            leadingPainter = rememberVectorPainter(YallaIcons.FocusLocation),
-            onClick = {}
-        )
+            SearchableItem(
+                title = "Andijan region, Andijan region, Andijan region, Andijan region",
+                description = "Launch Bar",
+                badge = "10 km",
+                leadingPainter = rememberVectorPainter(YallaIcons.FocusLocation),
+                onClick = {}
+            )
+        }
     }
-}

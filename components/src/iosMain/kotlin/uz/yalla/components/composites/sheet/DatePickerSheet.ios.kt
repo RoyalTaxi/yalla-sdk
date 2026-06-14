@@ -25,17 +25,18 @@ public actual fun DatePickerSheet(
     val currentOnSelect by rememberUpdatedState(onSelect)
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
 
-    val handle = remember(startDate, minDate, maxDate, title, dismissEnabled) {
-        requireConfig().sheet.createDatePicker(
-            startDate = startDate.toNSDate(),
-            minDate = minDate?.toNSDate(),
-            maxDate = maxDate?.toNSDate(),
-            title = title,
-            dismissEnabled = dismissEnabled,
-            onSelect = { currentOnSelect(it.toLocalDate()) },
-            onDismissRequest = { currentOnDismissRequest() }
-        )
-    }
+    val handle =
+        remember(startDate, minDate, maxDate, title, dismissEnabled) {
+            requireConfig().sheet.createDatePicker(
+                startDate = startDate.toNSDate(),
+                minDate = minDate?.toNSDate(),
+                maxDate = maxDate?.toNSDate(),
+                title = title,
+                dismissEnabled = dismissEnabled,
+                onSelect = { currentOnSelect(it.toLocalDate()) },
+                onDismissRequest = { currentOnDismissRequest() }
+            )
+        }
 
     DisposableEffect(isVisible) {
         if (!isVisible) {

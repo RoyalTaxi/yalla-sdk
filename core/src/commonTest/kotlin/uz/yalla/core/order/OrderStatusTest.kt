@@ -13,7 +13,6 @@ import kotlin.test.assertTrue
  * either silently, so every branch — and the input normalization around it — is pinned here.
  */
 class OrderStatusTest {
-
     @Test
     fun from_decodesEveryKnownId() {
         assertEquals(OrderStatus.New, OrderStatus.from("new"))

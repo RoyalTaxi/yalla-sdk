@@ -28,10 +28,11 @@ public fun TextButton(
             text = text,
             color = contentColor,
             style = System.font.body.caption,
-            modifier = Modifier.padding(
-                vertical = 10.dp,
-                horizontal = 20.dp
-            )
+            modifier =
+                Modifier.padding(
+                    vertical = 10.dp,
+                    horizontal = 20.dp
+                )
         )
     }
 }

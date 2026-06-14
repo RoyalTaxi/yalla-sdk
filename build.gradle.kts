@@ -9,6 +9,12 @@ plugins {
     alias(libs.plugins.android.multiplatform.library) apply false
     alias(libs.plugins.dokka)
     alias(libs.plugins.binary.compatibility.validator)
+    // G4 — static-analysis gate. The detekt + ktlint markers are declared here
+    // `apply false` so they land on the build classpath; the quality convention
+    // plugin then applies and configures them across the root + every module.
+    alias(libs.plugins.detekt) apply false
+    alias(libs.plugins.ktlint) apply false
+    id("yalla.sdk.quality")
 }
 
 // G3 — public ABI gate. `apiCheck` (wired into CI) fails the build when a change

@@ -13,7 +13,6 @@ import kotlin.test.assertEquals
  * falls back to Cash. Anything other than the normalized "card" id is Cash.
  */
 class PaymentMethodTest {
-
     @Test
     fun anyNonCardIdDecodesToCash() {
         assertEquals(PaymentMethod.Cash, PaymentMethod.from("cash"))

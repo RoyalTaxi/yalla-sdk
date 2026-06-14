@@ -32,26 +32,29 @@ public data class SpaceScheme(
     )
 }
 
-public fun standardSpaceScheme(): SpaceScheme = SpaceScheme(
-    screenEdge = 20.dp,
-    sheetEdge = 20.dp,
-    contentEdge = 16.dp,
-    itemGap = 12.dp,
-    sectionGap = 32.dp,
-    heroGap = 56.dp,
-    inlineGap = 8.dp,
-    scale = SpaceScheme.Scale(
-        xxs = 2.dp,
-        xs = 4.dp,
-        s = 8.dp,
-        m = 12.dp,
-        l = 16.dp,
-        xl = 20.dp,
-        xxl = 24.dp,
-        huge = 32.dp,
-        section = 40.dp,
-        massive = 56.dp
+public fun standardSpaceScheme(): SpaceScheme =
+    SpaceScheme(
+        screenEdge = 20.dp,
+        sheetEdge = 20.dp,
+        contentEdge = 16.dp,
+        itemGap = 12.dp,
+        sectionGap = 32.dp,
+        heroGap = 56.dp,
+        inlineGap = 8.dp,
+        scale =
+            SpaceScheme.Scale(
+                xxs = 2.dp,
+                xs = 4.dp,
+                s = 8.dp,
+                m = 12.dp,
+                l = 16.dp,
+                xl = 20.dp,
+                xxl = 24.dp,
+                huge = 32.dp,
+                section = 40.dp,
+                massive = 56.dp
+            )
     )
-)
 
-public val LocalSpaceScheme: ProvidableCompositionLocal<SpaceScheme> = staticCompositionLocalOf { standardSpaceScheme() }
+public val LocalSpaceScheme: ProvidableCompositionLocal<SpaceScheme> =
+    staticCompositionLocalOf { standardSpaceScheme() }

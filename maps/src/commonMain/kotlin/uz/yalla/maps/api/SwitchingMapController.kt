@@ -34,7 +34,6 @@ public class SwitchingMapController internal constructor(
     private val factory: MapFactory,
     private val initialPosition: CameraPosition? = null
 ) : MapController {
-
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     private val active = MutableStateFlow<MapController?>(null)
@@ -50,7 +49,8 @@ public class SwitchingMapController internal constructor(
     private val _isReady = MutableStateFlow(false)
     override val isReady: StateFlow<Boolean> = _isReady
 
-    private val _events = MutableSharedFlow<MapEvent>(replay = 0, extraBufferCapacity = 16, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val _events =
+        MutableSharedFlow<MapEvent>(replay = 0, extraBufferCapacity = 16, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     override val events: SharedFlow<MapEvent> = _events.asSharedFlow()
 
     private var pendingPadding: PaddingValues = PaddingValues()
@@ -74,10 +74,11 @@ public class SwitchingMapController internal constructor(
         if (currentKind == kind && active.value != null) return
         val previous = active.value
         val snapshot = previous?.snapshotScene()
-        val next = when (kind) {
-            MapKind.Google -> factory.createGoogleController()
-            MapKind.Libre -> factory.createLibreController()
-        }
+        val next =
+            when (kind) {
+                MapKind.Google -> factory.createGoogleController()
+                MapKind.Libre -> factory.createLibreController()
+            }
         currentKind = kind
         val seedSource = snapshot?.cameraPosition ?: _cameraPosition.value
         wireObservers(next)
@@ -94,13 +95,20 @@ public class SwitchingMapController internal constructor(
                 next.setInteractionEnabled(interactionEnabled)
                 next.setUserLocationEnabled(userLocationEnabled)
                 next.setUserLocation(userLocation)
-                if (!cameraCommanded && seedSource.target != GeoPoint.Zero) next.moveTo(seedSource.target, seedSource.zoom)
+                if (!cameraCommanded &&
+                    seedSource.target != GeoPoint.Zero
+                ) {
+                    next.moveTo(seedSource.target, seedSource.zoom)
+                }
             }
         }
         previous?.close()
     }
 
-    internal suspend fun applyStyle(style: MapStyle, isDark: Boolean) {
+    internal suspend fun applyStyle(
+        style: MapStyle,
+        isDark: Boolean
+    ) {
         currentStyle = style
         currentIsDark = isDark
         active.value?.setStyle(style, isDark)
@@ -110,27 +118,41 @@ public class SwitchingMapController internal constructor(
         observerJobs.forEach { it.cancel() }
         var cameraSeeded = false
         var centerPinSeeded = false
-        observerJobs = listOf(
-            controller.cameraPosition.onEach {
-                if (!cameraSeeded) {
-                    cameraSeeded = true
-                    if (it == CameraPosition.DEFAULT && _cameraPosition.value != CameraPosition.DEFAULT) return@onEach
-                }
-                _cameraPosition.value = it
-            }.launchIn(scope),
-            controller.centerPin.onEach {
-                if (!centerPinSeeded) {
-                    centerPinSeeded = true
-                    if (it == CenterPinState.INITIAL && _centerPin.value != CenterPinState.INITIAL) return@onEach
-                }
-                _centerPin.value = it
-            }.launchIn(scope),
-            controller.isReady.onEach { _isReady.value = it }.launchIn(scope),
-            controller.events.onEach { _events.emit(it) }.launchIn(scope)
-        )
+        observerJobs =
+            listOf(
+                controller.cameraPosition
+                    .onEach {
+                        if (!cameraSeeded) {
+                            cameraSeeded = true
+                            if (it == CameraPosition.DEFAULT &&
+                                _cameraPosition.value != CameraPosition.DEFAULT
+                            ) {
+                                return@onEach
+                            }
+                        }
+                        _cameraPosition.value = it
+                    }.launchIn(scope),
+                controller.centerPin
+                    .onEach {
+                        if (!centerPinSeeded) {
+                            centerPinSeeded = true
+                            if (it == CenterPinState.INITIAL &&
+                                _centerPin.value != CenterPinState.INITIAL
+                            ) {
+                                return@onEach
+                            }
+                        }
+                        _centerPin.value = it
+                    }.launchIn(scope),
+                controller.isReady.onEach { _isReady.value = it }.launchIn(scope),
+                controller.events.onEach { _events.emit(it) }.launchIn(scope)
+            )
     }
 
-    private suspend fun applySnapshot(controller: MapController, snapshot: MapController.SceneSnapshot) {
+    private suspend fun applySnapshot(
+        controller: MapController,
+        snapshot: MapController.SceneSnapshot
+    ) {
         withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { controller.isReady.first { it } }
         controller.setDesiredPadding(snapshot.padding)
         controller.setMarkers(snapshot.markers)
@@ -144,33 +166,58 @@ public class SwitchingMapController internal constructor(
         snapshot.lockedTarget?.let { controller.lockTarget(it, snapshot.lockedZoom) }
     }
 
-    override suspend fun moveTo(point: GeoPoint, zoom: Float) {
+    override suspend fun moveTo(
+        point: GeoPoint,
+        zoom: Float
+    ) {
         cameraCommanded = true
         active.value?.moveTo(point, zoom)
     }
 
-    override suspend fun animateTo(point: GeoPoint, zoom: Float, durationMs: Int) {
+    override suspend fun animateTo(
+        point: GeoPoint,
+        zoom: Float,
+        durationMs: Int
+    ) {
         cameraCommanded = true
         active.value?.animateTo(point, zoom, durationMs)
     }
 
-    override suspend fun animateToWithBearing(point: GeoPoint, bearing: Float, zoom: Float, durationMs: Int) {
+    override suspend fun animateToWithBearing(
+        point: GeoPoint,
+        bearing: Float,
+        zoom: Float,
+        durationMs: Int
+    ) {
         cameraCommanded = true
         active.value?.animateToWithBearing(point, bearing, zoom, durationMs)
     }
 
-    override suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean, padding: PaddingValues?) {
+    override suspend fun fitBounds(
+        points: List<GeoPoint>,
+        animate: Boolean,
+        padding: PaddingValues?
+    ) {
         cameraCommanded = true
         active.value?.fitBounds(points, animate, padding)
     }
 
-    override suspend fun zoomIn() { active.value?.zoomIn() }
+    override suspend fun zoomIn() {
+        active.value?.zoomIn()
+    }
 
-    override suspend fun zoomOut() { active.value?.zoomOut() }
+    override suspend fun zoomOut() {
+        active.value?.zoomOut()
+    }
 
-    override suspend fun setZoom(zoom: Float) { active.value?.setZoom(zoom) }
+    override suspend fun setZoom(zoom: Float) {
+        active.value?.setZoom(zoom)
+    }
 
-    override suspend fun setStyle(style: MapStyle, isDark: Boolean) {
+    override suspend fun setStyle(
+        style: MapStyle,
+        isDark: Boolean
+    ) {
         currentStyle = style
         currentIsDark = isDark
         active.value?.setStyle(style, isDark)
@@ -211,7 +258,10 @@ public class SwitchingMapController internal constructor(
         active.value?.setUserLocationEnabled(enabled)
     }
 
-    override fun lockTarget(point: GeoPoint, zoom: Float?) {
+    override fun lockTarget(
+        point: GeoPoint,
+        zoom: Float?
+    ) {
         lockedTarget = point
         lockedZoom = zoom
         active.value?.lockTarget(point, zoom)
@@ -223,16 +273,17 @@ public class SwitchingMapController internal constructor(
         active.value?.unlockTarget()
     }
 
-    override fun snapshotScene(): MapController.SceneSnapshot = active.value?.snapshotScene()
-        ?: MapController.SceneSnapshot(
-            cameraPosition = _cameraPosition.value,
-            markers = pendingMarkers,
-            routes = pendingRoutes,
-            circles = pendingCircles,
-            padding = pendingPadding,
-            lockedTarget = lockedTarget,
-            lockedZoom = lockedZoom
-        )
+    override fun snapshotScene(): MapController.SceneSnapshot =
+        active.value?.snapshotScene()
+            ?: MapController.SceneSnapshot(
+                cameraPosition = _cameraPosition.value,
+                markers = pendingMarkers,
+                routes = pendingRoutes,
+                circles = pendingCircles,
+                padding = pendingPadding,
+                lockedTarget = lockedTarget,
+                lockedZoom = lockedZoom
+            )
 
     override fun close() {
         observerJobs.forEach { it.cancel() }

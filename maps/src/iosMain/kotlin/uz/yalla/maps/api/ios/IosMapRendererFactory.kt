@@ -9,10 +9,11 @@ public interface IosMapRendererFactory {
     public fun createLibreRenderer(): IosMapRenderer
 }
 
-public fun iosMapFactoryOf(rendererFactory: IosMapRendererFactory): MapFactory = object : MapFactory {
-    override fun createGoogleController(): MapController =
-        IosMapControllerWrapper(rendererFactory.createGoogleRenderer())
+public fun iosMapFactoryOf(rendererFactory: IosMapRendererFactory): MapFactory =
+    object : MapFactory {
+        override fun createGoogleController(): MapController =
+            IosMapControllerWrapper(rendererFactory.createGoogleRenderer())
 
-    override fun createLibreController(): MapController =
-        IosMapControllerWrapper(rendererFactory.createLibreRenderer())
-}
+        override fun createLibreController(): MapController =
+            IosMapControllerWrapper(rendererFactory.createLibreRenderer())
+    }

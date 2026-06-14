@@ -43,9 +43,10 @@ public fun UserCard(
             painter = painter,
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .clip(CircleShape)
-                .size(80.dp)
+            modifier =
+                Modifier
+                    .clip(CircleShape)
+                    .size(80.dp)
         )
 
         Spacer(modifier = Modifier.height(10.dp))
@@ -76,46 +77,49 @@ public fun UserCard(
     lastName: String,
     number: String,
     modifier: Modifier = Modifier
-): Unit = UserCard(
-    painter = rememberAsyncImagePainter(
-        model = imageUrl,
-        placeholder = painterResource(Res.drawable.img_avatar_placeholder),
-        error = painterResource(Res.drawable.img_avatar_placeholder),
-        fallback = painterResource(Res.drawable.img_avatar_placeholder)
-    ),
-    firstName = firstName,
-    lastName = lastName,
-    number = number,
-    modifier = modifier
-)
+): Unit =
+    UserCard(
+        painter =
+            rememberAsyncImagePainter(
+                model = imageUrl,
+                placeholder = painterResource(Res.drawable.img_avatar_placeholder),
+                error = painterResource(Res.drawable.img_avatar_placeholder),
+                fallback = painterResource(Res.drawable.img_avatar_placeholder)
+            ),
+        firstName = firstName,
+        lastName = lastName,
+        number = number,
+        modifier = modifier
+    )
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        UserCard(
-            painter = painterResource(Res.drawable.img_avatar_placeholder),
-            firstName = "Islom",
-            lastName = "Sheraliyev",
-            number = "+998 90 123 45 67"
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            UserCard(
+                painter = painterResource(Res.drawable.img_avatar_placeholder),
+                firstName = "Islom",
+                lastName = "Sheraliyev",
+                number = "+998 90 123 45 67"
+            )
 
-        UserCard(
-            painter = painterResource(Res.drawable.img_avatar_placeholder),
-            firstName = "Ekaterina",
-            lastName = "Konstantinopolskaya",
-            number = "+998 90 987 65 43"
-        )
+            UserCard(
+                painter = painterResource(Res.drawable.img_avatar_placeholder),
+                firstName = "Ekaterina",
+                lastName = "Konstantinopolskaya",
+                number = "+998 90 987 65 43"
+            )
 
-        UserCard(
-            painter = painterResource(Res.drawable.img_avatar_placeholder),
-            firstName = "Ali",
-            lastName = "Vali",
-            number = "+1 415 555 0123 4567 8901"
-        )
+            UserCard(
+                painter = painterResource(Res.drawable.img_avatar_placeholder),
+                firstName = "Ali",
+                lastName = "Vali",
+                number = "+1 415 555 0123 4567 8901"
+            )
+        }
     }
-}

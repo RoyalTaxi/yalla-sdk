@@ -71,14 +71,15 @@ public object AddressCardDefaults {
         placeholderColor: Color = System.color.text.subtle,
         trailingContainerColor: Color = System.color.background.secondary,
         trailingIconColor: Color = System.color.icon.base
-    ): AddressCardColors = AddressCardColors(
-        borderColor = borderColor,
-        containerColor = containerColor,
-        textColor = textColor,
-        placeholderColor = placeholderColor,
-        trailingContainerColor = trailingContainerColor,
-        trailingIconColor = trailingIconColor
-    )
+    ): AddressCardColors =
+        AddressCardColors(
+            borderColor = borderColor,
+            containerColor = containerColor,
+            textColor = textColor,
+            placeholderColor = placeholderColor,
+            trailingContainerColor = trailingContainerColor,
+            trailingIconColor = trailingIconColor
+        )
 
     @Composable
     public fun dimens(
@@ -90,23 +91,23 @@ public object AddressCardDefaults {
         trailingButtonSize: Dp = 40.dp,
         trailingButtonShape: Shape = RoundedCornerShape(10.dp),
         trailingIconSize: Dp = 20.dp
-    ): AddressCardDimens = AddressCardDimens(
-        shape = shape,
-        borderWidth = borderWidth,
-        contentPadding = contentPadding,
-        contentSpacing = contentSpacing,
-        leadingIconSize = leadingIconSize,
-        trailingButtonSize = trailingButtonSize,
-        trailingButtonShape = trailingButtonShape,
-        trailingIconSize = trailingIconSize
-    )
+    ): AddressCardDimens =
+        AddressCardDimens(
+            shape = shape,
+            borderWidth = borderWidth,
+            contentPadding = contentPadding,
+            contentSpacing = contentSpacing,
+            leadingIconSize = leadingIconSize,
+            trailingButtonSize = trailingButtonSize,
+            trailingButtonShape = trailingButtonShape,
+            trailingIconSize = trailingIconSize
+        )
 
     @Composable
-    public fun styles(
-        textStyle: TextStyle = System.font.body.base.medium
-    ): AddressCardStyles = AddressCardStyles(
-        textStyle = textStyle
-    )
+    public fun styles(textStyle: TextStyle = System.font.body.base.medium): AddressCardStyles =
+        AddressCardStyles(
+            textStyle = textStyle
+        )
 }
 
 @Composable
@@ -132,9 +133,10 @@ public fun AddressCard(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(dimens.contentPadding)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(dimens.contentPadding)
         ) {
             Image(
                 painter = leadingPainter,
@@ -175,41 +177,43 @@ public fun AddressCard(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = Modifier
-            .background(System.color.background.base)
-            .padding(16.dp)
-    ) {
-        AddressCard(
-            value = null,
-            placeholder = "Enter address",
-            leadingPainter = rememberVectorPainter(YallaIcons.Origin),
-            trailingPainter = rememberVectorPainter(YallaIcons.Location),
-            onClick = {},
-            onTrailingClick = {},
-            modifier = Modifier.fillMaxWidth()
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier =
+                Modifier
+                    .background(System.color.background.base)
+                    .padding(16.dp)
+        ) {
+            AddressCard(
+                value = null,
+                placeholder = "Enter address",
+                leadingPainter = rememberVectorPainter(YallaIcons.Origin),
+                trailingPainter = rememberVectorPainter(YallaIcons.Location),
+                onClick = {},
+                onTrailingClick = {},
+                modifier = Modifier.fillMaxWidth()
+            )
 
-        AddressCard(
-            value = "Amir Temur 1, Tashkent",
-            placeholder = "Enter address",
-            leadingPainter = rememberVectorPainter(YallaIcons.Origin),
-            trailingPainter = rememberVectorPainter(YallaIcons.Location),
-            onClick = {},
-            onTrailingClick = {},
-            modifier = Modifier.fillMaxWidth()
-        )
+            AddressCard(
+                value = "Amir Temur 1, Tashkent",
+                placeholder = "Enter address",
+                leadingPainter = rememberVectorPainter(YallaIcons.Origin),
+                trailingPainter = rememberVectorPainter(YallaIcons.Location),
+                onClick = {},
+                onTrailingClick = {},
+                modifier = Modifier.fillMaxWidth()
+            )
 
-        AddressCard(
-            value = "Mustaqillik shoh ko'chasi 12-uy, 4-qavat, Yashnabod tumani, Toshkent shahri, 100000",
-            placeholder = "Enter address",
-            leadingPainter = rememberVectorPainter(YallaIcons.Origin),
-            trailingPainter = rememberVectorPainter(YallaIcons.Location),
-            onClick = {},
-            onTrailingClick = {},
-            modifier = Modifier.fillMaxWidth()
-        )
+            AddressCard(
+                value = "Mustaqillik shoh ko'chasi 12-uy, 4-qavat, Yashnabod tumani, Toshkent shahri, 100000",
+                placeholder = "Enter address",
+                leadingPainter = rememberVectorPainter(YallaIcons.Origin),
+                trailingPainter = rememberVectorPainter(YallaIcons.Location),
+                onClick = {},
+                onTrailingClick = {},
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
     }
-}

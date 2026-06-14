@@ -35,7 +35,10 @@ internal class SessionPreferencesImpl(
         scope.launch { dataStore.edit { it[PreferenceKeys.IS_GUEST_MODE] = value } }
     }
 
-    override val isDeviceRegistered: Flow<Boolean> = dataStore.data.map { it[PreferenceKeys.IS_DEVICE_REGISTERED].orFalse() }
+    override val isDeviceRegistered: Flow<Boolean> =
+        dataStore.data.map {
+            it[PreferenceKeys.IS_DEVICE_REGISTERED].orFalse()
+        }
 
     override fun setDeviceRegistered(value: Boolean) {
         staticPreferences.setDeviceRegistered(value)

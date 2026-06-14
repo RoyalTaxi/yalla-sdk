@@ -68,11 +68,12 @@ public object ActiveOrderCardDefaults {
         containerColor: Color = System.color.background.secondary,
         titleColor: Color = System.color.text.base,
         subtitleColor: Color = System.color.text.base
-    ): ActiveOrderCardColors = ActiveOrderCardColors(
-        containerColor = containerColor,
-        titleColor = titleColor,
-        subtitleColor = subtitleColor
-    )
+    ): ActiveOrderCardColors =
+        ActiveOrderCardColors(
+            containerColor = containerColor,
+            titleColor = titleColor,
+            subtitleColor = subtitleColor
+        )
 
     @Composable
     public fun dimens(
@@ -83,24 +84,26 @@ public object ActiveOrderCardDefaults {
         contentSpacing: Dp = 16.dp,
         carImageWidth: Dp = 64.dp,
         carImageHeight: Dp = 40.dp
-    ): ActiveOrderCardDimens = ActiveOrderCardDimens(
-        shape = shape,
-        contentPadding = contentPadding,
-        photoSize = photoSize,
-        photoShape = photoShape,
-        contentSpacing = contentSpacing,
-        carImageWidth = carImageWidth,
-        carImageHeight = carImageHeight
-    )
+    ): ActiveOrderCardDimens =
+        ActiveOrderCardDimens(
+            shape = shape,
+            contentPadding = contentPadding,
+            photoSize = photoSize,
+            photoShape = photoShape,
+            contentSpacing = contentSpacing,
+            carImageWidth = carImageWidth,
+            carImageHeight = carImageHeight
+        )
 
     @Composable
     public fun styles(
         titleStyle: TextStyle = System.font.body.large.bold,
         subtitleStyle: TextStyle = System.font.body.small.medium
-    ): ActiveOrderCardStyles = ActiveOrderCardStyles(
-        titleStyle = titleStyle,
-        subtitleStyle = subtitleStyle
-    )
+    ): ActiveOrderCardStyles =
+        ActiveOrderCardStyles(
+            titleStyle = titleStyle,
+            subtitleStyle = subtitleStyle
+        )
 }
 
 @Composable
@@ -123,9 +126,10 @@ public fun ActiveOrderCard(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(dimens.contentPadding)
-                .height(IntrinsicSize.Min)
+            modifier =
+                Modifier
+                    .padding(dimens.contentPadding)
+                    .height(IntrinsicSize.Min)
         ) {
             AsyncImage(
                 model = photoUrl,
@@ -134,18 +138,20 @@ public fun ActiveOrderCard(
                 placeholder = painterResource(Res.drawable.img_avatar_placeholder),
                 error = painterResource(Res.drawable.img_avatar_placeholder),
                 fallback = painterResource(Res.drawable.img_avatar_placeholder),
-                modifier = Modifier
-                    .size(dimens.photoSize)
-                    .clip(dimens.photoShape)
+                modifier =
+                    Modifier
+                        .size(dimens.photoSize)
+                        .clip(dimens.photoShape)
             )
 
             Spacer(modifier = Modifier.width(dimens.contentSpacing))
 
             Column(
                 verticalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .fillMaxHeight()
             ) {
                 Text(
                     text = driverName,
@@ -172,11 +178,12 @@ public fun ActiveOrderCard(
                     painter = painterResource(Res.drawable.img_car_economy),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .height(dimens.carImageHeight)
-                        .width(dimens.carImageWidth)
-                        .graphicsLayer { rotationY = 180f }
+                    modifier =
+                        Modifier
+                            .align(Alignment.BottomEnd)
+                            .height(dimens.carImageHeight)
+                            .width(dimens.carImageWidth)
+                            .graphicsLayer { rotationY = 180f }
                 )
             }
         }

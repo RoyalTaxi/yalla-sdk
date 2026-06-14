@@ -32,13 +32,13 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
-import kotlin.math.ceil
 import org.jetbrains.compose.resources.painterResource
 import uz.yalla.core.util.formatArgs
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_sensitive_background
+import kotlin.math.ceil
 
 @Immutable
 public data class SensitiveButtonColors(
@@ -62,26 +62,27 @@ public object SensitiveButtonDefaults {
     public fun colors(
         progressColor: Color = System.color.button.active,
         textColor: Color = System.color.text.white
-    ): SensitiveButtonColors = SensitiveButtonColors(
-        progressColor = progressColor,
-        textColor = textColor
-    )
+    ): SensitiveButtonColors =
+        SensitiveButtonColors(
+            progressColor = progressColor,
+            textColor = textColor
+        )
 
     @Composable
     public fun dimens(
         height: Dp = 60.dp,
         shape: Shape = RoundedCornerShape(16.dp)
-    ): SensitiveButtonDimens = SensitiveButtonDimens(
-        height = height,
-        shape = shape
-    )
+    ): SensitiveButtonDimens =
+        SensitiveButtonDimens(
+            height = height,
+            shape = shape
+        )
 
     @Composable
-    public fun styles(
-        textStyle: TextStyle = System.font.body.large.bold
-    ): SensitiveButtonStyles = SensitiveButtonStyles(
-        textStyle = textStyle
-    )
+    public fun styles(textStyle: TextStyle = System.font.body.large.bold): SensitiveButtonStyles =
+        SensitiveButtonStyles(
+            textStyle = textStyle
+        )
 }
 
 @Composable
@@ -107,10 +108,11 @@ public fun SensitiveButton(
             progress.snapTo(0f)
             progress.animateTo(
                 targetValue = 1f,
-                animationSpec = tween(
-                    durationMillis = countdownSeconds * 1000,
-                    easing = LinearEasing
-                )
+                animationSpec =
+                    tween(
+                        durationMillis = countdownSeconds * 1000,
+                        easing = LinearEasing
+                    )
             )
         }
     }
@@ -131,11 +133,12 @@ public fun SensitiveButton(
             )
 
             Box(
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .fillMaxHeight()
-                    .fillMaxWidth(progress.value)
-                    .background(colors.progressColor, dimens.shape)
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterStart)
+                        .fillMaxHeight()
+                        .fillMaxWidth(progress.value)
+                        .background(colors.progressColor, dimens.shape)
             )
 
             Text(
@@ -149,13 +152,15 @@ public fun SensitiveButton(
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    SensitiveButton(
-        onClick = { },
-        confirmText = "Yes, cancel my trip",
-        countdownText = "Yes, cancel my trip ({0})",
-        modifier = Modifier
-            .padding(16.dp)
-            .fillMaxWidth()
-    )
-}
+private fun Preview() =
+    YallaTheme {
+        SensitiveButton(
+            onClick = { },
+            confirmText = "Yes, cancel my trip",
+            countdownText = "Yes, cancel my trip ({0})",
+            modifier =
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+        )
+    }

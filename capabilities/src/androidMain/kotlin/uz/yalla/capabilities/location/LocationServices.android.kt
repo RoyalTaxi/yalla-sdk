@@ -15,8 +15,9 @@ public actual fun isLocationServicesEnabled(): Boolean {
 }
 
 public actual fun openLocationSettings() {
-    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
+    val intent =
+        Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
     appContext.startActivity(intent)
 }

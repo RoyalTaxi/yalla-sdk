@@ -26,24 +26,27 @@ public class SelectableItemController(
     private var selectedState by mutableStateOf(selected)
 
     @OptIn(ExperimentalComposeUiApi::class)
-    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
-        YallaTheme(isDark = rememberIsDarkTheme()) {
-            SelectableItem(
-                text = text,
-                selected = selectedState,
-                leadingPainter = icon?.asImageVector()?.let { rememberVectorPainter(it) },
-                onClick = onClick,
-                modifier = Modifier.fillMaxWidth(),
-                colors = SelectableItemDefaults.colors(
-                    iconColor = if (tintIcon) System.color.icon.base else Color.Unspecified,
-                    selectedIconColor = if (tintIcon) System.color.icon.base else Color.Unspecified
-                ),
-                dimens = SelectableItemDefaults.dimens(
-                    iconSize = if (tintIcon) 24.dp else 34.dp
+    public val viewController: UIViewController =
+        ComposeUIViewController(configure = { opaque = false }) {
+            YallaTheme(isDark = rememberIsDarkTheme()) {
+                SelectableItem(
+                    text = text,
+                    selected = selectedState,
+                    leadingPainter = icon?.asImageVector()?.let { rememberVectorPainter(it) },
+                    onClick = onClick,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors =
+                        SelectableItemDefaults.colors(
+                            iconColor = if (tintIcon) System.color.icon.base else Color.Unspecified,
+                            selectedIconColor = if (tintIcon) System.color.icon.base else Color.Unspecified
+                        ),
+                    dimens =
+                        SelectableItemDefaults.dimens(
+                            iconSize = if (tintIcon) 24.dp else 34.dp
+                        )
                 )
-            )
+            }
         }
-    }
 
     public fun setSelected(selected: Boolean) {
         selectedState = selected

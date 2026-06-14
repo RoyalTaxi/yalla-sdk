@@ -20,17 +20,19 @@ public actual fun rememberImagePickerLauncher(
 ): ImagePickerLauncher {
     val context = LocalContext.current
     val latestOnResult by rememberUpdatedState(onResult)
-    val selectionLimit = when (selectionMode) {
-        SelectionMode.Single -> 1
-        is SelectionMode.Multiple -> if (selectionMode.maxSelection == INFINITY) 0 else selectionMode.maxSelection
-    }
+    val selectionLimit =
+        when (selectionMode) {
+            SelectionMode.Single -> 1
+            is SelectionMode.Multiple -> if (selectionMode.maxSelection == INFINITY) 0 else selectionMode.maxSelection
+        }
     return remember {
         ImagePickerLauncher {
             requireMedia().factory.pickImages(selectionLimit) { uris ->
                 scope.launch(Dispatchers.IO) {
-                    val images = uris.mapNotNull { uri ->
-                        context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
-                    }
+                    val images =
+                        uris.mapNotNull { uri ->
+                            context.contentResolver.openInputStream(uri)?.use { it.readBytes() }
+                        }
                     withContext(Dispatchers.Main) { latestOnResult(images) }
                 }
             }

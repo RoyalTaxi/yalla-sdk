@@ -22,9 +22,10 @@ public actual fun rememberSystemCameraLauncher(
         SystemCameraLauncher {
             requireMedia().factory.captureImage { uri ->
                 scope.launch(Dispatchers.IO) {
-                    val bytes = uri?.let {
-                        context.contentResolver.openInputStream(it)?.use { stream -> stream.readBytes() }
-                    }
+                    val bytes =
+                        uri?.let {
+                            context.contentResolver.openInputStream(it)?.use { stream -> stream.readBytes() }
+                        }
                     withContext(Dispatchers.Main) { latestOnResult(bytes) }
                 }
             }

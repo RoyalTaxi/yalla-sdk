@@ -51,13 +51,14 @@ internal class UserPreferencesImpl(
         scope.launch { dataStore.edit { it[PreferenceKeys.BIRTHDAY] = value } }
     }
 
-    override val paymentMethod: Flow<PaymentMethod> = dataStore.data.map { prefs ->
-        PaymentMethod.from(
-            id = prefs[PreferenceKeys.PAYMENT_TYPE],
-            cardId = prefs[PreferenceKeys.CARD_ID]?.let { CardId(it) },
-            maskedNumber = prefs[PreferenceKeys.CARD_NUMBER]
-        )
-    }
+    override val paymentMethod: Flow<PaymentMethod> =
+        dataStore.data.map { prefs ->
+            PaymentMethod.from(
+                id = prefs[PreferenceKeys.PAYMENT_TYPE],
+                cardId = prefs[PreferenceKeys.CARD_ID]?.let { CardId(it) },
+                maskedNumber = prefs[PreferenceKeys.CARD_NUMBER]
+            )
+        }
 
     override fun setPaymentMethod(value: PaymentMethod) {
         scope.launch {

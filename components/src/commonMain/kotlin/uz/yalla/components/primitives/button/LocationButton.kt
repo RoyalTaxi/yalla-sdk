@@ -36,8 +36,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
-import uz.yalla.resources.icons.ArrowRightInCircle
 import uz.yalla.resources.icons.ArrowRight
+import uz.yalla.resources.icons.ArrowRightInCircle
 import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
@@ -70,53 +70,55 @@ public object LocationButtonDefaults {
         descriptionColor: Color = System.color.text.base,
         iconColor: Color = System.color.icon.base,
         containerColor: Color = System.color.background.secondary
-    ): LocationButtonColors = LocationButtonColors(
-        dotColor = dotColor,
-        titleColor = titleColor,
-        descriptionColor = descriptionColor,
-        iconColor = iconColor,
-        containerColor = containerColor
-    )
+    ): LocationButtonColors =
+        LocationButtonColors(
+            dotColor = dotColor,
+            titleColor = titleColor,
+            descriptionColor = descriptionColor,
+            iconColor = iconColor,
+            containerColor = containerColor
+        )
 
     @Composable
     public fun dimens(
         shape: Shape = RectangleShape,
         contentSpacing: Dp = 12.dp,
-        contentPadding: PaddingValues = PaddingValues(
-            vertical = 12.dp,
-            horizontal = 16.dp
+        contentPadding: PaddingValues =
+            PaddingValues(
+                vertical = 12.dp,
+                horizontal = 16.dp
+            )
+    ): LocationButtonDimens =
+        LocationButtonDimens(
+            shape = shape,
+            contentSpacing = contentSpacing,
+            contentPadding = contentPadding
         )
-    ): LocationButtonDimens = LocationButtonDimens(
-        shape = shape,
-        contentSpacing = contentSpacing,
-        contentPadding = contentPadding
-    )
 
     @Composable
     public fun styles(
         titleStyle: TextStyle = System.font.body.base.bold,
         descriptionStyle: TextStyle = System.font.body.small.medium
-    ): LocationButtonStyles = LocationButtonStyles(
-        titleStyle = titleStyle,
-        descriptionStyle = descriptionStyle
-    )
+    ): LocationButtonStyles =
+        LocationButtonStyles(
+            titleStyle = titleStyle,
+            descriptionStyle = descriptionStyle
+        )
 
     @Composable
-    public fun LeadingView(
-        color: Color
-    ) {
+    public fun LeadingView(color: Color) {
         Box(
-            modifier = Modifier
-                .size(14.dp)
-                .background(
-                    color = color,
-                    shape = CircleShape
-                )
-                .padding(4.dp)
-                .background(
-                    color = System.color.icon.white,
-                    shape = CircleShape
-                )
+            modifier =
+                Modifier
+                    .size(14.dp)
+                    .background(
+                        color = color,
+                        shape = CircleShape
+                    ).padding(4.dp)
+                    .background(
+                        color = System.color.icon.white,
+                        shape = CircleShape
+                    )
         )
     }
 
@@ -165,16 +167,17 @@ public object LocationButtonDefaults {
             itemCount = itemCount,
             modifier = modifier,
             maxLines = 2,
-            overflow = ContextualFlowRowOverflow.expandIndicator {
-                val visibleTitles = (shownItemCount + 1) / 2
-                val hiddenTitles = titles.size - visibleTitles
+            overflow =
+                ContextualFlowRowOverflow.expandIndicator {
+                    val visibleTitles = (shownItemCount + 1) / 2
+                    val hiddenTitles = titles.size - visibleTitles
 
-                Text(
-                    text = "+$hiddenTitles",
-                    color = colors.titleColor,
-                    style = styles.titleStyle
-                )
-            },
+                    Text(
+                        text = "+$hiddenTitles",
+                        color = colors.titleColor,
+                        style = styles.titleStyle
+                    )
+                },
             horizontalArrangement = Arrangement.spacedBy(6.dp),
             verticalArrangement = Arrangement.spacedBy(4.dp),
             itemVerticalAlignment = Alignment.CenterVertically
@@ -206,13 +209,14 @@ public object LocationButtonDefaults {
             painter = rememberVectorPainter(YallaIcons.ArrowRightInCircle),
             contentDescription = null,
             tint = color,
-            modifier = Modifier
-                .size(24.dp)
-                .clickable(
-                    onClick = onClick,
-                    indication = null,
-                    interactionSource = remember { MutableInteractionSource() }
-                )
+            modifier =
+                Modifier
+                    .size(24.dp)
+                    .clickable(
+                        onClick = onClick,
+                        indication = null,
+                        interactionSource = remember { MutableInteractionSource() }
+                    )
         )
     }
 }
@@ -267,23 +271,24 @@ public fun LocationButton(
             onClick = it
         )
     }
-): Unit = LocationButtonContainer(
-    onClick = onClick,
-    onTrailingViewClick = onTrailingViewClick,
-    modifier = modifier,
-    colors = colors,
-    dimens = dimens,
-    leadingView = leadingView,
-    trailingView = trailingView
-) {
-    LocationButtonDefaults.Content(
-        title = title,
-        description = description,
-        modifier = Modifier.weight(1f),
+): Unit =
+    LocationButtonContainer(
+        onClick = onClick,
+        onTrailingViewClick = onTrailingViewClick,
+        modifier = modifier,
         colors = colors,
-        styles = styles
-    )
-}
+        dimens = dimens,
+        leadingView = leadingView,
+        trailingView = trailingView
+    ) {
+        LocationButtonDefaults.Content(
+            title = title,
+            description = description,
+            modifier = Modifier.weight(1f),
+            colors = colors,
+            styles = styles
+        )
+    }
 
 @Composable
 public fun LocationButton(
@@ -305,73 +310,82 @@ public fun LocationButton(
             onClick = it
         )
     }
-): Unit = LocationButtonContainer(
-    onClick = onClick,
-    onTrailingViewClick = onTrailingViewClick,
-    modifier = modifier,
-    colors = colors,
-    dimens = dimens,
-    leadingView = leadingView,
-    trailingView = trailingView
-) {
-    LocationButtonDefaults.Content(
-        titles = titles,
-        modifier = Modifier.weight(1f),
+): Unit =
+    LocationButtonContainer(
+        onClick = onClick,
+        onTrailingViewClick = onTrailingViewClick,
+        modifier = modifier,
         colors = colors,
-        styles = styles
-    )
-}
+        dimens = dimens,
+        leadingView = leadingView,
+        trailingView = trailingView
+    ) {
+        LocationButtonDefaults.Content(
+            titles = titles,
+            modifier = Modifier.weight(1f),
+            colors = colors,
+            styles = styles
+        )
+    }
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        LocationButton(
-            title = "Amir Temur 1",
-            onClick = {},
-            dimens = LocationButtonDefaults.dimens(RoundedCornerShape(16.dp)),
-            modifier = Modifier.fillMaxWidth(),
-            onTrailingViewClick = {}
-        )
-
-        LocationButton(
-            title = "Amir Temur 1",
-            description = "Tashkent",
-            onClick = {},
-            colors = LocationButtonDefaults.colors(descriptionColor = System.color.text.subtle),
-            dimens = LocationButtonDefaults.dimens(RoundedCornerShape(16.dp)),
-            modifier = Modifier.fillMaxWidth(),
-            leadingView = { LocationButtonDefaults.LeadingView(System.color.icon.red) }
-        )
-
-        Surface(
-            shape = RoundedCornerShape(16.dp),
-            color = System.color.background.secondary
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LocationButton(
                 title = "Amir Temur 1",
-                onClick = {}
+                onClick = {},
+                dimens = LocationButtonDefaults.dimens(RoundedCornerShape(16.dp)),
+                modifier = Modifier.fillMaxWidth(),
+                onTrailingViewClick = {}
+            )
+
+            LocationButton(
+                title = "Amir Temur 1",
+                description = "Tashkent",
+                onClick = {},
+                colors = LocationButtonDefaults.colors(descriptionColor = System.color.text.subtle),
+                dimens = LocationButtonDefaults.dimens(RoundedCornerShape(16.dp)),
+                modifier = Modifier.fillMaxWidth(),
+                leadingView = { LocationButtonDefaults.LeadingView(System.color.icon.red) }
+            )
+
+            Surface(
+                shape = RoundedCornerShape(16.dp),
+                color = System.color.background.secondary
+            ) {
+                LocationButton(
+                    title = "Amir Temur 1",
+                    onClick = {}
+                )
+            }
+
+            LocationButton(
+                "Amir Temur 1",
+                "Tashkent",
+                "Samarkand",
+                onClick = {},
+                dimens = LocationButtonDefaults.dimens(RoundedCornerShape(16.dp)),
+                modifier = Modifier.fillMaxWidth(),
+                leadingView = { LocationButtonDefaults.LeadingView(System.color.icon.red) }
+            )
+
+            LocationButton(
+                "Amir Temur 1",
+                "Tashkent",
+                "Samarkand Region",
+                "Bukhara",
+                "Khiva",
+                "Nukus",
+                onClick = {},
+                dimens = LocationButtonDefaults.dimens(RoundedCornerShape(16.dp)),
+                modifier = Modifier.fillMaxWidth(),
+                leadingView = { LocationButtonDefaults.LeadingView(System.color.icon.red) }
             )
         }
-
-        LocationButton(
-            "Amir Temur 1", "Tashkent", "Samarkand",
-            onClick = {},
-            dimens = LocationButtonDefaults.dimens(RoundedCornerShape(16.dp)),
-            modifier = Modifier.fillMaxWidth(),
-            leadingView = { LocationButtonDefaults.LeadingView(System.color.icon.red) }
-        )
-
-        LocationButton(
-            "Amir Temur 1", "Tashkent", "Samarkand Region", "Bukhara", "Khiva", "Nukus",
-            onClick = {},
-            dimens = LocationButtonDefaults.dimens(RoundedCornerShape(16.dp)),
-            modifier = Modifier.fillMaxWidth(),
-            leadingView = { LocationButtonDefaults.LeadingView(System.color.icon.red) }
-        )
     }
-}

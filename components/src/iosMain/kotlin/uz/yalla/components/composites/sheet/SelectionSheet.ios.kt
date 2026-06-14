@@ -26,13 +26,14 @@ public actual fun SelectionSheet(
         }
 
         val parent = findKeyWindowRootController() ?: return@DisposableEffect onDispose {}
-        val handle = requireConfig().sheet.createSelection(
-            title = title,
-            items = items,
-            selectedId = selectedId,
-            onSelect = { currentOnSelect(it) },
-            onDismissRequest = { currentOnDismissRequest() }
-        )
+        val handle =
+            requireConfig().sheet.createSelection(
+                title = title,
+                items = items,
+                selectedId = selectedId,
+                onSelect = { currentOnSelect(it) },
+                onDismissRequest = { currentOnDismissRequest() }
+            )
         handle.present(parent)
 
         onDispose { handle.dismiss() }

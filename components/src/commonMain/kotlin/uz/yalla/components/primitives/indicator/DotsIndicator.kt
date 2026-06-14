@@ -35,17 +35,20 @@ public fun DotsIndicator(
             val width by animateDpAsState(if (isSelected) 24.dp else 10.dp)
 
             Box(
-                modifier = Modifier
-                    .size(width = width, height = 10.dp)
-                    .clip(CircleShape)
-                    .background(
-                        if (isSelected) System.color.background.brand
-                        else System.color.background.tertiary
-                    )
-                    .clickable(enabled = !isSelected) {
-                        haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
-                        onPageChange(index)
-                    }
+                modifier =
+                    Modifier
+                        .size(width = width, height = 10.dp)
+                        .clip(CircleShape)
+                        .background(
+                            if (isSelected) {
+                                System.color.background.brand
+                            } else {
+                                System.color.background.tertiary
+                            }
+                        ).clickable(enabled = !isSelected) {
+                            haptic.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+                            onPageChange(index)
+                        }
             )
         }
     }

@@ -47,36 +47,41 @@ internal fun PinContent(
     val rotation by transition.animateFloat(
         initialValue = 0f,
         targetValue = 360f,
-        animationSpec = infiniteRepeatable(
-            repeatMode = RepeatMode.Restart,
-            animation = tween(
-                durationMillis = JumpCycleDurationMs * 2,
-                easing = FastOutSlowInEasing
+        animationSpec =
+            infiniteRepeatable(
+                repeatMode = RepeatMode.Restart,
+                animation =
+                    tween(
+                        durationMillis = JumpCycleDurationMs * 2,
+                        easing = FastOutSlowInEasing
+                    )
             )
-        )
     )
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier
-            .size(dimens.contentSize)
-            .background(shape = dimens.contentShape, color = colors.background)
-            .border(
-                width = dimens.borderWidth,
-                shape = dimens.contentShape,
-                brush = colors.border
-            )
+        modifier =
+            modifier
+                .size(dimens.contentSize)
+                .background(shape = dimens.contentShape, color = colors.background)
+                .border(
+                    width = dimens.borderWidth,
+                    shape = dimens.contentShape,
+                    brush = colors.border
+                )
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             when {
-                jumping -> Image(
-                    painter = painterResource(Res.drawable.img_spinner),
-                    contentDescription = null,
-                    colorFilter = ColorFilter.tint(colors.icon, BlendMode.SrcIn),
-                    modifier = Modifier
-                        .size(IconSize)
-                        .graphicsLayer { rotationZ = rotation }
-                )
+                jumping ->
+                    Image(
+                        painter = painterResource(Res.drawable.img_spinner),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(colors.icon, BlendMode.SrcIn),
+                        modifier =
+                            Modifier
+                                .size(IconSize)
+                                .graphicsLayer { rotationZ = rotation }
+                    )
                 timeout == null -> icon()
                 else -> {
                     Text(
@@ -87,10 +92,11 @@ internal fun PinContent(
                     Text(
                         text = stringResource(Res.string.format_time_min_short),
                         color = colors.text,
-                        style = timeoutLabelStyle.copy(
-                            fontSize = 9.sp,
-                            lineHeight = 8.sp
-                        )
+                        style =
+                            timeoutLabelStyle.copy(
+                                fontSize = 9.sp,
+                                lineHeight = 8.sp
+                            )
                     )
                 }
             }

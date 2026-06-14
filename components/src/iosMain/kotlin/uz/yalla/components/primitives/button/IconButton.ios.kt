@@ -28,16 +28,17 @@ public actual fun IconButton(
     val borderArgb = if (borderColor.isSpecified) borderColor.toArgb().toLong() else 0L
     val onClickState = rememberUpdatedState(onClick)
 
-    val handle = remember {
-        requireConfig().iconButton.create(
-            icon = icon,
-            shape = shape,
-            iconArgb = iconArgb,
-            containerArgb = containerArgb,
-            borderArgb = borderArgb,
-            onClick = { onClickState.value() }
-        )
-    }
+    val handle =
+        remember {
+            requireConfig().iconButton.create(
+                icon = icon,
+                shape = shape,
+                iconArgb = iconArgb,
+                containerArgb = containerArgb,
+                borderArgb = borderArgb,
+                onClick = { onClickState.value() }
+            )
+        }
 
     LaunchedEffect(icon) {
         handle.setIcon(icon)

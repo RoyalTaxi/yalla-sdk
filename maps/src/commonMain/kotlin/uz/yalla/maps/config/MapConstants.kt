@@ -17,12 +17,13 @@ public object MapConstants {
 
     public const val EXECUTORS_VISIBLE_MIN_ZOOM: Double = 8.0
 
-    public val UZBEKISTAN_BOUNDING_BOX: BoundingBox = BoundingBox(
-        west = 55.996639,
-        south = 37.172764,
-        east = 73.132278,
-        north = 45.590075
-    )
+    public val UZBEKISTAN_BOUNDING_BOX: BoundingBox =
+        BoundingBox(
+            west = 55.996639,
+            south = 37.172764,
+            east = 73.132278,
+            north = 45.590075
+        )
 
     public val UZBEKISTAN_CENTER: Pair<Double, Double> = (37.172764 + 45.590075) / 2 to (55.996639 + 73.132278) / 2
 

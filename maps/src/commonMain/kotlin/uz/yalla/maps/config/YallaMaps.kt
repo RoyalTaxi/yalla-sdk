@@ -7,8 +7,9 @@ public object YallaMaps {
         this.config = config
     }
 
-    public fun current(): MapsConfig = config
-        ?: error("YallaMaps not installed. Call YallaMaps.install(...) at app start.")
+    public fun current(): MapsConfig =
+        config
+            ?: error("YallaMaps not installed. Call YallaMaps.install(...) at app start.")
 }
 
 internal fun requireMaps(): MapsConfig = YallaMaps.current()

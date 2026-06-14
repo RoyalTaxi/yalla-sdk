@@ -30,20 +30,21 @@ public fun GhostButton(
         text = text,
         style = style,
         color = if (enabled) color else color.copy(alpha = DisabledAlpha),
-        modifier = modifier
-            .minimumInteractiveComponentSize()
-            .clickable(
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null,
-                enabled = enabled,
-                onClick = onClick
-            )
-            .padding(horizontal = 12.dp, vertical = 8.dp)
+        modifier =
+            modifier
+                .minimumInteractiveComponentSize()
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                    enabled = enabled,
+                    onClick = onClick
+                ).padding(horizontal = 12.dp, vertical = 8.dp)
     )
 }
 
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    GhostButton(text = "Resend code", onClick = {})
-}
+private fun Preview() =
+    YallaTheme {
+        GhostButton(text = "Resend code", onClick = {})
+    }

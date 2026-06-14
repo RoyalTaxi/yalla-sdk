@@ -13,15 +13,16 @@ import uz.yalla.foundation.theme.rememberIsDarkTheme
 public fun PrimaryButtonViewController(
     title: String,
     onClick: () -> Unit
-): UIViewController = ComposeUIViewController(
-    configure = { opaque = false }
-) {
-    YallaTheme(isDark = rememberIsDarkTheme()) {
-        PrimaryButton(
-            onClick = onClick,
-            modifier = Modifier.fillMaxSize()
-        ) { _, _, styles ->
-            Text(text = title, style = styles.textStyle)
+): UIViewController =
+    ComposeUIViewController(
+        configure = { opaque = false }
+    ) {
+        YallaTheme(isDark = rememberIsDarkTheme()) {
+            PrimaryButton(
+                onClick = onClick,
+                modifier = Modifier.fillMaxSize()
+            ) { _, _, styles ->
+                Text(text = title, style = styles.textStyle)
+            }
         }
     }
-}
