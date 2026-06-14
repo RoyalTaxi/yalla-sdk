@@ -1,3 +1,5 @@
+import org.jetbrains.dokka.gradle.DokkaExtension
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform) apply false
     alias(libs.plugins.kotlin.jvm) apply false
@@ -7,7 +9,11 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.android.multiplatform.library) apply false
-    alias(libs.plugins.dokka)
+    // Dokka is opt-in (`-Pyalla.docs=true`) so the per-PR publications dry-run does not
+    // apply it across every module for docs nothing in that job consumes. Applied (and
+    // its aggregation wired) below only when the flag is set; releases that want the
+    // HTML/Javadoc output turn it on. See the KMP convention plugin for the module gate.
+    alias(libs.plugins.dokka) apply false
     alias(libs.plugins.binary.compatibility.validator)
     // G4 — static-analysis gate. The detekt + ktlint markers are declared here
     // `apply false` so they land on the build classpath; the quality convention
@@ -42,22 +48,36 @@ apiValidation {
     ignoredProjects.addAll(listOf("demo", "konsistTest", "bom"))
 }
 
-dependencies {
-    dokka(project(":core"))
-    dokka(project(":network"))
-    dokka(project(":datastore"))
-    dokka(project(":resources"))
-    dokka(project(":design"))
-    dokka(project(":foundation"))
-    dokka(project(":components"))
-    dokka(project(":maps"))
-    dokka(project(":media"))
-    dokka(project(":telemetry"))
-}
+// API docs (Dokka) — opt-in via `-Pyalla.docs=true`. The root plugin owns the
+// `dokka` aggregation configuration the modules feed into, so it (and the matching
+// per-module plugin application) is applied only when the flag is set. Off by
+// default the whole pipeline disappears from configuration, which is what the
+// per-PR publications dry-run wants. With the plugin `apply false` above, the Kotlin
+// DSL generates no `dokka {}` / `dokka(...)` accessors, so the typed API is used here.
+val docsEnabled = (findProperty("yalla.docs") as? String)?.toBoolean() == true
+if (docsEnabled) {
+    // Version pinned by the `apply false` catalog alias above; apply by id like the
+    // KMP convention plugin does, which keeps the typed `dokka {}` config below valid.
+    apply(plugin = "org.jetbrains.dokka")
 
-dokka {
-    moduleName.set("Yalla SDK")
-    dokkaPublications.html {
-        outputDirectory.set(rootProject.layout.buildDirectory.dir("dokka"))
+    // Aggregate the documented modules into the root `dokka` configuration. Same set
+    // and order as before; `dokka(project(...))` is unavailable here (no accessor when
+    // the plugin is `apply false`), so the configuration is named explicitly.
+    dependencies.add("dokka", project(":core"))
+    dependencies.add("dokka", project(":network"))
+    dependencies.add("dokka", project(":datastore"))
+    dependencies.add("dokka", project(":resources"))
+    dependencies.add("dokka", project(":design"))
+    dependencies.add("dokka", project(":foundation"))
+    dependencies.add("dokka", project(":components"))
+    dependencies.add("dokka", project(":maps"))
+    dependencies.add("dokka", project(":media"))
+    dependencies.add("dokka", project(":telemetry"))
+
+    extensions.configure<DokkaExtension> {
+        moduleName.set("Yalla SDK")
+        dokkaPublications.named("html") {
+            outputDirectory.set(rootProject.layout.buildDirectory.dir("dokka"))
+        }
     }
 }
