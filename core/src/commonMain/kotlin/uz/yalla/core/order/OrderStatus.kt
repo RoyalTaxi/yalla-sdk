@@ -35,27 +35,37 @@ sealed class OrderStatus(val id: String) {
             else -> Unknown(id ?: "null")
         }
 
-        val active: Set<OrderStatus> = setOf(
-            Appointed,
-            AtAddress,
-            InProgress
-        )
+        // Lazy so the nested `data object`s are fully initialized before the set is built.
+        // Building these sets eagerly in the companion `<clinit>` re-enters each object's
+        // initializer while `OrderStatus` is still being class-initialized on the same thread,
+        // which leaves the first such reference (Appointed) as a `null` element in the set.
+        val active: Set<OrderStatus> by lazy {
+            setOf(
+                Appointed,
+                AtAddress,
+                InProgress
+            )
+        }
 
-        val ongoing: Set<OrderStatus> = setOf(
-            New,
-            Sending,
-            UserSending,
-            NonStopSending,
-            Appointed,
-            AtAddress,
-            InProgress
-        )
+        val ongoing: Set<OrderStatus> by lazy {
+            setOf(
+                New,
+                Sending,
+                UserSending,
+                NonStopSending,
+                Appointed,
+                AtAddress,
+                InProgress
+            )
+        }
 
-        val nonInteractive: Set<OrderStatus> = setOf(
-            New,
-            Sending,
-            UserSending,
-            NonStopSending
-        )
+        val nonInteractive: Set<OrderStatus> by lazy {
+            setOf(
+                New,
+                Sending,
+                UserSending,
+                NonStopSending
+            )
+        }
     }
 }
