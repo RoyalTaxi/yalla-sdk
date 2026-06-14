@@ -31,5 +31,6 @@ include(
     ":media",
     ":telemetry",
     ":bom",
-    ":demo"
+    ":demo",
+    ":konsistTest"
 )
