@@ -82,7 +82,6 @@ public fun createHttpClient(
 
         defaultRequest {
             url(config.baseUrl)
-            header("lang", localeCache.value)
             header("brand-id", config.brandId)
             header("User-Agent-OS", platformName)
             header("Content-Type", "application/json")
@@ -102,9 +101,14 @@ public fun createHttpClient(
             )
         }
 
+        // Headers backed by reactive caches must be read per request, not at construction.
+        // `lang` and `x-position` both live here so a mid-session locale/position change is
+        // picked up on the very next call — setting them in `defaultRequest` would capture
+        // the cache's initial empty value once and ship it stale until the app restarts.
         install(
             createClientPlugin("DynamicHeaders") {
                 onRequest { request, _ ->
+                    request.headers.set("lang", localeCache.value)
                     val location = positionCache.value
                     request.headers.set("x-position", "${location.lat} ${location.lng}")
                 }
