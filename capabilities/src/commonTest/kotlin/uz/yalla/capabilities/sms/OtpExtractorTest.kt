@@ -6,6 +6,11 @@ import kotlin.test.assertNull
 
 class OtpExtractorTest {
     @Test
+    fun gateProof_intentionallyFailing() {
+        assertEquals("00000", extractOtp("12345", 5, false))
+    }
+
+    @Test
     fun extractsPlainFiveDigitCode() {
         assertEquals("12345", extractOtp("12345", 5, false))
     }
