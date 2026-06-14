@@ -5,7 +5,7 @@ import uz.yalla.components.composites.item.SelectableItemModel
 import uz.yalla.components.config.requireConfig
 
 @Composable
-actual fun SelectionSheet(
+public actual fun SelectionSheet(
     isVisible: Boolean,
     title: String,
     items: List<SelectableItemModel>,

@@ -13,7 +13,7 @@ import platform.UIKit.UIViewController
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
 
-class GhostButtonController(
+public class GhostButtonController(
     text: String,
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -22,7 +22,7 @@ class GhostButtonController(
     private var enabledState by mutableStateOf(enabled)
 
     @OptIn(ExperimentalComposeUiApi::class)
-    val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
+    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
         YallaTheme(isDark = rememberIsDarkTheme()) {
             Box(
                 modifier = Modifier.fillMaxSize(),
@@ -37,11 +37,11 @@ class GhostButtonController(
         }
     }
 
-    fun setText(text: String) {
+    public fun setText(text: String) {
         textState = text
     }
 
-    fun setEnabled(enabled: Boolean) {
+    public fun setEnabled(enabled: Boolean) {
         enabledState = enabled
     }
 }

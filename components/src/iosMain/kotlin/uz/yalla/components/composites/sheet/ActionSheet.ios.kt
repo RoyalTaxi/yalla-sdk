@@ -9,7 +9,7 @@ import uz.yalla.components.config.requireConfig
 import uz.yalla.components.platform.findKeyWindowRootController
 
 @Composable
-actual fun ActionSheet(
+public actual fun ActionSheet(
     isVisible: Boolean,
     title: String,
     items: List<ActionableItemModel>,

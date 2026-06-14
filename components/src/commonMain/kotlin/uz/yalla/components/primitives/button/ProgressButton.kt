@@ -29,7 +29,7 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_sensitive_background
 
 @Composable
-fun ProgressButton(
+public fun ProgressButton(
     text: String,
     progress: Float,
     enabled: Boolean,

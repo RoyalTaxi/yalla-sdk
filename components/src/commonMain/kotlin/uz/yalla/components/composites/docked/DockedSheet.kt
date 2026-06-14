@@ -31,7 +31,7 @@ private const val SlideDurationMillis = 250
 
 @OptIn(FlowPreview::class)
 @Composable
-fun DockedSheet(
+public fun DockedSheet(
     modifier: Modifier = Modifier,
     hidden: Boolean = false,
     onPaddingChanged: ((PaddingValues) -> Unit)? = null,

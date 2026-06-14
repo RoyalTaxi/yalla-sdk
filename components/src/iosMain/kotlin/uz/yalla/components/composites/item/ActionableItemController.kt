@@ -10,7 +10,7 @@ import uz.yalla.components.resource.asImageVector
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
 
-class ActionableItemController(
+public class ActionableItemController(
     text: String,
     icon: String,
     trailingIcon: String? = null,
@@ -26,7 +26,7 @@ class ActionableItemController(
     )
 
     @OptIn(ExperimentalComposeUiApi::class)
-    val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
+    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
         YallaTheme(isDark = rememberIsDarkTheme()) {
             ActionableItem(
                 text = model.text,

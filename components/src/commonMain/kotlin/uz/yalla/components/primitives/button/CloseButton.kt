@@ -6,10 +6,10 @@ import androidx.compose.ui.graphics.Color
 import uz.yalla.design.theme.System
 
 @Composable
-fun CloseButton(
+public fun CloseButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
-) = IconButton(
+): Unit = IconButton(
     icon = "ic_x",
     onClick = onClick,
     modifier = modifier,

@@ -1,6 +1,6 @@
 package uz.yalla.components.config.feedback
 
-interface SnackbarFactory {
-    fun show(message: String, isError: Boolean)
-    fun dismiss()
+public interface SnackbarFactory {
+    public fun show(message: String, isError: Boolean)
+    public fun dismiss()
 }

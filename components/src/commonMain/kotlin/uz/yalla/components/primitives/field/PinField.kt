@@ -36,7 +36,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
 @Composable
-fun PinField(
+public fun PinField(
     value: String,
     onValueChange: (String) -> Unit,
     length: Int,

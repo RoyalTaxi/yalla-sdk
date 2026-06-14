@@ -9,7 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
-actual fun rememberBrowser(): Browser {
+public actual fun rememberBrowser(): Browser {
     val context = LocalContext.current
     return remember(context) {
         object : Browser {

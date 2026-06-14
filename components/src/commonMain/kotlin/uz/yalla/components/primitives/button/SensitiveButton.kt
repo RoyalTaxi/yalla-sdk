@@ -41,51 +41,51 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_sensitive_background
 
 @Immutable
-data class SensitiveButtonColors(
+public data class SensitiveButtonColors(
     val progressColor: Color,
     val textColor: Color
 )
 
 @Immutable
-data class SensitiveButtonDimens(
+public data class SensitiveButtonDimens(
     val height: Dp,
     val shape: Shape
 )
 
 @Immutable
-data class SensitiveButtonStyles(
+public data class SensitiveButtonStyles(
     val textStyle: TextStyle
 )
 
-object SensitiveButtonDefaults {
+public object SensitiveButtonDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         progressColor: Color = System.color.button.active,
         textColor: Color = System.color.text.white
-    ) = SensitiveButtonColors(
+    ): SensitiveButtonColors = SensitiveButtonColors(
         progressColor = progressColor,
         textColor = textColor
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         height: Dp = 60.dp,
         shape: Shape = RoundedCornerShape(16.dp)
-    ) = SensitiveButtonDimens(
+    ): SensitiveButtonDimens = SensitiveButtonDimens(
         height = height,
         shape = shape
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         textStyle: TextStyle = System.font.body.large.bold
-    ) = SensitiveButtonStyles(
+    ): SensitiveButtonStyles = SensitiveButtonStyles(
         textStyle = textStyle
     )
 }
 
 @Composable
-fun SensitiveButton(
+public fun SensitiveButton(
     onClick: () -> Unit,
     confirmText: String,
     countdownText: String,

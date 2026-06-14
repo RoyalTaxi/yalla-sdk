@@ -13,7 +13,7 @@ import uz.yalla.media.config.requireMedia
 import uz.yalla.media.picker.SelectionMode.Companion.INFINITY
 
 @Composable
-actual fun rememberImagePickerLauncher(
+public actual fun rememberImagePickerLauncher(
     selectionMode: SelectionMode,
     scope: CoroutineScope,
     onResult: (List<ByteArray>) -> Unit

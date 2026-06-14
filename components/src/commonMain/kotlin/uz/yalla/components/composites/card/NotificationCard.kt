@@ -27,7 +27,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
 @Composable
-fun NotificationCard(
+public fun NotificationCard(
     title: String,
     date: String,
     description: String,

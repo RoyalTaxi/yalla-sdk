@@ -28,7 +28,7 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_avatar_placeholder
 
 @Composable
-fun UserCard(
+public fun UserCard(
     painter: Painter,
     firstName: String,
     lastName: String,
@@ -70,13 +70,13 @@ fun UserCard(
 }
 
 @Composable
-fun UserCard(
+public fun UserCard(
     imageUrl: String,
     firstName: String,
     lastName: String,
     number: String,
     modifier: Modifier = Modifier
-) = UserCard(
+): Unit = UserCard(
     painter = rememberAsyncImagePainter(
         model = imageUrl,
         placeholder = painterResource(Res.drawable.img_avatar_placeholder),

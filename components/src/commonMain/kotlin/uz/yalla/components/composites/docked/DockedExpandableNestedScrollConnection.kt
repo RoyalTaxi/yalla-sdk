@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.Velocity
 import kotlin.math.abs
 
 @OptIn(ExperimentalFoundationApi::class)
-class DockedExpandableNestedScrollConnection(
+public class DockedExpandableNestedScrollConnection(
     private val sheetState: DockedExpandableSheetState,
     private val canScrollUp: () -> Boolean
 ) : NestedScrollConnection {

@@ -30,6 +30,8 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
             val frameworkName = yallaFrameworkBaseName()
 
             extensions.configure<KotlinMultiplatformExtension> {
+                explicitApi()
+
                 targets.withType(KotlinMultiplatformAndroidLibraryTarget::class.java)
                     .configureEach {
                         namespace = androidNamespace

@@ -5,7 +5,7 @@ import uz.yalla.core.identity.DriverId
 import uz.yalla.core.identity.OrderId
 import uz.yalla.core.payment.PaymentMethod
 
-data class Order(
+public data class Order(
     val comment: String,
     val dateTime: Long,
     val driver: Driver,
@@ -16,7 +16,7 @@ data class Order(
     val statusTime: List<StatusTime>,
     val taxi: Taxi
 ) {
-    data class Driver(
+    public data class Driver(
         val point: GeoPoint,
         val heading: Double,
         val vehicle: Vehicle,
@@ -28,7 +28,7 @@ data class Order(
         val rating: Double,
         val surName: String
     ) {
-        data class Vehicle(
+        public data class Vehicle(
             val callsign: String,
             val color: Color,
             val id: Int,
@@ -36,19 +36,19 @@ data class Order(
             val model: String,
             val stateNumber: String
         ) {
-            data class Color(
+            public data class Color(
                 val hex: String,
                 val name: String
             )
         }
     }
 
-    data class StatusTime(
+    public data class StatusTime(
         val status: OrderStatus,
         val time: Long
     )
 
-    data class Taxi(
+    public data class Taxi(
         val bonusAmount: Int,
         val clientTotalPrice: Double,
         val distance: Double,
@@ -61,7 +61,7 @@ data class Order(
         val totalPrice: Int,
         val waitingTime: Int
     ) {
-        data class Point(
+        public data class Point(
             val coords: GeoPoint,
             val fullAddress: String,
             val index: Int
@@ -69,7 +69,7 @@ data class Order(
     }
 }
 
-fun Order.Driver.toDriverPosition() = DriverPosition(
+public fun Order.Driver.toDriverPosition(): DriverPosition = DriverPosition(
     id = id,
     point = point,
     heading = heading,

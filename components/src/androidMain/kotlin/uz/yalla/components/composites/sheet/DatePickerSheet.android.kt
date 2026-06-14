@@ -5,7 +5,7 @@ import kotlinx.datetime.LocalDate
 import uz.yalla.components.config.requireConfig
 
 @Composable
-actual fun DatePickerSheet(
+public actual fun DatePickerSheet(
     isVisible: Boolean,
     startDate: LocalDate,
     minDate: LocalDate?,

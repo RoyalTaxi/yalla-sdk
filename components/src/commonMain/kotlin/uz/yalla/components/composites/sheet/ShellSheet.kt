@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-expect fun ShellSheet(
+public expect fun ShellSheet(
     isVisible: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,

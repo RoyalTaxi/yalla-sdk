@@ -1,7 +1,7 @@
 package uz.yalla.core.location
 
-enum class PointKind(
-    val id: String
+public enum class PointKind(
+    public val id: String
 ) {
     START("start"),
 
@@ -9,7 +9,7 @@ enum class PointKind(
 
     STOP("stop");
 
-    companion object {
-        fun from(id: String?): PointKind = entries.find { it.id == id } ?: POINT
+    public companion object {
+        public fun from(id: String?): PointKind = entries.find { it.id == id } ?: POINT
     }
 }

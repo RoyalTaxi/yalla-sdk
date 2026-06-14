@@ -13,67 +13,67 @@ import uz.yalla.maps.api.model.MapRoute
 import uz.yalla.maps.api.model.MapStyle
 import uz.yalla.maps.config.MapConstants
 
-interface MapController {
+public interface MapController {
 
-    val cameraPosition: StateFlow<CameraPosition>
+    public val cameraPosition: StateFlow<CameraPosition>
 
-    val centerPin: StateFlow<CenterPinState>
+    public val centerPin: StateFlow<CenterPinState>
 
-    val isReady: StateFlow<Boolean>
+    public val isReady: StateFlow<Boolean>
 
-    val events: SharedFlow<MapEvent>
+    public val events: SharedFlow<MapEvent>
 
-    suspend fun moveTo(
+    public suspend fun moveTo(
         point: GeoPoint,
         zoom: Float = MapConstants.DEFAULT_ZOOM.toFloat()
     )
 
-    suspend fun animateTo(
+    public suspend fun animateTo(
         point: GeoPoint,
         zoom: Float = MapConstants.DEFAULT_ZOOM.toFloat(),
         durationMs: Int = ANIMATION_DURATION
     )
 
-    suspend fun animateToWithBearing(
+    public suspend fun animateToWithBearing(
         point: GeoPoint,
         bearing: Float,
         zoom: Float = MapConstants.DEFAULT_ZOOM.toFloat(),
         durationMs: Int = ANIMATION_DURATION
     )
 
-    suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean = true, padding: PaddingValues? = null)
+    public suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean = true, padding: PaddingValues? = null)
 
-    suspend fun zoomIn()
+    public suspend fun zoomIn()
 
-    suspend fun zoomOut()
+    public suspend fun zoomOut()
 
-    suspend fun setZoom(zoom: Float)
+    public suspend fun setZoom(zoom: Float)
 
-    suspend fun setStyle(style: MapStyle, isDark: Boolean)
+    public suspend fun setStyle(style: MapStyle, isDark: Boolean)
 
-    fun setDesiredPadding(padding: PaddingValues)
+    public fun setDesiredPadding(padding: PaddingValues)
 
-    fun setInteractionEnabled(enabled: Boolean)
+    public fun setInteractionEnabled(enabled: Boolean)
 
-    fun setMarkers(markers: List<MapMarker>)
+    public fun setMarkers(markers: List<MapMarker>)
 
-    fun setRoutes(routes: List<MapRoute>)
+    public fun setRoutes(routes: List<MapRoute>)
 
-    fun setCircles(circles: List<MapCircle>)
+    public fun setCircles(circles: List<MapCircle>)
 
-    fun setUserLocation(point: GeoPoint?)
+    public fun setUserLocation(point: GeoPoint?)
 
-    fun setUserLocationEnabled(enabled: Boolean)
+    public fun setUserLocationEnabled(enabled: Boolean)
 
-    fun lockTarget(point: GeoPoint, zoom: Float? = null)
+    public fun lockTarget(point: GeoPoint, zoom: Float? = null)
 
-    fun unlockTarget()
+    public fun unlockTarget()
 
-    fun snapshotScene(): SceneSnapshot
+    public fun snapshotScene(): SceneSnapshot
 
-    fun close()
+    public fun close()
 
-    data class SceneSnapshot(
+    public data class SceneSnapshot(
         val cameraPosition: CameraPosition,
         val markers: List<MapMarker>,
         val routes: List<MapRoute>,
@@ -83,7 +83,7 @@ interface MapController {
         val lockedZoom: Float?
     )
 
-    companion object {
-        const val ANIMATION_DURATION = 1000
+    public companion object {
+        public const val ANIMATION_DURATION: Int = 1000
     }
 }

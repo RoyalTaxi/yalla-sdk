@@ -14,7 +14,7 @@ import uz.yalla.components.config.requireConfig
 
 @OptIn(ExperimentalForeignApi::class)
 @Composable
-actual fun Toggle(
+public actual fun Toggle(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier,

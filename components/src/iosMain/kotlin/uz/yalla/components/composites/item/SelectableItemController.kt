@@ -16,7 +16,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
 
-class SelectableItemController(
+public class SelectableItemController(
     text: String,
     icon: String?,
     tintIcon: Boolean = false,
@@ -26,7 +26,7 @@ class SelectableItemController(
     private var selectedState by mutableStateOf(selected)
 
     @OptIn(ExperimentalComposeUiApi::class)
-    val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
+    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
         YallaTheme(isDark = rememberIsDarkTheme()) {
             SelectableItem(
                 text = text,
@@ -45,7 +45,7 @@ class SelectableItemController(
         }
     }
 
-    fun setSelected(selected: Boolean) {
+    public fun setSelected(selected: Boolean) {
         selectedState = selected
     }
 }

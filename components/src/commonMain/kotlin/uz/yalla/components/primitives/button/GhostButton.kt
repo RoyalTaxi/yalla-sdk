@@ -18,7 +18,7 @@ import uz.yalla.design.theme.YallaTheme
 private const val DisabledAlpha = 0.4f
 
 @Composable
-fun GhostButton(
+public fun GhostButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,

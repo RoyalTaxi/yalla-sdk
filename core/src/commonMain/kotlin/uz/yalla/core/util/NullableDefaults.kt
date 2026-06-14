@@ -1,11 +1,11 @@
 package uz.yalla.core.util
 
-fun Int?.or0() = this ?: 0
+public fun Int?.or0(): Int = this ?: 0
 
-fun Long?.or0() = this ?: 0L
+public fun Long?.or0(): Long = this ?: 0L
 
-fun Float?.or0() = this ?: 0f
+public fun Float?.or0(): Float = this ?: 0f
 
-fun Double?.or0() = this ?: 0.0
+public fun Double?.or0(): Double = this ?: 0.0
 
-fun Boolean?.orFalse() = this ?: false
+public fun Boolean?.orFalse(): Boolean = this ?: false

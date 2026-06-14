@@ -29,7 +29,7 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_toggle
 
 @Immutable
-data class ToggleableItemColors(
+public data class ToggleableItemColors(
     val titleColor: Color,
     val descriptionColor: Color,
     val iconBackgroundColor: Color,
@@ -37,7 +37,7 @@ data class ToggleableItemColors(
 )
 
 @Immutable
-data class ToggleableItemDimens(
+public data class ToggleableItemDimens(
     val contentSpacing: Dp,
     val contentPadding: PaddingValues,
     val iconShape: Shape,
@@ -47,19 +47,19 @@ data class ToggleableItemDimens(
 )
 
 @Immutable
-data class ToggleableItemStyles(
+public data class ToggleableItemStyles(
     val titleStyle: TextStyle,
     val descriptionStyle: TextStyle
 )
 
-object ToggleableItemDefaults {
+public object ToggleableItemDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         titleColor: Color = System.color.text.base,
         descriptionColor: Color = System.color.text.subtle,
         iconBackgroundColor: Color = System.color.background.secondary,
         containerColor: Color = Color.Transparent
-    ) = ToggleableItemColors(
+    ): ToggleableItemColors = ToggleableItemColors(
         titleColor = titleColor,
         descriptionColor = descriptionColor,
         iconBackgroundColor = iconBackgroundColor,
@@ -67,7 +67,7 @@ object ToggleableItemDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         contentSpacing: Dp = 16.dp,
         contentPadding: PaddingValues = PaddingValues(
             vertical = 4.dp,
@@ -77,7 +77,7 @@ object ToggleableItemDefaults {
         iconPadding: Dp = 16.dp,
         iconSize: Dp = 24.dp,
         textSpacing: Dp = 8.dp
-    ) = ToggleableItemDimens(
+    ): ToggleableItemDimens = ToggleableItemDimens(
         contentSpacing = contentSpacing,
         contentPadding = contentPadding,
         iconShape = iconShape,
@@ -87,17 +87,17 @@ object ToggleableItemDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         titleStyle: TextStyle = System.font.body.base.bold,
         descriptionStyle: TextStyle = System.font.body.small.medium
-    ) = ToggleableItemStyles(
+    ): ToggleableItemStyles = ToggleableItemStyles(
         titleStyle = titleStyle,
         descriptionStyle = descriptionStyle
     )
 }
 
 @Composable
-fun ToggleableItem(
+public fun ToggleableItem(
     title: String,
     description: String? = null,
     painter: Painter? = null,
@@ -168,7 +168,7 @@ fun ToggleableItem(
 }
 
 @Composable
-fun ToggleableItem(
+public fun ToggleableItem(
     title: String,
     description: String? = null,
     imageUrl: String?,

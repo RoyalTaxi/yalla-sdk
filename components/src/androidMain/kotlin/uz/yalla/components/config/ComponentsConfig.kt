@@ -6,21 +6,21 @@ import uz.yalla.components.config.primitives.IconButtonFactory
 import uz.yalla.components.config.primitives.LoadingIndicatorFactory
 import uz.yalla.components.config.primitives.ToggleFactory
 
-class ComponentsConfig private constructor(
-    val loadingIndicator: LoadingIndicatorFactory,
-    val iconButton: IconButtonFactory,
-    val toggle: ToggleFactory,
-    val snackbar: SnackbarFactory,
-    val sheet: SheetFactory
+public class ComponentsConfig private constructor(
+    public val loadingIndicator: LoadingIndicatorFactory,
+    public val iconButton: IconButtonFactory,
+    public val toggle: ToggleFactory,
+    public val snackbar: SnackbarFactory,
+    public val sheet: SheetFactory
 ) {
-    class Builder {
-        var loadingIndicator: LoadingIndicatorFactory? = null
-        var iconButton: IconButtonFactory? = null
-        var toggle: ToggleFactory? = null
-        var snackbar: SnackbarFactory? = null
-        var sheet: SheetFactory? = null
+    public class Builder {
+        public var loadingIndicator: LoadingIndicatorFactory? = null
+        public var iconButton: IconButtonFactory? = null
+        public var toggle: ToggleFactory? = null
+        public var snackbar: SnackbarFactory? = null
+        public var sheet: SheetFactory? = null
 
-        fun build() = ComponentsConfig(
+        public fun build(): ComponentsConfig = ComponentsConfig(
             loadingIndicator = requireNotNull(loadingIndicator) { "loadingIndicator required" },
             iconButton = requireNotNull(iconButton) { "iconButton required" },
             toggle = requireNotNull(toggle) { "toggle required" },

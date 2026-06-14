@@ -4,13 +4,13 @@ import androidx.compose.runtime.Immutable
 import uz.yalla.core.geo.GeoPoint
 
 @Immutable
-data class CenterPinState(
+public data class CenterPinState(
     val point: GeoPoint,
     val isMoving: Boolean,
     val isByUser: Boolean
 ) {
-    companion object {
-        val INITIAL = CenterPinState(
+    public companion object {
+        public val INITIAL: CenterPinState = CenterPinState(
             point = GeoPoint.Zero,
             isMoving = false,
             isByUser = false

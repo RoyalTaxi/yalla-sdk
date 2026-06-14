@@ -5,9 +5,9 @@ import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
 import platform.UIKit.UIApplicationOpenSettingsURLString
 
-actual fun isLocationServicesEnabled(): Boolean = CLLocationManager.locationServicesEnabled()
+public actual fun isLocationServicesEnabled(): Boolean = CLLocationManager.locationServicesEnabled()
 
-actual fun openLocationSettings() {
+public actual fun openLocationSettings() {
     val url = NSURL(string = UIApplicationOpenSettingsURLString)
     UIApplication.sharedApplication.openURL(
         url = url,

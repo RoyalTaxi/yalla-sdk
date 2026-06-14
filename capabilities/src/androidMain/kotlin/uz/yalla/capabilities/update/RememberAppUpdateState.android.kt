@@ -8,7 +8,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.UpdateAvailability
 
 @Composable
-actual fun rememberAppUpdateState(
+public actual fun rememberAppUpdateState(
     appId: String,
     countryCode: String
 ): AppUpdateState {

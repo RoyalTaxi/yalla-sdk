@@ -1,5 +1,5 @@
 package uz.yalla.capabilities.location
 
-expect fun isLocationServicesEnabled(): Boolean
+public expect fun isLocationServicesEnabled(): Boolean
 
-expect fun openLocationSettings()
+public expect fun openLocationSettings()

@@ -12,7 +12,7 @@ import uz.yalla.components.platform.toLocalDate
 import uz.yalla.components.platform.toNSDate
 
 @Composable
-actual fun DatePickerSheet(
+public actual fun DatePickerSheet(
     isVisible: Boolean,
     startDate: LocalDate,
     minDate: LocalDate?,

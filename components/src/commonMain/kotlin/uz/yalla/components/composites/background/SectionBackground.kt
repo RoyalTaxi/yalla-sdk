@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
 @Composable
-fun SectionBackground(
+public fun SectionBackground(
     modifier: Modifier = Modifier,
     content: @Composable ColumnScope.() -> Unit
 ) {
@@ -27,7 +27,7 @@ fun SectionBackground(
 }
 
 @Composable
-fun SectionDivider(startIndent: Dp = 60.dp) {
+public fun SectionDivider(startIndent: Dp = 60.dp) {
     HorizontalDivider(
         color = System.color.border.disabled,
         thickness = 1.dp,

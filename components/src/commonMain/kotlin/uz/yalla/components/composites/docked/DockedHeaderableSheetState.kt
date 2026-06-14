@@ -18,14 +18,14 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 
-enum class DockedHeaderableSheetValue {
+public enum class DockedHeaderableSheetValue {
     Collapsed,
     Expanded
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Stable
-class DockedHeaderableSheetState internal constructor(
+public class DockedHeaderableSheetState internal constructor(
     initialValue: DockedHeaderableSheetValue,
     internal val snapAnimationSpec: AnimationSpec<Float>,
     internal val density: Density,
@@ -40,18 +40,18 @@ class DockedHeaderableSheetState internal constructor(
 
     internal val anchoredDraggableState = AnchoredDraggableState<DockedHeaderableSheetValue>(initialValue)
 
-    val headerHeight: Dp get() = with(density) { headerHeightPx.toDp() }
-    val bodyHeight: Dp get() = with(density) { bodyHeightPx.toDp() }
-    val footerHeight: Dp get() = with(density) { footerHeightPx.toDp() }
-    val collapsedSheetHeight: Dp get() = headerHeight + footerHeight
+    public val headerHeight: Dp get() = with(density) { headerHeightPx.toDp() }
+    public val bodyHeight: Dp get() = with(density) { bodyHeightPx.toDp() }
+    public val footerHeight: Dp get() = with(density) { footerHeightPx.toDp() }
+    public val collapsedSheetHeight: Dp get() = headerHeight + footerHeight
 
-    val currentValue: DockedHeaderableSheetValue get() = anchoredDraggableState.currentValue
-    val targetValue: DockedHeaderableSheetValue get() = anchoredDraggableState.targetValue
-    val isExpanded: Boolean get() = currentValue == DockedHeaderableSheetValue.Expanded
-    val isCollapsed: Boolean get() = currentValue == DockedHeaderableSheetValue.Collapsed
-    val isAnimating: Boolean get() = anchoredDraggableState.isAnimationRunning
+    public val currentValue: DockedHeaderableSheetValue get() = anchoredDraggableState.currentValue
+    public val targetValue: DockedHeaderableSheetValue get() = anchoredDraggableState.targetValue
+    public val isExpanded: Boolean get() = currentValue == DockedHeaderableSheetValue.Expanded
+    public val isCollapsed: Boolean get() = currentValue == DockedHeaderableSheetValue.Collapsed
+    public val isAnimating: Boolean get() = anchoredDraggableState.isAnimationRunning
 
-    val fraction: Float by derivedStateOf {
+    public val fraction: Float by derivedStateOf {
         if (!hasOffset) return@derivedStateOf 0f
         val offset = anchoredDraggableState.offset
         when {
@@ -78,15 +78,15 @@ class DockedHeaderableSheetState internal constructor(
         }
     }
 
-    suspend fun expand() {
+    public suspend fun expand() {
         if (hasOffset) anchoredDraggableState.animateTo(DockedHeaderableSheetValue.Expanded)
     }
 
-    suspend fun collapse() {
+    public suspend fun collapse() {
         if (hasOffset) anchoredDraggableState.animateTo(DockedHeaderableSheetValue.Collapsed)
     }
 
-    suspend fun toggle() = if (isCollapsed) expand() else collapse()
+    public suspend fun toggle(): Unit = if (isCollapsed) expand() else collapse()
 
     internal fun updateHeights(
         headerHeightPx: Int,
@@ -109,14 +109,14 @@ class DockedHeaderableSheetState internal constructor(
 }
 
 @Composable
-fun rememberDockedHeaderableSheetState(
+public fun rememberDockedHeaderableSheetState(
     initialValue: DockedHeaderableSheetValue = DockedHeaderableSheetValue.Collapsed,
     snapAnimationSpec: AnimationSpec<Float> = spring(
         dampingRatio = Spring.DampingRatioMediumBouncy,
         stiffness = Spring.StiffnessMedium
     ),
     density: Density = LocalDensity.current
-) = remember {
+): DockedHeaderableSheetState = remember {
     DockedHeaderableSheetState(
         initialValue = initialValue,
         snapAnimationSpec = snapAnimationSpec,

@@ -26,7 +26,7 @@ private val StarPadding = 10.dp
 private val StarSpacing = 6.dp
 
 @Composable
-fun Rating(
+public fun Rating(
     rating: Int?,
     onRatingChange: (Int) -> Unit,
     modifier: Modifier = Modifier

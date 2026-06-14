@@ -3,7 +3,7 @@ package uz.yalla.capabilities.sms
 import androidx.compose.runtime.Composable
 
 @Composable
-expect fun ObserveSmsCode(
+public expect fun ObserveSmsCode(
     enabled: Boolean,
     codeLength: Int,
     alphanumeric: Boolean,

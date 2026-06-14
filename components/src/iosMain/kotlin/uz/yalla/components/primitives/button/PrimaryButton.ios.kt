@@ -10,7 +10,7 @@ import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
-fun PrimaryButtonViewController(
+public fun PrimaryButtonViewController(
     title: String,
     onClick: () -> Unit
 ): UIViewController = ComposeUIViewController(

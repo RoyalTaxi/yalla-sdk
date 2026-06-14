@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import uz.yalla.components.config.requireConfig
 
 @Composable
-actual fun ContentSheet(
+public actual fun ContentSheet(
     isVisible: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier,

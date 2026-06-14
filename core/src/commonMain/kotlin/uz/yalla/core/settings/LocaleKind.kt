@@ -1,16 +1,16 @@
 package uz.yalla.core.settings
 
 
-enum class LocaleKind(
-    val code: String,
-    val displayName: String
+public enum class LocaleKind(
+    public val code: String,
+    public val displayName: String
 ) {
     Uz("uz", "O'zbekcha"),
 
     Ru("ru", "Русский");
 
-    companion object {
-        fun from(code: String?): LocaleKind {
+    public companion object {
+        public fun from(code: String?): LocaleKind {
             val normalized = code
                 ?.trim()
                 ?.replace('_', '-')

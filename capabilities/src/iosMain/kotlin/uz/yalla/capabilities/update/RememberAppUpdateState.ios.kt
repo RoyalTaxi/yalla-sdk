@@ -14,7 +14,7 @@ import platform.Foundation.dataTaskWithURL
 import kotlin.coroutines.resume
 
 @Composable
-actual fun rememberAppUpdateState(
+public actual fun rememberAppUpdateState(
     appId: String,
     countryCode: String
 ): AppUpdateState {

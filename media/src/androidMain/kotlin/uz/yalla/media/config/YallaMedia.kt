@@ -1,21 +1,21 @@
 package uz.yalla.media.config
 
-class MediaConfig private constructor(
-    val factory: MediaFactory
+public class MediaConfig private constructor(
+    public val factory: MediaFactory
 ) {
-    class Builder {
-        var factory: MediaFactory? = null
+    public class Builder {
+        public var factory: MediaFactory? = null
 
-        fun build() = MediaConfig(
+        public fun build(): MediaConfig = MediaConfig(
             factory = requireNotNull(factory) { "MediaConfig.factory required" }
         )
     }
 }
 
-object YallaMedia {
+public object YallaMedia {
     @PublishedApi internal var config: MediaConfig? = null
 
-    fun install(config: MediaConfig) {
+    public fun install(config: MediaConfig) {
         this.config = config
     }
 }

@@ -35,7 +35,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
 @Composable
-fun PrimaryField(
+public fun PrimaryField(
     value: String,
     onValueChange: (String) -> Unit,
     enabled: Boolean = true,

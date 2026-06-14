@@ -2,8 +2,8 @@ package uz.yalla.components.config.primitives
 
 import platform.UIKit.UIViewController
 
-interface ToggleFactory {
-    fun create(
+public interface ToggleFactory {
+    public fun create(
         initialChecked: Boolean,
         initialEnabled: Boolean,
         thumbArgb: Long,
@@ -12,9 +12,9 @@ interface ToggleFactory {
     ): ToggleHandle
 }
 
-class ToggleHandle(
-    val viewController: UIViewController,
-    val setChecked: (Boolean) -> Unit,
-    val setEnabled: (Boolean) -> Unit,
-    val setColors: (thumbArgb: Long, trackArgb: Long) -> Unit
+public class ToggleHandle(
+    public val viewController: UIViewController,
+    public val setChecked: (Boolean) -> Unit,
+    public val setEnabled: (Boolean) -> Unit,
+    public val setColors: (thumbArgb: Long, trackArgb: Long) -> Unit
 )

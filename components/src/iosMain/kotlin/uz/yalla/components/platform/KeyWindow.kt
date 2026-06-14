@@ -7,7 +7,7 @@ import platform.UIKit.UIWindow
 import platform.UIKit.UIWindowScene
 
 @Suppress("UNCHECKED_CAST")
-fun findKeyWindowRootController(): UIViewController? {
+public fun findKeyWindowRootController(): UIViewController? {
     val scenes = UIApplication.sharedApplication.connectedScenes
 
     val activeScene = scenes.firstOrNull { scene ->

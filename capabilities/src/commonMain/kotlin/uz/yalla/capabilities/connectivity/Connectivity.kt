@@ -10,14 +10,15 @@ import androidx.compose.runtime.setValue
 import dev.jordond.connectivity.Connectivity
 import dev.jordond.connectivity.ConnectivityOptions
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @Stable
-class ConnectivityState(
+public class ConnectivityState(
     private val connectivity: Connectivity,
     private val scope: CoroutineScope
 ) {
-    var isOnline: Boolean by mutableStateOf(true)
+    public var isOnline: Boolean by mutableStateOf(true)
         private set
 
     init {
@@ -26,13 +27,13 @@ class ConnectivityState(
         }
     }
 
-    fun refresh() = scope.launch {
+    public fun refresh(): Job = scope.launch {
         isOnline = connectivity.status() is Connectivity.Status.Connected
     }
 }
 
 @Composable
-fun rememberConnectivityState(
+public fun rememberConnectivityState(
     connectivity: Connectivity,
     scope: CoroutineScope = rememberCoroutineScope()
 ): ConnectivityState = remember(connectivity, scope) {
@@ -40,7 +41,7 @@ fun rememberConnectivityState(
 }
 
 @Composable
-fun rememberConnectivityState(
+public fun rememberConnectivityState(
     scope: CoroutineScope = rememberCoroutineScope()
 ): ConnectivityState {
     val connectivity = remember(scope) {

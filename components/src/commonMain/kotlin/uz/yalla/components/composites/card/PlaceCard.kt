@@ -26,7 +26,7 @@ import uz.yalla.resources.icons.YallaIcons
 import uz.yalla.resources.places_add_hint
 
 @Composable
-fun PlaceCard(
+public fun PlaceCard(
     title: String,
     painter: Painter,
     location: String? = null,

@@ -1,3 +1,3 @@
 package uz.yalla.network
 
-expect val platformName: String
+public expect val platformName: String

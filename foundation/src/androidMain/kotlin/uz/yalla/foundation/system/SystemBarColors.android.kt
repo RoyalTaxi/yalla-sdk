@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 
 @Composable
-actual fun SystemBarColors(darkIcons: Boolean) {
+public actual fun SystemBarColors(darkIcons: Boolean) {
     val context = LocalContext.current
 
     LaunchedEffect(darkIcons) {

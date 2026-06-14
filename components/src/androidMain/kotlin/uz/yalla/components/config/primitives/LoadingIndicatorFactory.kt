@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
-interface LoadingIndicatorFactory {
+public interface LoadingIndicatorFactory {
     @Composable
-    fun Content(
+    public fun Content(
         color: Color,
         modifier: Modifier
     )

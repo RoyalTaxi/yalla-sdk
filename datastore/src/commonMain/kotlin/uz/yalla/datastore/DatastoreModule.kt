@@ -2,6 +2,7 @@ package uz.yalla.datastore
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import org.koin.core.module.Module
 import org.koin.dsl.module
 import uz.yalla.core.preferences.ConfigPreferences
 import uz.yalla.core.preferences.InterfacePreferences
@@ -19,7 +20,7 @@ import uz.yalla.datastore.createDataStore
 import uz.yalla.datastore.createSettings
 import uz.yalla.datastore.ioDispatcher
 
-val datastoreModule = module {
+public val datastoreModule: Module = module {
     single { createDataStore() }
     single { createSettings() }
 

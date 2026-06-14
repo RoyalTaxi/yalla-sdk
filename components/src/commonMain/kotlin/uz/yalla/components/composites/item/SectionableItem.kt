@@ -36,7 +36,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
 @Immutable
-data class SectionableItemColors(
+public data class SectionableItemColors(
     val iconColor: Color,
     val iconBackgroundColor: Color,
     val topDescriptionColor: Color,
@@ -49,7 +49,7 @@ data class SectionableItemColors(
 )
 
 @Immutable
-data class SectionableItemDimens(
+public data class SectionableItemDimens(
     val shape: Shape,
     val contentSpacing: Dp,
     val contentInlineSpacing: Dp,
@@ -63,15 +63,15 @@ data class SectionableItemDimens(
 )
 
 @Immutable
-data class SectionableItemStyles(
+public data class SectionableItemStyles(
     val topDescriptionStyle: TextStyle,
     val titleStyle: TextStyle,
     val bottomDescriptionStyle: TextStyle
 )
 
-object SectionableItemDefaults {
+public object SectionableItemDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         iconColor: Color = System.color.icon.base,
         iconBackgroundColor: Color = Color.Transparent,
         topDescriptionColor: Color = System.color.text.subtle,
@@ -81,7 +81,7 @@ object SectionableItemDefaults {
         openIconColor: Color = System.color.icon.base,
         borderColor: Color = Color.Transparent,
         containerColor: Color = Color.Transparent
-    ) = SectionableItemColors(
+    ): SectionableItemColors = SectionableItemColors(
         iconColor = iconColor,
         iconBackgroundColor = iconBackgroundColor,
         topDescriptionColor = topDescriptionColor,
@@ -94,7 +94,7 @@ object SectionableItemDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RectangleShape,
         contentSpacing: Dp = 16.dp,
         contentInlineSpacing: Dp = 4.dp,
@@ -110,7 +110,7 @@ object SectionableItemDefaults {
         iconPadding: Dp = 0.dp,
         openIconSize: Dp = 24.dp,
         borderWidth: Dp = 0.dp
-    ) = SectionableItemDimens(
+    ): SectionableItemDimens = SectionableItemDimens(
         shape = shape,
         contentSpacing = contentSpacing,
         contentInlineSpacing = contentInlineSpacing,
@@ -124,11 +124,11 @@ object SectionableItemDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         topDescriptionStyle: TextStyle = System.font.body.base.medium,
         titleStyle: TextStyle = System.font.body.large.medium,
         bottomDescriptionStyle: TextStyle = System.font.body.caption
-    ) = SectionableItemStyles(
+    ): SectionableItemStyles = SectionableItemStyles(
         topDescriptionStyle = topDescriptionStyle,
         titleStyle = titleStyle,
         bottomDescriptionStyle = bottomDescriptionStyle
@@ -136,7 +136,7 @@ object SectionableItemDefaults {
 }
 
 @Composable
-fun SectionableItem(
+public fun SectionableItem(
     topDescription: String? = null,
     title: String,
     bottomDescription: String? = null,

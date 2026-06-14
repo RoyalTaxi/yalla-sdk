@@ -17,7 +17,7 @@ import uz.yalla.design.image.themedPainter
 import uz.yalla.design.theme.System
 
 @Composable
-fun EmptyState(
+public fun EmptyState(
     image: ThemedImage,
     modifier: Modifier = Modifier,
     title: String? = null,

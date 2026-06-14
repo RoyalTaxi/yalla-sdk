@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 import uz.yalla.components.config.requireConfig
 
 @Composable
-actual fun LoadingIndicator(
+public actual fun LoadingIndicator(
     color: Color,
     modifier: Modifier
 ) {

@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import uz.yalla.core.geo.GeoPoint
 
 @Immutable
-data class CameraPosition(
+public data class CameraPosition(
     val target: GeoPoint,
     val zoom: Float,
     val bearing: Float = 0f,
@@ -35,8 +35,8 @@ data class CameraPosition(
         return result
     }
 
-    companion object {
-        val DEFAULT = CameraPosition(
+    public companion object {
+        public val DEFAULT: CameraPosition = CameraPosition(
             target = GeoPoint.Zero,
             zoom = 15f
         )

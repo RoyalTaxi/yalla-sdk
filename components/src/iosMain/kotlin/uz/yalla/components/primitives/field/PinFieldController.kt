@@ -14,7 +14,7 @@ import platform.UIKit.UIViewController
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
 
-class PinFieldController(
+public class PinFieldController(
     length: Int,
     code: String = "",
     error: Boolean = false,
@@ -26,7 +26,7 @@ class PinFieldController(
     private var errorState by mutableStateOf(error)
 
     @OptIn(ExperimentalComposeUiApi::class)
-    val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
+    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
         YallaTheme(isDark = rememberIsDarkTheme()) {
             val focusRequester = remember { FocusRequester() }
             if (autoFocus) {
@@ -46,11 +46,11 @@ class PinFieldController(
         }
     }
 
-    fun setCode(code: String) {
+    public fun setCode(code: String) {
         codeState = code
     }
 
-    fun setError(error: Boolean) {
+    public fun setError(error: Boolean) {
         errorState = error
     }
 }

@@ -16,7 +16,7 @@ import kotlin.math.min
 private const val MIN_QUALITY_INT = 10
 
 @OptIn(ExperimentalForeignApi::class)
-actual fun compressImage(
+public actual fun compressImage(
     imageBytes: ByteArray,
     config: CompressionConfig
 ): ByteArray {

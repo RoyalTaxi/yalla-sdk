@@ -16,7 +16,7 @@ import platform.UIKit.UIViewController
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
 
-class PrimaryFieldController(
+public class PrimaryFieldController(
     value: String = "",
     placeholder: String = "",
     enabled: Boolean = true,
@@ -29,7 +29,7 @@ class PrimaryFieldController(
     private var enabledState by mutableStateOf(enabled)
 
     @OptIn(ExperimentalComposeUiApi::class)
-    val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
+    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
         YallaTheme(isDark = rememberIsDarkTheme()) {
             val focusRequester = remember { FocusRequester() }
             if (autoFocus) {
@@ -53,15 +53,15 @@ class PrimaryFieldController(
         }
     }
 
-    fun setValue(value: String) {
+    public fun setValue(value: String) {
         valueState = value
     }
 
-    fun setPlaceholder(placeholder: String) {
+    public fun setPlaceholder(placeholder: String) {
         placeholderState = placeholder
     }
 
-    fun setEnabled(enabled: Boolean) {
+    public fun setEnabled(enabled: Boolean) {
         enabledState = enabled
     }
 }

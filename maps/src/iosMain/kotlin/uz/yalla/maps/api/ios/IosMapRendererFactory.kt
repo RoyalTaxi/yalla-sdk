@@ -3,13 +3,13 @@ package uz.yalla.maps.api.ios
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.config.MapFactory
 
-interface IosMapRendererFactory {
-    fun createGoogleRenderer(): IosMapRenderer
+public interface IosMapRendererFactory {
+    public fun createGoogleRenderer(): IosMapRenderer
 
-    fun createLibreRenderer(): IosMapRenderer
+    public fun createLibreRenderer(): IosMapRenderer
 }
 
-fun iosMapFactoryOf(rendererFactory: IosMapRendererFactory): MapFactory = object : MapFactory {
+public fun iosMapFactoryOf(rendererFactory: IosMapRendererFactory): MapFactory = object : MapFactory {
     override fun createGoogleController(): MapController =
         IosMapControllerWrapper(rendererFactory.createGoogleRenderer())
 

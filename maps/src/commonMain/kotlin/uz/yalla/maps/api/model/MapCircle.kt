@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import uz.yalla.core.geo.GeoPoint
 
 @Immutable
-data class MapCircle(
+public data class MapCircle(
     val id: String,
     val center: GeoPoint,
     val radiusMeters: Double,

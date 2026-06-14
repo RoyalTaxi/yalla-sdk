@@ -33,7 +33,7 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_car_business
 
 @Composable
-fun HistoryCard(
+public fun HistoryCard(
     origin: String,
     destination: String,
     time: String,

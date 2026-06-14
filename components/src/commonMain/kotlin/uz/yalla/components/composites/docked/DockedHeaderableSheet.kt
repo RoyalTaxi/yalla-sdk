@@ -31,7 +31,7 @@ import kotlin.math.roundToInt
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DockedHeaderableSheet(
+public fun DockedHeaderableSheet(
     state: DockedHeaderableSheetState,
     header: @Composable () -> Unit,
     body: @Composable () -> Unit,

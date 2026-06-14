@@ -20,34 +20,34 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
 @Immutable
-data class LoadingDialogColors(
+public data class LoadingDialogColors(
     val container: Color,
     val indicator: Color
 )
 
 @Immutable
-data class LoadingDialogDimens(
+public data class LoadingDialogDimens(
     val shape: Shape,
     val contentPadding: Dp,
     val indicatorSize: Dp
 )
 
-object LoadingDialogDefaults {
+public object LoadingDialogDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         container: Color = System.color.background.base,
         indicator: Color = System.color.background.brand
-    ) = LoadingDialogColors(
+    ): LoadingDialogColors = LoadingDialogColors(
         container = container,
         indicator = indicator
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = CircleShape,
         contentPadding: Dp = 20.dp,
         indicatorSize: Dp = 40.dp
-    ) = LoadingDialogDimens(
+    ): LoadingDialogDimens = LoadingDialogDimens(
         shape = shape,
         contentPadding = contentPadding,
         indicatorSize = indicatorSize
@@ -55,7 +55,7 @@ object LoadingDialogDefaults {
 }
 
 @Composable
-fun LoadingDialog(
+public fun LoadingDialog(
     isVisible: Boolean,
     modifier: Modifier = Modifier,
     colors: LoadingDialogColors = LoadingDialogDefaults.colors(),

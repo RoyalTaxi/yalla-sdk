@@ -1,6 +1,6 @@
 package uz.yalla.network
 
-data class NetworkConfig(
+public data class NetworkConfig(
     val baseUrl: String,
     val brandId: String,
     val secretKey: String,
@@ -9,7 +9,7 @@ data class NetworkConfig(
     val guestAllowedSegments: List<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS
 )
 
-val DEFAULT_GUEST_ALLOWED_SEGMENTS: List<String> = listOf(
+public val DEFAULT_GUEST_ALLOWED_SEGMENTS: List<String> = listOf(
     "client",
     "valid",
     "register",

@@ -46,7 +46,7 @@ import uz.yalla.resources.icons.Location
 import uz.yalla.resources.icons.YallaIcons
 
 @Composable
-fun SearchField(
+public fun SearchField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,

@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 
 @Composable
-fun FilterChip(
+public fun FilterChip(
     text: String,
     selected: Boolean,
     onClick: () -> Unit,

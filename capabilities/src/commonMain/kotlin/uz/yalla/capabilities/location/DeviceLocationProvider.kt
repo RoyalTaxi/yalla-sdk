@@ -11,15 +11,15 @@ import kotlinx.coroutines.launch
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.location.LocationProvider
 
-class DeviceLocationProvider(
-    val locationTracker: LocationTracker,
+public class DeviceLocationProvider(
+    public val locationTracker: LocationTracker,
     private val scope: CoroutineScope
 ) : LocationProvider {
     private val _currentLocation = MutableStateFlow<GeoPoint?>(null)
     override val currentLocation: StateFlow<GeoPoint?> = _currentLocation.asStateFlow()
 
     private val _permissionState = MutableStateFlow<LocationPermissionState?>(null)
-    val permissionState: StateFlow<LocationPermissionState?> = _permissionState.asStateFlow()
+    public val permissionState: StateFlow<LocationPermissionState?> = _permissionState.asStateFlow()
 
     private var job: Job? = null
 
@@ -45,7 +45,7 @@ class DeviceLocationProvider(
         locationTracker.stopTracking()
     }
 
-    fun updatePermissionState(state: LocationPermissionState?) {
+    public fun updatePermissionState(state: LocationPermissionState?) {
         _permissionState.value = state
     }
 }

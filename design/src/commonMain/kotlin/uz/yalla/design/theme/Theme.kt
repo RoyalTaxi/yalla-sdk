@@ -27,7 +27,7 @@ internal val LocalIsDark = staticCompositionLocalOf { false }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun YallaTheme(
+public fun YallaTheme(
     isDark: Boolean = isSystemInDarkTheme(),
     colorScheme: ColorScheme = if (isDark) dark() else light(),
     fontScheme: FontScheme = rememberFontScheme(),
@@ -87,20 +87,20 @@ fun YallaTheme(
     }
 }
 
-object System {
-    val color: ColorScheme
+public object System {
+    public val color: ColorScheme
         @Composable
         get() = LocalColorScheme.current
 
-    val font: FontScheme
+    public val font: FontScheme
         @Composable
         get() = LocalFontScheme.current
 
-    val space: SpaceScheme
+    public val space: SpaceScheme
         @Composable
         get() = LocalSpaceScheme.current
 
-    val isDark: Boolean
+    public val isDark: Boolean
         @Composable
         get() = LocalIsDark.current
 }

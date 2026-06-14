@@ -21,7 +21,7 @@ private const val INITIAL_RETRY_DELAY_MS = 200L
 private const val MAX_RETRY_DELAY_MS = 2_000L
 private const val RETRY_BACKOFF_FACTOR = 2.0
 
-suspend inline fun <reified T> safeApiCall(
+public suspend inline fun <reified T> safeApiCall(
     isIdempotent: Boolean = false,
     crossinline call: suspend () -> HttpResponse
 ): Either<DataError.Network, T> = try {

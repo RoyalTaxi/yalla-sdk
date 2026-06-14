@@ -12,7 +12,7 @@ import kotlinx.coroutines.withContext
 import uz.yalla.media.config.requireMedia
 
 @Composable
-actual fun rememberSystemCameraLauncher(
+public actual fun rememberSystemCameraLauncher(
     scope: CoroutineScope,
     onResult: (ByteArray?) -> Unit
 ): SystemCameraLauncher {

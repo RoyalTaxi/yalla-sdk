@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Color
 import uz.yalla.design.theme.System
 
 @Composable
-expect fun Toggle(
+public expect fun Toggle(
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,

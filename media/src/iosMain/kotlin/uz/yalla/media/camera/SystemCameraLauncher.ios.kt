@@ -12,7 +12,7 @@ import uz.yalla.media.config.requireMedia
 import uz.yalla.media.utils.toByteArray
 
 @Composable
-actual fun rememberSystemCameraLauncher(
+public actual fun rememberSystemCameraLauncher(
     scope: CoroutineScope,
     onResult: (ByteArray?) -> Unit
 ): SystemCameraLauncher {

@@ -1,12 +1,13 @@
 package uz.yalla.design.space
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data class SpaceScheme(
+public data class SpaceScheme(
     val screenEdge: Dp,
     val sheetEdge: Dp,
     val contentEdge: Dp,
@@ -17,7 +18,7 @@ data class SpaceScheme(
     val scale: Scale
 ) {
     @Immutable
-    data class Scale(
+    public data class Scale(
         val xxs: Dp,
         val xs: Dp,
         val s: Dp,
@@ -31,7 +32,7 @@ data class SpaceScheme(
     )
 }
 
-fun standardSpaceScheme(): SpaceScheme = SpaceScheme(
+public fun standardSpaceScheme(): SpaceScheme = SpaceScheme(
     screenEdge = 20.dp,
     sheetEdge = 20.dp,
     contentEdge = 16.dp,
@@ -53,4 +54,4 @@ fun standardSpaceScheme(): SpaceScheme = SpaceScheme(
     )
 )
 
-val LocalSpaceScheme = staticCompositionLocalOf { standardSpaceScheme() }
+public val LocalSpaceScheme: ProvidableCompositionLocal<SpaceScheme> = staticCompositionLocalOf { standardSpaceScheme() }

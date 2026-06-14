@@ -18,14 +18,14 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 
-enum class DockedExpandableSheetValue {
+public enum class DockedExpandableSheetValue {
     Collapsed,
     Expanded,
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Stable
-class DockedExpandableSheetState internal constructor(
+public class DockedExpandableSheetState internal constructor(
     initialValue: DockedExpandableSheetValue,
     internal val snapAnimationSpec: AnimationSpec<Float>,
     internal val density: Density,
@@ -40,17 +40,17 @@ class DockedExpandableSheetState internal constructor(
 
     internal val anchoredDraggableState: AnchoredDraggableState<DockedExpandableSheetValue> = AnchoredDraggableState(initialValue = initialValue)
 
-    val collapsedHeight: Dp get() = with(density) { collapsedHeightPx.toDp() }
-    val expandedHeight: Dp get() = with(density) { expandedHeightPx.toDp() }
-    val footerHeight: Dp get() = with(density) { footerHeightPx.toDp() }
-    val collapsedSheetHeight: Dp get() = collapsedHeight + footerHeight
+    public val collapsedHeight: Dp get() = with(density) { collapsedHeightPx.toDp() }
+    public val expandedHeight: Dp get() = with(density) { expandedHeightPx.toDp() }
+    public val footerHeight: Dp get() = with(density) { footerHeightPx.toDp() }
+    public val collapsedSheetHeight: Dp get() = collapsedHeight + footerHeight
 
-    val currentValue: DockedExpandableSheetValue get() = anchoredDraggableState.currentValue
-    val targetValue: DockedExpandableSheetValue get() = anchoredDraggableState.targetValue
-    val isExpanded: Boolean get() = currentValue == DockedExpandableSheetValue.Expanded
-    val isCollapsed: Boolean get() = currentValue == DockedExpandableSheetValue.Collapsed
+    public val currentValue: DockedExpandableSheetValue get() = anchoredDraggableState.currentValue
+    public val targetValue: DockedExpandableSheetValue get() = anchoredDraggableState.targetValue
+    public val isExpanded: Boolean get() = currentValue == DockedExpandableSheetValue.Expanded
+    public val isCollapsed: Boolean get() = currentValue == DockedExpandableSheetValue.Collapsed
 
-    val fraction: Float by derivedStateOf {
+    public val fraction: Float by derivedStateOf {
         if (!hasOffset) {
             0f
         } else {
@@ -78,17 +78,17 @@ class DockedExpandableSheetState internal constructor(
         }
     }
 
-    val isAnimating: Boolean get() = anchoredDraggableState.isAnimationRunning
+    public val isAnimating: Boolean get() = anchoredDraggableState.isAnimationRunning
 
-    suspend fun expand() {
+    public suspend fun expand() {
         if (hasOffset) anchoredDraggableState.animateTo(DockedExpandableSheetValue.Expanded)
     }
 
-    suspend fun collapse() {
+    public suspend fun collapse() {
         if (hasOffset) anchoredDraggableState.animateTo(DockedExpandableSheetValue.Collapsed)
     }
 
-    suspend fun toggle() {
+    public suspend fun toggle() {
         if (isCollapsed) expand() else collapse()
     }
 
@@ -122,13 +122,13 @@ class DockedExpandableSheetState internal constructor(
     }
 }
 
-val DockedExpandableSheetSpringSpec: AnimationSpec<Float> = spring(
+public val DockedExpandableSheetSpringSpec: AnimationSpec<Float> = spring(
     dampingRatio = Spring.DampingRatioNoBouncy,
     stiffness = Spring.StiffnessMedium
 )
 
 @Composable
-fun rememberDockedExpandableSheetState(
+public fun rememberDockedExpandableSheetState(
     initialValue: DockedExpandableSheetValue = DockedExpandableSheetValue.Collapsed,
     snapAnimationSpec: AnimationSpec<Float> = DockedExpandableSheetSpringSpec,
     density: Density = LocalDensity.current,

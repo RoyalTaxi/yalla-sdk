@@ -40,7 +40,7 @@ import uz.yalla.resources.auth_phone_placeholder
 private const val MAX_PHONE_DIGITS = 9
 
 @Composable
-fun NumberField(
+public fun NumberField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier

@@ -15,7 +15,7 @@ import uz.yalla.components.config.requireConfig
 
 @OptIn(ExperimentalForeignApi::class, ExperimentalComposeUiApi::class)
 @Composable
-actual fun LoadingIndicator(
+public actual fun LoadingIndicator(
     color: Color,
     modifier: Modifier
 ) {

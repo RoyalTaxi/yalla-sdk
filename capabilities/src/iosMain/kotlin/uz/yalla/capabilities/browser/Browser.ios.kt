@@ -12,7 +12,7 @@ import platform.UIKit.UIWindow
 import platform.UIKit.UIWindowScene
 
 @Composable
-actual fun rememberBrowser(): Browser {
+public actual fun rememberBrowser(): Browser {
     return remember {
         object : Browser {
             override fun open(url: String) {

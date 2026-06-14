@@ -12,7 +12,7 @@ import platform.UIKit.UIViewController
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
 
-class PrimaryButtonController(
+public class PrimaryButtonController(
     text: String,
     enabled: Boolean = true,
     loading: Boolean = false,
@@ -23,7 +23,7 @@ class PrimaryButtonController(
     private var loadingState by mutableStateOf(loading)
 
     @OptIn(ExperimentalComposeUiApi::class)
-    val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
+    public val viewController: UIViewController = ComposeUIViewController(configure = { opaque = false }) {
         YallaTheme(isDark = rememberIsDarkTheme()) {
             PrimaryButton(
                 enabled = enabledState,
@@ -36,15 +36,15 @@ class PrimaryButtonController(
         }
     }
 
-    fun setText(text: String) {
+    public fun setText(text: String) {
         textState = text
     }
 
-    fun setEnabled(enabled: Boolean) {
+    public fun setEnabled(enabled: Boolean) {
         enabledState = enabled
     }
 
-    fun setLoading(loading: Boolean) {
+    public fun setLoading(loading: Boolean) {
         loadingState = loading
     }
 }

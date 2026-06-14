@@ -3,36 +3,36 @@ package uz.yalla.core.identity
 import kotlin.jvm.JvmInline
 
 @JvmInline
-value class OrderId(
-    val raw: Int
+public value class OrderId(
+    public val raw: Int
 )
 
 @JvmInline
-value class DriverId(
-    val raw: Int
+public value class DriverId(
+    public val raw: Int
 )
 
 @JvmInline
-value class TaxiId(
-    val raw: Int
+public value class TaxiId(
+    public val raw: Int
 )
 
 @JvmInline
-value class ExtraServiceId(
-    val raw: Int
+public value class ExtraServiceId(
+    public val raw: Int
 )
 
 @JvmInline
-value class ServiceBrandId(
-    val raw: Int
+public value class ServiceBrandId(
+    public val raw: Int
 )
 
 @JvmInline
-value class PlaceId(
-    val raw: Int
+public value class PlaceId(
+    public val raw: Int
 )
 
 @JvmInline
-value class CardId(
-    val raw: String
+public value class CardId(
+    public val raw: String
 )

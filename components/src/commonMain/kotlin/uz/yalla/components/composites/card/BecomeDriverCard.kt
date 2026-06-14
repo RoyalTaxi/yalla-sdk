@@ -32,7 +32,7 @@ import uz.yalla.resources.img_banner_gradient
 import uz.yalla.resources.img_car_cropped
 
 @Composable
-fun BecomeDriverCard(
+public fun BecomeDriverCard(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {

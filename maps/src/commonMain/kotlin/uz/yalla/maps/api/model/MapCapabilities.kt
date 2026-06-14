@@ -3,7 +3,7 @@ package uz.yalla.maps.api.model
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class MapCapabilities(
+public data class MapCapabilities(
     val supportsOffline: Boolean = false,
     val supports3D: Boolean = false,
     val supportsTraffic: Boolean = false,
@@ -16,8 +16,8 @@ data class MapCapabilities(
     val maxZoom: Float = 21f,
     val minZoom: Float = 1f
 ) {
-    companion object {
-        val LIBRE = MapCapabilities(
+    public companion object {
+        public val LIBRE: MapCapabilities = MapCapabilities(
             supportsOffline = true,
             supportsCustomStyles = true,
             supportsRotation = true,
@@ -28,7 +28,7 @@ data class MapCapabilities(
             minZoom = 4f
         )
 
-        val GOOGLE = MapCapabilities(
+        public val GOOGLE: MapCapabilities = MapCapabilities(
             supportsTraffic = true,
             supportsRotation = true,
             supportsTilt = true,

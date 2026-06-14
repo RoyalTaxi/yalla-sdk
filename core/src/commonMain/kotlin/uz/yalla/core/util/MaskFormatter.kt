@@ -1,7 +1,7 @@
 package uz.yalla.core.util
 
-object MaskFormatter {
-    fun format(text: String, mask: String): String {
+public object MaskFormatter {
+    public fun format(text: String, mask: String): String {
         if (text.isEmpty()) return ""
         val builder = StringBuilder()
         var index = 0

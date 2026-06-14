@@ -34,7 +34,7 @@ import uz.yalla.resources.icons.YallaIcons
 import uz.yalla.resources.img_avatar_placeholder
 
 @Composable
-fun DriverCard(
+public fun DriverCard(
     painter: Painter,
     firstName: String,
     lastName: String,
@@ -112,7 +112,7 @@ fun DriverCard(
 }
 
 @Composable
-fun DriverCard(
+public fun DriverCard(
     imageUrl: String,
     firstName: String,
     lastName: String,

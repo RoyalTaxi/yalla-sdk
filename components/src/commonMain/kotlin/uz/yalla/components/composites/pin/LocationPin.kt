@@ -40,7 +40,7 @@ private const val ShadowShrinkDurationMs = 400
 internal const val JumpCycleDurationMs = 700
 
 @Immutable
-data class LocationPinColors(
+public data class LocationPinColors(
     val background: Color,
     val border: Brush,
     val stick: Color,
@@ -52,7 +52,7 @@ data class LocationPinColors(
 )
 
 @Immutable
-data class LocationPinDimens(
+public data class LocationPinDimens(
     val stickHeight: Dp,
     val stickWidth: Dp,
     val jumpHeight: Dp,
@@ -67,9 +67,9 @@ data class LocationPinDimens(
     val headerBottomOffset: Dp
 )
 
-object LocationPinDefaults {
+public object LocationPinDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         background: Color = System.color.background.base,
         border: Brush = System.color.gradient.sunsetNight,
         stick: Color = System.color.background.brand,
@@ -90,7 +90,7 @@ object LocationPinDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         stickHeight: Dp = 12.dp,
         stickWidth: Dp = 6.dp,
         jumpHeight: Dp = 6.dp,
@@ -120,7 +120,7 @@ object LocationPinDefaults {
 }
 
 @Composable
-fun LocationPin(
+public fun LocationPin(
     modifier: Modifier = Modifier,
     address: String? = null,
     timeout: Int? = null,

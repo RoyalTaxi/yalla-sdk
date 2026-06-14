@@ -1,9 +1,9 @@
 package uz.yalla.components.config
 
-object YallaComponents {
+public object YallaComponents {
     @PublishedApi internal var config: ComponentsConfig? = null
 
-    fun install(config: ComponentsConfig) {
+    public fun install(config: ComponentsConfig) {
         this.config = config
     }
 }

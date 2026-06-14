@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import uz.yalla.components.composites.item.SelectableItemModel
 
 @Composable
-expect fun SelectionSheet(
+public expect fun SelectionSheet(
     isVisible: Boolean,
     title: String,
     items: List<SelectableItemModel>,

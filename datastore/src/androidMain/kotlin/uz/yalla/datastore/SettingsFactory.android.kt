@@ -8,7 +8,7 @@ import org.koin.core.component.inject
 
 private const val SETTINGS_NAME = "yalla_startup"
 
-actual fun createSettings(): Settings = object : KoinComponent {
+public actual fun createSettings(): Settings = object : KoinComponent {
     val context: Context by inject()
 }.run {
     SharedPreferencesSettings(

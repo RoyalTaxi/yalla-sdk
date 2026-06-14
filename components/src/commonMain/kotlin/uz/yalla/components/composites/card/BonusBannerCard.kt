@@ -27,19 +27,19 @@ import uz.yalla.resources.Res
 import uz.yalla.resources.img_banner_bonus
 
 @Immutable
-data class BonusBannerCardDimens(
+public data class BonusBannerCardDimens(
     val shape: Shape,
     val height: Dp,
     val contentPadding: PaddingValues
 )
 
-object BonusBannerCardDefaults {
+public object BonusBannerCardDefaults {
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         height: Dp = 148.dp,
         contentPadding: PaddingValues = PaddingValues(vertical = 16.dp, horizontal = 20.dp)
-    ) = BonusBannerCardDimens(
+    ): BonusBannerCardDimens = BonusBannerCardDimens(
         shape = shape,
         height = height,
         contentPadding = contentPadding
@@ -47,7 +47,7 @@ object BonusBannerCardDefaults {
 }
 
 @Composable
-fun BonusBannerCard(
+public fun BonusBannerCard(
     title: String,
     subtitle: String,
     amount: String,

@@ -36,7 +36,7 @@ import uz.yalla.resources.icons.Origin
 import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
-data class AddressCardColors(
+public data class AddressCardColors(
     val borderColor: Color,
     val containerColor: Color,
     val textColor: Color,
@@ -46,7 +46,7 @@ data class AddressCardColors(
 )
 
 @Immutable
-data class AddressCardDimens(
+public data class AddressCardDimens(
     val shape: Shape,
     val borderWidth: Dp,
     val contentPadding: PaddingValues,
@@ -58,20 +58,20 @@ data class AddressCardDimens(
 )
 
 @Immutable
-data class AddressCardStyles(
+public data class AddressCardStyles(
     val textStyle: TextStyle
 )
 
-object AddressCardDefaults {
+public object AddressCardDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         borderColor: Color = System.color.border.disabled,
         containerColor: Color = Color.Transparent,
         textColor: Color = System.color.text.base,
         placeholderColor: Color = System.color.text.subtle,
         trailingContainerColor: Color = System.color.background.secondary,
         trailingIconColor: Color = System.color.icon.base
-    ) = AddressCardColors(
+    ): AddressCardColors = AddressCardColors(
         borderColor = borderColor,
         containerColor = containerColor,
         textColor = textColor,
@@ -81,7 +81,7 @@ object AddressCardDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RoundedCornerShape(12.dp),
         borderWidth: Dp = 1.dp,
         contentPadding: PaddingValues = PaddingValues(start = 12.dp, top = 4.dp, end = 4.dp, bottom = 4.dp),
@@ -90,7 +90,7 @@ object AddressCardDefaults {
         trailingButtonSize: Dp = 40.dp,
         trailingButtonShape: Shape = RoundedCornerShape(10.dp),
         trailingIconSize: Dp = 20.dp
-    ) = AddressCardDimens(
+    ): AddressCardDimens = AddressCardDimens(
         shape = shape,
         borderWidth = borderWidth,
         contentPadding = contentPadding,
@@ -102,15 +102,15 @@ object AddressCardDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         textStyle: TextStyle = System.font.body.base.medium
-    ) = AddressCardStyles(
+    ): AddressCardStyles = AddressCardStyles(
         textStyle = textStyle
     )
 }
 
 @Composable
-fun AddressCard(
+public fun AddressCard(
     value: String?,
     placeholder: String,
     leadingPainter: Painter,

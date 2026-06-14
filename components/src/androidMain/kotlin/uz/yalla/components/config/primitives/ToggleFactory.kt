@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
-interface ToggleFactory {
+public interface ToggleFactory {
     @Composable
-    fun Content(
+    public fun Content(
         checked: Boolean,
         onCheckedChange: (Boolean) -> Unit,
         enabled: Boolean,

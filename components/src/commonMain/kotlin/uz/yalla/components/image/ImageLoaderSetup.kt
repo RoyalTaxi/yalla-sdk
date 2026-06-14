@@ -5,7 +5,7 @@ import coil3.SingletonImageLoader
 import coil3.network.ktor3.KtorNetworkFetcherFactory
 import coil3.svg.SvgDecoder
 
-fun installImageLoader() {
+public fun installImageLoader() {
     SingletonImageLoader.setSafe { context ->
         ImageLoader.Builder(context)
             .components {

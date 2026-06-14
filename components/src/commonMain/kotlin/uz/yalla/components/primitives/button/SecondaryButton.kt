@@ -33,7 +33,7 @@ import uz.yalla.resources.icons.FocusLocation
 import uz.yalla.resources.icons.YallaIcons
 
 @Immutable
-data class SecondaryButtonColors(
+public data class SecondaryButtonColors(
     val contentColor: Color,
     val containerColor: Color,
     val disabledContentColor: Color,
@@ -48,11 +48,11 @@ data class SecondaryButtonColors(
     )
 
     @Composable
-    fun contentColorFor(enabled: Boolean) = if (enabled) contentColor else disabledContentColor
+    public fun contentColorFor(enabled: Boolean): Color = if (enabled) contentColor else disabledContentColor
 }
 
 @Immutable
-data class SecondaryButtonDimens(
+public data class SecondaryButtonDimens(
     val shape: Shape,
     val minHeight: Dp,
     val contentSpacing: Dp,
@@ -60,18 +60,18 @@ data class SecondaryButtonDimens(
 )
 
 @Immutable
-data class SecondaryButtonStyles(
+public data class SecondaryButtonStyles(
     val textStyle: TextStyle
 )
 
-object SecondaryButtonDefaults {
+public object SecondaryButtonDefaults {
     @Composable
-    fun colors(
+    public fun colors(
         contentColor: Color = System.color.background.base,
         containerColor: Color = System.color.button.tertiary,
         disabledContentColor: Color = System.color.text.white,
         disabledContainerColor: Color = System.color.button.disabled
-    ) = SecondaryButtonColors(
+    ): SecondaryButtonColors = SecondaryButtonColors(
         contentColor = contentColor,
         containerColor = containerColor,
         disabledContentColor = disabledContentColor,
@@ -79,12 +79,12 @@ object SecondaryButtonDefaults {
     )
 
     @Composable
-    fun dimens(
+    public fun dimens(
         shape: Shape = RoundedCornerShape(16.dp),
         minHeight: Dp = 24.dp,
         contentSpacing: Dp = 12.dp,
         contentPadding: PaddingValues = PaddingValues(20.dp)
-    ) = SecondaryButtonDimens(
+    ): SecondaryButtonDimens = SecondaryButtonDimens(
         shape = shape,
         minHeight = minHeight,
         contentSpacing = contentSpacing,
@@ -92,15 +92,15 @@ object SecondaryButtonDefaults {
     )
 
     @Composable
-    fun styles(
+    public fun styles(
         textStyle: TextStyle = System.font.body.base.medium
-    ) = SecondaryButtonStyles(
+    ): SecondaryButtonStyles = SecondaryButtonStyles(
         textStyle = textStyle
     )
 }
 
 @Composable
-fun SecondaryButton(
+public fun SecondaryButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,

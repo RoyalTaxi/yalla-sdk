@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import uz.yalla.core.geo.GeoPoint
 
 @Immutable
-data class MapRoute(
+public data class MapRoute(
     val id: String,
     val points: List<GeoPoint>,
     val colorArgb: Int,
@@ -13,4 +13,4 @@ data class MapRoute(
     val zIndex: Float = 0f
 )
 
-enum class RoutePattern { SOLID, DASHED, DOTTED }
+public enum class RoutePattern { SOLID, DASHED, DOTTED }
