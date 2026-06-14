@@ -11,6 +11,7 @@ import uz.yalla.sdk.buildlogic.extensions.configureAndroidAbiValidation
 import uz.yalla.sdk.buildlogic.extensions.configureDokkaModuleDoc
 import uz.yalla.sdk.buildlogic.extensions.configureYallaCoordinates
 import uz.yalla.sdk.buildlogic.extensions.configureYallaPublishing
+import uz.yalla.sdk.buildlogic.extensions.yallaDocsEnabled
 import uz.yalla.sdk.buildlogic.extensions.yallaFrameworkBaseName
 import uz.yalla.sdk.buildlogic.extensions.yallaNamespace
 
@@ -22,7 +23,9 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.multiplatform")
                 apply("org.jetbrains.kotlin.plugin.serialization")
                 apply("maven-publish")
-                apply("org.jetbrains.dokka")
+                // Dokka is opt-in (`-Pyalla.docs=true`); the per-PR publications dry-run
+                // does not set it, so it does not pay Dokka's config cost in every module.
+                if (yallaDocsEnabled) apply("org.jetbrains.dokka")
             }
 
             configureYallaCoordinates()
@@ -67,7 +70,7 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                 }
             }
 
-            configureDokkaModuleDoc()
+            if (yallaDocsEnabled) configureDokkaModuleDoc()
             configureYallaPublishing()
             configureAndroidAbiValidation()
         }
