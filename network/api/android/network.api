@@ -130,8 +130,10 @@ public final class uz/yalla/network/Platform_androidKt {
 }
 
 public final class uz/yalla/network/SafeApiCallKt {
+	public static final fun isSuccessStatus (I)Z
 	public static final fun parseApiError (Lio/ktor/client/statement/HttpResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static final fun retryWithBackoff (IJJDZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun retryWithBackoff$default (IJJDZLkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static final fun statusToEither (ILuz/yalla/core/error/DataError$Network$Api;)Luz/yalla/core/result/Either;
 }
 

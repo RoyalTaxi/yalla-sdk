@@ -27,19 +27,19 @@ public suspend inline fun <reified T> safeApiCall(
 ): Either<DataError.Network, T> =
     try {
         val response = retryWithBackoff(isIdempotent = isIdempotent) { call() }
-        when (response.status.value) {
-            in 200..299 -> {
+        val status = response.status.value
+        // Parse the error envelope only on a non-2xx status: the Ktor response body is a single-read
+        // stream, so consuming it as an envelope here would leave nothing for the success deserialization.
+        val parsedError = if (isSuccessStatus(status)) null else parseApiError(response)
+        when (val verdict = statusToEither(status, parsedError)) {
+            is Either.Success ->
                 if (T::class == Unit::class) {
                     Either.Success(Unit as T)
                 } else {
                     Either.Success(response.body())
                 }
-            }
 
-            in 300..399 -> Either.Failure(parseApiError(response) ?: DataError.Network.Client)
-            in 400..499 -> Either.Failure(parseApiError(response) ?: DataError.Network.Client)
-            in 500..599 -> Either.Failure(parseApiError(response) ?: DataError.Network.Server)
-            else -> Either.Failure(parseApiError(response) ?: DataError.Network.Unknown)
+            is Either.Failure -> Either.Failure(verdict.error)
         }
     } catch (_: ServerResponseException) {
         Either.Failure(DataError.Network.Server)
@@ -61,6 +61,31 @@ public suspend inline fun <reified T> safeApiCall(
         Either.Failure(DataError.Network.Unknown)
     } catch (_: GuestBlockedException) {
         Either.Failure(DataError.Network.Guest)
+    }
+
+@PublishedApi
+internal fun isSuccessStatus(status: Int): Boolean = status in 200..299
+
+/**
+ * The pure decision behind [safeApiCall]: maps an HTTP status to a result, leaving the actual call,
+ * retry, and body deserialization to the suspend orchestration. [Either.Success] means "the caller may
+ * deserialize the body as `T`"; [Either.Failure] carries the resolved error. A parsed API envelope,
+ * when present, always wins over the status-bucket default so server-supplied detail survives.
+ *
+ * A raw 3xx is treated as a client failure, not a redirect: the Ktor client follows redirects itself,
+ * so a 3xx reaching here is an unfollowed/unexpected redirect we cannot act on — a malformed request
+ * from our side, hence [DataError.Network.Client], the same bucket as 4xx.
+ */
+@PublishedApi
+internal fun statusToEither(
+    status: Int,
+    parsedError: DataError.Network.Api?
+): Either<DataError.Network, Unit> =
+    when {
+        isSuccessStatus(status) -> Either.Success(Unit)
+        status in 300..499 -> Either.Failure(parsedError ?: DataError.Network.Client)
+        status in 500..599 -> Either.Failure(parsedError ?: DataError.Network.Server)
+        else -> Either.Failure(parsedError ?: DataError.Network.Unknown)
     }
 
 @PublishedApi
