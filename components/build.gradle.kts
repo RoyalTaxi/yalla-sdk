@@ -12,7 +12,7 @@ kotlin {
             api(projects.design)
             api(projects.resources)
             api(projects.maps)
-            implementation(projects.core)
+            api(projects.core)
             implementation(projects.foundation)
 
             api(libs.kotlinx.datetime)
