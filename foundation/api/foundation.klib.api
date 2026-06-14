@@ -1,0 +1,59 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <uz.yalla.sdk:foundation>
+abstract class uz.yalla.foundation.infra/BaseViewModel : androidx.lifecycle/ViewModel { // uz.yalla.foundation.infra/BaseViewModel|null[0]
+    constructor <init>() // uz.yalla.foundation.infra/BaseViewModel.<init>|<init>(){}[0]
+
+    final val loading // uz.yalla.foundation.infra/BaseViewModel.loading|{}loading[0]
+        final fun <get-loading>(): kotlinx.coroutines.flow/StateFlow<kotlin/Boolean> // uz.yalla.foundation.infra/BaseViewModel.loading.<get-loading>|<get-loading>(){}[0]
+    final val safeScope // uz.yalla.foundation.infra/BaseViewModel.safeScope|{}safeScope[0]
+        final fun <get-safeScope>(): kotlinx.coroutines/CoroutineScope // uz.yalla.foundation.infra/BaseViewModel.safeScope.<get-safeScope>|<get-safeScope>(){}[0]
+
+    final fun (kotlinx.coroutines/CoroutineScope).launchWithLoading(kotlin.coroutines/SuspendFunction0<kotlin/Unit>): kotlinx.coroutines/Job // uz.yalla.foundation.infra/BaseViewModel.launchWithLoading|launchWithLoading@kotlinx.coroutines.CoroutineScope(kotlin.coroutines.SuspendFunction0<kotlin.Unit>){}[0]
+}
+
+final class uz.yalla.foundation.infra/LoadingController { // uz.yalla.foundation.infra/LoadingController|null[0]
+    constructor <init>(kotlinx.coroutines/CoroutineScope, kotlin.time/Duration = ..., kotlin.time/Duration = ...) // uz.yalla.foundation.infra/LoadingController.<init>|<init>(kotlinx.coroutines.CoroutineScope;kotlin.time.Duration;kotlin.time.Duration){}[0]
+
+    final val loading // uz.yalla.foundation.infra/LoadingController.loading|{}loading[0]
+        final fun <get-loading>(): kotlinx.coroutines.flow/StateFlow<kotlin/Boolean> // uz.yalla.foundation.infra/LoadingController.loading.<get-loading>|<get-loading>(){}[0]
+
+    final suspend fun <#A1: kotlin/Any?> withLoading(kotlin.coroutines/SuspendFunction0<#A1>): #A1 // uz.yalla.foundation.infra/LoadingController.withLoading|withLoading(kotlin.coroutines.SuspendFunction0<0:0>){0§<kotlin.Any?>}[0]
+
+    final object Companion { // uz.yalla.foundation.infra/LoadingController.Companion|null[0]
+        final val GRACE_PERIOD // uz.yalla.foundation.infra/LoadingController.Companion.GRACE_PERIOD|{}GRACE_PERIOD[0]
+            final fun <get-GRACE_PERIOD>(): kotlin.time/Duration // uz.yalla.foundation.infra/LoadingController.Companion.GRACE_PERIOD.<get-GRACE_PERIOD>|<get-GRACE_PERIOD>(){}[0]
+        final val MIN_VISIBLE // uz.yalla.foundation.infra/LoadingController.Companion.MIN_VISIBLE|{}MIN_VISIBLE[0]
+            final fun <get-MIN_VISIBLE>(): kotlin.time/Duration // uz.yalla.foundation.infra/LoadingController.Companion.MIN_VISIBLE.<get-MIN_VISIBLE>|<get-MIN_VISIBLE>(){}[0]
+    }
+}
+
+final val uz.yalla.foundation.infra/uz_yalla_foundation_infra_BaseViewModel$stableprop // uz.yalla.foundation.infra/uz_yalla_foundation_infra_BaseViewModel$stableprop|#static{}uz_yalla_foundation_infra_BaseViewModel$stableprop[0]
+final val uz.yalla.foundation.infra/uz_yalla_foundation_infra_LoadingController$stableprop // uz.yalla.foundation.infra/uz_yalla_foundation_infra_LoadingController$stableprop|#static{}uz_yalla_foundation_infra_LoadingController$stableprop[0]
+final val uz.yalla.foundation.locale/LocalAppLocale // uz.yalla.foundation.locale/LocalAppLocale|{}LocalAppLocale[0]
+    final fun <get-LocalAppLocale>(): androidx.compose.runtime/ProvidableCompositionLocal<uz.yalla.core.settings/LocaleKind> // uz.yalla.foundation.locale/LocalAppLocale.<get-LocalAppLocale>|<get-LocalAppLocale>(){}[0]
+final val uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_array$stableprop // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_array$stableprop|#static{}uz_yalla_sdk_foundation_generated_resources_Res_array$stableprop[0]
+final val uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_drawable$stableprop // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_drawable$stableprop|#static{}uz_yalla_sdk_foundation_generated_resources_Res_drawable$stableprop[0]
+final val uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_font$stableprop // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_font$stableprop|#static{}uz_yalla_sdk_foundation_generated_resources_Res_font$stableprop[0]
+final val uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_plurals$stableprop // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_plurals$stableprop|#static{}uz_yalla_sdk_foundation_generated_resources_Res_plurals$stableprop[0]
+final val uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_string$stableprop // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_string$stableprop|#static{}uz_yalla_sdk_foundation_generated_resources_Res_string$stableprop[0]
+
+final fun (androidx.compose.ui/Modifier).uz.yalla.foundation.animation/staggerReveal(kotlin/Boolean, kotlin/Int, kotlin/Int, kotlin/Int, kotlin/Float, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): androidx.compose.ui/Modifier // uz.yalla.foundation.animation/staggerReveal|staggerReveal@androidx.compose.ui.Modifier(kotlin.Boolean;kotlin.Int;kotlin.Int;kotlin.Int;kotlin.Float;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun (androidx.compose.ui/Modifier).uz.yalla.foundation.input/clearFocusOnTap(androidx.compose.runtime/Composer?, kotlin/Int): androidx.compose.ui/Modifier // uz.yalla.foundation.input/clearFocusOnTap|clearFocusOnTap@androidx.compose.ui.Modifier(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun uz.yalla.foundation.infra/uz_yalla_foundation_infra_BaseViewModel$stableprop_getter(): kotlin/Int // uz.yalla.foundation.infra/uz_yalla_foundation_infra_BaseViewModel$stableprop_getter|uz_yalla_foundation_infra_BaseViewModel$stableprop_getter(){}[0]
+final fun uz.yalla.foundation.infra/uz_yalla_foundation_infra_LoadingController$stableprop_getter(): kotlin/Int // uz.yalla.foundation.infra/uz_yalla_foundation_infra_LoadingController$stableprop_getter|uz_yalla_foundation_infra_LoadingController$stableprop_getter(){}[0]
+final fun uz.yalla.foundation.locale/LocaleProvider(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.foundation.locale/LocaleProvider|LocaleProvider(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun uz.yalla.foundation.locale/changeLanguage(kotlin/String) // uz.yalla.foundation.locale/changeLanguage|changeLanguage(kotlin.String){}[0]
+final fun uz.yalla.foundation.locale/getCurrentLanguage(): kotlin/String // uz.yalla.foundation.locale/getCurrentLanguage|getCurrentLanguage(){}[0]
+final fun uz.yalla.foundation.system/SystemBarColors(kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.foundation.system/SystemBarColors|SystemBarColors(kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun uz.yalla.foundation.theme/rememberIsDarkTheme(androidx.compose.runtime/Composer?, kotlin/Int): kotlin/Boolean // uz.yalla.foundation.theme/rememberIsDarkTheme|rememberIsDarkTheme(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
+final fun uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_array$stableprop_getter(): kotlin/Int // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_array$stableprop_getter|uz_yalla_sdk_foundation_generated_resources_Res_array$stableprop_getter(){}[0]
+final fun uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_drawable$stableprop_getter(): kotlin/Int // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_drawable$stableprop_getter|uz_yalla_sdk_foundation_generated_resources_Res_drawable$stableprop_getter(){}[0]
+final fun uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_font$stableprop_getter(): kotlin/Int // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_font$stableprop_getter|uz_yalla_sdk_foundation_generated_resources_Res_font$stableprop_getter(){}[0]
+final fun uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_plurals$stableprop_getter(): kotlin/Int // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_plurals$stableprop_getter|uz_yalla_sdk_foundation_generated_resources_Res_plurals$stableprop_getter(){}[0]
+final fun uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_string$stableprop_getter(): kotlin/Int // uz.yalla.sdk.foundation.generated.resources/uz_yalla_sdk_foundation_generated_resources_Res_string$stableprop_getter|uz_yalla_sdk_foundation_generated_resources_Res_string$stableprop_getter(){}[0]

@@ -39,7 +39,11 @@ jobs:
 
   test:
     name: Unit tests (host)
-    runs-on: ubuntu-latest
+    # macOS runner: the SDK's published binary surface lives in the iOS klibs, and
+    # the G3 ABI gate (apiCheck) can only validate Apple targets on an Apple host.
+    # On Linux those targets are unbuildable and apiCheck silently no-ops, so the
+    # gate would have no teeth. Host unit tests + Konsist run here unchanged.
+    runs-on: macos-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
@@ -51,5 +55,5 @@ jobs:
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: Run host unit tests
-        run: ./gradlew testAndroidHostTest :konsistTest:test --no-daemon -Dorg.gradle.workers.max=2
+      - name: Run host unit tests + ABI surface check (G3)
+        run: ./gradlew testAndroidHostTest :konsistTest:test apiCheck --no-daemon -Dorg.gradle.workers.max=2

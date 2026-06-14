@@ -1,0 +1,15 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <uz.yalla.sdk:datastore>
+final val uz.yalla.datastore/datastoreModule // uz.yalla.datastore/datastoreModule|{}datastoreModule[0]
+    final fun <get-datastoreModule>(): org.koin.core.module/Module // uz.yalla.datastore/datastoreModule.<get-datastoreModule>|<get-datastoreModule>(){}[0]
+final val uz.yalla.datastore/ioDispatcher // uz.yalla.datastore/ioDispatcher|{}ioDispatcher[0]
+    final fun <get-ioDispatcher>(): kotlinx.coroutines/CoroutineDispatcher // uz.yalla.datastore/ioDispatcher.<get-ioDispatcher>|<get-ioDispatcher>(){}[0]
+
+final fun uz.yalla.datastore/createDataStore(): androidx.datastore.core/DataStore<androidx.datastore.preferences.core/Preferences> // uz.yalla.datastore/createDataStore|createDataStore(){}[0]
+final fun uz.yalla.datastore/createSettings(): com.russhwolf.settings/Settings // uz.yalla.datastore/createSettings|createSettings(){}[0]
