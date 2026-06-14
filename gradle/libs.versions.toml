@@ -55,6 +55,10 @@ dokka = "2.2.0"
 valkyrie = "0.4.0"
 coil = "3.4.0"
 
+# Architecture testing (test-only)
+konsist = "0.17.3"
+junit-jupiter = "5.11.4"
+
 [libraries]
 # Build tools
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -133,6 +137,10 @@ maplibre-compose = { module = "org.maplibre.compose:maplibre-compose", version.r
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "paging" }
 paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "paging" }
 
+# Architecture testing (test-only)
+konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -140,6 +148,7 @@ android-multiplatform-library = { id = "com.android.kotlin.multiplatform.library
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 valkyrie = { id = "io.github.composegears.valkyrie", version.ref = "valkyrie" }

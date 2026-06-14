@@ -52,4 +52,4 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Run host unit tests
-        run: ./gradlew testAndroidHostTest --no-daemon -Dorg.gradle.workers.max=2
+        run: ./gradlew testAndroidHostTest :konsistTest:test --no-daemon -Dorg.gradle.workers.max=2
