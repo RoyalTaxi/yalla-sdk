@@ -1,0 +1,41 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+
+[*.{kt,kts}]
+ktlint_code_style = ktlint_official
+max_line_length = 120
+
+# Islom convention: NO trailing commas anywhere (Kotlin + Swift). The ktlint
+# trailing-comma rules stay ENABLED with allow=false so the gate actively rejects
+# (and ktlintFormat strips) any trailing comma — disabling the rules would only stop
+# ktlint adding them, not enforce their absence.
+ij_kotlin_allow_trailing_comma = false
+ij_kotlin_allow_trailing_comma_on_call_site = false
+
+# Multiplatform / Compose reality: KMP filenames and Composable function names do
+# not fit the standard rules, and wildcard imports are intentional in some modules.
+ktlint_standard_class-naming = disabled
+ktlint_standard_filename = disabled
+ktlint_standard_no-wildcard-imports = disabled
+ktlint_standard_function-naming_ignore_when_annotated_with = Composable
+ktlint_function_naming_ignore_when_annotated_with = Composable
+ktlint_standard_function-expression-body = disabled
+ktlint_standard_string-template-indent = disabled
+
+# The SDK deliberately names private animation/layout constants in PascalCase
+# (PresentationPollMillis, ShadowExpandedScale, ...) — Compose-idiomatic, used
+# pervasively. Don't force SCREAMING_SNAKE_CASE on the existing convention.
+ktlint_standard_property-naming = disabled
+# iOS bridge factories mirror Compose's own ComposeUIViewController naming
+# (PrimaryButtonViewController). detekt's naming ruleset (with the Composable
+# exemption) stays the naming authority for functions.
+ktlint_standard_function-naming = disabled
+
+[**/build/**]
+ktlint = disabled
