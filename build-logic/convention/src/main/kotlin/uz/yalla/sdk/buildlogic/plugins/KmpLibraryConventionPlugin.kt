@@ -58,6 +58,10 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                         isStatic = true
                     }
                 }
+
+                sourceSets.commonTest.dependencies {
+                    implementation(kotlin("test"))
+                }
             }
 
             configureDokkaModuleDoc()

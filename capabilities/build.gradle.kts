@@ -29,9 +29,5 @@ kotlin {
             implementation(libs.google.play.app.update)
             implementation(libs.play.services.auth.api.phone)
         }
-
-        commonTest.dependencies {
-            implementation(kotlin("test"))
-        }
     }
 }
