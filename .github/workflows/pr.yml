@@ -39,10 +39,11 @@ jobs:
 
   test:
     name: Unit tests (host)
-    # macOS runner: the SDK's published binary surface lives in the iOS klibs, and
-    # the G3 ABI gate (apiCheck) can only validate Apple targets on an Apple host.
-    # On Linux those targets are unbuildable and apiCheck silently no-ops, so the
-    # gate would have no teeth. Host unit tests + Konsist run here unchanged.
+    # macOS runner: the G3 ABI gate (apiCheck) validates BOTH published surfaces —
+    # the Android .aar (via androidApiCheck, host-agnostic) and the iOS klibs. The
+    # klib half can only be built on an Apple host; on Linux those targets no-op, so
+    # we run the whole gate on macOS to keep both halves enforced. Host unit tests +
+    # Konsist run here unchanged.
     runs-on: macos-latest
     timeout-minutes: 30
     steps:
