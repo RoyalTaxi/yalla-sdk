@@ -17,9 +17,10 @@ class EitherFlatMapTest {
     @Test
     fun flatMapChainsSuccesses() {
         val start: Either<String, Int> = Either.Success(2)
-        val result = start
-            .flatMap { Either.Success(it + 3) }
-            .flatMap { Either.Success(it * 10) }
+        val result =
+            start
+                .flatMap { Either.Success(it + 3) }
+                .flatMap { Either.Success(it * 10) }
 
         assertEquals(Either.Success(50), result)
     }
@@ -36,10 +37,11 @@ class EitherFlatMapTest {
     fun flatMapShortCircuitsOnFailureWithoutRunningTransform() {
         var transformRan = false
         val start: Either<String, Int> = Either.Failure("boom")
-        val result = start.flatMap {
-            transformRan = true
-            Either.Success(it + 1)
-        }
+        val result =
+            start.flatMap {
+                transformRan = true
+                Either.Success(it + 1)
+            }
 
         assertEquals(Either.Failure("boom"), result)
         assertTrue(!transformRan, "transform must not run on Failure")
@@ -49,12 +51,13 @@ class EitherFlatMapTest {
     fun flatMapStopsAtFirstFailureInAChain() {
         var secondTransformRan = false
         val start: Either<String, Int> = Either.Success(1)
-        val result: Either<String, Int> = start
-            .flatMap { _: Int -> Either.Failure<String>("stop at first") }
-            .flatMap { value: Int ->
-                secondTransformRan = true
-                Either.Success(value + 100)
-            }
+        val result: Either<String, Int> =
+            start
+                .flatMap { _: Int -> Either.Failure<String>("stop at first") }
+                .flatMap { value: Int ->
+                    secondTransformRan = true
+                    Either.Success(value + 100)
+                }
 
         assertEquals(Either.Failure("stop at first"), result)
         assertTrue(!secondTransformRan, "downstream transform must not run after a Failure")
@@ -63,9 +66,10 @@ class EitherFlatMapTest {
     @Test
     fun flatMapTransformMayItselfProduceFailure() {
         val start: Either<String, Int> = Either.Success(4)
-        val result = start.flatMap {
-            if (it > 3) Either.Failure("too big") else Either.Success(it)
-        }
+        val result =
+            start.flatMap {
+                if (it > 3) Either.Failure("too big") else Either.Success(it)
+            }
 
         assertEquals(Either.Failure("too big"), result)
     }
@@ -74,10 +78,11 @@ class EitherFlatMapTest {
     fun getOrElseReturnsDataOnSuccessWithoutRunningFallback() {
         var fallbackRan = false
         val source: Either<String, Int> = Either.Success(42)
-        val value = source.getOrElse {
-            fallbackRan = true
-            -1
-        }
+        val value =
+            source.getOrElse {
+                fallbackRan = true
+                -1
+            }
 
         assertEquals(42, value)
         assertTrue(!fallbackRan, "fallback must not run on Success")
