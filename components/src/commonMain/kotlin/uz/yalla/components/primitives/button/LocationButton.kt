@@ -147,7 +147,9 @@ public object LocationButtonDefaults {
             Text(
                 text = title,
                 color = colors.titleColor,
-                style = styles.titleStyle
+                style = styles.titleStyle,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1
             )
         }
     }
