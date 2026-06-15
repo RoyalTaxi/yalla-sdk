@@ -41,8 +41,7 @@ public fun cardBrandPainter(brand: CardBrand): Painter =
  * The icon for the brand of [method], derived from its card id via [CardBrand.of].
  */
 @Composable
-public fun cardBrandPainter(method: PaymentMethod.Card): Painter =
-    cardBrandPainter(CardBrand.of(method.cardId.raw))
+public fun cardBrandPainter(method: PaymentMethod.Card): Painter = cardBrandPainter(CardBrand.of(method.cardId.raw))
 
 /**
  * The display name for [brand].
