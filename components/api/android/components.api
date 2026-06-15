@@ -1277,6 +1277,28 @@ public final class uz/yalla/components/image/ImageLoaderSetupKt {
 	public static final fun installImageLoader ()V
 }
 
+public final class uz/yalla/components/payment/CardBrandPresentation {
+	public static final field $stable I
+	public fun <init> (Landroidx/compose/ui/graphics/painter/Painter;Ljava/lang/String;)V
+	public final fun component1 ()Landroidx/compose/ui/graphics/painter/Painter;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Landroidx/compose/ui/graphics/painter/Painter;Ljava/lang/String;)Luz/yalla/components/payment/CardBrandPresentation;
+	public static synthetic fun copy$default (Luz/yalla/components/payment/CardBrandPresentation;Landroidx/compose/ui/graphics/painter/Painter;Ljava/lang/String;ILjava/lang/Object;)Luz/yalla/components/payment/CardBrandPresentation;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLabel ()Ljava/lang/String;
+	public final fun getPainter ()Landroidx/compose/ui/graphics/painter/Painter;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/components/payment/CardBrandPresentationKt {
+	public static final fun cardBrandLabel (Luz/yalla/core/payment/CardBrand;)Ljava/lang/String;
+	public static final fun cardBrandPainter (Luz/yalla/core/payment/CardBrand;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/painter/Painter;
+	public static final fun cardBrandPainter (Luz/yalla/core/payment/PaymentMethod$Card;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/painter/Painter;
+	public static final fun rememberCardBrandPresentation (Luz/yalla/core/payment/CardBrand;Landroidx/compose/runtime/Composer;I)Luz/yalla/components/payment/CardBrandPresentation;
+	public static final fun rememberCardBrandPresentation (Luz/yalla/core/payment/PaymentMethod$Card;Landroidx/compose/runtime/Composer;I)Luz/yalla/components/payment/CardBrandPresentation;
+}
+
 public final class uz/yalla/components/primitives/button/CloseButtonKt {
 	public static final fun CloseButton (Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
 }
