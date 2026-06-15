@@ -794,6 +794,27 @@ final value class uz.yalla.core.identity/TaxiId { // uz.yalla.core.identity/Taxi
     final fun toString(): kotlin/String // uz.yalla.core.identity/TaxiId.toString|toString(){}[0]
 }
 
+final value class uz.yalla.core.phone/UzPhone { // uz.yalla.core.phone/UzPhone|null[0]
+    final val national // uz.yalla.core.phone/UzPhone.national|{}national[0]
+        final fun <get-national>(): kotlin/String // uz.yalla.core.phone/UzPhone.national.<get-national>|<get-national>(){}[0]
+
+    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.phone/UzPhone.equals|equals(kotlin.Any?){}[0]
+    final fun format(): kotlin/String // uz.yalla.core.phone/UzPhone.format|format(){}[0]
+    final fun hashCode(): kotlin/Int // uz.yalla.core.phone/UzPhone.hashCode|hashCode(){}[0]
+    final fun toE164(): kotlin/String // uz.yalla.core.phone/UzPhone.toE164|toE164(){}[0]
+    final fun toString(): kotlin/String // uz.yalla.core.phone/UzPhone.toString|toString(){}[0]
+
+    final object Companion { // uz.yalla.core.phone/UzPhone.Companion|null[0]
+        final const val COUNTRY_CODE // uz.yalla.core.phone/UzPhone.Companion.COUNTRY_CODE|{}COUNTRY_CODE[0]
+            final fun <get-COUNTRY_CODE>(): kotlin/String // uz.yalla.core.phone/UzPhone.Companion.COUNTRY_CODE.<get-COUNTRY_CODE>|<get-COUNTRY_CODE>(){}[0]
+        final const val NATIONAL_LENGTH // uz.yalla.core.phone/UzPhone.Companion.NATIONAL_LENGTH|{}NATIONAL_LENGTH[0]
+            final fun <get-NATIONAL_LENGTH>(): kotlin/Int // uz.yalla.core.phone/UzPhone.Companion.NATIONAL_LENGTH.<get-NATIONAL_LENGTH>|<get-NATIONAL_LENGTH>(){}[0]
+
+        final fun isValidNational(kotlin/String): kotlin/Boolean // uz.yalla.core.phone/UzPhone.Companion.isValidNational|isValidNational(kotlin.String){}[0]
+        final fun of(kotlin/String): uz.yalla.core.phone/UzPhone? // uz.yalla.core.phone/UzPhone.Companion.of|of(kotlin.String){}[0]
+    }
+}
+
 sealed class uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError|null[0]
     sealed class Network : uz.yalla.core.error/DataError { // uz.yalla.core.error/DataError.Network|null[0]
         final class Api : uz.yalla.core.error/DataError.Network { // uz.yalla.core.error/DataError.Network.Api|null[0]

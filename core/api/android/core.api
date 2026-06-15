@@ -656,6 +656,29 @@ public final class uz/yalla/core/payment/PaymentMethod$Companion {
 	public static synthetic fun from-TvTNBN8$default (Luz/yalla/core/payment/PaymentMethod$Companion;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Luz/yalla/core/payment/PaymentMethod;
 }
 
+public final class uz/yalla/core/phone/UzPhone {
+	public static final field COUNTRY_CODE Ljava/lang/String;
+	public static final field Companion Luz/yalla/core/phone/UzPhone$Companion;
+	public static final field NATIONAL_LENGTH I
+	public static final synthetic fun box-impl (Ljava/lang/String;)Luz/yalla/core/phone/UzPhone;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
+	public static final fun format-impl (Ljava/lang/String;)Ljava/lang/String;
+	public final fun getNational ()Ljava/lang/String;
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/lang/String;)I
+	public static final fun toE164-impl (Ljava/lang/String;)Ljava/lang/String;
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/lang/String;
+}
+
+public final class uz/yalla/core/phone/UzPhone$Companion {
+	public final fun isValidNational (Ljava/lang/String;)Z
+	public final fun of-7iH_rkg (Ljava/lang/String;)Ljava/lang/String;
+}
+
 public abstract interface class uz/yalla/core/preferences/ConfigPreferences {
 	public abstract fun getBalance ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getInfoInstagram ()Lkotlinx/coroutines/flow/Flow;
