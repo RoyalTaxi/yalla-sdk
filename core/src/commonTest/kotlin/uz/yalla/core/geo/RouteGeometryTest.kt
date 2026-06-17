@@ -6,8 +6,11 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class RouteGeometryTest {
-
-    private fun assertBearingClose(expected: Float, actual: Float?, eps: Float = 3f) {
+    private fun assertBearingClose(
+        expected: Float,
+        actual: Float?,
+        eps: Float = 3f
+    ) {
         assertTrue(actual != null, "expected a bearing near $expected, got null")
         val delta = abs(((actual!! - expected + 540f) % 360f) - 180f)
         assertTrue(delta <= eps, "expected bearing~=$expected got $actual")
@@ -39,11 +42,12 @@ class RouteGeometryTest {
 
     @Test
     fun picksNearestSegmentOfAnLShapedRoute() {
-        val route = listOf(
-            GeoPoint(41.0, 69.0),
-            GeoPoint(41.0, 69.01),
-            GeoPoint(41.01, 69.01)
-        )
+        val route =
+            listOf(
+                GeoPoint(41.0, 69.0),
+                GeoPoint(41.0, 69.01),
+                GeoPoint(41.01, 69.01)
+            )
         assertBearingClose(0f, headingAlongRoute(GeoPoint(41.005, 69.0100), route))
         assertBearingClose(90f, headingAlongRoute(GeoPoint(41.0, 69.005), route))
     }

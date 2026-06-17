@@ -301,18 +301,19 @@ public final class uz/yalla/maps/api/model/MapEvent$MarkerTapped : uz/yalla/maps
 
 public final class uz/yalla/maps/api/model/MapMarker {
 	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Luz/yalla/core/geo/GeoPoint;Luz/yalla/maps/api/model/MapMarkerIcon;FLuz/yalla/maps/api/model/Anchor;ZFLjava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Luz/yalla/core/geo/GeoPoint;Luz/yalla/maps/api/model/MapMarkerIcon;FLuz/yalla/maps/api/model/Anchor;ZFLjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Luz/yalla/core/geo/GeoPoint;Luz/yalla/maps/api/model/MapMarkerIcon;FLjava/lang/Float;Luz/yalla/maps/api/model/Anchor;ZFLjava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Luz/yalla/core/geo/GeoPoint;Luz/yalla/maps/api/model/MapMarkerIcon;FLjava/lang/Float;Luz/yalla/maps/api/model/Anchor;ZFLjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Luz/yalla/core/geo/GeoPoint;
 	public final fun component3 ()Luz/yalla/maps/api/model/MapMarkerIcon;
 	public final fun component4 ()F
-	public final fun component5 ()Luz/yalla/maps/api/model/Anchor;
-	public final fun component6 ()Z
-	public final fun component7 ()F
-	public final fun component8 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Luz/yalla/core/geo/GeoPoint;Luz/yalla/maps/api/model/MapMarkerIcon;FLuz/yalla/maps/api/model/Anchor;ZFLjava/lang/String;)Luz/yalla/maps/api/model/MapMarker;
-	public static synthetic fun copy$default (Luz/yalla/maps/api/model/MapMarker;Ljava/lang/String;Luz/yalla/core/geo/GeoPoint;Luz/yalla/maps/api/model/MapMarkerIcon;FLuz/yalla/maps/api/model/Anchor;ZFLjava/lang/String;ILjava/lang/Object;)Luz/yalla/maps/api/model/MapMarker;
+	public final fun component5 ()Ljava/lang/Float;
+	public final fun component6 ()Luz/yalla/maps/api/model/Anchor;
+	public final fun component7 ()Z
+	public final fun component8 ()F
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Luz/yalla/core/geo/GeoPoint;Luz/yalla/maps/api/model/MapMarkerIcon;FLjava/lang/Float;Luz/yalla/maps/api/model/Anchor;ZFLjava/lang/String;)Luz/yalla/maps/api/model/MapMarker;
+	public static synthetic fun copy$default (Luz/yalla/maps/api/model/MapMarker;Ljava/lang/String;Luz/yalla/core/geo/GeoPoint;Luz/yalla/maps/api/model/MapMarkerIcon;FLjava/lang/Float;Luz/yalla/maps/api/model/Anchor;ZFLjava/lang/String;ILjava/lang/Object;)Luz/yalla/maps/api/model/MapMarker;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAnchor ()Luz/yalla/maps/api/model/Anchor;
 	public final fun getContentDescription ()Ljava/lang/String;
@@ -321,6 +322,7 @@ public final class uz/yalla/maps/api/model/MapMarker {
 	public final fun getId ()Ljava/lang/String;
 	public final fun getPoint ()Luz/yalla/core/geo/GeoPoint;
 	public final fun getRotation ()F
+	public final fun getRouteHeading ()Ljava/lang/Float;
 	public final fun getZIndex ()F
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -528,6 +530,34 @@ public final class uz/yalla/maps/config/YallaMaps {
 	public final fun getConfig ()Luz/yalla/maps/config/MapsConfig;
 	public final fun install (Luz/yalla/maps/config/MapsConfig;)V
 	public final fun setConfig (Luz/yalla/maps/config/MapsConfig;)V
+}
+
+public final class uz/yalla/maps/motion/DriverMotionModel {
+	public static final field $stable I
+	public static final field Companion Luz/yalla/maps/motion/DriverMotionModel$Companion;
+	public fun <init> ()V
+	public fun <init> (DDJJJ)V
+	public synthetic fun <init> (DDJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun push (Luz/yalla/core/geo/GeoPoint;Ljava/lang/Float;Ljava/lang/Float;J)V
+	public final fun sample (J)Luz/yalla/maps/motion/Pose;
+}
+
+public final class uz/yalla/maps/motion/DriverMotionModel$Companion {
+	public final fun withDefaults ()Luz/yalla/maps/motion/DriverMotionModel;
+}
+
+public final class uz/yalla/maps/motion/Pose {
+	public static final field $stable I
+	public fun <init> (Luz/yalla/core/geo/GeoPoint;F)V
+	public final fun component1 ()Luz/yalla/core/geo/GeoPoint;
+	public final fun component2 ()F
+	public final fun copy (Luz/yalla/core/geo/GeoPoint;F)Luz/yalla/maps/motion/Pose;
+	public static synthetic fun copy$default (Luz/yalla/maps/motion/Pose;Luz/yalla/core/geo/GeoPoint;FILjava/lang/Object;)Luz/yalla/maps/motion/Pose;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBearing ()F
+	public final fun getPoint ()Luz/yalla/core/geo/GeoPoint;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/maps/util/HeadingKt {

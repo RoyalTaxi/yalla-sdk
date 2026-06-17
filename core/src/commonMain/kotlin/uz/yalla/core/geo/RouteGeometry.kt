@@ -26,7 +26,10 @@ public fun headingAlongRoute(
     return bestBearing?.toFloat()
 }
 
-private fun GeoPoint.distanceToSegmentMeters(a: GeoPoint, b: GeoPoint): Double {
+private fun GeoPoint.distanceToSegmentMeters(
+    a: GeoPoint,
+    b: GeoPoint
+): Double {
     val metersPerDegLat = 111_320.0
     val metersPerDegLng = 111_320.0 * cos(a.lat * PI / 180.0)
     val px = (lng - a.lng) * metersPerDegLng

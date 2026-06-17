@@ -7,12 +7,21 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class DriverMotionModelTest {
-
-    private fun assertClose(expected: Double, actual: Double, eps: Double = 1e-6, msg: String = "") {
+    private fun assertClose(
+        expected: Double,
+        actual: Double,
+        eps: Double = 1e-6,
+        msg: String = ""
+    ) {
         assertTrue(abs(expected - actual) <= eps, "$msg expected~=$expected got $actual")
     }
 
-    private fun assertBearingClose(expected: Float, actual: Float, eps: Float = 2f, msg: String = "") {
+    private fun assertBearingClose(
+        expected: Float,
+        actual: Float,
+        eps: Float = 2f,
+        msg: String = ""
+    ) {
         val delta = abs(((actual - expected + 540f) % 360f) - 180f)
         assertTrue(delta <= eps, "$msg expected bearing~=$expected got $actual")
     }

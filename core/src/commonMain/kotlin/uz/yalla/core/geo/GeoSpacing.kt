@@ -1,6 +1,9 @@
 package uz.yalla.core.geo
 
-public inline fun <T> List<T>.spacedApartBy(minMeters: Double, point: (T) -> GeoPoint): List<T> {
+public inline fun <T> List<T>.spacedApartBy(
+    minMeters: Double,
+    point: (T) -> GeoPoint
+): List<T> {
     val kept = ArrayList<T>(size)
     for (item in this) {
         val candidate = point(item)

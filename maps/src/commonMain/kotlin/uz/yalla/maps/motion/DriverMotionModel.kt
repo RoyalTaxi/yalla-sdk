@@ -34,7 +34,12 @@ public class DriverMotionModel(
      * The model — not the caller — owns this ordering: pass route-snap as [routeHint] and the raw
      * server heading as [serverHeading]; never pre-flatten them into one value.
      */
-    public fun push(point: GeoPoint, routeHint: Float?, serverHeading: Float?, atMillis: Long) {
+    public fun push(
+        point: GeoPoint,
+        routeHint: Float?,
+        serverHeading: Float?,
+        atMillis: Long
+    ) {
         val previousTarget = targetPoint
         if (previousTarget == null) {
             startPoint = point
@@ -79,22 +84,26 @@ public class DriverMotionModel(
             return Pose(target, targetBearing)
         }
         val start = startPoint ?: target
-        val fraction = if (durationMs > 0L) {
-            ((atMillis - startMs).toFloat() / durationMs).coerceIn(0f, 1f)
-        } else {
-            1f
-        }
-        val point = GeoPoint(
-            lat = start.lat + (target.lat - start.lat) * fraction,
-            lng = start.lng + (target.lng - start.lng) * fraction
-        )
+        val fraction =
+            if (durationMs > 0L) {
+                ((atMillis - startMs).toFloat() / durationMs).coerceIn(0f, 1f)
+            } else {
+                1f
+            }
+        val point =
+            GeoPoint(
+                lat = start.lat + (target.lat - start.lat) * fraction,
+                lng = start.lng + (target.lng - start.lng) * fraction
+            )
         val bearing = interpolateHeading(startBearing, targetBearing, fraction)
         displayBearing = bearing
         return Pose(point, bearing)
     }
 
-    private fun resolveHint(routeHint: Float?, serverHeading: Float?): Float? =
-        routeHint ?: serverHeading?.takeIf { it != 0f }
+    private fun resolveHint(
+        routeHint: Float?,
+        serverHeading: Float?
+    ): Float? = routeHint ?: serverHeading?.takeIf { it != 0f }
 
     public companion object {
         public fun withDefaults(): DriverMotionModel = DriverMotionModel()

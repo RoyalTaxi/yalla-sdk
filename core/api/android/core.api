@@ -73,6 +73,7 @@ public final class uz/yalla/core/error/DataError$Network$Unknown : uz/yalla/core
 }
 
 public final class uz/yalla/core/geo/GeoDistanceKt {
+	public static final fun bearingTo (Luz/yalla/core/geo/GeoPoint;Luz/yalla/core/geo/GeoPoint;)D
 	public static final fun distanceTo (Luz/yalla/core/geo/GeoPoint;Luz/yalla/core/geo/GeoPoint;)D
 }
 
@@ -92,6 +93,15 @@ public final class uz/yalla/core/geo/GeoPoint {
 
 public final class uz/yalla/core/geo/GeoPoint$Companion {
 	public final fun getZero ()Luz/yalla/core/geo/GeoPoint;
+}
+
+public final class uz/yalla/core/geo/GeoSpacingKt {
+	public static final fun spacedApartBy (Ljava/util/List;DLkotlin/jvm/functions/Function1;)Ljava/util/List;
+}
+
+public final class uz/yalla/core/geo/RouteGeometryKt {
+	public static final fun headingAlongRoute (Luz/yalla/core/geo/GeoPoint;Ljava/util/List;D)Ljava/lang/Float;
+	public static synthetic fun headingAlongRoute$default (Luz/yalla/core/geo/GeoPoint;Ljava/util/List;DILjava/lang/Object;)Ljava/lang/Float;
 }
 
 public final class uz/yalla/core/identity/CardId {
