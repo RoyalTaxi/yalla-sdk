@@ -2,4 +2,4 @@ package uz.yalla.datastore
 
 import com.russhwolf.settings.Settings
 
-public expect fun createSettings(): Settings
+internal expect fun createSettings(): Settings
