@@ -11,8 +11,11 @@ import kotlinx.coroutines.launch
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.location.LocationProvider
 
-public class DeviceLocationProvider(
-    public val locationTracker: LocationTracker,
+public fun createDeviceLocationProvider(scope: CoroutineScope): DeviceLocationProvider =
+    DeviceLocationProvider(createLocationTracker(), scope)
+
+public class DeviceLocationProvider internal constructor(
+    internal val locationTracker: LocationTracker,
     private val scope: CoroutineScope
 ) : LocationProvider {
     private val _currentLocation = MutableStateFlow<GeoPoint?>(null)

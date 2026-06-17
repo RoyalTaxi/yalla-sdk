@@ -18,13 +18,19 @@ public final class uz/yalla/capabilities/connectivity/ConnectivityState {
 
 public final class uz/yalla/capabilities/location/DeviceLocationProvider : uz/yalla/core/location/LocationProvider {
 	public static final field $stable I
-	public fun <init> (Ldev/icerock/moko/geo/LocationTracker;Lkotlinx/coroutines/CoroutineScope;)V
 	public fun getCurrentLocation ()Lkotlinx/coroutines/flow/StateFlow;
-	public final fun getLocationTracker ()Ldev/icerock/moko/geo/LocationTracker;
 	public final fun getPermissionState ()Lkotlinx/coroutines/flow/StateFlow;
 	public fun startTracking ()V
 	public fun stopTracking ()V
 	public final fun updatePermissionState (Luz/yalla/capabilities/location/LocationPermissionState;)V
+}
+
+public final class uz/yalla/capabilities/location/DeviceLocationProviderBinding_androidKt {
+	public static final fun bindToActivity (Luz/yalla/capabilities/location/DeviceLocationProvider;Landroidx/activity/ComponentActivity;)V
+}
+
+public final class uz/yalla/capabilities/location/DeviceLocationProviderKt {
+	public static final fun createDeviceLocationProvider (Lkotlinx/coroutines/CoroutineScope;)Luz/yalla/capabilities/location/DeviceLocationProvider;
 }
 
 public final class uz/yalla/capabilities/location/LocationPermissionState : java/lang/Enum {
@@ -40,10 +46,6 @@ public final class uz/yalla/capabilities/location/LocationPermissionState : java
 public final class uz/yalla/capabilities/location/LocationServices_androidKt {
 	public static final fun isLocationServicesEnabled ()Z
 	public static final fun openLocationSettings ()V
-}
-
-public final class uz/yalla/capabilities/location/LocationTrackerFactory_androidKt {
-	public static final fun createLocationTracker ()Ldev/icerock/moko/geo/LocationTracker;
 }
 
 public final class uz/yalla/capabilities/sms/AppSignature_androidKt {

@@ -31,12 +31,8 @@ final class uz.yalla.capabilities.connectivity/ConnectivityState { // uz.yalla.c
 }
 
 final class uz.yalla.capabilities.location/DeviceLocationProvider : uz.yalla.core.location/LocationProvider { // uz.yalla.capabilities.location/DeviceLocationProvider|null[0]
-    constructor <init>(dev.icerock.moko.geo/LocationTracker, kotlinx.coroutines/CoroutineScope) // uz.yalla.capabilities.location/DeviceLocationProvider.<init>|<init>(dev.icerock.moko.geo.LocationTracker;kotlinx.coroutines.CoroutineScope){}[0]
-
     final val currentLocation // uz.yalla.capabilities.location/DeviceLocationProvider.currentLocation|{}currentLocation[0]
         final fun <get-currentLocation>(): kotlinx.coroutines.flow/StateFlow<uz.yalla.core.geo/GeoPoint?> // uz.yalla.capabilities.location/DeviceLocationProvider.currentLocation.<get-currentLocation>|<get-currentLocation>(){}[0]
-    final val locationTracker // uz.yalla.capabilities.location/DeviceLocationProvider.locationTracker|{}locationTracker[0]
-        final fun <get-locationTracker>(): dev.icerock.moko.geo/LocationTracker // uz.yalla.capabilities.location/DeviceLocationProvider.locationTracker.<get-locationTracker>|<get-locationTracker>(){}[0]
     final val permissionState // uz.yalla.capabilities.location/DeviceLocationProvider.permissionState|{}permissionState[0]
         final fun <get-permissionState>(): kotlinx.coroutines.flow/StateFlow<uz.yalla.capabilities.location/LocationPermissionState?> // uz.yalla.capabilities.location/DeviceLocationProvider.permissionState.<get-permissionState>|<get-permissionState>(){}[0]
 
@@ -63,7 +59,7 @@ final val uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateSta
 final fun uz.yalla.capabilities.browser/rememberBrowser(androidx.compose.runtime/Composer?, kotlin/Int): uz.yalla.capabilities.browser/Browser // uz.yalla.capabilities.browser/rememberBrowser|rememberBrowser(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun uz.yalla.capabilities.connectivity/rememberConnectivityState(kotlinx.coroutines/CoroutineScope?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): uz.yalla.capabilities.connectivity/ConnectivityState // uz.yalla.capabilities.connectivity/rememberConnectivityState|rememberConnectivityState(kotlinx.coroutines.CoroutineScope?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun uz.yalla.capabilities.connectivity/uz_yalla_capabilities_connectivity_ConnectivityState$stableprop_getter(): kotlin/Int // uz.yalla.capabilities.connectivity/uz_yalla_capabilities_connectivity_ConnectivityState$stableprop_getter|uz_yalla_capabilities_connectivity_ConnectivityState$stableprop_getter(){}[0]
-final fun uz.yalla.capabilities.location/createLocationTracker(): dev.icerock.moko.geo/LocationTracker // uz.yalla.capabilities.location/createLocationTracker|createLocationTracker(){}[0]
+final fun uz.yalla.capabilities.location/createDeviceLocationProvider(kotlinx.coroutines/CoroutineScope): uz.yalla.capabilities.location/DeviceLocationProvider // uz.yalla.capabilities.location/createDeviceLocationProvider|createDeviceLocationProvider(kotlinx.coroutines.CoroutineScope){}[0]
 final fun uz.yalla.capabilities.location/isLocationServicesEnabled(): kotlin/Boolean // uz.yalla.capabilities.location/isLocationServicesEnabled|isLocationServicesEnabled(){}[0]
 final fun uz.yalla.capabilities.location/openLocationSettings() // uz.yalla.capabilities.location/openLocationSettings|openLocationSettings(){}[0]
 final fun uz.yalla.capabilities.location/uz_yalla_capabilities_location_DeviceLocationProvider$stableprop_getter(): kotlin/Int // uz.yalla.capabilities.location/uz_yalla_capabilities_location_DeviceLocationProvider$stableprop_getter|uz_yalla_capabilities_location_DeviceLocationProvider$stableprop_getter(){}[0]

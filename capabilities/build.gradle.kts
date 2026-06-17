@@ -16,7 +16,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.kermit)
 
-            api(libs.geo)
+            implementation(libs.geo)
             implementation(libs.connectivity.device)
         }
 
