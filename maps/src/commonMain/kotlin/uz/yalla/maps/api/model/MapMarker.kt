@@ -9,6 +9,7 @@ public data class MapMarker(
     val point: GeoPoint,
     val icon: MapMarkerIcon? = null,
     val rotation: Float = 0f,
+    val routeHeading: Float? = null,
     val anchor: Anchor = Anchor.BOTTOM,
     val flat: Boolean = false,
     val zIndex: Float = 0f,
