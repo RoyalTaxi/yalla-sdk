@@ -1,0 +1,111 @@
+package uz.yalla.maps.motion
+
+import uz.yalla.core.geo.GeoPoint
+import uz.yalla.core.geo.bearingTo
+import uz.yalla.core.geo.distanceTo
+import uz.yalla.maps.util.interpolateHeading
+
+public class DriverMotionModel(
+    private val minMoveMeters: Double = 1.5,
+    private val teleportSpeedMps: Double = 50.0,
+    private val minDurationMs: Long = 1_000L,
+    private val maxDurationMs: Long = 12_000L,
+    private val defaultDurationMs: Long = 10_000L
+) {
+    private var startPoint: GeoPoint? = null
+    private var targetPoint: GeoPoint? = null
+    private var startMs: Long = 0L
+    private var durationMs: Long = defaultDurationMs
+    private var lastFixMs: Long = 0L
+    private var startBearing: Float = 0f
+    private var targetBearing: Float = 0f
+    private var displayBearing: Float = 0f
+    private var hasGoodBearing: Boolean = false
+    private var snap: Boolean = true
+
+    /**
+     * Feeds one positional fix into the model. Heading precedence, highest trust first:
+     * 1. bearing derived from consecutive fixes when the car moved >= [minMoveMeters];
+     * 2. otherwise the last good derived bearing is held;
+     * 3. otherwise [routeHint] — a route-segment bearing the caller resolved (null when off-route);
+     * 4. otherwise [serverHeading] when non-zero (0f is treated as absent: the server collapses a
+     *    null heading to 0.0/north upstream, so a real northbound hint is indistinguishable).
+     *
+     * The model — not the caller — owns this ordering: pass route-snap as [routeHint] and the raw
+     * server heading as [serverHeading]; never pre-flatten them into one value.
+     */
+    public fun push(
+        point: GeoPoint,
+        routeHint: Float?,
+        serverHeading: Float?,
+        atMillis: Long
+    ) {
+        val previousTarget = targetPoint
+        if (previousTarget == null) {
+            startPoint = point
+            targetPoint = point
+            startMs = atMillis
+            lastFixMs = atMillis
+            durationMs = defaultDurationMs
+            resolveHint(routeHint, serverHeading)?.let {
+                targetBearing = it
+                displayBearing = it
+            }
+            startBearing = targetBearing
+            snap = true
+            return
+        }
+
+        val displayedPoint = sample(atMillis).point
+        val interval = (atMillis - lastFixMs).coerceIn(minDurationMs, maxDurationMs)
+        val movedMeters = previousTarget.distanceTo(point)
+        val impliedSpeed = movedMeters / (interval / 1000.0)
+
+        if (movedMeters >= minMoveMeters) {
+            targetBearing = previousTarget.bearingTo(point).toFloat()
+            hasGoodBearing = true
+        } else if (!hasGoodBearing) {
+            resolveHint(routeHint, serverHeading)?.let { targetBearing = it }
+        }
+
+        snap = impliedSpeed > teleportSpeedMps
+        startPoint = if (snap) point else displayedPoint
+        startBearing = if (snap) targetBearing else displayBearing
+        targetPoint = point
+        startMs = atMillis
+        durationMs = interval
+        lastFixMs = atMillis
+    }
+
+    public fun sample(atMillis: Long): Pose {
+        val target = targetPoint ?: return Pose(GeoPoint.Zero, displayBearing)
+        if (snap) {
+            displayBearing = targetBearing
+            return Pose(target, targetBearing)
+        }
+        val start = startPoint ?: target
+        val fraction =
+            if (durationMs > 0L) {
+                ((atMillis - startMs).toFloat() / durationMs).coerceIn(0f, 1f)
+            } else {
+                1f
+            }
+        val point =
+            GeoPoint(
+                lat = start.lat + (target.lat - start.lat) * fraction,
+                lng = start.lng + (target.lng - start.lng) * fraction
+            )
+        val bearing = interpolateHeading(startBearing, targetBearing, fraction)
+        displayBearing = bearing
+        return Pose(point, bearing)
+    }
+
+    private fun resolveHint(
+        routeHint: Float?,
+        serverHeading: Float?
+    ): Float? = routeHint ?: serverHeading?.takeIf { it != 0f }
+
+    public companion object {
+        public fun withDefaults(): DriverMotionModel = DriverMotionModel()
+    }
+}

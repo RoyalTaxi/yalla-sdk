@@ -299,7 +299,7 @@ final class uz.yalla.maps.api.model/MapCircle { // uz.yalla.maps.api.model/MapCi
 }
 
 final class uz.yalla.maps.api.model/MapMarker { // uz.yalla.maps.api.model/MapMarker|null[0]
-    constructor <init>(kotlin/String, uz.yalla.core.geo/GeoPoint, uz.yalla.maps.api.model/MapMarkerIcon? = ..., kotlin/Float = ..., uz.yalla.maps.api.model/Anchor = ..., kotlin/Boolean = ..., kotlin/Float = ..., kotlin/String? = ...) // uz.yalla.maps.api.model/MapMarker.<init>|<init>(kotlin.String;uz.yalla.core.geo.GeoPoint;uz.yalla.maps.api.model.MapMarkerIcon?;kotlin.Float;uz.yalla.maps.api.model.Anchor;kotlin.Boolean;kotlin.Float;kotlin.String?){}[0]
+    constructor <init>(kotlin/String, uz.yalla.core.geo/GeoPoint, uz.yalla.maps.api.model/MapMarkerIcon? = ..., kotlin/Float = ..., kotlin/Float? = ..., uz.yalla.maps.api.model/Anchor = ..., kotlin/Boolean = ..., kotlin/Float = ..., kotlin/String? = ...) // uz.yalla.maps.api.model/MapMarker.<init>|<init>(kotlin.String;uz.yalla.core.geo.GeoPoint;uz.yalla.maps.api.model.MapMarkerIcon?;kotlin.Float;kotlin.Float?;uz.yalla.maps.api.model.Anchor;kotlin.Boolean;kotlin.Float;kotlin.String?){}[0]
 
     final val anchor // uz.yalla.maps.api.model/MapMarker.anchor|{}anchor[0]
         final fun <get-anchor>(): uz.yalla.maps.api.model/Anchor // uz.yalla.maps.api.model/MapMarker.anchor.<get-anchor>|<get-anchor>(){}[0]
@@ -315,6 +315,8 @@ final class uz.yalla.maps.api.model/MapMarker { // uz.yalla.maps.api.model/MapMa
         final fun <get-point>(): uz.yalla.core.geo/GeoPoint // uz.yalla.maps.api.model/MapMarker.point.<get-point>|<get-point>(){}[0]
     final val rotation // uz.yalla.maps.api.model/MapMarker.rotation|{}rotation[0]
         final fun <get-rotation>(): kotlin/Float // uz.yalla.maps.api.model/MapMarker.rotation.<get-rotation>|<get-rotation>(){}[0]
+    final val routeHeading // uz.yalla.maps.api.model/MapMarker.routeHeading|{}routeHeading[0]
+        final fun <get-routeHeading>(): kotlin/Float? // uz.yalla.maps.api.model/MapMarker.routeHeading.<get-routeHeading>|<get-routeHeading>(){}[0]
     final val zIndex // uz.yalla.maps.api.model/MapMarker.zIndex|{}zIndex[0]
         final fun <get-zIndex>(): kotlin/Float // uz.yalla.maps.api.model/MapMarker.zIndex.<get-zIndex>|<get-zIndex>(){}[0]
 
@@ -322,11 +324,12 @@ final class uz.yalla.maps.api.model/MapMarker { // uz.yalla.maps.api.model/MapMa
     final fun component2(): uz.yalla.core.geo/GeoPoint // uz.yalla.maps.api.model/MapMarker.component2|component2(){}[0]
     final fun component3(): uz.yalla.maps.api.model/MapMarkerIcon? // uz.yalla.maps.api.model/MapMarker.component3|component3(){}[0]
     final fun component4(): kotlin/Float // uz.yalla.maps.api.model/MapMarker.component4|component4(){}[0]
-    final fun component5(): uz.yalla.maps.api.model/Anchor // uz.yalla.maps.api.model/MapMarker.component5|component5(){}[0]
-    final fun component6(): kotlin/Boolean // uz.yalla.maps.api.model/MapMarker.component6|component6(){}[0]
-    final fun component7(): kotlin/Float // uz.yalla.maps.api.model/MapMarker.component7|component7(){}[0]
-    final fun component8(): kotlin/String? // uz.yalla.maps.api.model/MapMarker.component8|component8(){}[0]
-    final fun copy(kotlin/String = ..., uz.yalla.core.geo/GeoPoint = ..., uz.yalla.maps.api.model/MapMarkerIcon? = ..., kotlin/Float = ..., uz.yalla.maps.api.model/Anchor = ..., kotlin/Boolean = ..., kotlin/Float = ..., kotlin/String? = ...): uz.yalla.maps.api.model/MapMarker // uz.yalla.maps.api.model/MapMarker.copy|copy(kotlin.String;uz.yalla.core.geo.GeoPoint;uz.yalla.maps.api.model.MapMarkerIcon?;kotlin.Float;uz.yalla.maps.api.model.Anchor;kotlin.Boolean;kotlin.Float;kotlin.String?){}[0]
+    final fun component5(): kotlin/Float? // uz.yalla.maps.api.model/MapMarker.component5|component5(){}[0]
+    final fun component6(): uz.yalla.maps.api.model/Anchor // uz.yalla.maps.api.model/MapMarker.component6|component6(){}[0]
+    final fun component7(): kotlin/Boolean // uz.yalla.maps.api.model/MapMarker.component7|component7(){}[0]
+    final fun component8(): kotlin/Float // uz.yalla.maps.api.model/MapMarker.component8|component8(){}[0]
+    final fun component9(): kotlin/String? // uz.yalla.maps.api.model/MapMarker.component9|component9(){}[0]
+    final fun copy(kotlin/String = ..., uz.yalla.core.geo/GeoPoint = ..., uz.yalla.maps.api.model/MapMarkerIcon? = ..., kotlin/Float = ..., kotlin/Float? = ..., uz.yalla.maps.api.model/Anchor = ..., kotlin/Boolean = ..., kotlin/Float = ..., kotlin/String? = ...): uz.yalla.maps.api.model/MapMarker // uz.yalla.maps.api.model/MapMarker.copy|copy(kotlin.String;uz.yalla.core.geo.GeoPoint;uz.yalla.maps.api.model.MapMarkerIcon?;kotlin.Float;kotlin.Float?;uz.yalla.maps.api.model.Anchor;kotlin.Boolean;kotlin.Float;kotlin.String?){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.maps.api.model/MapMarker.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.maps.api.model/MapMarker.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.maps.api.model/MapMarker.toString|toString(){}[0]
@@ -431,6 +434,33 @@ final class uz.yalla.maps.config/MapsConfig { // uz.yalla.maps.config/MapsConfig
 
         final fun build(): uz.yalla.maps.config/MapsConfig // uz.yalla.maps.config/MapsConfig.Builder.build|build(){}[0]
     }
+}
+
+final class uz.yalla.maps.motion/DriverMotionModel { // uz.yalla.maps.motion/DriverMotionModel|null[0]
+    constructor <init>(kotlin/Double = ..., kotlin/Double = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Long = ...) // uz.yalla.maps.motion/DriverMotionModel.<init>|<init>(kotlin.Double;kotlin.Double;kotlin.Long;kotlin.Long;kotlin.Long){}[0]
+
+    final fun push(uz.yalla.core.geo/GeoPoint, kotlin/Float?, kotlin/Float?, kotlin/Long) // uz.yalla.maps.motion/DriverMotionModel.push|push(uz.yalla.core.geo.GeoPoint;kotlin.Float?;kotlin.Float?;kotlin.Long){}[0]
+    final fun sample(kotlin/Long): uz.yalla.maps.motion/Pose // uz.yalla.maps.motion/DriverMotionModel.sample|sample(kotlin.Long){}[0]
+
+    final object Companion { // uz.yalla.maps.motion/DriverMotionModel.Companion|null[0]
+        final fun withDefaults(): uz.yalla.maps.motion/DriverMotionModel // uz.yalla.maps.motion/DriverMotionModel.Companion.withDefaults|withDefaults(){}[0]
+    }
+}
+
+final class uz.yalla.maps.motion/Pose { // uz.yalla.maps.motion/Pose|null[0]
+    constructor <init>(uz.yalla.core.geo/GeoPoint, kotlin/Float) // uz.yalla.maps.motion/Pose.<init>|<init>(uz.yalla.core.geo.GeoPoint;kotlin.Float){}[0]
+
+    final val bearing // uz.yalla.maps.motion/Pose.bearing|{}bearing[0]
+        final fun <get-bearing>(): kotlin/Float // uz.yalla.maps.motion/Pose.bearing.<get-bearing>|<get-bearing>(){}[0]
+    final val point // uz.yalla.maps.motion/Pose.point|{}point[0]
+        final fun <get-point>(): uz.yalla.core.geo/GeoPoint // uz.yalla.maps.motion/Pose.point.<get-point>|<get-point>(){}[0]
+
+    final fun component1(): uz.yalla.core.geo/GeoPoint // uz.yalla.maps.motion/Pose.component1|component1(){}[0]
+    final fun component2(): kotlin/Float // uz.yalla.maps.motion/Pose.component2|component2(){}[0]
+    final fun copy(uz.yalla.core.geo/GeoPoint = ..., kotlin/Float = ...): uz.yalla.maps.motion/Pose // uz.yalla.maps.motion/Pose.copy|copy(uz.yalla.core.geo.GeoPoint;kotlin.Float){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.maps.motion/Pose.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // uz.yalla.maps.motion/Pose.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // uz.yalla.maps.motion/Pose.toString|toString(){}[0]
 }
 
 sealed class uz.yalla.maps.api.model/MapEvent { // uz.yalla.maps.api.model/MapEvent|null[0]
@@ -656,6 +686,8 @@ final val uz.yalla.maps.config/uz_yalla_maps_config_MapsConfig$stableprop // uz.
 final val uz.yalla.maps.config/uz_yalla_maps_config_MapsConfig_Builder$stableprop // uz.yalla.maps.config/uz_yalla_maps_config_MapsConfig_Builder$stableprop|#static{}uz_yalla_maps_config_MapsConfig_Builder$stableprop[0]
 final val uz.yalla.maps.config/uz_yalla_maps_config_NoopLocationProvider$stableprop // uz.yalla.maps.config/uz_yalla_maps_config_NoopLocationProvider$stableprop|#static{}uz_yalla_maps_config_NoopLocationProvider$stableprop[0]
 final val uz.yalla.maps.config/uz_yalla_maps_config_YallaMaps$stableprop // uz.yalla.maps.config/uz_yalla_maps_config_YallaMaps$stableprop|#static{}uz_yalla_maps_config_YallaMaps$stableprop[0]
+final val uz.yalla.maps.motion/uz_yalla_maps_motion_DriverMotionModel$stableprop // uz.yalla.maps.motion/uz_yalla_maps_motion_DriverMotionModel$stableprop|#static{}uz_yalla_maps_motion_DriverMotionModel$stableprop[0]
+final val uz.yalla.maps.motion/uz_yalla_maps_motion_Pose$stableprop // uz.yalla.maps.motion/uz_yalla_maps_motion_Pose$stableprop|#static{}uz_yalla_maps_motion_Pose$stableprop[0]
 
 final fun uz.yalla.maps.api.ios/iosMapFactoryOf(uz.yalla.maps.api.ios/IosMapRendererFactory): uz.yalla.maps.config/MapFactory // uz.yalla.maps.api.ios/iosMapFactoryOf|iosMapFactoryOf(uz.yalla.maps.api.ios.IosMapRendererFactory){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_Anchor$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_Anchor$stableprop_getter|uz_yalla_maps_api_model_Anchor$stableprop_getter(){}[0]
@@ -689,6 +721,8 @@ final fun uz.yalla.maps.config/uz_yalla_maps_config_MapsConfig$stableprop_getter
 final fun uz.yalla.maps.config/uz_yalla_maps_config_MapsConfig_Builder$stableprop_getter(): kotlin/Int // uz.yalla.maps.config/uz_yalla_maps_config_MapsConfig_Builder$stableprop_getter|uz_yalla_maps_config_MapsConfig_Builder$stableprop_getter(){}[0]
 final fun uz.yalla.maps.config/uz_yalla_maps_config_NoopLocationProvider$stableprop_getter(): kotlin/Int // uz.yalla.maps.config/uz_yalla_maps_config_NoopLocationProvider$stableprop_getter|uz_yalla_maps_config_NoopLocationProvider$stableprop_getter(){}[0]
 final fun uz.yalla.maps.config/uz_yalla_maps_config_YallaMaps$stableprop_getter(): kotlin/Int // uz.yalla.maps.config/uz_yalla_maps_config_YallaMaps$stableprop_getter|uz_yalla_maps_config_YallaMaps$stableprop_getter(){}[0]
+final fun uz.yalla.maps.motion/uz_yalla_maps_motion_DriverMotionModel$stableprop_getter(): kotlin/Int // uz.yalla.maps.motion/uz_yalla_maps_motion_DriverMotionModel$stableprop_getter|uz_yalla_maps_motion_DriverMotionModel$stableprop_getter(){}[0]
+final fun uz.yalla.maps.motion/uz_yalla_maps_motion_Pose$stableprop_getter(): kotlin/Int // uz.yalla.maps.motion/uz_yalla_maps_motion_Pose$stableprop_getter|uz_yalla_maps_motion_Pose$stableprop_getter(){}[0]
 final fun uz.yalla.maps.util/interpolateHeading(kotlin/Float, kotlin/Float, kotlin/Float): kotlin/Float // uz.yalla.maps.util/interpolateHeading|interpolateHeading(kotlin.Float;kotlin.Float;kotlin.Float){}[0]
 final fun uz.yalla.maps.util/normalizeHeading(kotlin/Float): kotlin/Float // uz.yalla.maps.util/normalizeHeading|normalizeHeading(kotlin.Float){}[0]
 final fun uz.yalla.maps.util/shortestHeadingPath(kotlin/Float, kotlin/Float): kotlin/Float // uz.yalla.maps.util/shortestHeadingPath|shortestHeadingPath(kotlin.Float;kotlin.Float){}[0]

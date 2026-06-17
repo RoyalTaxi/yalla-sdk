@@ -7,6 +7,16 @@ the unified `yalla.sdk.version` published to GitHub Packages.
 > `.github/workflows/publish.yml`. A non-`release(` commit (e.g. `chore(release):`)
 > will NOT publish, even though the workflow run reports success.
 
+## 1.0.0-alpha18
+
+- `maps`: `DriverMotionModel` — pure, platform-free motion solver (chained
+  interpolation across fixes, movement-derived heading with hold-last-good,
+  teleport guard) consumed by all four renderers. The model owns the heading
+  precedence ladder via `push(point, routeHint, serverHeading, atMillis)` and the
+  new `MapMarker.routeHeading` channel (YLL-798).
+- `core`: `GeoPoint.bearingTo`, `headingAlongRoute` (nearest-segment route bearing,
+  off-route gated), and `List<T>.spacedApartBy` (haversine marker spacing).
+
 ## 1.0.0-alpha17
 
 - `components`: ellipsize the single-title `LocationButton` title to one line (#45).
