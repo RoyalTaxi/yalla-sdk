@@ -125,14 +125,6 @@ abstract interface uz.yalla.maps.api/MapController { // uz.yalla.maps.api/MapCon
     }
 }
 
-abstract interface uz.yalla.maps.api/MapsTelemetry { // uz.yalla.maps.api/MapsTelemetry|null[0]
-    open fun onCameraOpsCancelled(kotlin/String) // uz.yalla.maps.api/MapsTelemetry.onCameraOpsCancelled|onCameraOpsCancelled(kotlin.String){}[0]
-    open fun onIconLoadFailed(uz.yalla.maps.api.model/MapMarkerIcon, kotlin/Throwable) // uz.yalla.maps.api/MapsTelemetry.onIconLoadFailed|onIconLoadFailed(uz.yalla.maps.api.model.MapMarkerIcon;kotlin.Throwable){}[0]
-    open fun onMapReadyTimeout(kotlin/String) // uz.yalla.maps.api/MapsTelemetry.onMapReadyTimeout|onMapReadyTimeout(kotlin.String){}[0]
-    open fun onStyleLoadFailed(kotlin/String, kotlin/Throwable) // uz.yalla.maps.api/MapsTelemetry.onStyleLoadFailed|onStyleLoadFailed(kotlin.String;kotlin.Throwable){}[0]
-    open fun onUnsupportedFeature(kotlin/String, kotlin/String) // uz.yalla.maps.api/MapsTelemetry.onUnsupportedFeature|onUnsupportedFeature(kotlin.String;kotlin.String){}[0]
-}
-
 abstract interface uz.yalla.maps.config/MapFactory { // uz.yalla.maps.config/MapFactory|null[0]
     abstract fun createGoogleController(): uz.yalla.maps.api/MapController // uz.yalla.maps.config/MapFactory.createGoogleController|createGoogleController(){}[0]
     abstract fun createLibreController(): uz.yalla.maps.api/MapController // uz.yalla.maps.config/MapFactory.createLibreController|createLibreController(){}[0]
@@ -405,8 +397,6 @@ final class uz.yalla.maps.config/MapsConfig { // uz.yalla.maps.config/MapsConfig
         final fun <get-mapKindPreference>(): kotlinx.coroutines.flow/Flow<uz.yalla.core.settings/MapKind> // uz.yalla.maps.config/MapsConfig.mapKindPreference.<get-mapKindPreference>|<get-mapKindPreference>(){}[0]
     final val scope // uz.yalla.maps.config/MapsConfig.scope|{}scope[0]
         final fun <get-scope>(): kotlinx.coroutines/CoroutineScope // uz.yalla.maps.config/MapsConfig.scope.<get-scope>|<get-scope>(){}[0]
-    final val telemetry // uz.yalla.maps.config/MapsConfig.telemetry|{}telemetry[0]
-        final fun <get-telemetry>(): uz.yalla.maps.api/MapsTelemetry? // uz.yalla.maps.config/MapsConfig.telemetry.<get-telemetry>|<get-telemetry>(){}[0]
     final val themePreference // uz.yalla.maps.config/MapsConfig.themePreference|{}themePreference[0]
         final fun <get-themePreference>(): kotlinx.coroutines.flow/Flow<uz.yalla.core.settings/ThemeKind> // uz.yalla.maps.config/MapsConfig.themePreference.<get-themePreference>|<get-themePreference>(){}[0]
 
@@ -425,9 +415,6 @@ final class uz.yalla.maps.config/MapsConfig { // uz.yalla.maps.config/MapsConfig
         final var scope // uz.yalla.maps.config/MapsConfig.Builder.scope|{}scope[0]
             final fun <get-scope>(): kotlinx.coroutines/CoroutineScope? // uz.yalla.maps.config/MapsConfig.Builder.scope.<get-scope>|<get-scope>(){}[0]
             final fun <set-scope>(kotlinx.coroutines/CoroutineScope?) // uz.yalla.maps.config/MapsConfig.Builder.scope.<set-scope>|<set-scope>(kotlinx.coroutines.CoroutineScope?){}[0]
-        final var telemetry // uz.yalla.maps.config/MapsConfig.Builder.telemetry|{}telemetry[0]
-            final fun <get-telemetry>(): uz.yalla.maps.api/MapsTelemetry? // uz.yalla.maps.config/MapsConfig.Builder.telemetry.<get-telemetry>|<get-telemetry>(){}[0]
-            final fun <set-telemetry>(uz.yalla.maps.api/MapsTelemetry?) // uz.yalla.maps.config/MapsConfig.Builder.telemetry.<set-telemetry>|<set-telemetry>(uz.yalla.maps.api.MapsTelemetry?){}[0]
         final var themePreference // uz.yalla.maps.config/MapsConfig.Builder.themePreference|{}themePreference[0]
             final fun <get-themePreference>(): kotlinx.coroutines.flow/Flow<uz.yalla.core.settings/ThemeKind>? // uz.yalla.maps.config/MapsConfig.Builder.themePreference.<get-themePreference>|<get-themePreference>(){}[0]
             final fun <set-themePreference>(kotlinx.coroutines.flow/Flow<uz.yalla.core.settings/ThemeKind>?) // uz.yalla.maps.config/MapsConfig.Builder.themePreference.<set-themePreference>|<set-themePreference>(kotlinx.coroutines.flow.Flow<uz.yalla.core.settings.ThemeKind>?){}[0]
