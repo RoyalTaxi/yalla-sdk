@@ -23,7 +23,7 @@ public class DriverMotionModel(
     private var hasGoodBearing: Boolean = false
     private var snap: Boolean = true
 
-    public fun push(point: GeoPoint, serverHeading: Float?, atMillis: Long) {
+    public fun push(point: GeoPoint, serverHeading: Float, atMillis: Long) {
         val previousTarget = targetPoint
         if (previousTarget == null) {
             startPoint = point
@@ -31,7 +31,7 @@ public class DriverMotionModel(
             startMs = atMillis
             lastFixMs = atMillis
             durationMs = defaultDurationMs
-            serverHeading?.takeIf { it != 0f }?.let {
+            serverHeading.takeIf { it != 0f }?.let {
                 targetBearing = it
                 displayBearing = it
             }
@@ -49,7 +49,7 @@ public class DriverMotionModel(
             targetBearing = previousTarget.bearingTo(point).toFloat()
             hasGoodBearing = true
         } else if (!hasGoodBearing) {
-            serverHeading?.takeIf { it != 0f }?.let { targetBearing = it }
+            serverHeading.takeIf { it != 0f }?.let { targetBearing = it }
         }
 
         snap = impliedSpeed > teleportSpeedMps
