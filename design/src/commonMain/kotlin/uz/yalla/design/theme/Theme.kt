@@ -17,9 +17,6 @@ import uz.yalla.design.color.light
 import uz.yalla.design.font.FontScheme
 import uz.yalla.design.font.LocalFontScheme
 import uz.yalla.design.font.rememberFontScheme
-import uz.yalla.design.space.LocalSpaceScheme
-import uz.yalla.design.space.SpaceScheme
-import uz.yalla.design.space.standardSpaceScheme
 import androidx.compose.material3.darkColorScheme as materialDarkColorScheme
 import androidx.compose.material3.lightColorScheme as materialLightColorScheme
 
@@ -31,7 +28,6 @@ public fun YallaTheme(
     isDark: Boolean = isSystemInDarkTheme(),
     colorScheme: ColorScheme = if (isDark) dark() else light(),
     fontScheme: FontScheme = rememberFontScheme(),
-    spaceScheme: SpaceScheme = standardSpaceScheme(),
     content: @Composable () -> Unit
 ) {
     val rippleConfiguration =
@@ -77,7 +73,6 @@ public fun YallaTheme(
         LocalIsDark provides isDark,
         LocalColorScheme provides colorScheme,
         LocalFontScheme provides fontScheme,
-        LocalSpaceScheme provides spaceScheme,
         LocalRippleConfiguration provides rippleConfiguration
     ) {
         MaterialTheme(
@@ -95,10 +90,6 @@ public object System {
     public val font: FontScheme
         @Composable
         get() = LocalFontScheme.current
-
-    public val space: SpaceScheme
-        @Composable
-        get() = LocalSpaceScheme.current
 
     public val isDark: Boolean
         @Composable
