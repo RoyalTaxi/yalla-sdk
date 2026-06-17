@@ -14,7 +14,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 @Stable
-public class ConnectivityState(
+public class ConnectivityState internal constructor(
     private val connectivity: Connectivity,
     private val scope: CoroutineScope
 ) {
@@ -34,7 +34,7 @@ public class ConnectivityState(
 }
 
 @Composable
-public fun rememberConnectivityState(
+internal fun rememberConnectivityState(
     connectivity: Connectivity,
     scope: CoroutineScope = rememberCoroutineScope()
 ): ConnectivityState =

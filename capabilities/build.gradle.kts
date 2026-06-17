@@ -17,7 +17,7 @@ kotlin {
             implementation(libs.kermit)
 
             api(libs.geo)
-            api(libs.connectivity.device)
+            implementation(libs.connectivity.device)
         }
 
         androidMain.dependencies {

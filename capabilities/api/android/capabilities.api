@@ -7,13 +7,11 @@ public final class uz/yalla/capabilities/browser/Browser_androidKt {
 }
 
 public final class uz/yalla/capabilities/connectivity/ConnectivityKt {
-	public static final fun rememberConnectivityState (Ldev/jordond/connectivity/Connectivity;Lkotlinx/coroutines/CoroutineScope;Landroidx/compose/runtime/Composer;II)Luz/yalla/capabilities/connectivity/ConnectivityState;
 	public static final fun rememberConnectivityState (Lkotlinx/coroutines/CoroutineScope;Landroidx/compose/runtime/Composer;II)Luz/yalla/capabilities/connectivity/ConnectivityState;
 }
 
 public final class uz/yalla/capabilities/connectivity/ConnectivityState {
 	public static final field $stable I
-	public fun <init> (Ldev/jordond/connectivity/Connectivity;Lkotlinx/coroutines/CoroutineScope;)V
 	public final fun isOnline ()Z
 	public final fun refresh ()Lkotlinx/coroutines/Job;
 }
