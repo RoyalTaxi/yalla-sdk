@@ -51,7 +51,11 @@ class EitherOperatorsTest {
     fun mapSuccessTransformsSuccessAndLeavesFailureUntouched() {
         assertEquals(Either.Success("7!"), success.mapSuccess { "$it!" })
         var called = false
-        val mapped = failure.mapSuccess { called = true; "$it!" }
+        val mapped =
+            failure.mapSuccess {
+                called = true
+                "$it!"
+            }
         assertEquals(Either.Failure("boom"), mapped)
         assertTrue(!called)
     }
@@ -60,7 +64,11 @@ class EitherOperatorsTest {
     fun mapFailureTransformsFailureAndLeavesSuccessUntouched() {
         assertEquals(Either.Failure("boom!"), failure.mapFailure { "$it!" })
         var called = false
-        val mapped = success.mapFailure { called = true; "$it!" }
+        val mapped =
+            success.mapFailure {
+                called = true
+                "$it!"
+            }
         assertEquals(Either.Success(7), mapped)
         assertTrue(!called)
     }
