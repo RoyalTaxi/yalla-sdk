@@ -294,6 +294,45 @@ sealed interface <#A: out kotlin/Any?, #B: out kotlin/Any?> uz.yalla.core.result
     }
 }
 
+sealed interface uz.yalla.core.error/DomainError { // uz.yalla.core.error/DomainError|null[0]
+    final class Remote : uz.yalla.core.error/DomainError { // uz.yalla.core.error/DomainError.Remote|null[0]
+        constructor <init>(kotlin/String? = ..., kotlin/String? = ..., kotlin/Int? = ...) // uz.yalla.core.error/DomainError.Remote.<init>|<init>(kotlin.String?;kotlin.String?;kotlin.Int?){}[0]
+
+        final val errorCode // uz.yalla.core.error/DomainError.Remote.errorCode|{}errorCode[0]
+            final fun <get-errorCode>(): kotlin/String? // uz.yalla.core.error/DomainError.Remote.errorCode.<get-errorCode>|<get-errorCode>(){}[0]
+        final val message // uz.yalla.core.error/DomainError.Remote.message|{}message[0]
+            final fun <get-message>(): kotlin/String? // uz.yalla.core.error/DomainError.Remote.message.<get-message>|<get-message>(){}[0]
+        final val retryAfter // uz.yalla.core.error/DomainError.Remote.retryAfter|{}retryAfter[0]
+            final fun <get-retryAfter>(): kotlin/Int? // uz.yalla.core.error/DomainError.Remote.retryAfter.<get-retryAfter>|<get-retryAfter>(){}[0]
+
+        final fun component1(): kotlin/String? // uz.yalla.core.error/DomainError.Remote.component1|component1(){}[0]
+        final fun component2(): kotlin/String? // uz.yalla.core.error/DomainError.Remote.component2|component2(){}[0]
+        final fun component3(): kotlin/Int? // uz.yalla.core.error/DomainError.Remote.component3|component3(){}[0]
+        final fun copy(kotlin/String? = ..., kotlin/String? = ..., kotlin/Int? = ...): uz.yalla.core.error/DomainError.Remote // uz.yalla.core.error/DomainError.Remote.copy|copy(kotlin.String?;kotlin.String?;kotlin.Int?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.error/DomainError.Remote.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.error/DomainError.Remote.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.error/DomainError.Remote.toString|toString(){}[0]
+    }
+
+    final object Connectivity : uz.yalla.core.error/DomainError { // uz.yalla.core.error/DomainError.Connectivity|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.error/DomainError.Connectivity.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.error/DomainError.Connectivity.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.error/DomainError.Connectivity.toString|toString(){}[0]
+    }
+
+    final object Unauthorized : uz.yalla.core.error/DomainError { // uz.yalla.core.error/DomainError.Unauthorized|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.error/DomainError.Unauthorized.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.error/DomainError.Unauthorized.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.error/DomainError.Unauthorized.toString|toString(){}[0]
+    }
+
+    final object Unknown : uz.yalla.core.error/DomainError { // uz.yalla.core.error/DomainError.Unknown|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.error/DomainError.Unknown.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.error/DomainError.Unknown.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.error/DomainError.Unknown.toString|toString(){}[0]
+    }
+}
+
 final class uz.yalla.core.geo/GeoPoint { // uz.yalla.core.geo/GeoPoint|null[0]
     constructor <init>(kotlin/Double, kotlin/Double) // uz.yalla.core.geo/GeoPoint.<init>|<init>(kotlin.Double;kotlin.Double){}[0]
 
