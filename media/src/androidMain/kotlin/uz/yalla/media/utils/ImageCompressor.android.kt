@@ -11,7 +11,7 @@ import kotlin.math.min
 public actual fun compressImage(
     imageBytes: ByteArray,
     config: CompressionConfig
-): ByteArray {
+): ByteArray? {
     val maxDimension = config.maxDimension
     val maxSizeBytes = config.maxFileSize
 
@@ -48,7 +48,7 @@ public actual fun compressImage(
 
     val bitmap =
         BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, decodedOptions)
-            ?: return imageBytes
+            ?: return null
 
     val rotationDegrees =
         runCatching {

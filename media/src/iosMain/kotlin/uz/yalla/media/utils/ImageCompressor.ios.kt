@@ -19,7 +19,7 @@ private const val MIN_QUALITY_INT = 10
 public actual fun compressImage(
     imageBytes: ByteArray,
     config: CompressionConfig
-): ByteArray {
+): ByteArray? {
     val maxDimension = config.maxDimension
     val maxSizeBytes = config.maxFileSize
 
@@ -28,7 +28,7 @@ public actual fun compressImage(
             NSData.dataWithBytes(bytes = pinned.addressOf(0), length = imageBytes.size.toULong())
         }
 
-    val originalImage = UIImage(nsData) ?: return imageBytes
+    val originalImage = UIImage(nsData) ?: return null
 
     val originalWidth = originalImage.size.useContents { this.width }
     val originalHeight = originalImage.size.useContents { this.height }
@@ -86,7 +86,7 @@ public actual fun compressImage(
             }
         val minQuality = MIN_QUALITY_INT.toDouble() / 100.0
         bestData = UIImageJPEGRepresentation(smallerImage, minQuality)
-            ?: return imageBytes
+            ?: return null
     }
 
     return bestData.toByteArray()
