@@ -1,13 +1,10 @@
 package uz.yalla.capabilities.location
 
-import android.content.Context
 import dev.icerock.moko.geo.LocationTracker
 import dev.icerock.moko.permissions.PermissionsController
-import org.koin.core.context.GlobalContext
+import uz.yalla.capabilities.capabilitiesContext
 
-internal actual fun createLocationTracker(): LocationTracker {
-    val context: Context = GlobalContext.get().get()
-    return LocationTracker(
-        permissionsController = PermissionsController(applicationContext = context)
+internal actual fun createLocationTracker(): LocationTracker =
+    LocationTracker(
+        permissionsController = PermissionsController(applicationContext = capabilitiesContext)
     )
-}

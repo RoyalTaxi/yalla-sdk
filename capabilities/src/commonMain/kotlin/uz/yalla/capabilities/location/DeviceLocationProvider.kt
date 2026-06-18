@@ -21,9 +21,6 @@ public class DeviceLocationProvider internal constructor(
     private val _currentLocation = MutableStateFlow<GeoPoint?>(null)
     override val currentLocation: StateFlow<GeoPoint?> = _currentLocation.asStateFlow()
 
-    private val _permissionState = MutableStateFlow<LocationPermissionState?>(null)
-    public val permissionState: StateFlow<LocationPermissionState?> = _permissionState.asStateFlow()
-
     private var job: Job? = null
 
     override fun startTracking() {
@@ -48,9 +45,5 @@ public class DeviceLocationProvider internal constructor(
         job?.cancel()
         job = null
         locationTracker.stopTracking()
-    }
-
-    public fun updatePermissionState(state: LocationPermissionState?) {
-        _permissionState.value = state
     }
 }
