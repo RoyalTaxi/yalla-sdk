@@ -115,4 +115,16 @@ class DriverMotionModelTest {
         m.push(a, null, 0f, 0L)
         assertBearingClose(0f, m.sample(0L).bearing, msg = "no hint resolved; defaults to 0")
     }
+
+    @Test
+    fun heldDerivedBearingSurvivesSubThresholdMoveAndIgnoresRouteHint() {
+        val m = DriverMotionModel()
+        val a = GeoPoint(40.0, 71.0)
+        val east = GeoPoint(40.0, 71.0005)
+        m.push(a, null, null, 0L)
+        m.push(east, null, null, 10_000L)
+        val tiny = GeoPoint(40.0, 71.0005001)
+        m.push(tiny, 270f, null, 20_000L)
+        assertBearingClose(90f, m.sample(40_000L).bearing, msg = "a held derived bearing is not overwritten by a route hint on a sub-threshold move")
+    }
 }
