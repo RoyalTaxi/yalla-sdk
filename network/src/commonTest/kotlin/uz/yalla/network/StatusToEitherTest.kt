@@ -1,7 +1,7 @@
 package uz.yalla.network
 
-import uz.yalla.network.error.DataError
 import uz.yalla.core.result.Either
+import uz.yalla.network.error.DataError
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

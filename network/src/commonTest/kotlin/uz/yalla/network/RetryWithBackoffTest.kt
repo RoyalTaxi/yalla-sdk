@@ -16,60 +16,67 @@ import kotlin.test.assertFailsWith
 @OptIn(ExperimentalCoroutinesApi::class)
 class RetryWithBackoffTest {
     @Test
-    fun returnsImmediatelyWhenFirstAttemptSucceeds() = runTest {
-        var calls = 0
-        val result = retryWithBackoff(isIdempotent = true) {
-            calls++
-            "ok"
+    fun returnsImmediatelyWhenFirstAttemptSucceeds() =
+        runTest {
+            var calls = 0
+            val result =
+                retryWithBackoff(isIdempotent = true) {
+                    calls++
+                    "ok"
+                }
+            assertEquals(1, calls)
+            assertEquals("ok", result)
         }
-        assertEquals(1, calls)
-        assertEquals("ok", result)
-    }
 
     @Test
-    fun retriesIdempotentCallOnTransientIoThenSucceeds() = runTest {
-        var calls = 0
-        val result = retryWithBackoff(times = 3, isIdempotent = true) {
-            calls++
-            if (calls < 3) throw IOException("transient") else "ok"
+    fun retriesIdempotentCallOnTransientIoThenSucceeds() =
+        runTest {
+            var calls = 0
+            val result =
+                retryWithBackoff(times = 3, isIdempotent = true) {
+                    calls++
+                    if (calls < 3) throw IOException("transient") else "ok"
+                }
+            assertEquals(3, calls)
+            assertEquals("ok", result)
         }
-        assertEquals(3, calls)
-        assertEquals("ok", result)
-    }
 
     @Test
-    fun retriesIdempotentCallUpToLimitThenThrows() = runTest {
-        var calls = 0
-        assertFailsWith<IOException> {
-            retryWithBackoff(times = 3, isIdempotent = true) {
-                calls++
-                throw IOException("transient")
+    fun retriesIdempotentCallUpToLimitThenThrows() =
+        runTest {
+            var calls = 0
+            assertFailsWith<IOException> {
+                retryWithBackoff(times = 3, isIdempotent = true) {
+                    calls++
+                    throw IOException("transient")
+                }
             }
+            assertEquals(3, calls)
         }
-        assertEquals(3, calls)
-    }
 
     @Test
-    fun doesNotRetryNonIdempotentCall() = runTest {
-        var calls = 0
-        assertFailsWith<IOException> {
-            retryWithBackoff(times = 3, isIdempotent = false) {
-                calls++
-                throw IOException("transient")
+    fun doesNotRetryNonIdempotentCall() =
+        runTest {
+            var calls = 0
+            assertFailsWith<IOException> {
+                retryWithBackoff(times = 3, isIdempotent = false) {
+                    calls++
+                    throw IOException("transient")
+                }
             }
+            assertEquals(1, calls)
         }
-        assertEquals(1, calls)
-    }
 
     @Test
-    fun doesNotRetryNonTransientException() = runTest {
-        var calls = 0
-        assertFailsWith<IllegalStateException> {
-            retryWithBackoff(times = 3, isIdempotent = true) {
-                calls++
-                throw IllegalStateException("logic bug")
+    fun doesNotRetryNonTransientException() =
+        runTest {
+            var calls = 0
+            assertFailsWith<IllegalStateException> {
+                retryWithBackoff(times = 3, isIdempotent = true) {
+                    calls++
+                    error("logic bug")
+                }
             }
+            assertEquals(1, calls)
         }
-        assertEquals(1, calls)
-    }
 }

@@ -78,7 +78,7 @@ public fun createHttpClient(
             socketTimeoutMillis = SOCKET_TIMEOUT_MS
         }
 
-        install(createGuestModeGuardPlugin(guestModeCache, config.guestAllowedSegments.toSet()))
+        install(createGuestModeGuardPlugin(guestModeCache, config.guestAllowedPaths.toSet()))
 
         defaultRequest {
             url(config.baseUrl)

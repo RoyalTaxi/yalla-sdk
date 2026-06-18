@@ -6,15 +6,20 @@ public data class NetworkConfig(
     val secretKey: String,
     val deviceType: String = "client",
     val deviceMode: String = "mobile",
-    val guestAllowedSegments: List<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS
+    val guestAllowedPaths: List<String> = DEFAULT_GUEST_ALLOWED_PATHS
 )
 
-public val DEFAULT_GUEST_ALLOWED_SEGMENTS: List<String> =
+/**
+ * Full relative endpoint paths reachable before the user authenticates: send-code, validate, register,
+ * reverse-geocoding, the tariff cost estimate and the executor list. See [isGuestAllowedPath] for how
+ * these are matched against an outgoing request.
+ */
+public val DEFAULT_GUEST_ALLOWED_PATHS: List<String> =
     listOf(
         "client",
         "valid",
         "register",
         "location-name",
-        "cost",
-        "lists"
+        "address/tariff/cost",
+        "executor/lists"
     )

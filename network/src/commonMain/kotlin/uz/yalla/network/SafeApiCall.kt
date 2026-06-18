@@ -12,8 +12,8 @@ import io.ktor.serialization.ContentConvertException
 import kotlinx.coroutines.delay
 import kotlinx.io.IOException
 import kotlinx.serialization.SerializationException
-import uz.yalla.network.error.DataError
 import uz.yalla.core.result.Either
+import uz.yalla.network.error.DataError
 import kotlin.random.Random
 
 private const val DEFAULT_RETRY_COUNT = 3
