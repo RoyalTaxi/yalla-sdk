@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import uz.yalla.core.preferences.InterfacePreferences
-import uz.yalla.core.preferences.StaticPreferences
 import uz.yalla.core.settings.LocaleKind
 import uz.yalla.core.settings.MapKind
 import uz.yalla.core.settings.ThemeKind
@@ -16,13 +15,11 @@ import uz.yalla.core.util.orFalse
 
 internal class InterfacePreferencesImpl(
     private val dataStore: DataStore<Preferences>,
-    private val scope: CoroutineScope,
-    private val staticPreferences: StaticPreferences
+    private val scope: CoroutineScope
 ) : InterfacePreferences {
     override val localeType: Flow<LocaleKind> = dataStore.data.map { LocaleKind.from(it[PreferenceKeys.LOCALE_TYPE]) }
 
     override fun setLocaleType(value: LocaleKind) {
-        staticPreferences.setLocaleCode(value.code)
         scope.launch { dataStore.edit { it[PreferenceKeys.LOCALE_TYPE] = value.code } }
     }
 

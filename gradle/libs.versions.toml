@@ -33,9 +33,6 @@ ktor = "3.4.3"
 kermit = "2.1.0"
 koin = "4.2.1"
 
-# Storage
-multiplatform-settings = "1.3.0"
-
 # UI helpers
 compottie = "2.1.0"
 # 0.7.0-shaded-core moved/removed the ConstraintLayout API used by primitives.
@@ -131,9 +128,6 @@ kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-
-# Storage
-multiplatform-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatform-settings" }
 
 # UI helpers
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }

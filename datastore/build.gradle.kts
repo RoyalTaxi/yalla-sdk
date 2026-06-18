@@ -10,7 +10,6 @@ kotlin {
             api(libs.kotlinx.coroutines.core)
             api(libs.koin.core)
             api(libs.androidx.datastore.preferences)
-            api(libs.multiplatform.settings)
         }
     }
 }
