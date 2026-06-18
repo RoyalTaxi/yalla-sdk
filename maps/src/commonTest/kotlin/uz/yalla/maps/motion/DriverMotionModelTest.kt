@@ -125,6 +125,10 @@ class DriverMotionModelTest {
         m.push(east, null, null, 10_000L)
         val tiny = GeoPoint(40.0, 71.0005001)
         m.push(tiny, 270f, null, 20_000L)
-        assertBearingClose(90f, m.sample(40_000L).bearing, msg = "a held derived bearing is not overwritten by a route hint on a sub-threshold move")
+        assertBearingClose(
+            90f,
+            m.sample(40_000L).bearing,
+            msg = "a held derived bearing is not overwritten by a route hint on a sub-threshold move"
+        )
     }
 }

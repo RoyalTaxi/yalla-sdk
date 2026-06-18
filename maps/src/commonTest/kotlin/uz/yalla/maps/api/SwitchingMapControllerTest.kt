@@ -58,67 +58,72 @@ class SwitchingMapControllerTest {
     }
 
     @Test
-    fun cachesSceneStateWhenNoBackendIsActive() = runTest(dispatcher) {
-        val markers = listOf(marker("a"))
-        controller.setMarkers(markers)
-        controller.lockTarget(GeoPoint(1.0, 2.0), 15f)
+    fun cachesSceneStateWhenNoBackendIsActive() =
+        runTest(dispatcher) {
+            val markers = listOf(marker("a"))
+            controller.setMarkers(markers)
+            controller.lockTarget(GeoPoint(1.0, 2.0), 15f)
 
-        val snapshot = controller.snapshotScene()
+            val snapshot = controller.snapshotScene()
 
-        assertEquals(markers, snapshot.markers)
-        assertEquals(GeoPoint(1.0, 2.0), snapshot.lockedTarget)
-        assertEquals(15f, snapshot.lockedZoom)
-    }
-
-    @Test
-    fun switchToActivatesBackendAndAppliesCachedState() = runTest(dispatcher) {
-        val markers = listOf(marker("a"))
-        controller.setMarkers(markers)
-
-        controller.switchTo(MapKind.Google)
-
-        val active = controller.activeBackend.value as FakeMapController
-        assertEquals(markers, active.markers)
-        assertTrue(controller.isReady.value)
-    }
+            assertEquals(markers, snapshot.markers)
+            assertEquals(GeoPoint(1.0, 2.0), snapshot.lockedTarget)
+            assertEquals(15f, snapshot.lockedZoom)
+        }
 
     @Test
-    fun switchToIsIdempotentForSameProvider() = runTest(dispatcher) {
-        controller.switchTo(MapKind.Google)
-        controller.switchTo(MapKind.Google)
+    fun switchToActivatesBackendAndAppliesCachedState() =
+        runTest(dispatcher) {
+            val markers = listOf(marker("a"))
+            controller.setMarkers(markers)
 
-        assertEquals(1, factory.googleCreated.size)
-    }
+            controller.switchTo(MapKind.Google)
 
-    @Test
-    fun switchToDifferentProviderClosesPreviousAndCarriesScene() = runTest(dispatcher) {
-        val markers = listOf(marker("a"))
-        controller.switchTo(MapKind.Google)
-        controller.setMarkers(markers)
-
-        controller.switchTo(MapKind.Libre)
-
-        assertTrue(factory.googleCreated.single().closed)
-        val active = controller.activeBackend.value as FakeMapController
-        assertNotNull(active)
-        assertEquals(markers, active.markers)
-        assertSame(factory.libreCreated.single(), active)
-    }
+            val active = controller.activeBackend.value as FakeMapController
+            assertEquals(markers, active.markers)
+            assertTrue(controller.isReady.value)
+        }
 
     @Test
-    fun mutationsAreForwardedToActiveBackend() = runTest(dispatcher) {
-        controller.switchTo(MapKind.Google)
-        val active = factory.googleCreated.single()
+    fun switchToIsIdempotentForSameProvider() =
+        runTest(dispatcher) {
+            controller.switchTo(MapKind.Google)
+            controller.switchTo(MapKind.Google)
 
-        val markers = listOf(marker("x"), marker("y"))
-        controller.setMarkers(markers)
-        controller.setInteractionEnabled(false)
-        controller.setUserLocation(GeoPoint(5.0, 6.0))
+            assertEquals(1, factory.googleCreated.size)
+        }
 
-        assertEquals(markers, active.markers)
-        assertEquals(false, active.interactionEnabled)
-        assertEquals(GeoPoint(5.0, 6.0), active.userLocation)
-    }
+    @Test
+    fun switchToDifferentProviderClosesPreviousAndCarriesScene() =
+        runTest(dispatcher) {
+            val markers = listOf(marker("a"))
+            controller.switchTo(MapKind.Google)
+            controller.setMarkers(markers)
+
+            controller.switchTo(MapKind.Libre)
+
+            assertTrue(factory.googleCreated.single().closed)
+            val active = controller.activeBackend.value as FakeMapController
+            assertNotNull(active)
+            assertEquals(markers, active.markers)
+            assertSame(factory.libreCreated.single(), active)
+        }
+
+    @Test
+    fun mutationsAreForwardedToActiveBackend() =
+        runTest(dispatcher) {
+            controller.switchTo(MapKind.Google)
+            val active = factory.googleCreated.single()
+
+            val markers = listOf(marker("x"), marker("y"))
+            controller.setMarkers(markers)
+            controller.setInteractionEnabled(false)
+            controller.setUserLocation(GeoPoint(5.0, 6.0))
+
+            assertEquals(markers, active.markers)
+            assertEquals(false, active.interactionEnabled)
+            assertEquals(GeoPoint(5.0, 6.0), active.userLocation)
+        }
 
     private fun marker(id: String) = MapMarker(id = id, point = GeoPoint(0.0, 0.0))
 
@@ -137,26 +142,63 @@ class SwitchingMapControllerTest {
         override val isReady: StateFlow<Boolean> = MutableStateFlow(true)
         override val events: SharedFlow<MapEvent> = MutableSharedFlow()
 
-        var markers: List<MapMarker> = emptyList(); private set
-        var routes: List<MapRoute> = emptyList(); private set
-        var circles: List<MapCircle> = emptyList(); private set
-        var padding: PaddingValues = PaddingValues(); private set
-        var interactionEnabled: Boolean = true; private set
-        var userLocation: GeoPoint? = null; private set
-        var userLocationEnabled: Boolean = true; private set
-        var lockedTarget: GeoPoint? = null; private set
-        var lockedZoom: Float? = null; private set
-        var lastStyle: MapStyle? = null; private set
-        var closed: Boolean = false; private set
+        var markers: List<MapMarker> = emptyList()
+            private set
+        var routes: List<MapRoute> = emptyList()
+            private set
+        var circles: List<MapCircle> = emptyList()
+            private set
+        var padding: PaddingValues = PaddingValues()
+            private set
+        var interactionEnabled: Boolean = true
+            private set
+        var userLocation: GeoPoint? = null
+            private set
+        var userLocationEnabled: Boolean = true
+            private set
+        var lockedTarget: GeoPoint? = null
+            private set
+        var lockedZoom: Float? = null
+            private set
+        var lastStyle: MapStyle? = null
+            private set
+        var closed: Boolean = false
+            private set
 
-        override suspend fun moveTo(point: GeoPoint, zoom: Float) = Unit
-        override suspend fun animateTo(point: GeoPoint, zoom: Float, durationMs: Int) = Unit
-        override suspend fun animateToWithBearing(point: GeoPoint, bearing: Float, zoom: Float, durationMs: Int) = Unit
-        override suspend fun fitBounds(points: List<GeoPoint>, animate: Boolean, padding: PaddingValues?) = Unit
+        override suspend fun moveTo(
+            point: GeoPoint,
+            zoom: Float
+        ) = Unit
+
+        override suspend fun animateTo(
+            point: GeoPoint,
+            zoom: Float,
+            durationMs: Int
+        ) = Unit
+
+        override suspend fun animateToWithBearing(
+            point: GeoPoint,
+            bearing: Float,
+            zoom: Float,
+            durationMs: Int
+        ) = Unit
+
+        override suspend fun fitBounds(
+            points: List<GeoPoint>,
+            animate: Boolean,
+            padding: PaddingValues?
+        ) = Unit
+
         override suspend fun zoomIn() = Unit
+
         override suspend fun zoomOut() = Unit
+
         override suspend fun setZoom(zoom: Float) = Unit
-        override suspend fun setStyle(style: MapStyle, isDark: Boolean) {
+
+        override suspend fun setStyle(
+            style: MapStyle,
+            isDark: Boolean
+        ) {
             lastStyle = style
         }
 
@@ -188,7 +230,10 @@ class SwitchingMapControllerTest {
             userLocationEnabled = enabled
         }
 
-        override fun lockTarget(point: GeoPoint, zoom: Float?) {
+        override fun lockTarget(
+            point: GeoPoint,
+            zoom: Float?
+        ) {
             lockedTarget = point
             lockedZoom = zoom
         }
@@ -198,15 +243,16 @@ class SwitchingMapControllerTest {
             lockedZoom = null
         }
 
-        override fun snapshotScene(): MapController.SceneSnapshot = MapController.SceneSnapshot(
-            cameraPosition = cameraPosition.value,
-            markers = markers,
-            routes = routes,
-            circles = circles,
-            padding = padding,
-            lockedTarget = lockedTarget,
-            lockedZoom = lockedZoom
-        )
+        override fun snapshotScene(): MapController.SceneSnapshot =
+            MapController.SceneSnapshot(
+                cameraPosition = cameraPosition.value,
+                markers = markers,
+                routes = routes,
+                circles = circles,
+                padding = padding,
+                lockedTarget = lockedTarget,
+                lockedZoom = lockedZoom
+            )
 
         override fun close() {
             closed = true
