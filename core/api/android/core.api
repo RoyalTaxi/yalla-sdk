@@ -848,11 +848,15 @@ public final class uz/yalla/core/result/EitherKt {
 	public static final fun onSuccess (Luz/yalla/core/result/Either;Lkotlin/jvm/functions/Function1;)Luz/yalla/core/result/Either;
 }
 
-public final class uz/yalla/core/session/UnauthorizedSessionEvents {
-	public static final field INSTANCE Luz/yalla/core/session/UnauthorizedSessionEvents;
-	public final fun drainPendingEventIfExists ()V
-	public final fun getEvents ()Lkotlinx/coroutines/flow/Flow;
-	public final fun publish ()V
+public final class uz/yalla/core/session/DefaultSessionEventBus : uz/yalla/core/session/SessionEventBus {
+	public fun <init> ()V
+	public fun getUnauthorized ()Lkotlinx/coroutines/flow/Flow;
+	public fun publishUnauthorized ()V
+}
+
+public abstract interface class uz/yalla/core/session/SessionEventBus {
+	public abstract fun getUnauthorized ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun publishUnauthorized ()V
 }
 
 public final class uz/yalla/core/settings/LocaleKind : java/lang/Enum {
