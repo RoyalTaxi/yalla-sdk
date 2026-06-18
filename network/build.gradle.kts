@@ -17,6 +17,10 @@ kotlin {
             implementation(libs.ktor.client.logging)
         }
 
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+        }
+
         androidMain.dependencies {
             implementation(libs.ktor.client.android)
         }
