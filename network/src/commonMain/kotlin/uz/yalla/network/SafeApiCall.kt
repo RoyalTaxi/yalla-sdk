@@ -12,7 +12,7 @@ import io.ktor.serialization.ContentConvertException
 import kotlinx.coroutines.delay
 import kotlinx.io.IOException
 import kotlinx.serialization.SerializationException
-import uz.yalla.core.error.DataError
+import uz.yalla.network.error.DataError
 import uz.yalla.core.result.Either
 import kotlin.random.Random
 

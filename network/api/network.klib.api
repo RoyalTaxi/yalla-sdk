@@ -128,6 +128,74 @@ final class uz.yalla.network/NetworkConfig { // uz.yalla.network/NetworkConfig|n
     final fun toString(): kotlin/String // uz.yalla.network/NetworkConfig.toString|toString(){}[0]
 }
 
+sealed class uz.yalla.network.error/DataError { // uz.yalla.network.error/DataError|null[0]
+    sealed class Network : uz.yalla.network.error/DataError { // uz.yalla.network.error/DataError.Network|null[0]
+        final class Api : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Api|null[0]
+            constructor <init>(kotlin/Int? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/Int? = ...) // uz.yalla.network.error/DataError.Network.Api.<init>|<init>(kotlin.Int?;kotlin.String?;kotlin.String?;kotlin.Int?){}[0]
+
+            final val code // uz.yalla.network.error/DataError.Network.Api.code|{}code[0]
+                final fun <get-code>(): kotlin/Int? // uz.yalla.network.error/DataError.Network.Api.code.<get-code>|<get-code>(){}[0]
+            final val errorCode // uz.yalla.network.error/DataError.Network.Api.errorCode|{}errorCode[0]
+                final fun <get-errorCode>(): kotlin/String? // uz.yalla.network.error/DataError.Network.Api.errorCode.<get-errorCode>|<get-errorCode>(){}[0]
+            final val message // uz.yalla.network.error/DataError.Network.Api.message|{}message[0]
+                final fun <get-message>(): kotlin/String? // uz.yalla.network.error/DataError.Network.Api.message.<get-message>|<get-message>(){}[0]
+            final val retryAfter // uz.yalla.network.error/DataError.Network.Api.retryAfter|{}retryAfter[0]
+                final fun <get-retryAfter>(): kotlin/Int? // uz.yalla.network.error/DataError.Network.Api.retryAfter.<get-retryAfter>|<get-retryAfter>(){}[0]
+
+            final fun component1(): kotlin/Int? // uz.yalla.network.error/DataError.Network.Api.component1|component1(){}[0]
+            final fun component2(): kotlin/String? // uz.yalla.network.error/DataError.Network.Api.component2|component2(){}[0]
+            final fun component3(): kotlin/String? // uz.yalla.network.error/DataError.Network.Api.component3|component3(){}[0]
+            final fun component4(): kotlin/Int? // uz.yalla.network.error/DataError.Network.Api.component4|component4(){}[0]
+            final fun copy(kotlin/Int? = ..., kotlin/String? = ..., kotlin/String? = ..., kotlin/Int? = ...): uz.yalla.network.error/DataError.Network.Api // uz.yalla.network.error/DataError.Network.Api.copy|copy(kotlin.Int?;kotlin.String?;kotlin.String?;kotlin.Int?){}[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Api.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Api.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Api.toString|toString(){}[0]
+        }
+
+        final object Client : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Client|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Client.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Client.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Client.toString|toString(){}[0]
+        }
+
+        final object Connection : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Connection|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Connection.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Connection.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Connection.toString|toString(){}[0]
+        }
+
+        final object Guest : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Guest|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Guest.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Guest.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Guest.toString|toString(){}[0]
+        }
+
+        final object Serialization : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Serialization|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Serialization.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Serialization.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Serialization.toString|toString(){}[0]
+        }
+
+        final object Server : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Server|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Server.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Server.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Server.toString|toString(){}[0]
+        }
+
+        final object Timeout : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Timeout|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Timeout.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Timeout.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Timeout.toString|toString(){}[0]
+        }
+
+        final object Unknown : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Unknown|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Unknown.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Unknown.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Unknown.toString|toString(){}[0]
+        }
+    }
+}
+
 final val uz.yalla.network/DEFAULT_GUEST_ALLOWED_SEGMENTS // uz.yalla.network/DEFAULT_GUEST_ALLOWED_SEGMENTS|{}DEFAULT_GUEST_ALLOWED_SEGMENTS[0]
     final fun <get-DEFAULT_GUEST_ALLOWED_SEGMENTS>(): kotlin.collections/List<kotlin/String> // uz.yalla.network/DEFAULT_GUEST_ALLOWED_SEGMENTS.<get-DEFAULT_GUEST_ALLOWED_SEGMENTS>|<get-DEFAULT_GUEST_ALLOWED_SEGMENTS>(){}[0]
 final val uz.yalla.network/platformName // uz.yalla.network/platformName|{}platformName[0]
@@ -137,7 +205,7 @@ final fun uz.yalla.network/createGuestModeGuardPlugin(kotlinx.coroutines.flow/St
 final fun uz.yalla.network/createHttpClient(uz.yalla.network/NetworkConfig, kotlin.coroutines/SuspendFunction0<kotlin/String?>, kotlinx.coroutines.flow/Flow<kotlin/String>, kotlinx.coroutines.flow/Flow<kotlin/Boolean>, kotlinx.coroutines.flow/Flow<uz.yalla.core.geo/GeoPoint>, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlinx.coroutines/CoroutineScope, kotlin/Function1<io.ktor.client/HttpClientConfig<*>, kotlin/Unit>? = ..., io.ktor.client.engine/HttpClientEngine? = ..., kotlin/Boolean = ...): io.ktor.client/HttpClient // uz.yalla.network/createHttpClient|createHttpClient(uz.yalla.network.NetworkConfig;kotlin.coroutines.SuspendFunction0<kotlin.String?>;kotlinx.coroutines.flow.Flow<kotlin.String>;kotlinx.coroutines.flow.Flow<kotlin.Boolean>;kotlinx.coroutines.flow.Flow<uz.yalla.core.geo.GeoPoint>;kotlin.coroutines.SuspendFunction0<kotlin.Unit>;kotlinx.coroutines.CoroutineScope;kotlin.Function1<io.ktor.client.HttpClientConfig<*>,kotlin.Unit>?;io.ktor.client.engine.HttpClientEngine?;kotlin.Boolean){}[0]
 final fun uz.yalla.network/createHttpEngine(): io.ktor.client.engine/HttpClientEngine // uz.yalla.network/createHttpEngine|createHttpEngine(){}[0]
 final fun uz.yalla.network/isSuccessStatus(kotlin/Int): kotlin/Boolean // uz.yalla.network/isSuccessStatus|isSuccessStatus(kotlin.Int){}[0]
-final fun uz.yalla.network/statusToEither(kotlin/Int, uz.yalla.core.error/DataError.Network.Api?): uz.yalla.core.result/Either<uz.yalla.core.error/DataError.Network, kotlin/Unit> // uz.yalla.network/statusToEither|statusToEither(kotlin.Int;uz.yalla.core.error.DataError.Network.Api?){}[0]
+final fun uz.yalla.network/statusToEither(kotlin/Int, uz.yalla.network.error/DataError.Network.Api?): uz.yalla.core.result/Either<uz.yalla.network.error/DataError.Network, kotlin/Unit> // uz.yalla.network/statusToEither|statusToEither(kotlin.Int;uz.yalla.network.error.DataError.Network.Api?){}[0]
 final suspend fun <#A: kotlin/Any?> uz.yalla.network/retryWithBackoff(kotlin/Int = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Double = ..., kotlin/Boolean, kotlin.coroutines/SuspendFunction0<#A>): #A // uz.yalla.network/retryWithBackoff|retryWithBackoff(kotlin.Int;kotlin.Long;kotlin.Long;kotlin.Double;kotlin.Boolean;kotlin.coroutines.SuspendFunction0<0:0>){0§<kotlin.Any?>}[0]
-final suspend fun uz.yalla.network/parseApiError(io.ktor.client.statement/HttpResponse): uz.yalla.core.error/DataError.Network.Api? // uz.yalla.network/parseApiError|parseApiError(io.ktor.client.statement.HttpResponse){}[0]
-final suspend inline fun <#A: reified kotlin/Any?> uz.yalla.network/safeApiCall(kotlin/Boolean = ..., crossinline kotlin.coroutines/SuspendFunction0<io.ktor.client.statement/HttpResponse>): uz.yalla.core.result/Either<uz.yalla.core.error/DataError.Network, #A> // uz.yalla.network/safeApiCall|safeApiCall(kotlin.Boolean;kotlin.coroutines.SuspendFunction0<io.ktor.client.statement.HttpResponse>){0§<kotlin.Any?>}[0]
+final suspend fun uz.yalla.network/parseApiError(io.ktor.client.statement/HttpResponse): uz.yalla.network.error/DataError.Network.Api? // uz.yalla.network/parseApiError|parseApiError(io.ktor.client.statement.HttpResponse){}[0]
+final suspend inline fun <#A: reified kotlin/Any?> uz.yalla.network/safeApiCall(kotlin/Boolean = ..., crossinline kotlin.coroutines/SuspendFunction0<io.ktor.client.statement/HttpResponse>): uz.yalla.core.result/Either<uz.yalla.network.error/DataError.Network, #A> // uz.yalla.network/safeApiCall|safeApiCall(kotlin.Boolean;kotlin.coroutines.SuspendFunction0<io.ktor.client.statement.HttpResponse>){0§<kotlin.Any?>}[0]

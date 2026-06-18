@@ -1,4 +1,4 @@
-package uz.yalla.core.error
+package uz.yalla.network.error
 
 public sealed class DataError {
     public sealed class Network : DataError() {
