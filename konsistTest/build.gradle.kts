@@ -18,4 +18,9 @@ dependencies {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+    // Konsist scans the whole project's Kotlin sources via the filesystem, which Gradle's
+    // up-to-date check cannot see (only this module's own — empty — sources are tracked).
+    // Without this, a change in another module leaves a stale cached result, and a stale
+    // PASS would silently hide a real architecture violation. Always re-run so the gates gate.
+    outputs.upToDateWhen { false }
 }
