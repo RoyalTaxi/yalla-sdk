@@ -54,4 +54,11 @@ internal class SessionPreferencesImpl(
             dataStore.edit { it.clear() }
         }
     }
+
+    override suspend fun clearAndEnterGuestMode() {
+        dataStore.edit { prefs ->
+            prefs.clear()
+            prefs[PreferenceKeys.IS_GUEST_MODE] = true
+        }
+    }
 }
