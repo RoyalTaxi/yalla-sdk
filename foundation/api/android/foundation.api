@@ -44,5 +44,6 @@ public final class uz/yalla/foundation/system/SystemBarColors_androidKt {
 
 public final class uz/yalla/foundation/theme/ThemeModeKt {
 	public static final fun rememberIsDarkTheme (Landroidx/compose/runtime/Composer;I)Z
+	public static final fun resolveIsDark (Luz/yalla/core/settings/ThemeKind;Z)Z
 }
 
