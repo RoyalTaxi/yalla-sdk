@@ -34,9 +34,8 @@ public abstract interface class uz/yalla/media/config/MediaFactory {
 public final class uz/yalla/media/config/YallaMedia {
 	public static final field $stable I
 	public static final field INSTANCE Luz/yalla/media/config/YallaMedia;
-	public final fun getConfig ()Luz/yalla/media/config/MediaConfig;
+	public final fun current ()Luz/yalla/media/config/MediaConfig;
 	public final fun install (Luz/yalla/media/config/MediaConfig;)V
-	public final fun setConfig (Luz/yalla/media/config/MediaConfig;)V
 }
 
 public final class uz/yalla/media/picker/ImagePickerLauncher {

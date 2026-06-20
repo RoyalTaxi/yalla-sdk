@@ -89,10 +89,7 @@ sealed class uz.yalla.media.picker/SelectionMode { // uz.yalla.media.picker/Sele
 }
 
 final object uz.yalla.media.config/YallaMedia { // uz.yalla.media.config/YallaMedia|null[0]
-    final var config // uz.yalla.media.config/YallaMedia.config|{}config[0]
-        final fun <get-config>(): uz.yalla.media.config/MediaConfig? // uz.yalla.media.config/YallaMedia.config.<get-config>|<get-config>(){}[0]
-        final fun <set-config>(uz.yalla.media.config/MediaConfig?) // uz.yalla.media.config/YallaMedia.config.<set-config>|<set-config>(uz.yalla.media.config.MediaConfig?){}[0]
-
+    final fun current(): uz.yalla.media.config/MediaConfig // uz.yalla.media.config/YallaMedia.current|current(){}[0]
     final fun install(uz.yalla.media.config/MediaConfig) // uz.yalla.media.config/YallaMedia.install|install(uz.yalla.media.config.MediaConfig){}[0]
 }
 
@@ -116,5 +113,5 @@ final fun uz.yalla.media.picker/uz_yalla_media_picker_ImagePickerLauncher$stable
 final fun uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode$stableprop_getter(): kotlin/Int // uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode$stableprop_getter|uz_yalla_media_picker_SelectionMode$stableprop_getter(){}[0]
 final fun uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Multiple$stableprop_getter(): kotlin/Int // uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Multiple$stableprop_getter|uz_yalla_media_picker_SelectionMode_Multiple$stableprop_getter(){}[0]
 final fun uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Single$stableprop_getter(): kotlin/Int // uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Single$stableprop_getter|uz_yalla_media_picker_SelectionMode_Single$stableprop_getter(){}[0]
-final fun uz.yalla.media.utils/compressImage(kotlin/ByteArray, uz.yalla.media.utils/CompressionConfig = ...): kotlin/ByteArray // uz.yalla.media.utils/compressImage|compressImage(kotlin.ByteArray;uz.yalla.media.utils.CompressionConfig){}[0]
+final fun uz.yalla.media.utils/compressImage(kotlin/ByteArray, uz.yalla.media.utils/CompressionConfig = ...): kotlin/ByteArray? // uz.yalla.media.utils/compressImage|compressImage(kotlin.ByteArray;uz.yalla.media.utils.CompressionConfig){}[0]
 final fun uz.yalla.media.utils/uz_yalla_media_utils_CompressionConfig$stableprop_getter(): kotlin/Int // uz.yalla.media.utils/uz_yalla_media_utils_CompressionConfig$stableprop_getter|uz_yalla_media_utils_CompressionConfig$stableprop_getter(){}[0]

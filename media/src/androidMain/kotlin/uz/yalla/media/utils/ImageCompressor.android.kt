@@ -86,7 +86,7 @@ public actual fun compressImage(
             bitmap
         }
 
-    var lo = 10
+    var lo = MIN_JPEG_QUALITY
     var hi = config.quality
     var bestBytes: ByteArray? = null
 
@@ -95,7 +95,7 @@ public actual fun compressImage(
         val stream = ByteArrayOutputStream()
         resizedBitmap.compress(Bitmap.CompressFormat.JPEG, mid, stream)
         val compressed = stream.toByteArray()
-        if (compressed.size <= maxSizeBytes) {
+        if (compressed.size in 1..maxSizeBytes) {
             bestBytes = compressed
             lo = mid + 1
         } else {
@@ -107,16 +107,20 @@ public actual fun compressImage(
         val smaller =
             Bitmap.createScaledBitmap(
                 resizedBitmap,
-                resizedBitmap.width / 2,
-                resizedBitmap.height / 2,
+                (resizedBitmap.width / 2).coerceAtLeast(1),
+                (resizedBitmap.height / 2).coerceAtLeast(1),
                 true
             )
         val stream = ByteArrayOutputStream()
-        smaller.compress(Bitmap.CompressFormat.JPEG, 10, stream)
-        bestBytes = stream.toByteArray()
+        smaller.compress(Bitmap.CompressFormat.JPEG, MIN_JPEG_QUALITY, stream)
+        val fallback = stream.toByteArray()
         if (smaller != resizedBitmap) {
             smaller.recycle()
         }
+        // Honor the size-budget contract: the half-res min-quality encode is not guaranteed to fit
+        // a high-entropy input, so only return it when it is within budget; otherwise null so the
+        // caller can react instead of silently uploading over-budget bytes.
+        bestBytes = fallback.takeIf { it.size in 1..maxSizeBytes }
     }
 
     resizedBitmap.recycle()
