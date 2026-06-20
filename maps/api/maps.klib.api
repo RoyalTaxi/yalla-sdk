@@ -426,6 +426,7 @@ final class uz.yalla.maps.config/MapsConfig { // uz.yalla.maps.config/MapsConfig
 final class uz.yalla.maps.motion/DriverMotionModel { // uz.yalla.maps.motion/DriverMotionModel|null[0]
     constructor <init>(kotlin/Double = ..., kotlin/Double = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Long = ...) // uz.yalla.maps.motion/DriverMotionModel.<init>|<init>(kotlin.Double;kotlin.Double;kotlin.Long;kotlin.Long;kotlin.Long){}[0]
 
+    final fun hasFix(): kotlin/Boolean // uz.yalla.maps.motion/DriverMotionModel.hasFix|hasFix(){}[0]
     final fun push(uz.yalla.core.geo/GeoPoint, kotlin/Float?, kotlin/Float?, kotlin/Long) // uz.yalla.maps.motion/DriverMotionModel.push|push(uz.yalla.core.geo.GeoPoint;kotlin.Float?;kotlin.Float?;kotlin.Long){}[0]
     final fun sample(kotlin/Long): uz.yalla.maps.motion/Pose // uz.yalla.maps.motion/DriverMotionModel.sample|sample(kotlin.Long){}[0]
 
@@ -488,6 +489,12 @@ sealed class uz.yalla.maps.api.model/MapEvent { // uz.yalla.maps.api.model/MapEv
         final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.maps.api.model/MapEvent.MarkerTapped.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // uz.yalla.maps.api.model/MapEvent.MarkerTapped.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // uz.yalla.maps.api.model/MapEvent.MarkerTapped.toString|toString(){}[0]
+    }
+
+    final object ProviderUnavailable : uz.yalla.maps.api.model/MapEvent { // uz.yalla.maps.api.model/MapEvent.ProviderUnavailable|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.maps.api.model/MapEvent.ProviderUnavailable.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.maps.api.model/MapEvent.ProviderUnavailable.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.maps.api.model/MapEvent.ProviderUnavailable.toString|toString(){}[0]
     }
 }
 
@@ -646,6 +653,13 @@ final object uz.yalla.maps.config/YallaMaps { // uz.yalla.maps.config/YallaMaps|
     final fun install(uz.yalla.maps.config/MapsConfig) // uz.yalla.maps.config/YallaMaps.install|install(uz.yalla.maps.config.MapsConfig){}[0]
 }
 
+final const val uz.yalla.maps.api.model/CAMERA_ANGLE_EPSILON // uz.yalla.maps.api.model/CAMERA_ANGLE_EPSILON|{}CAMERA_ANGLE_EPSILON[0]
+    final fun <get-CAMERA_ANGLE_EPSILON>(): kotlin/Float // uz.yalla.maps.api.model/CAMERA_ANGLE_EPSILON.<get-CAMERA_ANGLE_EPSILON>|<get-CAMERA_ANGLE_EPSILON>(){}[0]
+final const val uz.yalla.maps.api.model/CAMERA_LAT_LNG_EPSILON // uz.yalla.maps.api.model/CAMERA_LAT_LNG_EPSILON|{}CAMERA_LAT_LNG_EPSILON[0]
+    final fun <get-CAMERA_LAT_LNG_EPSILON>(): kotlin/Double // uz.yalla.maps.api.model/CAMERA_LAT_LNG_EPSILON.<get-CAMERA_LAT_LNG_EPSILON>|<get-CAMERA_LAT_LNG_EPSILON>(){}[0]
+final const val uz.yalla.maps.api.model/CAMERA_ZOOM_EPSILON // uz.yalla.maps.api.model/CAMERA_ZOOM_EPSILON|{}CAMERA_ZOOM_EPSILON[0]
+    final fun <get-CAMERA_ZOOM_EPSILON>(): kotlin/Float // uz.yalla.maps.api.model/CAMERA_ZOOM_EPSILON.<get-CAMERA_ZOOM_EPSILON>|<get-CAMERA_ZOOM_EPSILON>(){}[0]
+
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_Anchor$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_Anchor$stableprop|#static{}uz_yalla_maps_api_model_Anchor$stableprop[0]
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_CameraPosition$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_CameraPosition$stableprop|#static{}uz_yalla_maps_api_model_CameraPosition$stableprop[0]
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_CenterPinState$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_CenterPinState$stableprop|#static{}uz_yalla_maps_api_model_CenterPinState$stableprop[0]
@@ -655,6 +669,7 @@ final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent$stableprop //
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MapLongPressed$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MapLongPressed$stableprop|#static{}uz_yalla_maps_api_model_MapEvent_MapLongPressed$stableprop[0]
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MapTapped$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MapTapped$stableprop|#static{}uz_yalla_maps_api_model_MapEvent_MapTapped$stableprop[0]
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MarkerTapped$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MarkerTapped$stableprop|#static{}uz_yalla_maps_api_model_MapEvent_MarkerTapped$stableprop[0]
+final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_ProviderUnavailable$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_ProviderUnavailable$stableprop|#static{}uz_yalla_maps_api_model_MapEvent_ProviderUnavailable$stableprop[0]
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarker$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarker$stableprop|#static{}uz_yalla_maps_api_model_MapMarker$stableprop[0]
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarkerIcon$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarkerIcon$stableprop|#static{}uz_yalla_maps_api_model_MapMarkerIcon$stableprop[0]
 final val uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarkerIcon_Bytes$stableprop // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarkerIcon_Bytes$stableprop|#static{}uz_yalla_maps_api_model_MapMarkerIcon_Bytes$stableprop[0]
@@ -676,6 +691,7 @@ final val uz.yalla.maps.config/uz_yalla_maps_config_YallaMaps$stableprop // uz.y
 final val uz.yalla.maps.motion/uz_yalla_maps_motion_DriverMotionModel$stableprop // uz.yalla.maps.motion/uz_yalla_maps_motion_DriverMotionModel$stableprop|#static{}uz_yalla_maps_motion_DriverMotionModel$stableprop[0]
 final val uz.yalla.maps.motion/uz_yalla_maps_motion_Pose$stableprop // uz.yalla.maps.motion/uz_yalla_maps_motion_Pose$stableprop|#static{}uz_yalla_maps_motion_Pose$stableprop[0]
 
+final fun (uz.yalla.maps.api.model/CameraPosition).uz.yalla.maps.api.model/approximatelyEquals(uz.yalla.maps.api.model/CameraPosition, kotlin/Double = ..., kotlin/Float = ..., kotlin/Float = ...): kotlin/Boolean // uz.yalla.maps.api.model/approximatelyEquals|approximatelyEquals@uz.yalla.maps.api.model.CameraPosition(uz.yalla.maps.api.model.CameraPosition;kotlin.Double;kotlin.Float;kotlin.Float){}[0]
 final fun uz.yalla.maps.api.ios/iosMapFactoryOf(uz.yalla.maps.api.ios/IosMapRendererFactory): uz.yalla.maps.config/MapFactory // uz.yalla.maps.api.ios/iosMapFactoryOf|iosMapFactoryOf(uz.yalla.maps.api.ios.IosMapRendererFactory){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_Anchor$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_Anchor$stableprop_getter|uz_yalla_maps_api_model_Anchor$stableprop_getter(){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_CameraPosition$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_CameraPosition$stableprop_getter|uz_yalla_maps_api_model_CameraPosition$stableprop_getter(){}[0]
@@ -686,6 +702,7 @@ final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent$stableprop_ge
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MapLongPressed$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MapLongPressed$stableprop_getter|uz_yalla_maps_api_model_MapEvent_MapLongPressed$stableprop_getter(){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MapTapped$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MapTapped$stableprop_getter|uz_yalla_maps_api_model_MapEvent_MapTapped$stableprop_getter(){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MarkerTapped$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_MarkerTapped$stableprop_getter|uz_yalla_maps_api_model_MapEvent_MarkerTapped$stableprop_getter(){}[0]
+final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_ProviderUnavailable$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapEvent_ProviderUnavailable$stableprop_getter|uz_yalla_maps_api_model_MapEvent_ProviderUnavailable$stableprop_getter(){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarker$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarker$stableprop_getter|uz_yalla_maps_api_model_MapMarker$stableprop_getter(){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarkerIcon$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarkerIcon$stableprop_getter|uz_yalla_maps_api_model_MapMarkerIcon$stableprop_getter(){}[0]
 final fun uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarkerIcon_Bytes$stableprop_getter(): kotlin/Int // uz.yalla.maps.api.model/uz_yalla_maps_api_model_MapMarkerIcon_Bytes$stableprop_getter|uz_yalla_maps_api_model_MapMarkerIcon_Bytes$stableprop_getter(){}[0]

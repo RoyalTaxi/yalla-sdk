@@ -22,5 +22,9 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
         }
+
+        iosTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
 }

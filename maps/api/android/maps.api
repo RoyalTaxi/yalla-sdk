@@ -157,6 +157,14 @@ public final class uz/yalla/maps/api/model/CameraPosition$Companion {
 	public final fun getDEFAULT ()Luz/yalla/maps/api/model/CameraPosition;
 }
 
+public final class uz/yalla/maps/api/model/CameraPositionKt {
+	public static final field CAMERA_ANGLE_EPSILON F
+	public static final field CAMERA_LAT_LNG_EPSILON D
+	public static final field CAMERA_ZOOM_EPSILON F
+	public static final fun approximatelyEquals (Luz/yalla/maps/api/model/CameraPosition;Luz/yalla/maps/api/model/CameraPosition;DFF)Z
+	public static synthetic fun approximatelyEquals$default (Luz/yalla/maps/api/model/CameraPosition;Luz/yalla/maps/api/model/CameraPosition;DFFILjava/lang/Object;)Z
+}
+
 public final class uz/yalla/maps/api/model/CenterPinState {
 	public static final field $stable I
 	public static final field Companion Luz/yalla/maps/api/model/CenterPinState$Companion;
@@ -279,6 +287,14 @@ public final class uz/yalla/maps/api/model/MapEvent$MarkerTapped : uz/yalla/maps
 	public static synthetic fun copy$default (Luz/yalla/maps/api/model/MapEvent$MarkerTapped;Ljava/lang/String;ILjava/lang/Object;)Luz/yalla/maps/api/model/MapEvent$MarkerTapped;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/maps/api/model/MapEvent$ProviderUnavailable : uz/yalla/maps/api/model/MapEvent {
+	public static final field $stable I
+	public static final field INSTANCE Luz/yalla/maps/api/model/MapEvent$ProviderUnavailable;
+	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -519,6 +535,7 @@ public final class uz/yalla/maps/motion/DriverMotionModel {
 	public fun <init> ()V
 	public fun <init> (DDJJJ)V
 	public synthetic fun <init> (DDJJJILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun hasFix ()Z
 	public final fun push (Luz/yalla/core/geo/GeoPoint;Ljava/lang/Float;Ljava/lang/Float;J)V
 	public final fun sample (J)Luz/yalla/maps/motion/Pose;
 }

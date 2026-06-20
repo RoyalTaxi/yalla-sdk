@@ -7,8 +7,11 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceTimeBy
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -125,21 +128,124 @@ class SwitchingMapControllerTest {
             assertEquals(GeoPoint(5.0, 6.0), active.userLocation)
         }
 
+    @Test
+    fun styleSurvivesProviderSwitch() =
+        runTest(dispatcher) {
+            val style = MapStyle.InlineJson(lightJson = "{light}", darkJson = "{dark}")
+            controller.switchTo(MapKind.Google)
+            controller.setStyle(style, isDark = true)
+
+            controller.switchTo(MapKind.Libre)
+
+            val active = controller.activeBackend.value as FakeMapController
+            assertEquals(style, active.lastStyle)
+        }
+
+    @Test
+    fun firstSwitchAppliesPersistedStyle() =
+        runTest(dispatcher) {
+            // setStyle is called before any backend exists; it only updates the cached fields. The
+            // first switchTo must replay that persisted style onto the freshly-created backend.
+            val style = MapStyle.InlineJson(lightJson = "{light}", darkJson = "{dark}")
+            controller.setStyle(style, isDark = true)
+
+            controller.switchTo(MapKind.Google)
+
+            val active = controller.activeBackend.value as FakeMapController
+            assertEquals(style, active.lastStyle)
+        }
+
+    @Test
+    fun aggregatedCameraSurvivesPreSeedDefaultEmissions() =
+        runTest(dispatcher) {
+            // Establish a meaningful aggregated camera via a ready backend.
+            controller.switchTo(MapKind.Google)
+            val google = factory.googleCreated.single()
+            val meaningful = CameraPosition(target = GeoPoint(40.0, 71.0), zoom = 16f)
+            google.cameraFlow.value = meaningful
+            assertEquals(meaningful, controller.cameraPosition.value)
+
+            // Switch to a backend that is NOT ready yet, so its seed moveTo is parked. While parked,
+            // it re-emits DEFAULT more than once; neither may clobber the aggregated camera (the old
+            // guard only suppressed the first emission, letting the second flicker to DEFAULT).
+            val notReadyFactory = FakeMapFactory(ready = false)
+            val pending = SwitchingMapController(notReadyFactory)
+            pending.switchTo(MapKind.Google)
+            val backend = notReadyFactory.googleCreated.single()
+            // Seed the parent's aggregated camera to the meaningful value, mirroring a real switch.
+            backend.cameraFlow.value = meaningful
+            advanceUntilIdle()
+            // Reset to a meaningful aggregated state, then have the not-ready backend emit DEFAULT twice.
+            backend.cameraFlow.value = CameraPosition.DEFAULT
+            backend.cameraFlow.value = CameraPosition.DEFAULT
+
+            assertEquals(meaningful, pending.cameraPosition.value)
+            pending.close()
+        }
+
+    @Test
+    fun cachedStateIsAppliedOnlyAfterBackendBecomesReady() =
+        runTest(dispatcher) {
+            val notReadyFactory = FakeMapFactory(ready = false)
+            val pending = SwitchingMapController(notReadyFactory)
+            val markers = listOf(marker("a"))
+            pending.setMarkers(markers)
+
+            pending.switchTo(MapKind.Google)
+            val backend = notReadyFactory.googleCreated.single()
+            // Backend not ready yet: the seed job is parked on isReady, so cached markers have not
+            // been forwarded.
+            assertEquals(emptyList(), backend.markers)
+
+            backend.readyFlow.value = true
+            advanceUntilIdle()
+
+            assertEquals(markers, backend.markers)
+            pending.close()
+        }
+
+    @Test
+    fun neverReadyBackendEmitsProviderUnavailable() =
+        runTest(dispatcher) {
+            val notReadyFactory = FakeMapFactory(ready = false)
+            val pending = SwitchingMapController(notReadyFactory)
+            val events = mutableListOf<MapEvent>()
+            val collectJob = launch { pending.events.collect { events += it } }
+
+            pending.switchTo(MapKind.Google)
+            advanceTimeBy(6_000L)
+            advanceUntilIdle()
+
+            assertTrue(events.contains(MapEvent.ProviderUnavailable), "expected ProviderUnavailable, got $events")
+            collectJob.cancel()
+            pending.close()
+        }
+
     private fun marker(id: String) = MapMarker(id = id, point = GeoPoint(0.0, 0.0))
 
-    private class FakeMapFactory : MapFactory {
+    private class FakeMapFactory(
+        private val ready: Boolean = true
+    ) : MapFactory {
         val googleCreated = mutableListOf<FakeMapController>()
         val libreCreated = mutableListOf<FakeMapController>()
 
-        override fun createGoogleController(): MapController = FakeMapController().also { googleCreated += it }
+        override fun createGoogleController(): MapController =
+            FakeMapController(ready = ready).also { googleCreated += it }
 
-        override fun createLibreController(): MapController = FakeMapController().also { libreCreated += it }
+        override fun createLibreController(): MapController =
+            FakeMapController(ready = ready).also { libreCreated += it }
     }
 
-    private class FakeMapController : MapController {
-        override val cameraPosition: StateFlow<CameraPosition> = MutableStateFlow(CameraPosition.DEFAULT)
-        override val centerPin: StateFlow<CenterPinState> = MutableStateFlow(CenterPinState.INITIAL)
-        override val isReady: StateFlow<Boolean> = MutableStateFlow(true)
+    private class FakeMapController(
+        ready: Boolean = true
+    ) : MapController {
+        val cameraFlow = MutableStateFlow(CameraPosition.DEFAULT)
+        val centerPinFlow = MutableStateFlow(CenterPinState.INITIAL)
+        val readyFlow = MutableStateFlow(ready)
+
+        override val cameraPosition: StateFlow<CameraPosition> = cameraFlow
+        override val centerPin: StateFlow<CenterPinState> = centerPinFlow
+        override val isReady: StateFlow<Boolean> = readyFlow
         override val events: SharedFlow<MapEvent> = MutableSharedFlow()
 
         var markers: List<MapMarker> = emptyList()

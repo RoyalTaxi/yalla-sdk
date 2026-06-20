@@ -50,11 +50,11 @@ public fun rememberMapController(
 
     LaunchedEffect(kind) {
         switching.switchTo(kind)
-        switching.applyStyle(style, isDark)
+        switching.setStyle(style, isDark)
     }
 
     LaunchedEffect(style, isDark) {
-        switching.applyStyle(style, isDark)
+        switching.setStyle(style, isDark)
     }
 
     LaunchedEffect(switching) {

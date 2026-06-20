@@ -18,6 +18,7 @@ import uz.yalla.maps.api.IosMapController
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.model.CameraPosition
 import uz.yalla.maps.api.model.CenterPinState
+import uz.yalla.maps.api.model.approximatelyEquals
 import uz.yalla.maps.api.model.MapCircle
 import uz.yalla.maps.api.model.MapEvent
 import uz.yalla.maps.api.model.MapMarker
@@ -274,19 +275,8 @@ internal class IosMapControllerWrapper(
     ) {
         val next = CameraPosition(target, zoom, bearing, tilt, pendingPadding)
         val prev = lastEmittedCamera
-        if (prev != null && cameraEpsilonEqual(prev, next)) return
+        if (prev != null && prev.approximatelyEquals(next)) return
         lastEmittedCamera = next
         _cameraPosition.value = next
-    }
-
-    private fun cameraEpsilonEqual(
-        a: CameraPosition,
-        b: CameraPosition
-    ): Boolean {
-        return kotlin.math.abs(a.target.lat - b.target.lat) < 1e-6 &&
-            kotlin.math.abs(a.target.lng - b.target.lng) < 1e-6 &&
-            kotlin.math.abs(a.zoom - b.zoom) < 1e-3 &&
-            kotlin.math.abs(a.bearing - b.bearing) < 0.1f &&
-            kotlin.math.abs(a.tilt - b.tilt) < 0.1f
     }
 }
