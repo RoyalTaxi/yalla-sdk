@@ -44,6 +44,10 @@ public actual fun IconButton(
         handle.setIcon(icon)
     }
 
+    // TODO(quality, needs-decision): H1 — `borderArgb` is passed to create() but frozen afterward:
+    //  `IconButtonHandle.setColors` omits it, so a dynamic border (error/focus) never updates on iOS
+    //  (Android forwards `borderColor` live). The fix adds `borderArgb` to `setColors`, a BREAKING
+    //  change to the committed `components.klib.api`. Blocked on owner sign-off.
     LaunchedEffect(iconArgb, containerArgb) {
         handle.setColors(iconArgb, containerArgb)
     }

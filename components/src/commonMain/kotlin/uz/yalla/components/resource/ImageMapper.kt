@@ -15,6 +15,10 @@ import uz.yalla.resources.icons.Trash
 import uz.yalla.resources.icons.Uzcard
 import uz.yalla.resources.icons.YallaIcons
 
+// TODO(quality, needs-decision): M17 — this `public` extension pollutes the global `String` namespace
+//  with a stringly-typed contract, and the file (ImageMapper.kt) declares no `ImageMapper` (charter
+//  file==declaration). Making it `internal`/typed, or renaming the file, is a BREAKING change to the
+//  committed `.api`/`.klib.api`. Blocked on owner sign-off for the breaking visibility/rename change.
 public fun String.asImageVector(): ImageVector? =
     when (this) {
         "camera" -> YallaIcons.Camera

@@ -78,6 +78,11 @@ public interface SheetFactory {
         onDismissRequest: () -> Unit
     ): VerificationSheetHandle
 
+    // TODO(quality, needs-decision): H5 — createPromoCode/createNotificationDetail/createAddCard bake
+    //  product features into the generic design-system bridge (no Android/common counterpart; Android
+    //  composes these in the app from `createContent`). They should be removed from the SDK and built
+    //  in the iOS app, but that is a BREAKING removal from the committed `components.klib.api` plus a
+    //  Swift migration. Blocked on owner sign-off for the breaking removal.
     public fun createPromoCode(
         code: String,
         title: String,

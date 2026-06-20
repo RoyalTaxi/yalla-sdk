@@ -35,9 +35,9 @@ import uz.yalla.resources.icons.YallaIcons
 
 private val IconSize = 18.dp
 
-private const val ShadowExpandedScale = 1.5f
-private const val ShadowShrinkDurationMs = 400
-internal const val JumpCycleDurationMs = 700
+private const val SHADOW_EXPANDED_SCALE = 1.5f
+private const val SHADOW_SHRINK_DURATION_MS = 400
+internal const val JUMP_CYCLE_DURATION_MS = 700
 
 @Immutable
 public data class LocationPinColors(
@@ -154,8 +154,8 @@ public fun LocationPin(
     LaunchedEffect(jumping) {
         if (jumping) {
             shadowScale.animateTo(
-                targetValue = ShadowExpandedScale,
-                animationSpec = tween(ShadowShrinkDurationMs, easing = EaseInOut)
+                targetValue = SHADOW_EXPANDED_SCALE,
+                animationSpec = tween(SHADOW_SHRINK_DURATION_MS, easing = EaseInOut)
             )
         } else {
             shadowScale.animateTo(
@@ -171,7 +171,7 @@ public fun LocationPin(
                 targetValue = -jumpHeightPx,
                 animationSpec =
                     infiniteRepeatable(
-                        animation = tween(JumpCycleDurationMs, easing = EaseInOut),
+                        animation = tween(JUMP_CYCLE_DURATION_MS, easing = EaseInOut),
                         repeatMode = RepeatMode.Reverse
                     )
             )

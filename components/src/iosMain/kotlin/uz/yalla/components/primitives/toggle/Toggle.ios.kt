@@ -32,6 +32,11 @@ public actual fun Toggle(
     disabledUncheckedTrackColor: Color,
     disabledUncheckedBorderColor: Color
 ) {
+    // TODO(quality, needs-decision): H1 — the expect declares 15 color params; iOS honors only 2
+    //  (and the checked/unchecked thumb/track mapping is inverted). Rendering the full restyleable
+    //  surface requires widening `ToggleFactory.create`/`ToggleHandle.setColors` (or narrowing the
+    //  common expect), both BREAKING changes to the committed `components.klib.api`. Blocked on owner
+    //  sign-off (widen the bridge contract vs. narrow the expect + correct the README).
     val thumbArgb = uncheckedThumbColor.toArgbOrZero()
     val trackArgb = checkedTrackColor.toArgbOrZero()
     val onCheckedChangeState = rememberUpdatedState(onCheckedChange)

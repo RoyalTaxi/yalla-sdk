@@ -31,7 +31,7 @@ import uz.yalla.components.platform.findKeyWindowRootController
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
 
-private const val PresentationPollMillis = 16L
+private const val PRESENTATION_POLL_MILLIS = 16L
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -68,6 +68,11 @@ public actual fun ContentSheet(
                         )
                     }
                 }
+            // TODO(quality, needs-decision): H1 — the caller's `onClose` action is swallowed on iOS
+            //  (only `showClose` is honored; Android forwards `onClose` distinctly). The fix adds an
+            //  `onClose` closure to `SheetFactory.createContent`/`ContentSheetHandle`, which is a
+            //  BREAKING change to the committed `components.klib.api` (Swift conformance). Blocked on
+            //  owner sign-off for a breaking bridge-contract change.
             requireConfig()
                 .sheet
                 .createContent(
@@ -136,7 +141,7 @@ internal fun PresentationLifecycle(
         if (!isPresented) return@LaunchedEffect
         val onPresented = currentOnFullyExpanded ?: return@LaunchedEffect
         while (handle.viewController.isBeingPresented()) {
-            delay(PresentationPollMillis)
+            delay(PRESENTATION_POLL_MILLIS)
         }
         onPresented()
     }

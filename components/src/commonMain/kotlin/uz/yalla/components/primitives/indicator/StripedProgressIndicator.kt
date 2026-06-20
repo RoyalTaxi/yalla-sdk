@@ -34,9 +34,9 @@ private val CornerRadius = 40.dp
 private val TrackShape = RoundedCornerShape(CornerRadius)
 private val StripeWidth = 7.dp
 private val StripeGap = 7.dp
-private const val StripeAngle = 30f
-private const val StripeAlpha = 0.2f
-private const val AnimationDurationMs = 250
+private const val STRIPE_ANGLE = 30f
+private const val STRIPE_ALPHA = 0.2f
+private const val ANIMATION_DURATION_MS = 250
 
 @Composable
 public fun StripedProgressIndicator(
@@ -56,7 +56,7 @@ public fun StripedProgressIndicator(
                 repeatMode = RepeatMode.Restart,
                 animation =
                     tween(
-                        durationMillis = AnimationDurationMs,
+                        durationMillis = ANIMATION_DURATION_MS,
                         easing = LinearEasing
                     )
             )
@@ -89,11 +89,12 @@ public fun StripedProgressIndicator(
                 val period = stripeWidth + gap
                 val diagonal = hypot(size.width, size.height)
                 val count = ((size.width + diagonal * 2) / period).toInt() + 4
+                val stripeColor = Color.White.copy(alpha = STRIPE_ALPHA)
 
-                rotate(StripeAngle, pivot = center) {
+                rotate(STRIPE_ANGLE, pivot = center) {
                     repeat(count) { i ->
                         drawRect(
-                            color = Color.White.copy(alpha = StripeAlpha),
+                            color = stripeColor,
                             topLeft = Offset(x = i * period - diagonal - period, y = -diagonal),
                             size = Size(width = stripeWidth, height = diagonal * 2)
                         )

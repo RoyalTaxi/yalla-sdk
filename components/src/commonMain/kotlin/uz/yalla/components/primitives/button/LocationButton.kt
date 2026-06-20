@@ -105,6 +105,10 @@ public object LocationButtonDefaults {
             descriptionStyle = descriptionStyle
         )
 
+    // TODO(quality, needs-decision): M10 — LocationButtonDefaults exposes LeadingView/TrailingView/Content
+    //  render helpers as `public`, the only Defaults of ~19 that breaks the colors/dimens/styles-only
+    //  shape. Making them private is a BREAKING removal from the committed `.api`/`.klib.api`. Blocked on
+    //  owner sign-off for the breaking visibility change.
     @Composable
     public fun LeadingView(color: Color) {
         Box(
