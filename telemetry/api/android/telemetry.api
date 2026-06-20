@@ -3,6 +3,7 @@ public final class uz/yalla/telemetry/Telemetry {
 	public final fun getCrash ()Luz/yalla/telemetry/crash/CrashReporter;
 	public final fun install (Ljava/util/List;Luz/yalla/telemetry/crash/CrashReporter;)V
 	public static synthetic fun install$default (Luz/yalla/telemetry/Telemetry;Ljava/util/List;Luz/yalla/telemetry/crash/CrashReporter;ILjava/lang/Object;)V
+	public final fun recordCrash (Ljava/lang/Throwable;)V
 	public final fun setUser (Ljava/lang/String;)V
 	public final fun track (Luz/yalla/telemetry/event/AnalyticsEvent;)V
 }

@@ -111,6 +111,7 @@ final object uz.yalla.telemetry/Telemetry { // uz.yalla.telemetry/Telemetry|null
         final fun <get-crash>(): uz.yalla.telemetry.crash/CrashReporter // uz.yalla.telemetry/Telemetry.crash.<get-crash>|<get-crash>(){}[0]
 
     final fun install(kotlin.collections/List<uz.yalla.telemetry.sink/TelemetrySink>, uz.yalla.telemetry.crash/CrashReporter = ...) // uz.yalla.telemetry/Telemetry.install|install(kotlin.collections.List<uz.yalla.telemetry.sink.TelemetrySink>;uz.yalla.telemetry.crash.CrashReporter){}[0]
+    final fun recordCrash(kotlin/Throwable) // uz.yalla.telemetry/Telemetry.recordCrash|recordCrash(kotlin.Throwable){}[0]
     final fun setUser(kotlin/String?) // uz.yalla.telemetry/Telemetry.setUser|setUser(kotlin.String?){}[0]
     final fun track(uz.yalla.telemetry.event/AnalyticsEvent) // uz.yalla.telemetry/Telemetry.track|track(uz.yalla.telemetry.event.AnalyticsEvent){}[0]
 }
