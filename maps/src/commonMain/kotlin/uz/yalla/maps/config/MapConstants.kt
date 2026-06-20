@@ -2,7 +2,6 @@ package uz.yalla.maps.config
 
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import io.github.dellisd.spatialk.geojson.BoundingBox
 
 /** Generic, cross-platform map tuning constants shared by the Android/iOS renderers (via SKIE). */
 public object MapConstants {
@@ -18,26 +17,8 @@ public object MapConstants {
     /** Maximum zoom the camera will reach when framing a set of points. */
     public const val FIT_ZOOM_MAX: Double = 17.0
 
-    // TODO(quality, needs-decision): finding #9 — SEARCH_MIN_ZOOM has zero consumers in any repo.
-    // Removing it would change the committed `.api`/`.klib.api` dumps (breaking). Needs owner
-    // sign-off on a binary-API break before deletion.
-    /** Minimum zoom at which a search affordance is shown. */
-    public const val SEARCH_MIN_ZOOM: Float = 13f
-
     /** Minimum zoom at which executor/driver markers become visible. */
     public const val EXECUTORS_VISIBLE_MIN_ZOOM: Double = 8.0
-
-    // TODO(quality, needs-decision): finding #9 — UZBEKISTAN_BOUNDING_BOX is dead and is
-    // app/product data that does not belong in a generic sold SDK; it belongs in uz.yalla.client.*.
-    // Removal/move is breaking against the committed dumps. Needs owner sign-off.
-    /** Bounding box covering Uzbekistan. */
-    public val UZBEKISTAN_BOUNDING_BOX: BoundingBox =
-        BoundingBox(
-            west = 55.996639,
-            south = 37.172764,
-            east = 73.132278,
-            north = 45.590075
-        )
 
     // TODO(quality, needs-decision): finding #9 — UZBEKISTAN_CENTER/ANDIJAN_CENTER/BOBUR_SQUARE are
     // Uzbekistan/Fergana product data in a generic SDK and are typed as Pair<Double,Double> (the
@@ -55,13 +36,9 @@ public object MapConstants {
     /** Default edge padding used when framing the camera. */
     public val DEFAULT_PADDING: Dp = 60.dp
 
+    // TODO(quality, needs-decision): finding #10 — LIGHT_STYLE_URL duplicates MapStyle.CARTO.lightUrl
+    // (two public sources for one value). Consolidating on MapStyle.CARTO is breaking against the
+    // committed dumps and the YallaMapsFactory consumers. Needs owner sign-off.
     /** CARTO positron (light) base style URL. */
     public const val LIGHT_STYLE_URL: String = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
-
-    // TODO(quality, needs-decision): finding #10 — DARK_STYLE_URL is dead and LIGHT_STYLE_URL
-    // duplicates MapStyle.CARTO.lightUrl/darkUrl (two public sources for one value). Consolidating
-    // on MapStyle.CARTO is breaking against the committed dumps and the YallaMapsFactory consumers.
-    // Needs owner sign-off.
-    /** CARTO dark-matter (dark) base style URL. */
-    public const val DARK_STYLE_URL: String = "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
 }
