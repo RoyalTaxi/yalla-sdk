@@ -27,10 +27,13 @@ public val datastoreModule: Module =
     module {
         single { createDataStore(this) }
 
+        // Encrypts the sensitive keys at rest (Keystore on Android, Keychain on iOS); see SecureStore.
+        single { createSecureStore(this) }
+
         single { CoroutineScope(ioDispatcher + SupervisorJob() + datastoreExceptionHandler) }
 
-        single<SessionPreferences> { SessionPreferencesImpl(get(), get()) }
-        single<UserPreferences> { UserPreferencesImpl(get(), get()) }
+        single<SessionPreferences> { SessionPreferencesImpl(get(), get(), get()) }
+        single<UserPreferences> { UserPreferencesImpl(get(), get(), get()) }
         single<ConfigPreferences> { ConfigPreferencesImpl(get(), get()) }
         single<InterfacePreferences> { InterfacePreferencesImpl(get(), get()) }
         single<PositionPreferences> { PositionPreferencesImpl(get(), get()) }

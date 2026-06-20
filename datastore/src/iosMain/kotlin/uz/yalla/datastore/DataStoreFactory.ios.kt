@@ -18,10 +18,12 @@ import platform.Foundation.NSError
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-// TODO(quality, needs-decision): token/PII at-rest encryption (#4) — the bearer token and PII persist in
-// this plain DataStore proto under NSDocumentDirectory (iCloud-backed, CWE-312). The fix (Keychain for
-// the tokens + move to NSApplicationSupportDirectory excluded from backup) needs a crypto-strategy choice
-// (Keychain/Keystore/Tink) and on-device validation; do not hand-roll. Tracked outside this change.
+// At-rest encryption (CWE-312, finding #4) is handled by SecureStore: the bearer/push tokens and the
+// profile/payment PII go to the Keychain (SecureStore.ios.kt) under
+// kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly — device-only and excluded from iCloud/iTunes backups.
+// This plain DataStore proto under NSDocumentDirectory now holds ONLY non-sensitive UX prefs (locale,
+// theme, map style, onboarding, last positions), the cash/card discriminator, cached config, and the
+// per-key revision markers — none of which are credentials or PII, so backup exposure here is benign.
 
 @OptIn(ExperimentalForeignApi::class)
 internal actual fun createDataStore(scope: Scope): DataStore<Preferences> =

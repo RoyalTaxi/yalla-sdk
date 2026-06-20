@@ -21,8 +21,9 @@ class PreferenceFlowDedupTest {
     @Test
     fun accessTokenDoesNotReEmitOnUnrelatedWrites() = runTest {
         val store = InMemoryPreferencesDataStore()
+        val secure = FakeSecureStore()
         val scope = CoroutineScope(StandardTestDispatcher(testScheduler))
-        val session = SessionPreferencesImpl(store, scope)
+        val session = SessionPreferencesImpl(store, secure, scope)
         val config = ConfigPreferencesImpl(store, scope)
 
         val emissions = mutableListOf<String>()
@@ -43,5 +44,29 @@ class PreferenceFlowDedupTest {
 
         // Only the initial empty value and the single real change.
         assertEquals(listOf("", "token-1"), emissions)
+    }
+
+    @Test
+    fun activeAccessTokenCollectorSeesTheValueClearedOnLogout() = runTest {
+        // Guards the secure-flow reactivity seam: a clear must re-emit "" to an ALREADY-subscribed collector
+        // (the revision marker is bumped, not just removed), or a logged-out session would keep observing the
+        // stale token.
+        val store = InMemoryPreferencesDataStore()
+        val secure = FakeSecureStore()
+        val scope = CoroutineScope(StandardTestDispatcher(testScheduler))
+        val session = SessionPreferencesImpl(store, secure, scope)
+
+        val emissions = mutableListOf<String>()
+        val collector = backgroundScope.launch { session.accessToken.toList(emissions) }
+        advanceUntilIdle()
+
+        session.setAccessToken("token-1")
+        advanceUntilIdle()
+        session.clearSession()
+        advanceUntilIdle()
+
+        collector.cancel()
+
+        assertEquals(listOf("", "token-1", ""), emissions)
     }
 }

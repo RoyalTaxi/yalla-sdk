@@ -11,6 +11,7 @@ import uz.yalla.core.settings.LocaleKind
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /**
@@ -26,14 +27,16 @@ class SessionPreferencesCharacterizationTest {
     @Test
     fun clearSessionDropsCredentialsButKeepsUserExperiencePrefs() = runTest {
         val store = InMemoryPreferencesDataStore()
-        seedAll(store)
-        val session = SessionPreferencesImpl(store, CoroutineScope(StandardTestDispatcher(testScheduler)))
+        val secure = FakeSecureStore()
+        seedAll(store, secure)
+        val session = SessionPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
 
         session.clearSession()
         advanceUntilIdle()
 
-        // Credentials and cached profile/config gone.
+        // Credentials (now encrypted at rest) and cached profile/config gone.
         assertEquals("", session.accessToken.first())
+        assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
         // UX prefs preserved.
         assertEquals(LocaleKind.Ru, InterfacePreferencesImpl(store, this.backgroundScope).localeType.first())
         assertTrue(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
@@ -44,13 +47,15 @@ class SessionPreferencesCharacterizationTest {
     @Test
     fun logoutPreservesUserExperiencePrefs() = runTest {
         val store = InMemoryPreferencesDataStore()
-        seedAll(store)
-        val session = SessionPreferencesImpl(store, CoroutineScope(StandardTestDispatcher(testScheduler)))
+        val secure = FakeSecureStore()
+        seedAll(store, secure)
+        val session = SessionPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
 
         session.clearAndEnterGuestMode()
 
-        // Token cleared, guest flag set...
+        // Token cleared (incl. the encrypted entry), guest flag set...
         assertEquals("", session.accessToken.first())
+        assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
         assertTrue(session.isGuestMode.first())
         // ...but the user's language/theme/onboarding survive logout.
         val ui = InterfacePreferencesImpl(store, this.backgroundScope)
@@ -63,13 +68,14 @@ class SessionPreferencesCharacterizationTest {
     @Test
     fun clearAllWipesEverythingIncludingUserExperiencePrefs() = runTest {
         val store = InMemoryPreferencesDataStore()
-        seedAll(store)
-        val session = SessionPreferencesImpl(store, CoroutineScope(StandardTestDispatcher(testScheduler)))
+        val secure = FakeSecureStore()
+        seedAll(store, secure)
+        val session = SessionPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
 
         session.clearAll()
         advanceUntilIdle()
 
-        assertFalse(store.snapshot().contains(PreferenceKeys.ACCESS_TOKEN))
+        assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
         assertFalse(store.snapshot().contains(PreferenceKeys.LOCALE_TYPE))
         assertFalse(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
         assertFalse(store.snapshot().contains(PreferenceKeys.LAST_GPS_POSITION))
@@ -95,10 +101,13 @@ class SessionPreferencesCharacterizationTest {
         assertTrue(PreferenceKeys.SESSION_KEYS.contains(PreferenceKeys.ACCESS_TOKEN))
     }
 
-    /** Seeds one credential/session value and every user-experience pref, written directly. */
-    private suspend fun seedAll(store: InMemoryPreferencesDataStore) {
+    /** Seeds one credential (encrypted side) plus session + every user-experience pref, written directly. */
+    private suspend fun seedAll(
+        store: InMemoryPreferencesDataStore,
+        secure: FakeSecureStore
+    ) {
+        secure.seed(PreferenceKeys.ACCESS_TOKEN.name, "live-token")
         store.edit { prefs ->
-            prefs[PreferenceKeys.ACCESS_TOKEN] = "live-token"
             prefs[PreferenceKeys.IS_DEVICE_REGISTERED] = true
             prefs[PreferenceKeys.BALANCE] = 1_000L
             prefs[PreferenceKeys.LOCALE_TYPE] = LocaleKind.Ru.code
