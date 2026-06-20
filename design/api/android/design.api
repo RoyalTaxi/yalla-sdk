@@ -156,16 +156,6 @@ public final class uz/yalla/design/color/ColorScheme$Text {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class uz/yalla/design/color/ColorSchemeKt {
-	public static final fun dark ()Luz/yalla/design/color/ColorScheme;
-	public static final fun getLocalColorScheme ()Landroidx/compose/runtime/ProvidableCompositionLocal;
-	public static final fun light ()Luz/yalla/design/color/ColorScheme;
-}
-
-public final class uz/yalla/design/font/FontKt {
-	public static final fun rememberFontScheme (Landroidx/compose/runtime/Composer;I)Luz/yalla/design/font/FontScheme;
-}
-
 public final class uz/yalla/design/font/FontScheme {
 	public static final field $stable I
 	public fun <init> (Luz/yalla/design/font/FontScheme$Title;Luz/yalla/design/font/FontScheme$Body;Luz/yalla/design/font/FontScheme$Custom;)V
@@ -242,16 +232,6 @@ public final class uz/yalla/design/font/FontScheme$Title {
 	public final fun getXLarge ()Landroidx/compose/ui/text/TextStyle;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public final class uz/yalla/design/font/FontSchemeKt {
-	public static final fun getLocalFontScheme ()Landroidx/compose/runtime/ProvidableCompositionLocal;
-}
-
-public final class uz/yalla/design/font/Font_androidKt {
-	public static final fun getBoldFont ()Lorg/jetbrains/compose/resources/FontResource;
-	public static final fun getMediumFont ()Lorg/jetbrains/compose/resources/FontResource;
-	public static final fun getNormalFont ()Lorg/jetbrains/compose/resources/FontResource;
 }
 
 public final class uz/yalla/design/image/ThemedImage : java/lang/Enum {

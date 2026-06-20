@@ -6,6 +6,18 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
+// TODO(quality, needs-decision): drop `data` from ColorScheme and its nested holders so adding a
+//  token is an additive (non-breaking) change — blocked: removing copy()/componentN from these
+//  core public types is a breaking ABI removal in design.klib.api / android/design.api and needs
+//  owner sign-off per the breaking-public-API policy.
+/**
+ * The semantic color tokens for one appearance (light or dark).
+ *
+ * Read it through [uz.yalla.design.theme.System.color] inside a
+ * [uz.yalla.design.theme.YallaTheme]; the nested holders ([Text], [Background], [Border],
+ * [Button], [Icon], [Accent], [Gradient]) group tokens by role so call sites read intent
+ * (`System.color.text.base`) rather than a raw hex value.
+ */
 @Immutable
 public data class ColorScheme(
     val text: Text,
@@ -16,6 +28,7 @@ public data class ColorScheme(
     val accent: Accent,
     val gradient: Gradient
 ) {
+    /** Foreground text colors keyed by role (primary, subtle, link, error, on-dark). */
     @Immutable
     public data class Text(
         val base: Color,
@@ -25,6 +38,7 @@ public data class ColorScheme(
         val white: Color
     )
 
+    /** Surface/background colors: the base canvas, brand fill, and secondary/tertiary layers. */
     @Immutable
     public data class Background(
         val base: Color,
@@ -33,6 +47,7 @@ public data class ColorScheme(
         val tertiary: Color
     )
 
+    /** Stroke colors for outlined surfaces (disabled, filled, on-dark, error). */
     @Immutable
     public data class Border(
         val disabled: Color,
@@ -41,6 +56,7 @@ public data class ColorScheme(
         val error: Color
     )
 
+    /** Button fill colors keyed by emphasis/state. */
     @Immutable
     public data class Button(
         val active: Color,
@@ -50,6 +66,7 @@ public data class ColorScheme(
         val disabledTertiary: Color
     )
 
+    /** Icon tint colors keyed by role/state. */
     @Immutable
     public data class Icon(
         val white: Color,
@@ -60,6 +77,10 @@ public data class ColorScheme(
         val subtle: Color
     )
 
+    // TODO(quality, needs-decision): the positional `color1..color5` names are non-semantic on the
+    //  public surface — renaming them (or modeling the ordered palette as a List<Color>) is a
+    //  breaking ABI change to a published type and needs owner sign-off.
+    /** Decorative accent palette (e.g. avatar/category tints). */
     @Immutable
     public data class Accent(
         val pinkSun: Color,
@@ -70,6 +91,7 @@ public data class ColorScheme(
         val color5: Color
     )
 
+    /** Multi-stop gradients exposed as ready-to-use [Brush]es (`splash`, `sunsetNight`). */
     @Immutable
     public data class Gradient(
         val splash: Brush,
@@ -77,7 +99,18 @@ public data class ColorScheme(
     )
 }
 
-public fun light(): ColorScheme =
+/**
+ * The light-appearance [ColorScheme], built once and shared so `YallaTheme`'s default does not
+ * allocate a fresh scheme (and churn `staticCompositionLocalOf` identity) on every recomposition.
+ */
+internal val LightColorScheme: ColorScheme = light()
+
+/**
+ * The dark-appearance [ColorScheme]; see [LightColorScheme] for why it is hoisted.
+ */
+internal val DarkColorScheme: ColorScheme = dark()
+
+internal fun light(): ColorScheme =
     ColorScheme(
         text =
             ColorScheme.Text(
@@ -134,7 +167,7 @@ public fun light(): ColorScheme =
             )
     )
 
-public fun dark(): ColorScheme =
+internal fun dark(): ColorScheme =
     ColorScheme(
         text =
             ColorScheme.Text(
@@ -191,4 +224,7 @@ public fun dark(): ColorScheme =
             )
     )
 
-public val LocalColorScheme: ProvidableCompositionLocal<ColorScheme> = staticCompositionLocalOf { light() }
+internal val LocalColorScheme: ProvidableCompositionLocal<ColorScheme> =
+    staticCompositionLocalOf {
+        error("No ColorScheme provided. Wrap your content with YallaTheme or provide a ColorScheme via LocalColorScheme.")
+    }
