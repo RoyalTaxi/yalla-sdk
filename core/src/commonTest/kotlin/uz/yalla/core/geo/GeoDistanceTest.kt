@@ -85,4 +85,60 @@ class GeoDistanceTest {
     fun isPositiveForDistinctPoints() {
         assertTrue(tashkent.distanceTo(samarkand) > 0.0)
     }
+
+    // --- bearingTo: compass degrees clockwise from north, normalized to [0, 360) ---
+
+    private fun assertBearingClose(
+        expected: Double,
+        actual: Double,
+        eps: Double = 1.0
+    ) {
+        // Compare on the circle so 359.9 vs 0.1 is close, not ~360 apart.
+        val delta = abs(((actual - expected + 540.0) % 360.0) - 180.0)
+        assertTrue(delta <= eps, "expected bearing~=$expected got $actual")
+    }
+
+    @Test
+    fun bearingPointsNorthForADueNorthTarget() {
+        assertBearingClose(0.0, GeoPoint(0.0, 0.0).bearingTo(GeoPoint(1.0, 0.0)))
+    }
+
+    @Test
+    fun bearingPointsEastForADueEastTarget() {
+        assertBearingClose(90.0, GeoPoint(0.0, 0.0).bearingTo(GeoPoint(0.0, 1.0)))
+    }
+
+    @Test
+    fun bearingPointsSouthForADueSouthTarget() {
+        // Exercises the negative-atan2 -> +360 wrap branch the route test never reaches.
+        assertBearingClose(180.0, GeoPoint(1.0, 0.0).bearingTo(GeoPoint(0.0, 0.0)))
+    }
+
+    @Test
+    fun bearingPointsWestForADueWestTarget() {
+        // The other half of the south/west normalization branch.
+        assertBearingClose(270.0, GeoPoint(0.0, 1.0).bearingTo(GeoPoint(0.0, 0.0)))
+    }
+
+    @Test
+    fun bearingIsRoughly45ForANortheastTargetAtTheEquator() {
+        // At the equator a small NE step is ~45 deg; independently expected, not recomputed.
+        assertBearingClose(45.0, GeoPoint(0.0, 0.0).bearingTo(GeoPoint(0.001, 0.001)), eps = 0.5)
+    }
+
+    @Test
+    fun bearingIsRoughly225ForASouthwestTargetAtTheEquator() {
+        assertBearingClose(225.0, GeoPoint(0.0, 0.0).bearingTo(GeoPoint(-0.001, -0.001)), eps = 0.5)
+    }
+
+    @Test
+    fun bearingIsEastWhenCrossingTheAntimeridian() {
+        // From lng 179 to lng -179 is a 2-degree step EAST across the antimeridian, not west.
+        assertBearingClose(90.0, GeoPoint(0.0, 179.0).bearingTo(GeoPoint(0.0, -179.0)))
+    }
+
+    @Test
+    fun bearingForIdenticalPointsIsZero() {
+        assertEquals(0.0, tashkent.bearingTo(tashkent))
+    }
 }

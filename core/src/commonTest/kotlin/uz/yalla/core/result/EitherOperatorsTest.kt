@@ -85,9 +85,12 @@ class EitherOperatorsTest {
     }
 
     @Test
-    fun getOrThrowThrowsWithErrorForFailure() {
-        val thrown = assertFailsWith<IllegalStateException> { failure.getOrThrow() }
-        assertTrue(thrown.message?.contains("boom") == true)
+    fun getOrThrowThrowsWithoutLeakingTheErrorPayloadForFailure() {
+        // The error payload must NOT be interpolated into the message — `error` may carry sensitive
+        // data (E is unconstrained), so echoing it would be a CWE-532 leak into stack/crash logs.
+        val secret: Either<String, Int> = Either.Failure("sk_live_secret_token")
+        val thrown = assertFailsWith<IllegalStateException> { secret.getOrThrow() }
+        assertTrue(thrown.message?.contains("sk_live_secret_token") != true)
     }
 
     @Test

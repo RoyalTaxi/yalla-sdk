@@ -38,4 +38,22 @@ class StringFormattingTest {
     fun nonStringArgumentsAreStringified() {
         assertEquals("count: 42, on: true", "count: {0}, on: {1}".formatArgs(42, true))
     }
+
+    @Test
+    fun resolvesPlaceholdersWithTenOrMoreArgs() {
+        // {1} is substituted before {10}/{11}, but the literal token is "{1}" (with braces), so the
+        // "{1"-prefix of "{10}" is never matched — each index resolves to its own arg.
+        val template = "{0}-{1}-{2}-{3}-{4}-{5}-{6}-{7}-{8}-{9}-{10}-{11}"
+        assertEquals(
+            "a-b-c-d-e-f-g-h-i-j-k-l",
+            template.formatArgs("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l")
+        )
+    }
+
+    @Test
+    fun aSubstitutedValueContainingAPlaceholderTokenIsRewrittenByLaterPasses() {
+        // Pinned wart: substitution is sequential, so a value injected by {0} that itself contains
+        // "{1}" IS clobbered by the {1} pass. Documents the order-of-substitution behavior.
+        assertEquals("raw X text", "{0}".formatArgs("raw {1} text", "X"))
+    }
 }

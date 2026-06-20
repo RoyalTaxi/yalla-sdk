@@ -28,6 +28,9 @@ public data class Order(
         val rating: Double,
         val surName: String
     ) {
+        // Redacted to keep the driver's phone/name out of logs and crash reports (CWE-532).
+        override fun toString(): String = "Driver(id=$id, <redacted>)"
+
         public data class Vehicle(
             val callsign: String,
             val color: Color,

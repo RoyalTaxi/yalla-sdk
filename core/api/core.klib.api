@@ -219,19 +219,7 @@ abstract interface uz.yalla.core.preferences/SessionPreferences { // uz.yalla.co
     abstract fun setDeviceRegistered(kotlin/Boolean) // uz.yalla.core.preferences/SessionPreferences.setDeviceRegistered|setDeviceRegistered(kotlin.Boolean){}[0]
     abstract fun setFirebaseToken(kotlin/String) // uz.yalla.core.preferences/SessionPreferences.setFirebaseToken|setFirebaseToken(kotlin.String){}[0]
     abstract fun setGuestMode(kotlin/Boolean) // uz.yalla.core.preferences/SessionPreferences.setGuestMode|setGuestMode(kotlin.Boolean){}[0]
-}
-
-abstract interface uz.yalla.core.preferences/StaticPreferences { // uz.yalla.core.preferences/StaticPreferences|null[0]
-    abstract val isDeviceRegistered // uz.yalla.core.preferences/StaticPreferences.isDeviceRegistered|{}isDeviceRegistered[0]
-        abstract fun <get-isDeviceRegistered>(): kotlin/Boolean // uz.yalla.core.preferences/StaticPreferences.isDeviceRegistered.<get-isDeviceRegistered>|<get-isDeviceRegistered>(){}[0]
-    abstract val isGuestMode // uz.yalla.core.preferences/StaticPreferences.isGuestMode|{}isGuestMode[0]
-        abstract fun <get-isGuestMode>(): kotlin/Boolean // uz.yalla.core.preferences/StaticPreferences.isGuestMode.<get-isGuestMode>|<get-isGuestMode>(){}[0]
-    abstract val localeCode // uz.yalla.core.preferences/StaticPreferences.localeCode|{}localeCode[0]
-        abstract fun <get-localeCode>(): kotlin/String // uz.yalla.core.preferences/StaticPreferences.localeCode.<get-localeCode>|<get-localeCode>(){}[0]
-
-    abstract fun setDeviceRegistered(kotlin/Boolean) // uz.yalla.core.preferences/StaticPreferences.setDeviceRegistered|setDeviceRegistered(kotlin.Boolean){}[0]
-    abstract fun setGuestMode(kotlin/Boolean) // uz.yalla.core.preferences/StaticPreferences.setGuestMode|setGuestMode(kotlin.Boolean){}[0]
-    abstract fun setLocaleCode(kotlin/String) // uz.yalla.core.preferences/StaticPreferences.setLocaleCode|setLocaleCode(kotlin.String){}[0]
+    open suspend fun clearAndEnterGuestMode() // uz.yalla.core.preferences/SessionPreferences.clearAndEnterGuestMode|clearAndEnterGuestMode(){}[0]
 }
 
 abstract interface uz.yalla.core.preferences/UserPreferences { // uz.yalla.core.preferences/UserPreferences|null[0]
@@ -1001,7 +989,6 @@ final fun (kotlin/Long?).uz.yalla.core.util/toLocalFormattedTime(): kotlin/Strin
 final fun (kotlin/String).uz.yalla.core.util/formatArgs(kotlin/Array<out kotlin/Any>...): kotlin/String // uz.yalla.core.util/formatArgs|formatArgs@kotlin.String(kotlin.Array<out|kotlin.Any>...){}[0]
 final fun (uz.yalla.core.geo/GeoPoint).uz.yalla.core.geo/bearingTo(uz.yalla.core.geo/GeoPoint): kotlin/Double // uz.yalla.core.geo/bearingTo|bearingTo@uz.yalla.core.geo.GeoPoint(uz.yalla.core.geo.GeoPoint){}[0]
 final fun (uz.yalla.core.geo/GeoPoint).uz.yalla.core.geo/distanceTo(uz.yalla.core.geo/GeoPoint): kotlin/Double // uz.yalla.core.geo/distanceTo|distanceTo@uz.yalla.core.geo.GeoPoint(uz.yalla.core.geo.GeoPoint){}[0]
-final fun (uz.yalla.core.order/Order.Driver).uz.yalla.core.order/toDriverPosition(): uz.yalla.core.order/DriverPosition // uz.yalla.core.order/toDriverPosition|toDriverPosition@uz.yalla.core.order.Order.Driver(){}[0]
 final fun uz.yalla.core.geo/headingAlongRoute(uz.yalla.core.geo/GeoPoint, kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/Double = ...): kotlin/Float? // uz.yalla.core.geo/headingAlongRoute|headingAlongRoute(uz.yalla.core.geo.GeoPoint;kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.Double){}[0]
 final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/flatMap(kotlin/Function1<#B, uz.yalla.core.result/Either<#A, #C>>): uz.yalla.core.result/Either<#A, #C> // uz.yalla.core.result/flatMap|flatMap@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:1,uz.yalla.core.result.Either<0:0,0:2>>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]
 final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/fold(kotlin/Function1<#A, #C>, kotlin/Function1<#B, #C>): #C // uz.yalla.core.result/fold|fold@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:0,0:2>;kotlin.Function1<0:1,0:2>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]

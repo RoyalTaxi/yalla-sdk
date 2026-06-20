@@ -73,7 +73,7 @@ class MoneyFormattingTest {
     }
 
     @Test
-    fun longMinValueProducesGarbledOutput_knownWart() {
+    fun longMinValueProducesGarbledOutputKnownWart() {
         // KNOWN WART, pinned as-is (characterization, not endorsement): `-this` on Long.MIN_VALUE
         // overflows back to Long.MIN_VALUE, so the magnitude string keeps its own '-', the grouping
         // counts that '-' as a character, and the sign prefix then doubles it. Result is a double

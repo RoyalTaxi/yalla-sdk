@@ -469,10 +469,6 @@ public final class uz/yalla/core/order/Order$Taxi$Point {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class uz/yalla/core/order/OrderKt {
-	public static final fun toDriverPosition (Luz/yalla/core/order/Order$Driver;)Luz/yalla/core/order/DriverPosition;
-}
-
 public abstract class uz/yalla/core/order/OrderStatus {
 	public static final field Companion Luz/yalla/core/order/OrderStatus$Companion;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -703,6 +699,7 @@ public abstract interface class uz/yalla/core/preferences/PositionPreferences {
 
 public abstract interface class uz/yalla/core/preferences/SessionPreferences {
 	public abstract fun clearAll ()V
+	public fun clearAndEnterGuestMode (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun clearSession ()V
 	public abstract fun getAccessToken ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getFirebaseToken ()Lkotlinx/coroutines/flow/Flow;
@@ -714,13 +711,8 @@ public abstract interface class uz/yalla/core/preferences/SessionPreferences {
 	public abstract fun setGuestMode (Z)V
 }
 
-public abstract interface class uz/yalla/core/preferences/StaticPreferences {
-	public abstract fun getLocaleCode ()Ljava/lang/String;
-	public abstract fun isDeviceRegistered ()Z
-	public abstract fun isGuestMode ()Z
-	public abstract fun setDeviceRegistered (Z)V
-	public abstract fun setGuestMode (Z)V
-	public abstract fun setLocaleCode (Ljava/lang/String;)V
+public final class uz/yalla/core/preferences/SessionPreferences$DefaultImpls {
+	public static fun clearAndEnterGuestMode (Luz/yalla/core/preferences/SessionPreferences;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class uz/yalla/core/preferences/UserPreferences {
