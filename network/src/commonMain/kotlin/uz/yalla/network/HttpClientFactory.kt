@@ -79,7 +79,7 @@ public fun createHttpClient(
     val positionCache = MutableStateFlow(GeoPoint.Zero)
 
     val client =
-        HttpClient(engine ?: createHttpEngine()) {
+        HttpClient(engine ?: createHttpEngine(config.certificatePins)) {
             inspektifySetup?.invoke(this)
 
             if (loggingEnabled) {

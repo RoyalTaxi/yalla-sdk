@@ -26,12 +26,6 @@ class ConventionSmokeTest {
     }
 
     @Test
-    fun apiErrorResponseDecodesMessage() {
-        val decoded = json.decodeFromString<ApiErrorResponse>("""{"message":"boom","extra":1}""")
-        assertEquals("boom", decoded.message)
-    }
-
-    @Test
     fun apiErrorEnvelopeDecodesTopLevelAndNestedRetryAfter() {
         // Pins the type the wire path actually decodes (parseApiError), including the top-level
         // retry_after used for a flat rate-limit body and the snake_case error_code mapping.

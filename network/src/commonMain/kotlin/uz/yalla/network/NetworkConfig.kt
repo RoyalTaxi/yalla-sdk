@@ -12,6 +12,11 @@ package uz.yalla.network
  * @param deviceType the `Device` header value.
  * @param deviceMode the `Device-Mode` header value.
  * @param guestAllowedPaths endpoints reachable before authentication; see [DEFAULT_GUEST_ALLOWED_PATHS].
+ * @param certificatePins TLS certificate pins applied by the underlying engine. **Empty by default,
+ *   which disables pinning** (normal CA trust). This is *deployment* configuration: the host supplies its
+ *   backend's real SPKI hashes here — the SDK cannot know or invent them. See [CertificatePin] for the pin
+ *   format, how to obtain the values, and why you should pin a backup key. Pins are honored on Android and
+ *   iOS; see `createHttpEngine` per platform for the wiring.
  */
 public data class NetworkConfig(
     val baseUrl: String,
@@ -19,7 +24,8 @@ public data class NetworkConfig(
     val secretKey: String,
     val deviceType: String = "client",
     val deviceMode: String = "mobile",
-    val guestAllowedPaths: List<String> = DEFAULT_GUEST_ALLOWED_PATHS
+    val guestAllowedPaths: List<String> = DEFAULT_GUEST_ALLOWED_PATHS,
+    val certificatePins: List<CertificatePin> = emptyList()
 )
 
 /**
