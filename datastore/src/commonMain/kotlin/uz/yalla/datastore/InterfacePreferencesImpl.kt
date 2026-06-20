@@ -2,11 +2,8 @@ package uz.yalla.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import uz.yalla.core.preferences.InterfacePreferences
 import uz.yalla.core.settings.LocaleKind
 import uz.yalla.core.settings.MapKind
@@ -17,30 +14,27 @@ internal class InterfacePreferencesImpl(
     private val dataStore: DataStore<Preferences>,
     private val scope: CoroutineScope
 ) : InterfacePreferences {
-    override val localeType: Flow<LocaleKind> = dataStore.data.map { LocaleKind.from(it[PreferenceKeys.LOCALE_TYPE]) }
+    override val localeType: Flow<LocaleKind> = dataStore.readFlow { LocaleKind.from(it[PreferenceKeys.LOCALE_TYPE]) }
 
     override fun setLocaleType(value: LocaleKind) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.LOCALE_TYPE] = value.code } }
+        dataStore.write(scope) { it[PreferenceKeys.LOCALE_TYPE] = value.code }
     }
 
-    override val themeType: Flow<ThemeKind> = dataStore.data.map { ThemeKind.from(it[PreferenceKeys.THEME_TYPE]) }
+    override val themeType: Flow<ThemeKind> = dataStore.readFlow { ThemeKind.from(it[PreferenceKeys.THEME_TYPE]) }
 
     override fun setThemeType(value: ThemeKind) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.THEME_TYPE] = value.id } }
+        dataStore.write(scope) { it[PreferenceKeys.THEME_TYPE] = value.id }
     }
 
-    override val mapKind: Flow<MapKind> =
-        dataStore.data.map { prefs ->
-            MapKind.from(prefs[PreferenceKeys.MAP_TYPE] ?: MapKind.Google.id)
-        }
+    override val mapKind: Flow<MapKind> = dataStore.readFlow { MapKind.from(it[PreferenceKeys.MAP_TYPE]) }
 
     override fun setMapKind(value: MapKind) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.MAP_TYPE] = value.id } }
+        dataStore.write(scope) { it[PreferenceKeys.MAP_TYPE] = value.id }
     }
 
-    override val skipOnboarding: Flow<Boolean> = dataStore.data.map { it[PreferenceKeys.SKIP_ONBOARDING].orFalse() }
+    override val skipOnboarding: Flow<Boolean> = dataStore.readFlow { it[PreferenceKeys.SKIP_ONBOARDING].orFalse() }
 
     override fun setSkipOnboarding(value: Boolean) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.SKIP_ONBOARDING] = value } }
+        dataStore.write(scope) { it[PreferenceKeys.SKIP_ONBOARDING] = value }
     }
 }

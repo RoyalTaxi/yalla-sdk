@@ -11,5 +11,9 @@ kotlin {
             api(libs.koin.core)
             api(libs.androidx.datastore.preferences)
         }
+
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
 }
