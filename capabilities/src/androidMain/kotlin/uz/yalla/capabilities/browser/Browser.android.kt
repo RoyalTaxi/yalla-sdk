@@ -15,7 +15,7 @@ public actual fun rememberBrowser(): Browser {
         object : Browser {
             override fun open(url: String) {
                 val uri = Uri.parse(url)
-                if (uri.scheme.isNullOrBlank()) return
+                if (!isWebUrl(uri.scheme)) return
                 try {
                     CustomTabsIntent
                         .Builder()

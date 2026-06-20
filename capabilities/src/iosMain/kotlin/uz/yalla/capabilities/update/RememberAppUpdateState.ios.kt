@@ -22,15 +22,18 @@ public actual fun rememberAppUpdateState(
 
     LaunchedEffect(Unit) {
         try {
-            val storeInfo = fetchStoreInfo(appId, countryCode)
-            if (storeInfo != null) {
-                val installedVersion =
+            val installedVersion =
+                (
                     NSBundle.mainBundle.infoDictionary
-                        ?.get("CFBundleShortVersionString") as? String ?: ""
-                if (VersionComparator.isNewer(storeInfo.first, installedVersion)) {
-                    state.isUpdateAvailable = true
-                    state.storeUrl = storeInfo.second
-                }
+                        ?.get("CFBundleShortVersionString") as? String
+                )?.takeIf { it.isNotBlank() }
+            // Fail closed: if the installed version can't be determined, don't drive a
+            // (potentially non-dismissible) force-update prompt off an unknown version.
+            if (installedVersion == null) return@LaunchedEffect
+            val storeInfo = fetchStoreInfo(appId, countryCode)
+            if (storeInfo != null && VersionComparator.isNewer(storeInfo.first, installedVersion)) {
+                state.isUpdateAvailable = true
+                state.storeUrl = storeInfo.second
             }
         } catch (_: Exception) {
         } finally {
@@ -58,13 +61,19 @@ private suspend fun fetchStoreInfo(
                     return@dataTaskWithURL
                 }
                 try {
+                    // TODO(quality, needs-decision): H6 — extract a pure parseStoreInfo(json) into
+                    // commonMain and fetch via the shared :network Ktor client instead of raw
+                    // NSURLSession + NSJSONSerialization. Blocked: requires the owner's call on
+                    // adding a :network dependency to :capabilities (layering decision).
                     val json = NSJSONSerialization.JSONObjectWithData(data, 0u, null) as? Map<Any?, *>
                     val results = json?.get("results") as? List<Map<Any?, *>>
                     val first = results?.firstOrNull()
                     val version = first?.get("version") as? String
                     val trackViewUrl = first?.get("trackViewUrl") as? String
-                    if (version != null && trackViewUrl != null) {
-                        cont.resume(version to trackViewUrl)
+                    // Only trust an https store URL on an apple.com host; a MITM/compromised
+                    // response must not be able to substitute an arbitrary URL the app opens.
+                    if (version != null && isTrustedStoreUrl(trackViewUrl)) {
+                        cont.resume(version to trackViewUrl!!)
                     } else {
                         cont.resume(null)
                     }
@@ -75,3 +84,11 @@ private suspend fun fetchStoreInfo(
         task.resume()
         cont.invokeOnCancellation { task.cancel() }
     }
+
+/** True only for an `https` URL whose host is `apple.com` or a subdomain of it. */
+private fun isTrustedStoreUrl(url: String?): Boolean {
+    val nsUrl = url?.let { NSURL.URLWithString(it) } ?: return false
+    if (nsUrl.scheme?.lowercase() != "https") return false
+    val host = nsUrl.host?.lowercase() ?: return false
+    return host == "apple.com" || host.endsWith(".apple.com")
+}

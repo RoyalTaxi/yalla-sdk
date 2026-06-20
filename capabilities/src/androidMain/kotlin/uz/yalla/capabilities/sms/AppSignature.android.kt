@@ -21,7 +21,7 @@ private val cachedSignature by lazy {
 
 public actual fun getAppSignature(): String? = cachedSignature
 
-public fun getAppSignature(context: Context): String? =
+internal fun getAppSignature(context: Context): String? =
     runCatching {
         val packageName = context.packageName
         val signatures =

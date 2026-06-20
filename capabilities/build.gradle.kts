@@ -20,6 +20,10 @@ kotlin {
             implementation(libs.connectivity.device)
         }
 
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+        }
+
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)
             implementation(libs.koin.android)

@@ -17,6 +17,8 @@ public actual fun rememberBrowser(): Browser {
         object : Browser {
             override fun open(url: String) {
                 val nsUrl = NSURL.URLWithString(url) ?: return
+                // Match Android: only http/https are loadable in SFSafariViewController.
+                if (!isWebUrl(nsUrl.scheme)) return
                 val safari = SFSafariViewController(uRL = nsUrl, entersReaderIfAvailable = false)
                 safari.setModalPresentationStyle(UIModalPresentationPageSheet)
                 findRootController()?.presentViewController(safari, animated = true, completion = null)
