@@ -111,8 +111,8 @@ final class uz.yalla.network/NetworkConfig { // uz.yalla.network/NetworkConfig|n
         final fun <get-deviceMode>(): kotlin/String // uz.yalla.network/NetworkConfig.deviceMode.<get-deviceMode>|<get-deviceMode>(){}[0]
     final val deviceType // uz.yalla.network/NetworkConfig.deviceType|{}deviceType[0]
         final fun <get-deviceType>(): kotlin/String // uz.yalla.network/NetworkConfig.deviceType.<get-deviceType>|<get-deviceType>(){}[0]
-    final val guestAllowedSegments // uz.yalla.network/NetworkConfig.guestAllowedSegments|{}guestAllowedSegments[0]
-        final fun <get-guestAllowedSegments>(): kotlin.collections/List<kotlin/String> // uz.yalla.network/NetworkConfig.guestAllowedSegments.<get-guestAllowedSegments>|<get-guestAllowedSegments>(){}[0]
+    final val guestAllowedPaths // uz.yalla.network/NetworkConfig.guestAllowedPaths|{}guestAllowedPaths[0]
+        final fun <get-guestAllowedPaths>(): kotlin.collections/List<kotlin/String> // uz.yalla.network/NetworkConfig.guestAllowedPaths.<get-guestAllowedPaths>|<get-guestAllowedPaths>(){}[0]
     final val secretKey // uz.yalla.network/NetworkConfig.secretKey|{}secretKey[0]
         final fun <get-secretKey>(): kotlin/String // uz.yalla.network/NetworkConfig.secretKey.<get-secretKey>|<get-secretKey>(){}[0]
 
@@ -188,6 +188,12 @@ sealed class uz.yalla.network.error/DataError { // uz.yalla.network.error/DataEr
             final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Timeout.toString|toString(){}[0]
         }
 
+        final object Unauthorized : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Unauthorized|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Unauthorized.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Unauthorized.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // uz.yalla.network.error/DataError.Network.Unauthorized.toString|toString(){}[0]
+        }
+
         final object Unknown : uz.yalla.network.error/DataError.Network { // uz.yalla.network.error/DataError.Network.Unknown|null[0]
             final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.network.error/DataError.Network.Unknown.equals|equals(kotlin.Any?){}[0]
             final fun hashCode(): kotlin/Int // uz.yalla.network.error/DataError.Network.Unknown.hashCode|hashCode(){}[0]
@@ -196,14 +202,10 @@ sealed class uz.yalla.network.error/DataError { // uz.yalla.network.error/DataEr
     }
 }
 
-final val uz.yalla.network/DEFAULT_GUEST_ALLOWED_SEGMENTS // uz.yalla.network/DEFAULT_GUEST_ALLOWED_SEGMENTS|{}DEFAULT_GUEST_ALLOWED_SEGMENTS[0]
-    final fun <get-DEFAULT_GUEST_ALLOWED_SEGMENTS>(): kotlin.collections/List<kotlin/String> // uz.yalla.network/DEFAULT_GUEST_ALLOWED_SEGMENTS.<get-DEFAULT_GUEST_ALLOWED_SEGMENTS>|<get-DEFAULT_GUEST_ALLOWED_SEGMENTS>(){}[0]
-final val uz.yalla.network/platformName // uz.yalla.network/platformName|{}platformName[0]
-    final fun <get-platformName>(): kotlin/String // uz.yalla.network/platformName.<get-platformName>|<get-platformName>(){}[0]
+final val uz.yalla.network/DEFAULT_GUEST_ALLOWED_PATHS // uz.yalla.network/DEFAULT_GUEST_ALLOWED_PATHS|{}DEFAULT_GUEST_ALLOWED_PATHS[0]
+    final fun <get-DEFAULT_GUEST_ALLOWED_PATHS>(): kotlin.collections/List<kotlin/String> // uz.yalla.network/DEFAULT_GUEST_ALLOWED_PATHS.<get-DEFAULT_GUEST_ALLOWED_PATHS>|<get-DEFAULT_GUEST_ALLOWED_PATHS>(){}[0]
 
-final fun uz.yalla.network/createGuestModeGuardPlugin(kotlinx.coroutines.flow/StateFlow<kotlin/Boolean>, kotlin.collections/Set<kotlin/String> = ...): io.ktor.client.plugins.api/ClientPlugin<kotlin/Unit> // uz.yalla.network/createGuestModeGuardPlugin|createGuestModeGuardPlugin(kotlinx.coroutines.flow.StateFlow<kotlin.Boolean>;kotlin.collections.Set<kotlin.String>){}[0]
 final fun uz.yalla.network/createHttpClient(uz.yalla.network/NetworkConfig, kotlin.coroutines/SuspendFunction0<kotlin/String?>, kotlinx.coroutines.flow/Flow<kotlin/String>, kotlinx.coroutines.flow/Flow<kotlin/Boolean>, kotlinx.coroutines.flow/Flow<uz.yalla.core.geo/GeoPoint>, kotlin.coroutines/SuspendFunction0<kotlin/Unit>, kotlinx.coroutines/CoroutineScope, kotlin/Function1<io.ktor.client/HttpClientConfig<*>, kotlin/Unit>? = ..., io.ktor.client.engine/HttpClientEngine? = ..., kotlin/Boolean = ...): io.ktor.client/HttpClient // uz.yalla.network/createHttpClient|createHttpClient(uz.yalla.network.NetworkConfig;kotlin.coroutines.SuspendFunction0<kotlin.String?>;kotlinx.coroutines.flow.Flow<kotlin.String>;kotlinx.coroutines.flow.Flow<kotlin.Boolean>;kotlinx.coroutines.flow.Flow<uz.yalla.core.geo.GeoPoint>;kotlin.coroutines.SuspendFunction0<kotlin.Unit>;kotlinx.coroutines.CoroutineScope;kotlin.Function1<io.ktor.client.HttpClientConfig<*>,kotlin.Unit>?;io.ktor.client.engine.HttpClientEngine?;kotlin.Boolean){}[0]
-final fun uz.yalla.network/createHttpEngine(): io.ktor.client.engine/HttpClientEngine // uz.yalla.network/createHttpEngine|createHttpEngine(){}[0]
 final fun uz.yalla.network/isSuccessStatus(kotlin/Int): kotlin/Boolean // uz.yalla.network/isSuccessStatus|isSuccessStatus(kotlin.Int){}[0]
 final fun uz.yalla.network/statusToEither(kotlin/Int, uz.yalla.network.error/DataError.Network.Api?): uz.yalla.core.result/Either<uz.yalla.network.error/DataError.Network, kotlin/Unit> // uz.yalla.network/statusToEither|statusToEither(kotlin.Int;uz.yalla.network.error.DataError.Network.Api?){}[0]
 final suspend fun <#A: kotlin/Any?> uz.yalla.network/retryWithBackoff(kotlin/Int = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Double = ..., kotlin/Boolean, kotlin.coroutines/SuspendFunction0<#A>): #A // uz.yalla.network/retryWithBackoff|retryWithBackoff(kotlin.Int;kotlin.Long;kotlin.Long;kotlin.Double;kotlin.Boolean;kotlin.coroutines.SuspendFunction0<0:0>){0§<kotlin.Any?>}[0]

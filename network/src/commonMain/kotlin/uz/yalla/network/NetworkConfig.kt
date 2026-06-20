@@ -1,5 +1,18 @@
 package uz.yalla.network
 
+/**
+ * Static configuration for the SDK's HTTP client: the values that shape every request but never change
+ * during a client's life.
+ *
+ * @param baseUrl the backend origin all requests are resolved against.
+ * @param brandId the `brand-id` header value.
+ * @param secretKey the `secret-key` header value. **Not confidential:** it is a build-time constant
+ *   baked into the distributed binary and is trivially extractable (CWE-798), so it must not be the
+ *   sole authorization factor — treat it as a routing/brand tag, validated server-side, not a secret.
+ * @param deviceType the `Device` header value.
+ * @param deviceMode the `Device-Mode` header value.
+ * @param guestAllowedPaths endpoints reachable before authentication; see [DEFAULT_GUEST_ALLOWED_PATHS].
+ */
 public data class NetworkConfig(
     val baseUrl: String,
     val brandId: String,

@@ -7,6 +7,7 @@ import kotlinx.serialization.Serializable
 internal data class ApiErrorEnvelope(
     val code: Int? = null,
     val message: String? = null,
+    @SerialName("retry_after") val retryAfter: Int? = null,
     val error: ApiErrorBody? = null
 )
 

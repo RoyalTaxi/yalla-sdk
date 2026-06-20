@@ -27,15 +27,19 @@ internal fun isGuestAllowedPath(
     }
 }
 
-public fun createGuestModeGuardPlugin(
+internal fun createGuestModeGuardPlugin(
     isGuestMode: StateFlow<Boolean>,
     allowedPaths: Set<String> = DEFAULT_GUEST_ALLOWED_PATHS.toSet()
-): ClientPlugin<Unit> =
-    createClientPlugin("GuestModeGuard") {
+): ClientPlugin<Unit> {
+    // Normalize the allowlist once at construction: allowedPaths is fixed, so re-trimming every entry
+    // on every guest request was pure per-request allocation.
+    val normalized = allowedPaths.mapNotNull { it.trim('/').takeIf(String::isNotEmpty) }.toSet()
+    return createClientPlugin("GuestModeGuard") {
         onRequest { request, _ ->
             if (!isGuestMode.value) return@onRequest
-            if (!isGuestAllowedPath(request.url.encodedPath, allowedPaths)) {
+            if (!isGuestAllowedPath(request.url.encodedPath, normalized)) {
                 throw GuestBlockedException()
             }
         }
     }
+}

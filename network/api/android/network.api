@@ -85,18 +85,9 @@ public final class uz/yalla/network/ApiResponse$Companion {
 	public final fun serializer (Lkotlinx/serialization/KSerializer;)Lkotlinx/serialization/KSerializer;
 }
 
-public final class uz/yalla/network/GuestModeGuardKt {
-	public static final fun createGuestModeGuardPlugin (Lkotlinx/coroutines/flow/StateFlow;Ljava/util/Set;)Lio/ktor/client/plugins/api/ClientPlugin;
-	public static synthetic fun createGuestModeGuardPlugin$default (Lkotlinx/coroutines/flow/StateFlow;Ljava/util/Set;ILjava/lang/Object;)Lio/ktor/client/plugins/api/ClientPlugin;
-}
-
 public final class uz/yalla/network/HttpClientFactoryKt {
 	public static final fun createHttpClient (Luz/yalla/network/NetworkConfig;Lkotlin/jvm/functions/Function1;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;Lio/ktor/client/engine/HttpClientEngine;Z)Lio/ktor/client/HttpClient;
 	public static synthetic fun createHttpClient$default (Luz/yalla/network/NetworkConfig;Lkotlin/jvm/functions/Function1;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function1;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;Lio/ktor/client/engine/HttpClientEngine;ZILjava/lang/Object;)Lio/ktor/client/HttpClient;
-}
-
-public final class uz/yalla/network/HttpEngine_androidKt {
-	public static final fun createHttpEngine ()Lio/ktor/client/engine/HttpClientEngine;
 }
 
 public final class uz/yalla/network/NetworkConfig {
@@ -115,18 +106,14 @@ public final class uz/yalla/network/NetworkConfig {
 	public final fun getBrandId ()Ljava/lang/String;
 	public final fun getDeviceMode ()Ljava/lang/String;
 	public final fun getDeviceType ()Ljava/lang/String;
-	public final fun getGuestAllowedSegments ()Ljava/util/List;
+	public final fun getGuestAllowedPaths ()Ljava/util/List;
 	public final fun getSecretKey ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/network/NetworkConfigKt {
-	public static final fun getDEFAULT_GUEST_ALLOWED_SEGMENTS ()Ljava/util/List;
-}
-
-public final class uz/yalla/network/Platform_androidKt {
-	public static final fun getPlatformName ()Ljava/lang/String;
+	public static final fun getDEFAULT_GUEST_ALLOWED_PATHS ()Ljava/util/List;
 }
 
 public final class uz/yalla/network/SafeApiCallKt {
@@ -199,6 +186,13 @@ public final class uz/yalla/network/error/DataError$Network$Server : uz/yalla/ne
 
 public final class uz/yalla/network/error/DataError$Network$Timeout : uz/yalla/network/error/DataError$Network {
 	public static final field INSTANCE Luz/yalla/network/error/DataError$Network$Timeout;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/network/error/DataError$Network$Unauthorized : uz/yalla/network/error/DataError$Network {
+	public static final field INSTANCE Luz/yalla/network/error/DataError$Network$Unauthorized;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
