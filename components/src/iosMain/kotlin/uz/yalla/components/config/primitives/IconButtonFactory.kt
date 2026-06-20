@@ -25,10 +25,10 @@ public interface IconButtonFactory {
  *
  * @property viewController the hosting native controller.
  * @property setIcon swaps the rendered icon.
- * @property setColors updates icon and container colors (packed `0xAARRGGBB`).
+ * @property setColors updates icon, container, and border colors (packed `0xAARRGGBB`).
  */
 public class IconButtonHandle(
     public val viewController: UIViewController,
     public val setIcon: (String) -> Unit,
-    public val setColors: (iconArgb: Long, containerArgb: Long) -> Unit
+    public val setColors: (iconArgb: Long, containerArgb: Long, borderArgb: Long) -> Unit
 )

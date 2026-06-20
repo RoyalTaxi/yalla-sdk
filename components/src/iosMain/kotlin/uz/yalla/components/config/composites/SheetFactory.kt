@@ -19,6 +19,7 @@ public interface SheetFactory {
         title: String?,
         showClose: Boolean,
         contentController: UIViewController,
+        onClose: (() -> Unit)?,
         onDismissRequest: () -> Unit
     ): ContentSheetHandle
 
@@ -71,6 +72,7 @@ public interface SheetFactory {
         isLoading: Boolean,
         resendEnabled: Boolean,
         dismissEnabled: Boolean,
+        alphanumeric: Boolean,
         onCodeChange: (String) -> Unit,
         onConfirm: () -> Unit,
         onResend: () -> Unit,

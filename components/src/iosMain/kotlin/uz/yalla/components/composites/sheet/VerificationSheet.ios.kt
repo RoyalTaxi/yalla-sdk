@@ -38,11 +38,6 @@ public actual fun VerificationSheet(
 
     val handle =
         remember {
-            // TODO(quality, needs-decision): H1 — `alphanumeric` is accepted here but never forwarded;
-            //  iOS always shows a numeric keypad and strips letters (Android honors it via PinField).
-            //  The fix adds `alphanumeric` to `SheetFactory.createVerification` (and threads it through
-            //  `PinFieldController`), a BREAKING change to the committed `components.klib.api`. Blocked
-            //  on owner sign-off for a breaking bridge-contract change.
             requireConfig().sheet.createVerification(
                 code = code,
                 codeLength = codeLength,
@@ -55,6 +50,7 @@ public actual fun VerificationSheet(
                 isLoading = isLoading,
                 resendEnabled = resendEnabled,
                 dismissEnabled = dismissEnabled,
+                alphanumeric = alphanumeric,
                 onCodeChange = { currentOnCodeChange(it) },
                 onConfirm = { currentOnConfirm() },
                 onResend = { currentOnResend() },

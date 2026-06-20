@@ -47,6 +47,7 @@ public actual fun ContentSheet(
     content: @Composable (padding: PaddingValues) -> Unit
 ) {
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
+    val currentOnClose by rememberUpdatedState(onClose)
     val currentContent by rememberUpdatedState(content)
     val handleRef = remember { mutableStateOf<ContentSheetHandle?>(null) }
 
@@ -68,11 +69,6 @@ public actual fun ContentSheet(
                         )
                     }
                 }
-            // TODO(quality, needs-decision): H1 — the caller's `onClose` action is swallowed on iOS
-            //  (only `showClose` is honored; Android forwards `onClose` distinctly). The fix adds an
-            //  `onClose` closure to `SheetFactory.createContent`/`ContentSheetHandle`, which is a
-            //  BREAKING change to the committed `components.klib.api` (Swift conformance). Blocked on
-            //  owner sign-off for a breaking bridge-contract change.
             requireConfig()
                 .sheet
                 .createContent(
@@ -81,6 +77,7 @@ public actual fun ContentSheet(
                     title = title,
                     showClose = onClose != null,
                     contentController = rootController,
+                    onClose = if (onClose != null) ({ currentOnClose?.invoke() }) else null,
                     onDismissRequest = { currentOnDismissRequest() }
                 ).also { handleRef.value = it }
         }
