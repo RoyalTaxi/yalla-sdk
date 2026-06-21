@@ -105,31 +105,8 @@ public interface MapController {
     /** Releases a [lockTarget]. */
     public fun unlockTarget()
 
-    /**
-     * Captures the current scene so it can be replayed onto another backend. Used by
-     * [SwitchingMapController] to hand the scene over during a provider switch.
-     *
-     * TODO(quality, needs-decision): finding #5 — this scene-handover seam (and the
-     * lockTarget/unlockTarget pair it replays) leaks SwitchingMapController's private mechanism
-     * onto the contract every backend must implement. It should be an internal seam, but
-     * snapshotScene/SceneSnapshot are frozen in the committed `.api`/`.klib.api` dumps, so demoting
-     * them is a breaking dump change. Needs the owner's sign-off on a binary-API break.
-     */
-    public fun snapshotScene(): SceneSnapshot
-
     /** Releases the backend and all its resources. The controller must not be used afterwards. */
     public fun close()
-
-    /** A captured map scene used to hand state from one backend to another across a switch. */
-    public data class SceneSnapshot(
-        val cameraPosition: CameraPosition,
-        val markers: List<MapMarker>,
-        val routes: List<MapRoute>,
-        val circles: List<MapCircle>,
-        val padding: PaddingValues,
-        val lockedTarget: GeoPoint?,
-        val lockedZoom: Float?
-    )
 
     public companion object {
         /** Default animation duration, in milliseconds, for [animateTo]/[animateToWithBearing]. */

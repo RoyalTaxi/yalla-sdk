@@ -1,4 +1,6 @@
-package uz.yalla.media.utils
+package uz.yalla.media.util
+
+import uz.yalla.media.config.CompressionConfig
 
 /** Lower bound the JPEG-quality search may drop to before falling back to a half-resolution encode. */
 internal const val MIN_JPEG_QUALITY: Int = 10

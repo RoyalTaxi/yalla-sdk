@@ -38,46 +38,49 @@ class ConnectivityStateTest {
     }
 
     @Test
-    fun isOnlineTracksStatusEmissions() = runTest {
-        val fake = FakeConnectivity(Connectivity.Status.Disconnected)
-        val state = ConnectivityState(fake, this)
+    fun isOnlineTracksStatusEmissions() =
+        runTest {
+            val fake = FakeConnectivity(Connectivity.Status.Disconnected)
+            val state = ConnectivityState(fake, this)
 
-        runCurrent()
-        fake.emissions.emit(Connectivity.Status.Disconnected)
-        runCurrent()
-        assertFalse(state.isOnline)
+            runCurrent()
+            fake.emissions.emit(Connectivity.Status.Disconnected)
+            runCurrent()
+            assertFalse(state.isOnline)
 
-        fake.emissions.emit(Connectivity.Status.Connected(metered = false))
-        runCurrent()
-        assertTrue(state.isOnline)
+            fake.emissions.emit(Connectivity.Status.Connected(metered = false))
+            runCurrent()
+            assertTrue(state.isOnline)
 
-        coroutineContext.cancelChildren()
-    }
-
-    @Test
-    fun refreshReflectsOneShotStatusRead() = runTest {
-        val fake = FakeConnectivity(Connectivity.Status.Disconnected)
-        val state = ConnectivityState(fake, this)
-
-        state.refresh().join()
-        assertFalse(state.isOnline)
-
-        coroutineContext.cancelChildren()
-    }
+            coroutineContext.cancelChildren()
+        }
 
     @Test
-    fun refreshIsSingleFlightAndDoesNotLeakJobs() = runTest {
-        val fake = FakeConnectivity(Connectivity.Status.Connected(metered = false))
-        val state = ConnectivityState(fake, this)
+    fun refreshReflectsOneShotStatusRead() =
+        runTest {
+            val fake = FakeConnectivity(Connectivity.Status.Disconnected)
+            val state = ConnectivityState(fake, this)
 
-        val first = state.refresh()
-        val second = state.refresh()
-        // Launching a second refresh must cancel the in-flight first one.
-        assertTrue(first.isCancelled)
+            state.refresh().join()
+            assertFalse(state.isOnline)
 
-        second.join()
-        assertTrue(state.isOnline)
+            coroutineContext.cancelChildren()
+        }
 
-        coroutineContext.cancelChildren()
-    }
+    @Test
+    fun refreshIsSingleFlightAndDoesNotLeakJobs() =
+        runTest {
+            val fake = FakeConnectivity(Connectivity.Status.Connected(metered = false))
+            val state = ConnectivityState(fake, this)
+
+            val first = state.refresh()
+            val second = state.refresh()
+            // Launching a second refresh must cancel the in-flight first one.
+            assertTrue(first.isCancelled)
+
+            second.join()
+            assertTrue(state.isOnline)
+
+            coroutineContext.cancelChildren()
+        }
 }

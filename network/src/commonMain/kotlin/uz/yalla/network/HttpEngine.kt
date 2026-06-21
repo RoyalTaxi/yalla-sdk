@@ -11,6 +11,4 @@ import io.ktor.client.engine.HttpClientEngine
  * `CertificatePinner`; the Android `HttpURLConnection` engine exposes an `sslManager` we drive with a
  * SPKI-matching trust manager) — see each `actual`.
  */
-internal expect fun createHttpEngine(
-    certificatePins: List<CertificatePin> = emptyList()
-): HttpClientEngine
+internal expect fun createHttpEngine(certificatePins: List<CertificatePin> = emptyList()): HttpClientEngine

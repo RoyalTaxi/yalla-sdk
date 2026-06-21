@@ -10,6 +10,33 @@ abstract interface uz.yalla.capabilities.browser/Browser { // uz.yalla.capabilit
     abstract fun open(kotlin/String) // uz.yalla.capabilities.browser/Browser.open|open(kotlin.String){}[0]
 }
 
+sealed interface uz.yalla.capabilities.update/AppUpdateStatus { // uz.yalla.capabilities.update/AppUpdateStatus|null[0]
+    final class Available : uz.yalla.capabilities.update/AppUpdateStatus { // uz.yalla.capabilities.update/AppUpdateStatus.Available|null[0]
+        constructor <init>(kotlin/String) // uz.yalla.capabilities.update/AppUpdateStatus.Available.<init>|<init>(kotlin.String){}[0]
+
+        final val storeUrl // uz.yalla.capabilities.update/AppUpdateStatus.Available.storeUrl|{}storeUrl[0]
+            final fun <get-storeUrl>(): kotlin/String // uz.yalla.capabilities.update/AppUpdateStatus.Available.storeUrl.<get-storeUrl>|<get-storeUrl>(){}[0]
+
+        final fun component1(): kotlin/String // uz.yalla.capabilities.update/AppUpdateStatus.Available.component1|component1(){}[0]
+        final fun copy(kotlin/String = ...): uz.yalla.capabilities.update/AppUpdateStatus.Available // uz.yalla.capabilities.update/AppUpdateStatus.Available.copy|copy(kotlin.String){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.capabilities.update/AppUpdateStatus.Available.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.capabilities.update/AppUpdateStatus.Available.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.capabilities.update/AppUpdateStatus.Available.toString|toString(){}[0]
+    }
+
+    final object Checking : uz.yalla.capabilities.update/AppUpdateStatus { // uz.yalla.capabilities.update/AppUpdateStatus.Checking|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.capabilities.update/AppUpdateStatus.Checking.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.capabilities.update/AppUpdateStatus.Checking.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.capabilities.update/AppUpdateStatus.Checking.toString|toString(){}[0]
+    }
+
+    final object UpToDate : uz.yalla.capabilities.update/AppUpdateStatus { // uz.yalla.capabilities.update/AppUpdateStatus.UpToDate|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.capabilities.update/AppUpdateStatus.UpToDate.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.capabilities.update/AppUpdateStatus.UpToDate.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.capabilities.update/AppUpdateStatus.UpToDate.toString|toString(){}[0]
+    }
+}
+
 final class uz.yalla.capabilities.connectivity/ConnectivityState { // uz.yalla.capabilities.connectivity/ConnectivityState|null[0]
     final var isOnline // uz.yalla.capabilities.connectivity/ConnectivityState.isOnline|{}isOnline[0]
         final fun <get-isOnline>(): kotlin/Boolean // uz.yalla.capabilities.connectivity/ConnectivityState.isOnline.<get-isOnline>|<get-isOnline>(){}[0]
@@ -28,17 +55,25 @@ final class uz.yalla.capabilities.location/DeviceLocationProvider : uz.yalla.cor
 final class uz.yalla.capabilities.update/AppUpdateState { // uz.yalla.capabilities.update/AppUpdateState|null[0]
     constructor <init>() // uz.yalla.capabilities.update/AppUpdateState.<init>|<init>(){}[0]
 
-    final var isChecking // uz.yalla.capabilities.update/AppUpdateState.isChecking|{}isChecking[0]
+    final val isChecking // uz.yalla.capabilities.update/AppUpdateState.isChecking|{}isChecking[0]
         final fun <get-isChecking>(): kotlin/Boolean // uz.yalla.capabilities.update/AppUpdateState.isChecking.<get-isChecking>|<get-isChecking>(){}[0]
-    final var isUpdateAvailable // uz.yalla.capabilities.update/AppUpdateState.isUpdateAvailable|{}isUpdateAvailable[0]
+    final val isUpdateAvailable // uz.yalla.capabilities.update/AppUpdateState.isUpdateAvailable|{}isUpdateAvailable[0]
         final fun <get-isUpdateAvailable>(): kotlin/Boolean // uz.yalla.capabilities.update/AppUpdateState.isUpdateAvailable.<get-isUpdateAvailable>|<get-isUpdateAvailable>(){}[0]
-    final var storeUrl // uz.yalla.capabilities.update/AppUpdateState.storeUrl|{}storeUrl[0]
-        final fun <get-storeUrl>(): kotlin/String // uz.yalla.capabilities.update/AppUpdateState.storeUrl.<get-storeUrl>|<get-storeUrl>(){}[0]
+    final val storeUrl // uz.yalla.capabilities.update/AppUpdateState.storeUrl|{}storeUrl[0]
+        final fun <get-storeUrl>(): kotlin/String? // uz.yalla.capabilities.update/AppUpdateState.storeUrl.<get-storeUrl>|<get-storeUrl>(){}[0]
+
+    final var status // uz.yalla.capabilities.update/AppUpdateState.status|{}status[0]
+        final fun <get-status>(): uz.yalla.capabilities.update/AppUpdateStatus // uz.yalla.capabilities.update/AppUpdateState.status.<get-status>|<get-status>(){}[0]
+
+    final fun launchUpdate(androidx.compose.ui.platform/UriHandler): kotlin/Boolean // uz.yalla.capabilities.update/AppUpdateState.launchUpdate|launchUpdate(androidx.compose.ui.platform.UriHandler){}[0]
 }
 
 final val uz.yalla.capabilities.connectivity/uz_yalla_capabilities_connectivity_ConnectivityState$stableprop // uz.yalla.capabilities.connectivity/uz_yalla_capabilities_connectivity_ConnectivityState$stableprop|#static{}uz_yalla_capabilities_connectivity_ConnectivityState$stableprop[0]
 final val uz.yalla.capabilities.location/uz_yalla_capabilities_location_DeviceLocationProvider$stableprop // uz.yalla.capabilities.location/uz_yalla_capabilities_location_DeviceLocationProvider$stableprop|#static{}uz_yalla_capabilities_location_DeviceLocationProvider$stableprop[0]
 final val uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateState$stableprop // uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateState$stableprop|#static{}uz_yalla_capabilities_update_AppUpdateState$stableprop[0]
+final val uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_Available$stableprop // uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_Available$stableprop|#static{}uz_yalla_capabilities_update_AppUpdateStatus_Available$stableprop[0]
+final val uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_Checking$stableprop // uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_Checking$stableprop|#static{}uz_yalla_capabilities_update_AppUpdateStatus_Checking$stableprop[0]
+final val uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_UpToDate$stableprop // uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_UpToDate$stableprop|#static{}uz_yalla_capabilities_update_AppUpdateStatus_UpToDate$stableprop[0]
 
 final fun uz.yalla.capabilities.browser/rememberBrowser(androidx.compose.runtime/Composer?, kotlin/Int): uz.yalla.capabilities.browser/Browser // uz.yalla.capabilities.browser/rememberBrowser|rememberBrowser(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun uz.yalla.capabilities.connectivity/rememberConnectivityState(kotlinx.coroutines/CoroutineScope?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): uz.yalla.capabilities.connectivity/ConnectivityState // uz.yalla.capabilities.connectivity/rememberConnectivityState|rememberConnectivityState(kotlinx.coroutines.CoroutineScope?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
@@ -47,7 +82,9 @@ final fun uz.yalla.capabilities.location/createDeviceLocationProvider(kotlinx.co
 final fun uz.yalla.capabilities.location/isLocationServicesEnabled(): kotlin/Boolean // uz.yalla.capabilities.location/isLocationServicesEnabled|isLocationServicesEnabled(){}[0]
 final fun uz.yalla.capabilities.location/openLocationSettings() // uz.yalla.capabilities.location/openLocationSettings|openLocationSettings(){}[0]
 final fun uz.yalla.capabilities.location/uz_yalla_capabilities_location_DeviceLocationProvider$stableprop_getter(): kotlin/Int // uz.yalla.capabilities.location/uz_yalla_capabilities_location_DeviceLocationProvider$stableprop_getter|uz_yalla_capabilities_location_DeviceLocationProvider$stableprop_getter(){}[0]
-final fun uz.yalla.capabilities.sms/ObserveSmsCode(kotlin/Boolean, kotlin/Int, kotlin/Boolean, kotlin/Any?, kotlin/Function1<kotlin/String, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.capabilities.sms/ObserveSmsCode|ObserveSmsCode(kotlin.Boolean;kotlin.Int;kotlin.Boolean;kotlin.Any?;kotlin.Function1<kotlin.String,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun uz.yalla.capabilities.sms/getAppSignature(): kotlin/String? // uz.yalla.capabilities.sms/getAppSignature|getAppSignature(){}[0]
 final fun uz.yalla.capabilities.update/rememberAppUpdateState(kotlin/String, kotlin/String?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): uz.yalla.capabilities.update/AppUpdateState // uz.yalla.capabilities.update/rememberAppUpdateState|rememberAppUpdateState(kotlin.String;kotlin.String?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
 final fun uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateState$stableprop_getter(): kotlin/Int // uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateState$stableprop_getter|uz_yalla_capabilities_update_AppUpdateState$stableprop_getter(){}[0]
+final fun uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_Available$stableprop_getter(): kotlin/Int // uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_Available$stableprop_getter|uz_yalla_capabilities_update_AppUpdateStatus_Available$stableprop_getter(){}[0]
+final fun uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_Checking$stableprop_getter(): kotlin/Int // uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_Checking$stableprop_getter|uz_yalla_capabilities_update_AppUpdateStatus_Checking$stableprop_getter(){}[0]
+final fun uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_UpToDate$stableprop_getter(): kotlin/Int // uz.yalla.capabilities.update/uz_yalla_capabilities_update_AppUpdateStatus_UpToDate$stableprop_getter|uz_yalla_capabilities_update_AppUpdateStatus_UpToDate$stableprop_getter(){}[0]

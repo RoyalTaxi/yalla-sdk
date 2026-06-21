@@ -1,5 +1,7 @@
 package uz.yalla.maps.config
 
+import uz.yalla.maps.config.YallaMaps.current
+import uz.yalla.maps.config.YallaMaps.install
 import kotlin.concurrent.Volatile
 
 /**

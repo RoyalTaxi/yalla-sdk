@@ -1,9 +1,10 @@
-package uz.yalla.media.utils
+package uz.yalla.media.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import androidx.exifinterface.media.ExifInterface
+import uz.yalla.media.config.CompressionConfig
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import kotlin.math.min

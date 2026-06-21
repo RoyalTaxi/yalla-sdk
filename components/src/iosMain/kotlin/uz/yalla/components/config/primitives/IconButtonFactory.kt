@@ -6,7 +6,7 @@ import uz.yalla.components.primitives.button.IconButtonShape
 /**
  * iOS bridge for the shared `IconButton`. The Swift side implements this to host a native icon button
  * and returns an [IconButtonHandle] of imperative closures Compose drives. Colors are packed as
- * `0xAARRGGBB` [Long]s (see `Color.toArgbOrZero()`).
+ * `0xAARRGGBB` [Long]s; [ICON_BUTTON_COLOR_UNSET] means the corresponding color was not supplied.
  */
 public interface IconButtonFactory {
     /** Builds the native icon button and returns its [IconButtonHandle]. */
@@ -19,6 +19,9 @@ public interface IconButtonFactory {
         onClick: () -> Unit
     ): IconButtonHandle
 }
+
+/** Sentinel used when a Compose [androidx.compose.ui.graphics.Color] is unspecified. */
+public const val ICON_BUTTON_COLOR_UNSET: Long = Long.MIN_VALUE
 
 /**
  * Handle Compose uses to update a live native icon button.

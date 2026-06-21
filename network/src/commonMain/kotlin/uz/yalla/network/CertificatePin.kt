@@ -47,7 +47,10 @@ public data class CertificatePin(
  * Lives in `commonMain` so it is expressed once and unit-tested directly; the Android engine consumes it,
  * while the Darwin engine applies the equivalent rule inside Ktor's own `CertificatePinner`.
  */
-internal fun pinPatternMatchesHost(pattern: String, hostname: String): Boolean {
+internal fun pinPatternMatchesHost(
+    pattern: String,
+    hostname: String
+): Boolean {
     val canonicalPattern = pattern.lowercase()
     val canonicalHost = hostname.lowercase()
     return when {

@@ -44,8 +44,7 @@ internal class PositionPreferencesImpl(
 internal fun parseGeoPoint(
     raw: String?,
     fallbackRaw: String? = null
-): GeoPoint =
-    decodeGeoPoint(raw) ?: decodeGeoPoint(fallbackRaw) ?: GeoPoint.Zero
+): GeoPoint = decodeGeoPoint(raw) ?: decodeGeoPoint(fallbackRaw) ?: GeoPoint.Zero
 
 private fun decodeGeoPoint(raw: String?): GeoPoint? {
     val source = raw?.takeIf { it.isNotBlank() } ?: return null

@@ -79,47 +79,6 @@ public interface SheetFactory {
         onCodeComplete: (String) -> Unit,
         onDismissRequest: () -> Unit
     ): VerificationSheetHandle
-
-    // TODO(quality, needs-decision): H5 — createPromoCode/createNotificationDetail/createAddCard bake
-    //  product features into the generic design-system bridge (no Android/common counterpart; Android
-    //  composes these in the app from `createContent`). They should be removed from the SDK and built
-    //  in the iOS app, but that is a BREAKING removal from the committed `components.klib.api` plus a
-    //  Swift migration. Blocked on owner sign-off for the breaking removal.
-    public fun createPromoCode(
-        code: String,
-        title: String,
-        headline: String,
-        placeholder: String,
-        hint: String,
-        confirmText: String,
-        isLoading: Boolean,
-        onCodeChange: (String) -> Unit,
-        onSubmit: () -> Unit,
-        onDismissRequest: () -> Unit
-    ): PromoCodeSheetHandle
-
-    public fun createNotificationDetail(
-        title: String,
-        date: String,
-        body: String,
-        imageUrl: String?,
-        onDismissRequest: () -> Unit
-    ): NotificationDetailSheetHandle
-
-    public fun createAddCard(
-        cardNumber: String,
-        cardExpiry: String,
-        title: String,
-        cardNumberPlaceholder: String,
-        expiryPlaceholder: String,
-        confirmText: String,
-        isError: Boolean,
-        isLoading: Boolean,
-        onCardNumberChange: (String) -> Unit,
-        onExpiryChange: (String) -> Unit,
-        onSubmit: () -> Unit,
-        onDismissRequest: () -> Unit
-    ): AddCardSheetHandle
 }
 
 public class ContentSheetHandle(
@@ -164,25 +123,5 @@ public class VerificationSheetHandle(
         resendText: String,
         resendEnabled: Boolean
     ) -> Unit,
-    public val dismiss: () -> Unit
-)
-
-public class PromoCodeSheetHandle(
-    public val viewController: UIViewController,
-    public val present: (parent: UIViewController) -> Unit,
-    public val update: (code: String, isLoading: Boolean) -> Unit,
-    public val dismiss: () -> Unit
-)
-
-public class NotificationDetailSheetHandle(
-    public val viewController: UIViewController,
-    public val present: (parent: UIViewController) -> Unit,
-    public val dismiss: () -> Unit
-)
-
-public class AddCardSheetHandle(
-    public val viewController: UIViewController,
-    public val present: (parent: UIViewController) -> Unit,
-    public val update: (cardNumber: String, cardExpiry: String, isError: Boolean, isLoading: Boolean) -> Unit,
     public val dismiss: () -> Unit
 )

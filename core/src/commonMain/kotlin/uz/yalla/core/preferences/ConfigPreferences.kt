@@ -3,16 +3,9 @@ package uz.yalla.core.preferences
 import kotlinx.coroutines.flow.Flow
 
 /**
- * Remote app configuration mirrored to local storage as one cohesive snapshot (support/info contacts,
- * legal URLs, bonus economics, balance, card/order policy).
- *
- * Intentionally wider than the segregated [PositionPreferences]/[SessionPreferences]/[InterfacePreferences]
- * (ISP): all of it is fetched, persisted, and invalidated together as a single backend "app config"
- * payload, so splitting it would fragment one atomic refresh across several stores for no consumer gain.
+ * Support and public contact channels from the backend app configuration snapshot.
  */
-// TODO(quality, needs-decision): M14 — if a finer split is wanted, it is a breaking .api change with
-// external consumers; needs owner sign-off. Documented as deliberately-wide for now.
-public interface ConfigPreferences {
+public interface SupportConfigPreferences {
     public val supportNumber: Flow<String>
 
     public fun setSupportNumber(value: String)
@@ -28,7 +21,10 @@ public interface ConfigPreferences {
     public val infoTelegram: Flow<String>
 
     public fun setInfoTelegram(value: String)
+}
 
+/** Legal document URLs from the backend app configuration snapshot. */
+public interface LegalConfigPreferences {
     public val privacyPolicyRu: Flow<String>
 
     public fun setPrivacyPolicyRu(value: String)
@@ -36,7 +32,10 @@ public interface ConfigPreferences {
     public val privacyPolicyUz: Flow<String>
 
     public fun setPrivacyPolicyUz(value: String)
+}
 
+/** Bonus, balance, and payment policy values from the backend app configuration snapshot. */
+public interface BonusConfigPreferences {
     public val maxBonus: Flow<Long>
 
     public fun setMaxBonus(value: Long)
@@ -56,8 +55,22 @@ public interface ConfigPreferences {
     public val isCardEnabled: Flow<Boolean>
 
     public fun setCardEnabled(value: Boolean)
+}
 
+/** Order lifecycle policy values from the backend app configuration snapshot. */
+public interface OrderConfigPreferences {
     public val orderCancelTime: Flow<Int>
 
     public fun setOrderCancelTime(value: Int)
 }
+
+/**
+ * Full remote app configuration mirrored to local storage as one cohesive backend snapshot.
+ *
+ * Prefer the narrower parent interfaces when a consumer needs only one slice of configuration.
+ */
+public interface ConfigPreferences :
+    SupportConfigPreferences,
+    LegalConfigPreferences,
+    BonusConfigPreferences,
+    OrderConfigPreferences

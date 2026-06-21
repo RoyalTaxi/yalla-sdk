@@ -5,11 +5,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import org.koin.core.module.Module
 import org.koin.dsl.module
+import uz.yalla.core.preferences.BonusConfigPreferences
 import uz.yalla.core.preferences.ConfigPreferences
 import uz.yalla.core.preferences.InterfacePreferences
+import uz.yalla.core.preferences.LegalConfigPreferences
+import uz.yalla.core.preferences.OrderConfigPreferences
 import uz.yalla.core.preferences.PositionPreferences
 import uz.yalla.core.preferences.SessionPreferences
+import uz.yalla.core.preferences.SupportConfigPreferences
 import uz.yalla.core.preferences.UserPreferences
+import uz.yalla.telemetry.Telemetry
 
 /**
  * Koin module backing the persistence layer.
@@ -32,9 +37,13 @@ public val datastoreModule: Module =
 
         single { CoroutineScope(ioDispatcher + SupervisorJob() + datastoreExceptionHandler) }
 
-        single<SessionPreferences> { SessionPreferencesImpl(get(), get(), get()) }
+        single<SessionPreferences> { SessionPreferencesImpl(get(), get()) }
         single<UserPreferences> { UserPreferencesImpl(get(), get(), get()) }
         single<ConfigPreferences> { ConfigPreferencesImpl(get(), get()) }
+        single<SupportConfigPreferences> { get<ConfigPreferences>() }
+        single<LegalConfigPreferences> { get<ConfigPreferences>() }
+        single<BonusConfigPreferences> { get<ConfigPreferences>() }
+        single<OrderConfigPreferences> { get<ConfigPreferences>() }
         single<InterfacePreferences> { InterfacePreferencesImpl(get(), get()) }
         single<PositionPreferences> { PositionPreferencesImpl(get(), get()) }
     }
@@ -47,8 +56,5 @@ public val datastoreModule: Module =
  */
 private val datastoreExceptionHandler: CoroutineExceptionHandler =
     CoroutineExceptionHandler { _, throwable ->
-        // TODO(quality, needs-decision): route to the host's telemetry/Crashlytics seam — this module
-        // has no logging port today, and wiring a reporter needs the owner's choice of sink. Until then
-        // the handler's presence is what prevents the silent-loss / process-crash failure mode (#2).
-        throwable.printStackTrace()
+        Telemetry.recordCrash(throwable)
     }

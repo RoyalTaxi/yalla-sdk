@@ -6,10 +6,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-// TODO(quality, needs-decision): drop `data` from ColorScheme and its nested holders so adding a
-//  token is an additive (non-breaking) change — blocked: removing copy()/componentN from these
-//  core public types is a breaking ABI removal in design.klib.api / android/design.api and needs
-//  owner sign-off per the breaking-public-API policy.
 /**
  * The semantic color tokens for one appearance (light or dark).
  *
@@ -19,83 +15,80 @@ import androidx.compose.ui.graphics.Color
  * (`System.color.text.base`) rather than a raw hex value.
  */
 @Immutable
-public data class ColorScheme(
-    val text: Text,
-    val background: Background,
-    val border: Border,
-    val button: Button,
-    val icon: Icon,
-    val accent: Accent,
-    val gradient: Gradient
+public class ColorScheme(
+    public val text: Text,
+    public val background: Background,
+    public val border: Border,
+    public val button: Button,
+    public val icon: Icon,
+    public val accent: Accent,
+    public val gradient: Gradient
 ) {
     /** Foreground text colors keyed by role (primary, subtle, link, error, on-dark). */
     @Immutable
-    public data class Text(
-        val base: Color,
-        val subtle: Color,
-        val link: Color,
-        val red: Color,
-        val white: Color
+    public class Text(
+        public val base: Color,
+        public val subtle: Color,
+        public val link: Color,
+        public val red: Color,
+        public val white: Color
     )
 
     /** Surface/background colors: the base canvas, brand fill, and secondary/tertiary layers. */
     @Immutable
-    public data class Background(
-        val base: Color,
-        val brand: Color,
-        val secondary: Color,
-        val tertiary: Color
+    public class Background(
+        public val base: Color,
+        public val brand: Color,
+        public val secondary: Color,
+        public val tertiary: Color
     )
 
     /** Stroke colors for outlined surfaces (disabled, filled, on-dark, error). */
     @Immutable
-    public data class Border(
-        val disabled: Color,
-        val filled: Color,
-        val white: Color,
-        val error: Color
+    public class Border(
+        public val disabled: Color,
+        public val filled: Color,
+        public val white: Color,
+        public val error: Color
     )
 
     /** Button fill colors keyed by emphasis/state. */
     @Immutable
-    public data class Button(
-        val active: Color,
-        val disabled: Color,
-        val secondary: Color,
-        val tertiary: Color,
-        val disabledTertiary: Color
+    public class Button(
+        public val active: Color,
+        public val disabled: Color,
+        public val secondary: Color,
+        public val tertiary: Color,
+        public val disabledTertiary: Color
     )
 
     /** Icon tint colors keyed by role/state. */
     @Immutable
-    public data class Icon(
-        val white: Color,
-        val base: Color,
-        val secondary: Color,
-        val disabled: Color,
-        val red: Color,
-        val subtle: Color
+    public class Icon(
+        public val white: Color,
+        public val base: Color,
+        public val secondary: Color,
+        public val disabled: Color,
+        public val red: Color,
+        public val subtle: Color
     )
 
-    // TODO(quality, needs-decision): the positional `color1..color5` names are non-semantic on the
-    //  public surface — renaming them (or modeling the ordered palette as a List<Color>) is a
-    //  breaking ABI change to a published type and needs owner sign-off.
     /** Decorative accent palette (e.g. avatar/category tints). */
     @Immutable
-    public data class Accent(
-        val pinkSun: Color,
-        val color1: Color,
-        val color2: Color,
-        val color3: Color,
-        val color4: Color,
-        val color5: Color
+    public class Accent(
+        public val pinkSun: Color,
+        public val blush: Color,
+        public val periwinkle: Color,
+        public val amber: Color,
+        public val aqua: Color,
+        public val lavender: Color
     )
 
     /** Multi-stop gradients exposed as ready-to-use [Brush]es (`splash`, `sunsetNight`). */
     @Immutable
-    public data class Gradient(
-        val splash: Brush,
-        val sunsetNight: Brush
+    public class Gradient(
+        public val splash: Brush,
+        public val sunsetNight: Brush
     )
 }
 
@@ -154,11 +147,11 @@ internal fun light(): ColorScheme =
         accent =
             ColorScheme.Accent(
                 pinkSun = PinkSun,
-                color1 = Color1,
-                color2 = Color2,
-                color3 = Color3,
-                color4 = Color4,
-                color5 = Color5
+                blush = Color1,
+                periwinkle = Color2,
+                amber = Color3,
+                aqua = Color4,
+                lavender = Color5
             ),
         gradient =
             ColorScheme.Gradient(
@@ -211,11 +204,11 @@ internal fun dark(): ColorScheme =
         accent =
             ColorScheme.Accent(
                 pinkSun = PinkSun,
-                color1 = Color1,
-                color2 = Color2,
-                color3 = Color3,
-                color4 = Color4,
-                color5 = Color5
+                blush = Color1,
+                periwinkle = Color2,
+                amber = Color3,
+                aqua = Color4,
+                lavender = Color5
             ),
         gradient =
             ColorScheme.Gradient(
@@ -226,5 +219,8 @@ internal fun dark(): ColorScheme =
 
 internal val LocalColorScheme: ProvidableCompositionLocal<ColorScheme> =
     staticCompositionLocalOf {
-        error("No ColorScheme provided. Wrap your content with YallaTheme or provide a ColorScheme via LocalColorScheme.")
+        error(
+            "No ColorScheme provided. Wrap your content with YallaTheme or provide a ColorScheme via " +
+                "LocalColorScheme."
+        )
     }

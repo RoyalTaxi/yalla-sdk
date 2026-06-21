@@ -17,15 +17,17 @@ import okhttp3.CertificatePinner
  * normal CA trust — see [CertificatePin] for how the host supplies real pins and why this is deployment
  * configuration the SDK cannot ship.
  */
-internal actual fun createHttpEngine(
-    certificatePins: List<CertificatePin>
-): HttpClientEngine = OkHttp.create {
-    if (certificatePins.isNotEmpty()) {
-        val pinner = CertificatePinner.Builder().apply {
-            certificatePins.forEach { pin -> add(pin.host, *pin.pins.toTypedArray()) }
-        }.build()
-        config {
-            certificatePinner(pinner)
+internal actual fun createHttpEngine(certificatePins: List<CertificatePin>): HttpClientEngine =
+    OkHttp.create {
+        if (certificatePins.isNotEmpty()) {
+            val pinner =
+                CertificatePinner
+                    .Builder()
+                    .apply {
+                        certificatePins.forEach { pin -> add(pin.host, *pin.pins.toTypedArray()) }
+                    }.build()
+            config {
+                certificatePinner(pinner)
+            }
         }
     }
-}

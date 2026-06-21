@@ -114,7 +114,11 @@ public fun ToggleableItem(
     styles: ToggleableItemStyles = ToggleableItemDefaults.styles(),
     // The trailing toggle control. Defaults to the native bridged Toggle; callers can swap in a
     // Compose Switch where the native UISwitch can't honor the design (e.g. its off-track color).
-    toggleControl: @Composable (checked: Boolean, onToggle: (Boolean) -> Unit, enabled: Boolean) -> Unit = { isChecked, onChange, isEnabled ->
+    toggleControl: @Composable (
+        checked: Boolean,
+        onToggle: (Boolean) -> Unit,
+        enabled: Boolean
+    ) -> Unit = { isChecked, onChange, isEnabled ->
         Toggle(checked = isChecked, onCheckedChange = onChange, enabled = isEnabled)
     }
 ) {
@@ -185,7 +189,11 @@ public fun ToggleableItem(
     colors: ToggleableItemColors = ToggleableItemDefaults.colors(),
     dimens: ToggleableItemDimens = ToggleableItemDefaults.dimens(),
     styles: ToggleableItemStyles = ToggleableItemDefaults.styles(),
-    toggleControl: @Composable (checked: Boolean, onToggle: (Boolean) -> Unit, enabled: Boolean) -> Unit = { isChecked, onChange, isEnabled ->
+    toggleControl: @Composable (
+        checked: Boolean,
+        onToggle: (Boolean) -> Unit,
+        enabled: Boolean
+    ) -> Unit = { isChecked, onChange, isEnabled ->
         Toggle(checked = isChecked, onCheckedChange = onChange, enabled = isEnabled)
     }
 ) {

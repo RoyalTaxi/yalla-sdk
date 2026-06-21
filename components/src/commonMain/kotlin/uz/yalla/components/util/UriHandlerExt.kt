@@ -21,7 +21,12 @@ public fun normalizeWebUri(rawUri: String): String? {
     val trimmed = rawUri.trim()
     if (trimmed.isBlank()) return null
     if (!trimmed.matches(URI_SCHEME_REGEX)) return "https://$trimmed"
-    val scheme = SCHEME_PREFIX_REGEX.find(trimmed)?.groupValues?.get(1)?.lowercase()
+    val scheme =
+        SCHEME_PREFIX_REGEX
+            .find(trimmed)
+            ?.groupValues
+            ?.get(1)
+            ?.lowercase()
     return if (scheme in ALLOWED_URI_SCHEMES) trimmed else null
 }
 

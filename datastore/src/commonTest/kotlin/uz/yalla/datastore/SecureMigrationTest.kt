@@ -22,55 +22,58 @@ import kotlin.test.assertNull
 @OptIn(ExperimentalCoroutinesApi::class)
 class SecureMigrationTest {
     @Test
-    fun legacyCleartextTokenIsMovedIntoSecureStoreAndScrubbed() = runTest {
-        val store = InMemoryPreferencesDataStore()
-        val secure = FakeSecureStore()
-        // Pre-encryption install: the token is plaintext in DataStore under its bare key.
-        store.edit { it[stringPreferencesKey(PreferenceKeys.ACCESS_TOKEN.name)] = "legacy-token" }
-        val session = SessionPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
+    fun legacyCleartextTokenIsMovedIntoSecureStoreAndScrubbed() =
+        runTest {
+            val store = InMemoryPreferencesDataStore()
+            val secure = FakeSecureStore()
+            // Pre-encryption install: the token is plaintext in DataStore under its bare key.
+            store.edit { it[stringPreferencesKey(PreferenceKeys.ACCESS_TOKEN.name)] = "legacy-token" }
+            val session = SessionPreferencesImpl(store, secure)
 
-        // First read still returns the value (user stays logged in)...
-        val token = session.accessToken.first()
-        advanceUntilIdle()
+            // First read still returns the value (user stays logged in)...
+            val token = session.accessToken.first()
+            advanceUntilIdle()
 
-        assertEquals("legacy-token", token)
-        // ...and it now lives encrypted, with the plaintext deleted.
-        assertEquals("legacy-token", secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
-        assertFalse(store.snapshot().contains(stringPreferencesKey(PreferenceKeys.ACCESS_TOKEN.name)))
-    }
-
-    @Test
-    fun legacyCleartextPiiIsMigratedForEachSensitiveKey() = runTest {
-        val store = InMemoryPreferencesDataStore()
-        val secure = FakeSecureStore()
-        store.edit { prefs ->
-            prefs[stringPreferencesKey(PreferenceKeys.NUMBER.name)] = "998901112233"
-            prefs[stringPreferencesKey(PreferenceKeys.FIRST_NAME.name)] = "Aziz"
+            assertEquals("legacy-token", token)
+            // ...and it now lives encrypted, with the plaintext deleted.
+            assertEquals("legacy-token", secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
+            assertFalse(store.snapshot().contains(stringPreferencesKey(PreferenceKeys.ACCESS_TOKEN.name)))
         }
-        val user = UserPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
-
-        assertEquals("998901112233", user.number.first())
-        assertEquals("Aziz", user.firstName.first())
-        advanceUntilIdle()
-
-        assertEquals("998901112233", secure.peek(PreferenceKeys.NUMBER.name))
-        assertEquals("Aziz", secure.peek(PreferenceKeys.FIRST_NAME.name))
-        assertFalse(store.snapshot().contains(stringPreferencesKey(PreferenceKeys.NUMBER.name)))
-        assertFalse(store.snapshot().contains(stringPreferencesKey(PreferenceKeys.FIRST_NAME.name)))
-    }
 
     @Test
-    fun absentLegacyValueIsANoOp() = runTest {
-        val store = InMemoryPreferencesDataStore()
-        val secure = FakeSecureStore()
-        val session = SessionPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
+    fun legacyCleartextPiiIsMigratedForEachSensitiveKey() =
+        runTest {
+            val store = InMemoryPreferencesDataStore()
+            val secure = FakeSecureStore()
+            store.edit { prefs ->
+                prefs[stringPreferencesKey(PreferenceKeys.NUMBER.name)] = "998901112233"
+                prefs[stringPreferencesKey(PreferenceKeys.FIRST_NAME.name)] = "Aziz"
+            }
+            val user = UserPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
 
-        assertEquals("", session.accessToken.first())
-        advanceUntilIdle()
+            assertEquals("998901112233", user.number.first())
+            assertEquals("Aziz", user.firstName.first())
+            advanceUntilIdle()
 
-        // Nothing to migrate → no encrypted entry created.
-        assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
-    }
+            assertEquals("998901112233", secure.peek(PreferenceKeys.NUMBER.name))
+            assertEquals("Aziz", secure.peek(PreferenceKeys.FIRST_NAME.name))
+            assertFalse(store.snapshot().contains(stringPreferencesKey(PreferenceKeys.NUMBER.name)))
+            assertFalse(store.snapshot().contains(stringPreferencesKey(PreferenceKeys.FIRST_NAME.name)))
+        }
+
+    @Test
+    fun absentLegacyValueIsANoOp() =
+        runTest {
+            val store = InMemoryPreferencesDataStore()
+            val secure = FakeSecureStore()
+            val session = SessionPreferencesImpl(store, secure)
+
+            assertEquals("", session.accessToken.first())
+            advanceUntilIdle()
+
+            // Nothing to migrate → no encrypted entry created.
+            assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
+        }
 
     @Test
     fun secureKeysCoverTheCredentialsAndPiiButNotTheUxPrefs() {

@@ -47,9 +47,42 @@ public final class uz/yalla/capabilities/sms/SmsCodeObserver_androidKt {
 public final class uz/yalla/capabilities/update/AppUpdateState {
 	public static final field $stable I
 	public fun <init> ()V
+	public final fun getStatus ()Luz/yalla/capabilities/update/AppUpdateStatus;
 	public final fun getStoreUrl ()Ljava/lang/String;
 	public final fun isChecking ()Z
 	public final fun isUpdateAvailable ()Z
+	public final fun launchUpdate (Landroidx/compose/ui/platform/UriHandler;)Z
+}
+
+public abstract interface class uz/yalla/capabilities/update/AppUpdateStatus {
+}
+
+public final class uz/yalla/capabilities/update/AppUpdateStatus$Available : uz/yalla/capabilities/update/AppUpdateStatus {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Luz/yalla/capabilities/update/AppUpdateStatus$Available;
+	public static synthetic fun copy$default (Luz/yalla/capabilities/update/AppUpdateStatus$Available;Ljava/lang/String;ILjava/lang/Object;)Luz/yalla/capabilities/update/AppUpdateStatus$Available;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStoreUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/capabilities/update/AppUpdateStatus$Checking : uz/yalla/capabilities/update/AppUpdateStatus {
+	public static final field $stable I
+	public static final field INSTANCE Luz/yalla/capabilities/update/AppUpdateStatus$Checking;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/capabilities/update/AppUpdateStatus$UpToDate : uz/yalla/capabilities/update/AppUpdateStatus {
+	public static final field $stable I
+	public static final field INSTANCE Luz/yalla/capabilities/update/AppUpdateStatus$UpToDate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/capabilities/update/RememberAppUpdateState_androidKt {

@@ -30,7 +30,6 @@ public abstract interface class uz/yalla/maps/api/MapController {
 	public abstract fun setUserLocation (Luz/yalla/core/geo/GeoPoint;)V
 	public abstract fun setUserLocationEnabled (Z)V
 	public abstract fun setZoom (FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun snapshotScene ()Luz/yalla/maps/api/MapController$SceneSnapshot;
 	public abstract fun unlockTarget ()V
 	public abstract fun zoomIn (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun zoomOut (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -46,30 +45,6 @@ public final class uz/yalla/maps/api/MapController$DefaultImpls {
 	public static synthetic fun fitBounds$default (Luz/yalla/maps/api/MapController;Ljava/util/List;ZLandroidx/compose/foundation/layout/PaddingValues;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun lockTarget$default (Luz/yalla/maps/api/MapController;Luz/yalla/core/geo/GeoPoint;Ljava/lang/Float;ILjava/lang/Object;)V
 	public static synthetic fun moveTo$default (Luz/yalla/maps/api/MapController;Luz/yalla/core/geo/GeoPoint;FLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-}
-
-public final class uz/yalla/maps/api/MapController$SceneSnapshot {
-	public static final field $stable I
-	public fun <init> (Luz/yalla/maps/api/model/CameraPosition;Ljava/util/List;Ljava/util/List;Ljava/util/List;Landroidx/compose/foundation/layout/PaddingValues;Luz/yalla/core/geo/GeoPoint;Ljava/lang/Float;)V
-	public final fun component1 ()Luz/yalla/maps/api/model/CameraPosition;
-	public final fun component2 ()Ljava/util/List;
-	public final fun component3 ()Ljava/util/List;
-	public final fun component4 ()Ljava/util/List;
-	public final fun component5 ()Landroidx/compose/foundation/layout/PaddingValues;
-	public final fun component6 ()Luz/yalla/core/geo/GeoPoint;
-	public final fun component7 ()Ljava/lang/Float;
-	public final fun copy (Luz/yalla/maps/api/model/CameraPosition;Ljava/util/List;Ljava/util/List;Ljava/util/List;Landroidx/compose/foundation/layout/PaddingValues;Luz/yalla/core/geo/GeoPoint;Ljava/lang/Float;)Luz/yalla/maps/api/MapController$SceneSnapshot;
-	public static synthetic fun copy$default (Luz/yalla/maps/api/MapController$SceneSnapshot;Luz/yalla/maps/api/model/CameraPosition;Ljava/util/List;Ljava/util/List;Ljava/util/List;Landroidx/compose/foundation/layout/PaddingValues;Luz/yalla/core/geo/GeoPoint;Ljava/lang/Float;ILjava/lang/Object;)Luz/yalla/maps/api/MapController$SceneSnapshot;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCameraPosition ()Luz/yalla/maps/api/model/CameraPosition;
-	public final fun getCircles ()Ljava/util/List;
-	public final fun getLockedTarget ()Luz/yalla/core/geo/GeoPoint;
-	public final fun getLockedZoom ()Ljava/lang/Float;
-	public final fun getMarkers ()Ljava/util/List;
-	public final fun getPadding ()Landroidx/compose/foundation/layout/PaddingValues;
-	public final fun getRoutes ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/maps/api/MapHost_androidKt {
@@ -88,7 +63,6 @@ public final class uz/yalla/maps/api/SwitchingMapController : uz/yalla/maps/api/
 	public fun animateToWithBearing (Luz/yalla/core/geo/GeoPoint;FFILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun close ()V
 	public fun fitBounds (Ljava/util/List;ZLandroidx/compose/foundation/layout/PaddingValues;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getActiveBackend ()Lkotlinx/coroutines/flow/StateFlow;
 	public fun getCameraPosition ()Lkotlinx/coroutines/flow/StateFlow;
 	public fun getCenterPin ()Lkotlinx/coroutines/flow/StateFlow;
 	public fun getEvents ()Lkotlinx/coroutines/flow/SharedFlow;
@@ -104,7 +78,6 @@ public final class uz/yalla/maps/api/SwitchingMapController : uz/yalla/maps/api/
 	public fun setUserLocation (Luz/yalla/core/geo/GeoPoint;)V
 	public fun setUserLocationEnabled (Z)V
 	public fun setZoom (FLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun snapshotScene ()Luz/yalla/maps/api/MapController$SceneSnapshot;
 	public fun unlockTarget ()V
 	public fun zoomIn (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun zoomOut (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -429,13 +402,9 @@ public final class uz/yalla/maps/config/MapConstants {
 	public static final field EXECUTORS_VISIBLE_MIN_ZOOM D
 	public static final field FIT_ZOOM_MAX D
 	public static final field INSTANCE Luz/yalla/maps/config/MapConstants;
-	public static final field LIGHT_STYLE_URL Ljava/lang/String;
 	public static final field ZOOM_MAX D
 	public static final field ZOOM_MIN D
-	public final fun getANDIJAN_CENTER ()Lkotlin/Pair;
-	public final fun getBOBUR_SQUARE ()Lkotlin/Pair;
 	public final fun getDEFAULT_PADDING-D9Ej5fM ()F
-	public final fun getUZBEKISTAN_CENTER ()Lkotlin/Pair;
 }
 
 public abstract interface class uz/yalla/maps/config/MapFactory {
@@ -445,11 +414,10 @@ public abstract interface class uz/yalla/maps/config/MapFactory {
 
 public final class uz/yalla/maps/config/MapsConfig {
 	public static final field $stable I
-	public synthetic fun <init> (Luz/yalla/maps/config/MapFactory;Luz/yalla/core/location/LocationProvider;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Luz/yalla/maps/config/MapFactory;Luz/yalla/core/location/LocationProvider;Lkotlinx/coroutines/flow/Flow;Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getFactory ()Luz/yalla/maps/config/MapFactory;
 	public final fun getLocationProvider ()Luz/yalla/core/location/LocationProvider;
 	public final fun getMapKindPreference ()Lkotlinx/coroutines/flow/Flow;
-	public final fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public final fun getThemePreference ()Lkotlinx/coroutines/flow/Flow;
 }
 
@@ -460,12 +428,10 @@ public final class uz/yalla/maps/config/MapsConfig$Builder {
 	public final fun getFactory ()Luz/yalla/maps/config/MapFactory;
 	public final fun getLocationProvider ()Luz/yalla/core/location/LocationProvider;
 	public final fun getMapKindPreference ()Lkotlinx/coroutines/flow/Flow;
-	public final fun getScope ()Lkotlinx/coroutines/CoroutineScope;
 	public final fun getThemePreference ()Lkotlinx/coroutines/flow/Flow;
 	public final fun setFactory (Luz/yalla/maps/config/MapFactory;)V
 	public final fun setLocationProvider (Luz/yalla/core/location/LocationProvider;)V
 	public final fun setMapKindPreference (Lkotlinx/coroutines/flow/Flow;)V
-	public final fun setScope (Lkotlinx/coroutines/CoroutineScope;)V
 	public final fun setThemePreference (Lkotlinx/coroutines/flow/Flow;)V
 }
 

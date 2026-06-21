@@ -20,8 +20,7 @@ private const val POSITION_SCALE = 1_000_000L // 10^POSITION_DECIMALS
  * both axes to [POSITION_DECIMALS] decimals through a shared integer path makes the emitted string
  * byte-identical across platforms.
  */
-internal fun formatPosition(point: GeoPoint): String =
-    "${formatCoordinate(point.lat)} ${formatCoordinate(point.lng)}"
+internal fun formatPosition(point: GeoPoint): String = "${formatCoordinate(point.lat)} ${formatCoordinate(point.lng)}"
 
 private fun formatCoordinate(value: Double): String {
     val scaled = (value.absoluteValue * POSITION_SCALE).roundToLong()

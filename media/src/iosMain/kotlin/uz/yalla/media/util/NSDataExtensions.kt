@@ -1,4 +1,4 @@
-package uz.yalla.media.utils
+package uz.yalla.media.util
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf

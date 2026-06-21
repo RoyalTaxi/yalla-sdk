@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import uz.yalla.datastore.PreferenceKeys.SESSION_KEYS
 
 internal object PreferenceKeys {
     val ACCESS_TOKEN = stringPreferencesKey("accessToken")

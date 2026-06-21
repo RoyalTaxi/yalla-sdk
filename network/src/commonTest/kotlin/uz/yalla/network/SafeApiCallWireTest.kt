@@ -29,11 +29,23 @@ import kotlin.test.assertEquals
  */
 class SafeApiCallWireTest {
     @Serializable
-    private data class Dto(val name: String)
+    private data class Dto(
+        val name: String
+    )
 
-    private fun jsonClient(status: HttpStatusCode, body: String): HttpClient =
+    private fun jsonClient(
+        status: HttpStatusCode,
+        body: String
+    ): HttpClient =
         HttpClient(MockEngine { respond(body, status, JSON_HEADERS) }) {
-            install(ContentNegotiation) { json(Json { isLenient = true; ignoreUnknownKeys = true }) }
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        isLenient = true
+                        ignoreUnknownKeys = true
+                    }
+                )
+            }
         }
 
     @Test

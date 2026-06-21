@@ -35,8 +35,7 @@ internal fun <T> DataStore<Preferences>.readFlow(transform: (Preferences) -> T):
             } catch (_: ClassCastException) {
                 transform(EMPTY_PREFERENCES)
             }
-        }
-        .distinctUntilChanged()
+        }.distinctUntilChanged()
 
 /**
  * Launches [block] as an `edit` on the shared [scope].
@@ -52,4 +51,9 @@ internal fun DataStore<Preferences>.write(
     block: (MutablePreferences) -> Unit
 ) {
     scope.launch { edit(block) }
+}
+
+/** Suspends until [block] has been applied to DataStore. */
+internal suspend fun DataStore<Preferences>.writeNow(block: (MutablePreferences) -> Unit) {
+    edit(block)
 }

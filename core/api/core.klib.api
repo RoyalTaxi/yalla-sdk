@@ -25,9 +25,9 @@ final enum class uz.yalla.core.location/PlaceKind : kotlin/Enum<uz.yalla.core.lo
 }
 
 final enum class uz.yalla.core.location/PointKind : kotlin/Enum<uz.yalla.core.location/PointKind> { // uz.yalla.core.location/PointKind|null[0]
-    enum entry POINT // uz.yalla.core.location/PointKind.POINT|null[0]
-    enum entry START // uz.yalla.core.location/PointKind.START|null[0]
-    enum entry STOP // uz.yalla.core.location/PointKind.STOP|null[0]
+    enum entry Point // uz.yalla.core.location/PointKind.Point|null[0]
+    enum entry Start // uz.yalla.core.location/PointKind.Start|null[0]
+    enum entry Stop // uz.yalla.core.location/PointKind.Stop|null[0]
 
     final val entries // uz.yalla.core.location/PointKind.entries|#static{}entries[0]
         final fun <get-entries>(): kotlin.enums/EnumEntries<uz.yalla.core.location/PointKind> // uz.yalla.core.location/PointKind.entries.<get-entries>|<get-entries>#static(){}[0]
@@ -137,45 +137,26 @@ abstract interface uz.yalla.core.location/LocationProvider { // uz.yalla.core.lo
     abstract fun stopTracking() // uz.yalla.core.location/LocationProvider.stopTracking|stopTracking(){}[0]
 }
 
-abstract interface uz.yalla.core.preferences/ConfigPreferences { // uz.yalla.core.preferences/ConfigPreferences|null[0]
-    abstract val balance // uz.yalla.core.preferences/ConfigPreferences.balance|{}balance[0]
-        abstract fun <get-balance>(): kotlinx.coroutines.flow/Flow<kotlin/Long> // uz.yalla.core.preferences/ConfigPreferences.balance.<get-balance>|<get-balance>(){}[0]
-    abstract val infoInstagram // uz.yalla.core.preferences/ConfigPreferences.infoInstagram|{}infoInstagram[0]
-        abstract fun <get-infoInstagram>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/ConfigPreferences.infoInstagram.<get-infoInstagram>|<get-infoInstagram>(){}[0]
-    abstract val infoTelegram // uz.yalla.core.preferences/ConfigPreferences.infoTelegram|{}infoTelegram[0]
-        abstract fun <get-infoTelegram>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/ConfigPreferences.infoTelegram.<get-infoTelegram>|<get-infoTelegram>(){}[0]
-    abstract val isBonusEnabled // uz.yalla.core.preferences/ConfigPreferences.isBonusEnabled|{}isBonusEnabled[0]
-        abstract fun <get-isBonusEnabled>(): kotlinx.coroutines.flow/Flow<kotlin/Boolean> // uz.yalla.core.preferences/ConfigPreferences.isBonusEnabled.<get-isBonusEnabled>|<get-isBonusEnabled>(){}[0]
-    abstract val isCardEnabled // uz.yalla.core.preferences/ConfigPreferences.isCardEnabled|{}isCardEnabled[0]
-        abstract fun <get-isCardEnabled>(): kotlinx.coroutines.flow/Flow<kotlin/Boolean> // uz.yalla.core.preferences/ConfigPreferences.isCardEnabled.<get-isCardEnabled>|<get-isCardEnabled>(){}[0]
-    abstract val maxBonus // uz.yalla.core.preferences/ConfigPreferences.maxBonus|{}maxBonus[0]
-        abstract fun <get-maxBonus>(): kotlinx.coroutines.flow/Flow<kotlin/Long> // uz.yalla.core.preferences/ConfigPreferences.maxBonus.<get-maxBonus>|<get-maxBonus>(){}[0]
-    abstract val minBonus // uz.yalla.core.preferences/ConfigPreferences.minBonus|{}minBonus[0]
-        abstract fun <get-minBonus>(): kotlinx.coroutines.flow/Flow<kotlin/Long> // uz.yalla.core.preferences/ConfigPreferences.minBonus.<get-minBonus>|<get-minBonus>(){}[0]
-    abstract val orderCancelTime // uz.yalla.core.preferences/ConfigPreferences.orderCancelTime|{}orderCancelTime[0]
-        abstract fun <get-orderCancelTime>(): kotlinx.coroutines.flow/Flow<kotlin/Int> // uz.yalla.core.preferences/ConfigPreferences.orderCancelTime.<get-orderCancelTime>|<get-orderCancelTime>(){}[0]
-    abstract val privacyPolicyRu // uz.yalla.core.preferences/ConfigPreferences.privacyPolicyRu|{}privacyPolicyRu[0]
-        abstract fun <get-privacyPolicyRu>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/ConfigPreferences.privacyPolicyRu.<get-privacyPolicyRu>|<get-privacyPolicyRu>(){}[0]
-    abstract val privacyPolicyUz // uz.yalla.core.preferences/ConfigPreferences.privacyPolicyUz|{}privacyPolicyUz[0]
-        abstract fun <get-privacyPolicyUz>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/ConfigPreferences.privacyPolicyUz.<get-privacyPolicyUz>|<get-privacyPolicyUz>(){}[0]
-    abstract val supportNumber // uz.yalla.core.preferences/ConfigPreferences.supportNumber|{}supportNumber[0]
-        abstract fun <get-supportNumber>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/ConfigPreferences.supportNumber.<get-supportNumber>|<get-supportNumber>(){}[0]
-    abstract val supportTelegram // uz.yalla.core.preferences/ConfigPreferences.supportTelegram|{}supportTelegram[0]
-        abstract fun <get-supportTelegram>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/ConfigPreferences.supportTelegram.<get-supportTelegram>|<get-supportTelegram>(){}[0]
+abstract interface uz.yalla.core.preferences/BonusConfigPreferences { // uz.yalla.core.preferences/BonusConfigPreferences|null[0]
+    abstract val balance // uz.yalla.core.preferences/BonusConfigPreferences.balance|{}balance[0]
+        abstract fun <get-balance>(): kotlinx.coroutines.flow/Flow<kotlin/Long> // uz.yalla.core.preferences/BonusConfigPreferences.balance.<get-balance>|<get-balance>(){}[0]
+    abstract val isBonusEnabled // uz.yalla.core.preferences/BonusConfigPreferences.isBonusEnabled|{}isBonusEnabled[0]
+        abstract fun <get-isBonusEnabled>(): kotlinx.coroutines.flow/Flow<kotlin/Boolean> // uz.yalla.core.preferences/BonusConfigPreferences.isBonusEnabled.<get-isBonusEnabled>|<get-isBonusEnabled>(){}[0]
+    abstract val isCardEnabled // uz.yalla.core.preferences/BonusConfigPreferences.isCardEnabled|{}isCardEnabled[0]
+        abstract fun <get-isCardEnabled>(): kotlinx.coroutines.flow/Flow<kotlin/Boolean> // uz.yalla.core.preferences/BonusConfigPreferences.isCardEnabled.<get-isCardEnabled>|<get-isCardEnabled>(){}[0]
+    abstract val maxBonus // uz.yalla.core.preferences/BonusConfigPreferences.maxBonus|{}maxBonus[0]
+        abstract fun <get-maxBonus>(): kotlinx.coroutines.flow/Flow<kotlin/Long> // uz.yalla.core.preferences/BonusConfigPreferences.maxBonus.<get-maxBonus>|<get-maxBonus>(){}[0]
+    abstract val minBonus // uz.yalla.core.preferences/BonusConfigPreferences.minBonus|{}minBonus[0]
+        abstract fun <get-minBonus>(): kotlinx.coroutines.flow/Flow<kotlin/Long> // uz.yalla.core.preferences/BonusConfigPreferences.minBonus.<get-minBonus>|<get-minBonus>(){}[0]
 
-    abstract fun setBalance(kotlin/Long) // uz.yalla.core.preferences/ConfigPreferences.setBalance|setBalance(kotlin.Long){}[0]
-    abstract fun setBonusEnabled(kotlin/Boolean) // uz.yalla.core.preferences/ConfigPreferences.setBonusEnabled|setBonusEnabled(kotlin.Boolean){}[0]
-    abstract fun setCardEnabled(kotlin/Boolean) // uz.yalla.core.preferences/ConfigPreferences.setCardEnabled|setCardEnabled(kotlin.Boolean){}[0]
-    abstract fun setInfoInstagram(kotlin/String) // uz.yalla.core.preferences/ConfigPreferences.setInfoInstagram|setInfoInstagram(kotlin.String){}[0]
-    abstract fun setInfoTelegram(kotlin/String) // uz.yalla.core.preferences/ConfigPreferences.setInfoTelegram|setInfoTelegram(kotlin.String){}[0]
-    abstract fun setMaxBonus(kotlin/Long) // uz.yalla.core.preferences/ConfigPreferences.setMaxBonus|setMaxBonus(kotlin.Long){}[0]
-    abstract fun setMinBonus(kotlin/Long) // uz.yalla.core.preferences/ConfigPreferences.setMinBonus|setMinBonus(kotlin.Long){}[0]
-    abstract fun setOrderCancelTime(kotlin/Int) // uz.yalla.core.preferences/ConfigPreferences.setOrderCancelTime|setOrderCancelTime(kotlin.Int){}[0]
-    abstract fun setPrivacyPolicyRu(kotlin/String) // uz.yalla.core.preferences/ConfigPreferences.setPrivacyPolicyRu|setPrivacyPolicyRu(kotlin.String){}[0]
-    abstract fun setPrivacyPolicyUz(kotlin/String) // uz.yalla.core.preferences/ConfigPreferences.setPrivacyPolicyUz|setPrivacyPolicyUz(kotlin.String){}[0]
-    abstract fun setSupportNumber(kotlin/String) // uz.yalla.core.preferences/ConfigPreferences.setSupportNumber|setSupportNumber(kotlin.String){}[0]
-    abstract fun setSupportTelegram(kotlin/String) // uz.yalla.core.preferences/ConfigPreferences.setSupportTelegram|setSupportTelegram(kotlin.String){}[0]
+    abstract fun setBalance(kotlin/Long) // uz.yalla.core.preferences/BonusConfigPreferences.setBalance|setBalance(kotlin.Long){}[0]
+    abstract fun setBonusEnabled(kotlin/Boolean) // uz.yalla.core.preferences/BonusConfigPreferences.setBonusEnabled|setBonusEnabled(kotlin.Boolean){}[0]
+    abstract fun setCardEnabled(kotlin/Boolean) // uz.yalla.core.preferences/BonusConfigPreferences.setCardEnabled|setCardEnabled(kotlin.Boolean){}[0]
+    abstract fun setMaxBonus(kotlin/Long) // uz.yalla.core.preferences/BonusConfigPreferences.setMaxBonus|setMaxBonus(kotlin.Long){}[0]
+    abstract fun setMinBonus(kotlin/Long) // uz.yalla.core.preferences/BonusConfigPreferences.setMinBonus|setMinBonus(kotlin.Long){}[0]
 }
+
+abstract interface uz.yalla.core.preferences/ConfigPreferences : uz.yalla.core.preferences/BonusConfigPreferences, uz.yalla.core.preferences/LegalConfigPreferences, uz.yalla.core.preferences/OrderConfigPreferences, uz.yalla.core.preferences/SupportConfigPreferences // uz.yalla.core.preferences/ConfigPreferences|null[0]
 
 abstract interface uz.yalla.core.preferences/InterfacePreferences { // uz.yalla.core.preferences/InterfacePreferences|null[0]
     abstract val localeType // uz.yalla.core.preferences/InterfacePreferences.localeType|{}localeType[0]
@@ -191,6 +172,23 @@ abstract interface uz.yalla.core.preferences/InterfacePreferences { // uz.yalla.
     abstract fun setMapKind(uz.yalla.core.settings/MapKind) // uz.yalla.core.preferences/InterfacePreferences.setMapKind|setMapKind(uz.yalla.core.settings.MapKind){}[0]
     abstract fun setSkipOnboarding(kotlin/Boolean) // uz.yalla.core.preferences/InterfacePreferences.setSkipOnboarding|setSkipOnboarding(kotlin.Boolean){}[0]
     abstract fun setThemeType(uz.yalla.core.settings/ThemeKind) // uz.yalla.core.preferences/InterfacePreferences.setThemeType|setThemeType(uz.yalla.core.settings.ThemeKind){}[0]
+}
+
+abstract interface uz.yalla.core.preferences/LegalConfigPreferences { // uz.yalla.core.preferences/LegalConfigPreferences|null[0]
+    abstract val privacyPolicyRu // uz.yalla.core.preferences/LegalConfigPreferences.privacyPolicyRu|{}privacyPolicyRu[0]
+        abstract fun <get-privacyPolicyRu>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/LegalConfigPreferences.privacyPolicyRu.<get-privacyPolicyRu>|<get-privacyPolicyRu>(){}[0]
+    abstract val privacyPolicyUz // uz.yalla.core.preferences/LegalConfigPreferences.privacyPolicyUz|{}privacyPolicyUz[0]
+        abstract fun <get-privacyPolicyUz>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/LegalConfigPreferences.privacyPolicyUz.<get-privacyPolicyUz>|<get-privacyPolicyUz>(){}[0]
+
+    abstract fun setPrivacyPolicyRu(kotlin/String) // uz.yalla.core.preferences/LegalConfigPreferences.setPrivacyPolicyRu|setPrivacyPolicyRu(kotlin.String){}[0]
+    abstract fun setPrivacyPolicyUz(kotlin/String) // uz.yalla.core.preferences/LegalConfigPreferences.setPrivacyPolicyUz|setPrivacyPolicyUz(kotlin.String){}[0]
+}
+
+abstract interface uz.yalla.core.preferences/OrderConfigPreferences { // uz.yalla.core.preferences/OrderConfigPreferences|null[0]
+    abstract val orderCancelTime // uz.yalla.core.preferences/OrderConfigPreferences.orderCancelTime|{}orderCancelTime[0]
+        abstract fun <get-orderCancelTime>(): kotlinx.coroutines.flow/Flow<kotlin/Int> // uz.yalla.core.preferences/OrderConfigPreferences.orderCancelTime.<get-orderCancelTime>|<get-orderCancelTime>(){}[0]
+
+    abstract fun setOrderCancelTime(kotlin/Int) // uz.yalla.core.preferences/OrderConfigPreferences.setOrderCancelTime|setOrderCancelTime(kotlin.Int){}[0]
 }
 
 abstract interface uz.yalla.core.preferences/PositionPreferences { // uz.yalla.core.preferences/PositionPreferences|null[0]
@@ -213,13 +211,29 @@ abstract interface uz.yalla.core.preferences/SessionPreferences { // uz.yalla.co
     abstract val isGuestMode // uz.yalla.core.preferences/SessionPreferences.isGuestMode|{}isGuestMode[0]
         abstract fun <get-isGuestMode>(): kotlinx.coroutines.flow/Flow<kotlin/Boolean> // uz.yalla.core.preferences/SessionPreferences.isGuestMode.<get-isGuestMode>|<get-isGuestMode>(){}[0]
 
-    abstract fun clearAll() // uz.yalla.core.preferences/SessionPreferences.clearAll|clearAll(){}[0]
-    abstract fun clearSession() // uz.yalla.core.preferences/SessionPreferences.clearSession|clearSession(){}[0]
-    abstract fun setAccessToken(kotlin/String) // uz.yalla.core.preferences/SessionPreferences.setAccessToken|setAccessToken(kotlin.String){}[0]
-    abstract fun setDeviceRegistered(kotlin/Boolean) // uz.yalla.core.preferences/SessionPreferences.setDeviceRegistered|setDeviceRegistered(kotlin.Boolean){}[0]
-    abstract fun setFirebaseToken(kotlin/String) // uz.yalla.core.preferences/SessionPreferences.setFirebaseToken|setFirebaseToken(kotlin.String){}[0]
-    abstract fun setGuestMode(kotlin/Boolean) // uz.yalla.core.preferences/SessionPreferences.setGuestMode|setGuestMode(kotlin.Boolean){}[0]
+    abstract suspend fun clearAll() // uz.yalla.core.preferences/SessionPreferences.clearAll|clearAll(){}[0]
+    abstract suspend fun clearSession() // uz.yalla.core.preferences/SessionPreferences.clearSession|clearSession(){}[0]
+    abstract suspend fun setAccessToken(kotlin/String) // uz.yalla.core.preferences/SessionPreferences.setAccessToken|setAccessToken(kotlin.String){}[0]
+    abstract suspend fun setDeviceRegistered(kotlin/Boolean) // uz.yalla.core.preferences/SessionPreferences.setDeviceRegistered|setDeviceRegistered(kotlin.Boolean){}[0]
+    abstract suspend fun setFirebaseToken(kotlin/String) // uz.yalla.core.preferences/SessionPreferences.setFirebaseToken|setFirebaseToken(kotlin.String){}[0]
+    abstract suspend fun setGuestMode(kotlin/Boolean) // uz.yalla.core.preferences/SessionPreferences.setGuestMode|setGuestMode(kotlin.Boolean){}[0]
     open suspend fun clearAndEnterGuestMode() // uz.yalla.core.preferences/SessionPreferences.clearAndEnterGuestMode|clearAndEnterGuestMode(){}[0]
+}
+
+abstract interface uz.yalla.core.preferences/SupportConfigPreferences { // uz.yalla.core.preferences/SupportConfigPreferences|null[0]
+    abstract val infoInstagram // uz.yalla.core.preferences/SupportConfigPreferences.infoInstagram|{}infoInstagram[0]
+        abstract fun <get-infoInstagram>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/SupportConfigPreferences.infoInstagram.<get-infoInstagram>|<get-infoInstagram>(){}[0]
+    abstract val infoTelegram // uz.yalla.core.preferences/SupportConfigPreferences.infoTelegram|{}infoTelegram[0]
+        abstract fun <get-infoTelegram>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/SupportConfigPreferences.infoTelegram.<get-infoTelegram>|<get-infoTelegram>(){}[0]
+    abstract val supportNumber // uz.yalla.core.preferences/SupportConfigPreferences.supportNumber|{}supportNumber[0]
+        abstract fun <get-supportNumber>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/SupportConfigPreferences.supportNumber.<get-supportNumber>|<get-supportNumber>(){}[0]
+    abstract val supportTelegram // uz.yalla.core.preferences/SupportConfigPreferences.supportTelegram|{}supportTelegram[0]
+        abstract fun <get-supportTelegram>(): kotlinx.coroutines.flow/Flow<kotlin/String> // uz.yalla.core.preferences/SupportConfigPreferences.supportTelegram.<get-supportTelegram>|<get-supportTelegram>(){}[0]
+
+    abstract fun setInfoInstagram(kotlin/String) // uz.yalla.core.preferences/SupportConfigPreferences.setInfoInstagram|setInfoInstagram(kotlin.String){}[0]
+    abstract fun setInfoTelegram(kotlin/String) // uz.yalla.core.preferences/SupportConfigPreferences.setInfoTelegram|setInfoTelegram(kotlin.String){}[0]
+    abstract fun setSupportNumber(kotlin/String) // uz.yalla.core.preferences/SupportConfigPreferences.setSupportNumber|setSupportNumber(kotlin.String){}[0]
+    abstract fun setSupportTelegram(kotlin/String) // uz.yalla.core.preferences/SupportConfigPreferences.setSupportTelegram|setSupportTelegram(kotlin.String){}[0]
 }
 
 abstract interface uz.yalla.core.preferences/UserPreferences { // uz.yalla.core.preferences/UserPreferences|null[0]
@@ -751,15 +765,6 @@ final class uz.yalla.core.profile/Client { // uz.yalla.core.profile/Client|null[
     final fun toString(): kotlin/String // uz.yalla.core.profile/Client.toString|toString(){}[0]
 }
 
-final class uz.yalla.core.session/DefaultSessionEventBus : uz.yalla.core.session/SessionEventBus { // uz.yalla.core.session/DefaultSessionEventBus|null[0]
-    constructor <init>() // uz.yalla.core.session/DefaultSessionEventBus.<init>|<init>(){}[0]
-
-    final val unauthorized // uz.yalla.core.session/DefaultSessionEventBus.unauthorized|{}unauthorized[0]
-        final fun <get-unauthorized>(): kotlinx.coroutines.flow/Flow<kotlin/Unit> // uz.yalla.core.session/DefaultSessionEventBus.unauthorized.<get-unauthorized>|<get-unauthorized>(){}[0]
-
-    final fun publishUnauthorized() // uz.yalla.core.session/DefaultSessionEventBus.publishUnauthorized|publishUnauthorized(){}[0]
-}
-
 final value class uz.yalla.core.identity/CardId { // uz.yalla.core.identity/CardId|null[0]
     constructor <init>(kotlin/String) // uz.yalla.core.identity/CardId.<init>|<init>(kotlin.String){}[0]
 
@@ -990,6 +995,7 @@ final fun (kotlin/String).uz.yalla.core.util/formatArgs(kotlin/Array<out kotlin/
 final fun (uz.yalla.core.geo/GeoPoint).uz.yalla.core.geo/bearingTo(uz.yalla.core.geo/GeoPoint): kotlin/Double // uz.yalla.core.geo/bearingTo|bearingTo@uz.yalla.core.geo.GeoPoint(uz.yalla.core.geo.GeoPoint){}[0]
 final fun (uz.yalla.core.geo/GeoPoint).uz.yalla.core.geo/distanceTo(uz.yalla.core.geo/GeoPoint): kotlin/Double // uz.yalla.core.geo/distanceTo|distanceTo@uz.yalla.core.geo.GeoPoint(uz.yalla.core.geo.GeoPoint){}[0]
 final fun uz.yalla.core.geo/headingAlongRoute(uz.yalla.core.geo/GeoPoint, kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/Double = ...): kotlin/Float? // uz.yalla.core.geo/headingAlongRoute|headingAlongRoute(uz.yalla.core.geo.GeoPoint;kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.Double){}[0]
+final fun uz.yalla.core.session/createSessionEventBus(): uz.yalla.core.session/SessionEventBus // uz.yalla.core.session/createSessionEventBus|createSessionEventBus(){}[0]
 final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/flatMap(kotlin/Function1<#B, uz.yalla.core.result/Either<#A, #C>>): uz.yalla.core.result/Either<#A, #C> // uz.yalla.core.result/flatMap|flatMap@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:1,uz.yalla.core.result.Either<0:0,0:2>>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]
 final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/fold(kotlin/Function1<#A, #C>, kotlin/Function1<#B, #C>): #C // uz.yalla.core.result/fold|fold@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:0,0:2>;kotlin.Function1<0:1,0:2>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]
 final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/mapFailure(kotlin/Function1<#A, #C>): uz.yalla.core.result/Either<#C, #B> // uz.yalla.core.result/mapFailure|mapFailure@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:0,0:2>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]

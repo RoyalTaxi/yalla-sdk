@@ -1,4 +1,4 @@
-package uz.yalla.media.utils
+package uz.yalla.media.util
 
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.addressOf
@@ -13,6 +13,7 @@ import platform.UIKit.UIGraphicsImageRenderer
 import platform.UIKit.UIGraphicsImageRendererFormat
 import platform.UIKit.UIImage
 import platform.UIKit.UIImageJPEGRepresentation
+import uz.yalla.media.config.CompressionConfig
 import kotlin.math.min
 
 @OptIn(ExperimentalForeignApi::class)

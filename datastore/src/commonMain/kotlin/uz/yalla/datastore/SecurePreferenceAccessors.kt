@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.yield
 
-/**
+/*
  * The read/write/migration policy for the SENSITIVE keys — the secure-store counterpart to
  * [readFlow]/[write]. Sensitive values live in [SecureStore] (encrypted at rest), but the public surface
  * is still a reactive `Flow<String>`, so this seam bridges the two while keeping the same dedup contract

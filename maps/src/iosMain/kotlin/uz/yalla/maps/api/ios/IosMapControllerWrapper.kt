@@ -18,12 +18,12 @@ import uz.yalla.maps.api.IosMapController
 import uz.yalla.maps.api.MapController
 import uz.yalla.maps.api.model.CameraPosition
 import uz.yalla.maps.api.model.CenterPinState
-import uz.yalla.maps.api.model.approximatelyEquals
 import uz.yalla.maps.api.model.MapCircle
 import uz.yalla.maps.api.model.MapEvent
 import uz.yalla.maps.api.model.MapMarker
 import uz.yalla.maps.api.model.MapRoute
 import uz.yalla.maps.api.model.MapStyle
+import uz.yalla.maps.api.model.approximatelyEquals
 
 internal class IosMapControllerWrapper(
     private val renderer: IosMapRenderer
@@ -239,17 +239,6 @@ internal class IosMapControllerWrapper(
         lockedTarget = null
         lockedZoom = null
     }
-
-    override fun snapshotScene(): MapController.SceneSnapshot =
-        MapController.SceneSnapshot(
-            cameraPosition = _cameraPosition.value,
-            markers = pendingMarkers,
-            routes = pendingRoutes,
-            circles = pendingCircles,
-            padding = pendingPadding,
-            lockedTarget = lockedTarget,
-            lockedZoom = lockedZoom
-        )
 
     override fun close() {
         if (closed) return

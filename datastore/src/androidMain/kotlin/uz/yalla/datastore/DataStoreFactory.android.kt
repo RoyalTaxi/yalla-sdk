@@ -8,7 +8,6 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import okio.Path.Companion.toPath
 import org.koin.core.scope.Scope
-import org.koin.core.scope.get
 import java.io.File
 
 internal actual fun createDataStore(scope: Scope): DataStore<Preferences> {

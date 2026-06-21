@@ -67,11 +67,12 @@ class SwitchingMapControllerTest {
             controller.setMarkers(markers)
             controller.lockTarget(GeoPoint(1.0, 2.0), 15f)
 
-            val snapshot = controller.snapshotScene()
+            controller.switchTo(MapKind.Google)
+            val active = controller.activeBackend.value as FakeMapController
 
-            assertEquals(markers, snapshot.markers)
-            assertEquals(GeoPoint(1.0, 2.0), snapshot.lockedTarget)
-            assertEquals(15f, snapshot.lockedZoom)
+            assertEquals(markers, active.markers)
+            assertEquals(GeoPoint(1.0, 2.0), active.lockedTarget)
+            assertEquals(15f, active.lockedZoom)
         }
 
     @Test
@@ -348,17 +349,6 @@ class SwitchingMapControllerTest {
             lockedTarget = null
             lockedZoom = null
         }
-
-        override fun snapshotScene(): MapController.SceneSnapshot =
-            MapController.SceneSnapshot(
-                cameraPosition = cameraPosition.value,
-                markers = markers,
-                routes = routes,
-                circles = circles,
-                padding = padding,
-                lockedTarget = lockedTarget,
-                lockedZoom = lockedZoom
-            )
 
         override fun close() {
             closed = true

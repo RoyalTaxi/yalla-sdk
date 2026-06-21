@@ -27,142 +27,148 @@ class LoadingControllerTest {
     private val minVisible = 500.milliseconds
 
     @Test
-    fun fastWorkWithinGracePeriodNeverShowsSpinner() = runTest {
-        val controller = LoadingController(this, grace, minVisible)
-        runCurrent()
+    fun fastWorkWithinGracePeriodNeverShowsSpinner() =
+        runTest {
+            val controller = LoadingController(this, grace, minVisible)
+            runCurrent()
 
-        val gate = CompletableDeferred<Unit>()
-        launch { controller.withLoading { gate.await() } }
-        runCurrent()
+            val gate = CompletableDeferred<Unit>()
+            launch { controller.withLoading { gate.await() } }
+            runCurrent()
 
-        // Finish before the grace period elapses.
-        advanceTimeBy(100.milliseconds)
-        gate.complete(Unit)
-        advanceTimeBy(1_000.milliseconds)
-        runCurrent()
+            // Finish before the grace period elapses.
+            advanceTimeBy(100.milliseconds)
+            gate.complete(Unit)
+            advanceTimeBy(1_000.milliseconds)
+            runCurrent()
 
-        assertFalse(controller.loading.value, "spinner must not show for sub-grace work")
+            assertFalse(controller.loading.value, "spinner must not show for sub-grace work")
 
-        coroutineContext.cancelChildren()
-    }
-
-    @Test
-    fun slowWorkShowsSpinnerAfterGracePeriod() = runTest {
-        val controller = LoadingController(this, grace, minVisible)
-        runCurrent()
-
-        val gate = CompletableDeferred<Unit>()
-        launch { controller.withLoading { gate.await() } }
-        runCurrent()
-
-        // Just before grace elapses: still hidden.
-        advanceTimeBy(199.milliseconds)
-        runCurrent()
-        assertFalse(controller.loading.value)
-
-        // After grace elapses: shown.
-        advanceTimeBy(2.milliseconds)
-        runCurrent()
-        assertTrue(controller.loading.value, "spinner must show once work outlives grace")
-
-        gate.complete(Unit)
-        coroutineContext.cancelChildren()
-    }
-
-    @Test
-    fun shownSpinnerStaysVisibleForMinVisibleWindow() = runTest {
-        val controller = LoadingController(this, grace, minVisible)
-        runCurrent()
-
-        val gate = CompletableDeferred<Unit>()
-        launch { controller.withLoading { gate.await() } }
-        runCurrent()
-
-        advanceTimeBy(grace + 1.milliseconds)
-        runCurrent()
-        assertTrue(controller.loading.value)
-
-        // Work completes almost immediately after the spinner showed.
-        gate.complete(Unit)
-        runCurrent()
-        // Still within the min-visible window: must remain shown.
-        assertTrue(controller.loading.value, "spinner must hold for the min-visible window")
-
-        advanceTimeBy(minVisible)
-        runCurrent()
-        assertFalse(controller.loading.value, "spinner hides once min-visible elapses")
-
-        coroutineContext.cancelChildren()
-    }
-
-    @Test
-    fun throwingBlockStillReleasesTheSpinner() = runTest {
-        val controller = LoadingController(this, grace, minVisible)
-        runCurrent()
-
-        val gate = CompletableDeferred<Unit>()
-        var thrown = false
-        launch {
-            try {
-                controller.withLoading {
-                    gate.await()
-                    error("boom")
-                }
-            } catch (_: IllegalStateException) {
-                thrown = true
-            }
+            coroutineContext.cancelChildren()
         }
-        runCurrent()
-
-        advanceTimeBy(grace + 1.milliseconds)
-        runCurrent()
-        assertTrue(controller.loading.value)
-
-        // Body throws; the `finally` decrement must still release the count.
-        gate.complete(Unit)
-        advanceTimeBy(minVisible + minVisible)
-        runCurrent()
-        assertTrue(thrown, "the exception must propagate out of withLoading")
-        assertFalse(controller.loading.value, "a thrown body must not strand the spinner at true")
-
-        coroutineContext.cancelChildren()
-    }
 
     @Test
-    fun overlappingLoadsKeepSpinnerUntilBothFinish() = runTest {
-        val controller = LoadingController(this, grace, minVisible)
-        runCurrent()
+    fun slowWorkShowsSpinnerAfterGracePeriod() =
+        runTest {
+            val controller = LoadingController(this, grace, minVisible)
+            runCurrent()
 
-        val first = CompletableDeferred<Unit>()
-        val second = CompletableDeferred<Unit>()
-        launch { controller.withLoading { first.await() } }
-        launch { controller.withLoading { second.await() } }
-        runCurrent()
+            val gate = CompletableDeferred<Unit>()
+            launch { controller.withLoading { gate.await() } }
+            runCurrent()
 
-        advanceTimeBy(grace + 1.milliseconds)
-        runCurrent()
-        assertTrue(controller.loading.value)
+            // Just before grace elapses: still hidden.
+            advanceTimeBy(199.milliseconds)
+            runCurrent()
+            assertFalse(controller.loading.value)
 
-        // First finishes; the second is still in flight, so the spinner stays up past min-visible.
-        first.complete(Unit)
-        advanceTimeBy(minVisible + minVisible)
-        runCurrent()
-        assertTrue(controller.loading.value, "spinner stays up while any load is in flight")
+            // After grace elapses: shown.
+            advanceTimeBy(2.milliseconds)
+            runCurrent()
+            assertTrue(controller.loading.value, "spinner must show once work outlives grace")
 
-        // Second finishes; now it can settle.
-        second.complete(Unit)
-        advanceTimeBy(minVisible + minVisible)
-        runCurrent()
-        assertFalse(controller.loading.value)
-
-        coroutineContext.cancelChildren()
-    }
+            gate.complete(Unit)
+            coroutineContext.cancelChildren()
+        }
 
     @Test
-    fun spinnerStartsHiddenWithNoWork() = runTest {
-        val controller = LoadingController(this, grace, minVisible)
-        runCurrent()
-        assertFalse(controller.loading.value)
-        coroutineContext.cancelChildren()
-    }
+    fun shownSpinnerStaysVisibleForMinVisibleWindow() =
+        runTest {
+            val controller = LoadingController(this, grace, minVisible)
+            runCurrent()
+
+            val gate = CompletableDeferred<Unit>()
+            launch { controller.withLoading { gate.await() } }
+            runCurrent()
+
+            advanceTimeBy(grace + 1.milliseconds)
+            runCurrent()
+            assertTrue(controller.loading.value)
+
+            // Work completes almost immediately after the spinner showed.
+            gate.complete(Unit)
+            runCurrent()
+            // Still within the min-visible window: must remain shown.
+            assertTrue(controller.loading.value, "spinner must hold for the min-visible window")
+
+            advanceTimeBy(minVisible)
+            runCurrent()
+            assertFalse(controller.loading.value, "spinner hides once min-visible elapses")
+
+            coroutineContext.cancelChildren()
+        }
+
+    @Test
+    fun throwingBlockStillReleasesTheSpinner() =
+        runTest {
+            val controller = LoadingController(this, grace, minVisible)
+            runCurrent()
+
+            val gate = CompletableDeferred<Unit>()
+            var thrown = false
+            launch {
+                try {
+                    controller.withLoading {
+                        gate.await()
+                        error("boom")
+                    }
+                } catch (_: IllegalStateException) {
+                    thrown = true
+                }
+            }
+            runCurrent()
+
+            advanceTimeBy(grace + 1.milliseconds)
+            runCurrent()
+            assertTrue(controller.loading.value)
+
+            // Body throws; the `finally` decrement must still release the count.
+            gate.complete(Unit)
+            advanceTimeBy(minVisible + minVisible)
+            runCurrent()
+            assertTrue(thrown, "the exception must propagate out of withLoading")
+            assertFalse(controller.loading.value, "a thrown body must not strand the spinner at true")
+
+            coroutineContext.cancelChildren()
+        }
+
+    @Test
+    fun overlappingLoadsKeepSpinnerUntilBothFinish() =
+        runTest {
+            val controller = LoadingController(this, grace, minVisible)
+            runCurrent()
+
+            val first = CompletableDeferred<Unit>()
+            val second = CompletableDeferred<Unit>()
+            launch { controller.withLoading { first.await() } }
+            launch { controller.withLoading { second.await() } }
+            runCurrent()
+
+            advanceTimeBy(grace + 1.milliseconds)
+            runCurrent()
+            assertTrue(controller.loading.value)
+
+            // First finishes; the second is still in flight, so the spinner stays up past min-visible.
+            first.complete(Unit)
+            advanceTimeBy(minVisible + minVisible)
+            runCurrent()
+            assertTrue(controller.loading.value, "spinner stays up while any load is in flight")
+
+            // Second finishes; now it can settle.
+            second.complete(Unit)
+            advanceTimeBy(minVisible + minVisible)
+            runCurrent()
+            assertFalse(controller.loading.value)
+
+            coroutineContext.cancelChildren()
+        }
+
+    @Test
+    fun spinnerStartsHiddenWithNoWork() =
+        runTest {
+            val controller = LoadingController(this, grace, minVisible)
+            runCurrent()
+            assertFalse(controller.loading.value)
+            coroutineContext.cancelChildren()
+        }
 }

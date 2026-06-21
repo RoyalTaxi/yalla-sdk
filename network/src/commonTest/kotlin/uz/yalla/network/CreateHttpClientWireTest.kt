@@ -38,8 +38,7 @@ class CreateHttpClientWireTest {
             respond("""{"result":"ok"}""", status, headersOf(HttpHeaders.ContentType, "application/json"))
         }
 
-    private fun config() =
-        NetworkConfig(baseUrl = "https://example.test/", brandId = "2", secretKey = "k")
+    private fun config() = NetworkConfig(baseUrl = "https://example.test/", brandId = "2", secretKey = "k")
 
     private fun buildClient(
         accessToken: suspend () -> String?,
@@ -106,11 +105,12 @@ class CreateHttpClientWireTest {
     fun unauthorized401FiresLogoutHookAndSurfacesUnauthorized() =
         runTest {
             var loggedOut = false
-            val client = buildClient(
-                accessToken = { "expired" },
-                onUnauthorized = { loggedOut = true },
-                status = HttpStatusCode.Unauthorized
-            )
+            val client =
+                buildClient(
+                    accessToken = { "expired" },
+                    onUnauthorized = { loggedOut = true },
+                    status = HttpStatusCode.Unauthorized
+                )
             val result = safeApiCall<ApiResponse<String>> { client.get("x") }
             assertTrue(loggedOut)
             assertEquals(Either.Failure(DataError.Network.Unauthorized), result)

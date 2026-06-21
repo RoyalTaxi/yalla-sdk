@@ -1,4 +1,4 @@
-package uz.yalla.media.utils
+package uz.yalla.media.config
 
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -12,7 +12,6 @@ import kotlin.test.assertTrue
  * disabling the quality search deep in the compressor (review media.md #12).
  */
 class CompressionConfigTest {
-
     // --- Default preset ---
 
     @Test

@@ -15,6 +15,34 @@ final class uz.yalla.media.camera/SystemCameraLauncher { // uz.yalla.media.camer
     final fun launch() // uz.yalla.media.camera/SystemCameraLauncher.launch|launch(){}[0]
 }
 
+final class uz.yalla.media.config/CompressionConfig { // uz.yalla.media.config/CompressionConfig|null[0]
+    constructor <init>(kotlin/Int, kotlin/Int, kotlin/Int) // uz.yalla.media.config/CompressionConfig.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+
+    final val maxDimension // uz.yalla.media.config/CompressionConfig.maxDimension|{}maxDimension[0]
+        final fun <get-maxDimension>(): kotlin/Int // uz.yalla.media.config/CompressionConfig.maxDimension.<get-maxDimension>|<get-maxDimension>(){}[0]
+    final val maxFileSize // uz.yalla.media.config/CompressionConfig.maxFileSize|{}maxFileSize[0]
+        final fun <get-maxFileSize>(): kotlin/Int // uz.yalla.media.config/CompressionConfig.maxFileSize.<get-maxFileSize>|<get-maxFileSize>(){}[0]
+    final val quality // uz.yalla.media.config/CompressionConfig.quality|{}quality[0]
+        final fun <get-quality>(): kotlin/Int // uz.yalla.media.config/CompressionConfig.quality.<get-quality>|<get-quality>(){}[0]
+
+    final fun component1(): kotlin/Int // uz.yalla.media.config/CompressionConfig.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // uz.yalla.media.config/CompressionConfig.component2|component2(){}[0]
+    final fun component3(): kotlin/Int // uz.yalla.media.config/CompressionConfig.component3|component3(){}[0]
+    final fun copy(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...): uz.yalla.media.config/CompressionConfig // uz.yalla.media.config/CompressionConfig.copy|copy(kotlin.Int;kotlin.Int;kotlin.Int){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.media.config/CompressionConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // uz.yalla.media.config/CompressionConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // uz.yalla.media.config/CompressionConfig.toString|toString(){}[0]
+
+    final object Companion { // uz.yalla.media.config/CompressionConfig.Companion|null[0]
+        final val ChatImage // uz.yalla.media.config/CompressionConfig.Companion.ChatImage|{}ChatImage[0]
+            final fun <get-ChatImage>(): uz.yalla.media.config/CompressionConfig // uz.yalla.media.config/CompressionConfig.Companion.ChatImage.<get-ChatImage>|<get-ChatImage>(){}[0]
+        final val Default // uz.yalla.media.config/CompressionConfig.Companion.Default|{}Default[0]
+            final fun <get-Default>(): uz.yalla.media.config/CompressionConfig // uz.yalla.media.config/CompressionConfig.Companion.Default.<get-Default>|<get-Default>(){}[0]
+        final val ProfilePhoto // uz.yalla.media.config/CompressionConfig.Companion.ProfilePhoto|{}ProfilePhoto[0]
+            final fun <get-ProfilePhoto>(): uz.yalla.media.config/CompressionConfig // uz.yalla.media.config/CompressionConfig.Companion.ProfilePhoto.<get-ProfilePhoto>|<get-ProfilePhoto>(){}[0]
+    }
+}
+
 final class uz.yalla.media.config/MediaConfig { // uz.yalla.media.config/MediaConfig|null[0]
     final val factory // uz.yalla.media.config/MediaConfig.factory|{}factory[0]
         final fun <get-factory>(): uz.yalla.media.config/MediaFactory // uz.yalla.media.config/MediaConfig.factory.<get-factory>|<get-factory>(){}[0]
@@ -32,34 +60,6 @@ final class uz.yalla.media.config/MediaConfig { // uz.yalla.media.config/MediaCo
 
 final class uz.yalla.media.picker/ImagePickerLauncher { // uz.yalla.media.picker/ImagePickerLauncher|null[0]
     final fun launch() // uz.yalla.media.picker/ImagePickerLauncher.launch|launch(){}[0]
-}
-
-final class uz.yalla.media.utils/CompressionConfig { // uz.yalla.media.utils/CompressionConfig|null[0]
-    constructor <init>(kotlin/Int, kotlin/Int, kotlin/Int) // uz.yalla.media.utils/CompressionConfig.<init>|<init>(kotlin.Int;kotlin.Int;kotlin.Int){}[0]
-
-    final val maxDimension // uz.yalla.media.utils/CompressionConfig.maxDimension|{}maxDimension[0]
-        final fun <get-maxDimension>(): kotlin/Int // uz.yalla.media.utils/CompressionConfig.maxDimension.<get-maxDimension>|<get-maxDimension>(){}[0]
-    final val maxFileSize // uz.yalla.media.utils/CompressionConfig.maxFileSize|{}maxFileSize[0]
-        final fun <get-maxFileSize>(): kotlin/Int // uz.yalla.media.utils/CompressionConfig.maxFileSize.<get-maxFileSize>|<get-maxFileSize>(){}[0]
-    final val quality // uz.yalla.media.utils/CompressionConfig.quality|{}quality[0]
-        final fun <get-quality>(): kotlin/Int // uz.yalla.media.utils/CompressionConfig.quality.<get-quality>|<get-quality>(){}[0]
-
-    final fun component1(): kotlin/Int // uz.yalla.media.utils/CompressionConfig.component1|component1(){}[0]
-    final fun component2(): kotlin/Int // uz.yalla.media.utils/CompressionConfig.component2|component2(){}[0]
-    final fun component3(): kotlin/Int // uz.yalla.media.utils/CompressionConfig.component3|component3(){}[0]
-    final fun copy(kotlin/Int = ..., kotlin/Int = ..., kotlin/Int = ...): uz.yalla.media.utils/CompressionConfig // uz.yalla.media.utils/CompressionConfig.copy|copy(kotlin.Int;kotlin.Int;kotlin.Int){}[0]
-    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.media.utils/CompressionConfig.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // uz.yalla.media.utils/CompressionConfig.hashCode|hashCode(){}[0]
-    final fun toString(): kotlin/String // uz.yalla.media.utils/CompressionConfig.toString|toString(){}[0]
-
-    final object Companion { // uz.yalla.media.utils/CompressionConfig.Companion|null[0]
-        final val ChatImage // uz.yalla.media.utils/CompressionConfig.Companion.ChatImage|{}ChatImage[0]
-            final fun <get-ChatImage>(): uz.yalla.media.utils/CompressionConfig // uz.yalla.media.utils/CompressionConfig.Companion.ChatImage.<get-ChatImage>|<get-ChatImage>(){}[0]
-        final val Default // uz.yalla.media.utils/CompressionConfig.Companion.Default|{}Default[0]
-            final fun <get-Default>(): uz.yalla.media.utils/CompressionConfig // uz.yalla.media.utils/CompressionConfig.Companion.Default.<get-Default>|<get-Default>(){}[0]
-        final val ProfilePhoto // uz.yalla.media.utils/CompressionConfig.Companion.ProfilePhoto|{}ProfilePhoto[0]
-            final fun <get-ProfilePhoto>(): uz.yalla.media.utils/CompressionConfig // uz.yalla.media.utils/CompressionConfig.Companion.ProfilePhoto.<get-ProfilePhoto>|<get-ProfilePhoto>(){}[0]
-    }
 }
 
 sealed class uz.yalla.media.picker/SelectionMode { // uz.yalla.media.picker/SelectionMode|null[0]
@@ -94,6 +94,7 @@ final object uz.yalla.media.config/YallaMedia { // uz.yalla.media.config/YallaMe
 }
 
 final val uz.yalla.media.camera/uz_yalla_media_camera_SystemCameraLauncher$stableprop // uz.yalla.media.camera/uz_yalla_media_camera_SystemCameraLauncher$stableprop|#static{}uz_yalla_media_camera_SystemCameraLauncher$stableprop[0]
+final val uz.yalla.media.config/uz_yalla_media_config_CompressionConfig$stableprop // uz.yalla.media.config/uz_yalla_media_config_CompressionConfig$stableprop|#static{}uz_yalla_media_config_CompressionConfig$stableprop[0]
 final val uz.yalla.media.config/uz_yalla_media_config_MediaConfig$stableprop // uz.yalla.media.config/uz_yalla_media_config_MediaConfig$stableprop|#static{}uz_yalla_media_config_MediaConfig$stableprop[0]
 final val uz.yalla.media.config/uz_yalla_media_config_MediaConfig_Builder$stableprop // uz.yalla.media.config/uz_yalla_media_config_MediaConfig_Builder$stableprop|#static{}uz_yalla_media_config_MediaConfig_Builder$stableprop[0]
 final val uz.yalla.media.config/uz_yalla_media_config_YallaMedia$stableprop // uz.yalla.media.config/uz_yalla_media_config_YallaMedia$stableprop|#static{}uz_yalla_media_config_YallaMedia$stableprop[0]
@@ -101,10 +102,10 @@ final val uz.yalla.media.picker/uz_yalla_media_picker_ImagePickerLauncher$stable
 final val uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode$stableprop // uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode$stableprop|#static{}uz_yalla_media_picker_SelectionMode$stableprop[0]
 final val uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Multiple$stableprop // uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Multiple$stableprop|#static{}uz_yalla_media_picker_SelectionMode_Multiple$stableprop[0]
 final val uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Single$stableprop // uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Single$stableprop|#static{}uz_yalla_media_picker_SelectionMode_Single$stableprop[0]
-final val uz.yalla.media.utils/uz_yalla_media_utils_CompressionConfig$stableprop // uz.yalla.media.utils/uz_yalla_media_utils_CompressionConfig$stableprop|#static{}uz_yalla_media_utils_CompressionConfig$stableprop[0]
 
 final fun uz.yalla.media.camera/rememberSystemCameraLauncher(kotlinx.coroutines/CoroutineScope, kotlin/Function1<kotlin/ByteArray?, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int): uz.yalla.media.camera/SystemCameraLauncher // uz.yalla.media.camera/rememberSystemCameraLauncher|rememberSystemCameraLauncher(kotlinx.coroutines.CoroutineScope;kotlin.Function1<kotlin.ByteArray?,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun uz.yalla.media.camera/uz_yalla_media_camera_SystemCameraLauncher$stableprop_getter(): kotlin/Int // uz.yalla.media.camera/uz_yalla_media_camera_SystemCameraLauncher$stableprop_getter|uz_yalla_media_camera_SystemCameraLauncher$stableprop_getter(){}[0]
+final fun uz.yalla.media.config/uz_yalla_media_config_CompressionConfig$stableprop_getter(): kotlin/Int // uz.yalla.media.config/uz_yalla_media_config_CompressionConfig$stableprop_getter|uz_yalla_media_config_CompressionConfig$stableprop_getter(){}[0]
 final fun uz.yalla.media.config/uz_yalla_media_config_MediaConfig$stableprop_getter(): kotlin/Int // uz.yalla.media.config/uz_yalla_media_config_MediaConfig$stableprop_getter|uz_yalla_media_config_MediaConfig$stableprop_getter(){}[0]
 final fun uz.yalla.media.config/uz_yalla_media_config_MediaConfig_Builder$stableprop_getter(): kotlin/Int // uz.yalla.media.config/uz_yalla_media_config_MediaConfig_Builder$stableprop_getter|uz_yalla_media_config_MediaConfig_Builder$stableprop_getter(){}[0]
 final fun uz.yalla.media.config/uz_yalla_media_config_YallaMedia$stableprop_getter(): kotlin/Int // uz.yalla.media.config/uz_yalla_media_config_YallaMedia$stableprop_getter|uz_yalla_media_config_YallaMedia$stableprop_getter(){}[0]
@@ -113,5 +114,4 @@ final fun uz.yalla.media.picker/uz_yalla_media_picker_ImagePickerLauncher$stable
 final fun uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode$stableprop_getter(): kotlin/Int // uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode$stableprop_getter|uz_yalla_media_picker_SelectionMode$stableprop_getter(){}[0]
 final fun uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Multiple$stableprop_getter(): kotlin/Int // uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Multiple$stableprop_getter|uz_yalla_media_picker_SelectionMode_Multiple$stableprop_getter(){}[0]
 final fun uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Single$stableprop_getter(): kotlin/Int // uz.yalla.media.picker/uz_yalla_media_picker_SelectionMode_Single$stableprop_getter|uz_yalla_media_picker_SelectionMode_Single$stableprop_getter(){}[0]
-final fun uz.yalla.media.utils/compressImage(kotlin/ByteArray, uz.yalla.media.utils/CompressionConfig = ...): kotlin/ByteArray? // uz.yalla.media.utils/compressImage|compressImage(kotlin.ByteArray;uz.yalla.media.utils.CompressionConfig){}[0]
-final fun uz.yalla.media.utils/uz_yalla_media_utils_CompressionConfig$stableprop_getter(): kotlin/Int // uz.yalla.media.utils/uz_yalla_media_utils_CompressionConfig$stableprop_getter|uz_yalla_media_utils_CompressionConfig$stableprop_getter(){}[0]
+final fun uz.yalla.media.util/compressImage(kotlin/ByteArray, uz.yalla.media.config/CompressionConfig = ...): kotlin/ByteArray? // uz.yalla.media.util/compressImage|compressImage(kotlin.ByteArray;uz.yalla.media.config.CompressionConfig){}[0]

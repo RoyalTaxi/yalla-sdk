@@ -122,7 +122,10 @@ public class DockedExpandableSheetState internal constructor(
      * configured [positionalThreshold] (not a hardcoded `0.5f`), so a caller passing e.g.
      * `{ it * 0.3f }` is honored on release as well as on drag.
      */
-    internal fun settleTarget(velocity: Float, currentFraction: Float): DockedExpandableSheetValue {
+    internal fun settleTarget(
+        velocity: Float,
+        currentFraction: Float
+    ): DockedExpandableSheetValue {
         val expandThresholdPx = positionalThreshold(maxOffsetPx)
         val expandedFraction =
             if (maxOffsetPx > 0f) (expandThresholdPx / maxOffsetPx).coerceIn(0f, 1f) else 0.5f

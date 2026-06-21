@@ -126,15 +126,27 @@ private class FakeIosMapRenderer : IosMapRenderer {
         this.listener = listener
     }
 
-    override fun moveTo(target: GeoPoint, zoom: Float) {
+    override fun moveTo(
+        target: GeoPoint,
+        zoom: Float
+    ) {
         moveToCalls += target
     }
 
-    override fun animateTo(target: GeoPoint, zoom: Float, durationMs: Int) {
+    override fun animateTo(
+        target: GeoPoint,
+        zoom: Float,
+        durationMs: Int
+    ) {
         animateToCalls += target
     }
 
-    override fun animateToWithBearing(target: GeoPoint, bearing: Float, zoom: Float, durationMs: Int) = Unit
+    override fun animateToWithBearing(
+        target: GeoPoint,
+        bearing: Float,
+        zoom: Float,
+        durationMs: Int
+    ) = Unit
 
     override fun fitBounds(
         points: List<GeoPoint>,
@@ -157,7 +169,12 @@ private class FakeIosMapRenderer : IosMapRenderer {
 
     override fun setColorScheme(isDark: Boolean) = Unit
 
-    override fun setPaddingPt(leftPt: Float, topPt: Float, rightPt: Float, bottomPt: Float) = Unit
+    override fun setPaddingPt(
+        leftPt: Float,
+        topPt: Float,
+        rightPt: Float,
+        bottomPt: Float
+    ) = Unit
 
     override fun setInteractionEnabled(enabled: Boolean) = Unit
 

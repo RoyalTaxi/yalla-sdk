@@ -1,20 +1,20 @@
 package uz.yalla.telemetry.event
 
-// TODO(quality, needs-decision): AnalyticsEvent and the ParamValue subtypes are
-//  `data class`es, so copy()/componentN()/equals/hashCode are part of the committed
-//  .api/.klib.api. Demoting them to regular classes shrinks the breakable ABI but is
-//  a breaking removal (b-c-v gate) — defer to the owner before 1.0 leaves alpha.
-//  Construction is meant to go through `event { }`; consumers should read .name/.params
-//  and not destructure or `copy`.
-
 /**
  * A single analytics event: a [name] plus typed [params]. Construct via the
  * [event] DSL rather than this constructor; sinks read [name]/[params] only.
  */
-public data class AnalyticsEvent(
-    val name: String,
-    val params: Map<String, ParamValue> = emptyMap()
-)
+public class AnalyticsEvent(
+    public val name: String,
+    public val params: Map<String, ParamValue> = emptyMap()
+) {
+    override fun equals(other: Any?): Boolean =
+        this === other || (other is AnalyticsEvent && name == other.name && params == other.params)
+
+    override fun hashCode(): Int = 31 * name.hashCode() + params.hashCode()
+
+    override fun toString(): String = "AnalyticsEvent(name=$name, params=$params)"
+}
 
 /** Typed analytics parameter value. Keeps the wire payload type-safe per sink. */
 public sealed interface ParamValue {
@@ -22,24 +22,48 @@ public sealed interface ParamValue {
      * A free-form string value. Must never carry PII or raw user input (search
      * queries, addresses, names, card data) — the value reaches third-party analytics.
      */
-    public data class Text(
-        val value: String
-    ) : ParamValue
+    public class Text(
+        public val value: String
+    ) : ParamValue {
+        override fun equals(other: Any?): Boolean = this === other || (other is Text && value == other.value)
+
+        override fun hashCode(): Int = value.hashCode()
+
+        override fun toString(): String = "Text(value=$value)"
+    }
 
     /** An integral count. [Int] inputs are widened to [Long] by [ParamScope.put]. */
-    public data class Count(
-        val value: Long
-    ) : ParamValue
+    public class Count(
+        public val value: Long
+    ) : ParamValue {
+        override fun equals(other: Any?): Boolean = this === other || (other is Count && value == other.value)
+
+        override fun hashCode(): Int = value.hashCode()
+
+        override fun toString(): String = "Count(value=$value)"
+    }
 
     /** A fractional/monetary amount. */
-    public data class Amount(
-        val value: Double
-    ) : ParamValue
+    public class Amount(
+        public val value: Double
+    ) : ParamValue {
+        override fun equals(other: Any?): Boolean = this === other || (other is Amount && value == other.value)
+
+        override fun hashCode(): Int = value.hashCode()
+
+        override fun toString(): String = "Amount(value=$value)"
+    }
 
     /** A boolean flag. */
-    public data class Flag(
-        val value: Boolean
-    ) : ParamValue
+    public class Flag(
+        public val value: Boolean
+    ) : ParamValue {
+        override fun equals(other: Any?): Boolean = this === other || (other is Flag && value == other.value)
+
+        override fun hashCode(): Int = value.hashCode()
+
+        override fun toString(): String = "Flag(value=$value)"
+    }
 }
 
 /**

@@ -15,7 +15,7 @@ ever touching a raw hex, a font resource, or a `CompositionLocal`.
 - **Typography tokens** — [`FontScheme`][uz.yalla.design.font.FontScheme] and its holders (`Title`,
   `Body` with the regular/medium/bold triad, `Custom`).
 - **Themed images** — [`ThemedImage`][uz.yalla.design.image.ThemedImage] (a light/dark pair) and
-  [`themedPainter`][uz.yalla.design.image.themedPainter], which resolves it for the current
+  [`rememberThemedPainter`][uz.yalla.design.image.rememberThemedPainter], which resolves it for the current
   appearance.
 
 ## Conventions
@@ -27,8 +27,10 @@ ever touching a raw hex, a font resource, or a `CompositionLocal`.
   agree with it, so the three can never silently diverge.
 - **Fail fast on misuse:** reading `System.color`/`System.font` outside a `YallaTheme` throws rather
   than rendering silently-wrong tokens.
-- **Token provenance:** values originate from the `yalla-design` token source; the per-platform Kotlin
-  is hand-finished afterwards (explicit-API modifiers, the iOS bridge `assetName`, the bounds-relative
+- **Token provenance:** values originate from the `yalla-design` token source; the per-platform
+  Kotlin
+  is hand-finished afterwards (explicit-API modifiers, the iOS bridge `assetName`, the
+  bounds-relative
   splash gradient) and is authoritative for this module until the emitter round-trips.
 
 ## Public contract
@@ -37,4 +39,4 @@ The published surface is pinned by the committed ABI dumps under `design/api/`
 (`design.klib.api`, `android/design.api`); any diff is a reviewable breaking change. The internal
 scheme factories, the backing `CompositionLocal`s, and the platform font handles are deliberately
 `internal` — the only sanctioned surface is `YallaTheme`, `System`, the token holders,
-`ThemedImage`, and `themedPainter`. KDoc on the public surface is the buyer-facing documentation.
+`ThemedImage`, and `rememberThemedPainter`. KDoc on the public surface is the buyer-facing documentation.

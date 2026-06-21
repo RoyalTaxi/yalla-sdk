@@ -1401,10 +1401,6 @@ public final class uz/yalla/components/primitives/button/LocationButtonColors {
 public final class uz/yalla/components/primitives/button/LocationButtonDefaults {
 	public static final field $stable I
 	public static final field INSTANCE Luz/yalla/components/primitives/button/LocationButtonDefaults;
-	public final fun Content (Ljava/lang/String;Ljava/lang/String;Landroidx/compose/ui/Modifier;Luz/yalla/components/primitives/button/LocationButtonColors;Luz/yalla/components/primitives/button/LocationButtonStyles;Landroidx/compose/runtime/Composer;II)V
-	public final fun Content ([Ljava/lang/String;Landroidx/compose/ui/Modifier;Luz/yalla/components/primitives/button/LocationButtonColors;Luz/yalla/components/primitives/button/LocationButtonStyles;Landroidx/compose/runtime/Composer;II)V
-	public final fun LeadingView-ek8zF_U (JLandroidx/compose/runtime/Composer;I)V
-	public final fun TrailingView-Iv8Zu3U (JLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
 	public final fun colors-zjMxDiM (JJJJJLandroidx/compose/runtime/Composer;II)Luz/yalla/components/primitives/button/LocationButtonColors;
 	public final fun dimens-uFdPcIQ (Landroidx/compose/ui/graphics/Shape;FLandroidx/compose/foundation/layout/PaddingValues;Landroidx/compose/runtime/Composer;II)Luz/yalla/components/primitives/button/LocationButtonDimens;
 	public final fun styles (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/runtime/Composer;II)Luz/yalla/components/primitives/button/LocationButtonStyles;
@@ -1719,8 +1715,32 @@ public final class uz/yalla/components/primitives/toggle/Toggle_androidKt {
 	public static final fun Toggle-qkn-Gh8 (ZLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;ZJJJJJJJJJJJJLandroidx/compose/runtime/Composer;III)V
 }
 
-public final class uz/yalla/components/resource/ImageMapperKt {
-	public static final fun asImageVector (Ljava/lang/String;)Landroidx/compose/ui/graphics/vector/ImageVector;
+public final class uz/yalla/components/resource/ComponentImage : java/lang/Enum {
+	public static final field Brush Luz/yalla/components/resource/ComponentImage;
+	public static final field Camera Luz/yalla/components/resource/ComponentImage;
+	public static final field Companion Luz/yalla/components/resource/ComponentImage$Companion;
+	public static final field FlagRu Luz/yalla/components/resource/ComponentImage;
+	public static final field FlagUz Luz/yalla/components/resource/ComponentImage;
+	public static final field Gallery Luz/yalla/components/resource/ComponentImage;
+	public static final field Humo Luz/yalla/components/resource/ComponentImage;
+	public static final field Logout Luz/yalla/components/resource/ComponentImage;
+	public static final field ThemeDark Luz/yalla/components/resource/ComponentImage;
+	public static final field ThemeLight Luz/yalla/components/resource/ComponentImage;
+	public static final field ThemeSystem Luz/yalla/components/resource/ComponentImage;
+	public static final field Trash Luz/yalla/components/resource/ComponentImage;
+	public static final field Uzcard Luz/yalla/components/resource/ComponentImage;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getId ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Luz/yalla/components/resource/ComponentImage;
+	public static fun values ()[Luz/yalla/components/resource/ComponentImage;
+}
+
+public final class uz/yalla/components/resource/ComponentImage$Companion {
+	public final fun from (Ljava/lang/String;)Luz/yalla/components/resource/ComponentImage;
+}
+
+public final class uz/yalla/components/resource/ComponentImageKt {
+	public static final fun asImageVector (Luz/yalla/components/resource/ComponentImage;)Landroidx/compose/ui/graphics/vector/ImageVector;
 }
 
 public final class uz/yalla/components/util/UriHandlerExtKt {

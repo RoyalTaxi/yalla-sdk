@@ -14,13 +14,13 @@ import uz.yalla.core.settings.LocaleKind
 
 /**
  * The active [LocaleKind] for the composition subtree, provided by [LocaleProvider]. Read it via
- * `LocalAppLocale.current` to observe in-session language changes without re-reading preferences.
+ * [currentAppLocale] to observe in-session language changes without re-reading preferences.
  */
-// TODO(quality, needs-decision): M6 — LocalAppLocale is published in the committed ABI
-//  (foundation.klib.api, foundation.api) with no in-repo `.current` reader. Making it `internal` or
-//  deleting it is a breaking public-API removal a buyer may already bind to; the call to narrow vs.
-//  wire-it-as-the-iOS-re-localization-seam needs the owner's sign-off. Left public + documented.
 public val LocalAppLocale: ProvidableCompositionLocal<LocaleKind> = staticCompositionLocalOf { LocaleKind.Uz }
+
+/** Returns the locale currently provided by [LocaleProvider]. */
+@Composable
+public fun currentAppLocale(): LocaleKind = LocalAppLocale.current
 
 /**
  * Wraps [content] with the user's persisted UI language and keeps the platform locale in sync.

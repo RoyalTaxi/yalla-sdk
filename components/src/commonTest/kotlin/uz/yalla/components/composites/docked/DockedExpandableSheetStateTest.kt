@@ -12,9 +12,7 @@ import kotlin.test.assertEquals
  * is a pure function of velocity, fraction, and the configured threshold.
  */
 class DockedExpandableSheetStateTest {
-    private fun state(
-        positionalThreshold: (Float) -> Float = { it * 0.5f }
-    ): DockedExpandableSheetState =
+    private fun state(positionalThreshold: (Float) -> Float = { it * 0.5f }): DockedExpandableSheetState =
         DockedExpandableSheetState(
             initialValue = DockedExpandableSheetValue.Collapsed,
             snapAnimationSpec = snap(),

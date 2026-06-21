@@ -125,15 +125,19 @@ private object PhoneVisualTransformation : VisualTransformation {
         if (digits.isEmpty()) return TransformedText(text, OffsetMapping.Identity)
 
         val formatted = formatPhoneDigits(digits)
+        val digitCount = digits.length
+        val formattedLength = formatted.length
+
+        fun mapOriginalOffset(offset: Int): Int = phoneOriginalToTransformed(offset, digitCount, formattedLength)
+
+        fun mapTransformedOffset(offset: Int): Int = phoneTransformedToOriginal(offset, formatted)
 
         return TransformedText(
             AnnotatedString(formatted),
             object : OffsetMapping {
-                override fun originalToTransformed(offset: Int) =
-                    phoneOriginalToTransformed(offset, digits.length, formatted.length)
+                override fun originalToTransformed(offset: Int) = mapOriginalOffset(offset)
 
-                override fun transformedToOriginal(offset: Int) =
-                    phoneTransformedToOriginal(offset, formatted)
+                override fun transformedToOriginal(offset: Int) = mapTransformedOffset(offset)
             }
         )
     }

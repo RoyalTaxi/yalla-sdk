@@ -14,7 +14,7 @@ abstract class uz.yalla.foundation.infra/BaseViewModel : androidx.lifecycle/View
     final val safeScope // uz.yalla.foundation.infra/BaseViewModel.safeScope|{}safeScope[0]
         final fun <get-safeScope>(): kotlinx.coroutines/CoroutineScope // uz.yalla.foundation.infra/BaseViewModel.safeScope.<get-safeScope>|<get-safeScope>(){}[0]
 
-    final fun (kotlinx.coroutines/CoroutineScope).launchWithLoading(kotlin.coroutines/SuspendFunction0<kotlin/Unit>): kotlinx.coroutines/Job // uz.yalla.foundation.infra/BaseViewModel.launchWithLoading|launchWithLoading@kotlinx.coroutines.CoroutineScope(kotlin.coroutines.SuspendFunction0<kotlin.Unit>){}[0]
+    final fun launchWithLoading(kotlin.coroutines/SuspendFunction0<kotlin/Unit>): kotlinx.coroutines/Job // uz.yalla.foundation.infra/BaseViewModel.launchWithLoading|launchWithLoading(kotlin.coroutines.SuspendFunction0<kotlin.Unit>){}[0]
 }
 
 final class uz.yalla.foundation.infra/LoadingController { // uz.yalla.foundation.infra/LoadingController|null[0]
@@ -50,6 +50,7 @@ final fun uz.yalla.foundation.infra/uz_yalla_foundation_infra_BaseViewModel$stab
 final fun uz.yalla.foundation.infra/uz_yalla_foundation_infra_LoadingController$stableprop_getter(): kotlin/Int // uz.yalla.foundation.infra/uz_yalla_foundation_infra_LoadingController$stableprop_getter|uz_yalla_foundation_infra_LoadingController$stableprop_getter(){}[0]
 final fun uz.yalla.foundation.locale/LocaleProvider(kotlin/Function2<androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.foundation.locale/LocaleProvider|LocaleProvider(kotlin.Function2<androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun uz.yalla.foundation.locale/changeLanguage(kotlin/String) // uz.yalla.foundation.locale/changeLanguage|changeLanguage(kotlin.String){}[0]
+final fun uz.yalla.foundation.locale/currentAppLocale(androidx.compose.runtime/Composer?, kotlin/Int): uz.yalla.core.settings/LocaleKind // uz.yalla.foundation.locale/currentAppLocale|currentAppLocale(androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun uz.yalla.foundation.locale/getCurrentLanguage(): kotlin/String // uz.yalla.foundation.locale/getCurrentLanguage|getCurrentLanguage(){}[0]
 final fun uz.yalla.foundation.system/SystemBarColors(kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int) // uz.yalla.foundation.system/SystemBarColors|SystemBarColors(kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int){}[0]
 final fun uz.yalla.foundation.theme/rememberIsDarkTheme(androidx.compose.runtime/Composer?, kotlin/Int): kotlin/Boolean // uz.yalla.foundation.theme/rememberIsDarkTheme|rememberIsDarkTheme(androidx.compose.runtime.Composer?;kotlin.Int){}[0]

@@ -30,12 +30,7 @@ public interface SessionEventBus {
  * the conflation behavior callers relied on, without the fan-out (single-consumer) hazard of a
  * `Channel`.
  */
-// TODO(quality, needs-decision): M9 — this concrete impl is published in the ABI but should be
-// `internal` (or moved to the DI/runtime module) so `core` stays contracts-only. Blocked: it is
-// constructed directly by an external consumer (YallaClient NetworkModule.kt:60
-// `DefaultSessionEventBus()`), so narrowing visibility is a breaking .api change. Needs owner sign-off
-// to move the DI binding before this can land.
-public class DefaultSessionEventBus : SessionEventBus {
+internal class DefaultSessionEventBus : SessionEventBus {
     private val _unauthorized =
         MutableSharedFlow<Unit>(
             replay = 0,
@@ -49,3 +44,6 @@ public class DefaultSessionEventBus : SessionEventBus {
         _unauthorized.tryEmit(Unit)
     }
 }
+
+/** Creates the SDK's default unauthorized-session event bus. */
+public fun createSessionEventBus(): SessionEventBus = DefaultSessionEventBus()

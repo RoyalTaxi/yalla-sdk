@@ -1,16 +1,6 @@
 public final class uz/yalla/design/color/ColorScheme {
 	public static final field $stable I
 	public fun <init> (Luz/yalla/design/color/ColorScheme$Text;Luz/yalla/design/color/ColorScheme$Background;Luz/yalla/design/color/ColorScheme$Border;Luz/yalla/design/color/ColorScheme$Button;Luz/yalla/design/color/ColorScheme$Icon;Luz/yalla/design/color/ColorScheme$Accent;Luz/yalla/design/color/ColorScheme$Gradient;)V
-	public final fun component1 ()Luz/yalla/design/color/ColorScheme$Text;
-	public final fun component2 ()Luz/yalla/design/color/ColorScheme$Background;
-	public final fun component3 ()Luz/yalla/design/color/ColorScheme$Border;
-	public final fun component4 ()Luz/yalla/design/color/ColorScheme$Button;
-	public final fun component5 ()Luz/yalla/design/color/ColorScheme$Icon;
-	public final fun component6 ()Luz/yalla/design/color/ColorScheme$Accent;
-	public final fun component7 ()Luz/yalla/design/color/ColorScheme$Gradient;
-	public final fun copy (Luz/yalla/design/color/ColorScheme$Text;Luz/yalla/design/color/ColorScheme$Background;Luz/yalla/design/color/ColorScheme$Border;Luz/yalla/design/color/ColorScheme$Button;Luz/yalla/design/color/ColorScheme$Icon;Luz/yalla/design/color/ColorScheme$Accent;Luz/yalla/design/color/ColorScheme$Gradient;)Luz/yalla/design/color/ColorScheme;
-	public static synthetic fun copy$default (Luz/yalla/design/color/ColorScheme;Luz/yalla/design/color/ColorScheme$Text;Luz/yalla/design/color/ColorScheme$Background;Luz/yalla/design/color/ColorScheme$Border;Luz/yalla/design/color/ColorScheme$Button;Luz/yalla/design/color/ColorScheme$Icon;Luz/yalla/design/color/ColorScheme$Accent;Luz/yalla/design/color/ColorScheme$Gradient;ILjava/lang/Object;)Luz/yalla/design/color/ColorScheme;
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAccent ()Luz/yalla/design/color/ColorScheme$Accent;
 	public final fun getBackground ()Luz/yalla/design/color/ColorScheme$Background;
 	public final fun getBorder ()Luz/yalla/design/color/ColorScheme$Border;
@@ -18,142 +8,73 @@ public final class uz/yalla/design/color/ColorScheme {
 	public final fun getGradient ()Luz/yalla/design/color/ColorScheme$Gradient;
 	public final fun getIcon ()Luz/yalla/design/color/ColorScheme$Icon;
 	public final fun getText ()Luz/yalla/design/color/ColorScheme$Text;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/design/color/ColorScheme$Accent {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
-	public final fun copy-tNS2XkQ (JJJJJJ)Luz/yalla/design/color/ColorScheme$Accent;
-	public static synthetic fun copy-tNS2XkQ$default (Luz/yalla/design/color/ColorScheme$Accent;JJJJJJILjava/lang/Object;)Luz/yalla/design/color/ColorScheme$Accent;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getColor1-0d7_KjU ()J
-	public final fun getColor2-0d7_KjU ()J
-	public final fun getColor3-0d7_KjU ()J
-	public final fun getColor4-0d7_KjU ()J
-	public final fun getColor5-0d7_KjU ()J
+	public final fun getAmber-0d7_KjU ()J
+	public final fun getAqua-0d7_KjU ()J
+	public final fun getBlush-0d7_KjU ()J
+	public final fun getLavender-0d7_KjU ()J
+	public final fun getPeriwinkle-0d7_KjU ()J
 	public final fun getPinkSun-0d7_KjU ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/design/color/ColorScheme$Background {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun copy-jRlVdoo (JJJJ)Luz/yalla/design/color/ColorScheme$Background;
-	public static synthetic fun copy-jRlVdoo$default (Luz/yalla/design/color/ColorScheme$Background;JJJJILjava/lang/Object;)Luz/yalla/design/color/ColorScheme$Background;
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBase-0d7_KjU ()J
 	public final fun getBrand-0d7_KjU ()J
 	public final fun getSecondary-0d7_KjU ()J
 	public final fun getTertiary-0d7_KjU ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/design/color/ColorScheme$Border {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun copy-jRlVdoo (JJJJ)Luz/yalla/design/color/ColorScheme$Border;
-	public static synthetic fun copy-jRlVdoo$default (Luz/yalla/design/color/ColorScheme$Border;JJJJILjava/lang/Object;)Luz/yalla/design/color/ColorScheme$Border;
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDisabled-0d7_KjU ()J
 	public final fun getError-0d7_KjU ()J
 	public final fun getFilled-0d7_KjU ()J
 	public final fun getWhite-0d7_KjU ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/design/color/ColorScheme$Button {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun copy-t635Npw (JJJJJ)Luz/yalla/design/color/ColorScheme$Button;
-	public static synthetic fun copy-t635Npw$default (Luz/yalla/design/color/ColorScheme$Button;JJJJJILjava/lang/Object;)Luz/yalla/design/color/ColorScheme$Button;
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActive-0d7_KjU ()J
 	public final fun getDisabled-0d7_KjU ()J
 	public final fun getDisabledTertiary-0d7_KjU ()J
 	public final fun getSecondary-0d7_KjU ()J
 	public final fun getTertiary-0d7_KjU ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/design/color/ColorScheme$Gradient {
 	public static final field $stable I
 	public fun <init> (Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;)V
-	public final fun component1 ()Landroidx/compose/ui/graphics/Brush;
-	public final fun component2 ()Landroidx/compose/ui/graphics/Brush;
-	public final fun copy (Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;)Luz/yalla/design/color/ColorScheme$Gradient;
-	public static synthetic fun copy$default (Luz/yalla/design/color/ColorScheme$Gradient;Landroidx/compose/ui/graphics/Brush;Landroidx/compose/ui/graphics/Brush;ILjava/lang/Object;)Luz/yalla/design/color/ColorScheme$Gradient;
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun getSplash ()Landroidx/compose/ui/graphics/Brush;
 	public final fun getSunsetNight ()Landroidx/compose/ui/graphics/Brush;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/design/color/ColorScheme$Icon {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun component6-0d7_KjU ()J
-	public final fun copy-tNS2XkQ (JJJJJJ)Luz/yalla/design/color/ColorScheme$Icon;
-	public static synthetic fun copy-tNS2XkQ$default (Luz/yalla/design/color/ColorScheme$Icon;JJJJJJILjava/lang/Object;)Luz/yalla/design/color/ColorScheme$Icon;
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBase-0d7_KjU ()J
 	public final fun getDisabled-0d7_KjU ()J
 	public final fun getRed-0d7_KjU ()J
 	public final fun getSecondary-0d7_KjU ()J
 	public final fun getSubtle-0d7_KjU ()J
 	public final fun getWhite-0d7_KjU ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/design/color/ColorScheme$Text {
 	public static final field $stable I
 	public synthetic fun <init> (JJJJJLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-0d7_KjU ()J
-	public final fun component2-0d7_KjU ()J
-	public final fun component3-0d7_KjU ()J
-	public final fun component4-0d7_KjU ()J
-	public final fun component5-0d7_KjU ()J
-	public final fun copy-t635Npw (JJJJJ)Luz/yalla/design/color/ColorScheme$Text;
-	public static synthetic fun copy-t635Npw$default (Luz/yalla/design/color/ColorScheme$Text;JJJJJILjava/lang/Object;)Luz/yalla/design/color/ColorScheme$Text;
-	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBase-0d7_KjU ()J
 	public final fun getLink-0d7_KjU ()J
 	public final fun getRed-0d7_KjU ()J
 	public final fun getSubtle-0d7_KjU ()J
 	public final fun getWhite-0d7_KjU ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/design/font/FontScheme {
@@ -174,30 +95,30 @@ public final class uz/yalla/design/font/FontScheme {
 
 public final class uz/yalla/design/font/FontScheme$Body {
 	public static final field $stable I
-	public fun <init> (Landroidx/compose/ui/text/TextStyle;Luz/yalla/design/font/FontScheme$Body$Weighty;Luz/yalla/design/font/FontScheme$Body$Weighty;Luz/yalla/design/font/FontScheme$Body$Weighty;)V
+	public fun <init> (Landroidx/compose/ui/text/TextStyle;Luz/yalla/design/font/FontScheme$Body$Weights;Luz/yalla/design/font/FontScheme$Body$Weights;Luz/yalla/design/font/FontScheme$Body$Weights;)V
 	public final fun component1 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun component2 ()Luz/yalla/design/font/FontScheme$Body$Weighty;
-	public final fun component3 ()Luz/yalla/design/font/FontScheme$Body$Weighty;
-	public final fun component4 ()Luz/yalla/design/font/FontScheme$Body$Weighty;
-	public final fun copy (Landroidx/compose/ui/text/TextStyle;Luz/yalla/design/font/FontScheme$Body$Weighty;Luz/yalla/design/font/FontScheme$Body$Weighty;Luz/yalla/design/font/FontScheme$Body$Weighty;)Luz/yalla/design/font/FontScheme$Body;
-	public static synthetic fun copy$default (Luz/yalla/design/font/FontScheme$Body;Landroidx/compose/ui/text/TextStyle;Luz/yalla/design/font/FontScheme$Body$Weighty;Luz/yalla/design/font/FontScheme$Body$Weighty;Luz/yalla/design/font/FontScheme$Body$Weighty;ILjava/lang/Object;)Luz/yalla/design/font/FontScheme$Body;
+	public final fun component2 ()Luz/yalla/design/font/FontScheme$Body$Weights;
+	public final fun component3 ()Luz/yalla/design/font/FontScheme$Body$Weights;
+	public final fun component4 ()Luz/yalla/design/font/FontScheme$Body$Weights;
+	public final fun copy (Landroidx/compose/ui/text/TextStyle;Luz/yalla/design/font/FontScheme$Body$Weights;Luz/yalla/design/font/FontScheme$Body$Weights;Luz/yalla/design/font/FontScheme$Body$Weights;)Luz/yalla/design/font/FontScheme$Body;
+	public static synthetic fun copy$default (Luz/yalla/design/font/FontScheme$Body;Landroidx/compose/ui/text/TextStyle;Luz/yalla/design/font/FontScheme$Body$Weights;Luz/yalla/design/font/FontScheme$Body$Weights;Luz/yalla/design/font/FontScheme$Body$Weights;ILjava/lang/Object;)Luz/yalla/design/font/FontScheme$Body;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBase ()Luz/yalla/design/font/FontScheme$Body$Weighty;
+	public final fun getBase ()Luz/yalla/design/font/FontScheme$Body$Weights;
 	public final fun getCaption ()Landroidx/compose/ui/text/TextStyle;
-	public final fun getLarge ()Luz/yalla/design/font/FontScheme$Body$Weighty;
-	public final fun getSmall ()Luz/yalla/design/font/FontScheme$Body$Weighty;
+	public final fun getLarge ()Luz/yalla/design/font/FontScheme$Body$Weights;
+	public final fun getSmall ()Luz/yalla/design/font/FontScheme$Body$Weights;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class uz/yalla/design/font/FontScheme$Body$Weighty {
+public final class uz/yalla/design/font/FontScheme$Body$Weights {
 	public static final field $stable I
 	public fun <init> (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)V
 	public final fun component1 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component2 ()Landroidx/compose/ui/text/TextStyle;
 	public final fun component3 ()Landroidx/compose/ui/text/TextStyle;
-	public final fun copy (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)Luz/yalla/design/font/FontScheme$Body$Weighty;
-	public static synthetic fun copy$default (Luz/yalla/design/font/FontScheme$Body$Weighty;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;ILjava/lang/Object;)Luz/yalla/design/font/FontScheme$Body$Weighty;
+	public final fun copy (Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;)Luz/yalla/design/font/FontScheme$Body$Weights;
+	public static synthetic fun copy$default (Luz/yalla/design/font/FontScheme$Body$Weights;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;Landroidx/compose/ui/text/TextStyle;ILjava/lang/Object;)Luz/yalla/design/font/FontScheme$Body$Weights;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBold ()Landroidx/compose/ui/text/TextStyle;
 	public final fun getMedium ()Landroidx/compose/ui/text/TextStyle;
@@ -257,7 +178,7 @@ public final class uz/yalla/design/image/ThemedImage : java/lang/Enum {
 }
 
 public final class uz/yalla/design/image/ThemedPainterKt {
-	public static final fun themedPainter (Luz/yalla/design/image/ThemedImage;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/painter/Painter;
+	public static final fun rememberThemedPainter (Luz/yalla/design/image/ThemedImage;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/graphics/painter/Painter;
 }
 
 public final class uz/yalla/design/theme/System {

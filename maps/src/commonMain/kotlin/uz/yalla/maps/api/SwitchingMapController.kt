@@ -45,15 +45,8 @@ public class SwitchingMapController internal constructor(
 
     private val active = MutableStateFlow<MapController?>(null)
 
-    /**
-     * The currently-active concrete backend, or null before the first switch. Exposed so the host
-     * composable can re-key the map view when the backend is swapped.
-     *
-     * TODO(quality, needs-decision): finding #20 — this leaks the swap internal onto the sold
-     * surface and should be `internal`, but it is frozen in the committed `.api`/`.klib.api` dumps,
-     * so demoting it is a breaking dump change. Needs the owner's sign-off on a binary-API break.
-     */
-    public val activeBackend: StateFlow<MapController?> = active
+    /** The currently-active concrete backend used by [MapView] to re-key the platform host. */
+    internal val activeBackend: StateFlow<MapController?> = active
 
     private val _cameraPosition = MutableStateFlow(initialPosition ?: CameraPosition.DEFAULT)
     override val cameraPosition: StateFlow<CameraPosition> = _cameraPosition
@@ -97,46 +90,42 @@ public class SwitchingMapController internal constructor(
         // stale moveTo/markers job cannot push into the now-replaced (or closed) backend.
         seedJob?.cancel()
         val previous = active.value
-        val snapshot = previous?.snapshotScene()
         val next =
             when (kind) {
                 MapKind.Google -> factory.createGoogleController()
                 MapKind.Libre -> factory.createLibreController()
             }
         currentKind = kind
-        val seedSource = snapshot?.cameraPosition ?: _cameraPosition.value
+        val seedSource = _cameraPosition.value
         cameraSeedApplied = false
         wireObservers(next)
         active.value = next
-        if (snapshot != null) {
-            applySnapshot(next, snapshot)
-        } else {
-            seedJob =
-                scope.launch {
-                    val readied = withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { next.isReady.first { it } } != null
-                    // The next switch may already have replaced this backend while we awaited
-                    // readiness; do not seed a superseded backend.
-                    if (active.value !== next) return@launch
-                    if (!readied) {
-                        _events.emit(MapEvent.ProviderUnavailable)
-                        return@launch
-                    }
-                    next.setDesiredPadding(pendingPadding)
-                    next.setMarkers(pendingMarkers)
-                    next.setRoutes(pendingRoutes)
-                    next.setCircles(pendingCircles)
-                    next.setInteractionEnabled(interactionEnabled)
-                    next.setUserLocationEnabled(userLocationEnabled)
-                    next.setUserLocation(userLocation)
-                    next.setStyle(currentStyle, currentIsDark)
-                    if (!cameraCommanded &&
-                        seedSource.target != GeoPoint.Zero
-                    ) {
-                        next.moveTo(seedSource.target, seedSource.zoom)
-                    }
-                    cameraSeedApplied = true
+        seedJob =
+            scope.launch {
+                val readied = withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { next.isReady.first { it } } != null
+                // The next switch may already have replaced this backend while we awaited
+                // readiness; do not seed a superseded backend.
+                if (active.value !== next) return@launch
+                if (!readied) {
+                    _events.emit(MapEvent.ProviderUnavailable)
+                    return@launch
                 }
-        }
+                next.setDesiredPadding(pendingPadding)
+                next.setMarkers(pendingMarkers)
+                next.setRoutes(pendingRoutes)
+                next.setCircles(pendingCircles)
+                next.setInteractionEnabled(interactionEnabled)
+                next.setUserLocationEnabled(userLocationEnabled)
+                next.setUserLocation(userLocation)
+                next.setStyle(currentStyle, currentIsDark)
+                if (!cameraCommanded &&
+                    seedSource.target != GeoPoint.Zero
+                ) {
+                    next.moveTo(seedSource.target, seedSource.zoom)
+                }
+                lockedTarget?.let { next.lockTarget(it, lockedZoom) }
+                cameraSeedApplied = true
+            }
         previous?.close()
     }
 
@@ -174,30 +163,6 @@ public class SwitchingMapController internal constructor(
                 controller.isReady.onEach { _isReady.value = it }.launchIn(scope),
                 controller.events.onEach { _events.emit(it) }.launchIn(scope)
             )
-    }
-
-    private suspend fun applySnapshot(
-        controller: MapController,
-        snapshot: MapController.SceneSnapshot
-    ) {
-        val readied = withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { controller.isReady.first { it } } != null
-        // The next switch may already have replaced this backend while we awaited readiness.
-        if (active.value !== controller) return
-        if (!readied) {
-            _events.emit(MapEvent.ProviderUnavailable)
-            return
-        }
-        controller.setDesiredPadding(snapshot.padding)
-        controller.setMarkers(snapshot.markers)
-        controller.setRoutes(snapshot.routes)
-        controller.setCircles(snapshot.circles)
-        controller.setInteractionEnabled(interactionEnabled)
-        controller.setUserLocationEnabled(userLocationEnabled)
-        controller.setUserLocation(userLocation)
-        controller.setStyle(currentStyle, currentIsDark)
-        controller.moveTo(snapshot.cameraPosition.target, snapshot.cameraPosition.zoom)
-        snapshot.lockedTarget?.let { controller.lockTarget(it, snapshot.lockedZoom) }
-        cameraSeedApplied = true
     }
 
     override suspend fun moveTo(
@@ -306,18 +271,6 @@ public class SwitchingMapController internal constructor(
         lockedZoom = null
         active.value?.unlockTarget()
     }
-
-    override fun snapshotScene(): MapController.SceneSnapshot =
-        active.value?.snapshotScene()
-            ?: MapController.SceneSnapshot(
-                cameraPosition = _cameraPosition.value,
-                markers = pendingMarkers,
-                routes = pendingRoutes,
-                circles = pendingCircles,
-                padding = pendingPadding,
-                lockedTarget = lockedTarget,
-                lockedZoom = lockedZoom
-            )
 
     override fun close() {
         seedJob?.cancel()

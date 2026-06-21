@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.UIKitViewController
 import kotlinx.cinterop.ExperimentalForeignApi
-import uz.yalla.components.config.primitives.ToggleColors
+import uz.yalla.components.config.primitives.ToggleDefaults
 import uz.yalla.components.config.requireConfig
 
 @OptIn(ExperimentalForeignApi::class)
@@ -34,7 +34,7 @@ public actual fun Toggle(
     disabledUncheckedBorderColor: Color
 ) {
     val colors =
-        ToggleColors(
+        ToggleDefaults.colors(
             checkedThumbArgb = checkedThumbColor.toArgbOrZero(),
             checkedTrackArgb = checkedTrackColor.toArgbOrZero(),
             checkedBorderArgb = checkedBorderColor.toArgbOrZero(),

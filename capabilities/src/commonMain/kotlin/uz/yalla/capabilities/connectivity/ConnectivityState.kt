@@ -50,9 +50,10 @@ public class ConnectivityState internal constructor(
      */
     public fun refresh(): Job {
         refreshJob?.cancel()
-        return scope.launch {
-            isOnline = connectivity.status() is Connectivity.Status.Connected
-        }.also { refreshJob = it }
+        return scope
+            .launch {
+                isOnline = connectivity.status() is Connectivity.Status.Connected
+            }.also { refreshJob = it }
     }
 }
 

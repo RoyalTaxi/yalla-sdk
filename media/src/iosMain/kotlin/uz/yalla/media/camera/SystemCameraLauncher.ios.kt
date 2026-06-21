@@ -9,8 +9,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uz.yalla.media.config.requireMedia
-import uz.yalla.media.utils.MediaScope
-import uz.yalla.media.utils.toByteArray
+import uz.yalla.media.util.MediaScope
+import uz.yalla.media.util.toByteArray
 
 @Composable
 public actual fun rememberSystemCameraLauncher(

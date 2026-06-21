@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 /**
  * Remembers a handle that launches the system camera. [onResult] is delivered on the main thread with
  * the captured image's bytes, or `null` on cancel. The bytes are the camera's raw original (EXIF
- * metadata, including GPS, is preserved) — run them through [uz.yalla.media.utils.compressImage]
+ * metadata, including GPS, is preserved) — run them through [uz.yalla.media.util.compressImage]
  * before uploading to strip metadata and bound the size.
  *
  * @param scope a coroutine scope used to read the captured bytes; the result is not lost if it is

@@ -11,7 +11,6 @@ import kotlin.test.assertTrue
  * pin configured once in [NetworkConfig.certificatePins] covers the same hosts on both platforms.
  */
 class CertificatePinTest {
-
     @Test
     fun exactHostMatchesOnlyItself() {
         assertTrue(pinPatternMatchesHost("api.example.com", "api.example.com"))
@@ -45,6 +44,12 @@ class CertificatePinTest {
     @Test
     fun emptyPinsDefaultDisablesPinningOnNetworkConfig() {
         // The no-op default: an integrator who does not opt in keeps normal CA trust.
-        assertTrue(NetworkConfig(baseUrl = "https://example.test/", brandId = "1", secretKey = "k").certificatePins.isEmpty())
+        assertTrue(
+            NetworkConfig(
+                baseUrl = "https://example.test/",
+                brandId = "1",
+                secretKey = "k"
+            ).certificatePins.isEmpty()
+        )
     }
 }

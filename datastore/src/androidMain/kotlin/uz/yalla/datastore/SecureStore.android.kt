@@ -6,7 +6,7 @@ import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import kotlinx.coroutines.withContext
 import org.koin.core.scope.Scope
-import org.koin.core.scope.get
+import uz.yalla.datastore.AndroidKeystoreSecureStore.Companion.KEY_ALIAS
 import java.security.KeyStore
 import java.util.Base64
 import javax.crypto.Cipher
@@ -26,7 +26,9 @@ internal actual fun createSecureStore(scope: Scope): SecureStore = AndroidKeysto
  * Deliberately NOT `EncryptedSharedPreferences` (deprecated). This is plain `SharedPreferences` used only
  * as opaque ciphertext storage; all confidentiality comes from the Keystore key + GCM here.
  */
-private class AndroidKeystoreSecureStore(context: Context) : SecureStore {
+private class AndroidKeystoreSecureStore(
+    context: Context
+) : SecureStore {
     private val prefs: SharedPreferences =
         context.getSharedPreferences(CIPHERTEXT_FILE, Context.MODE_PRIVATE)
 
@@ -80,12 +82,12 @@ private class AndroidKeystoreSecureStore(context: Context) : SecureStore {
         (keyStore.getEntry(KEY_ALIAS, null) as? KeyStore.SecretKeyEntry)?.let { return it.secretKey }
 
         val generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, KEYSTORE_PROVIDER)
-        generator.init(
-            KeyGenParameterSpec.Builder(
-                KEY_ALIAS,
-                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-            )
-                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+        val spec =
+            KeyGenParameterSpec
+                .Builder(
+                    KEY_ALIAS,
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                ).setBlockModes(KeyProperties.BLOCK_MODE_GCM)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
                 .setKeySize(AES_KEY_BITS)
                 // Decryption supplies the stored IV via GCMParameterSpec; the default randomized-encryption
@@ -93,7 +95,7 @@ private class AndroidKeystoreSecureStore(context: Context) : SecureStore {
                 // fresh GCM-generated random IV per value (read back via cipher.iv) — no nonce reuse.
                 .setRandomizedEncryptionRequired(false)
                 .build()
-        )
+        generator.init(spec)
         return generator.generateKey()
     }
 

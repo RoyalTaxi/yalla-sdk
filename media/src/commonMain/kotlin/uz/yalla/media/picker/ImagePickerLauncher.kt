@@ -2,12 +2,13 @@ package uz.yalla.media.picker
 
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.CoroutineScope
+import uz.yalla.media.picker.SelectionMode.Companion.INFINITY
 
 /**
  * Remembers a handle that launches the system photo picker. [onResult] is delivered on the main
  * thread with the picked images' bytes, or an empty list on cancel. The bytes are the picker's raw
  * originals (EXIF metadata, including GPS, is preserved) — run them through
- * [uz.yalla.media.utils.compressImage] before uploading to strip metadata and bound the size.
+ * [uz.yalla.media.util.compressImage] before uploading to strip metadata and bound the size.
  *
  * @param selectionMode how many images the user may pick; see [SelectionMode].
  * @param scope a coroutine scope used to read the picked bytes; results are not lost if it is

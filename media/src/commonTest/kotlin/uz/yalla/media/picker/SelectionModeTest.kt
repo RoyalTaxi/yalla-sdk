@@ -9,7 +9,6 @@ import kotlin.test.assertEquals
  * #18): `1` for a single pick, `0` for unlimited ([SelectionMode.INFINITY]), the cap otherwise.
  */
 class SelectionModeTest {
-
     @Test
     fun singleMapsToOne() {
         assertEquals(1, SelectionMode.Single.toSelectionLimit())

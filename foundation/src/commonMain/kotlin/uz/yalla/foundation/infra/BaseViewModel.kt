@@ -49,17 +49,11 @@ public abstract class BaseViewModel : ViewModel() {
      * Launches [block] while reflecting its in-flight state through [loading] (reference-counted, so
      * overlapping calls keep the indicator up until all complete).
      *
-     * The [CoroutineScope] receiver only selects where the coroutine launches; the loading state is
-     * always owned by [viewModelScope]. Call it on [safeScope] so failures are caught by the
-     * crash-safe handler rather than propagating.
+     * Always launches on [safeScope] so uncaught failures are handled by the crash-safe handler
+     * instead of propagating through [viewModelScope].
      */
-    // TODO(quality, needs-decision): M1 — the CoroutineScope receiver lets call sites pick
-    //  viewModelScope (crash-propagating) or safeScope (swallowing) at random, and does not govern
-    //  the loading lifecycle. Collapsing to `fun launchWithLoading(block): Job = safeScope.launch
-    //  { ... }` is the right fix but is a breaking change to the committed ABI signature
-    //  (foundation.klib.api / foundation.api drop the receiver) and needs the owner's sign-off.
-    public fun CoroutineScope.launchWithLoading(block: suspend () -> Unit): Job =
-        launch {
+    public fun launchWithLoading(block: suspend () -> Unit): Job =
+        safeScope.launch {
             loadingController.withLoading(block)
         }
 }

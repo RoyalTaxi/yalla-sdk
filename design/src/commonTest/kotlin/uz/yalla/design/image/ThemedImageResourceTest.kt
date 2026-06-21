@@ -5,7 +5,7 @@ import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
 /**
- * Pins the pure light/dark selection that backs [themedPainter]. The selection is the whole point
+ * Pins the pure light/dark selection that backs [rememberThemedPainter]. The selection is the whole point
  * of [ThemedImage], yet it sits behind a `@Composable` that cannot be unit-tested; extracting
  * [resourceFor] (mirroring how `CardBrandPresentationTest` extracts the non-`@Composable` half)
  * lets both branches be guarded against an inverted condition that would ship light art in dark mode.

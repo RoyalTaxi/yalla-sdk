@@ -1,11 +1,7 @@
-package uz.yalla.media.utils
+package uz.yalla.media.config
 
-// TODO(quality, needs-decision): finding #11 — the package should be `util` (singular, matching the
-// rest of the SDK) and this `*Config` should live in `config/` next to MediaConfig. Both are breaking
-// FQN renames: `uz.yalla.media.utils.compressImage`/`CompressionConfig` are imported by an external
-// consumer (YallaClient ProfileRoute.kt:28) that this module cannot edit, so the rename would break
-// its compile and change the committed .api/.klib.api. Needs the owner to coordinate the consumer
-// move + an accepted ABI change before applying.
+import uz.yalla.media.util.MIN_JPEG_QUALITY
+import uz.yalla.media.util.compressImage
 
 /**
  * Bounds for [compressImage]: the output JPEG is downsampled so its longest edge is at most

@@ -40,6 +40,38 @@ public class ToggleColors(
     public val disabledUncheckedBorderArgb: Long
 )
 
+/** Defaults for the native toggle bridge. A zero channel keeps the Swift-side native default. */
+public object ToggleDefaults {
+    public fun colors(
+        checkedThumbArgb: Long = 0L,
+        checkedTrackArgb: Long = 0L,
+        checkedBorderArgb: Long = 0L,
+        uncheckedThumbArgb: Long = 0L,
+        uncheckedTrackArgb: Long = 0L,
+        uncheckedBorderArgb: Long = 0L,
+        disabledCheckedThumbArgb: Long = 0L,
+        disabledCheckedTrackArgb: Long = 0L,
+        disabledCheckedBorderArgb: Long = 0L,
+        disabledUncheckedThumbArgb: Long = 0L,
+        disabledUncheckedTrackArgb: Long = 0L,
+        disabledUncheckedBorderArgb: Long = 0L
+    ): ToggleColors =
+        ToggleColors(
+            checkedThumbArgb = checkedThumbArgb,
+            checkedTrackArgb = checkedTrackArgb,
+            checkedBorderArgb = checkedBorderArgb,
+            uncheckedThumbArgb = uncheckedThumbArgb,
+            uncheckedTrackArgb = uncheckedTrackArgb,
+            uncheckedBorderArgb = uncheckedBorderArgb,
+            disabledCheckedThumbArgb = disabledCheckedThumbArgb,
+            disabledCheckedTrackArgb = disabledCheckedTrackArgb,
+            disabledCheckedBorderArgb = disabledCheckedBorderArgb,
+            disabledUncheckedThumbArgb = disabledUncheckedThumbArgb,
+            disabledUncheckedTrackArgb = disabledUncheckedTrackArgb,
+            disabledUncheckedBorderArgb = disabledUncheckedBorderArgb
+        )
+}
+
 /**
  * Handle Compose uses to update a live native switch.
  *

@@ -20,36 +20,38 @@ import kotlin.test.assertNull
 @OptIn(ExperimentalCoroutinesApi::class)
 class UserPreferencesPaymentMethodTest {
     @Test
-    fun cardRoundTripsWithItsIdAndMaskedNumber() = runTest {
-        val store = InMemoryPreferencesDataStore()
-        val secure = FakeSecureStore()
-        val user = UserPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
+    fun cardRoundTripsWithItsIdAndMaskedNumber() =
+        runTest {
+            val store = InMemoryPreferencesDataStore()
+            val secure = FakeSecureStore()
+            val user = UserPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
 
-        user.setPaymentMethod(PaymentMethod.Card(CardId("card-42"), "**** 1234"))
-        advanceUntilIdle()
+            user.setPaymentMethod(PaymentMethod.Card(CardId("card-42"), "**** 1234"))
+            advanceUntilIdle()
 
-        val read = user.paymentMethod.first()
-        assertEquals(PaymentMethod.Card(CardId("card-42"), "**** 1234"), read)
-        // The card id + masked PAN are encrypted at rest, not in plain prefs.
-        assertEquals("card-42", secure.peek(PreferenceKeys.CARD_ID.name))
-        assertEquals("**** 1234", secure.peek(PreferenceKeys.CARD_NUMBER.name))
-    }
+            val read = user.paymentMethod.first()
+            assertEquals(PaymentMethod.Card(CardId("card-42"), "**** 1234"), read)
+            // The card id + masked PAN are encrypted at rest, not in plain prefs.
+            assertEquals("card-42", secure.peek(PreferenceKeys.CARD_ID.name))
+            assertEquals("**** 1234", secure.peek(PreferenceKeys.CARD_NUMBER.name))
+        }
 
     @Test
-    fun switchingBackToCashClearsStaleCardData() = runTest {
-        val store = InMemoryPreferencesDataStore()
-        val secure = FakeSecureStore()
-        val user = UserPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
+    fun switchingBackToCashClearsStaleCardData() =
+        runTest {
+            val store = InMemoryPreferencesDataStore()
+            val secure = FakeSecureStore()
+            val user = UserPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
 
-        user.setPaymentMethod(PaymentMethod.Card(CardId("card-42"), "**** 1234"))
-        advanceUntilIdle()
-        user.setPaymentMethod(PaymentMethod.Cash)
-        advanceUntilIdle()
+            user.setPaymentMethod(PaymentMethod.Card(CardId("card-42"), "**** 1234"))
+            advanceUntilIdle()
+            user.setPaymentMethod(PaymentMethod.Cash)
+            advanceUntilIdle()
 
-        assertEquals(PaymentMethod.Cash, user.paymentMethod.first())
-        // The encrypted card values must be gone, not merely shadowed — otherwise a future 'card' write
-        // with leftover data could resurrect a stale card.
-        assertNull(secure.peek(PreferenceKeys.CARD_ID.name))
-        assertNull(secure.peek(PreferenceKeys.CARD_NUMBER.name))
-    }
+            assertEquals(PaymentMethod.Cash, user.paymentMethod.first())
+            // The encrypted card values must be gone, not merely shadowed — otherwise a future 'card' write
+            // with leftover data could resurrect a stale card.
+            assertNull(secure.peek(PreferenceKeys.CARD_ID.name))
+            assertNull(secure.peek(PreferenceKeys.CARD_NUMBER.name))
+        }
 }

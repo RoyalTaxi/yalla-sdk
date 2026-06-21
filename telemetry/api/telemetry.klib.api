@@ -28,8 +28,6 @@ sealed interface uz.yalla.telemetry.event/ParamValue { // uz.yalla.telemetry.eve
         final val value // uz.yalla.telemetry.event/ParamValue.Amount.value|{}value[0]
             final fun <get-value>(): kotlin/Double // uz.yalla.telemetry.event/ParamValue.Amount.value.<get-value>|<get-value>(){}[0]
 
-        final fun component1(): kotlin/Double // uz.yalla.telemetry.event/ParamValue.Amount.component1|component1(){}[0]
-        final fun copy(kotlin/Double = ...): uz.yalla.telemetry.event/ParamValue.Amount // uz.yalla.telemetry.event/ParamValue.Amount.copy|copy(kotlin.Double){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.telemetry.event/ParamValue.Amount.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // uz.yalla.telemetry.event/ParamValue.Amount.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // uz.yalla.telemetry.event/ParamValue.Amount.toString|toString(){}[0]
@@ -41,8 +39,6 @@ sealed interface uz.yalla.telemetry.event/ParamValue { // uz.yalla.telemetry.eve
         final val value // uz.yalla.telemetry.event/ParamValue.Count.value|{}value[0]
             final fun <get-value>(): kotlin/Long // uz.yalla.telemetry.event/ParamValue.Count.value.<get-value>|<get-value>(){}[0]
 
-        final fun component1(): kotlin/Long // uz.yalla.telemetry.event/ParamValue.Count.component1|component1(){}[0]
-        final fun copy(kotlin/Long = ...): uz.yalla.telemetry.event/ParamValue.Count // uz.yalla.telemetry.event/ParamValue.Count.copy|copy(kotlin.Long){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.telemetry.event/ParamValue.Count.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // uz.yalla.telemetry.event/ParamValue.Count.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // uz.yalla.telemetry.event/ParamValue.Count.toString|toString(){}[0]
@@ -54,8 +50,6 @@ sealed interface uz.yalla.telemetry.event/ParamValue { // uz.yalla.telemetry.eve
         final val value // uz.yalla.telemetry.event/ParamValue.Flag.value|{}value[0]
             final fun <get-value>(): kotlin/Boolean // uz.yalla.telemetry.event/ParamValue.Flag.value.<get-value>|<get-value>(){}[0]
 
-        final fun component1(): kotlin/Boolean // uz.yalla.telemetry.event/ParamValue.Flag.component1|component1(){}[0]
-        final fun copy(kotlin/Boolean = ...): uz.yalla.telemetry.event/ParamValue.Flag // uz.yalla.telemetry.event/ParamValue.Flag.copy|copy(kotlin.Boolean){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.telemetry.event/ParamValue.Flag.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // uz.yalla.telemetry.event/ParamValue.Flag.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // uz.yalla.telemetry.event/ParamValue.Flag.toString|toString(){}[0]
@@ -67,8 +61,6 @@ sealed interface uz.yalla.telemetry.event/ParamValue { // uz.yalla.telemetry.eve
         final val value // uz.yalla.telemetry.event/ParamValue.Text.value|{}value[0]
             final fun <get-value>(): kotlin/String // uz.yalla.telemetry.event/ParamValue.Text.value.<get-value>|<get-value>(){}[0]
 
-        final fun component1(): kotlin/String // uz.yalla.telemetry.event/ParamValue.Text.component1|component1(){}[0]
-        final fun copy(kotlin/String = ...): uz.yalla.telemetry.event/ParamValue.Text // uz.yalla.telemetry.event/ParamValue.Text.copy|copy(kotlin.String){}[0]
         final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.telemetry.event/ParamValue.Text.equals|equals(kotlin.Any?){}[0]
         final fun hashCode(): kotlin/Int // uz.yalla.telemetry.event/ParamValue.Text.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // uz.yalla.telemetry.event/ParamValue.Text.toString|toString(){}[0]
@@ -83,9 +75,6 @@ final class uz.yalla.telemetry.event/AnalyticsEvent { // uz.yalla.telemetry.even
     final val params // uz.yalla.telemetry.event/AnalyticsEvent.params|{}params[0]
         final fun <get-params>(): kotlin.collections/Map<kotlin/String, uz.yalla.telemetry.event/ParamValue> // uz.yalla.telemetry.event/AnalyticsEvent.params.<get-params>|<get-params>(){}[0]
 
-    final fun component1(): kotlin/String // uz.yalla.telemetry.event/AnalyticsEvent.component1|component1(){}[0]
-    final fun component2(): kotlin.collections/Map<kotlin/String, uz.yalla.telemetry.event/ParamValue> // uz.yalla.telemetry.event/AnalyticsEvent.component2|component2(){}[0]
-    final fun copy(kotlin/String = ..., kotlin.collections/Map<kotlin/String, uz.yalla.telemetry.event/ParamValue> = ...): uz.yalla.telemetry.event/AnalyticsEvent // uz.yalla.telemetry.event/AnalyticsEvent.copy|copy(kotlin.String;kotlin.collections.Map<kotlin.String,uz.yalla.telemetry.event.ParamValue>){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.telemetry.event/AnalyticsEvent.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.telemetry.event/AnalyticsEvent.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.telemetry.event/AnalyticsEvent.toString|toString(){}[0]

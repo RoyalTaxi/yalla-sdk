@@ -34,19 +34,17 @@ public data class FontScheme(
         val base: TextStyle
     )
 
-    /** Body copy styles by size; each [Weighty] size carries the regular/medium/bold triad. */
+    /** Body copy styles by size; each [Weights] size carries the regular/medium/bold triad. */
     @Immutable
     public data class Body(
         val caption: TextStyle,
-        val large: Weighty,
-        val base: Weighty,
-        val small: Weighty
+        val large: Weights,
+        val base: Weights,
+        val small: Weights
     ) {
-        // TODO(quality, needs-decision): rename `Weighty` to a clearer noun (e.g. `Weights`) — a
-        //  breaking ABI change to a published nested type that needs owner sign-off.
         /** A regular/medium/bold weight triad for one body size. */
         @Immutable
-        public data class Weighty(
+        public data class Weights(
             val regular: TextStyle,
             val medium: TextStyle,
             val bold: TextStyle
@@ -86,19 +84,19 @@ internal fun rememberFontScheme(): FontScheme {
                 FontScheme.Body(
                     caption = TextStyle(fontSize = 13.sp, lineHeight = 15.6.sp, fontFamily = medium),
                     large =
-                        FontScheme.Body.Weighty(
+                        FontScheme.Body.Weights(
                             regular = TextStyle(fontSize = 18.sp, lineHeight = 21.6.sp, fontFamily = normal),
                             medium = TextStyle(fontSize = 18.sp, lineHeight = 21.6.sp, fontFamily = medium),
                             bold = TextStyle(fontSize = 18.sp, lineHeight = 21.6.sp, fontFamily = bold)
                         ),
                     base =
-                        FontScheme.Body.Weighty(
+                        FontScheme.Body.Weights(
                             regular = TextStyle(fontSize = 16.sp, lineHeight = 20.8.sp, fontFamily = normal),
                             medium = TextStyle(fontSize = 16.sp, lineHeight = 20.8.sp, fontFamily = medium),
                             bold = TextStyle(fontSize = 16.sp, lineHeight = 20.8.sp, fontFamily = bold)
                         ),
                     small =
-                        FontScheme.Body.Weighty(
+                        FontScheme.Body.Weights(
                             regular = TextStyle(fontSize = 14.sp, lineHeight = 15.4.sp, fontFamily = normal),
                             medium = TextStyle(fontSize = 14.sp, lineHeight = 15.4.sp, fontFamily = medium),
                             bold = TextStyle(fontSize = 14.sp, lineHeight = 15.4.sp, fontFamily = bold)

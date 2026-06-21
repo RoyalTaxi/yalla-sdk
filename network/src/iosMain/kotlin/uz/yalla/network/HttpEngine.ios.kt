@@ -11,12 +11,11 @@ import io.ktor.client.engine.darwin.certificates.CertificatePinner
  * client uses the system's normal CA trust — see [CertificatePin] for how the host supplies real pins
  * and why this is deployment config, not a baked-in constant.
  */
-internal actual fun createHttpEngine(
-    certificatePins: List<CertificatePin>
-): HttpClientEngine = Darwin.create {
-    if (certificatePins.isNotEmpty()) {
-        val builder = CertificatePinner.Builder()
-        certificatePins.forEach { pin -> builder.add(pin.host, *pin.pins.toTypedArray()) }
-        handleChallenge(builder.build())
+internal actual fun createHttpEngine(certificatePins: List<CertificatePin>): HttpClientEngine =
+    Darwin.create {
+        if (certificatePins.isNotEmpty()) {
+            val builder = CertificatePinner.Builder()
+            certificatePins.forEach { pin -> builder.add(pin.host, *pin.pins.toTypedArray()) }
+            handleChallenge(builder.build())
+        }
     }
-}

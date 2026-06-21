@@ -1,10 +1,8 @@
 package uz.yalla.datastore
 
 import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import uz.yalla.core.settings.LocaleKind
@@ -25,61 +23,64 @@ import kotlin.test.assertTrue
 @OptIn(ExperimentalCoroutinesApi::class)
 class SessionPreferencesCharacterizationTest {
     @Test
-    fun clearSessionDropsCredentialsButKeepsUserExperiencePrefs() = runTest {
-        val store = InMemoryPreferencesDataStore()
-        val secure = FakeSecureStore()
-        seedAll(store, secure)
-        val session = SessionPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
+    fun clearSessionDropsCredentialsButKeepsUserExperiencePrefs() =
+        runTest {
+            val store = InMemoryPreferencesDataStore()
+            val secure = FakeSecureStore()
+            seedAll(store, secure)
+            val session = SessionPreferencesImpl(store, secure)
 
-        session.clearSession()
-        advanceUntilIdle()
+            session.clearSession()
+            advanceUntilIdle()
 
-        // Credentials (now encrypted at rest) and cached profile/config gone.
-        assertEquals("", session.accessToken.first())
-        assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
-        // UX prefs preserved.
-        assertEquals(LocaleKind.Ru, InterfacePreferencesImpl(store, this.backgroundScope).localeType.first())
-        assertTrue(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
-        assertTrue(store.snapshot().contains(PreferenceKeys.SKIP_ONBOARDING))
-        assertTrue(store.snapshot().contains(PreferenceKeys.LAST_GPS_POSITION))
-    }
-
-    @Test
-    fun logoutPreservesUserExperiencePrefs() = runTest {
-        val store = InMemoryPreferencesDataStore()
-        val secure = FakeSecureStore()
-        seedAll(store, secure)
-        val session = SessionPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
-
-        session.clearAndEnterGuestMode()
-
-        // Token cleared (incl. the encrypted entry), guest flag set...
-        assertEquals("", session.accessToken.first())
-        assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
-        assertTrue(session.isGuestMode.first())
-        // ...but the user's language/theme/onboarding survive logout.
-        val ui = InterfacePreferencesImpl(store, this.backgroundScope)
-        assertEquals(LocaleKind.Ru, ui.localeType.first())
-        assertTrue(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
-        assertTrue(store.snapshot().contains(PreferenceKeys.MAP_TYPE))
-        assertTrue(store.snapshot().contains(PreferenceKeys.SKIP_ONBOARDING))
-    }
+            // Credentials (now encrypted at rest) and cached profile/config gone.
+            assertEquals("", session.accessToken.first())
+            assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
+            // UX prefs preserved.
+            assertEquals(LocaleKind.Ru, InterfacePreferencesImpl(store, this.backgroundScope).localeType.first())
+            assertTrue(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
+            assertTrue(store.snapshot().contains(PreferenceKeys.SKIP_ONBOARDING))
+            assertTrue(store.snapshot().contains(PreferenceKeys.LAST_GPS_POSITION))
+        }
 
     @Test
-    fun clearAllWipesEverythingIncludingUserExperiencePrefs() = runTest {
-        val store = InMemoryPreferencesDataStore()
-        val secure = FakeSecureStore()
-        seedAll(store, secure)
-        val session = SessionPreferencesImpl(store, secure, CoroutineScope(StandardTestDispatcher(testScheduler)))
+    fun logoutPreservesUserExperiencePrefs() =
+        runTest {
+            val store = InMemoryPreferencesDataStore()
+            val secure = FakeSecureStore()
+            seedAll(store, secure)
+            val session = SessionPreferencesImpl(store, secure)
 
-        session.clearAll()
-        advanceUntilIdle()
+            session.clearAndEnterGuestMode()
 
-        assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
-        assertFalse(store.snapshot().contains(PreferenceKeys.LOCALE_TYPE))
-        assertFalse(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
-        assertFalse(store.snapshot().contains(PreferenceKeys.LAST_GPS_POSITION))
-    }
+            // Token cleared (incl. the encrypted entry), guest flag set...
+            assertEquals("", session.accessToken.first())
+            assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
+            assertTrue(session.isGuestMode.first())
+            // ...but the user's language/theme/onboarding survive logout.
+            val ui = InterfacePreferencesImpl(store, this.backgroundScope)
+            assertEquals(LocaleKind.Ru, ui.localeType.first())
+            assertTrue(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
+            assertTrue(store.snapshot().contains(PreferenceKeys.MAP_TYPE))
+            assertTrue(store.snapshot().contains(PreferenceKeys.SKIP_ONBOARDING))
+        }
+
+    @Test
+    fun clearAllWipesEverythingIncludingUserExperiencePrefs() =
+        runTest {
+            val store = InMemoryPreferencesDataStore()
+            val secure = FakeSecureStore()
+            seedAll(store, secure)
+            val session = SessionPreferencesImpl(store, secure)
+
+            session.clearAll()
+            advanceUntilIdle()
+
+            assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
+            assertFalse(store.snapshot().contains(PreferenceKeys.LOCALE_TYPE))
+            assertFalse(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
+            assertFalse(store.snapshot().contains(PreferenceKeys.LAST_GPS_POSITION))
+        }
 
     @Test
     fun sessionKeysExcludesTheUserExperiencePrefs() {
