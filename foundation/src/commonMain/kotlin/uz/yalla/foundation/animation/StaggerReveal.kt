@@ -11,6 +11,15 @@ private const val DEFAULT_STAGGER_MS = 100
 private const val DEFAULT_DURATION_MS = 300
 private const val DEFAULT_SLIDE_PX = 40f
 
+/**
+ * Animates an item into view with a fade + upward slide, staggered by its position in a list.
+ *
+ * @param visible drives the animation: `true` reveals, `false` hides.
+ * @param index the item's position; its delay is `index * staggerMs` so later items reveal later.
+ * @param staggerMs per-index delay step in milliseconds.
+ * @param durationMs fade/slide duration in milliseconds.
+ * @param slidePx vertical slide distance (in pixels) the item travels while hidden.
+ */
 @Composable
 public fun Modifier.staggerReveal(
     visible: Boolean,

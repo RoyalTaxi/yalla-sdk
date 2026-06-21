@@ -14,13 +14,13 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import uz.yalla.resources.Res
 
 private val DefaultSize = 200.dp
-private const val LottieResourcePath = "files/lottie_order_search.json"
+private const val LOTTIE_RESOURCE_PATH = "files/lottie_order_search.json"
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 public fun SearchPin(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition {
-        LottieCompositionSpec.JsonString(Res.readBytes(LottieResourcePath).decodeToString())
+        LottieCompositionSpec.JsonString(Res.readBytes(LOTTIE_RESOURCE_PATH).decodeToString())
     }
 
     Image(

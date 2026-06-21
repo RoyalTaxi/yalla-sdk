@@ -2,7 +2,7 @@ package uz.yalla.media.config
 
 import android.net.Uri
 
-public interface MediaFactory {
+public actual interface MediaFactory {
     public fun pickImages(
         selectionLimit: Int,
         onResult: (List<Uri>) -> Unit

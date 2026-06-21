@@ -30,6 +30,13 @@ import uz.yalla.maps.config.MapFactory
 
 private const val PROVIDER_READY_TIMEOUT_MS = 5_000L
 
+/**
+ * A [MapController] that hides the Google<->MapLibre runtime swap behind one stable surface. It
+ * caches the whole scene (markers/routes/circles/camera/lock/style) so a switch re-seeds the new
+ * backend seamlessly, suppresses a fresh backend's default camera/pin from clobbering the
+ * aggregated state, and disposes the previous backend once the new one is confirmed ready. Buyers
+ * obtain it via [rememberMapController]; the constructor is internal.
+ */
 public class SwitchingMapController internal constructor(
     private val factory: MapFactory,
     private val initialPosition: CameraPosition? = null
@@ -38,7 +45,8 @@ public class SwitchingMapController internal constructor(
 
     private val active = MutableStateFlow<MapController?>(null)
 
-    public val activeBackend: StateFlow<MapController?> = active
+    /** The currently-active concrete backend used by [MapView] to re-key the platform host. */
+    internal val activeBackend: StateFlow<MapController?> = active
 
     private val _cameraPosition = MutableStateFlow(initialPosition ?: CameraPosition.DEFAULT)
     override val cameraPosition: StateFlow<CameraPosition> = _cameraPosition
@@ -69,25 +77,39 @@ public class SwitchingMapController internal constructor(
     private var currentIsDark: Boolean = false
 
     private var observerJobs: List<Job> = emptyList()
+    private var seedJob: Job? = null
+
+    // Flipped true only once the seed/snapshot camera has actually been applied to the new backend.
+    // While false, the observer suppresses every DEFAULT emission (not just the first) so a backend
+    // that re-emits DEFAULT after a layout pass cannot clobber the meaningful aggregated camera.
+    private var cameraSeedApplied = false
 
     internal suspend fun switchTo(kind: MapKind) {
         if (currentKind == kind && active.value != null) return
+        // A new switch supersedes any in-flight seeding from the previous switch: cancel it so a
+        // stale moveTo/markers job cannot push into the now-replaced (or closed) backend.
+        seedJob?.cancel()
         val previous = active.value
-        val snapshot = previous?.snapshotScene()
         val next =
             when (kind) {
                 MapKind.Google -> factory.createGoogleController()
                 MapKind.Libre -> factory.createLibreController()
             }
         currentKind = kind
-        val seedSource = snapshot?.cameraPosition ?: _cameraPosition.value
+        val seedSource = _cameraPosition.value
+        cameraSeedApplied = false
         wireObservers(next)
         active.value = next
-        if (snapshot != null) {
-            applySnapshot(next, snapshot)
-        } else {
+        seedJob =
             scope.launch {
-                withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { next.isReady.first { it } }
+                val readied = withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { next.isReady.first { it } } != null
+                // The next switch may already have replaced this backend while we awaited
+                // readiness; do not seed a superseded backend.
+                if (active.value !== next) return@launch
+                if (!readied) {
+                    _events.emit(MapEvent.ProviderUnavailable)
+                    return@launch
+                }
                 next.setDesiredPadding(pendingPadding)
                 next.setMarkers(pendingMarkers)
                 next.setRoutes(pendingRoutes)
@@ -95,40 +117,34 @@ public class SwitchingMapController internal constructor(
                 next.setInteractionEnabled(interactionEnabled)
                 next.setUserLocationEnabled(userLocationEnabled)
                 next.setUserLocation(userLocation)
+                next.setStyle(currentStyle, currentIsDark)
                 if (!cameraCommanded &&
                     seedSource.target != GeoPoint.Zero
                 ) {
                     next.moveTo(seedSource.target, seedSource.zoom)
                 }
+                lockedTarget?.let { next.lockTarget(it, lockedZoom) }
+                cameraSeedApplied = true
             }
-        }
         previous?.close()
-    }
-
-    internal suspend fun applyStyle(
-        style: MapStyle,
-        isDark: Boolean
-    ) {
-        currentStyle = style
-        currentIsDark = isDark
-        active.value?.setStyle(style, isDark)
     }
 
     private fun wireObservers(controller: MapController) {
         observerJobs.forEach { it.cancel() }
-        var cameraSeeded = false
         var centerPinSeeded = false
         observerJobs =
             listOf(
                 controller.cameraPosition
                     .onEach {
-                        if (!cameraSeeded) {
-                            cameraSeeded = true
-                            if (it == CameraPosition.DEFAULT &&
-                                _cameraPosition.value != CameraPosition.DEFAULT
-                            ) {
-                                return@onEach
-                            }
+                        // Suppress a fresh backend's DEFAULT camera for the whole pre-seed window
+                        // (not just the first emission): a backend can re-emit DEFAULT after a
+                        // layout/padding pass, and that second DEFAULT must not clobber the
+                        // meaningful aggregated camera that the seed moveTo is about to apply.
+                        if (!cameraSeedApplied &&
+                            it == CameraPosition.DEFAULT &&
+                            _cameraPosition.value != CameraPosition.DEFAULT
+                        ) {
+                            return@onEach
                         }
                         _cameraPosition.value = it
                     }.launchIn(scope),
@@ -147,23 +163,6 @@ public class SwitchingMapController internal constructor(
                 controller.isReady.onEach { _isReady.value = it }.launchIn(scope),
                 controller.events.onEach { _events.emit(it) }.launchIn(scope)
             )
-    }
-
-    private suspend fun applySnapshot(
-        controller: MapController,
-        snapshot: MapController.SceneSnapshot
-    ) {
-        withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { controller.isReady.first { it } }
-        controller.setDesiredPadding(snapshot.padding)
-        controller.setMarkers(snapshot.markers)
-        controller.setRoutes(snapshot.routes)
-        controller.setCircles(snapshot.circles)
-        controller.setInteractionEnabled(interactionEnabled)
-        controller.setUserLocationEnabled(userLocationEnabled)
-        controller.setUserLocation(userLocation)
-        controller.setStyle(currentStyle, currentIsDark)
-        controller.moveTo(snapshot.cameraPosition.target, snapshot.cameraPosition.zoom)
-        snapshot.lockedTarget?.let { controller.lockTarget(it, snapshot.lockedZoom) }
     }
 
     override suspend fun moveTo(
@@ -273,19 +272,9 @@ public class SwitchingMapController internal constructor(
         active.value?.unlockTarget()
     }
 
-    override fun snapshotScene(): MapController.SceneSnapshot =
-        active.value?.snapshotScene()
-            ?: MapController.SceneSnapshot(
-                cameraPosition = _cameraPosition.value,
-                markers = pendingMarkers,
-                routes = pendingRoutes,
-                circles = pendingCircles,
-                padding = pendingPadding,
-                lockedTarget = lockedTarget,
-                lockedZoom = lockedZoom
-            )
-
     override fun close() {
+        seedJob?.cancel()
+        seedJob = null
         observerJobs.forEach { it.cancel() }
         observerJobs = emptyList()
         active.value?.close()

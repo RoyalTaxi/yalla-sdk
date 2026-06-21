@@ -1,21 +1,23 @@
-public abstract class uz/yalla/core/error/DataError {
+public abstract interface class uz/yalla/core/error/DomainError {
 }
 
-public abstract class uz/yalla/core/error/DataError$Network : uz/yalla/core/error/DataError {
-}
-
-public final class uz/yalla/core/error/DataError$Network$Api : uz/yalla/core/error/DataError$Network {
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)V
-	public synthetic fun <init> (Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/Integer;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun component4 ()Ljava/lang/Integer;
-	public final fun copy (Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)Luz/yalla/core/error/DataError$Network$Api;
-	public static synthetic fun copy$default (Luz/yalla/core/error/DataError$Network$Api;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Luz/yalla/core/error/DataError$Network$Api;
+public final class uz/yalla/core/error/DomainError$Connectivity : uz/yalla/core/error/DomainError {
+	public static final field INSTANCE Luz/yalla/core/error/DomainError$Connectivity;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/core/error/DomainError$Remote : uz/yalla/core/error/DomainError {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)Luz/yalla/core/error/DomainError$Remote;
+	public static synthetic fun copy$default (Luz/yalla/core/error/DomainError$Remote;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Luz/yalla/core/error/DomainError$Remote;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getErrorCode ()Ljava/lang/String;
 	public final fun getMessage ()Ljava/lang/String;
 	public final fun getRetryAfter ()Ljava/lang/Integer;
@@ -23,50 +25,15 @@ public final class uz/yalla/core/error/DataError$Network$Api : uz/yalla/core/err
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class uz/yalla/core/error/DataError$Network$Client : uz/yalla/core/error/DataError$Network {
-	public static final field INSTANCE Luz/yalla/core/error/DataError$Network$Client;
+public final class uz/yalla/core/error/DomainError$Unauthorized : uz/yalla/core/error/DomainError {
+	public static final field INSTANCE Luz/yalla/core/error/DomainError$Unauthorized;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class uz/yalla/core/error/DataError$Network$Connection : uz/yalla/core/error/DataError$Network {
-	public static final field INSTANCE Luz/yalla/core/error/DataError$Network$Connection;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class uz/yalla/core/error/DataError$Network$Guest : uz/yalla/core/error/DataError$Network {
-	public static final field INSTANCE Luz/yalla/core/error/DataError$Network$Guest;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class uz/yalla/core/error/DataError$Network$Serialization : uz/yalla/core/error/DataError$Network {
-	public static final field INSTANCE Luz/yalla/core/error/DataError$Network$Serialization;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class uz/yalla/core/error/DataError$Network$Server : uz/yalla/core/error/DataError$Network {
-	public static final field INSTANCE Luz/yalla/core/error/DataError$Network$Server;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class uz/yalla/core/error/DataError$Network$Timeout : uz/yalla/core/error/DataError$Network {
-	public static final field INSTANCE Luz/yalla/core/error/DataError$Network$Timeout;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class uz/yalla/core/error/DataError$Network$Unknown : uz/yalla/core/error/DataError$Network {
-	public static final field INSTANCE Luz/yalla/core/error/DataError$Network$Unknown;
+public final class uz/yalla/core/error/DomainError$Unknown : uz/yalla/core/error/DomainError {
+	public static final field INSTANCE Luz/yalla/core/error/DomainError$Unknown;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -261,9 +228,9 @@ public final class uz/yalla/core/location/PlaceKind$Companion {
 
 public final class uz/yalla/core/location/PointKind : java/lang/Enum {
 	public static final field Companion Luz/yalla/core/location/PointKind$Companion;
-	public static final field POINT Luz/yalla/core/location/PointKind;
-	public static final field START Luz/yalla/core/location/PointKind;
-	public static final field STOP Luz/yalla/core/location/PointKind;
+	public static final field Point Luz/yalla/core/location/PointKind;
+	public static final field Start Luz/yalla/core/location/PointKind;
+	public static final field Stop Luz/yalla/core/location/PointKind;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getId ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Luz/yalla/core/location/PointKind;
@@ -502,10 +469,6 @@ public final class uz/yalla/core/order/Order$Taxi$Point {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class uz/yalla/core/order/OrderKt {
-	public static final fun toDriverPosition (Luz/yalla/core/order/Order$Driver;)Luz/yalla/core/order/DriverPosition;
-}
-
 public abstract class uz/yalla/core/order/OrderStatus {
 	public static final field Companion Luz/yalla/core/order/OrderStatus$Companion;
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -689,31 +652,20 @@ public final class uz/yalla/core/phone/UzPhone$Companion {
 	public final fun of-7iH_rkg (Ljava/lang/String;)Ljava/lang/String;
 }
 
-public abstract interface class uz/yalla/core/preferences/ConfigPreferences {
+public abstract interface class uz/yalla/core/preferences/BonusConfigPreferences {
 	public abstract fun getBalance ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getInfoInstagram ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getInfoTelegram ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getMaxBonus ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getMinBonus ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getOrderCancelTime ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getPrivacyPolicyRu ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getPrivacyPolicyUz ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getSupportNumber ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun getSupportTelegram ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun isBonusEnabled ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun isCardEnabled ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun setBalance (J)V
 	public abstract fun setBonusEnabled (Z)V
 	public abstract fun setCardEnabled (Z)V
-	public abstract fun setInfoInstagram (Ljava/lang/String;)V
-	public abstract fun setInfoTelegram (Ljava/lang/String;)V
 	public abstract fun setMaxBonus (J)V
 	public abstract fun setMinBonus (J)V
-	public abstract fun setOrderCancelTime (I)V
-	public abstract fun setPrivacyPolicyRu (Ljava/lang/String;)V
-	public abstract fun setPrivacyPolicyUz (Ljava/lang/String;)V
-	public abstract fun setSupportNumber (Ljava/lang/String;)V
-	public abstract fun setSupportTelegram (Ljava/lang/String;)V
+}
+
+public abstract interface class uz/yalla/core/preferences/ConfigPreferences : uz/yalla/core/preferences/BonusConfigPreferences, uz/yalla/core/preferences/LegalConfigPreferences, uz/yalla/core/preferences/OrderConfigPreferences, uz/yalla/core/preferences/SupportConfigPreferences {
 }
 
 public abstract interface class uz/yalla/core/preferences/InterfacePreferences {
@@ -727,6 +679,18 @@ public abstract interface class uz/yalla/core/preferences/InterfacePreferences {
 	public abstract fun setThemeType (Luz/yalla/core/settings/ThemeKind;)V
 }
 
+public abstract interface class uz/yalla/core/preferences/LegalConfigPreferences {
+	public abstract fun getPrivacyPolicyRu ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun getPrivacyPolicyUz ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun setPrivacyPolicyRu (Ljava/lang/String;)V
+	public abstract fun setPrivacyPolicyUz (Ljava/lang/String;)V
+}
+
+public abstract interface class uz/yalla/core/preferences/OrderConfigPreferences {
+	public abstract fun getOrderCancelTime ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun setOrderCancelTime (I)V
+}
+
 public abstract interface class uz/yalla/core/preferences/PositionPreferences {
 	public abstract fun getLastGpsPosition ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getLastMapPosition ()Lkotlinx/coroutines/flow/Flow;
@@ -735,25 +699,32 @@ public abstract interface class uz/yalla/core/preferences/PositionPreferences {
 }
 
 public abstract interface class uz/yalla/core/preferences/SessionPreferences {
-	public abstract fun clearAll ()V
-	public abstract fun clearSession ()V
+	public abstract fun clearAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun clearAndEnterGuestMode (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun clearSession (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAccessToken ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getFirebaseToken ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun isDeviceRegistered ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun isGuestMode ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun setAccessToken (Ljava/lang/String;)V
-	public abstract fun setDeviceRegistered (Z)V
-	public abstract fun setFirebaseToken (Ljava/lang/String;)V
-	public abstract fun setGuestMode (Z)V
+	public abstract fun setAccessToken (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun setDeviceRegistered (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun setFirebaseToken (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun setGuestMode (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class uz/yalla/core/preferences/StaticPreferences {
-	public abstract fun getLocaleCode ()Ljava/lang/String;
-	public abstract fun isDeviceRegistered ()Z
-	public abstract fun isGuestMode ()Z
-	public abstract fun setDeviceRegistered (Z)V
-	public abstract fun setGuestMode (Z)V
-	public abstract fun setLocaleCode (Ljava/lang/String;)V
+public final class uz/yalla/core/preferences/SessionPreferences$DefaultImpls {
+	public static fun clearAndEnterGuestMode (Luz/yalla/core/preferences/SessionPreferences;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class uz/yalla/core/preferences/SupportConfigPreferences {
+	public abstract fun getInfoInstagram ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun getInfoTelegram ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun getSupportNumber ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun getSupportTelegram ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun setInfoInstagram (Ljava/lang/String;)V
+	public abstract fun setInfoTelegram (Ljava/lang/String;)V
+	public abstract fun setSupportNumber (Ljava/lang/String;)V
+	public abstract fun setSupportTelegram (Ljava/lang/String;)V
 }
 
 public abstract interface class uz/yalla/core/preferences/UserPreferences {
@@ -848,11 +819,13 @@ public final class uz/yalla/core/result/EitherKt {
 	public static final fun onSuccess (Luz/yalla/core/result/Either;Lkotlin/jvm/functions/Function1;)Luz/yalla/core/result/Either;
 }
 
-public final class uz/yalla/core/session/UnauthorizedSessionEvents {
-	public static final field INSTANCE Luz/yalla/core/session/UnauthorizedSessionEvents;
-	public final fun drainPendingEventIfExists ()V
-	public final fun getEvents ()Lkotlinx/coroutines/flow/Flow;
-	public final fun publish ()V
+public abstract interface class uz/yalla/core/session/SessionEventBus {
+	public abstract fun getUnauthorized ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun publishUnauthorized ()V
+}
+
+public final class uz/yalla/core/session/SessionEventBusKt {
+	public static final fun createSessionEventBus ()Luz/yalla/core/session/SessionEventBus;
 }
 
 public final class uz/yalla/core/settings/LocaleKind : java/lang/Enum {

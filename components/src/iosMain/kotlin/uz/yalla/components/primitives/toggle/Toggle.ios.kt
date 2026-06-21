@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.UIKitViewController
 import kotlinx.cinterop.ExperimentalForeignApi
+import uz.yalla.components.config.primitives.ToggleDefaults
 import uz.yalla.components.config.requireConfig
 
 @OptIn(ExperimentalForeignApi::class)
@@ -32,8 +33,21 @@ public actual fun Toggle(
     disabledUncheckedTrackColor: Color,
     disabledUncheckedBorderColor: Color
 ) {
-    val thumbArgb = uncheckedThumbColor.toArgbOrZero()
-    val trackArgb = checkedTrackColor.toArgbOrZero()
+    val colors =
+        ToggleDefaults.colors(
+            checkedThumbArgb = checkedThumbColor.toArgbOrZero(),
+            checkedTrackArgb = checkedTrackColor.toArgbOrZero(),
+            checkedBorderArgb = checkedBorderColor.toArgbOrZero(),
+            uncheckedThumbArgb = uncheckedThumbColor.toArgbOrZero(),
+            uncheckedTrackArgb = uncheckedTrackColor.toArgbOrZero(),
+            uncheckedBorderArgb = uncheckedBorderColor.toArgbOrZero(),
+            disabledCheckedThumbArgb = disabledCheckedThumbColor.toArgbOrZero(),
+            disabledCheckedTrackArgb = disabledCheckedTrackColor.toArgbOrZero(),
+            disabledCheckedBorderArgb = disabledCheckedBorderColor.toArgbOrZero(),
+            disabledUncheckedThumbArgb = disabledUncheckedThumbColor.toArgbOrZero(),
+            disabledUncheckedTrackArgb = disabledUncheckedTrackColor.toArgbOrZero(),
+            disabledUncheckedBorderArgb = disabledUncheckedBorderColor.toArgbOrZero()
+        )
     val onCheckedChangeState = rememberUpdatedState(onCheckedChange)
 
     val handle =
@@ -41,15 +55,27 @@ public actual fun Toggle(
             requireConfig().toggle.create(
                 initialChecked = checked,
                 initialEnabled = enabled,
-                thumbArgb = thumbArgb,
-                trackArgb = trackArgb,
+                colors = colors,
                 onCheckedChange = { onCheckedChangeState.value(it) }
             )
         }
 
     LaunchedEffect(checked) { handle.setChecked(checked) }
     LaunchedEffect(enabled) { handle.setEnabled(enabled) }
-    LaunchedEffect(thumbArgb, trackArgb) { handle.setColors(thumbArgb, trackArgb) }
+    LaunchedEffect(
+        colors.checkedThumbArgb,
+        colors.checkedTrackArgb,
+        colors.checkedBorderArgb,
+        colors.uncheckedThumbArgb,
+        colors.uncheckedTrackArgb,
+        colors.uncheckedBorderArgb,
+        colors.disabledCheckedThumbArgb,
+        colors.disabledCheckedTrackArgb,
+        colors.disabledCheckedBorderArgb,
+        colors.disabledUncheckedThumbArgb,
+        colors.disabledUncheckedTrackArgb,
+        colors.disabledUncheckedBorderArgb
+    ) { handle.setColors(colors) }
 
     UIKitViewController(
         factory = { handle.viewController },

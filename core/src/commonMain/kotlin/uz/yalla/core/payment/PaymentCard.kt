@@ -11,4 +11,7 @@ public data class PaymentCard(
             cardId = cardId,
             maskedNumber = maskedPan
         )
+
+    // Redacted so the masked PAN never lands in a log line or crash report (CWE-532).
+    override fun toString(): String = "PaymentCard(cardId=$cardId, <redacted>)"
 }

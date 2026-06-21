@@ -14,7 +14,7 @@ import kotlin.test.assertTrue
  */
 class OrderStatusTest {
     @Test
-    fun from_decodesEveryKnownId() {
+    fun fromDecodesEveryKnownId() {
         assertEquals(OrderStatus.New, OrderStatus.from("new"))
         assertEquals(OrderStatus.Sending, OrderStatus.from("sending"))
         assertEquals(OrderStatus.UserSending, OrderStatus.from("user_sending"))
@@ -27,14 +27,14 @@ class OrderStatusTest {
     }
 
     @Test
-    fun from_aliasesInFettersToInProgress() {
+    fun fromAliasesInFettersToInProgress() {
         // The contract: the legacy backend id `in_fetters` must collapse onto InProgress.
         assertEquals(OrderStatus.InProgress, OrderStatus.from("in_fetters"))
         assertEquals(OrderStatus.from("in_progress"), OrderStatus.from("in_fetters"))
     }
 
     @Test
-    fun from_trimsAndLowercasesBeforeMatching() {
+    fun fromTrimsAndLowercasesBeforeMatching() {
         assertEquals(OrderStatus.Appointed, OrderStatus.from("  appointed  "))
         assertEquals(OrderStatus.Appointed, OrderStatus.from("APPOINTED"))
         assertEquals(OrderStatus.Appointed, OrderStatus.from("  ApPoInTeD\n"))
@@ -42,32 +42,32 @@ class OrderStatusTest {
     }
 
     @Test
-    fun from_nullDecodesToUnknownWithLiteralNullId() {
+    fun fromNullDecodesToUnknownWithLiteralNullId() {
         assertEquals(OrderStatus.Unknown("null"), OrderStatus.from(null))
     }
 
     @Test
-    fun from_unrecognizedIdDecodesToUnknownPreservingOriginal() {
+    fun fromUnrecognizedIdDecodesToUnknownPreservingOriginal() {
         assertEquals(OrderStatus.Unknown("paid"), OrderStatus.from("paid"))
         assertEquals(OrderStatus.Unknown("???"), OrderStatus.from("???"))
         assertEquals(OrderStatus.Unknown(""), OrderStatus.from(""))
     }
 
     @Test
-    fun from_unknownPreservesRawCasingAndWhitespaceNotTheNormalizedForm() {
+    fun fromUnknownPreservesRawCasingAndWhitespaceNotTheNormalizedForm() {
         // Normalization is only applied to the match key; the fallback keeps the raw input.
         val raw = "  Mystery_State  "
         assertEquals(OrderStatus.Unknown(raw), OrderStatus.from(raw))
     }
 
     @Test
-    fun from_isStableAcrossRepeatedCalls() {
+    fun fromIsStableAcrossRepeatedCalls() {
         assertEquals(OrderStatus.from("completed"), OrderStatus.from("completed"))
         assertEquals(OrderStatus.from(null), OrderStatus.from(null))
     }
 
     @Test
-    fun id_matchesTheWireValueForEveryStatus() {
+    fun idMatchesTheWireValueForEveryStatus() {
         assertEquals("new", OrderStatus.New.id)
         assertEquals("sending", OrderStatus.Sending.id)
         assertEquals("user_sending", OrderStatus.UserSending.id)
@@ -81,7 +81,7 @@ class OrderStatusTest {
     }
 
     @Test
-    fun active_isExactlyAppointedAtAddressInProgress() {
+    fun activeIsExactlyAppointedAtAddressInProgress() {
         assertEquals(
             setOf(OrderStatus.Appointed, OrderStatus.AtAddress, OrderStatus.InProgress),
             OrderStatus.active
@@ -89,7 +89,7 @@ class OrderStatusTest {
     }
 
     @Test
-    fun ongoing_coversEveryPreCompletionStatus() {
+    fun ongoingCoversEveryPreCompletionStatus() {
         assertEquals(
             setOf(
                 OrderStatus.New,
@@ -105,13 +105,13 @@ class OrderStatusTest {
     }
 
     @Test
-    fun ongoing_excludesTerminalStatuses() {
+    fun ongoingExcludesTerminalStatuses() {
         assertTrue(OrderStatus.Completed !in OrderStatus.ongoing)
         assertTrue(OrderStatus.Canceled !in OrderStatus.ongoing)
     }
 
     @Test
-    fun nonInteractive_isExactlyTheSearchingStatuses() {
+    fun nonInteractiveIsExactlyTheSearchingStatuses() {
         assertEquals(
             setOf(
                 OrderStatus.New,
@@ -124,7 +124,7 @@ class OrderStatusTest {
     }
 
     @Test
-    fun partitions_relateAsExpected() {
+    fun partitionsRelateAsExpected() {
         // active is the ongoing statuses that are NOT in the non-interactive (searching) phase.
         assertEquals(OrderStatus.ongoing - OrderStatus.nonInteractive, OrderStatus.active)
         assertTrue(OrderStatus.active.all { it in OrderStatus.ongoing })

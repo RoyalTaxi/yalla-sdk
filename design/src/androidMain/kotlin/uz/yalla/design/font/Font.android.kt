@@ -6,6 +6,6 @@ import uz.yalla.resources.roboto_bold
 import uz.yalla.resources.roboto_medium
 import uz.yalla.resources.roboto_normal
 
-public actual val boldFont: FontResource = Res.font.roboto_bold
-public actual val mediumFont: FontResource = Res.font.roboto_medium
-public actual val normalFont: FontResource = Res.font.roboto_normal
+internal actual val boldFont: FontResource = Res.font.roboto_bold
+internal actual val mediumFont: FontResource = Res.font.roboto_medium
+internal actual val normalFont: FontResource = Res.font.roboto_normal

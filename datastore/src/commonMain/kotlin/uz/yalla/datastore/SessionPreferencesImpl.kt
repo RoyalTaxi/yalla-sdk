@@ -2,64 +2,62 @@ package uz.yalla.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import uz.yalla.core.preferences.SessionPreferences
-import uz.yalla.core.preferences.StaticPreferences
 import uz.yalla.core.util.orFalse
 
 internal class SessionPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
-    private val scope: CoroutineScope,
-    private val staticPreferences: StaticPreferences
+    private val secureStore: SecureStore
 ) : SessionPreferences {
-    override val accessToken: Flow<String> = dataStore.data.map { it[PreferenceKeys.ACCESS_TOKEN].orEmpty() }
+    // Credentials are encrypted at rest (CWE-312): they flow through SecureStore, not the plain DataStore.
+    override val accessToken: Flow<String> =
+        dataStore.secureReadFlow(PreferenceKeys.ACCESS_TOKEN.name, secureStore)
 
-    override fun setAccessToken(value: String) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.ACCESS_TOKEN] = value } }
+    override suspend fun setAccessToken(value: String) {
+        dataStore.secureSet(PreferenceKeys.ACCESS_TOKEN.name, value, secureStore)
     }
 
-    override val firebaseToken: Flow<String> = dataStore.data.map { it[PreferenceKeys.FIREBASE_TOKEN].orEmpty() }
+    override val firebaseToken: Flow<String> =
+        dataStore.secureReadFlow(PreferenceKeys.FIREBASE_TOKEN.name, secureStore)
 
-    override fun setFirebaseToken(value: String) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.FIREBASE_TOKEN] = value } }
+    override suspend fun setFirebaseToken(value: String) {
+        dataStore.secureSet(PreferenceKeys.FIREBASE_TOKEN.name, value, secureStore)
     }
 
-    override val isGuestMode: Flow<Boolean> = dataStore.data.map { it[PreferenceKeys.IS_GUEST_MODE].orFalse() }
+    override val isGuestMode: Flow<Boolean> = dataStore.readFlow { it[PreferenceKeys.IS_GUEST_MODE].orFalse() }
 
-    override fun setGuestMode(value: Boolean) {
-        staticPreferences.setGuestMode(value)
-        scope.launch { dataStore.edit { it[PreferenceKeys.IS_GUEST_MODE] = value } }
+    override suspend fun setGuestMode(value: Boolean) {
+        dataStore.writeNow { it[PreferenceKeys.IS_GUEST_MODE] = value }
     }
 
     override val isDeviceRegistered: Flow<Boolean> =
-        dataStore.data.map {
-            it[PreferenceKeys.IS_DEVICE_REGISTERED].orFalse()
-        }
+        dataStore.readFlow { it[PreferenceKeys.IS_DEVICE_REGISTERED].orFalse() }
 
-    override fun setDeviceRegistered(value: Boolean) {
-        staticPreferences.setDeviceRegistered(value)
-        scope.launch { dataStore.edit { it[PreferenceKeys.IS_DEVICE_REGISTERED] = value } }
+    override suspend fun setDeviceRegistered(value: Boolean) {
+        dataStore.writeNow { it[PreferenceKeys.IS_DEVICE_REGISTERED] = value }
     }
 
-    override fun clearSession() {
-        staticPreferences.setGuestMode(false)
-        staticPreferences.setDeviceRegistered(false)
-        scope.launch {
-            dataStore.edit { prefs ->
-                PreferenceKeys.SESSION_KEYS.forEach { prefs.remove(it) }
-            }
+    override suspend fun clearSession() {
+        // Scrub the encrypted credentials + PII (SecureStore) and the plain session keys together, so a
+        // logout leaves neither cleartext nor ciphertext behind. UX prefs (not in SESSION_KEYS) survive.
+        dataStore.secureClear(PreferenceKeys.SECURE_KEYS, secureStore) { prefs ->
+            PreferenceKeys.SESSION_KEYS.forEach { prefs.remove(it) }
         }
     }
 
-    override fun clearAll() {
-        staticPreferences.setGuestMode(false)
-        staticPreferences.setDeviceRegistered(false)
-        scope.launch {
-            dataStore.edit { it.clear() }
+    override suspend fun clearAll() {
+        dataStore.secureClear(PreferenceKeys.SECURE_KEYS, secureStore) { it.clear() }
+    }
+
+    override suspend fun clearAndEnterGuestMode() {
+        // Logout: scrub the encrypted session entries, then clear only the session-scoped plain keys (same
+        // contract as clearSession), PRESERVING the user-experience prefs (locale, theme, map style,
+        // onboarding, last positions). A full prefs.clear() here would reset the user's language/theme on
+        // logout — see SESSION_KEYS.
+        dataStore.secureClear(PreferenceKeys.SECURE_KEYS, secureStore) { prefs ->
+            PreferenceKeys.SESSION_KEYS.forEach { prefs.remove(it) }
+            prefs[PreferenceKeys.IS_GUEST_MODE] = true
         }
     }
 }

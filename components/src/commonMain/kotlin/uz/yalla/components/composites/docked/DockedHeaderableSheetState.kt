@@ -60,14 +60,7 @@ public class DockedHeaderableSheetState internal constructor(
         }
     }
 
-    internal val bodyAlpha: Float by derivedStateOf {
-        val t = fraction
-        if (t < 0.5f) {
-            4f * t * t * t
-        } else {
-            1f - (-2f * t + 2f).let { it * it * it } / 2f
-        }
-    }
+    internal val bodyAlpha: Float by derivedStateOf { bodyAlphaFor(fraction) }
 
     internal val visibleBodyHeightPx: Float by derivedStateOf {
         if (!hasOffset) return@derivedStateOf 0f
@@ -106,6 +99,19 @@ public class DockedHeaderableSheetState internal constructor(
                 }
             anchoredDraggableState.updateAnchors(anchors, currentValue)
         }
+    }
+}
+
+/**
+ * Cubic ease-in-out mapping the sheet [fraction] (0..1) to the body's alpha. Pure so the seam at
+ * `t == 0.5f` (where the two cubic halves meet) can be pinned in a test without a Compose clock.
+ */
+internal fun bodyAlphaFor(fraction: Float): Float {
+    val t = fraction.coerceIn(0f, 1f)
+    return if (t < 0.5f) {
+        4f * t * t * t
+    } else {
+        1f - (-2f * t + 2f).let { it * it * it } / 2f
     }
 }
 

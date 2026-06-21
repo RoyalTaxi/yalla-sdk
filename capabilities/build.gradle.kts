@@ -16,8 +16,12 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.kermit)
 
-            api(libs.geo)
-            api(libs.connectivity.device)
+            implementation(libs.geo)
+            implementation(libs.connectivity.device)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
         }
 
         androidMain.dependencies {

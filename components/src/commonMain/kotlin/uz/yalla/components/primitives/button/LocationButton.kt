@@ -106,7 +106,7 @@ public object LocationButtonDefaults {
         )
 
     @Composable
-    public fun LeadingView(color: Color) {
+    internal fun LeadingView(color: Color) {
         Box(
             modifier =
                 Modifier
@@ -123,7 +123,7 @@ public object LocationButtonDefaults {
     }
 
     @Composable
-    public fun Content(
+    internal fun Content(
         title: String,
         description: String?,
         modifier: Modifier = Modifier,
@@ -157,7 +157,7 @@ public object LocationButtonDefaults {
     @Suppress("DEPRECATION")
     @OptIn(ExperimentalLayoutApi::class)
     @Composable
-    public fun Content(
+    internal fun Content(
         vararg titles: String,
         modifier: Modifier = Modifier,
         colors: LocationButtonColors,
@@ -205,7 +205,7 @@ public object LocationButtonDefaults {
     }
 
     @Composable
-    public fun TrailingView(
+    internal fun TrailingView(
         color: Color,
         onClick: () -> Unit
     ) {

@@ -1,0 +1,152 @@
+package uz.yalla.media.util
+
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import androidx.exifinterface.media.ExifInterface
+import uz.yalla.media.config.CompressionConfig
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import kotlin.math.min
+
+public actual fun compressImage(
+    imageBytes: ByteArray,
+    config: CompressionConfig
+): ByteArray? {
+    val maxDimension = config.maxDimension
+    val maxSizeBytes = config.maxFileSize
+
+    val options =
+        BitmapFactory.Options().apply {
+            inJustDecodeBounds = true
+        }
+    BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, options)
+
+    val originalWidth = options.outWidth
+    val originalHeight = options.outHeight
+
+    val scale =
+        if (
+            originalWidth > maxDimension ||
+            originalHeight > maxDimension
+        ) {
+            min(
+                maxDimension.toDouble() / originalWidth,
+                maxDimension.toDouble() / originalHeight
+            )
+        } else {
+            1.0
+        }
+
+    val newWidth = (originalWidth * scale).toInt()
+    val newHeight = (originalHeight * scale).toInt()
+
+    val decodedOptions =
+        BitmapFactory.Options().apply {
+            inJustDecodeBounds = false
+            inSampleSize = calculateInSampleSize(options, newWidth, newHeight)
+        }
+
+    val bitmap =
+        BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size, decodedOptions)
+            ?: return null
+
+    val rotationDegrees =
+        runCatching {
+            ExifInterface(ByteArrayInputStream(imageBytes)).rotationDegrees
+        }.getOrDefault(0)
+
+    val resizedBitmap =
+        if (bitmap.width != newWidth || bitmap.height != newHeight || rotationDegrees != 0) {
+            val exactWidth = newWidth.toFloat()
+            val exactHeight = newHeight.toFloat()
+            val scaleX = exactWidth / bitmap.width
+            val scaleY = exactHeight / bitmap.height
+
+            val matrix =
+                Matrix().apply {
+                    postScale(scaleX, scaleY)
+                    if (rotationDegrees != 0) postRotate(rotationDegrees.toFloat())
+                }
+
+            Bitmap
+                .createBitmap(
+                    bitmap,
+                    0,
+                    0,
+                    bitmap.width,
+                    bitmap.height,
+                    matrix,
+                    true
+                ).also {
+                    if (it != bitmap) {
+                        bitmap.recycle()
+                    }
+                }
+        } else {
+            bitmap
+        }
+
+    var lo = MIN_JPEG_QUALITY
+    var hi = config.quality
+    var bestBytes: ByteArray? = null
+
+    while (lo <= hi) {
+        val mid = (lo + hi) / 2
+        val stream = ByteArrayOutputStream()
+        resizedBitmap.compress(Bitmap.CompressFormat.JPEG, mid, stream)
+        val compressed = stream.toByteArray()
+        if (compressed.size in 1..maxSizeBytes) {
+            bestBytes = compressed
+            lo = mid + 1
+        } else {
+            hi = mid - 1
+        }
+    }
+
+    if (bestBytes == null) {
+        val smaller =
+            Bitmap.createScaledBitmap(
+                resizedBitmap,
+                (resizedBitmap.width / 2).coerceAtLeast(1),
+                (resizedBitmap.height / 2).coerceAtLeast(1),
+                true
+            )
+        val stream = ByteArrayOutputStream()
+        smaller.compress(Bitmap.CompressFormat.JPEG, MIN_JPEG_QUALITY, stream)
+        val fallback = stream.toByteArray()
+        if (smaller != resizedBitmap) {
+            smaller.recycle()
+        }
+        // Honor the size-budget contract: the half-res min-quality encode is not guaranteed to fit
+        // a high-entropy input, so only return it when it is within budget; otherwise null so the
+        // caller can react instead of silently uploading over-budget bytes.
+        bestBytes = fallback.takeIf { it.size in 1..maxSizeBytes }
+    }
+
+    resizedBitmap.recycle()
+    return bestBytes
+}
+
+private fun calculateInSampleSize(
+    options: BitmapFactory.Options,
+    reqWidth: Int,
+    reqHeight: Int
+): Int {
+    val (height: Int, width: Int) = options.run { outHeight to outWidth }
+    var inSampleSize = 1
+
+    if (height > reqHeight || width > reqWidth) {
+        val halfHeight = height / 2
+        val halfWidth = width / 2
+
+        while (
+            halfHeight / inSampleSize >= reqHeight &&
+            halfWidth / inSampleSize >= reqWidth
+        ) {
+            inSampleSize *= 2
+        }
+    }
+
+    return inSampleSize
+}

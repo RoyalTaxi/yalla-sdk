@@ -1,16 +1,8 @@
-public final class uz/yalla/datastore/DataStoreFactory_androidKt {
-	public static final fun createDataStore ()Landroidx/datastore/core/DataStore;
-}
-
 public final class uz/yalla/datastore/DatastoreModuleKt {
 	public static final fun getDatastoreModule ()Lorg/koin/core/module/Module;
 }
 
 public final class uz/yalla/datastore/IoDispatcher_androidKt {
 	public static final fun getIoDispatcher ()Lkotlinx/coroutines/CoroutineDispatcher;
-}
-
-public final class uz/yalla/datastore/SettingsFactory_androidKt {
-	public static final fun createSettings ()Lcom/russhwolf/settings/Settings;
 }
 

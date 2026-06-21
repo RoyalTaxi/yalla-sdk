@@ -6,37 +6,29 @@ public final class uz/yalla/capabilities/browser/Browser_androidKt {
 	public static final fun rememberBrowser (Landroidx/compose/runtime/Composer;I)Luz/yalla/capabilities/browser/Browser;
 }
 
-public final class uz/yalla/capabilities/connectivity/ConnectivityKt {
-	public static final fun rememberConnectivityState (Ldev/jordond/connectivity/Connectivity;Lkotlinx/coroutines/CoroutineScope;Landroidx/compose/runtime/Composer;II)Luz/yalla/capabilities/connectivity/ConnectivityState;
-	public static final fun rememberConnectivityState (Lkotlinx/coroutines/CoroutineScope;Landroidx/compose/runtime/Composer;II)Luz/yalla/capabilities/connectivity/ConnectivityState;
-}
-
 public final class uz/yalla/capabilities/connectivity/ConnectivityState {
 	public static final field $stable I
-	public fun <init> (Ldev/jordond/connectivity/Connectivity;Lkotlinx/coroutines/CoroutineScope;)V
 	public final fun isOnline ()Z
 	public final fun refresh ()Lkotlinx/coroutines/Job;
 }
 
-public final class uz/yalla/capabilities/location/DeviceLocationProvider : uz/yalla/core/location/LocationProvider {
-	public static final field $stable I
-	public fun <init> (Ldev/icerock/moko/geo/LocationTracker;Lkotlinx/coroutines/CoroutineScope;)V
-	public fun getCurrentLocation ()Lkotlinx/coroutines/flow/StateFlow;
-	public final fun getLocationTracker ()Ldev/icerock/moko/geo/LocationTracker;
-	public final fun getPermissionState ()Lkotlinx/coroutines/flow/StateFlow;
-	public fun startTracking ()V
-	public fun stopTracking ()V
-	public final fun updatePermissionState (Luz/yalla/capabilities/location/LocationPermissionState;)V
+public final class uz/yalla/capabilities/connectivity/ConnectivityStateKt {
+	public static final fun rememberConnectivityState (Lkotlinx/coroutines/CoroutineScope;Landroidx/compose/runtime/Composer;II)Luz/yalla/capabilities/connectivity/ConnectivityState;
 }
 
-public final class uz/yalla/capabilities/location/LocationPermissionState : java/lang/Enum {
-	public static final field DENIED Luz/yalla/capabilities/location/LocationPermissionState;
-	public static final field DENIED_PERMANENTLY Luz/yalla/capabilities/location/LocationPermissionState;
-	public static final field GRANTED Luz/yalla/capabilities/location/LocationPermissionState;
-	public static final field NOT_DETERMINED Luz/yalla/capabilities/location/LocationPermissionState;
-	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Luz/yalla/capabilities/location/LocationPermissionState;
-	public static fun values ()[Luz/yalla/capabilities/location/LocationPermissionState;
+public final class uz/yalla/capabilities/location/DeviceLocationProvider : uz/yalla/core/location/LocationProvider {
+	public static final field $stable I
+	public fun getCurrentLocation ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun startTracking ()V
+	public fun stopTracking ()V
+}
+
+public final class uz/yalla/capabilities/location/DeviceLocationProviderBinding_androidKt {
+	public static final fun bindToActivity (Luz/yalla/capabilities/location/DeviceLocationProvider;Landroidx/activity/ComponentActivity;)V
+}
+
+public final class uz/yalla/capabilities/location/DeviceLocationProviderKt {
+	public static final fun createDeviceLocationProvider (Lkotlinx/coroutines/CoroutineScope;)Luz/yalla/capabilities/location/DeviceLocationProvider;
 }
 
 public final class uz/yalla/capabilities/location/LocationServices_androidKt {
@@ -44,17 +36,8 @@ public final class uz/yalla/capabilities/location/LocationServices_androidKt {
 	public static final fun openLocationSettings ()V
 }
 
-public final class uz/yalla/capabilities/location/LocationTrackerFactory_androidKt {
-	public static final fun createLocationTracker ()Ldev/icerock/moko/geo/LocationTracker;
-}
-
 public final class uz/yalla/capabilities/sms/AppSignature_androidKt {
 	public static final fun getAppSignature ()Ljava/lang/String;
-	public static final fun getAppSignature (Landroid/content/Context;)Ljava/lang/String;
-}
-
-public final class uz/yalla/capabilities/sms/OtpExtractorKt {
-	public static final fun extractOtp (Ljava/lang/String;IZ)Ljava/lang/String;
 }
 
 public final class uz/yalla/capabilities/sms/SmsCodeObserver_androidKt {
@@ -64,9 +47,42 @@ public final class uz/yalla/capabilities/sms/SmsCodeObserver_androidKt {
 public final class uz/yalla/capabilities/update/AppUpdateState {
 	public static final field $stable I
 	public fun <init> ()V
+	public final fun getStatus ()Luz/yalla/capabilities/update/AppUpdateStatus;
 	public final fun getStoreUrl ()Ljava/lang/String;
 	public final fun isChecking ()Z
 	public final fun isUpdateAvailable ()Z
+	public final fun launchUpdate (Landroidx/compose/ui/platform/UriHandler;)Z
+}
+
+public abstract interface class uz/yalla/capabilities/update/AppUpdateStatus {
+}
+
+public final class uz/yalla/capabilities/update/AppUpdateStatus$Available : uz/yalla/capabilities/update/AppUpdateStatus {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Luz/yalla/capabilities/update/AppUpdateStatus$Available;
+	public static synthetic fun copy$default (Luz/yalla/capabilities/update/AppUpdateStatus$Available;Ljava/lang/String;ILjava/lang/Object;)Luz/yalla/capabilities/update/AppUpdateStatus$Available;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStoreUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/capabilities/update/AppUpdateStatus$Checking : uz/yalla/capabilities/update/AppUpdateStatus {
+	public static final field $stable I
+	public static final field INSTANCE Luz/yalla/capabilities/update/AppUpdateStatus$Checking;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/capabilities/update/AppUpdateStatus$UpToDate : uz/yalla/capabilities/update/AppUpdateStatus {
+	public static final field $stable I
+	public static final field INSTANCE Luz/yalla/capabilities/update/AppUpdateStatus$UpToDate;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class uz/yalla/capabilities/update/RememberAppUpdateState_androidKt {

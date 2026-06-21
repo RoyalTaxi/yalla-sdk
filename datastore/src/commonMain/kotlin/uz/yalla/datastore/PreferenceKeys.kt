@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import uz.yalla.datastore.PreferenceKeys.SESSION_KEYS
 
 internal object PreferenceKeys {
     val ACCESS_TOKEN = stringPreferencesKey("accessToken")
@@ -85,6 +86,30 @@ internal object PreferenceKeys {
             IS_CARD_ENABLED,
             ORDER_CANCEL_TIME
         )
+
+    /**
+     * The SENSITIVE keys routed through [SecureStore] (encrypted at rest) instead of the plain DataStore:
+     * the auth + push tokens and the profile/payment PII (name, phone, birthday, gender, avatar URL, card
+     * id + masked PAN). Identified by their logical name so the secure store, the migration, and the clears
+     * stay 1:1 with the matching plain key. NON-sensitive keys (guest/device flags, the `PAYMENT_TYPE`
+     * cash/card discriminator, config, and all UX prefs) deliberately stay in plain DataStore.
+     *
+     * Every entry here is also in [SESSION_KEYS], so a session reset scrubs both the encrypted value and any
+     * un-migrated legacy plaintext.
+     */
+    val SECURE_KEYS: List<String> =
+        listOf(
+            ACCESS_TOKEN,
+            FIREBASE_TOKEN,
+            FIRST_NAME,
+            LAST_NAME,
+            NUMBER,
+            IMAGE,
+            GENDER,
+            BIRTHDAY,
+            CARD_ID,
+            CARD_NUMBER
+        ).map { it.name }
 
     val LOCALE_TYPE = stringPreferencesKey("localeType")
 

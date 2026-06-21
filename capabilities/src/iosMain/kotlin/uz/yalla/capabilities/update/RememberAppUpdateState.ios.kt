@@ -22,19 +22,26 @@ public actual fun rememberAppUpdateState(
 
     LaunchedEffect(Unit) {
         try {
-            val storeInfo = fetchStoreInfo(appId, countryCode)
-            if (storeInfo != null) {
-                val installedVersion =
+            val installedVersion =
+                (
                     NSBundle.mainBundle.infoDictionary
-                        ?.get("CFBundleShortVersionString") as? String ?: ""
-                if (VersionComparator.isNewer(storeInfo.first, installedVersion)) {
-                    state.isUpdateAvailable = true
-                    state.storeUrl = storeInfo.second
-                }
+                        ?.get("CFBundleShortVersionString") as? String
+                )?.takeIf { it.isNotBlank() }
+            // Fail closed: if the installed version can't be determined, don't drive a
+            // (potentially non-dismissible) force-update prompt off an unknown version.
+            if (installedVersion == null) return@LaunchedEffect
+            val storeInfo = fetchStoreInfo(appId, countryCode)
+            if (storeInfo != null && VersionComparator.isNewer(storeInfo.first, installedVersion)) {
+                state.status = AppUpdateStatus.Available(storeInfo.second)
+            } else {
+                state.status = AppUpdateStatus.UpToDate
             }
         } catch (_: Exception) {
+            state.status = AppUpdateStatus.UpToDate
         } finally {
-            state.isChecking = false
+            if (state.status is AppUpdateStatus.Checking) {
+                state.status = AppUpdateStatus.UpToDate
+            }
         }
     }
 
@@ -59,15 +66,7 @@ private suspend fun fetchStoreInfo(
                 }
                 try {
                     val json = NSJSONSerialization.JSONObjectWithData(data, 0u, null) as? Map<Any?, *>
-                    val results = json?.get("results") as? List<Map<Any?, *>>
-                    val first = results?.firstOrNull()
-                    val version = first?.get("version") as? String
-                    val trackViewUrl = first?.get("trackViewUrl") as? String
-                    if (version != null && trackViewUrl != null) {
-                        cont.resume(version to trackViewUrl)
-                    } else {
-                        cont.resume(null)
-                    }
+                    cont.resume(parseStoreInfo(json)?.let { it.version to it.storeUrl })
                 } catch (_: Exception) {
                     cont.resume(null)
                 }

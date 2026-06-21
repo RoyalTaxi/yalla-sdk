@@ -114,14 +114,32 @@ public class DockedExpandableSheetState internal constructor(
     }
 
     internal suspend fun settle(velocity: Float) {
-        val target =
-            when {
-                velocity < -500f -> DockedExpandableSheetValue.Expanded
-                velocity > 500f -> DockedExpandableSheetValue.Collapsed
-                fraction > 0.5f -> DockedExpandableSheetValue.Expanded
-                else -> DockedExpandableSheetValue.Collapsed
-            }
-        anchoredDraggableState.animateTo(target)
+        anchoredDraggableState.animateTo(settleTarget(velocity, fraction))
+    }
+
+    /**
+     * Pure snap-target decision for [settle]. Below the velocity threshold the snap is decided by the
+     * configured [positionalThreshold] (not a hardcoded `0.5f`), so a caller passing e.g.
+     * `{ it * 0.3f }` is honored on release as well as on drag.
+     */
+    internal fun settleTarget(
+        velocity: Float,
+        currentFraction: Float
+    ): DockedExpandableSheetValue {
+        val expandThresholdPx = positionalThreshold(maxOffsetPx)
+        val expandedFraction =
+            if (maxOffsetPx > 0f) (expandThresholdPx / maxOffsetPx).coerceIn(0f, 1f) else 0.5f
+        return when {
+            velocity < -SETTLE_VELOCITY_THRESHOLD -> DockedExpandableSheetValue.Expanded
+            velocity > SETTLE_VELOCITY_THRESHOLD -> DockedExpandableSheetValue.Collapsed
+            currentFraction >= expandedFraction -> DockedExpandableSheetValue.Expanded
+            else -> DockedExpandableSheetValue.Collapsed
+        }
+    }
+
+    private companion object {
+        /** Above this absolute drag velocity (px/s) the fling direction wins over the position. */
+        const val SETTLE_VELOCITY_THRESHOLD = 500f
     }
 }
 

@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.viewinterop.UIKitViewController
 import kotlinx.cinterop.ExperimentalForeignApi
+import uz.yalla.components.config.primitives.ICON_BUTTON_COLOR_UNSET
 import uz.yalla.components.config.requireConfig
 
 @OptIn(ExperimentalForeignApi::class)
@@ -23,9 +24,9 @@ public actual fun IconButton(
     containerColor: Color,
     borderColor: Color
 ) {
-    val iconArgb = if (iconColor.isSpecified) iconColor.toArgb().toLong() else 0L
-    val containerArgb = if (containerColor.isSpecified) containerColor.toArgb().toLong() else 0L
-    val borderArgb = if (borderColor.isSpecified) borderColor.toArgb().toLong() else 0L
+    val iconArgb = if (iconColor.isSpecified) iconColor.toArgb().toLong() else ICON_BUTTON_COLOR_UNSET
+    val containerArgb = if (containerColor.isSpecified) containerColor.toArgb().toLong() else ICON_BUTTON_COLOR_UNSET
+    val borderArgb = if (borderColor.isSpecified) borderColor.toArgb().toLong() else ICON_BUTTON_COLOR_UNSET
     val onClickState = rememberUpdatedState(onClick)
 
     val handle =
@@ -44,8 +45,8 @@ public actual fun IconButton(
         handle.setIcon(icon)
     }
 
-    LaunchedEffect(iconArgb, containerArgb) {
-        handle.setColors(iconArgb, containerArgb)
+    LaunchedEffect(iconArgb, containerArgb, borderArgb) {
+        handle.setColors(iconArgb, containerArgb, borderArgb)
     }
 
     UIKitViewController(

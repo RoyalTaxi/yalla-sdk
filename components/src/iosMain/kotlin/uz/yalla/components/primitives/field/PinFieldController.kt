@@ -20,6 +20,7 @@ public class PinFieldController(
     error: Boolean = false,
     autoFocus: Boolean = true,
     horizontalPadding: Double = 0.0,
+    alphanumeric: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
     private var codeState by mutableStateOf(code)
@@ -41,6 +42,7 @@ public class PinFieldController(
                     },
                     length = length,
                     error = errorState,
+                    alphanumeric = alphanumeric,
                     focusRequester = if (autoFocus) focusRequester else null,
                     contentPadding = PaddingValues(horizontal = horizontalPadding.dp)
                 )

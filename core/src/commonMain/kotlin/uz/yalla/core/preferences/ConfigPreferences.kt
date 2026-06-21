@@ -2,7 +2,10 @@ package uz.yalla.core.preferences
 
 import kotlinx.coroutines.flow.Flow
 
-public interface ConfigPreferences {
+/**
+ * Support and public contact channels from the backend app configuration snapshot.
+ */
+public interface SupportConfigPreferences {
     public val supportNumber: Flow<String>
 
     public fun setSupportNumber(value: String)
@@ -18,7 +21,10 @@ public interface ConfigPreferences {
     public val infoTelegram: Flow<String>
 
     public fun setInfoTelegram(value: String)
+}
 
+/** Legal document URLs from the backend app configuration snapshot. */
+public interface LegalConfigPreferences {
     public val privacyPolicyRu: Flow<String>
 
     public fun setPrivacyPolicyRu(value: String)
@@ -26,7 +32,10 @@ public interface ConfigPreferences {
     public val privacyPolicyUz: Flow<String>
 
     public fun setPrivacyPolicyUz(value: String)
+}
 
+/** Bonus, balance, and payment policy values from the backend app configuration snapshot. */
+public interface BonusConfigPreferences {
     public val maxBonus: Flow<Long>
 
     public fun setMaxBonus(value: Long)
@@ -46,8 +55,22 @@ public interface ConfigPreferences {
     public val isCardEnabled: Flow<Boolean>
 
     public fun setCardEnabled(value: Boolean)
+}
 
+/** Order lifecycle policy values from the backend app configuration snapshot. */
+public interface OrderConfigPreferences {
     public val orderCancelTime: Flow<Int>
 
     public fun setOrderCancelTime(value: Int)
 }
+
+/**
+ * Full remote app configuration mirrored to local storage as one cohesive backend snapshot.
+ *
+ * Prefer the narrower parent interfaces when a consumer needs only one slice of configuration.
+ */
+public interface ConfigPreferences :
+    SupportConfigPreferences,
+    LegalConfigPreferences,
+    BonusConfigPreferences,
+    OrderConfigPreferences

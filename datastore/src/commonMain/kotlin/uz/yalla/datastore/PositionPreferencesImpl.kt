@@ -2,11 +2,8 @@ package uz.yalla.datastore
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.preferences.PositionPreferences
 
@@ -15,18 +12,16 @@ internal class PositionPreferencesImpl(
     private val scope: CoroutineScope
 ) : PositionPreferences {
     override val lastMapPosition: Flow<GeoPoint> =
-        dataStore.data.map {
+        dataStore.readFlow {
             parseGeoPoint(it[PreferenceKeys.LAST_MAP_POSITION])
         }
 
     override fun setLastMapPosition(value: GeoPoint) {
-        scope.launch {
-            dataStore.edit { it[PreferenceKeys.LAST_MAP_POSITION] = "${value.lat},${value.lng}" }
-        }
+        dataStore.write(scope) { it[PreferenceKeys.LAST_MAP_POSITION] = "${value.lat},${value.lng}" }
     }
 
     override val lastGpsPosition: Flow<GeoPoint> =
-        dataStore.data.map { prefs ->
+        dataStore.readFlow { prefs ->
             parseGeoPoint(
                 raw = prefs[PreferenceKeys.LAST_GPS_POSITION],
                 fallbackRaw = prefs[PreferenceKeys.LAST_MAP_POSITION]
@@ -34,19 +29,27 @@ internal class PositionPreferencesImpl(
         }
 
     override fun setLastGpsPosition(value: GeoPoint) {
-        scope.launch {
-            dataStore.edit { it[PreferenceKeys.LAST_GPS_POSITION] = "${value.lat},${value.lng}" }
-        }
+        dataStore.write(scope) { it[PreferenceKeys.LAST_GPS_POSITION] = "${value.lat},${value.lng}" }
     }
 }
 
+/**
+ * Decodes a `"lat,lng"` position string, trying [raw] then [fallbackRaw], then [GeoPoint.Zero].
+ *
+ * Parses atomically: a value is accepted only when BOTH components parse, so a half-valid string like
+ * `"40.38,xyz"` is rejected (and falls through to [fallbackRaw]) rather than silently yielding
+ * `(40.38, 0.0)`. A fully-unparseable value falls back to [GeoPoint.Zero] (Null Island) — a neutral
+ * default, not a valid user location.
+ */
 internal fun parseGeoPoint(
     raw: String?,
     fallbackRaw: String? = null
-): GeoPoint {
-    val source = raw?.takeIf { it.isNotBlank() } ?: fallbackRaw.orEmpty()
+): GeoPoint = decodeGeoPoint(raw) ?: decodeGeoPoint(fallbackRaw) ?: GeoPoint.Zero
+
+private fun decodeGeoPoint(raw: String?): GeoPoint? {
+    val source = raw?.takeIf { it.isNotBlank() } ?: return null
     val parts = source.split(",", limit = 2)
-    val lat = parts.getOrNull(0)?.toDoubleOrNull() ?: 0.0
-    val lng = parts.getOrNull(1)?.toDoubleOrNull() ?: 0.0
+    val lat = parts.getOrNull(0)?.toDoubleOrNull() ?: return null
+    val lng = parts.getOrNull(1)?.toDoubleOrNull() ?: return null
     return GeoPoint(lat, lng)
 }

@@ -6,6 +6,6 @@ a choice was made so the next reader does not relitigate it from scratch.
 
 Status values: `proposed` · `accepted` · `superseded by NNNN`.
 
-| #    | Decision                                                              | Status   |
-|------|----------------------------------------------------------------------|----------|
+| #    | Decision                                                               | Status   |
+|------|------------------------------------------------------------------------|----------|
 | 0001 | [Comments: ban narration, mandate load-bearing docs](0001-comments.md) | accepted |

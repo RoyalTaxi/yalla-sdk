@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.image.ThemedImage
-import uz.yalla.design.image.themedPainter
+import uz.yalla.design.image.rememberThemedPainter
 import uz.yalla.design.theme.System
 
 @Composable
@@ -29,7 +29,7 @@ public fun EmptyState(
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = themedPainter(image),
+            painter = rememberThemedPainter(image),
             contentDescription = null,
             modifier = Modifier.size(120.dp)
         )

@@ -47,6 +47,7 @@ tasks.configureEach {
     if (name != valkyrieTask && !name.startsWith("generateValkyrie")) {
         val usesValkyrieOutput =
             name.startsWith("compileKotlin") ||
+                name.startsWith("runKtlint") ||
                 name.contains("SourcesJar", ignoreCase = true) ||
                 name.contains("sourcesJar", ignoreCase = true)
         if (usesValkyrieOutput) {

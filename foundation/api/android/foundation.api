@@ -7,7 +7,7 @@ public abstract class uz/yalla/foundation/infra/BaseViewModel : androidx/lifecyc
 	public fun <init> ()V
 	public final fun getLoading ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getSafeScope ()Lkotlinx/coroutines/CoroutineScope;
-	public final fun launchWithLoading (Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/Job;
+	public final fun launchWithLoading (Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/Job;
 }
 
 public final class uz/yalla/foundation/infra/LoadingController {
@@ -35,6 +35,7 @@ public final class uz/yalla/foundation/locale/ChangeLanguage_androidKt {
 
 public final class uz/yalla/foundation/locale/LocaleProviderKt {
 	public static final fun LocaleProvider (Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;I)V
+	public static final fun currentAppLocale (Landroidx/compose/runtime/Composer;I)Luz/yalla/core/settings/LocaleKind;
 	public static final fun getLocalAppLocale ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 }
 
@@ -44,5 +45,6 @@ public final class uz/yalla/foundation/system/SystemBarColors_androidKt {
 
 public final class uz/yalla/foundation/theme/ThemeModeKt {
 	public static final fun rememberIsDarkTheme (Landroidx/compose/runtime/Composer;I)Z
+	public static final fun resolveIsDark (Luz/yalla/core/settings/ThemeKind;Z)Z
 }
 

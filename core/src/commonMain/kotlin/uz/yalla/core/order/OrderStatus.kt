@@ -1,5 +1,8 @@
 package uz.yalla.core.order
 
+import uz.yalla.core.util.normalizedId
+
+/** An order's lifecycle status, decoded from the backend [id]; unknown ids preserve their original value. */
 public sealed class OrderStatus(
     public val id: String
 ) {
@@ -26,8 +29,13 @@ public sealed class OrderStatus(
     ) : OrderStatus("unknown")
 
     public companion object {
+        /**
+         * Decodes a wire id into an [OrderStatus], normalizing case/whitespace via the shared
+         * `normalizedId()` helper. The legacy `in_fetters` aliases to [InProgress]; any unrecognized
+         * id becomes [Unknown] preserving the original (un-normalized) value.
+         */
         public fun from(id: String?): OrderStatus =
-            when (id?.trim()?.lowercase()) {
+            when (id.normalizedId()) {
                 "new" -> New
                 "sending" -> Sending
                 "user_sending" -> UserSending

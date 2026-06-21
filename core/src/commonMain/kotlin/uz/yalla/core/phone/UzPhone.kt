@@ -1,5 +1,8 @@
 package uz.yalla.core.phone
 
+import uz.yalla.core.phone.UzPhone.Companion.COUNTRY_CODE
+import uz.yalla.core.phone.UzPhone.Companion.NATIONAL_LENGTH
+import uz.yalla.core.phone.UzPhone.Companion.of
 import kotlin.jvm.JvmInline
 
 /**

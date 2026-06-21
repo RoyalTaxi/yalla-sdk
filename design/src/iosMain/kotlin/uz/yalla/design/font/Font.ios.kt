@@ -6,6 +6,6 @@ import uz.yalla.resources.sfpro_bold
 import uz.yalla.resources.sfpro_medium
 import uz.yalla.resources.sfpro_normal
 
-public actual val boldFont: FontResource = Res.font.sfpro_bold
-public actual val mediumFont: FontResource = Res.font.sfpro_medium
-public actual val normalFont: FontResource = Res.font.sfpro_normal
+internal actual val boldFont: FontResource = Res.font.sfpro_bold
+internal actual val mediumFont: FontResource = Res.font.sfpro_medium
+internal actual val normalFont: FontResource = Res.font.sfpro_normal
