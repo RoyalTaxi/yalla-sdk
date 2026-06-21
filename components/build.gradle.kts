@@ -12,6 +12,7 @@ kotlin {
             api(projects.design)
             api(projects.resources)
             api(projects.maps)
+            api(projects.media)
             api(projects.core)
             implementation(projects.foundation)
 
@@ -47,6 +48,7 @@ kotlin.targets
     .configureEach {
         binaries.withType(Framework::class.java).configureEach {
             export(projects.maps)
+            export(projects.media)
             export(projects.design)
             export(projects.resources)
             export(projects.core)
