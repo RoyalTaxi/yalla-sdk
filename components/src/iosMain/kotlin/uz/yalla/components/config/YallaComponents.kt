@@ -1,7 +1,5 @@
 package uz.yalla.components.config
 
-import uz.yalla.components.config.YallaComponents.config
-import uz.yalla.components.config.YallaComponents.install
 import kotlin.concurrent.Volatile
 
 public object YallaComponents {

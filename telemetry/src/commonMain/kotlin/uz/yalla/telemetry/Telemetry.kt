@@ -1,10 +1,5 @@
 package uz.yalla.telemetry
 
-import uz.yalla.telemetry.Telemetry.crash
-import uz.yalla.telemetry.Telemetry.install
-import uz.yalla.telemetry.Telemetry.recordCrash
-import uz.yalla.telemetry.Telemetry.setUser
-import uz.yalla.telemetry.Telemetry.track
 import uz.yalla.telemetry.crash.CrashReporter
 import uz.yalla.telemetry.event.AnalyticsEvent
 import uz.yalla.telemetry.sink.TelemetrySink

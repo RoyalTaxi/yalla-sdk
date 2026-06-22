@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class SettingsKindTest {
-
     @Test
     fun mapKindDecodesKnownIds() {
         assertEquals(MapKind.Google, MapKind.from("google"))

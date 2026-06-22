@@ -4,7 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class LocationKindTest {
-
     @Test
     fun pointKindDecodesKnownIds() {
         assertEquals(PointKind.Start, PointKind.from("start"))
