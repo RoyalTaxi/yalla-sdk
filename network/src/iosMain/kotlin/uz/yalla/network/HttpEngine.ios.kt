@@ -8,7 +8,7 @@ internal actual fun createHttpEngine(certificatePins: List<CertificatePin>): Htt
     Darwin.create {
         if (certificatePins.isNotEmpty()) {
             val builder = CertificatePinner.Builder()
-            certificatePins.forEach { pin -> builder.add(pin.host, *pin.pins.toTypedArray()) }
+            certificatePins.forEach { pin -> pin.pins.forEach { value -> builder.add(pin.host, value) } }
             handleChallenge(builder.build())
         }
     }

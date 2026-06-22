@@ -122,9 +122,9 @@ public fun createHttpClient(
             )
         }
 
-    client.launch { locale.collectLatest { localeCache.value = it } }
-    client.launch { guestMode.collectLatest { guestModeCache.value = it } }
-    client.launch { position.collectLatest { positionCache.value = it } }
+    scope.launch { locale.collectLatest { localeCache.value = it } }
+    scope.launch { guestMode.collectLatest { guestModeCache.value = it } }
+    scope.launch { position.collectLatest { positionCache.value = it } }
 
     return client
 }
