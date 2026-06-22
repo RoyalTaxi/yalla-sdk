@@ -8,7 +8,8 @@ This doc defines **one thing only**: the *shape* a configurable component takes 
 `Colors` / `Dimens` / `Styles` holders, the `Defaults` object, and the composable's parameter
 list. It is the convention that the rest of the file (layout, behaviour) is free to vary around.
 
-A Konsist rule (`:konsistTest` → [`ComponentShapeKonsistTest`](../konsistTest/src/test/kotlin/uz/yalla/konsist/ComponentShapeKonsistTest.kt))
+A Konsist rule (`:konsistTest` → [
+`ComponentShapeKonsistTest`](../konsistTest/src/test/kotlin/uz/yalla/konsist/ComponentShapeKonsistTest.kt))
 enforces the load-bearing parts of this shape in CI. **If you change the convention, change the
 rule and this doc together.**
 
@@ -88,7 +89,8 @@ public object XDefaults {                       // the ONE place theme tokens en
    A holder with no factory is unreachable; a factory with no holder can't compile.
 4. **Each factory parameter defaults to a token** so `XDefaults.colors()` is a complete, callable
    default, and callers override only what they need (`XDefaults.colors(containerColor = …)`).
-5. **The composable defaults each holder param to its factory:** `colors: XColors = XDefaults.colors()`.
+5. **The composable defaults each holder param to its factory:**
+   `colors: XColors = XDefaults.colors()`.
 
 ### What is *not* mandatory
 
@@ -101,13 +103,14 @@ axis when a real caller needs it, not pre-emptively.
 
 ## 3. What the Konsist rule guards
 
-[`ComponentShapeKonsistTest`](../konsistTest/src/test/kotlin/uz/yalla/konsist/ComponentShapeKonsistTest.kt)
+[
+`ComponentShapeKonsistTest`](../konsistTest/src/test/kotlin/uz/yalla/konsist/ComponentShapeKonsistTest.kt)
 scans `uz.yalla.components..` and fails the build on the two drift modes that bit us:
 
-| Rule | Fails when | Catches |
-|------|-----------|---------|
-| `everyColorsHolderHasMatchingDefaults` | a `*Colors` data class has no sibling `*Defaults` object | a holder wired to nothing — the dead-end |
-| `everyHolderHasItsDefaultsFactory` | a `*Colors`/`*Dimens`/`*Styles` holder lacks its `Defaults.colors()`/`dimens()`/`styles()` factory | the "Defaults miss Colors/Styles" half-pairs |
+| Rule                                   | Fails when                                                                                         | Catches                                      |
+|----------------------------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------|
+| `everyColorsHolderHasMatchingDefaults` | a `*Colors` data class has no sibling `*Defaults` object                                           | a holder wired to nothing — the dead-end     |
+| `everyHolderHasItsDefaultsFactory`     | a `*Colors`/`*Dimens`/`*Styles` holder lacks its `Defaults.colors()`/`dimens()`/`styles()` factory | the "Defaults miss Colors/Styles" half-pairs |
 
 Both are **structural** — they assert the shape exists, not what's inside it. They start narrow
 (`Colors`-anchored, plus holder→factory pairing) on purpose; tighten them as the convention

@@ -1,12 +1,12 @@
 package uz.yalla.maps.util
 
-public fun normalizeHeading(headingDegrees: Float): Float {
+internal fun normalizeHeading(headingDegrees: Float): Float {
     var normalized = headingDegrees % 360f
     if (normalized < 0f) normalized += 360f
     return normalized
 }
 
-public fun shortestHeadingPath(
+internal fun shortestHeadingPath(
     fromDegrees: Float,
     toDegrees: Float
 ): Float {
@@ -16,7 +16,7 @@ public fun shortestHeadingPath(
     return fromDegrees + delta
 }
 
-public fun interpolateHeading(
+internal fun interpolateHeading(
     fromDegrees: Float,
     toDegrees: Float,
     fraction: Float

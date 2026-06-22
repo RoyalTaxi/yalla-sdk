@@ -30,7 +30,7 @@ import com.google.android.gms.common.api.Status
 private const val CONSENT_GRACE_MS = 400L
 
 @Composable
-public actual fun ObserveSmsCode(
+public fun ObserveSmsCode(
     enabled: Boolean,
     codeLength: Int,
     alphanumeric: Boolean,

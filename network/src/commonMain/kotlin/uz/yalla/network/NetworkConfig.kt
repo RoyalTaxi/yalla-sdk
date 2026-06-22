@@ -6,15 +6,16 @@ public data class NetworkConfig(
     val secretKey: String,
     val deviceType: String = "client",
     val deviceMode: String = "mobile",
-    val guestAllowedSegments: List<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS
+    val guestAllowedPaths: List<String> = DEFAULT_GUEST_ALLOWED_PATHS,
+    val certificatePins: List<CertificatePin> = emptyList()
 )
 
-public val DEFAULT_GUEST_ALLOWED_SEGMENTS: List<String> =
+public val DEFAULT_GUEST_ALLOWED_PATHS: List<String> =
     listOf(
         "client",
         "valid",
         "register",
         "location-name",
-        "cost",
-        "lists"
+        "address/tariff/cost",
+        "executor/lists"
     )

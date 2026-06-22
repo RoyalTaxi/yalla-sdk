@@ -36,7 +36,7 @@ public class LoadingController(
                     emit(true)
                     awaitCancellation()
                 } else {
-                    shownAt?.let { delay(minVisible - it.elapsedNow()) }
+                    shownAt?.let { delay((minVisible - it.elapsedNow()).coerceAtLeast(Duration.ZERO)) }
                     shownAt = null
                     emit(false)
                 }
@@ -53,6 +53,7 @@ public class LoadingController(
 
     public companion object {
         public val GRACE_PERIOD: Duration = 200.milliseconds
+
         public val MIN_VISIBLE: Duration = 500.milliseconds
     }
 }

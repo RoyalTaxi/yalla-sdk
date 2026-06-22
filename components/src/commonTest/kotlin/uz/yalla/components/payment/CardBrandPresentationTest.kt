@@ -6,12 +6,6 @@ import uz.yalla.core.payment.PaymentMethod
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * The label is the only non-`@Composable` half of the presentation, so it is the part that can be
- * pinned down without a UI test. These assertions guard that every [CardBrand] still maps to a
- * label and that the [PaymentMethod.Card] overload classifies through [CardBrand.of] rather than
- * inventing its own heuristic.
- */
 class CardBrandPresentationTest {
     @Test
     fun everyBrandHasALabel() {

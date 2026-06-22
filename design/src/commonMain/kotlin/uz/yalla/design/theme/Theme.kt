@@ -8,18 +8,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RippleConfiguration
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import uz.yalla.design.color.ColorScheme
+import uz.yalla.design.color.DarkColorScheme
+import uz.yalla.design.color.LightColorScheme
 import uz.yalla.design.color.LocalColorScheme
-import uz.yalla.design.color.dark
-import uz.yalla.design.color.light
 import uz.yalla.design.font.FontScheme
 import uz.yalla.design.font.LocalFontScheme
 import uz.yalla.design.font.rememberFontScheme
-import uz.yalla.design.space.LocalSpaceScheme
-import uz.yalla.design.space.SpaceScheme
-import uz.yalla.design.space.standardSpaceScheme
 import androidx.compose.material3.darkColorScheme as materialDarkColorScheme
 import androidx.compose.material3.lightColorScheme as materialLightColorScheme
 
@@ -29,22 +27,29 @@ internal val LocalIsDark = staticCompositionLocalOf { false }
 @Composable
 public fun YallaTheme(
     isDark: Boolean = isSystemInDarkTheme(),
-    colorScheme: ColorScheme = if (isDark) dark() else light(),
+    colorScheme: ColorScheme = if (isDark) DarkColorScheme else LightColorScheme,
     fontScheme: FontScheme = rememberFontScheme(),
-    spaceScheme: SpaceScheme = standardSpaceScheme(),
     content: @Composable () -> Unit
 ) {
+    val expectedScheme = if (isDark) DarkColorScheme else LightColorScheme
+    require(colorScheme.background.base == expectedScheme.background.base) {
+        "YallaTheme: colorScheme appearance disagrees with isDark=$isDark. Provide the matching " +
+            "scheme so colors, ripple, and themed images stay consistent."
+    }
+
     val rippleConfiguration =
-        RippleConfiguration(
-            color = if (isDark) Color.White else Color.Black,
-            rippleAlpha =
-                RippleAlpha(
-                    pressedAlpha = 0.12f,
-                    focusedAlpha = 0.08f,
-                    draggedAlpha = 0.12f,
-                    hoveredAlpha = 0.08f
-                )
-        )
+        remember(isDark) {
+            RippleConfiguration(
+                color = if (isDark) Color.White else Color.Black,
+                rippleAlpha =
+                    RippleAlpha(
+                        pressedAlpha = 0.12f,
+                        focusedAlpha = 0.08f,
+                        draggedAlpha = 0.12f,
+                        hoveredAlpha = 0.08f
+                    )
+            )
+        }
 
     val materialColorScheme =
         if (isDark) {
@@ -77,7 +82,6 @@ public fun YallaTheme(
         LocalIsDark provides isDark,
         LocalColorScheme provides colorScheme,
         LocalFontScheme provides fontScheme,
-        LocalSpaceScheme provides spaceScheme,
         LocalRippleConfiguration provides rippleConfiguration
     ) {
         MaterialTheme(
@@ -95,10 +99,6 @@ public object System {
     public val font: FontScheme
         @Composable
         get() = LocalFontScheme.current
-
-    public val space: SpaceScheme
-        @Composable
-        get() = LocalSpaceScheme.current
 
     public val isDark: Boolean
         @Composable

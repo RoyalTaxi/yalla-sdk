@@ -9,7 +9,9 @@ public data class Anchor(
 ) {
     public companion object {
         public val CENTER: Anchor = Anchor(0.5f, 0.5f)
+
         public val BOTTOM: Anchor = Anchor(0.5f, 1.0f)
+
         public val TOP: Anchor = Anchor(0.5f, 0.0f)
     }
 }

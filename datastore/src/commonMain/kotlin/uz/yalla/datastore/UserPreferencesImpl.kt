@@ -5,7 +5,8 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import uz.yalla.core.identity.CardId
 import uz.yalla.core.payment.PaymentMethod
@@ -13,65 +14,74 @@ import uz.yalla.core.preferences.UserPreferences
 
 internal class UserPreferencesImpl(
     private val dataStore: DataStore<Preferences>,
+    private val secureStore: SecureStore,
     private val scope: CoroutineScope
 ) : UserPreferences {
-    override val firstName: Flow<String> = dataStore.data.map { it[PreferenceKeys.FIRST_NAME].orEmpty() }
+    override val firstName: Flow<String> =
+        dataStore.secureReadFlow(PreferenceKeys.FIRST_NAME.name, secureStore)
 
     override fun setFirstName(value: String) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.FIRST_NAME] = value } }
+        dataStore.secureWrite(PreferenceKeys.FIRST_NAME.name, value, secureStore, scope)
     }
 
-    override val lastName: Flow<String> = dataStore.data.map { it[PreferenceKeys.LAST_NAME].orEmpty() }
+    override val lastName: Flow<String> =
+        dataStore.secureReadFlow(PreferenceKeys.LAST_NAME.name, secureStore)
 
     override fun setLastName(value: String) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.LAST_NAME] = value } }
+        dataStore.secureWrite(PreferenceKeys.LAST_NAME.name, value, secureStore, scope)
     }
 
-    override val number: Flow<String> = dataStore.data.map { it[PreferenceKeys.NUMBER].orEmpty() }
+    override val number: Flow<String> =
+        dataStore.secureReadFlow(PreferenceKeys.NUMBER.name, secureStore)
 
     override fun setNumber(value: String) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.NUMBER] = value } }
+        dataStore.secureWrite(PreferenceKeys.NUMBER.name, value, secureStore, scope)
     }
 
-    override val image: Flow<String> = dataStore.data.map { it[PreferenceKeys.IMAGE].orEmpty() }
+    override val image: Flow<String> =
+        dataStore.secureReadFlow(PreferenceKeys.IMAGE.name, secureStore)
 
     override fun setImage(value: String) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.IMAGE] = value } }
+        dataStore.secureWrite(PreferenceKeys.IMAGE.name, value, secureStore, scope)
     }
 
-    override val gender: Flow<String> = dataStore.data.map { it[PreferenceKeys.GENDER].orEmpty() }
+    override val gender: Flow<String> =
+        dataStore.secureReadFlow(PreferenceKeys.GENDER.name, secureStore)
 
     override fun setGender(value: String) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.GENDER] = value } }
+        dataStore.secureWrite(PreferenceKeys.GENDER.name, value, secureStore, scope)
     }
 
-    override val birthday: Flow<String> = dataStore.data.map { it[PreferenceKeys.BIRTHDAY].orEmpty() }
+    override val birthday: Flow<String> =
+        dataStore.secureReadFlow(PreferenceKeys.BIRTHDAY.name, secureStore)
 
     override fun setBirthday(value: String) {
-        scope.launch { dataStore.edit { it[PreferenceKeys.BIRTHDAY] = value } }
+        dataStore.secureWrite(PreferenceKeys.BIRTHDAY.name, value, secureStore, scope)
     }
 
     override val paymentMethod: Flow<PaymentMethod> =
-        dataStore.data.map { prefs ->
+        combine(
+            dataStore.readFlow { it[PreferenceKeys.PAYMENT_TYPE] },
+            dataStore.secureReadFlow(PreferenceKeys.CARD_ID.name, secureStore),
+            dataStore.secureReadFlow(PreferenceKeys.CARD_NUMBER.name, secureStore)
+        ) { type, cardId, maskedNumber ->
             PaymentMethod.from(
-                id = prefs[PreferenceKeys.PAYMENT_TYPE],
-                cardId = prefs[PreferenceKeys.CARD_ID]?.let { CardId(it) },
-                maskedNumber = prefs[PreferenceKeys.CARD_NUMBER]
+                id = type,
+                cardId = cardId.takeIf { it.isNotEmpty() }?.let { CardId(it) },
+                maskedNumber = maskedNumber
             )
-        }
+        }.distinctUntilChanged()
 
     override fun setPaymentMethod(value: PaymentMethod) {
         scope.launch {
-            dataStore.edit { prefs ->
-                prefs[PreferenceKeys.PAYMENT_TYPE] = value.id
-                if (value is PaymentMethod.Card) {
-                    prefs[PreferenceKeys.CARD_ID] = value.cardId.raw
-                    prefs[PreferenceKeys.CARD_NUMBER] = value.maskedNumber
-                } else {
-                    prefs.remove(PreferenceKeys.CARD_ID)
-                    prefs.remove(PreferenceKeys.CARD_NUMBER)
-                }
+            if (value is PaymentMethod.Card) {
+                dataStore.secureSet(PreferenceKeys.CARD_ID.name, value.cardId.raw, secureStore)
+                dataStore.secureSet(PreferenceKeys.CARD_NUMBER.name, value.maskedNumber, secureStore)
+            } else {
+                dataStore.secureUnset(PreferenceKeys.CARD_ID.name, secureStore)
+                dataStore.secureUnset(PreferenceKeys.CARD_NUMBER.name, secureStore)
             }
+            dataStore.edit { it[PreferenceKeys.PAYMENT_TYPE] = value.id }
         }
     }
 }

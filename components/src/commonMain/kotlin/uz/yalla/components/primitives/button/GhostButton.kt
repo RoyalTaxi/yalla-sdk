@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
-private const val DisabledAlpha = 0.4f
+private const val DISABLED_ALPHA = 0.4f
 
 @Composable
 public fun GhostButton(
@@ -29,7 +29,7 @@ public fun GhostButton(
     Text(
         text = text,
         style = style,
-        color = if (enabled) color else color.copy(alpha = DisabledAlpha),
+        color = if (enabled) color else color.copy(alpha = DISABLED_ALPHA),
         modifier =
             modifier
                 .minimumInteractiveComponentSize()

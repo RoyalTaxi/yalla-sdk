@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Base64
-import org.koin.core.context.GlobalContext
+import uz.yalla.capabilities.capabilitiesContextOrNull
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.util.Arrays
@@ -16,12 +16,12 @@ private const val NUM_HASHED_BYTES = 9
 private const val NUM_BASE64_CHAR = 11
 
 private val cachedSignature by lazy {
-    runCatching { GlobalContext.get().get<Context>() }.getOrNull()?.let(::getAppSignature)
+    capabilitiesContextOrNull?.let(::getAppSignature)
 }
 
 public actual fun getAppSignature(): String? = cachedSignature
 
-public fun getAppSignature(context: Context): String? =
+internal fun getAppSignature(context: Context): String? =
     runCatching {
         val packageName = context.packageName
         val signatures =

@@ -38,7 +38,7 @@ public class SwitchingMapController internal constructor(
 
     private val active = MutableStateFlow<MapController?>(null)
 
-    public val activeBackend: StateFlow<MapController?> = active
+    internal val activeBackend: StateFlow<MapController?> = active
 
     private val _cameraPosition = MutableStateFlow(initialPosition ?: CameraPosition.DEFAULT)
     override val cameraPosition: StateFlow<CameraPosition> = _cameraPosition
@@ -69,25 +69,32 @@ public class SwitchingMapController internal constructor(
     private var currentIsDark: Boolean = false
 
     private var observerJobs: List<Job> = emptyList()
+    private var seedJob: Job? = null
+
+    private var cameraSeedApplied = false
 
     internal suspend fun switchTo(kind: MapKind) {
         if (currentKind == kind && active.value != null) return
+        seedJob?.cancel()
         val previous = active.value
-        val snapshot = previous?.snapshotScene()
         val next =
             when (kind) {
                 MapKind.Google -> factory.createGoogleController()
                 MapKind.Libre -> factory.createLibreController()
             }
         currentKind = kind
-        val seedSource = snapshot?.cameraPosition ?: _cameraPosition.value
+        val seedSource = _cameraPosition.value
+        cameraSeedApplied = false
         wireObservers(next)
         active.value = next
-        if (snapshot != null) {
-            applySnapshot(next, snapshot)
-        } else {
+        seedJob =
             scope.launch {
-                withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { next.isReady.first { it } }
+                val readied = withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { next.isReady.first { it } } != null
+                if (active.value !== next) return@launch
+                if (!readied) {
+                    _events.emit(MapEvent.ProviderUnavailable)
+                    return@launch
+                }
                 next.setDesiredPadding(pendingPadding)
                 next.setMarkers(pendingMarkers)
                 next.setRoutes(pendingRoutes)
@@ -95,40 +102,30 @@ public class SwitchingMapController internal constructor(
                 next.setInteractionEnabled(interactionEnabled)
                 next.setUserLocationEnabled(userLocationEnabled)
                 next.setUserLocation(userLocation)
+                next.setStyle(currentStyle, currentIsDark)
                 if (!cameraCommanded &&
                     seedSource.target != GeoPoint.Zero
                 ) {
                     next.moveTo(seedSource.target, seedSource.zoom)
                 }
+                lockedTarget?.let { next.lockTarget(it, lockedZoom) }
+                cameraSeedApplied = true
             }
-        }
         previous?.close()
-    }
-
-    internal suspend fun applyStyle(
-        style: MapStyle,
-        isDark: Boolean
-    ) {
-        currentStyle = style
-        currentIsDark = isDark
-        active.value?.setStyle(style, isDark)
     }
 
     private fun wireObservers(controller: MapController) {
         observerJobs.forEach { it.cancel() }
-        var cameraSeeded = false
         var centerPinSeeded = false
         observerJobs =
             listOf(
                 controller.cameraPosition
                     .onEach {
-                        if (!cameraSeeded) {
-                            cameraSeeded = true
-                            if (it == CameraPosition.DEFAULT &&
-                                _cameraPosition.value != CameraPosition.DEFAULT
-                            ) {
-                                return@onEach
-                            }
+                        if (!cameraSeedApplied &&
+                            it == CameraPosition.DEFAULT &&
+                            _cameraPosition.value != CameraPosition.DEFAULT
+                        ) {
+                            return@onEach
                         }
                         _cameraPosition.value = it
                     }.launchIn(scope),
@@ -147,23 +144,6 @@ public class SwitchingMapController internal constructor(
                 controller.isReady.onEach { _isReady.value = it }.launchIn(scope),
                 controller.events.onEach { _events.emit(it) }.launchIn(scope)
             )
-    }
-
-    private suspend fun applySnapshot(
-        controller: MapController,
-        snapshot: MapController.SceneSnapshot
-    ) {
-        withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { controller.isReady.first { it } }
-        controller.setDesiredPadding(snapshot.padding)
-        controller.setMarkers(snapshot.markers)
-        controller.setRoutes(snapshot.routes)
-        controller.setCircles(snapshot.circles)
-        controller.setInteractionEnabled(interactionEnabled)
-        controller.setUserLocationEnabled(userLocationEnabled)
-        controller.setUserLocation(userLocation)
-        controller.setStyle(currentStyle, currentIsDark)
-        controller.moveTo(snapshot.cameraPosition.target, snapshot.cameraPosition.zoom)
-        snapshot.lockedTarget?.let { controller.lockTarget(it, snapshot.lockedZoom) }
     }
 
     override suspend fun moveTo(
@@ -273,19 +253,9 @@ public class SwitchingMapController internal constructor(
         active.value?.unlockTarget()
     }
 
-    override fun snapshotScene(): MapController.SceneSnapshot =
-        active.value?.snapshotScene()
-            ?: MapController.SceneSnapshot(
-                cameraPosition = _cameraPosition.value,
-                markers = pendingMarkers,
-                routes = pendingRoutes,
-                circles = pendingCircles,
-                padding = pendingPadding,
-                lockedTarget = lockedTarget,
-                lockedZoom = lockedZoom
-            )
-
     override fun close() {
+        seedJob?.cancel()
+        seedJob = null
         observerJobs.forEach { it.cancel() }
         observerJobs = emptyList()
         active.value?.close()

@@ -7,7 +7,12 @@ public sealed class MapStyle {
     public data class Url(
         val lightUrl: String,
         val darkUrl: String
-    ) : MapStyle()
+    ) : MapStyle() {
+        init {
+            require(lightUrl.startsWith("https://")) { "MapStyle.Url.lightUrl must be https://" }
+            require(darkUrl.startsWith("https://")) { "MapStyle.Url.darkUrl must be https://" }
+        }
+    }
 
     public data class InlineJson(
         val lightJson: String,

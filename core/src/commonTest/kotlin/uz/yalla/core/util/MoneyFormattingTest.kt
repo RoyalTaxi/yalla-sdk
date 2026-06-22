@@ -3,14 +3,6 @@ package uz.yalla.core.util
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Output-based characterization of [formatMoney].
- *
- * The edges that bite: the sign placement (`-` prefixed once, ahead of the grouping),
- * the 3-digit space grouping boundaries (no leading separator at exactly 1 000),
- * and the null receiver collapsing to "0". This is user-facing currency text, so a silent
- * grouping or sign regression is high cost.
- */
 class MoneyFormattingTest {
     @Test
     fun formatsZero() {
@@ -27,7 +19,6 @@ class MoneyFormattingTest {
 
     @Test
     fun insertsSeparatorAtFirstThousandsBoundary() {
-        // No leading separator: exactly four digits groups as "1 000", not " 1 000".
         assertEquals("1 000", 1_000L.formatMoney())
         assertEquals("9 999", 9_999L.formatMoney())
         assertEquals("10 000", 10_000L.formatMoney())
@@ -73,12 +64,7 @@ class MoneyFormattingTest {
     }
 
     @Test
-    fun longMinValueProducesGarbledOutput_knownWart() {
-        // KNOWN WART, pinned as-is (characterization, not endorsement): `-this` on Long.MIN_VALUE
-        // overflows back to Long.MIN_VALUE, so the magnitude string keeps its own '-', the grouping
-        // counts that '-' as a character, and the sign prefix then doubles it. Result is a double
-        // dash. Money is never realistically Long.MIN_VALUE, so this is documented rather than fixed
-        // here — fixing it is a behavior change that belongs in its own item.
+    fun longMinValueProducesGarbledOutputKnownWart() {
         assertEquals("--9 223 372 036 854 775 808", Long.MIN_VALUE.formatMoney())
     }
 }

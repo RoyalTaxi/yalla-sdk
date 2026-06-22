@@ -20,7 +20,8 @@ froze), and large. The rewrite follows one rule:
 
 This is the same pattern the rest of the SDK uses for `SheetFactory`, `SnackbarFactory`, etc. The
 shared `media` module declares a `MediaFactory` interface; `yalla-sdk-android` and `yalla-sdk-ios`
-each provide a native implementation, and the host app injects it once via `YallaMedia.install(...)`.
+each provide a native implementation, and the host app injects it once via
+`YallaMedia.install(...)`.
 
 ```
 ┌───────────────────────────── commonMain (this module) ─────────────────────────────┐
@@ -61,27 +62,29 @@ each provide a native implementation, and the host app injects it once via `Yall
 
 ```
 commonMain/uz/yalla/media/
-├── picker/ImagePickerLauncher.kt        expect fun + SelectionMode + ImagePickerLauncher handle
+├── config/MediaConfig.kt                MediaConfig + Builder (platform-agnostic, single-sourced)
+├── config/YallaMedia.kt                 install (single-shot) + current + requireMedia
+├── config/MediaFactory.kt              expect interface MediaFactory (handle type differs per platform)
+├── picker/ImagePickerLauncher.kt        expect fun + SelectionMode + toSelectionLimit + handle
 ├── camera/SystemCameraLauncher.kt       expect fun + SystemCameraLauncher handle
 └── utils/
-    ├── ImageCompressor.kt               expect fun compressImage(...)
-    └── CompressionConfig.kt             Default / ProfilePhoto / ChatImage presets
+    ├── ImageCompressor.kt               expect fun compressImage(...): ByteArray?
+    ├── CompressionConfig.kt             Default / ProfilePhoto / ChatImage presets + validation
+    └── MediaScope.kt                    app-lifetime scope for reads (survives caller cancellation)
 
 androidMain/uz/yalla/media/
-├── config/MediaFactory.kt               native contract — returns List<Uri> / Uri?
-├── config/YallaMedia.kt                 MediaConfig.Builder + install + requireMedia
+├── config/MediaFactory.kt               actual interface — returns List<Uri> / Uri?
 ├── picker/ImagePickerLauncher.android.kt   reads picked Uris → ByteArray (IO)
 ├── camera/SystemCameraLauncher.android.kt  reads captured Uri → ByteArray (IO)
-├── utils/ImageCompressor.android.kt     BitmapFactory downsample + JPEG quality search
+├── utils/ImageCompressor.android.kt     BitmapFactory inSampleSize downsample + JPEG quality search
 └── ImageViewerFileProvider.kt           FileProvider for the camera output file
 
 iosMain/uz/yalla/media/
-├── config/MediaFactory.kt               native contract — returns List<NSData> / NSData?
-├── config/YallaMedia.kt                 MediaConfig.Builder + install + requireMedia
-├── picker/ImagePickerLauncher.ios.kt    NSData → ByteArray (Default)
-├── camera/SystemCameraLauncher.ios.kt   NSData → ByteArray (Default)
+├── config/MediaFactory.kt               actual interface — returns List<NSData> / NSData?
+├── picker/ImagePickerLauncher.ios.kt    NSData → ByteArray (IO)
+├── camera/SystemCameraLauncher.ios.kt   NSData → ByteArray (IO)
 └── utils/
-    ├── ImageCompressor.ios.kt           UIGraphicsImageRenderer + JPEG quality search
+    ├── ImageCompressor.ios.kt           UIGraphicsImageRenderer (scale=1.0) + JPEG quality search
     └── NSDataExtensions.kt              the single NSData.toByteArray() converter
 ```
 
@@ -91,24 +94,29 @@ iosMain/uz/yalla/media/
 
 - **Coordinates:** `uz.yalla.sdk:media` (version from the SDK BOM / version catalog).
 - **Plugin:** `id("yalla.sdk.kmp.compose")` — a convention plugin that applies:
-  - `yalla.sdk.kmp` → AGP KMP library + Kotlin Multiplatform + serialization + `maven-publish` + Dokka.
-  - `org.jetbrains.compose` + the Compose compiler + Compose stability config.
+    - `yalla.sdk.kmp` → AGP KMP library + Kotlin Multiplatform + serialization + `maven-publish` +
+      Dokka.
+    - `org.jetbrains.compose` + the Compose compiler + Compose stability config.
 - **Targets:** Android (`compileSdk 36`, `minSdk 26`, `JVM_11`), `iosArm64`, `iosSimulatorArm64`.
 - **iOS binary:** **static** framework (`isStatic = true`), base name set by the SDK convention.
 - **Dependencies:**
-  - common: `compose.runtime`, `compose.ui`, `compose.foundation`, `compose.material3`.
-  - android: `androidx.core.ktx` (FileProvider, content resolver), `androidx.exifinterface`.
-  - ios: none beyond the Kotlin/Native platform libs.
+    - common: `compose.runtime`, `compose.ui`, `compose.foundation`, `compose.material3`.
+    - android: `androidx.core.ktx` (FileProvider, content resolver), `androidx.exifinterface`.
+    - ios: none beyond the Kotlin/Native platform libs.
 
 The module ships **no Android permissions**. Its `AndroidManifest.xml` declares only the
-`ImageViewerFileProvider` (authority `${applicationId}.provider`, paths from `res/xml/file_paths.xml`)
+`ImageViewerFileProvider` (authority `${applicationId}.provider`, paths from
+`res/xml/file_paths.xml`)
 used to hand the camera a file URI to write into.
 
 ---
 
 ## 4. Installation (host app)
 
-The shared module must be told which native factory to use, **once**, at startup.
+The shared module must be told which native factory to use, **once**, at startup. `install` is
+single-shot — calling it a second time throws (`IllegalStateException`) rather than silently
+swapping
+the trusted factory that receives the user's image bytes. Read it back with `YallaMedia.current()`.
 
 ### Android — `YallaApp.onCreate()`
 
@@ -141,10 +149,13 @@ fun installMedia(factory: MediaFactory) = YallaMedia.install(MediaConfig.Builder
 ```
 
 Requirements on iOS:
-- `iosApp/build.gradle.kts` must `export(libs.yalla.media)` (so Swift sees `MediaFactory`/`MediaConfig`)
+
+- `iosApp/build.gradle.kts` must `export(libs.yalla.media)` (so Swift sees `MediaFactory`/
+  `MediaConfig`)
   and `api(libs.yalla.media)`.
 - `YallaMediaFactory.swift` (in `yalla-sdk-ios`) must be a member of the app target.
-- `Info.plist` must contain `NSCameraUsageDescription` (camera) and `NSPhotoLibraryUsageDescription`.
+- `Info.plist` must contain `NSCameraUsageDescription` (camera) and
+  `NSPhotoLibraryUsageDescription`.
   *PHPicker itself needs no permission*; the photo-library key is only a safety net for any
   library-read path.
 
@@ -170,6 +181,7 @@ galleryLauncher.launch()
 ```
 
 `SelectionMode`:
+
 - `SelectionMode.Single` — one image (most common; e.g. avatar).
 - `SelectionMode.Multiple(maxSelection = n)` — up to `n` images.
 - `SelectionMode.Multiple(SelectionMode.INFINITY)` — system maximum (`INFINITY == 0`).
@@ -201,25 +213,44 @@ val compressed: ByteArray = compressImage(
 ```
 
 `CompressionConfig` presets (`maxFileSize` / `maxDimension` / `quality`):
-| Preset         | Max file | Max dimension | JPEG quality |
+| Preset | Max file | Max dimension | JPEG quality |
 |----------------|----------|---------------|--------------|
-| `Default`      | 1 MB     | 1024 px       | 80           |
-| `ProfilePhoto` | 512 KB   | 512 px        | 85           |
-| `ChatImage`    | 2 MB     | 1920 px       | 75           |
+| `Default`      | 1 MB | 1024 px | 80 |
+| `ProfilePhoto` | 512 KB | 512 px | 85 |
+| `ChatImage`    | 2 MB | 1920 px | 75 |
 
-`compressImage` downsamples on decode (Android `inSampleSize`; iOS `UIGraphicsImageRenderer`),
-then **binary-searches the JPEG quality** to land just under `maxFileSize`, with a half-resolution
-fallback if even minimum quality is too big. Run it off the main thread.
+`compressImage` downsamples to `maxDimension` (Android `inSampleSize` decodes downsampled; iOS
+renders the decoded image through a `UIGraphicsImageRenderer` pinned to `scale = 1.0` so points
+equal
+pixels), bakes any EXIF orientation into the pixels (and strips it from metadata) so output is
+equivalently oriented on both platforms, then **binary-searches the JPEG quality** to land just
+under
+`maxFileSize`. If even minimum quality at half resolution still exceeds the budget, it returns
+`null`
+rather than over-budget bytes. Run it off the main thread.
+
+> Note: on iOS the decode is not yet downsampled at decode time (the full-resolution image is
+> decoded
+> before the render-time downscale); `CGImageSourceCreateThumbnailAtIndex` would cap the decoded
+> buffer like Android's `inSampleSize` — tracked as a follow-up perf optimization.
 
 ### The canonical pattern
 
-Picker/camera give you raw bytes; `compressImage` makes them small. Keep them separate:
+Picker/camera give you the image's **raw original bytes** — these still carry EXIF metadata,
+**including GPS location**. `compressImage` re-encodes and thereby strips that metadata (and bounds
+the size). Always compress before uploading, and **fail closed**: if `compressImage` returns `null`,
+do *not* fall back to uploading the raw original (that would leak the user's location); surface an
+error instead. Keep the two steps separate:
 
 ```kotlin
 val onImagePicked: (ByteArray) -> Unit = { raw ->
     scope.launch(Dispatchers.Default) {
         val compressed = compressImage(raw, CompressionConfig.ProfilePhoto)
-        viewModel.onIntent(ProfileIntent.SetImage(compressed))
+        if (compressed == null) {
+            viewModel.onIntent(ProfileIntent.ImageError) // fail closed — never upload the raw original
+        } else {
+            viewModel.onIntent(ProfileIntent.SetImage(compressed))
+        }
     }
 }
 
@@ -230,6 +261,11 @@ val camera  = rememberSystemCameraLauncher(scope) { it?.let(onImagePicked) }
 ---
 
 ## 6. Native implementation
+
+> **Factory convention deviation:** unlike the other SDK factories, which return a `{Concept}Handle`
+> of imperative `present`/`update`/`dismiss` closures, `MediaFactory` returns result callbacks and
+> `Unit`. This is intentional: a one-shot picker/camera has no imperative lifecycle to expose, so a
+> `MediaHandle` would be empty ceremony. Documented here rather than forced into the handle shape.
 
 ### iOS — `YallaMediaFactory.swift`
 
@@ -265,9 +301,14 @@ val camera  = rememberSystemCameraLauncher(scope) { it?.let(onImagePicked) }
 
 - Native presentation and `onResult` delivery → **main thread**.
 - Reading the picked/captured bytes (Android: `contentResolver.openInputStream`; iOS:
-  `NSData.toByteArray`) → off-main on the caller-supplied `scope` (`Dispatchers.IO` on Android,
-  `Dispatchers.Default` on iOS), then hopped back to main for `onResult`.
-- `compressImage` is synchronous and CPU-bound → the **caller** must run it off the main thread.
+  `NSData.toByteArray`) → off-main on `Dispatchers.IO` (both platforms), then hopped back to main
+  for
+  `onResult`. The read runs on a **module-owned, app-lifetime scope** (`MediaScope`), *not* the
+  caller's `scope`, so navigating away while the OS picker is still open does not cancel the read
+  and
+  silently drop the picked image. The `scope` parameter is retained for source compatibility.
+- `compressImage` is synchronous and CPU- and memory-bound → the **caller** must run it off the main
+  thread.
 
 The launcher captures the latest `onResult` via `rememberUpdatedState`, so a recomposition with a
 new lambda never delivers to a stale one.

@@ -10,10 +10,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uz.yalla.media.config.requireMedia
+import uz.yalla.media.util.MediaScope
 
 @Composable
 public actual fun rememberSystemCameraLauncher(
-    scope: CoroutineScope,
+    @Suppress("UNUSED_PARAMETER") scope: CoroutineScope,
     onResult: (ByteArray?) -> Unit
 ): SystemCameraLauncher {
     val context = LocalContext.current
@@ -21,7 +22,7 @@ public actual fun rememberSystemCameraLauncher(
     return remember {
         SystemCameraLauncher {
             requireMedia().factory.captureImage { uri ->
-                scope.launch(Dispatchers.IO) {
+                MediaScope.launch(Dispatchers.IO) {
                     val bytes =
                         uri?.let {
                             context.contentResolver.openInputStream(it)?.use { stream -> stream.readBytes() }

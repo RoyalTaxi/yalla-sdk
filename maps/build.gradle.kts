@@ -18,5 +18,13 @@ kotlin {
 
             implementation(libs.androidx.lifecycle.runtime.compose)
         }
+
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+        }
+
+        iosTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
+        }
     }
 }

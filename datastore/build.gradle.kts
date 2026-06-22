@@ -7,10 +7,15 @@ kotlin {
         commonMain.dependencies {
             api(projects.core)
 
+            implementation(projects.telemetry)
+
             api(libs.kotlinx.coroutines.core)
             api(libs.koin.core)
             api(libs.androidx.datastore.preferences)
-            api(libs.multiplatform.settings)
+        }
+
+        commonTest.dependencies {
+            implementation(libs.kotlinx.coroutines.test)
         }
     }
 }

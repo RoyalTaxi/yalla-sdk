@@ -114,14 +114,26 @@ public class DockedExpandableSheetState internal constructor(
     }
 
     internal suspend fun settle(velocity: Float) {
-        val target =
-            when {
-                velocity < -500f -> DockedExpandableSheetValue.Expanded
-                velocity > 500f -> DockedExpandableSheetValue.Collapsed
-                fraction > 0.5f -> DockedExpandableSheetValue.Expanded
-                else -> DockedExpandableSheetValue.Collapsed
-            }
-        anchoredDraggableState.animateTo(target)
+        anchoredDraggableState.animateTo(settleTarget(velocity, fraction))
+    }
+
+    internal fun settleTarget(
+        velocity: Float,
+        currentFraction: Float
+    ): DockedExpandableSheetValue {
+        val expandThresholdPx = positionalThreshold(maxOffsetPx)
+        val expandedFraction =
+            if (maxOffsetPx > 0f) (expandThresholdPx / maxOffsetPx).coerceIn(0f, 1f) else 0.5f
+        return when {
+            velocity < -SETTLE_VELOCITY_THRESHOLD -> DockedExpandableSheetValue.Expanded
+            velocity > SETTLE_VELOCITY_THRESHOLD -> DockedExpandableSheetValue.Collapsed
+            currentFraction >= expandedFraction -> DockedExpandableSheetValue.Expanded
+            else -> DockedExpandableSheetValue.Collapsed
+        }
+    }
+
+    private companion object {
+        const val SETTLE_VELOCITY_THRESHOLD = 500f
     }
 }
 

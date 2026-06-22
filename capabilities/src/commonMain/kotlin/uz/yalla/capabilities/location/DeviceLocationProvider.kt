@@ -11,21 +11,21 @@ import kotlinx.coroutines.launch
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.core.location.LocationProvider
 
-public class DeviceLocationProvider(
-    public val locationTracker: LocationTracker,
+public fun createDeviceLocationProvider(scope: CoroutineScope): DeviceLocationProvider =
+    DeviceLocationProvider(createLocationTracker(), scope)
+
+public class DeviceLocationProvider internal constructor(
+    internal val locationTracker: LocationTracker,
     private val scope: CoroutineScope
 ) : LocationProvider {
     private val _currentLocation = MutableStateFlow<GeoPoint?>(null)
     override val currentLocation: StateFlow<GeoPoint?> = _currentLocation.asStateFlow()
 
-    private val _permissionState = MutableStateFlow<LocationPermissionState?>(null)
-    public val permissionState: StateFlow<LocationPermissionState?> = _permissionState.asStateFlow()
-
     private var job: Job? = null
 
     override fun startTracking() {
         if (job != null) return
-        job =
+        val launched =
             scope.launch {
                 try {
                     locationTracker.startTracking()
@@ -35,19 +35,16 @@ public class DeviceLocationProvider(
                 } catch (e: CancellationException) {
                     throw e
                 } catch (ignored: Exception) {
-                    // Location tracking failed; clear the job so a later start retries.
-                    job = null
+                    runCatching { locationTracker.stopTracking() }
                 }
             }
+        job = launched
+        launched.invokeOnCompletion { if (job === launched) job = null }
     }
 
     override fun stopTracking() {
         job?.cancel()
         job = null
         locationTracker.stopTracking()
-    }
-
-    public fun updatePermissionState(state: LocationPermissionState?) {
-        _permissionState.value = state
     }
 }

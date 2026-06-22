@@ -4,6 +4,25 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.unit.LayoutDirection
 import uz.yalla.core.geo.GeoPoint
+import kotlin.math.abs
+
+public const val CAMERA_LAT_LNG_EPSILON: Double = 1e-6
+
+public const val CAMERA_ZOOM_EPSILON: Float = 1e-3f
+
+public const val CAMERA_ANGLE_EPSILON: Float = 0.1f
+
+public fun CameraPosition.approximatelyEquals(
+    other: CameraPosition,
+    latLngEpsilon: Double = CAMERA_LAT_LNG_EPSILON,
+    zoomEpsilon: Float = CAMERA_ZOOM_EPSILON,
+    angleEpsilon: Float = CAMERA_ANGLE_EPSILON
+): Boolean =
+    abs(target.lat - other.target.lat) < latLngEpsilon &&
+        abs(target.lng - other.target.lng) < latLngEpsilon &&
+        abs(zoom - other.zoom) < zoomEpsilon &&
+        abs(bearing - other.bearing) < angleEpsilon &&
+        abs(tilt - other.tilt) < angleEpsilon
 
 @Immutable
 public data class CameraPosition(

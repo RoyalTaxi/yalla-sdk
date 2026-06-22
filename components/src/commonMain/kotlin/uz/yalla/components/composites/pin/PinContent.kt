@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.TextStyle
@@ -43,21 +44,6 @@ internal fun PinContent(
     dimens: LocationPinDimens,
     modifier: Modifier = Modifier
 ) {
-    val transition = rememberInfiniteTransition()
-    val rotation by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 360f,
-        animationSpec =
-            infiniteRepeatable(
-                repeatMode = RepeatMode.Restart,
-                animation =
-                    tween(
-                        durationMillis = JumpCycleDurationMs * 2,
-                        easing = FastOutSlowInEasing
-                    )
-            )
-    )
-
     Box(
         contentAlignment = Alignment.Center,
         modifier =
@@ -72,16 +58,7 @@ internal fun PinContent(
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             when {
-                jumping ->
-                    Image(
-                        painter = painterResource(Res.drawable.img_spinner),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(colors.icon, BlendMode.SrcIn),
-                        modifier =
-                            Modifier
-                                .size(IconSize)
-                                .graphicsLayer { rotationZ = rotation }
-                    )
+                jumping -> JumpingSpinner(tint = colors.icon)
                 timeout == null -> icon()
                 else -> {
                     Text(
@@ -102,4 +79,32 @@ internal fun PinContent(
             }
         }
     }
+}
+
+@Composable
+private fun JumpingSpinner(tint: Color) {
+    val transition = rememberInfiniteTransition()
+    val rotation by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec =
+            infiniteRepeatable(
+                repeatMode = RepeatMode.Restart,
+                animation =
+                    tween(
+                        durationMillis = JUMP_CYCLE_DURATION_MS * 2,
+                        easing = FastOutSlowInEasing
+                    )
+            )
+    )
+
+    Image(
+        painter = painterResource(Res.drawable.img_spinner),
+        contentDescription = null,
+        colorFilter = ColorFilter.tint(tint, BlendMode.SrcIn),
+        modifier =
+            Modifier
+                .size(IconSize)
+                .graphicsLayer { rotationZ = rotation }
+    )
 }

@@ -50,6 +50,7 @@ public actual fun VerificationSheet(
                 isLoading = isLoading,
                 resendEnabled = resendEnabled,
                 dismissEnabled = dismissEnabled,
+                alphanumeric = alphanumeric,
                 onCodeChange = { currentOnCodeChange(it) },
                 onConfirm = { currentOnConfirm() },
                 onResend = { currentOnResend() },

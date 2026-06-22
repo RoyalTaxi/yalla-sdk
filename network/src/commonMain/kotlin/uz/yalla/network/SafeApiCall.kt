@@ -12,14 +12,15 @@ import io.ktor.serialization.ContentConvertException
 import kotlinx.coroutines.delay
 import kotlinx.io.IOException
 import kotlinx.serialization.SerializationException
-import uz.yalla.core.error.DataError
 import uz.yalla.core.result.Either
+import uz.yalla.network.error.DataError
 import kotlin.random.Random
 
 private const val DEFAULT_RETRY_COUNT = 3
 private const val INITIAL_RETRY_DELAY_MS = 200L
 private const val MAX_RETRY_DELAY_MS = 2_000L
 private const val RETRY_BACKOFF_FACTOR = 2.0
+private const val HTTP_UNAUTHORIZED = 401
 
 public suspend inline fun <reified T> safeApiCall(
     isIdempotent: Boolean = false,
@@ -28,8 +29,6 @@ public suspend inline fun <reified T> safeApiCall(
     try {
         val response = retryWithBackoff(isIdempotent = isIdempotent) { call() }
         val status = response.status.value
-        // Parse the error envelope only on a non-2xx status: the Ktor response body is a single-read
-        // stream, so consuming it as an envelope here would leave nothing for the success deserialization.
         val parsedError = if (isSuccessStatus(status)) null else parseApiError(response)
         when (val verdict = statusToEither(status, parsedError)) {
             is Either.Success ->
@@ -57,6 +56,8 @@ public suspend inline fun <reified T> safeApiCall(
         Either.Failure(DataError.Network.Serialization)
     } catch (_: SerializationException) {
         Either.Failure(DataError.Network.Serialization)
+    } catch (_: UnsupportedOperationException) {
+        Either.Failure(DataError.Network.Serialization)
     } catch (_: ResponseException) {
         Either.Failure(DataError.Network.Unknown)
     } catch (_: GuestBlockedException) {
@@ -66,16 +67,6 @@ public suspend inline fun <reified T> safeApiCall(
 @PublishedApi
 internal fun isSuccessStatus(status: Int): Boolean = status in 200..299
 
-/**
- * The pure decision behind [safeApiCall]: maps an HTTP status to a result, leaving the actual call,
- * retry, and body deserialization to the suspend orchestration. [Either.Success] means "the caller may
- * deserialize the body as `T`"; [Either.Failure] carries the resolved error. A parsed API envelope,
- * when present, always wins over the status-bucket default so server-supplied detail survives.
- *
- * A raw 3xx is treated as a client failure, not a redirect: the Ktor client follows redirects itself,
- * so a 3xx reaching here is an unfollowed/unexpected redirect we cannot act on — a malformed request
- * from our side, hence [DataError.Network.Client], the same bucket as 4xx.
- */
 @PublishedApi
 internal fun statusToEither(
     status: Int,
@@ -83,6 +74,7 @@ internal fun statusToEither(
 ): Either<DataError.Network, Unit> =
     when {
         isSuccessStatus(status) -> Either.Success(Unit)
+        status == HTTP_UNAUTHORIZED -> Either.Failure(parsedError ?: DataError.Network.Unauthorized)
         status in 300..499 -> Either.Failure(parsedError ?: DataError.Network.Client)
         status in 500..599 -> Either.Failure(parsedError ?: DataError.Network.Server)
         else -> Either.Failure(parsedError ?: DataError.Network.Unknown)
@@ -92,13 +84,13 @@ internal fun statusToEither(
 internal suspend fun parseApiError(response: HttpResponse): DataError.Network.Api? =
     runCatching { response.body<ApiErrorEnvelope>() }
         .getOrNull()
-        ?.takeIf { it.message != null || it.error != null }
+        ?.takeIf { it.message != null || it.error != null || it.code != null }
         ?.let { envelope ->
             DataError.Network.Api(
                 code = envelope.code,
                 message = envelope.message,
                 errorCode = envelope.error?.errorCode,
-                retryAfter = envelope.error?.retryAfter
+                retryAfter = envelope.error?.retryAfter ?: envelope.retryAfter
             )
         }
 
@@ -123,7 +115,7 @@ internal suspend fun <T> retryWithBackoff(
             if (!retryable) throw e
         }
         val jitter = Random.nextLong(0, (currentDelay / 2) + 1)
-        delay(currentDelay + jitter)
+        delay((currentDelay + jitter).coerceAtMost(maxDelay))
         currentDelay = (currentDelay * factor).toLong().coerceAtMost(maxDelay)
     }
     return block()

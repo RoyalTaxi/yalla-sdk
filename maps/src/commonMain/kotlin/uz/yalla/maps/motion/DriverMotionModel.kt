@@ -23,17 +23,6 @@ public class DriverMotionModel(
     private var hasGoodBearing: Boolean = false
     private var snap: Boolean = true
 
-    /**
-     * Feeds one positional fix into the model. Heading precedence, highest trust first:
-     * 1. bearing derived from consecutive fixes when the car moved >= [minMoveMeters];
-     * 2. otherwise the last good derived bearing is held;
-     * 3. otherwise [routeHint] — a route-segment bearing the caller resolved (null when off-route);
-     * 4. otherwise [serverHeading] when non-zero (0f is treated as absent: the server collapses a
-     *    null heading to 0.0/north upstream, so a real northbound hint is indistinguishable).
-     *
-     * The model — not the caller — owns this ordering: pass route-snap as [routeHint] and the raw
-     * server heading as [serverHeading]; never pre-flatten them into one value.
-     */
     public fun push(
         point: GeoPoint,
         routeHint: Float?,
@@ -57,9 +46,10 @@ public class DriverMotionModel(
         }
 
         val displayedPoint = sample(atMillis).point
-        val interval = (atMillis - lastFixMs).coerceIn(minDurationMs, maxDurationMs)
+        val elapsed = (atMillis - lastFixMs).coerceAtLeast(1L)
+        val interval = elapsed.coerceIn(minDurationMs, maxDurationMs)
         val movedMeters = previousTarget.distanceTo(point)
-        val impliedSpeed = movedMeters / (interval / 1000.0)
+        val impliedSpeed = movedMeters / (elapsed / 1000.0)
 
         if (movedMeters >= minMoveMeters) {
             targetBearing = previousTarget.bearingTo(point).toFloat()
@@ -76,6 +66,8 @@ public class DriverMotionModel(
         durationMs = interval
         lastFixMs = atMillis
     }
+
+    public fun hasFix(): Boolean = targetPoint != null
 
     public fun sample(atMillis: Long): Pose {
         val target = targetPoint ?: return Pose(GeoPoint.Zero, displayBearing)

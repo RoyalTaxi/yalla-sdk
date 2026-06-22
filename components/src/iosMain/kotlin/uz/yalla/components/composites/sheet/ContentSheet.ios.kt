@@ -31,7 +31,7 @@ import uz.yalla.components.platform.findKeyWindowRootController
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.foundation.theme.rememberIsDarkTheme
 
-private const val PresentationPollMillis = 16L
+private const val PRESENTATION_POLL_MILLIS = 16L
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -47,6 +47,7 @@ public actual fun ContentSheet(
     content: @Composable (padding: PaddingValues) -> Unit
 ) {
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
+    val currentOnClose by rememberUpdatedState(onClose)
     val currentContent by rememberUpdatedState(content)
     val handleRef = remember { mutableStateOf<ContentSheetHandle?>(null) }
 
@@ -76,6 +77,7 @@ public actual fun ContentSheet(
                     title = title,
                     showClose = onClose != null,
                     contentController = rootController,
+                    onClose = if (onClose != null) ({ currentOnClose?.invoke() }) else null,
                     onDismissRequest = { currentOnDismissRequest() }
                 ).also { handleRef.value = it }
         }
@@ -136,7 +138,7 @@ internal fun PresentationLifecycle(
         if (!isPresented) return@LaunchedEffect
         val onPresented = currentOnFullyExpanded ?: return@LaunchedEffect
         while (handle.viewController.isBeingPresented()) {
-            delay(PresentationPollMillis)
+            delay(PRESENTATION_POLL_MILLIS)
         }
         onPresented()
     }

@@ -47,7 +47,7 @@ public inline fun <E, D> Either<E, D>.getOrNull(): D? =
 public inline fun <E, D> Either<E, D>.getOrThrow(): D =
     when (this) {
         is Either.Success -> data
-        is Either.Failure -> error("Either.Failure: $error")
+        is Either.Failure -> error("Either.getOrThrow called on Failure")
     }
 
 public inline fun <E, D> Either<E, D>.getOrElse(fallback: (E) -> D): D =

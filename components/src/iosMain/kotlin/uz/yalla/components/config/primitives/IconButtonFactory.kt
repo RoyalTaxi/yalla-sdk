@@ -14,8 +14,10 @@ public interface IconButtonFactory {
     ): IconButtonHandle
 }
 
+public const val ICON_BUTTON_COLOR_UNSET: Long = Long.MIN_VALUE
+
 public class IconButtonHandle(
     public val viewController: UIViewController,
     public val setIcon: (String) -> Unit,
-    public val setColors: (iconArgb: Long, containerArgb: Long) -> Unit
+    public val setColors: (iconArgb: Long, containerArgb: Long, borderArgb: Long) -> Unit
 )

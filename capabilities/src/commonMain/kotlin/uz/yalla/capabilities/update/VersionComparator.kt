@@ -7,6 +7,7 @@ internal object VersionComparator {
     ): Boolean {
         val storeParts = storeVersion.split(".").mapNotNull { it.toIntOrNull() }
         val installedParts = installedVersion.split(".").mapNotNull { it.toIntOrNull() }
+        if (installedParts.isEmpty()) return false
         val maxLen = maxOf(storeParts.size, installedParts.size)
         for (i in 0 until maxLen) {
             val s = storeParts.getOrElse(i) { 0 }

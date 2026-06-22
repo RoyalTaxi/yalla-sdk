@@ -131,13 +131,14 @@ public fun ActiveOrderCard(
                     .padding(dimens.contentPadding)
                     .height(IntrinsicSize.Min)
         ) {
+            val avatarPlaceholder = painterResource(Res.drawable.img_avatar_placeholder)
             AsyncImage(
                 model = photoUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                placeholder = painterResource(Res.drawable.img_avatar_placeholder),
-                error = painterResource(Res.drawable.img_avatar_placeholder),
-                fallback = painterResource(Res.drawable.img_avatar_placeholder),
+                placeholder = avatarPlaceholder,
+                error = avatarPlaceholder,
+                fallback = avatarPlaceholder,
                 modifier =
                     Modifier
                         .size(dimens.photoSize)

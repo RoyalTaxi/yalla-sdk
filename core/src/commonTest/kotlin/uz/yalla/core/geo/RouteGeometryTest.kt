@@ -2,6 +2,7 @@ package uz.yalla.core.geo
 
 import kotlin.math.abs
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -50,5 +51,38 @@ class RouteGeometryTest {
             )
         assertBearingClose(0f, headingAlongRoute(GeoPoint(41.005, 69.0100), route))
         assertBearingClose(90f, headingAlongRoute(GeoPoint(41.0, 69.005), route))
+    }
+
+    @Test
+    fun skipsDuplicatedConsecutiveVertex() {
+        val withDup =
+            listOf(GeoPoint(41.0, 69.0), GeoPoint(41.0, 69.0), GeoPoint(41.0, 69.01))
+        val withoutDup = listOf(GeoPoint(41.0, 69.0), GeoPoint(41.0, 69.01))
+        val query = GeoPoint(41.00002, 69.005)
+        assertEquals(
+            headingAlongRoute(query, withoutDup),
+            headingAlongRoute(query, withDup)
+        )
+    }
+
+    @Test
+    fun nullWhenEveryRoutePointIsIdentical() {
+        val route = listOf(GeoPoint(41.0, 69.0), GeoPoint(41.0, 69.0))
+        assertNull(headingAlongRoute(GeoPoint(41.0, 69.0), route))
+    }
+
+    @Test
+    fun includesPointJustInsideTheDefaultBoundaryAndExcludesJustOutside() {
+        val route = listOf(GeoPoint(41.0, 69.0), GeoPoint(41.0, 69.01))
+        assertBearingClose(90f, headingAlongRoute(GeoPoint(41.00053, 69.005), route))
+        assertNull(headingAlongRoute(GeoPoint(41.00055, 69.005), route))
+    }
+
+    @Test
+    fun honorsAnExplicitMaxOffRouteMeters() {
+        val route = listOf(GeoPoint(41.0, 69.0), GeoPoint(41.0, 69.01))
+        val query = GeoPoint(41.001, 69.005)
+        assertNull(headingAlongRoute(query, route))
+        assertBearingClose(90f, headingAlongRoute(query, route, maxOffRouteMeters = 200.0))
     }
 }

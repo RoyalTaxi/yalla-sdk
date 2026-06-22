@@ -23,6 +23,7 @@ import uz.yalla.maps.api.model.MapEvent
 import uz.yalla.maps.api.model.MapMarker
 import uz.yalla.maps.api.model.MapRoute
 import uz.yalla.maps.api.model.MapStyle
+import uz.yalla.maps.api.model.approximatelyEquals
 
 internal class IosMapControllerWrapper(
     private val renderer: IosMapRenderer
@@ -239,17 +240,6 @@ internal class IosMapControllerWrapper(
         lockedZoom = null
     }
 
-    override fun snapshotScene(): MapController.SceneSnapshot =
-        MapController.SceneSnapshot(
-            cameraPosition = _cameraPosition.value,
-            markers = pendingMarkers,
-            routes = pendingRoutes,
-            circles = pendingCircles,
-            padding = pendingPadding,
-            lockedTarget = lockedTarget,
-            lockedZoom = lockedZoom
-        )
-
     override fun close() {
         if (closed) return
         closed = true
@@ -274,19 +264,8 @@ internal class IosMapControllerWrapper(
     ) {
         val next = CameraPosition(target, zoom, bearing, tilt, pendingPadding)
         val prev = lastEmittedCamera
-        if (prev != null && cameraEpsilonEqual(prev, next)) return
+        if (prev != null && prev.approximatelyEquals(next)) return
         lastEmittedCamera = next
         _cameraPosition.value = next
-    }
-
-    private fun cameraEpsilonEqual(
-        a: CameraPosition,
-        b: CameraPosition
-    ): Boolean {
-        return kotlin.math.abs(a.target.lat - b.target.lat) < 1e-6 &&
-            kotlin.math.abs(a.target.lng - b.target.lng) < 1e-6 &&
-            kotlin.math.abs(a.zoom - b.zoom) < 1e-3 &&
-            kotlin.math.abs(a.bearing - b.bearing) < 0.1f &&
-            kotlin.math.abs(a.tilt - b.tilt) < 0.1f
     }
 }

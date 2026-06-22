@@ -14,4 +14,6 @@ public sealed class MapEvent {
     public data class MapLongPressed(
         val point: GeoPoint
     ) : MapEvent()
+
+    public data object ProviderUnavailable : MapEvent()
 }

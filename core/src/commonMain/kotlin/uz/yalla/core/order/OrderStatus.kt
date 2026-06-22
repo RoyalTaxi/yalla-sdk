@@ -1,5 +1,7 @@
 package uz.yalla.core.order
 
+import uz.yalla.core.util.normalizedId
+
 public sealed class OrderStatus(
     public val id: String
 ) {
@@ -27,7 +29,7 @@ public sealed class OrderStatus(
 
     public companion object {
         public fun from(id: String?): OrderStatus =
-            when (id?.trim()?.lowercase()) {
+            when (id.normalizedId()) {
                 "new" -> New
                 "sending" -> Sending
                 "user_sending" -> UserSending
@@ -40,10 +42,6 @@ public sealed class OrderStatus(
                 else -> Unknown(id ?: "null")
             }
 
-        // Lazy so the nested `data object`s are fully initialized before the set is built.
-        // Building these sets eagerly in the companion `<clinit>` re-enters each object's
-        // initializer while `OrderStatus` is still being class-initialized on the same thread,
-        // which leaves the first such reference (Appointed) as a `null` element in the set.
         public val active: Set<OrderStatus> by lazy {
             setOf(
                 Appointed,

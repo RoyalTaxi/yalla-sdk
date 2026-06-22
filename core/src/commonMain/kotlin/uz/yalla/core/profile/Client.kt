@@ -8,4 +8,6 @@ public data class Client(
     val birthday: String,
     val balance: Long,
     val gender: GenderKind
-)
+) {
+    override fun toString(): String = "Client(gender=$gender, <redacted>)"
+}

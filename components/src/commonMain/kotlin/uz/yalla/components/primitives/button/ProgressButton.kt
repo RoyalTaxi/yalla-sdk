@@ -58,7 +58,7 @@ public fun ProgressButton(
                     Modifier
                         .align(Alignment.CenterStart)
                         .fillMaxHeight()
-                        .fillMaxWidth(progress)
+                        .fillMaxWidth(progress.coerceIn(0f, 1f))
                         .background(System.color.background.brand)
             )
 

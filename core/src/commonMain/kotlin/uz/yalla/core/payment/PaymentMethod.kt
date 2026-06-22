@@ -11,7 +11,9 @@ public sealed class PaymentMethod(
     public data class Card(
         val cardId: CardId,
         val maskedNumber: String
-    ) : PaymentMethod("card")
+    ) : PaymentMethod("card") {
+        override fun toString(): String = "Card(cardId=$cardId, <redacted>)"
+    }
 
     public companion object {
         public fun from(

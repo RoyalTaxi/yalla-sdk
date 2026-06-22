@@ -20,12 +20,12 @@ public actual fun rememberAppUpdateState(
         appUpdateManager.appUpdateInfo
             .addOnSuccessListener { info ->
                 if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
-                    state.isUpdateAvailable = true
-                    state.storeUrl = "market://details?id=$appId"
+                    state.status = AppUpdateStatus.Available("market://details?id=$appId")
+                } else {
+                    state.status = AppUpdateStatus.UpToDate
                 }
-                state.isChecking = false
             }.addOnFailureListener {
-                state.isChecking = false
+                state.status = AppUpdateStatus.UpToDate
             }
     }
 

@@ -5,29 +5,29 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-/**
- * Proves the shared KMP test convention is live for :network — `kotlin("test")` resolves and
- * `commonTest` runs under `testAndroidHostTest`. Characterizes the public envelope contract via a
- * serialization round-trip so the wiring change ships with a real net rather than an empty source set.
- */
 class ConventionSmokeTest {
     private val json = Json { ignoreUnknownKeys = true }
 
     @Test
-    fun apiResponse_roundTripsResult() {
+    fun apiResponseRoundTripsResult() {
         val decoded = json.decodeFromString<ApiResponse<String>>("""{"result":"ok"}""")
         assertEquals("ok", decoded.result)
     }
 
     @Test
-    fun apiResponse_missingResultDecodesToNull() {
+    fun apiResponseMissingResultDecodesToNull() {
         val decoded = json.decodeFromString<ApiResponse<String>>("{}")
         assertNull(decoded.result)
     }
 
     @Test
-    fun apiErrorResponse_decodesMessage() {
-        val decoded = json.decodeFromString<ApiErrorResponse>("""{"message":"boom","extra":1}""")
-        assertEquals("boom", decoded.message)
+    fun apiErrorEnvelopeDecodesTopLevelAndNestedRetryAfter() {
+        val decoded =
+            json.decodeFromString<ApiErrorEnvelope>(
+                """{"code":429,"retry_after":30,"error":{"error_code":"E429"}}"""
+            )
+        assertEquals(429, decoded.code)
+        assertEquals(30, decoded.retryAfter)
+        assertEquals("E429", decoded.error?.errorCode)
     }
 }

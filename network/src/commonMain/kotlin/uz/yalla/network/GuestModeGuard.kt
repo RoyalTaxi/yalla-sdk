@@ -7,18 +7,28 @@ import kotlinx.coroutines.flow.StateFlow
 
 internal class GuestBlockedException : RuntimeException()
 
-public fun createGuestModeGuardPlugin(
+internal fun isGuestAllowedPath(
+    encodedPath: String,
+    allowedPaths: Set<String>
+): Boolean {
+    val path = encodedPath.trim('/')
+    return allowedPaths.any { entry ->
+        val target = entry.trim('/')
+        target.isNotEmpty() && (path == target || path.endsWith("/$target"))
+    }
+}
+
+internal fun createGuestModeGuardPlugin(
     isGuestMode: StateFlow<Boolean>,
-    allowedSegments: Set<String> = DEFAULT_GUEST_ALLOWED_SEGMENTS.toSet()
-): ClientPlugin<Unit> =
-    createClientPlugin("GuestModeGuard") {
+    allowedPaths: Set<String> = DEFAULT_GUEST_ALLOWED_PATHS.toSet()
+): ClientPlugin<Unit> {
+    val normalized = allowedPaths.mapNotNull { it.trim('/').takeIf(String::isNotEmpty) }.toSet()
+    return createClientPlugin("GuestModeGuard") {
         onRequest { request, _ ->
             if (!isGuestMode.value) return@onRequest
-
-            val path = request.url.encodedPath.trimEnd('/')
-            val lastSegment = path.substringAfterLast('/')
-            if (lastSegment !in allowedSegments) {
+            if (!isGuestAllowedPath(request.url.encodedPath, normalized)) {
                 throw GuestBlockedException()
             }
         }
     }
+}

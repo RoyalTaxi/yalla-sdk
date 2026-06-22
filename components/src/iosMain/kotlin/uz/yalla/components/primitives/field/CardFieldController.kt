@@ -53,7 +53,7 @@ public class CardFieldController(
         } else {
             ExpiryDateVisualTransformation
         }
-    private val maxLength = if (mask == CardFieldMask.CARD_NUMBER) 16 else 4
+    private val maxLength = if (mask == CardFieldMask.CARD_NUMBER) CARD_DIGITS else EXPIRY_DIGITS
 
     @OptIn(ExperimentalComposeUiApi::class)
     public val viewController: UIViewController =
@@ -130,10 +130,12 @@ public class CardFieldController(
 private const val CARD_MASK = "#### #### #### ####"
 private const val EXPIRY_MASK = "##/##"
 private const val MASK_CHAR = '#'
+private const val CARD_DIGITS = 16
+private const val EXPIRY_DIGITS = 4
 
 private object CardNumberVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        val trimmed = text.text.take(16)
+        val trimmed = text.text.take(CARD_DIGITS)
         val formatted = applyMask(trimmed, CARD_MASK)
         return TransformedText(
             AnnotatedString(formatted),
@@ -144,7 +146,7 @@ private object CardNumberVisualTransformation : VisualTransformation {
 
 private object ExpiryDateVisualTransformation : VisualTransformation {
     override fun filter(text: AnnotatedString): TransformedText {
-        val trimmed = text.text.take(4)
+        val trimmed = text.text.take(EXPIRY_DIGITS)
         val formatted = applyMask(trimmed, EXPIRY_MASK)
         return TransformedText(
             AnnotatedString(formatted),

@@ -111,7 +111,14 @@ public fun ToggleableItem(
     enabled: Boolean = true,
     colors: ToggleableItemColors = ToggleableItemDefaults.colors(),
     dimens: ToggleableItemDimens = ToggleableItemDefaults.dimens(),
-    styles: ToggleableItemStyles = ToggleableItemDefaults.styles()
+    styles: ToggleableItemStyles = ToggleableItemDefaults.styles(),
+    toggleControl: @Composable (
+        checked: Boolean,
+        onToggle: (Boolean) -> Unit,
+        enabled: Boolean
+    ) -> Unit = { isChecked, onChange, isEnabled ->
+        Toggle(checked = isChecked, onCheckedChange = onChange, enabled = isEnabled)
+    }
 ) {
     Surface(
         modifier = modifier,
@@ -163,11 +170,7 @@ public fun ToggleableItem(
                 }
             }
 
-            Toggle(
-                checked = checked,
-                onCheckedChange = onToggle,
-                enabled = enabled
-            )
+            toggleControl(checked, onToggle, enabled)
         }
     }
 }
@@ -183,7 +186,14 @@ public fun ToggleableItem(
     enabled: Boolean = true,
     colors: ToggleableItemColors = ToggleableItemDefaults.colors(),
     dimens: ToggleableItemDimens = ToggleableItemDefaults.dimens(),
-    styles: ToggleableItemStyles = ToggleableItemDefaults.styles()
+    styles: ToggleableItemStyles = ToggleableItemDefaults.styles(),
+    toggleControl: @Composable (
+        checked: Boolean,
+        onToggle: (Boolean) -> Unit,
+        enabled: Boolean
+    ) -> Unit = { isChecked, onChange, isEnabled ->
+        Toggle(checked = isChecked, onCheckedChange = onChange, enabled = isEnabled)
+    }
 ) {
     val fallback = painterResource(Res.drawable.img_toggle)
 
@@ -205,6 +215,7 @@ public fun ToggleableItem(
         enabled = enabled,
         colors = colors,
         dimens = dimens,
-        styles = styles
+        styles = styles,
+        toggleControl = toggleControl
     )
 }

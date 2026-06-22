@@ -13,8 +13,6 @@ valkyrie {
     packageName = "uz.yalla.resources.icons"
     resourceDirectoryName = "valkyrieResources"
 
-    // Emit `public` on generated icon declarations so they satisfy the
-    // module's explicitApi() mode (KmpLibraryConventionPlugin).
     codeStyle {
         useExplicitMode = true
     }
@@ -47,6 +45,7 @@ tasks.configureEach {
     if (name != valkyrieTask && !name.startsWith("generateValkyrie")) {
         val usesValkyrieOutput =
             name.startsWith("compileKotlin") ||
+                name.startsWith("runKtlint") ||
                 name.contains("SourcesJar", ignoreCase = true) ||
                 name.contains("sourcesJar", ignoreCase = true)
         if (usesValkyrieOutput) {

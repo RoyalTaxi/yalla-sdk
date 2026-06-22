@@ -1,15 +1,17 @@
 package uz.yalla.core.location
 
+import uz.yalla.core.util.normalizedId
+
 public enum class PointKind(
     public val id: String
 ) {
-    START("start"),
+    Start("start"),
 
-    POINT("point"),
+    Point("point"),
 
-    STOP("stop");
+    Stop("stop");
 
     public companion object {
-        public fun from(id: String?): PointKind = entries.find { it.id == id } ?: POINT
+        public fun from(id: String?): PointKind = entries.find { it.id == id.normalizedId() } ?: Point
     }
 }

@@ -12,17 +12,18 @@ import kotlinx.coroutines.plus
 
 public abstract class BaseViewModel : ViewModel() {
     private val loadingController = LoadingController(viewModelScope)
+
     public val loading: StateFlow<Boolean> = loadingController.loading
 
     private val handler =
         CoroutineExceptionHandler { _, throwable ->
-            Logger.e(throwable) { "Uncaught exception in safeScope" }
+            Logger.e { "Uncaught exception in safeScope: ${throwable::class.simpleName}" }
         }
 
     public val safeScope: CoroutineScope = viewModelScope + handler
 
-    public fun CoroutineScope.launchWithLoading(block: suspend () -> Unit): Job =
-        launch {
+    public fun launchWithLoading(block: suspend () -> Unit): Job =
+        safeScope.launch {
             loadingController.withLoading(block)
         }
 }

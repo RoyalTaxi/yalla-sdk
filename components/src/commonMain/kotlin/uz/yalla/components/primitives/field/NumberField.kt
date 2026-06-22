@@ -124,49 +124,55 @@ private object PhoneVisualTransformation : VisualTransformation {
         val digits = text.text
         if (digits.isEmpty()) return TransformedText(text, OffsetMapping.Identity)
 
-        val formatted = digits.format()
+        val formatted = formatPhoneDigits(digits)
+        val digitCount = digits.length
+        val formattedLength = formatted.length
+
+        fun mapOriginalOffset(offset: Int): Int = phoneOriginalToTransformed(offset, digitCount, formattedLength)
+
+        fun mapTransformedOffset(offset: Int): Int = phoneTransformedToOriginal(offset, formatted)
 
         return TransformedText(
             AnnotatedString(formatted),
-            offsetMapping(
-                digitsLength = digits.length,
-                formattedText = formatted
-            )
+            object : OffsetMapping {
+                override fun originalToTransformed(offset: Int) = mapOriginalOffset(offset)
+
+                override fun transformedToOriginal(offset: Int) = mapTransformedOffset(offset)
+            }
         )
     }
-
-    private fun String.format() =
-        buildString {
-            this@format.forEachIndexed { index, digit ->
-                when (index) {
-                    0 -> append('(')
-                    2 -> append(") ")
-                    5, 7 -> append(' ')
-                }
-
-                append(digit)
-            }
-        }
-
-    private fun offsetMapping(
-        digitsLength: Int,
-        formattedText: String
-    ) = object : OffsetMapping {
-        override fun originalToTransformed(offset: Int) =
-            offset.coerceIn(0, digitsLength).phoneOffset().coerceAtMost(formattedText.length)
-
-        override fun transformedToOriginal(offset: Int) =
-            formattedText.take(offset.coerceIn(0, formattedText.length)).count(Char::isDigit)
-    }
-
-    private fun Int.phoneOffset(): Int {
-        var offset = this + 1
-        if (this >= 2) offset += 2
-        if (this >= 5) offset += 1
-        if (this >= 7) offset += 1
-        return offset
-    }
 }
+
+internal fun formatPhoneDigits(digits: String): String =
+    buildString {
+        digits.forEachIndexed { index, digit ->
+            when (index) {
+                0 -> append('(')
+                2 -> append(") ")
+                5, 7 -> append(' ')
+            }
+            append(digit)
+        }
+    }
+
+internal fun phoneOriginalToTransformed(
+    offset: Int,
+    digitsLength: Int,
+    formattedLength: Int
+): Int {
+    val clamped = offset.coerceIn(0, digitsLength)
+    var transformed = clamped
+    if (clamped >= 1) transformed += 1
+    if (clamped >= 2) transformed += 2
+    if (clamped >= 5) transformed += 1
+    if (clamped >= 7) transformed += 1
+    return transformed.coerceAtMost(formattedLength)
+}
+
+internal fun phoneTransformedToOriginal(
+    offset: Int,
+    formatted: String
+): Int = formatted.take(offset.coerceIn(0, formatted.length)).count(Char::isDigit)
 
 @Preview(showSystemUi = true)
 @Composable

@@ -10,13 +10,14 @@ public enum class LocaleKind(
 
     public companion object {
         public fun from(code: String?): LocaleKind {
-            val normalized =
+            val primarySubtag =
                 code
                     ?.trim()
                     ?.replace('_', '-')
                     ?.lowercase()
+                    ?.substringBefore('-')
                     .orEmpty()
-            return entries.find { it.code.lowercase() == normalized } ?: Uz
+            return entries.find { it.code == primarySubtag } ?: Uz
         }
     }
 }

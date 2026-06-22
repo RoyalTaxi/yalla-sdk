@@ -11,4 +11,6 @@ public data class PaymentCard(
             cardId = cardId,
             maskedNumber = maskedPan
         )
+
+    override fun toString(): String = "PaymentCard(cardId=$cardId, <redacted>)"
 }

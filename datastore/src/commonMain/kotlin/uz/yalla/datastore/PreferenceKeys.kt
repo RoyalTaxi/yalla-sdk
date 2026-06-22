@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import uz.yalla.datastore.PreferenceKeys.SESSION_KEYS
 
 internal object PreferenceKeys {
     val ACCESS_TOKEN = stringPreferencesKey("accessToken")
@@ -85,6 +86,20 @@ internal object PreferenceKeys {
             IS_CARD_ENABLED,
             ORDER_CANCEL_TIME
         )
+
+    val SECURE_KEYS: List<String> =
+        listOf(
+            ACCESS_TOKEN,
+            FIREBASE_TOKEN,
+            FIRST_NAME,
+            LAST_NAME,
+            NUMBER,
+            IMAGE,
+            GENDER,
+            BIRTHDAY,
+            CARD_ID,
+            CARD_NUMBER
+        ).map { it.name }
 
     val LOCALE_TYPE = stringPreferencesKey("localeType")
 

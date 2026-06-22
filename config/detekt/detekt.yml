@@ -1,88 +1,65 @@
-# Static-analysis gate (G4) — code smells only. ktlint owns formatting (see the root
-# .editorconfig); detekt here focuses on substance and is tuned for a Compose component
-# library, where @Composable functions are intentionally long, take many parameters, and
-# carry UI literals. We exempt those idioms and keep the rules that catch real defects.
 
 build:
-  maxIssues: 0
+    maxIssues: 0
 
 config:
-  validation: true
+    validation: true
 
 complexity:
-  LongMethod:
-    # Compose UI trees are declarative and long by nature; gate non-Composable methods.
-    ignoreAnnotated: ["Composable", "Preview"]
-    threshold: 100
-  LongParameterList:
-    # Composables and colors()/dimens() builders take many params, as do the iOS bridge
-    # factories (SheetFactory.create*) that mirror a Composable's full surface for Swift.
-    ignoreAnnotated: ["Composable", "Preview"]
-    functionThreshold: 18
-    constructorThreshold: 18
-    ignoreDefaultParameters: true
-  CyclomaticComplexMethod:
-    # Exhaustive mappers raise the count without raising tangle: safeApiCall maps every
-    # HTTP status + Ktor exception to a DataError, and the Android image compressor branches
-    # over format/orientation/quality. Each branch is trivial; keep them centralized.
-    ignoreAnnotated: ["Composable", "Preview"]
-    threshold: 25
-  LargeClass:
-    threshold: 600
-  TooManyFunctions:
-    ignoreAnnotated: ["Composable", "Preview"]
-    # Cohesive facades (ConfigPreferences key/value surface; the MapController map API and
-    # its delegating SwitchingMapController/IosMapControllerWrapper) legitimately carry a
-    # wide operation surface — far more than the default 11.
-    thresholdInClasses: 25
-    thresholdInInterfaces: 25
-    thresholdInObjects: 25
+    LongMethod:
+        ignoreAnnotated: [ "Composable", "Preview" ]
+        threshold: 100
+    LongParameterList:
+        ignoreAnnotated: [ "Composable", "Preview" ]
+        functionThreshold: 18
+        constructorThreshold: 18
+        ignoreDefaultParameters: true
+    CyclomaticComplexMethod:
+        ignoreAnnotated: [ "Composable", "Preview" ]
+        threshold: 25
+    LargeClass:
+        threshold: 600
+    TooManyFunctions:
+        ignoreAnnotated: [ "Composable", "Preview" ]
+        thresholdInClasses: 25
+        thresholdInInterfaces: 25
+        thresholdInObjects: 25
 
 naming:
-  FunctionNaming:
-    # @Composable functions are PascalCase by convention; iOS view-controller factories
-    # mirror Compose's own ComposeUIViewController naming.
-    ignoreAnnotated: ["Composable", "Preview"]
-    functionPattern: "[a-zA-Z][a-zA-Z0-9]*"
-  TopLevelPropertyNaming:
-    # Both PascalCase (Compose UI constants like ShadowExpandedScale) and SCREAMING_SNAKE
-    # (platform constants) are used deliberately across the SDK.
-    constantPattern: "[A-Za-z][A-Za-z0-9_]*"
-  MatchingDeclarationName:
-    active: false
+    FunctionNaming:
+        ignoreAnnotated: [ "Composable", "Preview" ]
+        functionPattern: "[a-zA-Z][a-zA-Z0-9]*"
+    TopLevelPropertyNaming:
+        constantPattern: "[A-Za-z][A-Za-z0-9_]*"
+    MatchingDeclarationName:
+        active: false
 
 style:
-  MagicNumber:
-    # A Compose UI + animation library is saturated with layout/physics literals
-    # (fractions, dp, durations). The rule is almost all noise here and catches no real
-    # defects, so it is off; logic constants are still named where it aids readability.
-    active: false
-  ReturnCount:
-    max: 6
-  DestructuringDeclarationWithTooManyEntries:
-    maxDestructuringEntries: 4
-  UnusedPrivateMember:
-    # @Preview/@Composable previews are invoked by tooling, never by code.
-    ignoreAnnotated: ["Composable", "Preview"]
-  ForbiddenComment:
-    active: true
-    comments:
-      - reason: "Track TODOs in the issue tracker, not the code."
-        value: "TODO"
-      - reason: "Fix before shipping."
-        value: "FIXME"
-      - reason: "Never ship a STOPSHIP."
-        value: "STOPSHIP"
+    MagicNumber:
+        active: false
+    ReturnCount:
+        max: 6
+    DestructuringDeclarationWithTooManyEntries:
+        maxDestructuringEntries: 4
+    UnusedPrivateMember:
+        ignoreAnnotated: [ "Composable", "Preview" ]
+    ForbiddenComment:
+        active: true
+        comments:
+            -   reason: "Track TODOs in the issue tracker, not the code."
+                value: "TODO"
+            -   reason: "Fix before shipping."
+                value: "FIXME"
+            -   reason: "Never ship a STOPSHIP."
+                value: "STOPSHIP"
 
 exceptions:
-  TooGenericExceptionCaught:
-    # Coroutine collectors catch broadly after rethrowing CancellationException; that is
-    # the correct structured-concurrency pattern, not a defect.
-    allowedExceptionNameRegex: "_|(ignore|expected).*"
-  SwallowedException:
-    allowedExceptionNameRegex: "_|(ignore|expected).*"
-    ignoredExceptionTypes:
-      - InterruptedException
-      - MalformedURLException
-      - NumberFormatException
-      - ParseException
+    TooGenericExceptionCaught:
+        allowedExceptionNameRegex: "_|(ignore|expected).*"
+    SwallowedException:
+        allowedExceptionNameRegex: "_|(ignore|expected).*"
+        ignoredExceptionTypes:
+            - InterruptedException
+            - MalformedURLException
+            - NumberFormatException
+            - ParseException

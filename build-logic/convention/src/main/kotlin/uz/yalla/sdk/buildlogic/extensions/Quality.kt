@@ -10,22 +10,10 @@ import org.gradle.kotlin.dsl.register
 import org.jlleitschuh.gradle.ktlint.KtlintExtension
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
-// Stable aggregate task name. Wired as the single required check in CI — keep it
-// stable so the GitHub branch-protection rule never needs renaming.
 internal const val STATIC_ANALYSIS_TASK = "staticAnalysis"
 
-// Per-project detekt pass that scans EVERY Kotlin source set (commonMain, androidMain,
-// iosMain, *Test, ...). The default `detekt` task the plugin auto-creates only sees the
-// JVM `src/main` layout, which is empty in a KMP module — so we register our own and
-// point it at the whole `src` tree. ktlint-gradle already discovers all source sets.
 private const val DETEKT_ALL_TASK = "detektAll"
 
-// Configures the static-analysis gate on [target] and all of its subprojects with a
-// clean split of concerns: ktlint owns formatting (driven by the committed root
-// .editorconfig — no trailing commas, 120 cols, Compose naming exemptions) and detekt
-// owns code smells (config/detekt/detekt.yml, tuned for a Compose component library).
-// Running a single ktlint engine avoids the indentation conflicts you get from also
-// enabling detekt-formatting. Applied once at the SDK root.
 internal fun Project.configureQuality() {
     val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
     val detektVersion = libs.findVersion("detekt").get().requiredVersion
@@ -81,7 +69,6 @@ internal fun Project.configureQuality() {
         }
     }
 
-    // One required check for CI. Fans out to every module's detektAll + ktlintCheck.
     tasks.register(STATIC_ANALYSIS_TASK) {
         description = "Aggregate static-analysis gate: detekt + ktlint across all modules."
         group = "verification"

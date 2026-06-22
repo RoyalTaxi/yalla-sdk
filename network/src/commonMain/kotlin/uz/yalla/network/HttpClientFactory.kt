@@ -15,6 +15,7 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.client.request.header
+import io.ktor.http.encodedPath
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -27,6 +28,10 @@ import uz.yalla.core.geo.GeoPoint
 private const val REQUEST_TIMEOUT_MS = 15_000L
 private const val CONNECT_TIMEOUT_MS = 10_000L
 private const val SOCKET_TIMEOUT_MS = 15_000L
+
+internal val SENSITIVE_HEADERS: List<String> = listOf("Authorization", "secret-key", "x-position")
+
+internal val SENSITIVE_BODY_PATHS: List<String> = listOf("client", "valid", "register")
 
 public fun createHttpClient(
     config: NetworkConfig,
@@ -44,71 +49,82 @@ public fun createHttpClient(
     val guestModeCache = MutableStateFlow(false)
     val positionCache = MutableStateFlow(GeoPoint.Zero)
 
-    scope.launch { locale.collectLatest { localeCache.value = it } }
-    scope.launch { guestMode.collectLatest { guestModeCache.value = it } }
-    scope.launch { position.collectLatest { positionCache.value = it } }
+    val client =
+        HttpClient(engine ?: createHttpEngine(config.certificatePins)) {
+            inspektifySetup?.invoke(this)
 
-    return HttpClient(engine ?: createHttpEngine()) {
-        inspektifySetup?.invoke(this)
-
-        if (loggingEnabled) {
-            install(Logging) {
-                logger = Logger.SIMPLE
-                level = LogLevel.BODY
-            }
-        }
-
-        install(Auth) {
-            bearer {
-                loadTokens {
-                    val token = accessToken()
-                    if (token.isNullOrEmpty()) null else BearerTokens(accessToken = token, refreshToken = "")
+            if (loggingEnabled) {
+                install(Logging) {
+                    logger = Logger.SIMPLE
+                    level = LogLevel.BODY
+                    SENSITIVE_HEADERS.forEach { name -> sanitizeHeader { it.equals(name, ignoreCase = true) } }
+                    filter { request ->
+                        SENSITIVE_BODY_PATHS.none { isGuestAllowedPath(request.url.encodedPath, setOf(it)) }
+                    }
                 }
-                refreshTokens {
-                    onUnauthorized()
-                    null
-                }
-                sendWithoutRequest { true }
             }
-        }
 
-        install(HttpTimeout) {
-            requestTimeoutMillis = REQUEST_TIMEOUT_MS
-            connectTimeoutMillis = CONNECT_TIMEOUT_MS
-            socketTimeoutMillis = SOCKET_TIMEOUT_MS
-        }
+            install(Auth) {
+                bearer {
+                    cacheTokens = false
+                    loadTokens {
+                        val token = accessToken()
+                        if (token.isNullOrBlank()) null else BearerTokens(accessToken = token, refreshToken = "")
+                    }
+                    refreshTokens {
+                        onUnauthorized()
+                        null
+                    }
+                    sendWithoutRequest { true }
+                }
+            }
 
-        install(createGuestModeGuardPlugin(guestModeCache, config.guestAllowedSegments.toSet()))
+            install(HttpTimeout) {
+                requestTimeoutMillis = REQUEST_TIMEOUT_MS
+                connectTimeoutMillis = CONNECT_TIMEOUT_MS
+                socketTimeoutMillis = SOCKET_TIMEOUT_MS
+            }
 
-        defaultRequest {
-            url(config.baseUrl)
-            header("lang", localeCache.value)
-            header("brand-id", config.brandId)
-            header("User-Agent-OS", platformName)
-            header("Content-Type", "application/json")
-            header("Device-Mode", config.deviceMode)
-            header("Device", config.deviceType)
-            header("secret-key", config.secretKey)
-        }
+            install(createGuestModeGuardPlugin(guestModeCache, config.guestAllowedPaths.toSet()))
 
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                    explicitNulls = false
-                    encodeDefaults = true
+            defaultRequest {
+                url(config.baseUrl)
+                val lang = localeCache.value
+                if (lang.isNotBlank()) header("lang", lang)
+                header("brand-id", config.brandId)
+                header("User-Agent-OS", platformName)
+                header("Content-Type", "application/json")
+                header("Device-Mode", config.deviceMode)
+                header("Device", config.deviceType)
+                header("secret-key", config.secretKey)
+            }
+
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        isLenient = true
+                        ignoreUnknownKeys = true
+                        explicitNulls = false
+                        encodeDefaults = true
+                    }
+                )
+            }
+
+            install(
+                createClientPlugin("DynamicHeaders") {
+                    onRequest { request, _ ->
+                        val location = positionCache.value
+                        if (location != GeoPoint.Zero) {
+                            request.headers.set("x-position", formatPosition(location))
+                        }
+                    }
                 }
             )
         }
 
-        install(
-            createClientPlugin("DynamicHeaders") {
-                onRequest { request, _ ->
-                    val location = positionCache.value
-                    request.headers.set("x-position", "${location.lat} ${location.lng}")
-                }
-            }
-        )
-    }
+    client.launch { locale.collectLatest { localeCache.value = it } }
+    client.launch { guestMode.collectLatest { guestModeCache.value = it } }
+    client.launch { position.collectLatest { positionCache.value = it } }
+
+    return client
 }

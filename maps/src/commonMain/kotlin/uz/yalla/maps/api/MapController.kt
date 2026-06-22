@@ -78,19 +78,7 @@ public interface MapController {
 
     public fun unlockTarget()
 
-    public fun snapshotScene(): SceneSnapshot
-
     public fun close()
-
-    public data class SceneSnapshot(
-        val cameraPosition: CameraPosition,
-        val markers: List<MapMarker>,
-        val routes: List<MapRoute>,
-        val circles: List<MapCircle>,
-        val padding: PaddingValues,
-        val lockedTarget: GeoPoint?,
-        val lockedZoom: Float?
-    )
 
     public companion object {
         public const val ANIMATION_DURATION: Int = 1000

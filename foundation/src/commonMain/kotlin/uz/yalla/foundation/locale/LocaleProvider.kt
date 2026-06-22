@@ -2,6 +2,7 @@ package uz.yalla.foundation.locale
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -14,12 +15,15 @@ import uz.yalla.core.settings.LocaleKind
 public val LocalAppLocale: ProvidableCompositionLocal<LocaleKind> = staticCompositionLocalOf { LocaleKind.Uz }
 
 @Composable
+public fun currentAppLocale(): LocaleKind = LocalAppLocale.current
+
+@Composable
 public fun LocaleProvider(content: @Composable () -> Unit) {
     val preferences = remember { KoinPlatform.getKoin().get<InterfacePreferences>() }
     val initialLocale = remember { LocaleKind.from(getCurrentLanguage()) }
     val locale by preferences.localeType.collectAsState(initialLocale)
 
-    remember(locale) { changeLanguage(locale.code) }
+    LaunchedEffect(locale) { changeLanguage(locale.code) }
 
     CompositionLocalProvider(LocalAppLocale provides locale) {
         content()

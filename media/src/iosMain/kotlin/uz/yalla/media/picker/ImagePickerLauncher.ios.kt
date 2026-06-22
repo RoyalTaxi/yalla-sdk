@@ -9,24 +9,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uz.yalla.media.config.requireMedia
-import uz.yalla.media.utils.toByteArray
+import uz.yalla.media.util.MediaScope
+import uz.yalla.media.util.toByteArray
 
 @Composable
 public actual fun rememberImagePickerLauncher(
     selectionMode: SelectionMode,
-    scope: CoroutineScope,
+    @Suppress("UNUSED_PARAMETER") scope: CoroutineScope,
     onResult: (List<ByteArray>) -> Unit
 ): ImagePickerLauncher {
     val latestOnResult by rememberUpdatedState(onResult)
-    val selectionLimit =
-        when (selectionMode) {
-            SelectionMode.Single -> 1
-            is SelectionMode.Multiple -> selectionMode.maxSelection
-        }
+    val selectionLimit = selectionMode.toSelectionLimit()
     return remember {
         ImagePickerLauncher {
             requireMedia().factory.pickImages(selectionLimit) { dataList ->
-                scope.launch(Dispatchers.Default) {
+                MediaScope.launch {
                     val images = dataList.map { it.toByteArray() }
                     withContext(Dispatchers.Main) { latestOnResult(images) }
                 }

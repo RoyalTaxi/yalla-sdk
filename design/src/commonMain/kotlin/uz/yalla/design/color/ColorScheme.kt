@@ -7,77 +7,81 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 @Immutable
-public data class ColorScheme(
-    val text: Text,
-    val background: Background,
-    val border: Border,
-    val button: Button,
-    val icon: Icon,
-    val accent: Accent,
-    val gradient: Gradient
+public class ColorScheme(
+    public val text: Text,
+    public val background: Background,
+    public val border: Border,
+    public val button: Button,
+    public val icon: Icon,
+    public val accent: Accent,
+    public val gradient: Gradient
 ) {
     @Immutable
-    public data class Text(
-        val base: Color,
-        val subtle: Color,
-        val link: Color,
-        val red: Color,
-        val white: Color
+    public class Text(
+        public val base: Color,
+        public val subtle: Color,
+        public val link: Color,
+        public val red: Color,
+        public val white: Color
     )
 
     @Immutable
-    public data class Background(
-        val base: Color,
-        val brand: Color,
-        val secondary: Color,
-        val tertiary: Color
+    public class Background(
+        public val base: Color,
+        public val brand: Color,
+        public val secondary: Color,
+        public val tertiary: Color
     )
 
     @Immutable
-    public data class Border(
-        val disabled: Color,
-        val filled: Color,
-        val white: Color,
-        val error: Color
+    public class Border(
+        public val disabled: Color,
+        public val filled: Color,
+        public val white: Color,
+        public val error: Color
     )
 
     @Immutable
-    public data class Button(
-        val active: Color,
-        val disabled: Color,
-        val secondary: Color,
-        val tertiary: Color,
-        val disabledTertiary: Color
+    public class Button(
+        public val active: Color,
+        public val disabled: Color,
+        public val secondary: Color,
+        public val tertiary: Color,
+        public val disabledTertiary: Color
     )
 
     @Immutable
-    public data class Icon(
-        val white: Color,
-        val base: Color,
-        val secondary: Color,
-        val disabled: Color,
-        val red: Color,
-        val subtle: Color
+    public class Icon(
+        public val white: Color,
+        public val base: Color,
+        public val secondary: Color,
+        public val disabled: Color,
+        public val red: Color,
+        public val subtle: Color
     )
 
     @Immutable
-    public data class Accent(
-        val pinkSun: Color,
-        val color1: Color,
-        val color2: Color,
-        val color3: Color,
-        val color4: Color,
-        val color5: Color
+    public class Accent(
+        public val pinkSun: Color,
+        public val blush: Color,
+        public val periwinkle: Color,
+        public val amber: Color,
+        public val aqua: Color,
+        public val lavender: Color
     )
 
     @Immutable
-    public data class Gradient(
-        val splash: Brush,
-        val sunsetNight: Brush
+    public class Gradient(
+        public val splash: Brush,
+        public val sunsetNight: Brush
     )
 }
 
-public fun light(): ColorScheme =
+internal val LightColorScheme: ColorScheme = light()
+
+internal val DarkColorScheme: ColorScheme = dark()
+
+internal fun light(): ColorScheme =
     ColorScheme(
         text =
             ColorScheme.Text(
@@ -121,11 +125,11 @@ public fun light(): ColorScheme =
         accent =
             ColorScheme.Accent(
                 pinkSun = PinkSun,
-                color1 = Color1,
-                color2 = Color2,
-                color3 = Color3,
-                color4 = Color4,
-                color5 = Color5
+                blush = Color1,
+                periwinkle = Color2,
+                amber = Color3,
+                aqua = Color4,
+                lavender = Color5
             ),
         gradient =
             ColorScheme.Gradient(
@@ -134,7 +138,7 @@ public fun light(): ColorScheme =
             )
     )
 
-public fun dark(): ColorScheme =
+internal fun dark(): ColorScheme =
     ColorScheme(
         text =
             ColorScheme.Text(
@@ -178,11 +182,11 @@ public fun dark(): ColorScheme =
         accent =
             ColorScheme.Accent(
                 pinkSun = PinkSun,
-                color1 = Color1,
-                color2 = Color2,
-                color3 = Color3,
-                color4 = Color4,
-                color5 = Color5
+                blush = Color1,
+                periwinkle = Color2,
+                amber = Color3,
+                aqua = Color4,
+                lavender = Color5
             ),
         gradient =
             ColorScheme.Gradient(
@@ -191,4 +195,10 @@ public fun dark(): ColorScheme =
             )
     )
 
-public val LocalColorScheme: ProvidableCompositionLocal<ColorScheme> = staticCompositionLocalOf { light() }
+internal val LocalColorScheme: ProvidableCompositionLocal<ColorScheme> =
+    staticCompositionLocalOf {
+        error(
+            "No ColorScheme provided. Wrap your content with YallaTheme or provide a ColorScheme via " +
+                "LocalColorScheme."
+        )
+    }

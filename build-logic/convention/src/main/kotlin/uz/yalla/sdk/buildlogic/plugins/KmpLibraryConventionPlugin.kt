@@ -23,8 +23,6 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                 apply("org.jetbrains.kotlin.multiplatform")
                 apply("org.jetbrains.kotlin.plugin.serialization")
                 apply("maven-publish")
-                // Dokka is opt-in (`-Pyalla.docs=true`); the per-PR publications dry-run
-                // does not set it, so it does not pay Dokka's config cost in every module.
                 if (yallaDocsEnabled) apply("org.jetbrains.dokka")
             }
 

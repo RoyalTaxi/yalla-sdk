@@ -1,8 +1,3 @@
-public final class uz/yalla/media/ImageViewerFileProvider : androidx/core/content/FileProvider {
-	public static final field $stable I
-	public fun <init> ()V
-}
-
 public final class uz/yalla/media/camera/SystemCameraLauncher {
 	public static final field $stable I
 	public final fun launch ()V
@@ -10,6 +5,29 @@ public final class uz/yalla/media/camera/SystemCameraLauncher {
 
 public final class uz/yalla/media/camera/SystemCameraLauncher_androidKt {
 	public static final fun rememberSystemCameraLauncher (Lkotlinx/coroutines/CoroutineScope;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)Luz/yalla/media/camera/SystemCameraLauncher;
+}
+
+public final class uz/yalla/media/config/CompressionConfig {
+	public static final field $stable I
+	public static final field Companion Luz/yalla/media/config/CompressionConfig$Companion;
+	public fun <init> (III)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun copy (III)Luz/yalla/media/config/CompressionConfig;
+	public static synthetic fun copy$default (Luz/yalla/media/config/CompressionConfig;IIIILjava/lang/Object;)Luz/yalla/media/config/CompressionConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMaxDimension ()I
+	public final fun getMaxFileSize ()I
+	public final fun getQuality ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/media/config/CompressionConfig$Companion {
+	public final fun getChatImage ()Luz/yalla/media/config/CompressionConfig;
+	public final fun getDefault ()Luz/yalla/media/config/CompressionConfig;
+	public final fun getProfilePhoto ()Luz/yalla/media/config/CompressionConfig;
 }
 
 public final class uz/yalla/media/config/MediaConfig {
@@ -34,9 +52,8 @@ public abstract interface class uz/yalla/media/config/MediaFactory {
 public final class uz/yalla/media/config/YallaMedia {
 	public static final field $stable I
 	public static final field INSTANCE Luz/yalla/media/config/YallaMedia;
-	public final fun getConfig ()Luz/yalla/media/config/MediaConfig;
+	public final fun current ()Luz/yalla/media/config/MediaConfig;
 	public final fun install (Luz/yalla/media/config/MediaConfig;)V
-	public final fun setConfig (Luz/yalla/media/config/MediaConfig;)V
 }
 
 public final class uz/yalla/media/picker/ImagePickerLauncher {
@@ -79,31 +96,8 @@ public final class uz/yalla/media/picker/SelectionMode$Single : uz/yalla/media/p
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class uz/yalla/media/utils/CompressionConfig {
-	public static final field $stable I
-	public static final field Companion Luz/yalla/media/utils/CompressionConfig$Companion;
-	public fun <init> (III)V
-	public final fun component1 ()I
-	public final fun component2 ()I
-	public final fun component3 ()I
-	public final fun copy (III)Luz/yalla/media/utils/CompressionConfig;
-	public static synthetic fun copy$default (Luz/yalla/media/utils/CompressionConfig;IIIILjava/lang/Object;)Luz/yalla/media/utils/CompressionConfig;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getMaxDimension ()I
-	public final fun getMaxFileSize ()I
-	public final fun getQuality ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class uz/yalla/media/utils/CompressionConfig$Companion {
-	public final fun getChatImage ()Luz/yalla/media/utils/CompressionConfig;
-	public final fun getDefault ()Luz/yalla/media/utils/CompressionConfig;
-	public final fun getProfilePhoto ()Luz/yalla/media/utils/CompressionConfig;
-}
-
-public final class uz/yalla/media/utils/ImageCompressor_androidKt {
-	public static final fun compressImage ([BLuz/yalla/media/utils/CompressionConfig;)[B
-	public static synthetic fun compressImage$default ([BLuz/yalla/media/utils/CompressionConfig;ILjava/lang/Object;)[B
+public final class uz/yalla/media/util/ImageCompressor_androidKt {
+	public static final fun compressImage ([BLuz/yalla/media/config/CompressionConfig;)[B
+	public static synthetic fun compressImage$default ([BLuz/yalla/media/config/CompressionConfig;ILjava/lang/Object;)[B
 }
 

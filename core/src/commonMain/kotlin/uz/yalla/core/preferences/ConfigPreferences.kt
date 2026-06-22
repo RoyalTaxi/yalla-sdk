@@ -2,7 +2,7 @@ package uz.yalla.core.preferences
 
 import kotlinx.coroutines.flow.Flow
 
-public interface ConfigPreferences {
+public interface SupportConfigPreferences {
     public val supportNumber: Flow<String>
 
     public fun setSupportNumber(value: String)
@@ -18,7 +18,9 @@ public interface ConfigPreferences {
     public val infoTelegram: Flow<String>
 
     public fun setInfoTelegram(value: String)
+}
 
+public interface LegalConfigPreferences {
     public val privacyPolicyRu: Flow<String>
 
     public fun setPrivacyPolicyRu(value: String)
@@ -26,7 +28,9 @@ public interface ConfigPreferences {
     public val privacyPolicyUz: Flow<String>
 
     public fun setPrivacyPolicyUz(value: String)
+}
 
+public interface BonusConfigPreferences {
     public val maxBonus: Flow<Long>
 
     public fun setMaxBonus(value: Long)
@@ -46,8 +50,16 @@ public interface ConfigPreferences {
     public val isCardEnabled: Flow<Boolean>
 
     public fun setCardEnabled(value: Boolean)
+}
 
+public interface OrderConfigPreferences {
     public val orderCancelTime: Flow<Int>
 
     public fun setOrderCancelTime(value: Int)
 }
+
+public interface ConfigPreferences :
+    SupportConfigPreferences,
+    LegalConfigPreferences,
+    BonusConfigPreferences,
+    OrderConfigPreferences

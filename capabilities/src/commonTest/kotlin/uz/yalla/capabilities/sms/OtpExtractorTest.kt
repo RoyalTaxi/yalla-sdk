@@ -61,8 +61,9 @@ class OtpExtractorTest {
     }
 
     @Test
-    fun keywordAfterCodeFallsBackToFirstMatch() {
+    fun keywordPresentButNoFollowingCodeFallsBackToFirstMatch() {
         assertEquals("482913", extractOtp("482913 is your kod", 6, true))
+        assertEquals("777777", extractOtp("777777 sent. Your code expired", 6, false))
     }
 
     @Test
@@ -85,5 +86,30 @@ class OtpExtractorTest {
     fun extractedLengthAlwaysEqualsRequestedLength() {
         assertEquals(6, extractOtp("Use code 123456 now", 6, false)?.length)
         assertNull(extractOtp("Use code 12345 now", 6, false))
+    }
+
+    @Test
+    fun numericSurfaceAnchorBeatsEarlierDecoyRun() {
+        assertEquals("12345", extractOtp("Order 99999. Your code is 12345", 5, false))
+    }
+
+    @Test
+    fun allLetterTokenOfRequestedLengthIsRejectedOnAlphanumericSurface() {
+        assertNull(extractOtp("Your code is ABCDEF", 6, true))
+    }
+
+    @Test
+    fun zeroLengthReturnsNullInsteadOfEmptyCode() {
+        assertNull(extractOtp("Your code is 12345", 0, false))
+    }
+
+    @Test
+    fun negativeLengthReturnsNullWithoutThrowing() {
+        assertNull(extractOtp("Your code is 12345", -1, false))
+    }
+
+    @Test
+    fun lengthAboveMaxReturnsNull() {
+        assertNull(extractOtp("Your code is 1234567890123", 13, false))
     }
 }

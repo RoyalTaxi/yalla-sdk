@@ -26,8 +26,8 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filter
 import uz.yalla.design.theme.System
 
-private const val HiddenFraction = 0.65f
-private const val SlideDurationMillis = 250
+private const val HIDDEN_FRACTION = 0.65f
+private const val SLIDE_DURATION_MILLIS = 250
 
 @OptIn(FlowPreview::class)
 @Composable
@@ -42,8 +42,8 @@ public fun DockedSheet(
     var heightPx by remember { mutableIntStateOf(0) }
 
     val offset by animateFloatAsState(
-        targetValue = if (hidden && heightPx > 0) heightPx * HiddenFraction else 0f,
-        animationSpec = tween(durationMillis = SlideDurationMillis)
+        targetValue = if (hidden && heightPx > 0) heightPx * HIDDEN_FRACTION else 0f,
+        animationSpec = tween(durationMillis = SLIDE_DURATION_MILLIS)
     )
 
     val currentOnPaddingChanged by rememberUpdatedState(onPaddingChanged)
