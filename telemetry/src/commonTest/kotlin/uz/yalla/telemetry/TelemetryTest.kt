@@ -112,9 +112,9 @@ class TelemetryTest {
     }
 
     private object ThrowingSink : TelemetrySink {
-        override fun track(event: AnalyticsEvent): Unit = throw RuntimeException("sink.track")
+        override fun track(event: AnalyticsEvent): Unit = error("sink.track")
 
-        override fun setUser(userId: String?): Unit = throw RuntimeException("sink.setUser")
+        override fun setUser(userId: String?): Unit = error("sink.setUser")
     }
 
     private class RecordingReporter : CrashReporter {
@@ -124,12 +124,12 @@ class TelemetryTest {
             recorded += throwable
         }
 
-        override fun setUser(userId: String?) {}
+        override fun setUser(userId: String?): Unit = Unit
     }
 
     private object ThrowingReporter : CrashReporter {
-        override fun record(throwable: Throwable): Unit = throw RuntimeException("crash.record")
+        override fun record(throwable: Throwable): Unit = error("crash.record")
 
-        override fun setUser(userId: String?): Unit = throw RuntimeException("crash.setUser")
+        override fun setUser(userId: String?): Unit = error("crash.setUser")
     }
 }

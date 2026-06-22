@@ -11,7 +11,7 @@ internal actual fun createHttpEngine(certificatePins: List<CertificatePin>): Htt
                 CertificatePinner
                     .Builder()
                     .apply {
-                        certificatePins.forEach { pin -> add(pin.host, *pin.pins.toTypedArray()) }
+                        certificatePins.forEach { pin -> pin.pins.forEach { value -> add(pin.host, value) } }
                     }.build()
             config {
                 certificatePinner(pinner)
