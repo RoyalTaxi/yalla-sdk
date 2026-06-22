@@ -4,14 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-/**
- * Characterization of [OrderStatus.from] and the status partitions.
- *
- * Highest cost-of-silent-break in the pure core: `from` carries a non-obvious aliasing
- * contract (both `in_progress` AND `in_fetters` decode to [OrderStatus.InProgress]) and an
- * [OrderStatus.Unknown] fallback that preserves the original id. A careless edit could erase
- * either silently, so every branch — and the input normalization around it — is pinned here.
- */
 class OrderStatusTest {
     @Test
     fun fromDecodesEveryKnownId() {
@@ -28,7 +20,6 @@ class OrderStatusTest {
 
     @Test
     fun fromAliasesInFettersToInProgress() {
-        // The contract: the legacy backend id `in_fetters` must collapse onto InProgress.
         assertEquals(OrderStatus.InProgress, OrderStatus.from("in_fetters"))
         assertEquals(OrderStatus.from("in_progress"), OrderStatus.from("in_fetters"))
     }
@@ -55,7 +46,6 @@ class OrderStatusTest {
 
     @Test
     fun fromUnknownPreservesRawCasingAndWhitespaceNotTheNormalizedForm() {
-        // Normalization is only applied to the match key; the fallback keeps the raw input.
         val raw = "  Mystery_State  "
         assertEquals(OrderStatus.Unknown(raw), OrderStatus.from(raw))
     }
@@ -125,7 +115,6 @@ class OrderStatusTest {
 
     @Test
     fun partitionsRelateAsExpected() {
-        // active is the ongoing statuses that are NOT in the non-interactive (searching) phase.
         assertEquals(OrderStatus.ongoing - OrderStatus.nonInteractive, OrderStatus.active)
         assertTrue(OrderStatus.active.all { it in OrderStatus.ongoing })
         assertTrue(OrderStatus.nonInteractive.all { it in OrderStatus.ongoing })

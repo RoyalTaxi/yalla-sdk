@@ -33,15 +33,6 @@ jobs:
 
             -   uses: gradle/actions/setup-gradle@v4
 
-            # Android + common-metadata publications only. The SDK's iOS native deps
-            # moved from CocoaPods to SwiftPM (consumed by the iOS app directly), so
-            # no podInstall / Kotlin-Native linking is needed to publish the android
-            # AARs the client resolves. The per-module task names are run at the root
-            # so every module that declares them is published, no hardcoded list.
-            #
-            # Gated on commits whose message starts with `release(` so non-release
-            # pushes to main don't republish the same version (GitHub Packages
-            # returns 409 on identical coordinates).
             -   name: Publish
                 if: startsWith(github.event.head_commit.message, 'release(')
                 run: |
@@ -75,9 +66,6 @@ jobs:
 
             -   uses: gradle/actions/setup-gradle@v4
 
-            # Klib publications only — no framework linking, no tests. Gated like the
-            # android job, plus workflow_dispatch so ios artifacts can be backfilled
-            # for an already-published version without re-running (and 409ing) android.
             -   name: Publish
                 if: startsWith(github.event.head_commit.message, 'release(') || github.event_name == 'workflow_dispatch'
                 run: |

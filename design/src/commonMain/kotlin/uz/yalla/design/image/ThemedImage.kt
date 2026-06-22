@@ -28,16 +28,6 @@ import uz.yalla.resources.img_light_tariff_card
 import uz.yalla.resources.img_light_trash_can
 import uz.yalla.resources.img_wifi
 
-// Image entries originate from yalla-design; this file is hand-finished afterwards (e.g. the
-// `Wifi` entry) and is authoritative for this module.
-
-/**
- * A light/dark image pair. Resolve it to a `Painter` for the current appearance with
- * [rememberThemedPainter]; do not read [light]/[dark] directly.
- *
- * @property light the resource shown in the light appearance.
- * @property dark the resource shown in the dark appearance.
- */
 public enum class ThemedImage(
     public val light: DrawableResource,
     public val dark: DrawableResource
@@ -59,7 +49,6 @@ public enum class ThemedImage(
     TrashCan(Res.drawable.img_light_trash_can, Res.drawable.img_dark_trash_can),
     Wifi(Res.drawable.img_wifi, Res.drawable.img_wifi);
 
-    /** Matching iOS asset-catalog name used by the iOS bridge. */
     public val assetName: String
         get() = "img_" + name.replace(CAMEL_HUMP, "_$1").lowercase()
 

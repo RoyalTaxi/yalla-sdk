@@ -9,15 +9,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-/**
- * Pins the module's central contract: `Telemetry` is best-effort fan-out where a
- * throwing sink or crash reporter is isolated and never reaches the caller, and the
- * fan-out reaches every installed sink. These are the `runCatching` guarantees that
- * are the module's whole reason to exist — deleting any of them must fail a test.
- *
- * `Telemetry` is a process-global singleton, so each test installs the exact set it
- * needs and [tearDown] resets to the no-op default to avoid cross-test bleed.
- */
 class TelemetryTest {
     @AfterTest
     fun tearDown() {
@@ -40,11 +31,10 @@ class TelemetryTest {
     @Test
     fun trackContinuesAfterAThrowingSinkAndDoesNotThrow() {
         val good = RecordingSink()
-        // Throwing sink is installed first; the good sink must still receive the event.
         Telemetry.install(listOf(ThrowingSink, good))
 
         val e = event("boom")
-        Telemetry.track(e) // must not throw
+        Telemetry.track(e)
 
         assertEquals(listOf(e), good.events)
     }
@@ -54,7 +44,7 @@ class TelemetryTest {
         val good = RecordingSink()
         Telemetry.install(listOf(ThrowingSink, good))
 
-        Telemetry.setUser("u-1") // must not throw
+        Telemetry.setUser("u-1")
 
         assertEquals(listOf<String?>("u-1"), good.users)
     }
@@ -74,7 +64,7 @@ class TelemetryTest {
         val good = RecordingSink()
         Telemetry.install(listOf(good), ThrowingReporter)
 
-        Telemetry.setUser("u-2") // crash.setUser throws internally; must be swallowed
+        Telemetry.setUser("u-2")
 
         assertEquals(listOf<String?>("u-2"), good.users)
     }
@@ -83,8 +73,6 @@ class TelemetryTest {
     fun recordCrashIsolatesAThrowingReporter() {
         Telemetry.install(emptyList(), ThrowingReporter)
 
-        // The whole point of recordCrash: a throwing reporter must not escape, which
-        // on the real path is inside a CoroutineExceptionHandler.
         Telemetry.recordCrash(RuntimeException("from coroutine"))
     }
 
@@ -103,7 +91,6 @@ class TelemetryTest {
     fun trackOnEmptyInstallIsASafeNoop() {
         Telemetry.install(emptyList(), CrashReporter.Noop)
 
-        // No sinks, Noop reporter: nothing observable, nothing thrown.
         Telemetry.track(event("nobody_home"))
         Telemetry.setUser("u-3")
         Telemetry.recordCrash(RuntimeException("silent"))

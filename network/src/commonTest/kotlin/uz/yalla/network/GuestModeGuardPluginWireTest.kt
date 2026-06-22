@@ -17,14 +17,6 @@ import uz.yalla.network.error.DataError
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * End-to-end enforcement test for the guest-mode guard, exercising the real plugin + the
- * [GuestBlockedException] → [DataError.Network.Guest] mapping through [safeApiCall] — the security
- * contract the pure [isGuestAllowedPath] table alone cannot prove. Pins that the guard reads the
- * StateFlow live (a flag flip changes the verdict mid-client) and that a blocked request never
- * reaches the wire. The StateFlow is driven directly so the test is deterministic, with no reliance
- * on an async warm-up collector.
- */
 class GuestModeGuardPluginWireTest {
     private val guestMode = MutableStateFlow(true)
 

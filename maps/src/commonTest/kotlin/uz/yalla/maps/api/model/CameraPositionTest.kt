@@ -7,10 +7,6 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-/**
- * Pins [approximatelyEquals] — the single-source camera-emission de-dup the backends use to
- * suppress no-op emits during continuous pan/zoom. Guards the named epsilon thresholds.
- */
 class CameraPositionTest {
     private val base = CameraPosition(target = GeoPoint(40.0, 71.0), zoom = 15f, bearing = 90f, tilt = 30f)
 

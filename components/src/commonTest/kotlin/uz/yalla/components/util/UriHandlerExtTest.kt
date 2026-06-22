@@ -4,11 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-/**
- * Pins the scheme allowlist on [normalizeWebUri]: backend/user-controlled links must only ever resolve
- * to `http`/`https`. Guards the security fix (finding M9) — a crafted `javascript:`/`file:`/`intent:`
- * link is rejected (returns null) rather than passed verbatim to the platform `UriHandler`.
- */
 class UriHandlerExtTest {
     @Test
     fun prependsHttpsWhenSchemeMissing() {

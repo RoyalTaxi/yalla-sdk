@@ -18,13 +18,6 @@ import platform.Foundation.NSError
 import platform.Foundation.NSFileManager
 import platform.Foundation.NSUserDomainMask
 
-// At-rest encryption (CWE-312, finding #4) is handled by SecureStore: the bearer/push tokens and the
-// profile/payment PII go to the Keychain (SecureStore.ios.kt) under
-// kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly — device-only and excluded from iCloud/iTunes backups.
-// This plain DataStore proto under NSDocumentDirectory now holds ONLY non-sensitive UX prefs (locale,
-// theme, map style, onboarding, last positions), the cash/card discriminator, cached config, and the
-// per-key revision markers — none of which are credentials or PII, so backup exposure here is benign.
-
 @OptIn(ExperimentalForeignApi::class)
 internal actual fun createDataStore(scope: Scope): DataStore<Preferences> =
     PreferenceDataStoreFactory.createWithPath(

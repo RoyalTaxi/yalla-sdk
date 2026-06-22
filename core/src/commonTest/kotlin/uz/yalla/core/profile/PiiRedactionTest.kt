@@ -8,11 +8,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-/**
- * Pins that PII- and credential-bearing public types redact their [toString] so the
- * auto-generated data-class string cannot leak sensitive fields into a log line, exception
- * message, or crash report (CWE-532). Covers [Client], [PaymentMethod.Card], and [PaymentCard].
- */
 class PiiRedactionTest {
     @Test
     fun clientToStringOmitsPhoneNameBirthdayAndBalance() {
@@ -59,7 +54,6 @@ class PiiRedactionTest {
 
     @Test
     fun redactionDoesNotAffectEquality() {
-        // Redacting toString must not touch data-class equality/copy semantics.
         val a = PaymentCard(cardId = CardId("tok"), maskedPan = "1111")
         val b = PaymentCard(cardId = CardId("tok"), maskedPan = "1111")
         assertEquals(a, b)

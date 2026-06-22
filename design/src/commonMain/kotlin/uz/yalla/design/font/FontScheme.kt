@@ -12,21 +12,12 @@ import org.jetbrains.compose.resources.Font
 import uz.yalla.resources.Res
 import uz.yalla.resources.nummernschild
 
-/**
- * The semantic typography tokens for the app.
- *
- * Read it through [uz.yalla.design.theme.System.font] inside a
- * [uz.yalla.design.theme.YallaTheme]; the nested holders ([Title], [Body], [Custom]) group
- * [TextStyle]s by role so call sites read intent (`System.font.body.base.medium`) rather than a
- * raw size/weight.
- */
 @Immutable
 public data class FontScheme(
     val title: Title,
     val body: Body,
     val custom: Custom
 ) {
-    /** Display/heading styles, largest to smallest. */
     @Immutable
     public data class Title(
         val xLarge: TextStyle,
@@ -34,7 +25,6 @@ public data class FontScheme(
         val base: TextStyle
     )
 
-    /** Body copy styles by size; each [Weights] size carries the regular/medium/bold triad. */
     @Immutable
     public data class Body(
         val caption: TextStyle,
@@ -42,7 +32,6 @@ public data class FontScheme(
         val base: Weights,
         val small: Weights
     ) {
-        /** A regular/medium/bold weight triad for one body size. */
         @Immutable
         public data class Weights(
             val regular: TextStyle,
@@ -51,21 +40,12 @@ public data class FontScheme(
         )
     }
 
-    /** One-off styles that are not part of the size/weight scale (e.g. the car-plate font). */
     @Immutable
     public data class Custom(
         val carNumber: TextStyle
     )
 }
 
-/**
- * Builds (and caches across recomposition) the default [FontScheme].
- *
- * The whole scheme is theme-constant, so it is wrapped in `remember`: it is built once and keeps a
- * stable identity, which lets the `staticCompositionLocalOf` consumers below [YallaTheme] skip
- * instead of re-recomposing the whole subtree on every theme recomposition. The three
- * [FontFamily]s are hoisted so each is created once and shared by all the [TextStyle]s.
- */
 @Composable
 internal fun rememberFontScheme(): FontScheme {
     val bold = FontFamily(Font(boldFont))

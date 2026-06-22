@@ -4,16 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-/**
- * Output-based characterization of [extractOtp].
- *
- * Pins the anchor-then-fallback precedence: a code following a `code`/`kod`/`код`
- * keyword wins; otherwise the first standalone match wins (including the documented
- * limitation that a keyword with no code after it falls back to the first global
- * match — see [keywordPresentButNoFollowingCodeFallsBackToFirstMatch]). Also pins the
- * no-slicing guarantee for phone numbers / long digit-runs and the degenerate-length
- * boundary (length out of `1..12` returns `null`, never throws).
- */
 class OtpExtractorTest {
     @Test
     fun extractsPlainFiveDigitCode() {
@@ -72,11 +62,6 @@ class OtpExtractorTest {
 
     @Test
     fun keywordPresentButNoFollowingCodeFallsBackToFirstMatch() {
-        // Documented limitation (M8): when the keyword has no code after it the search
-        // falls back to the first global match, which preserves the legitimate
-        // code-before-keyword case (see extractsFiveDigitCodeAtMessageStart) at the cost
-        // of returning a preceding decoy when there is no real code. Pinned intentionally
-        // so a future change to this trade-off is a conscious, reviewed decision.
         assertEquals("482913", extractOtp("482913 is your kod", 6, true))
         assertEquals("777777", extractOtp("777777 sent. Your code expired", 6, false))
     }
@@ -105,13 +90,11 @@ class OtpExtractorTest {
 
     @Test
     fun numericSurfaceAnchorBeatsEarlierDecoyRun() {
-        // The default Uzbek OTP shape: a decoy run precedes the keyword, real code follows.
         assertEquals("12345", extractOtp("Order 99999. Your code is 12345", 5, false))
     }
 
     @Test
     fun allLetterTokenOfRequestedLengthIsRejectedOnAlphanumericSurface() {
-        // Pins the digit-required lookahead: a right-length all-letter token must fail.
         assertNull(extractOtp("Your code is ABCDEF", 6, true))
     }
 

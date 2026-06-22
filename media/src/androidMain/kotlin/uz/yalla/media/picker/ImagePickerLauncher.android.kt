@@ -24,8 +24,6 @@ public actual fun rememberImagePickerLauncher(
     return remember {
         ImagePickerLauncher {
             requireMedia().factory.pickImages(selectionLimit) { uris ->
-                // Read on the module-owned scope, not the caller's: the OS picker can outlive the
-                // composition scope, and a cancelled caller scope must not drop the picked image.
                 MediaScope.launch(Dispatchers.IO) {
                     val images =
                         uris.mapNotNull { uri ->

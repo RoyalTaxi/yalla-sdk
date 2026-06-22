@@ -5,11 +5,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-/**
- * Proves the shared KMP test convention is live for :network — `kotlin("test")` resolves and
- * `commonTest` runs under `testAndroidHostTest`. Characterizes the public envelope contract via a
- * serialization round-trip so the wiring change ships with a real net rather than an empty source set.
- */
 class ConventionSmokeTest {
     private val json = Json { ignoreUnknownKeys = true }
 
@@ -27,8 +22,6 @@ class ConventionSmokeTest {
 
     @Test
     fun apiErrorEnvelopeDecodesTopLevelAndNestedRetryAfter() {
-        // Pins the type the wire path actually decodes (parseApiError), including the top-level
-        // retry_after used for a flat rate-limit body and the snake_case error_code mapping.
         val decoded =
             json.decodeFromString<ApiErrorEnvelope>(
                 """{"code":429,"retry_after":30,"error":{"error_code":"E429"}}"""

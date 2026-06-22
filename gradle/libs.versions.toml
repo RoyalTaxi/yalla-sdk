@@ -1,12 +1,10 @@
 [versions]
-# Toolchain
 agp = "9.2.1"
 kotlin = "2.3.21"
 compose = "1.10.3"
 compose-material3 = "1.9.0"
 compose-material-icons = "1.7.3"
 
-# AndroidX / Google Android
 androidx-activity = "1.13.0"
 androidx-browser = "1.10.0"
 androidx-camera = "1.6.1"
@@ -20,53 +18,39 @@ google-play-app-update = "2.1.0"
 play-services-auth-api-phone = "18.3.0"
 play-services-maps = "20.0.0"
 
-# KotlinX
 kotlinx-coroutines = "1.11.0"
 kotlinx-datetime = "0.8.0-0.6.x-compat"
 kotlinx-serialization = "1.11.0"
 
-# Networking
 connectivity = "2.4.1"
 ktor = "3.4.3"
 
-# Architecture / DI / Logging
 kermit = "2.1.0"
 koin = "4.2.1"
 
-# UI helpers
 compottie = "2.1.0"
-# 0.7.0-shaded-core moved/removed the ConstraintLayout API used by primitives.
 constraintlayout = "0.6.1"
 datetime-wheel-picker = "1.3.0"
 
-# Maps / Location
 moko-geo = "0.8.0"
-# 0.12.x changes coordinate/style APIs used by :maps.
 maplibre-compose = "0.11.1"
 
-# Paging
 paging = "3.3.0-alpha02-0.5.1"
 
-# Documentation / catalog
 dokka = "2.2.0"
 valkyrie = "0.4.0"
 coil = "3.4.0"
 
-# Architecture testing (test-only)
 konsist = "0.17.3"
 junit-jupiter = "5.11.4"
 
-# Binary compatibility gate (G3): ABI surface validation
 binary-compatibility-validator = "0.18.1"
 
-# Static-analysis gate (G4): detekt code smells + ktlint formatting. Versions are
-# pinned to match YallaClient so one .editorconfig governs the whole ecosystem.
 detekt = "1.23.8"
 ktlint = "1.3.1"
 ktlint-gradle = "12.1.0"
 
 [libraries]
-# Build tools
 android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 compose-compiler-gradle-plugin = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 dokka-gradle-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
@@ -75,7 +59,6 @@ binary-compatibility-validator-gradle-plugin = { module = "org.jetbrains.kotlinx
 detekt-gradle-plugin = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
 ktlint-gradle-plugin = { module = "org.jlleitschuh.gradle.ktlint:org.jlleitschuh.gradle.ktlint.gradle.plugin", version.ref = "ktlint-gradle" }
 
-# Compose
 compose-animation = { module = "org.jetbrains.compose.animation:animation", version.ref = "compose" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
@@ -88,7 +71,6 @@ compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose" }
 compose-ui-tooling = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose" }
 
-# AndroidX / Google Android
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "androidx-browser" }
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "androidx-camera" }
@@ -106,14 +88,12 @@ google-play-app-update = { module = "com.google.android.play:app-update", versio
 play-services-auth-api-phone = { module = "com.google.android.gms:play-services-auth-api-phone", version.ref = "play-services-auth-api-phone" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "play-services-maps" }
 
-# KotlinX
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
-# Networking
 connectivity-device = { module = "dev.jordond.connectivity:connectivity-device", version.ref = "connectivity" }
 ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
@@ -125,28 +105,23 @@ ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 
-# Architecture / DI / Logging
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 
-# UI helpers
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
 compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources", version.ref = "compottie" }
 constraintlayout = { module = "tech.annexflow.compose:constraintlayout-compose-multiplatform", version.ref = "constraintlayout" }
 datetime-wheel-picker = { module = "io.github.darkokoa:datetime-wheel-picker", version.ref = "datetime-wheel-picker" }
 
-# Maps / Location
 geo = { module = "dev.icerock.moko:geo", version.ref = "moko-geo" }
 geo-compose = { module = "dev.icerock.moko:geo-compose", version.ref = "moko-geo" }
 maplibre-compose = { module = "org.maplibre.compose:maplibre-compose", version.ref = "maplibre-compose" }
 
-# Paging
 paging-common = { module = "app.cash.paging:paging-common", version.ref = "paging" }
 paging-compose-common = { module = "app.cash.paging:paging-compose-common", version.ref = "paging" }
 
-# Architecture testing (test-only)
 konsist = { module = "com.lemonappdev:konsist", version.ref = "konsist" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
 
@@ -165,7 +140,6 @@ binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibil
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint-gradle" }
 
-# Local convention plugins
 yalla-sdk-android-library = { id = "yalla.sdk.android.library" }
 yalla-sdk-kmp = { id = "yalla.sdk.kmp" }
 yalla-sdk-kmp-compose = { id = "yalla.sdk.kmp.compose" }

@@ -16,16 +16,6 @@ import javax.crypto.spec.GCMParameterSpec
 
 internal actual fun createSecureStore(scope: Scope): SecureStore = AndroidKeystoreSecureStore(scope.get<Context>())
 
-/**
- * [SecureStore] backed by AES-256-GCM with a key held in the **Android Keystore** (TEE/StrongBox-backed
- * where available), under a fixed alias generated on first use. The key never leaves the Keystore — only
- * `Base64(IV || ciphertext)` is persisted (in a dedicated `SharedPreferences` file, distinct from the
- * plain DataStore). A fresh random 12-byte IV is generated per write (GCM's nonce-reuse requirement), so
- * `setRandomizedEncryptionRequired(false)` is set deliberately: WE supply the IV, the Keystore must not.
- *
- * Deliberately NOT `EncryptedSharedPreferences` (deprecated). This is plain `SharedPreferences` used only
- * as opaque ciphertext storage; all confidentiality comes from the Keystore key + GCM here.
- */
 private class AndroidKeystoreSecureStore(
     context: Context
 ) : SecureStore {
@@ -38,8 +28,6 @@ private class AndroidKeystoreSecureStore(
             try {
                 decrypt(stored)
             } catch (expected: Exception) {
-                // A value that no longer decrypts (key invalidated by a credential/biometric change, or a
-                // corrupt blob) is treated as absent rather than crashing every read — the caller re-auths.
                 null
             }
         }
@@ -62,7 +50,7 @@ private class AndroidKeystoreSecureStore(
     private fun encrypt(plaintext: String): String {
         val cipher = Cipher.getInstance(TRANSFORMATION)
         cipher.init(Cipher.ENCRYPT_MODE, secretKey())
-        val iv = cipher.iv // GCM init produces a fresh random 12-byte IV.
+        val iv = cipher.iv
         val ciphertext = cipher.doFinal(plaintext.encodeToByteArray())
         return Base64.getEncoder().encodeToString(iv + ciphertext)
     }
@@ -76,7 +64,6 @@ private class AndroidKeystoreSecureStore(
         return cipher.doFinal(ciphertext).decodeToString()
     }
 
-    /** Loads the Keystore AES key, generating it under [KEY_ALIAS] on first use. */
     private fun secretKey(): SecretKey {
         val keyStore = KeyStore.getInstance(KEYSTORE_PROVIDER).apply { load(null) }
         (keyStore.getEntry(KEY_ALIAS, null) as? KeyStore.SecretKeyEntry)?.let { return it.secretKey }
@@ -90,9 +77,6 @@ private class AndroidKeystoreSecureStore(
                 ).setBlockModes(KeyProperties.BLOCK_MODE_GCM)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
                 .setKeySize(AES_KEY_BITS)
-                // Decryption supplies the stored IV via GCMParameterSpec; the default randomized-encryption
-                // requirement forbids a caller-provided IV, so it must be relaxed. Encryption still uses a
-                // fresh GCM-generated random IV per value (read back via cipher.iv) — no nonce reuse.
                 .setRandomizedEncryptionRequired(false)
                 .build()
         generator.init(spec)

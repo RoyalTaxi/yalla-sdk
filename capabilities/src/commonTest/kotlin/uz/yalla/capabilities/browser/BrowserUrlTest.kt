@@ -4,11 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-/**
- * Pins the shared [isWebUrl] allowlist both [Browser] actuals enforce: only
- * `http`/`https` (case-insensitive) are loadable; every other scheme and a missing
- * scheme are rejected, closing the scheme-confusion / open-redirect surface.
- */
 class BrowserUrlTest {
     @Test
     fun acceptsHttpAndHttpsCaseInsensitively() {

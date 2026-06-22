@@ -27,8 +27,6 @@ public actual fun rememberAppUpdateState(
                     NSBundle.mainBundle.infoDictionary
                         ?.get("CFBundleShortVersionString") as? String
                 )?.takeIf { it.isNotBlank() }
-            // Fail closed: if the installed version can't be determined, don't drive a
-            // (potentially non-dismissible) force-update prompt off an unknown version.
             if (installedVersion == null) return@LaunchedEffect
             val storeInfo = fetchStoreInfo(appId, countryCode)
             if (storeInfo != null && VersionComparator.isNewer(storeInfo.first, installedVersion)) {

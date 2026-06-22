@@ -4,12 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
-/**
- * Pins the pure light/dark selection that backs [rememberThemedPainter]. The selection is the whole point
- * of [ThemedImage], yet it sits behind a `@Composable` that cannot be unit-tested; extracting
- * [resourceFor] (mirroring how `CardBrandPresentationTest` extracts the non-`@Composable` half)
- * lets both branches be guarded against an inverted condition that would ship light art in dark mode.
- */
 class ThemedImageResourceTest {
     @Test
     fun darkBranchReturnsDarkResource() {
@@ -27,7 +21,6 @@ class ThemedImageResourceTest {
 
     @Test
     fun assetNameIsPresentForEveryEntry() {
-        // The iOS bridge resolves images by this string; a blank one silently fails the lookup.
         for (image in ThemedImage.entries) {
             assertTrue(image.assetName.isNotBlank(), "assetName for $image")
         }

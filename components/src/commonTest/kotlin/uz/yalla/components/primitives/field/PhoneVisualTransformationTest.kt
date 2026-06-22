@@ -3,12 +3,6 @@ package uz.yalla.components.primitives.field
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Pins the phone visual-transformation cursor math (finding H3): formatting `912345678` →
- * `(91) 234 56 78`, the per-separator offset arithmetic, and the round-trip invariant
- * `transformedToOriginal(originalToTransformed(n)) == n`. Pure logic, unit-tested without a Compose
- * field — exactly the off-by-one territory the review called out as untested.
- */
 class PhoneVisualTransformationTest {
     @Test
     fun formatsFullNationalNumber() {
@@ -28,13 +22,9 @@ class PhoneVisualTransformationTest {
     fun originalToTransformedAtKnownPositions() {
         val digits = "912345678"
         val formatted = formatPhoneDigits(digits)
-        // cursor before any digit
         assertEquals(0, phoneOriginalToTransformed(0, digits.length, formatted.length))
-        // after "9" -> right before "1"
         assertEquals(2, phoneOriginalToTransformed(1, digits.length, formatted.length))
-        // after "91" -> skips ") " to land before the third digit
         assertEquals(5, phoneOriginalToTransformed(2, digits.length, formatted.length))
-        // at the very end
         assertEquals(formatted.length, phoneOriginalToTransformed(9, digits.length, formatted.length))
     }
 

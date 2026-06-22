@@ -18,17 +18,6 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-/**
- * Characterization of [BaseViewModel]'s two crash/loading contracts — the substrate every product
- * ViewModel inherits. Pins that [BaseViewModel.safeScope] is the log-and-swallow hatch (a throwing
- * coroutine on it does not crash the scope or cancel sibling work), and that [launchWithLoading]
- * drives [BaseViewModel.loading] true while in flight and false once it completes. A regression that
- * drops the handler or the loading wiring would otherwise ship with a green build.
- *
- * `Main` is backed by [runTest]'s own scheduler so the single virtual clock drives both
- * `viewModelScope` (which inherits `Main`) and the test body — the loading delays advance with
- * [advanceUntilIdle].
- */
 @OptIn(ExperimentalCoroutinesApi::class)
 class BaseViewModelTest {
     private class TestViewModel : BaseViewModel()
@@ -49,7 +38,6 @@ class BaseViewModelTest {
             viewModel.safeScope.launch { siblingRan = true }
             runCurrent()
 
-            // The throwing coroutine was caught by the handler; the sibling still ran, the scope is alive.
             assertTrue(siblingRan, "safeScope must swallow the failure and keep sibling work running")
             assertTrue(viewModel.safeScope.coroutineContext[Job]?.isActive ?: false)
 
@@ -66,7 +54,6 @@ class BaseViewModelTest {
             val gate = CompletableDeferred<Unit>()
             with(viewModel) { viewModel.launchWithLoading { gate.await() } }
 
-            // Let the grace period elapse: loading turns on while the block is in flight.
             advanceUntilIdle()
             assertTrue(viewModel.loading.value, "loading must be true while the block runs")
 

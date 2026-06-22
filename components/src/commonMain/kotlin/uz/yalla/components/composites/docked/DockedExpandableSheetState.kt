@@ -117,11 +117,6 @@ public class DockedExpandableSheetState internal constructor(
         anchoredDraggableState.animateTo(settleTarget(velocity, fraction))
     }
 
-    /**
-     * Pure snap-target decision for [settle]. Below the velocity threshold the snap is decided by the
-     * configured [positionalThreshold] (not a hardcoded `0.5f`), so a caller passing e.g.
-     * `{ it * 0.3f }` is honored on release as well as on drag.
-     */
     internal fun settleTarget(
         velocity: Float,
         currentFraction: Float
@@ -138,7 +133,6 @@ public class DockedExpandableSheetState internal constructor(
     }
 
     private companion object {
-        /** Above this absolute drag velocity (px/s) the fling direction wins over the position. */
         const val SETTLE_VELOCITY_THRESHOLD = 500f
     }
 }

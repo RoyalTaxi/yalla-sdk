@@ -81,10 +81,6 @@ internal fun PinContent(
     }
 }
 
-/**
- * The rotating order-search spinner. Kept in its own composable so the infinite rotation transition
- * is only subscribed while the pin is actually [jumping][PinContent]; the idle pin holds no frame clock.
- */
 @Composable
 private fun JumpingSpinner(tint: Color) {
     val transition = rememberInfiniteTransition()

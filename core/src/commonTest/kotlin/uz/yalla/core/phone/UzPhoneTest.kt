@@ -6,14 +6,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-/**
- * Output-based contract for [UzPhone] — the single source of truth for +998 numbers.
- *
- * Pins three things a client depends on and that a regression would silently break:
- * the national length / country code constants, the display spacing of [UzPhone.format],
- * and the parse closure of [UzPhone.of] (every accepted spelling collapses to one value,
- * everything malformed yields `null` rather than a half-valid instance).
- */
 class UzPhoneTest {
     private val national = "901234567"
 
@@ -50,7 +42,6 @@ class UzPhoneTest {
 
     @Test
     fun ofStripsCountryCodeFromE164Input() {
-        // "+", country code, spaces and separators all normalize to the same national value.
         assertEquals(national, UzPhone.of("998901234567")?.national)
         assertEquals(national, UzPhone.of("+998901234567")?.national)
         assertEquals(national, UzPhone.of("+998 (90) 123 45 67")?.national)
@@ -76,7 +67,6 @@ class UzPhoneTest {
 
     @Test
     fun parseThenE164IsStableAcrossInputSpellings() {
-        // Whatever spelling a client passes, the wire form it sends is identical.
         val fromNational = UzPhone.of("901234567")!!
         val fromE164 = UzPhone.of("+998 90 123 45 67")!!
         assertEquals(fromNational.toE164(), fromE164.toE164())

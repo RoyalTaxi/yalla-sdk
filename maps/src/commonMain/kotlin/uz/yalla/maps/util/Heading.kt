@@ -1,13 +1,11 @@
 package uz.yalla.maps.util
 
-/** Normalizes [headingDegrees] into the [0, 360) range. */
 internal fun normalizeHeading(headingDegrees: Float): Float {
     var normalized = headingDegrees % 360f
     if (normalized < 0f) normalized += 360f
     return normalized
 }
 
-/** Returns [toDegrees] re-expressed relative to [fromDegrees] so the rotation takes the short way around. */
 internal fun shortestHeadingPath(
     fromDegrees: Float,
     toDegrees: Float
@@ -18,7 +16,6 @@ internal fun shortestHeadingPath(
     return fromDegrees + delta
 }
 
-/** Interpolates from [fromDegrees] toward [toDegrees] by [fraction] (clamped to [0,1]) along the short arc. */
 internal fun interpolateHeading(
     fromDegrees: Float,
     toDegrees: Float,

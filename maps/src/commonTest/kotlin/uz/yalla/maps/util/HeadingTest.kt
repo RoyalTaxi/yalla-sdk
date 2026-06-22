@@ -3,11 +3,6 @@ package uz.yalla.maps.util
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Characterization of the heading math behind smooth marker rotation. The wrap-around is the
- * bug-prone part: turning 350° -> 10° must rotate +20° across north, not -340° the long way, and the
- * interpolated value must stay continuous (unwrapped) so the marker doesn't spin.
- */
 class HeadingTest {
     private val tolerance = 0.001f
 

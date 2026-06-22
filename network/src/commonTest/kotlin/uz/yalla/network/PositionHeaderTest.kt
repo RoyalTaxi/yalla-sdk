@@ -4,11 +4,6 @@ import uz.yalla.core.geo.GeoPoint
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Pins the exact `x-position` wire string [formatPosition] emits. The header must be byte-identical on
- * the JVM and Kotlin/Native — platform `Double.toString` is not guaranteed to agree — so this runs in
- * commonTest (both androidHostTest and iosTest) and asserts the literal string, fixed to six decimals.
- */
 class PositionHeaderTest {
     @Test
     fun formatsToSixDecimalsWithASingleSpaceSeparator() {
@@ -28,7 +23,6 @@ class PositionHeaderTest {
     @Test
     fun keepsNegativeSignAndDropsItForZero() {
         assertEquals("-1.000000 0.000000", formatPosition(GeoPoint(-1.0, 0.0)))
-        // -0.0 must not render as "-0.000000".
         assertEquals("0.000000 0.000000", formatPosition(GeoPoint(-0.0, 0.0)))
     }
 }

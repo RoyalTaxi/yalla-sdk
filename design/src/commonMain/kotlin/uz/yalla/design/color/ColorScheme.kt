@@ -6,14 +6,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-/**
- * The semantic color tokens for one appearance (light or dark).
- *
- * Read it through [uz.yalla.design.theme.System.color] inside a
- * [uz.yalla.design.theme.YallaTheme]; the nested holders ([Text], [Background], [Border],
- * [Button], [Icon], [Accent], [Gradient]) group tokens by role so call sites read intent
- * (`System.color.text.base`) rather than a raw hex value.
- */
 @Immutable
 public class ColorScheme(
     public val text: Text,
@@ -24,7 +16,6 @@ public class ColorScheme(
     public val accent: Accent,
     public val gradient: Gradient
 ) {
-    /** Foreground text colors keyed by role (primary, subtle, link, error, on-dark). */
     @Immutable
     public class Text(
         public val base: Color,
@@ -34,7 +25,6 @@ public class ColorScheme(
         public val white: Color
     )
 
-    /** Surface/background colors: the base canvas, brand fill, and secondary/tertiary layers. */
     @Immutable
     public class Background(
         public val base: Color,
@@ -43,7 +33,6 @@ public class ColorScheme(
         public val tertiary: Color
     )
 
-    /** Stroke colors for outlined surfaces (disabled, filled, on-dark, error). */
     @Immutable
     public class Border(
         public val disabled: Color,
@@ -52,7 +41,6 @@ public class ColorScheme(
         public val error: Color
     )
 
-    /** Button fill colors keyed by emphasis/state. */
     @Immutable
     public class Button(
         public val active: Color,
@@ -62,7 +50,6 @@ public class ColorScheme(
         public val disabledTertiary: Color
     )
 
-    /** Icon tint colors keyed by role/state. */
     @Immutable
     public class Icon(
         public val white: Color,
@@ -73,7 +60,6 @@ public class ColorScheme(
         public val subtle: Color
     )
 
-    /** Decorative accent palette (e.g. avatar/category tints). */
     @Immutable
     public class Accent(
         public val pinkSun: Color,
@@ -84,7 +70,6 @@ public class ColorScheme(
         public val lavender: Color
     )
 
-    /** Multi-stop gradients exposed as ready-to-use [Brush]es (`splash`, `sunsetNight`). */
     @Immutable
     public class Gradient(
         public val splash: Brush,
@@ -92,15 +77,8 @@ public class ColorScheme(
     )
 }
 
-/**
- * The light-appearance [ColorScheme], built once and shared so `YallaTheme`'s default does not
- * allocate a fresh scheme (and churn `staticCompositionLocalOf` identity) on every recomposition.
- */
 internal val LightColorScheme: ColorScheme = light()
 
-/**
- * The dark-appearance [ColorScheme]; see [LightColorScheme] for why it is hoisted.
- */
 internal val DarkColorScheme: ColorScheme = dark()
 
 internal fun light(): ColorScheme =

@@ -87,16 +87,6 @@ internal object PreferenceKeys {
             ORDER_CANCEL_TIME
         )
 
-    /**
-     * The SENSITIVE keys routed through [SecureStore] (encrypted at rest) instead of the plain DataStore:
-     * the auth + push tokens and the profile/payment PII (name, phone, birthday, gender, avatar URL, card
-     * id + masked PAN). Identified by their logical name so the secure store, the migration, and the clears
-     * stay 1:1 with the matching plain key. NON-sensitive keys (guest/device flags, the `PAYMENT_TYPE`
-     * cash/card discriminator, config, and all UX prefs) deliberately stay in plain DataStore.
-     *
-     * Every entry here is also in [SESSION_KEYS], so a session reset scrubs both the encrypted value and any
-     * un-migrated legacy plaintext.
-     */
     val SECURE_KEYS: List<String> =
         listOf(
             ACCESS_TOKEN,

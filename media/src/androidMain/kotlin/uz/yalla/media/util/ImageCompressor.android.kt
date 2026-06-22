@@ -118,9 +118,6 @@ public actual fun compressImage(
         if (smaller != resizedBitmap) {
             smaller.recycle()
         }
-        // Honor the size-budget contract: the half-res min-quality encode is not guaranteed to fit
-        // a high-entropy input, so only return it when it is within budget; otherwise null so the
-        // caller can react instead of silently uploading over-budget bytes.
         bestBytes = fallback.takeIf { it.size in 1..maxSizeBytes }
     }
 

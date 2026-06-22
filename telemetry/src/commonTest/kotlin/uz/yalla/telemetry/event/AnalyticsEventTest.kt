@@ -4,13 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-/**
- * Pins the pure `event { }` DSL data-mapping that the sinks rely on to build their
- * wire payload: each `put` overload produces its matching [ParamValue] subtype, the
- * `Int -> Count(Long)` widening, insertion-order preservation, and duplicate-key
- * last-write-wins. A regression here (e.g. switching off a `LinkedHashMap`, or
- * changing the `Int` handling) would otherwise ship green.
- */
 class AnalyticsEventTest {
     @Test
     fun eachPutOverloadProducesItsParamValueType() {
@@ -25,7 +18,7 @@ class AnalyticsEventTest {
 
         assertEquals(ParamValue.Text("hello"), e.params["text"])
         assertEquals(ParamValue.Count(7L), e.params["long"])
-        assertEquals(ParamValue.Count(3L), e.params["int"]) // Int widened to Long
+        assertEquals(ParamValue.Count(3L), e.params["int"])
         assertEquals(ParamValue.Amount(1.5), e.params["amount"])
         assertEquals(ParamValue.Flag(true), e.params["flag"])
     }

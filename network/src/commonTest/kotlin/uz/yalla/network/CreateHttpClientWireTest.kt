@@ -22,13 +22,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-/**
- * Wire-seam coverage for the client assembled by [createHttpClient]: the auth-header contract and the
- * cold-start header hygiene that the factory owns. Asserts on the request captured by [MockEngine].
- * Pins that the bearer token is read fresh per request (no stale Ktor cache), a blank token is treated
- * as no token, and that the unset locale/position seeds never ship an empty `lang` or a bogus
- * `x-position: 0.0 0.0`. A 401 fires the logout hook and surfaces as Unauthorized.
- */
 class CreateHttpClientWireTest {
     private val captured = mutableListOf<HttpRequestData>()
 
@@ -78,9 +71,9 @@ class CreateHttpClientWireTest {
         runTest {
             var token: String? = null
             val client = buildClient(accessToken = { token })
-            client.get("x") // guest: no token yet
+            client.get("x")
             token = "fresh-after-login"
-            client.get("x") // authenticated: must carry the new token, proving cacheTokens=false
+            client.get("x")
             assertNull(captured[0].headers[HttpHeaders.Authorization])
             assertEquals("Bearer fresh-after-login", captured[1].headers[HttpHeaders.Authorization])
         }
@@ -88,7 +81,7 @@ class CreateHttpClientWireTest {
     @Test
     fun unsetLocaleOmitsLangHeaderRatherThanSendingEmpty() =
         runTest {
-            val client = buildClient(accessToken = { null }) // locale flow never emits -> cache stays ""
+            val client = buildClient(accessToken = { null })
             client.get("x")
             assertNull(captured.single().headers["lang"])
         }
@@ -96,7 +89,7 @@ class CreateHttpClientWireTest {
     @Test
     fun unsetPositionOmitsXPositionRatherThanSendingZeroZero() =
         runTest {
-            val client = buildClient(accessToken = { null }) // position flow never emits -> GeoPoint.Zero
+            val client = buildClient(accessToken = { null })
             client.get("x")
             assertNull(captured.single().headers["x-position"])
         }

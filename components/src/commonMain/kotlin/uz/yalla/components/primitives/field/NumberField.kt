@@ -143,10 +143,6 @@ private object PhoneVisualTransformation : VisualTransformation {
     }
 }
 
-/**
- * Formats up to [MAX_PHONE_DIGITS] national digits as `(91) 234 56 78`. Pure and `internal` so the
- * cursor arithmetic below can be unit-tested without a Compose field (finding H3).
- */
 internal fun formatPhoneDigits(digits: String): String =
     buildString {
         digits.forEachIndexed { index, digit ->
@@ -159,7 +155,6 @@ internal fun formatPhoneDigits(digits: String): String =
         }
     }
 
-/** Maps a cursor position in the raw digits to its position in the formatted string. */
 internal fun phoneOriginalToTransformed(
     offset: Int,
     digitsLength: Int,
@@ -167,14 +162,13 @@ internal fun phoneOriginalToTransformed(
 ): Int {
     val clamped = offset.coerceIn(0, digitsLength)
     var transformed = clamped
-    if (clamped >= 1) transformed += 1 // leading '('
-    if (clamped >= 2) transformed += 2 // ") "
+    if (clamped >= 1) transformed += 1
+    if (clamped >= 2) transformed += 2
     if (clamped >= 5) transformed += 1
     if (clamped >= 7) transformed += 1
     return transformed.coerceAtMost(formattedLength)
 }
 
-/** Maps a cursor position in the formatted string back to the raw digit index. */
 internal fun phoneTransformedToOriginal(
     offset: Int,
     formatted: String

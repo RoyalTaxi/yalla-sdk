@@ -30,13 +30,6 @@ import uz.yalla.maps.config.MapFactory
 
 private const val PROVIDER_READY_TIMEOUT_MS = 5_000L
 
-/**
- * A [MapController] that hides the Google<->MapLibre runtime swap behind one stable surface. It
- * caches the whole scene (markers/routes/circles/camera/lock/style) so a switch re-seeds the new
- * backend seamlessly, suppresses a fresh backend's default camera/pin from clobbering the
- * aggregated state, and disposes the previous backend once the new one is confirmed ready. Buyers
- * obtain it via [rememberMapController]; the constructor is internal.
- */
 public class SwitchingMapController internal constructor(
     private val factory: MapFactory,
     private val initialPosition: CameraPosition? = null
@@ -45,7 +38,6 @@ public class SwitchingMapController internal constructor(
 
     private val active = MutableStateFlow<MapController?>(null)
 
-    /** The currently-active concrete backend used by [MapView] to re-key the platform host. */
     internal val activeBackend: StateFlow<MapController?> = active
 
     private val _cameraPosition = MutableStateFlow(initialPosition ?: CameraPosition.DEFAULT)
@@ -79,15 +71,10 @@ public class SwitchingMapController internal constructor(
     private var observerJobs: List<Job> = emptyList()
     private var seedJob: Job? = null
 
-    // Flipped true only once the seed/snapshot camera has actually been applied to the new backend.
-    // While false, the observer suppresses every DEFAULT emission (not just the first) so a backend
-    // that re-emits DEFAULT after a layout pass cannot clobber the meaningful aggregated camera.
     private var cameraSeedApplied = false
 
     internal suspend fun switchTo(kind: MapKind) {
         if (currentKind == kind && active.value != null) return
-        // A new switch supersedes any in-flight seeding from the previous switch: cancel it so a
-        // stale moveTo/markers job cannot push into the now-replaced (or closed) backend.
         seedJob?.cancel()
         val previous = active.value
         val next =
@@ -103,8 +90,6 @@ public class SwitchingMapController internal constructor(
         seedJob =
             scope.launch {
                 val readied = withTimeoutOrNull(PROVIDER_READY_TIMEOUT_MS) { next.isReady.first { it } } != null
-                // The next switch may already have replaced this backend while we awaited
-                // readiness; do not seed a superseded backend.
                 if (active.value !== next) return@launch
                 if (!readied) {
                     _events.emit(MapEvent.ProviderUnavailable)
@@ -136,10 +121,6 @@ public class SwitchingMapController internal constructor(
             listOf(
                 controller.cameraPosition
                     .onEach {
-                        // Suppress a fresh backend's DEFAULT camera for the whole pre-seed window
-                        // (not just the first emission): a backend can re-emit DEFAULT after a
-                        // layout/padding pass, and that second DEFAULT must not clobber the
-                        // meaningful aggregated camera that the seed moveTo is about to apply.
                         if (!cameraSeedApplied &&
                             it == CameraPosition.DEFAULT &&
                             _cameraPosition.value != CameraPosition.DEFAULT

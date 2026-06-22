@@ -3,13 +3,7 @@ package uz.yalla.components.config.primitives
 import platform.UIKit.UIViewController
 import uz.yalla.components.primitives.button.IconButtonShape
 
-/**
- * iOS bridge for the shared `IconButton`. The Swift side implements this to host a native icon button
- * and returns an [IconButtonHandle] of imperative closures Compose drives. Colors are packed as
- * `0xAARRGGBB` [Long]s; [ICON_BUTTON_COLOR_UNSET] means the corresponding color was not supplied.
- */
 public interface IconButtonFactory {
-    /** Builds the native icon button and returns its [IconButtonHandle]. */
     public fun create(
         icon: String,
         shape: IconButtonShape,
@@ -20,16 +14,8 @@ public interface IconButtonFactory {
     ): IconButtonHandle
 }
 
-/** Sentinel used when a Compose [androidx.compose.ui.graphics.Color] is unspecified. */
 public const val ICON_BUTTON_COLOR_UNSET: Long = Long.MIN_VALUE
 
-/**
- * Handle Compose uses to update a live native icon button.
- *
- * @property viewController the hosting native controller.
- * @property setIcon swaps the rendered icon.
- * @property setColors updates icon, container, and border colors (packed `0xAARRGGBB`).
- */
 public class IconButtonHandle(
     public val viewController: UIViewController,
     public val setIcon: (String) -> Unit,

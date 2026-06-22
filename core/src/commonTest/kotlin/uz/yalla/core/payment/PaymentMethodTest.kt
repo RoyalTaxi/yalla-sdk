@@ -4,14 +4,6 @@ import uz.yalla.core.identity.CardId
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Characterization of [PaymentMethod.from].
- *
- * The contract that is easy to break silently: "card" alone is NOT enough to produce a [Card] —
- * the decoder degrades to [Cash] whenever the card id is null/blank, and it trims the raw id and
- * masked number. So a malformed card payload can never surface a Card with an empty id; it always
- * falls back to Cash. Anything other than the normalized "card" id is Cash.
- */
 class PaymentMethodTest {
     @Test
     fun anyNonCardIdDecodesToCash() {

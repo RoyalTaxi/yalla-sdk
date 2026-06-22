@@ -3,15 +3,7 @@ package uz.yalla.core.location
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Characterization of the location enum decoders: [PointKind.from] and [PlaceKind.from].
- *
- * Both normalize (trim + lowercase) via the shared `normalizedId()` helper before matching, like
- * every other `from` decoder in the SDK, then fall back to their own default ([PointKind.Point] /
- * [PlaceKind.Other]) on any unrecognized or null input.
- */
 class LocationKindTest {
-    // --- PointKind: normalized match, default POINT ---
 
     @Test
     fun pointKindDecodesKnownIds() {
@@ -22,8 +14,6 @@ class LocationKindTest {
 
     @Test
     fun pointKindNormalizesCaseAndWhitespace() {
-        // Now matches its siblings: case/whitespace-insensitive so a backend "START" or " start "
-        // resolves to the real waypoint instead of silently mislabeling it POINT.
         assertEquals(PointKind.Start, PointKind.from("START"))
         assertEquals(PointKind.Start, PointKind.from(" start "))
         assertEquals(PointKind.Stop, PointKind.from("Stop"))
@@ -42,8 +32,6 @@ class LocationKindTest {
         assertEquals("point", PointKind.Point.id)
         assertEquals("stop", PointKind.Stop.id)
     }
-
-    // --- PlaceKind: normalized, default Other ---
 
     @Test
     fun placeKindDecodesKnownIds() {

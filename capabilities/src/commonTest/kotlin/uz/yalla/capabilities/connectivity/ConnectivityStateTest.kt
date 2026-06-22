@@ -14,13 +14,6 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-/**
- * Behavioral characterization of [ConnectivityState].
- *
- * Pins that `isOnline` tracks the collaborator's status emissions, that [refresh]
- * reflects a one-shot read, and — guarding the M16 fix — that a refresh is
- * single-flight (only the latest write survives concurrent refreshes).
- */
 @OptIn(ExperimentalCoroutinesApi::class)
 class ConnectivityStateTest {
     private class FakeConnectivity(
@@ -75,7 +68,6 @@ class ConnectivityStateTest {
 
             val first = state.refresh()
             val second = state.refresh()
-            // Launching a second refresh must cancel the in-flight first one.
             assertTrue(first.isCancelled)
 
             second.join()

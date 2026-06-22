@@ -17,7 +17,6 @@ internal class UserPreferencesImpl(
     private val secureStore: SecureStore,
     private val scope: CoroutineScope
 ) : UserPreferences {
-    // Profile PII is encrypted at rest (CWE-312): name/phone/birthday/gender flow through SecureStore.
     override val firstName: Flow<String> =
         dataStore.secureReadFlow(PreferenceKeys.FIRST_NAME.name, secureStore)
 
@@ -60,8 +59,6 @@ internal class UserPreferencesImpl(
         dataStore.secureWrite(PreferenceKeys.BIRTHDAY.name, value, secureStore, scope)
     }
 
-    // The card id + masked PAN are payment identifiers (encrypted); PAYMENT_TYPE is a plain "cash"/"card"
-    // discriminator. Combine the two secure flows so paymentMethod re-emits when either card field changes.
     override val paymentMethod: Flow<PaymentMethod> =
         combine(
             dataStore.readFlow { it[PreferenceKeys.PAYMENT_TYPE] },
@@ -76,9 +73,6 @@ internal class UserPreferencesImpl(
         }.distinctUntilChanged()
 
     override fun setPaymentMethod(value: PaymentMethod) {
-        // Ordered in one coroutine so the encrypted card fields are settled BEFORE the plain "card"/"cash"
-        // discriminator flips — otherwise the combined paymentMethod flow could momentarily reconstruct a
-        // half-written method. Mirrors the original single-edit atomicity across the two stores.
         scope.launch {
             if (value is PaymentMethod.Card) {
                 dataStore.secureSet(PreferenceKeys.CARD_ID.name, value.cardId.raw, secureStore)

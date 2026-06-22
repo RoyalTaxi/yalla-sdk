@@ -6,20 +6,12 @@ import kotlin.math.sqrt
 
 private const val METERS_PER_DEG_LAT = 111_320.0
 
-/**
- * Returns the compass bearing (degrees clockwise from north, via [GeoPoint.bearingTo]) of the route
- * segment nearest to [point], or `null` if the route has fewer than two points or the nearest
- * segment is more than [maxOffRouteMeters] away. Used for the live driver heading arrow.
- */
 public fun headingAlongRoute(
     point: GeoPoint,
     route: List<GeoPoint>,
     maxOffRouteMeters: Double = 60.0
 ): Float? {
     if (route.size < 2) return null
-    // Hoist the longitude-scale `cos()` out of the per-segment loop: the route's latitude span is
-    // tiny, so one representative value (the query point's latitude) is used for every segment.
-    // Behavior is unchanged versus the previous per-segment `cos(a.lat)`; cost drops O(segments)->O(1).
     val metersPerDegLng = METERS_PER_DEG_LAT * cos(point.lat * PI / 180.0)
     var bestDistanceMeters = Double.MAX_VALUE
     var bestBearing: Double? = null

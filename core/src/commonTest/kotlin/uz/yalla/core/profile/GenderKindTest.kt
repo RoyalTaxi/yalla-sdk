@@ -3,10 +3,6 @@ package uz.yalla.core.profile
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Characterization of [GenderKind.from]: normalized (trim + lowercase) decode with a
- * [GenderKind.NotSelected] fallback for unknown and null input.
- */
 class GenderKindTest {
     @Test
     fun decodesKnownIds() {

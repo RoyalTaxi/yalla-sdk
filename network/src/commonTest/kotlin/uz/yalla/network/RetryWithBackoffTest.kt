@@ -8,12 +8,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
-/**
- * Characterization of [retryWithBackoff]. The retry policy is safety-critical: only idempotent calls
- * may be retried, only on transient I/O failures, and only up to the attempt limit. Everything else
- * must surface on the first failure so non-idempotent writes are never silently replayed. Virtual
- * time ([runTest]) elides the backoff delays.
- */
 @OptIn(ExperimentalCoroutinesApi::class)
 class RetryWithBackoffTest {
     @Test
@@ -91,7 +85,6 @@ class RetryWithBackoffTest {
                     throw IOException("transient")
                 }
             }
-            // repeat(times - 1) = repeat(0): only the final out-of-loop attempt runs.
             assertEquals(1, calls)
         }
 
@@ -106,8 +99,6 @@ class RetryWithBackoffTest {
                     throw IOException("transient")
                 }
             }
-            // The realized sleep (currentDelay + jitter, capped) between consecutive attempts must
-            // never exceed the documented cap — jitter on top of a capped base previously hit ~1.5x.
             attemptTimes.zipWithNext { prev, next ->
                 assertTrue(next - prev <= maxDelay, "delay ${next - prev} exceeded cap $maxDelay")
             }

@@ -23,10 +23,6 @@ public actual fun rememberImagePickerLauncher(
     return remember {
         ImagePickerLauncher {
             requireMedia().factory.pickImages(selectionLimit) { dataList ->
-                // Read on the module-owned scope, not the caller's: the OS picker can outlive the
-                // composition scope, and a cancelled caller scope must not drop the picked image.
-                // MediaScope is backed by Dispatchers.Default (Dispatchers.IO is JVM-only / absent on
-                // Kotlin/Native), which is the off-main background dispatcher for the byte read.
                 MediaScope.launch {
                     val images = dataList.map { it.toByteArray() }
                     withContext(Dispatchers.Main) { latestOnResult(images) }

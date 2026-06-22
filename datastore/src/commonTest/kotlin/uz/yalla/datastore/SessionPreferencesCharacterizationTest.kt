@@ -12,14 +12,6 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-/**
- * Pins the three reset paths' differing semantics — the load-bearing, easily-desynced session contract.
- *
- * The key regression this guards (#1): the explicit Log-out path ([SessionPreferences.clearAndEnterGuestMode])
- * must PRESERVE the user-experience prefs (locale, theme, map style, onboarding, last positions) — the
- * same set [SessionPreferences.clearSession] keeps — not wipe them like the old `prefs.clear()` did.
- * Before the fix, [logoutPreservesUserExperiencePrefs] fails because the user's language reset to Uz.
- */
 @OptIn(ExperimentalCoroutinesApi::class)
 class SessionPreferencesCharacterizationTest {
     @Test
@@ -33,10 +25,8 @@ class SessionPreferencesCharacterizationTest {
             session.clearSession()
             advanceUntilIdle()
 
-            // Credentials (now encrypted at rest) and cached profile/config gone.
             assertEquals("", session.accessToken.first())
             assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
-            // UX prefs preserved.
             assertEquals(LocaleKind.Ru, InterfacePreferencesImpl(store, this.backgroundScope).localeType.first())
             assertTrue(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
             assertTrue(store.snapshot().contains(PreferenceKeys.SKIP_ONBOARDING))
@@ -53,11 +43,9 @@ class SessionPreferencesCharacterizationTest {
 
             session.clearAndEnterGuestMode()
 
-            // Token cleared (incl. the encrypted entry), guest flag set...
             assertEquals("", session.accessToken.first())
             assertNull(secure.peek(PreferenceKeys.ACCESS_TOKEN.name))
             assertTrue(session.isGuestMode.first())
-            // ...but the user's language/theme/onboarding survive logout.
             val ui = InterfacePreferencesImpl(store, this.backgroundScope)
             assertEquals(LocaleKind.Ru, ui.localeType.first())
             assertTrue(store.snapshot().contains(PreferenceKeys.THEME_TYPE))
@@ -84,8 +72,6 @@ class SessionPreferencesCharacterizationTest {
 
     @Test
     fun sessionKeysExcludesTheUserExperiencePrefs() {
-        // The curated SESSION_KEYS list is the contract: a new sensitive key added here without listing
-        // it would silently survive logout; the UX prefs must stay excluded so logout never drops them.
         val uxPrefs =
             listOf(
                 PreferenceKeys.LOCALE_TYPE,
@@ -98,11 +84,9 @@ class SessionPreferencesCharacterizationTest {
         uxPrefs.forEach { key ->
             assertFalse(PreferenceKeys.SESSION_KEYS.contains(key), "SESSION_KEYS must not contain $key")
         }
-        // ...and the access token MUST be cleared on a session reset.
         assertTrue(PreferenceKeys.SESSION_KEYS.contains(PreferenceKeys.ACCESS_TOKEN))
     }
 
-    /** Seeds one credential (encrypted side) plus session + every user-experience pref, written directly. */
     private suspend fun seedAll(
         store: InMemoryPreferencesDataStore,
         secure: FakeSecureStore

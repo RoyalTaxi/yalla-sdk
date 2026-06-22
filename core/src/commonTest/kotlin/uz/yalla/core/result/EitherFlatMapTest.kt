@@ -4,15 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-/**
- * Output-based characterization of [flatMap] and [getOrElse].
- *
- * The load-bearing behavior pinned here is short-circuiting: [flatMap] must NOT invoke its
- * transform on a [Either.Failure], and the original error must propagate untouched (not re-wrapped,
- * not replaced). A regression that ran the transform on failure — or swallowed the original error —
- * would silently corrupt every chained pipeline built on this. [getOrElse] mirrors that contract on
- * the extraction side: the fallback runs only on failure, and receives the actual error value.
- */
 class EitherFlatMapTest {
     @Test
     fun flatMapChainsSuccesses() {

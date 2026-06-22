@@ -33,13 +33,6 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
-/**
- * Characterization of [SwitchingMapController] — the Google<->MapLibre runtime switch (a known
- * flicker-prone seam). Pins the behaviours that keep a switch seamless: scene state is cached even
- * with no active backend, switching is idempotent for the same provider, switching to a different
- * provider hands the scene over to the new backend and disposes the old one, and live mutations are
- * forwarded to the active backend.
- */
 @OptIn(ExperimentalCoroutinesApi::class)
 class SwitchingMapControllerTest {
     private lateinit var dispatcher: TestDispatcher
@@ -145,8 +138,6 @@ class SwitchingMapControllerTest {
     @Test
     fun firstSwitchAppliesPersistedStyle() =
         runTest(dispatcher) {
-            // setStyle is called before any backend exists; it only updates the cached fields. The
-            // first switchTo must replay that persisted style onto the freshly-created backend.
             val style = MapStyle.InlineJson(lightJson = "{light}", darkJson = "{dark}")
             controller.setStyle(style, isDark = true)
 
@@ -159,24 +150,18 @@ class SwitchingMapControllerTest {
     @Test
     fun aggregatedCameraSurvivesPreSeedDefaultEmissions() =
         runTest(dispatcher) {
-            // Establish a meaningful aggregated camera via a ready backend.
             controller.switchTo(MapKind.Google)
             val google = factory.googleCreated.single()
             val meaningful = CameraPosition(target = GeoPoint(40.0, 71.0), zoom = 16f)
             google.cameraFlow.value = meaningful
             assertEquals(meaningful, controller.cameraPosition.value)
 
-            // Switch to a backend that is NOT ready yet, so its seed moveTo is parked. While parked,
-            // it re-emits DEFAULT more than once; neither may clobber the aggregated camera (the old
-            // guard only suppressed the first emission, letting the second flicker to DEFAULT).
             val notReadyFactory = FakeMapFactory(ready = false)
             val pending = SwitchingMapController(notReadyFactory)
             pending.switchTo(MapKind.Google)
             val backend = notReadyFactory.googleCreated.single()
-            // Seed the parent's aggregated camera to the meaningful value, mirroring a real switch.
             backend.cameraFlow.value = meaningful
             advanceUntilIdle()
-            // Reset to a meaningful aggregated state, then have the not-ready backend emit DEFAULT twice.
             backend.cameraFlow.value = CameraPosition.DEFAULT
             backend.cameraFlow.value = CameraPosition.DEFAULT
 
@@ -194,8 +179,6 @@ class SwitchingMapControllerTest {
 
             pending.switchTo(MapKind.Google)
             val backend = notReadyFactory.googleCreated.single()
-            // Backend not ready yet: the seed job is parked on isReady, so cached markers have not
-            // been forwarded.
             assertEquals(emptyList(), backend.markers)
 
             backend.readyFlow.value = true

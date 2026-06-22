@@ -10,8 +10,6 @@ private const val APPLE_LANGUAGES_KEY = "AppleLanguages"
 
 public actual fun changeLanguage(languageCode: String) {
     val defaults = NSUserDefaults.standardUserDefaults
-    // `AppleLanguages` is an ordered preference list. Move the chosen code to the front instead of
-    // clobbering the rest of the user's language order (which next-launch bundle resolution uses).
     val existing =
         (defaults.arrayForKey(APPLE_LANGUAGES_KEY) as? List<*>)
             .orEmpty()
@@ -21,8 +19,6 @@ public actual fun changeLanguage(languageCode: String) {
 }
 
 public actual fun getCurrentLanguage(): String {
-    // Read back the same store `changeLanguage` writes so set-then-get is symmetric with Android;
-    // fall back to the device locale, then the product default, so the result is never blank.
     val persisted =
         (NSUserDefaults.standardUserDefaults.arrayForKey(APPLE_LANGUAGES_KEY) as? List<*>)
             ?.filterIsInstance<String>()

@@ -4,11 +4,6 @@ import uz.yalla.telemetry.event.event
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Pins [DebugLogSink]'s output format — the shipped default sink's entire contract —
- * by testing the pure [renderLine] formatter, so the empty-vs-non-empty param branch
- * is covered without intercepting `println`.
- */
 class DebugLogSinkTest {
     @Test
     fun rendersNameOnlyWhenNoParams() {

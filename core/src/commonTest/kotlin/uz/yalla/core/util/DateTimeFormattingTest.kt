@@ -4,12 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-/**
- * Characterization of the epoch-timestamp formatters. [normalizedEpochSeconds] is fully
- * deterministic and pinned exactly (the seconds-vs-milliseconds heuristic is a recurring bug spot).
- * The formatters themselves depend on the system time zone, so they are pinned by their empty-input
- * guards and their output *shape* (dd.MM.yyyy / HH:mm) rather than a time-zone-specific value.
- */
 class DateTimeFormattingTest {
     @Test
     fun secondsValueBelowThresholdIsUnchanged() {

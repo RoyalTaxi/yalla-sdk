@@ -19,14 +19,6 @@ import uz.yalla.network.error.DataError
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Wire-seam coverage for [safeApiCall] through Ktor's [MockEngine] and the production
- * ContentNegotiation config — the real decode + error-mapping path a buyer audits, previously
- * exercised by no test. Each case asserts only the observable [Either], pinning the exception →
- * [DataError.Network] taxonomy: the `Unit` success short-circuit, the empty/204-body crash guard,
- * malformed-JSON and transport failures, the 401 → Unauthorized split, and rate-limit envelope
- * preservation.
- */
 class SafeApiCallWireTest {
     @Serializable
     private data class Dto(
@@ -59,7 +51,6 @@ class SafeApiCallWireTest {
     @Test
     fun success2xxWithUnitTDoesNotTouchTheBody() =
         runTest {
-            // No Content-Type, non-JSON body: a Unit T must short-circuit and never deserialize.
             val client = HttpClient(MockEngine { respond("not json", HttpStatusCode.OK) })
             val result: Either<DataError.Network, Unit> = safeApiCall { client.get("x") }
             assertEquals(Either.Success(Unit), result)
@@ -68,8 +59,6 @@ class SafeApiCallWireTest {
     @Test
     fun emptyBodyWithNonUnitTIsSerializationFailureNotCrash() =
         runTest {
-            // 204/empty 2xx + a non-Unit T makes ContentNegotiation throw NoTransformationFoundException;
-            // it must be caught and mapped, not escape safeApiCall.
             val client = HttpClient(MockEngine { respond("", HttpStatusCode.NoContent) })
             val result: Either<DataError.Network, Dto> = safeApiCall { client.get("x") }
             assertEquals(Either.Failure(DataError.Network.Serialization), result)
@@ -122,8 +111,6 @@ class SafeApiCallWireTest {
     @Test
     fun flatRateLimitEnvelopeWithOnlyCodeAndRetryAfterSurvives() =
         runTest {
-            // {"code":429,"retry_after":30} has no top-level message and no nested error — the old
-            // takeIf dropped it, collapsing 429 to a bare Client error and losing the backoff hint.
             val body = """{"code":429,"retry_after":30}"""
             val result: Either<DataError.Network, Unit> =
                 safeApiCall { jsonClient(HttpStatusCode.TooManyRequests, body).get("x") }

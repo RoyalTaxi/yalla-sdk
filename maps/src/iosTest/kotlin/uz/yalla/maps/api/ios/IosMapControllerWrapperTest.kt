@@ -19,12 +19,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-/**
- * Characterization of [IosMapControllerWrapper] — the iOS counterpart of SwitchingMapController.
- * Pins the branchy bridge logic that previously had zero coverage: camera-emit epsilon de-dup,
- * the by-user lock-clear, user-location enable gating, locked-target replay, and the closed-guard
- * that must make every method a no-op after [close].
- */
 @OptIn(ExperimentalCoroutinesApi::class)
 class IosMapControllerWrapperTest {
     private lateinit var renderer: FakeIosMapRenderer
@@ -50,11 +44,9 @@ class IosMapControllerWrapperTest {
             val first = wrapper.cameraPosition.value
             assertEquals(GeoPoint(40.0, 71.0), first.target)
 
-            // Sub-epsilon nudge must be de-duped: the public camera does not change.
             listener.onCameraMove(GeoPoint(40.0 + 5e-7, 71.0), zoom = 15f, bearing = 0f, tilt = 0f, isByUser = false)
             assertEquals(first, wrapper.cameraPosition.value)
 
-            // A real pan past the epsilon must be forwarded.
             listener.onCameraMove(GeoPoint(40.01, 71.0), zoom = 15f, bearing = 0f, tilt = 0f, isByUser = false)
             assertEquals(GeoPoint(40.01, 71.0), wrapper.cameraPosition.value.target)
         }
@@ -66,7 +58,6 @@ class IosMapControllerWrapperTest {
             renderer.animateToCalls.clear()
 
             renderer.listener!!.onCameraMove(GeoPoint(40.0, 71.0), 15f, 0f, 0f, isByUser = true)
-            // After a by-user move the lock is cleared, so changing padding no longer replays it.
             wrapper.setDesiredPadding(PaddingValues())
             assertTrue(renderer.animateToCalls.isEmpty(), "lock should be cleared; no replay expected")
         }

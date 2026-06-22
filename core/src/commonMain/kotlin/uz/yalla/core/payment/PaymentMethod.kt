@@ -12,7 +12,6 @@ public sealed class PaymentMethod(
         val cardId: CardId,
         val maskedNumber: String
     ) : PaymentMethod("card") {
-        // Redacted so the masked PAN never lands in a log line or crash report (CWE-532).
         override fun toString(): String = "Card(cardId=$cardId, <redacted>)"
     }
 

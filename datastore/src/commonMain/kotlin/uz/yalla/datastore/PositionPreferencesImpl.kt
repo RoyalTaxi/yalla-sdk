@@ -33,14 +33,6 @@ internal class PositionPreferencesImpl(
     }
 }
 
-/**
- * Decodes a `"lat,lng"` position string, trying [raw] then [fallbackRaw], then [GeoPoint.Zero].
- *
- * Parses atomically: a value is accepted only when BOTH components parse, so a half-valid string like
- * `"40.38,xyz"` is rejected (and falls through to [fallbackRaw]) rather than silently yielding
- * `(40.38, 0.0)`. A fully-unparseable value falls back to [GeoPoint.Zero] (Null Island) — a neutral
- * default, not a valid user location.
- */
 internal fun parseGeoPoint(
     raw: String?,
     fallbackRaw: String? = null

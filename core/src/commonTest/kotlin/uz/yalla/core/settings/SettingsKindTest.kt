@@ -3,18 +3,7 @@ package uz.yalla.core.settings
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Characterization of the settings enum decoders: [MapKind.from], [ThemeKind.from], and
- * [LocaleKind.from].
- *
- * Each decoder normalizes (trim + lowercase) and falls back to a specific default on any
- * unrecognized or null input. The defaults are the load-bearing contract — a careless edit that
- * changes the fallback flips the app's map provider, theme, or language. [LocaleKind] additionally
- * strips the region/script subtag, so a region-tagged code resolves by its primary language subtag;
- * that is pinned separately.
- */
 class SettingsKindTest {
-    // --- MapKind: default Google ---
 
     @Test
     fun mapKindDecodesKnownIds() {
@@ -40,8 +29,6 @@ class SettingsKindTest {
         assertEquals("google", MapKind.Google.id)
         assertEquals("libre", MapKind.Libre.id)
     }
-
-    // --- ThemeKind: default System ---
 
     @Test
     fun themeKindDecodesKnownIds() {
@@ -70,8 +57,6 @@ class SettingsKindTest {
         assertEquals("system", ThemeKind.System.id)
     }
 
-    // --- LocaleKind: default Uz, region/script subtag stripped before matching ---
-
     @Test
     fun localeKindDecodesKnownCodes() {
         assertEquals(LocaleKind.Uz, LocaleKind.from("uz"))
@@ -86,8 +71,6 @@ class SettingsKindTest {
 
     @Test
     fun localeKindResolvesRegionTaggedCodesByPrimaryLanguageSubtag() {
-        // The region/script subtag is stripped before matching, so a platform locale string maps
-        // to its language — "ru-RU"/"ru_RU" is Russian (not a silent Uz fallback).
         assertEquals(LocaleKind.Uz, LocaleKind.from("uz_UZ"))
         assertEquals(LocaleKind.Ru, LocaleKind.from("ru_RU"))
         assertEquals(LocaleKind.Ru, LocaleKind.from("ru-RU"))

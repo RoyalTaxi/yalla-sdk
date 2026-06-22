@@ -3,10 +3,6 @@ package uz.yalla.core.util
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Pins the [or0]/[orFalse] fallback helpers: each overload maps null to its typed default and passes
- * a non-null value through unchanged. Cheap insurance against a "tidy" that swaps a default or type.
- */
 class NullableDefaultsTest {
     @Test
     fun or0DefaultsNullToTypedZero() {

@@ -13,8 +13,6 @@ valkyrie {
     packageName = "uz.yalla.resources.icons"
     resourceDirectoryName = "valkyrieResources"
 
-    // Emit `public` on generated icon declarations so they satisfy the
-    // module's explicitApi() mode (KmpLibraryConventionPlugin).
     codeStyle {
         useExplicitMode = true
     }

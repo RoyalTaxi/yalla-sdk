@@ -10,48 +10,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 
-/**
- * Base class for every product ViewModel. Provides the shared loading-indicator state ([loading])
- * and a crash-safe coroutine scope ([safeScope]) for fire-and-forget UI work.
- *
- * The crash-free contract is split deliberately: Orbit intent flow is guarded by the container's
- * `crashGuard()`, while non-Orbit work launched on [safeScope] is the explicit log-and-swallow
- * escape hatch documented below.
- */
 public abstract class BaseViewModel : ViewModel() {
     private val loadingController = LoadingController(viewModelScope)
 
-    /**
-     * Anti-flicker loading flag: `true` only once in-flight [launchWithLoading]/[LoadingController]
-     * work outlives the grace period, and held visible for at least the minimum-visible window.
-     */
     public val loading: StateFlow<Boolean> = loadingController.loading
 
     private val handler =
         CoroutineExceptionHandler { _, throwable ->
-            // Log only the exception type, never the throwable's message or stack trace. safeScope
-            // backs the most sensitive flows (login/OTP, add-card, profile), and there is no
-            // release-aware Kermit sink in the SDK, so a full throwable would write OTPs / phone
-            // numbers / tokens carried in its message to Logcat / os_log in production (CWE-532).
-            // Mirrors the network layer's unconditional-redaction discipline.
             Logger.e { "Uncaught exception in safeScope: ${throwable::class.simpleName}" }
         }
 
-    /**
-     * Crash-safe scope for fire-and-forget UI work. Failures that escape the body are caught by an
-     * uncaught-exception handler that **logs (the exception type only) and swallows** them — they do
-     * not crash the scope, cancel sibling work, or surface on any effect channel. Use it for work
-     * that has no other failure path; route user-visible failures through Orbit intents instead.
-     */
     public val safeScope: CoroutineScope = viewModelScope + handler
 
-    /**
-     * Launches [block] while reflecting its in-flight state through [loading] (reference-counted, so
-     * overlapping calls keep the indicator up until all complete).
-     *
-     * Always launches on [safeScope] so uncaught failures are handled by the crash-safe handler
-     * instead of propagating through [viewModelScope].
-     */
     public fun launchWithLoading(block: suspend () -> Unit): Job =
         safeScope.launch {
             loadingController.withLoading(block)

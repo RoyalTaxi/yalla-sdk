@@ -5,13 +5,6 @@ import uz.yalla.network.error.DataError
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/**
- * Output-based tests over the Humble Object's pure decision: `statusToEither` carries the whole
- * HTTP-status → result mapping that `safeApiCall` used to inline, so it can be exercised by value
- * alone — no Ktor client, no suspension, no I/O. These cases pin the contract the suspend
- * orchestration now leans on: which status buckets succeed, which fail, and that a parsed envelope
- * overrides the bucket default while a missing body falls back to it.
- */
 class StatusToEitherTest {
     @Test
     fun success2xxSignalsDeserializeBody() {

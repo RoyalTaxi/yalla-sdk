@@ -23,18 +23,6 @@ import androidx.compose.material3.lightColorScheme as materialLightColorScheme
 
 internal val LocalIsDark = staticCompositionLocalOf { false }
 
-/**
- * The single theming entry point: wrap your app (or a screen) in `YallaTheme` once, then read
- * tokens through [System] (`System.color.*`, `System.font.*`, `System.isDark`).
- *
- * @param isDark the appearance to render; defaults to the system setting. This is the single
- *   source of truth for appearance — colors, the ripple, and themed images all follow it.
- * @param colorScheme the color tokens to provide; defaults to the [isDark]-matching scheme. A
- *   custom scheme must agree with [isDark] (its `background.base` must match the matching default)
- *   so colors, ripple, and image variants can never silently diverge.
- * @param fontScheme the typography tokens to provide; defaults to [rememberFontScheme].
- * @param content the themed content.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 public fun YallaTheme(
@@ -43,8 +31,6 @@ public fun YallaTheme(
     fontScheme: FontScheme = rememberFontScheme(),
     content: @Composable () -> Unit
 ) {
-    // Make the illegal state unrepresentable: a caller cannot pass a colorScheme whose appearance
-    // disagrees with isDark, which would otherwise render dark colors with light images + ripple.
     val expectedScheme = if (isDark) DarkColorScheme else LightColorScheme
     require(colorScheme.background.base == expectedScheme.background.base) {
         "YallaTheme: colorScheme appearance disagrees with isDark=$isDark. Provide the matching " +
@@ -105,23 +91,15 @@ public fun YallaTheme(
     }
 }
 
-/**
- * The canonical token surface. Read design tokens through `System` inside a [YallaTheme]:
- * `System.color.*` for colors, `System.font.*` for typography, and `System.isDark` for the current
- * appearance (e.g. to pick a themed image). Reading any of these outside a `YallaTheme` fails fast.
- */
 public object System {
-    /** The active [ColorScheme] (semantic color tokens). */
     public val color: ColorScheme
         @Composable
         get() = LocalColorScheme.current
 
-    /** The active [FontScheme] (semantic typography tokens). */
     public val font: FontScheme
         @Composable
         get() = LocalFontScheme.current
 
-    /** Whether the active theme is the dark appearance. */
     public val isDark: Boolean
         @Composable
         get() = LocalIsDark.current

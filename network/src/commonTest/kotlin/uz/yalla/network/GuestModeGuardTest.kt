@@ -4,12 +4,6 @@ import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-/**
- * Output-based tests over the guard's pure decision [isGuestAllowedPath]. The plugin wiring is a
- * thin shell; the policy worth pinning is which outgoing paths a guest may reach. Cases cover the
- * real onboarding endpoints, robustness to whatever base path the backend prepends, and the
- * false-allow holes that bare last-segment matching used to leave open.
- */
 class GuestModeGuardTest {
     private val allowed = DEFAULT_GUEST_ALLOWED_PATHS.toSet()
 

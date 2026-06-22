@@ -4,12 +4,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
-// Token values originate from yalla-design (tokens/colors.json). This file is hand-finished
-// afterwards (e.g. explicit-API modifiers, the bounds-relative splash gradient) and is the
-// authoritative source for this module until the emitter round-trips — edit deliberately.
-
-// region Light Theme Colors
-
 internal val LightTextBase = Color(0xFF101828)
 internal val LightTextSubtle = Color(0xFF98A2B3)
 internal val LightTextLink = Color(0xFF562DF8)
@@ -34,10 +28,6 @@ internal val LightIconSecondary = Color(0xFF562DF8)
 internal val LightIconDisabled = Color(0xFFC8CBFA)
 internal val LightIconRed = Color(0xFFF42500)
 internal val LightIconSubtle = Color(0xFF98A2B3)
-
-// endregion
-
-// region Dark Theme Colors
 
 internal val DarkTextBase = Color(0xFFFFFFFF)
 internal val DarkTextSubtle = Color(0xFF747C8B)
@@ -64,10 +54,6 @@ internal val DarkIconDisabled = Color(0xFF2C2D34)
 internal val DarkIconRed = Color(0xFFF42500)
 internal val DarkIconSubtle = Color(0xFF98A2B3)
 
-// endregion
-
-// region Accent Colors
-
 internal val PinkSun = Color(0xFFFF234B)
 internal val Color1 = Color(0xFFFFD1D2)
 internal val Color2 = Color(0xFFCADDFF)
@@ -75,12 +61,6 @@ internal val Color3 = Color(0xFFFFDFAB)
 internal val Color4 = Color(0xFFA7FFF9)
 internal val Color5 = Color(0xFFD6C8FF)
 
-// endregion
-
-// region Gradients
-
-// `end = Offset.Infinite` makes the diagonal span the drawn bounds instead of clamping past a
-// fixed 1000px (which left a flat block on phones/tablets larger than 1000px).
 internal val SplashBackground =
     Brush.linearGradient(
         colors = listOf(Color(0xFF7957FF), Color(0xFF562DF8), Color(0xFF3812CE)),
@@ -88,5 +68,3 @@ internal val SplashBackground =
         end = Offset.Infinite
     )
 internal val SunsetNight = Brush.linearGradient(listOf(Color(0xFFFF234B), Color(0xFF2F00EC)))
-
-// endregion
