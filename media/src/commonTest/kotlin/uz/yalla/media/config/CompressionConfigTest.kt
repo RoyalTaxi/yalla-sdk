@@ -6,7 +6,6 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class CompressionConfigTest {
-
     @Test
     fun defaultPresetValues() {
         assertEquals(1024 * 1024, CompressionConfig.Default.maxFileSize)

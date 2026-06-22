@@ -1,7 +1,6 @@
 package uz.yalla.media.config
 
 import uz.yalla.media.util.MIN_JPEG_QUALITY
-import uz.yalla.media.util.compressImage
 
 public data class CompressionConfig(
     val maxFileSize: Int,

@@ -27,8 +27,7 @@ internal fun DataStore<Preferences>.secureReadFlow(
         .map {
             migrateIfNeeded(key, secureStore)
             secureStore.get(key).orEmpty()
-        }
-        .distinctUntilChanged()
+        }.distinctUntilChanged()
 
 internal fun DataStore<Preferences>.secureWrite(
     key: String,

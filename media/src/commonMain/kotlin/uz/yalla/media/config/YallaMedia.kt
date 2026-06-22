@@ -1,7 +1,5 @@
 package uz.yalla.media.config
 
-import uz.yalla.media.config.YallaMedia.current
-import uz.yalla.media.config.YallaMedia.install
 import kotlin.concurrent.Volatile
 
 public object YallaMedia {
