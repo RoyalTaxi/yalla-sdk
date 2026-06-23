@@ -5,9 +5,10 @@ package uz.yalla.maps.motion
  *
  * Deliberately *not* graded (no "slightly off" / "very off"): the canon panel and Islom resolved
  * the off-route-honesty fork in favour of a binary state plus a visible connector line ([RouteConnector])
- * from the raw GPS to the snapped point. The single edge from [ON_ROUTE] to [OFF_ROUTE] is the one
- * the client consumes to refetch a fresh route — the SDK owns the *signal*, the client owns the
- * refetch (see ADR 0002).
+ * from the raw GPS to the snapped point. The [ON_ROUTE]→[OFF_ROUTE] edge is what drives a route
+ * refetch, but the SDK does not signal it: the client detects the crossing itself (via the shared
+ * projection geometry) and owns the refetch. The SDK computes this state only for its own rendering —
+ * drawing the connector and choosing follow-vs-chord (see ADR 0002).
  */
 public enum class RouteState {
     /** The latest fix is within the snap threshold; the car follows the route's arc-length progress. */
