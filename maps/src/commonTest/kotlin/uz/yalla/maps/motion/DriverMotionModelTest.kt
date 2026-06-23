@@ -145,13 +145,13 @@ class DriverMotionModelTest {
     }
 
     @Test
-    fun derivedMovementBearingOutranksRouteHint() {
+    fun routeHintOutranksDerivedMovementBearing() {
         val m = DriverMotionModel()
         val a = GeoPoint(40.0, 71.0)
         val east = GeoPoint(40.0, 71.0005)
         m.push(a, 0f, null, 0L)
         m.push(east, 270f, null, 10_000L)
-        assertBearingClose(90f, m.sample(20_000L).bearing, msg = "movement direction beats a stale route hint")
+        assertBearingClose(270f, m.sample(20_000L).bearing, msg = "route segment bearing beats projected-point jump")
     }
 
     @Test
@@ -163,7 +163,7 @@ class DriverMotionModelTest {
     }
 
     @Test
-    fun heldDerivedBearingSurvivesSubThresholdMoveAndIgnoresRouteHint() {
+    fun routeHintUpdatesHeldBearingOnSubThresholdMove() {
         val m = DriverMotionModel()
         val a = GeoPoint(40.0, 71.0)
         val east = GeoPoint(40.0, 71.0005)
@@ -172,9 +172,27 @@ class DriverMotionModelTest {
         val tiny = GeoPoint(40.0, 71.0005001)
         m.push(tiny, 270f, null, 20_000L)
         assertBearingClose(
-            90f,
+            270f,
             m.sample(40_000L).bearing,
-            msg = "a held derived bearing is not overwritten by a route hint on a sub-threshold move"
+            msg = "route hint can correct a held derived bearing on a sub-threshold move"
         )
+    }
+
+    @Test
+    fun routeHintOnlyUpdateRotatesInPlaceDuringAnUnfinishedMove() {
+        val m = DriverMotionModel()
+        val a = GeoPoint(40.0, 71.0)
+        val east = GeoPoint(40.0, 71.001)
+        m.push(a, 90f, null, 0L)
+        m.push(east, 90f, null, 10_000L)
+        val displayedBeforeTurn = m.sample(15_000L).point
+
+        m.push(east, 180f, null, 15_000L)
+
+        val midTurn = m.sample(17_500L)
+        val displayedAfterTurn = midTurn.point
+        assertClose(displayedBeforeTurn.lat, displayedAfterTurn.lat, msg = "rotation-only update keeps lat fixed")
+        assertClose(displayedBeforeTurn.lng, displayedAfterTurn.lng, msg = "rotation-only update keeps lng fixed")
+        assertBearingClose(135f, midTurn.bearing, msg = "heading rotates in place")
     }
 }

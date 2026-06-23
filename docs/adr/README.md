@@ -9,3 +9,5 @@ Status values: `proposed` · `accepted` · `superseded by NNNN`.
 | #    | Decision                                                               | Status   |
 |------|------------------------------------------------------------------------|----------|
 | 0001 | [Comments: ban narration, mandate load-bearing docs](0001-comments.md) | accepted |
+| 0002 | [Route refetch ownership: client refetches](0002-route-refetch-ownership.md) | accepted |
+| 0003 | [Off-route state machine: binary + connector](0003-off-route-state-machine.md) | accepted |
