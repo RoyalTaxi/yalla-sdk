@@ -391,6 +391,38 @@ final class uz.yalla.core.geo/RouteProgress { // uz.yalla.core.geo/RouteProgress
     final fun toString(): kotlin/String // uz.yalla.core.geo/RouteProgress.toString|toString(){}[0]
 }
 
+final class uz.yalla.core.geo/RouteProgressGeometry { // uz.yalla.core.geo/RouteProgressGeometry|null[0]
+    constructor <init>(kotlin.collections/List<uz.yalla.core.geo/GeoPoint>) // uz.yalla.core.geo/RouteProgressGeometry.<init>|<init>(kotlin.collections.List<uz.yalla.core.geo.GeoPoint>){}[0]
+
+    final val isValid // uz.yalla.core.geo/RouteProgressGeometry.isValid|{}isValid[0]
+        final fun <get-isValid>(): kotlin/Boolean // uz.yalla.core.geo/RouteProgressGeometry.isValid.<get-isValid>|<get-isValid>(){}[0]
+    final val totalDistanceMeters // uz.yalla.core.geo/RouteProgressGeometry.totalDistanceMeters|{}totalDistanceMeters[0]
+        final fun <get-totalDistanceMeters>(): kotlin/Double // uz.yalla.core.geo/RouteProgressGeometry.totalDistanceMeters.<get-totalDistanceMeters>|<get-totalDistanceMeters>(){}[0]
+
+    final fun clamp(kotlin/Double): kotlin/Double // uz.yalla.core.geo/RouteProgressGeometry.clamp|clamp(kotlin.Double){}[0]
+    final fun coordinateAt(kotlin/Double): uz.yalla.core.geo/GeoPoint // uz.yalla.core.geo/RouteProgressGeometry.coordinateAt|coordinateAt(kotlin.Double){}[0]
+    final fun headingAt(kotlin/Double, kotlin/Float, kotlin/Double = ...): kotlin/Float // uz.yalla.core.geo/RouteProgressGeometry.headingAt|headingAt(kotlin.Double;kotlin.Float;kotlin.Double){}[0]
+    final fun project(uz.yalla.core.geo/GeoPoint): uz.yalla.core.geo/RouteProgressGeometry.Projection // uz.yalla.core.geo/RouteProgressGeometry.project|project(uz.yalla.core.geo.GeoPoint){}[0]
+    final fun projectForward(uz.yalla.core.geo/GeoPoint, kotlin/Double, kotlin/Double = ..., kotlin/Double = ...): uz.yalla.core.geo/RouteProgressGeometry.Projection // uz.yalla.core.geo/RouteProgressGeometry.projectForward|projectForward(uz.yalla.core.geo.GeoPoint;kotlin.Double;kotlin.Double;kotlin.Double){}[0]
+    final fun remainingRouteFrom(kotlin/Double): kotlin.collections/List<uz.yalla.core.geo/GeoPoint> // uz.yalla.core.geo/RouteProgressGeometry.remainingRouteFrom|remainingRouteFrom(kotlin.Double){}[0]
+
+    final class Projection { // uz.yalla.core.geo/RouteProgressGeometry.Projection|null[0]
+        constructor <init>(kotlin/Double, kotlin/Double) // uz.yalla.core.geo/RouteProgressGeometry.Projection.<init>|<init>(kotlin.Double;kotlin.Double){}[0]
+
+        final val crossTrackMeters // uz.yalla.core.geo/RouteProgressGeometry.Projection.crossTrackMeters|{}crossTrackMeters[0]
+            final fun <get-crossTrackMeters>(): kotlin/Double // uz.yalla.core.geo/RouteProgressGeometry.Projection.crossTrackMeters.<get-crossTrackMeters>|<get-crossTrackMeters>(){}[0]
+        final val progressMeters // uz.yalla.core.geo/RouteProgressGeometry.Projection.progressMeters|{}progressMeters[0]
+            final fun <get-progressMeters>(): kotlin/Double // uz.yalla.core.geo/RouteProgressGeometry.Projection.progressMeters.<get-progressMeters>|<get-progressMeters>(){}[0]
+
+        final fun component1(): kotlin/Double // uz.yalla.core.geo/RouteProgressGeometry.Projection.component1|component1(){}[0]
+        final fun component2(): kotlin/Double // uz.yalla.core.geo/RouteProgressGeometry.Projection.component2|component2(){}[0]
+        final fun copy(kotlin/Double = ..., kotlin/Double = ...): uz.yalla.core.geo/RouteProgressGeometry.Projection // uz.yalla.core.geo/RouteProgressGeometry.Projection.copy|copy(kotlin.Double;kotlin.Double){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.geo/RouteProgressGeometry.Projection.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // uz.yalla.core.geo/RouteProgressGeometry.Projection.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // uz.yalla.core.geo/RouteProgressGeometry.Projection.toString|toString(){}[0]
+    }
+}
+
 final class uz.yalla.core.location/Address { // uz.yalla.core.location/Address|null[0]
     constructor <init>(kotlin/String, kotlin/String? = ...) // uz.yalla.core.location/Address.<init>|<init>(kotlin.String;kotlin.String?){}[0]
 

@@ -90,6 +90,33 @@ public final class uz/yalla/core/geo/RouteProgress {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class uz/yalla/core/geo/RouteProgressGeometry {
+	public fun <init> (Ljava/util/List;)V
+	public final fun clamp (D)D
+	public final fun coordinateAt (D)Luz/yalla/core/geo/GeoPoint;
+	public final fun getTotalDistanceMeters ()D
+	public final fun headingAt (DFD)F
+	public static synthetic fun headingAt$default (Luz/yalla/core/geo/RouteProgressGeometry;DFDILjava/lang/Object;)F
+	public final fun isValid ()Z
+	public final fun project (Luz/yalla/core/geo/GeoPoint;)Luz/yalla/core/geo/RouteProgressGeometry$Projection;
+	public final fun projectForward (Luz/yalla/core/geo/GeoPoint;DDD)Luz/yalla/core/geo/RouteProgressGeometry$Projection;
+	public static synthetic fun projectForward$default (Luz/yalla/core/geo/RouteProgressGeometry;Luz/yalla/core/geo/GeoPoint;DDDILjava/lang/Object;)Luz/yalla/core/geo/RouteProgressGeometry$Projection;
+	public final fun remainingRouteFrom (D)Ljava/util/List;
+}
+
+public final class uz/yalla/core/geo/RouteProgressGeometry$Projection {
+	public fun <init> (DD)V
+	public final fun component1 ()D
+	public final fun component2 ()D
+	public final fun copy (DD)Luz/yalla/core/geo/RouteProgressGeometry$Projection;
+	public static synthetic fun copy$default (Luz/yalla/core/geo/RouteProgressGeometry$Projection;DDILjava/lang/Object;)Luz/yalla/core/geo/RouteProgressGeometry$Projection;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCrossTrackMeters ()D
+	public final fun getProgressMeters ()D
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class uz/yalla/core/geo/RouteProgressKind : java/lang/Enum {
 	public static final field NO_ROUTE Luz/yalla/core/geo/RouteProgressKind;
 	public static final field OFF_ROUTE Luz/yalla/core/geo/RouteProgressKind;
