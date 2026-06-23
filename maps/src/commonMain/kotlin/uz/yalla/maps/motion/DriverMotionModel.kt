@@ -39,6 +39,7 @@ public class DriverMotionModel(
             resolveHint(routeHint, serverHeading)?.let {
                 targetBearing = it
                 displayBearing = it
+                hasGoodBearing = true
             }
             startBearing = targetBearing
             snap = true
@@ -50,12 +51,27 @@ public class DriverMotionModel(
         val interval = elapsed.coerceIn(minDurationMs, maxDurationMs)
         val movedMeters = previousTarget.distanceTo(point)
         val impliedSpeed = movedMeters / (elapsed / 1000.0)
+        val shouldMove = movedMeters >= minMoveMeters
 
-        if (movedMeters >= minMoveMeters) {
+        if (routeHint != null) {
+            targetBearing = routeHint
+            hasGoodBearing = true
+        } else if (shouldMove) {
             targetBearing = previousTarget.bearingTo(point).toFloat()
             hasGoodBearing = true
         } else if (!hasGoodBearing) {
-            resolveHint(routeHint, serverHeading)?.let { targetBearing = it }
+            serverHeading?.takeIf { it != 0f }?.let { targetBearing = it }
+        }
+
+        if (!shouldMove) {
+            snap = false
+            startPoint = displayedPoint
+            startBearing = displayBearing
+            targetPoint = displayedPoint
+            startMs = atMillis
+            durationMs = interval
+            lastFixMs = atMillis
+            return
         }
 
         snap = impliedSpeed > teleportSpeedMps

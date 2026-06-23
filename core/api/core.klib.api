@@ -6,6 +6,19 @@
 // - Show declarations: true
 
 // Library unique name: <uz.yalla.sdk:core>
+final enum class uz.yalla.core.geo/RouteProgressKind : kotlin/Enum<uz.yalla.core.geo/RouteProgressKind> { // uz.yalla.core.geo/RouteProgressKind|null[0]
+    enum entry NO_ROUTE // uz.yalla.core.geo/RouteProgressKind.NO_ROUTE|null[0]
+    enum entry OFF_ROUTE // uz.yalla.core.geo/RouteProgressKind.OFF_ROUTE|null[0]
+    enum entry ON_ROUTE // uz.yalla.core.geo/RouteProgressKind.ON_ROUTE|null[0]
+    enum entry PASSED_ROUTE // uz.yalla.core.geo/RouteProgressKind.PASSED_ROUTE|null[0]
+
+    final val entries // uz.yalla.core.geo/RouteProgressKind.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<uz.yalla.core.geo/RouteProgressKind> // uz.yalla.core.geo/RouteProgressKind.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): uz.yalla.core.geo/RouteProgressKind // uz.yalla.core.geo/RouteProgressKind.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<uz.yalla.core.geo/RouteProgressKind> // uz.yalla.core.geo/RouteProgressKind.values|values#static(){}[0]
+}
+
 final enum class uz.yalla.core.location/PlaceKind : kotlin/Enum<uz.yalla.core.location/PlaceKind> { // uz.yalla.core.location/PlaceKind|null[0]
     enum entry Home // uz.yalla.core.location/PlaceKind.Home|null[0]
     enum entry Other // uz.yalla.core.location/PlaceKind.Other|null[0]
@@ -354,6 +367,28 @@ final class uz.yalla.core.geo/GeoPoint { // uz.yalla.core.geo/GeoPoint|null[0]
         final val Zero // uz.yalla.core.geo/GeoPoint.Companion.Zero|{}Zero[0]
             final fun <get-Zero>(): uz.yalla.core.geo/GeoPoint // uz.yalla.core.geo/GeoPoint.Companion.Zero.<get-Zero>|<get-Zero>(){}[0]
     }
+}
+
+final class uz.yalla.core.geo/RouteProgress { // uz.yalla.core.geo/RouteProgress|null[0]
+    constructor <init>(uz.yalla.core.geo/RouteProgressKind, uz.yalla.core.geo/GeoPoint, kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/Float?) // uz.yalla.core.geo/RouteProgress.<init>|<init>(uz.yalla.core.geo.RouteProgressKind;uz.yalla.core.geo.GeoPoint;kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.Float?){}[0]
+
+    final val displayPoint // uz.yalla.core.geo/RouteProgress.displayPoint|{}displayPoint[0]
+        final fun <get-displayPoint>(): uz.yalla.core.geo/GeoPoint // uz.yalla.core.geo/RouteProgress.displayPoint.<get-displayPoint>|<get-displayPoint>(){}[0]
+    final val heading // uz.yalla.core.geo/RouteProgress.heading|{}heading[0]
+        final fun <get-heading>(): kotlin/Float? // uz.yalla.core.geo/RouteProgress.heading.<get-heading>|<get-heading>(){}[0]
+    final val kind // uz.yalla.core.geo/RouteProgress.kind|{}kind[0]
+        final fun <get-kind>(): uz.yalla.core.geo/RouteProgressKind // uz.yalla.core.geo/RouteProgress.kind.<get-kind>|<get-kind>(){}[0]
+    final val remainingRoute // uz.yalla.core.geo/RouteProgress.remainingRoute|{}remainingRoute[0]
+        final fun <get-remainingRoute>(): kotlin.collections/List<uz.yalla.core.geo/GeoPoint> // uz.yalla.core.geo/RouteProgress.remainingRoute.<get-remainingRoute>|<get-remainingRoute>(){}[0]
+
+    final fun component1(): uz.yalla.core.geo/RouteProgressKind // uz.yalla.core.geo/RouteProgress.component1|component1(){}[0]
+    final fun component2(): uz.yalla.core.geo/GeoPoint // uz.yalla.core.geo/RouteProgress.component2|component2(){}[0]
+    final fun component3(): kotlin.collections/List<uz.yalla.core.geo/GeoPoint> // uz.yalla.core.geo/RouteProgress.component3|component3(){}[0]
+    final fun component4(): kotlin/Float? // uz.yalla.core.geo/RouteProgress.component4|component4(){}[0]
+    final fun copy(uz.yalla.core.geo/RouteProgressKind = ..., uz.yalla.core.geo/GeoPoint = ..., kotlin.collections/List<uz.yalla.core.geo/GeoPoint> = ..., kotlin/Float? = ...): uz.yalla.core.geo/RouteProgress // uz.yalla.core.geo/RouteProgress.copy|copy(uz.yalla.core.geo.RouteProgressKind;uz.yalla.core.geo.GeoPoint;kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.Float?){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.core.geo/RouteProgress.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // uz.yalla.core.geo/RouteProgress.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // uz.yalla.core.geo/RouteProgress.toString|toString(){}[0]
 }
 
 final class uz.yalla.core.location/Address { // uz.yalla.core.location/Address|null[0]
@@ -995,6 +1030,7 @@ final fun (kotlin/String).uz.yalla.core.util/formatArgs(kotlin/Array<out kotlin/
 final fun (uz.yalla.core.geo/GeoPoint).uz.yalla.core.geo/bearingTo(uz.yalla.core.geo/GeoPoint): kotlin/Double // uz.yalla.core.geo/bearingTo|bearingTo@uz.yalla.core.geo.GeoPoint(uz.yalla.core.geo.GeoPoint){}[0]
 final fun (uz.yalla.core.geo/GeoPoint).uz.yalla.core.geo/distanceTo(uz.yalla.core.geo/GeoPoint): kotlin/Double // uz.yalla.core.geo/distanceTo|distanceTo@uz.yalla.core.geo.GeoPoint(uz.yalla.core.geo.GeoPoint){}[0]
 final fun uz.yalla.core.geo/headingAlongRoute(uz.yalla.core.geo/GeoPoint, kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/Double = ...): kotlin/Float? // uz.yalla.core.geo/headingAlongRoute|headingAlongRoute(uz.yalla.core.geo.GeoPoint;kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.Double){}[0]
+final fun uz.yalla.core.geo/routeProgress(uz.yalla.core.geo/GeoPoint, kotlin.collections/List<uz.yalla.core.geo/GeoPoint>, kotlin/Double = ..., kotlin/Double = ...): uz.yalla.core.geo/RouteProgress // uz.yalla.core.geo/routeProgress|routeProgress(uz.yalla.core.geo.GeoPoint;kotlin.collections.List<uz.yalla.core.geo.GeoPoint>;kotlin.Double;kotlin.Double){}[0]
 final fun uz.yalla.core.session/createSessionEventBus(): uz.yalla.core.session/SessionEventBus // uz.yalla.core.session/createSessionEventBus|createSessionEventBus(){}[0]
 final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/flatMap(kotlin/Function1<#B, uz.yalla.core.result/Either<#A, #C>>): uz.yalla.core.result/Either<#A, #C> // uz.yalla.core.result/flatMap|flatMap@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:1,uz.yalla.core.result.Either<0:0,0:2>>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]
 final inline fun <#A: kotlin/Any?, #B: kotlin/Any?, #C: kotlin/Any?> (uz.yalla.core.result/Either<#A, #B>).uz.yalla.core.result/fold(kotlin/Function1<#A, #C>, kotlin/Function1<#B, #C>): #C // uz.yalla.core.result/fold|fold@uz.yalla.core.result.Either<0:0,0:1>(kotlin.Function1<0:0,0:2>;kotlin.Function1<0:1,0:2>){0§<kotlin.Any?>;1§<kotlin.Any?>;2§<kotlin.Any?>}[0]

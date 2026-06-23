@@ -69,6 +69,35 @@ public final class uz/yalla/core/geo/GeoSpacingKt {
 public final class uz/yalla/core/geo/RouteGeometryKt {
 	public static final fun headingAlongRoute (Luz/yalla/core/geo/GeoPoint;Ljava/util/List;D)Ljava/lang/Float;
 	public static synthetic fun headingAlongRoute$default (Luz/yalla/core/geo/GeoPoint;Ljava/util/List;DILjava/lang/Object;)Ljava/lang/Float;
+	public static final fun routeProgress (Luz/yalla/core/geo/GeoPoint;Ljava/util/List;DD)Luz/yalla/core/geo/RouteProgress;
+	public static synthetic fun routeProgress$default (Luz/yalla/core/geo/GeoPoint;Ljava/util/List;DDILjava/lang/Object;)Luz/yalla/core/geo/RouteProgress;
+}
+
+public final class uz/yalla/core/geo/RouteProgress {
+	public fun <init> (Luz/yalla/core/geo/RouteProgressKind;Luz/yalla/core/geo/GeoPoint;Ljava/util/List;Ljava/lang/Float;)V
+	public final fun component1 ()Luz/yalla/core/geo/RouteProgressKind;
+	public final fun component2 ()Luz/yalla/core/geo/GeoPoint;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/lang/Float;
+	public final fun copy (Luz/yalla/core/geo/RouteProgressKind;Luz/yalla/core/geo/GeoPoint;Ljava/util/List;Ljava/lang/Float;)Luz/yalla/core/geo/RouteProgress;
+	public static synthetic fun copy$default (Luz/yalla/core/geo/RouteProgress;Luz/yalla/core/geo/RouteProgressKind;Luz/yalla/core/geo/GeoPoint;Ljava/util/List;Ljava/lang/Float;ILjava/lang/Object;)Luz/yalla/core/geo/RouteProgress;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDisplayPoint ()Luz/yalla/core/geo/GeoPoint;
+	public final fun getHeading ()Ljava/lang/Float;
+	public final fun getKind ()Luz/yalla/core/geo/RouteProgressKind;
+	public final fun getRemainingRoute ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/core/geo/RouteProgressKind : java/lang/Enum {
+	public static final field NO_ROUTE Luz/yalla/core/geo/RouteProgressKind;
+	public static final field OFF_ROUTE Luz/yalla/core/geo/RouteProgressKind;
+	public static final field ON_ROUTE Luz/yalla/core/geo/RouteProgressKind;
+	public static final field PASSED_ROUTE Luz/yalla/core/geo/RouteProgressKind;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Luz/yalla/core/geo/RouteProgressKind;
+	public static fun values ()[Luz/yalla/core/geo/RouteProgressKind;
 }
 
 public final class uz/yalla/core/identity/CardId {
