@@ -25,11 +25,10 @@ import uz.yalla.maps.util.shortestHeadingPath
  *   the route through a bounded forward window (no un-eating on loops / U-turns / parallel streets).
  *
  * **Off-route honesty.** Route state is binary ([RouteState.ON_ROUTE] / [RouteState.OFF_ROUTE]) with
- * enter/exit hysteresis from [routeConfig]. Crossing into OFF_ROUTE latches a single edge signal
- * ([consumeOffRouteSignal]) subject to a refetch cooldown — the SDK only *emits* off-route; the
- * client owns the refetch (ADR 0002). While on-route but offset, [connector] exposes the raw-GPS →
- * snapped line so the snap is never a silent lie. Off-route falls back to chord interpolation so the
- * car never freezes.
+ * enter/exit hysteresis from [routeConfig]. The client owns off-route detection + refetch
+ * (OrderSheetViewModel.OffRouteTracker, ADR 0002); the SDK only uses the state to render. While
+ * on-route but offset, [connector] exposes the raw-GPS → snapped line so the snap is never a silent
+ * lie. Off-route falls back to chord interpolation so the car never freezes.
  *
  * The route-following path is feature-flagged OFF by default; chord interpolation stays the
  * production default until a platform flips the flag on-device (see ADR 0003).
@@ -78,10 +77,6 @@ public class DriverMotionModel(
     private var rawFix: GeoPoint? = null
     private var connectorVisible: Boolean = false
 
-    // Edge-latched off-route signal for the client to consume, plus the cooldown gate.
-    private var pendingOffRouteSignal: Boolean = false
-    private var lastOffRouteSignalMs: Long = Long.MIN_VALUE
-
     /**
      * Sets (or clears) the route this model follows.
      *
@@ -129,12 +124,13 @@ public class DriverMotionModel(
                     activeGeometry.project(point)
                 }
             if (isOnRouteAfterHysteresis(projection.crossTrackMeters)) {
-                updateOffRouteState(RouteState.ON_ROUTE, atMillis)
+                routeState = RouteState.ON_ROUTE
                 pushRoute(activeGeometry, projection, point, atMillis)
                 return
             }
-            // Off-route: fall through to chord interpolation and surface it to the client.
-            updateOffRouteState(RouteState.OFF_ROUTE, atMillis)
+            // Off-route: fall through to chord. The client owns off-route detection + refetch
+            // (OrderSheetViewModel.OffRouteTracker); the SDK only renders.
+            routeState = RouteState.OFF_ROUTE
             routeMode = false
             rawFix = null
             connectorVisible = false
@@ -253,17 +249,6 @@ public class DriverMotionModel(
         return RouteConnector(rawPoint = raw, snappedPoint = sample(atMillis).point)
     }
 
-    /**
-     * Consumes the edge-latched off-route signal: returns `true` exactly once per ON_ROUTE→OFF_ROUTE
-     * crossing (subject to the refetch cooldown), then resets. The client refetches the route when
-     * this returns `true`; the SDK never refetches itself.
-     */
-    public fun consumeOffRouteSignal(): Boolean {
-        if (!pendingOffRouteSignal) return false
-        pendingOffRouteSignal = false
-        return true
-    }
-
     public fun sample(atMillis: Long): Pose {
         if (routeMode) {
             val activeGeometry = geometry
@@ -326,24 +311,6 @@ public class DriverMotionModel(
             RouteState.ON_ROUTE -> crossTrackMeters <= routeConfig.offRouteEnterMeters
             RouteState.OFF_ROUTE -> crossTrackMeters <= routeConfig.offRouteExitMeters
         }
-
-    /**
-     * Updates the binary route state and latches a single off-route signal on the ON_ROUTE→OFF_ROUTE
-     * edge, gated by the refetch cooldown so GPS noise at the boundary cannot storm the client.
-     */
-    private fun updateOffRouteState(
-        next: RouteState,
-        atMillis: Long
-    ) {
-        val crossingIntoOffRoute = next == RouteState.OFF_ROUTE && routeState != RouteState.OFF_ROUTE
-        routeState = next
-        if (!crossingIntoOffRoute) return
-        val sinceLast = atMillis - lastOffRouteSignalMs
-        if (lastOffRouteSignalMs == Long.MIN_VALUE || sinceLast >= routeConfig.refetchCooldownMillis) {
-            pendingOffRouteSignal = true
-            lastOffRouteSignalMs = atMillis
-        }
-    }
 
     /**
      * Eases [current] heading toward [target] with a per-second turn-rate cap so a sharp corner

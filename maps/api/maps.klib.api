@@ -348,7 +348,7 @@ final class uz.yalla.maps.config/MapsConfig { // uz.yalla.maps.config/MapsConfig
 }
 
 final class uz.yalla.maps.config/RouteFollowingConfig { // uz.yalla.maps.config/RouteFollowingConfig|null[0]
-    constructor <init>(kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Long = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ...) // uz.yalla.maps.config/RouteFollowingConfig.<init>|<init>(kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Long;kotlin.Double;kotlin.Double;kotlin.Double){}[0]
+    constructor <init>(kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ...) // uz.yalla.maps.config/RouteFollowingConfig.<init>|<init>(kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double){}[0]
 
     final val backWindowMeters // uz.yalla.maps.config/RouteFollowingConfig.backWindowMeters|{}backWindowMeters[0]
         final fun <get-backWindowMeters>(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.backWindowMeters.<get-backWindowMeters>|<get-backWindowMeters>(){}[0]
@@ -362,23 +362,17 @@ final class uz.yalla.maps.config/RouteFollowingConfig { // uz.yalla.maps.config/
         final fun <get-offRouteEnterMeters>(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.offRouteEnterMeters.<get-offRouteEnterMeters>|<get-offRouteEnterMeters>(){}[0]
     final val offRouteExitMeters // uz.yalla.maps.config/RouteFollowingConfig.offRouteExitMeters|{}offRouteExitMeters[0]
         final fun <get-offRouteExitMeters>(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.offRouteExitMeters.<get-offRouteExitMeters>|<get-offRouteExitMeters>(){}[0]
-    final val refetchCooldownMillis // uz.yalla.maps.config/RouteFollowingConfig.refetchCooldownMillis|{}refetchCooldownMillis[0]
-        final fun <get-refetchCooldownMillis>(): kotlin/Long // uz.yalla.maps.config/RouteFollowingConfig.refetchCooldownMillis.<get-refetchCooldownMillis>|<get-refetchCooldownMillis>(){}[0]
     final val routeArrivalThreshold // uz.yalla.maps.config/RouteFollowingConfig.routeArrivalThreshold|{}routeArrivalThreshold[0]
         final fun <get-routeArrivalThreshold>(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.routeArrivalThreshold.<get-routeArrivalThreshold>|<get-routeArrivalThreshold>(){}[0]
-    final val routeSnapThreshold // uz.yalla.maps.config/RouteFollowingConfig.routeSnapThreshold|{}routeSnapThreshold[0]
-        final fun <get-routeSnapThreshold>(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.routeSnapThreshold.<get-routeSnapThreshold>|<get-routeSnapThreshold>(){}[0]
 
     final fun component1(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.component1|component1(){}[0]
     final fun component2(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.component2|component2(){}[0]
     final fun component3(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.component3|component3(){}[0]
     final fun component4(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.component4|component4(){}[0]
     final fun component5(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.component5|component5(){}[0]
-    final fun component6(): kotlin/Long // uz.yalla.maps.config/RouteFollowingConfig.component6|component6(){}[0]
+    final fun component6(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.component6|component6(){}[0]
     final fun component7(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.component7|component7(){}[0]
-    final fun component8(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.component8|component8(){}[0]
-    final fun component9(): kotlin/Double // uz.yalla.maps.config/RouteFollowingConfig.component9|component9(){}[0]
-    final fun copy(kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Long = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ...): uz.yalla.maps.config/RouteFollowingConfig // uz.yalla.maps.config/RouteFollowingConfig.copy|copy(kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Long;kotlin.Double;kotlin.Double;kotlin.Double){}[0]
+    final fun copy(kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ..., kotlin/Double = ...): uz.yalla.maps.config/RouteFollowingConfig // uz.yalla.maps.config/RouteFollowingConfig.copy|copy(kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double;kotlin.Double){}[0]
     final fun equals(kotlin/Any?): kotlin/Boolean // uz.yalla.maps.config/RouteFollowingConfig.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // uz.yalla.maps.config/RouteFollowingConfig.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // uz.yalla.maps.config/RouteFollowingConfig.toString|toString(){}[0]
@@ -388,7 +382,6 @@ final class uz.yalla.maps.motion/DriverMotionModel { // uz.yalla.maps.motion/Dri
     constructor <init>(kotlin/Double = ..., kotlin/Double = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Long = ..., kotlin/Boolean = ..., uz.yalla.maps.config/RouteFollowingConfig = ...) // uz.yalla.maps.motion/DriverMotionModel.<init>|<init>(kotlin.Double;kotlin.Double;kotlin.Long;kotlin.Long;kotlin.Long;kotlin.Boolean;uz.yalla.maps.config.RouteFollowingConfig){}[0]
 
     final fun connector(kotlin/Long): uz.yalla.maps.motion/RouteConnector? // uz.yalla.maps.motion/DriverMotionModel.connector|connector(kotlin.Long){}[0]
-    final fun consumeOffRouteSignal(): kotlin/Boolean // uz.yalla.maps.motion/DriverMotionModel.consumeOffRouteSignal|consumeOffRouteSignal(){}[0]
     final fun hasFix(): kotlin/Boolean // uz.yalla.maps.motion/DriverMotionModel.hasFix|hasFix(){}[0]
     final fun isFollowingRoute(): kotlin/Boolean // uz.yalla.maps.motion/DriverMotionModel.isFollowingRoute|isFollowingRoute(){}[0]
     final fun isOffRoute(): kotlin/Boolean // uz.yalla.maps.motion/DriverMotionModel.isOffRoute|isOffRoute(){}[0]

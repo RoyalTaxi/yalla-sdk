@@ -174,23 +174,6 @@ class DriverMotionModelRouteTest {
     }
 
     @Test
-    fun offRouteSignalIsEdgeLatchedNotPerFrame() {
-        val m = routeModel(RouteFollowingConfig(refetchCooldownMillis = 0L))
-        m.setRoute(route)
-        m.push(GeoPoint(40.0, 71.0002), null, null, 0L)
-        assertFalse(m.consumeOffRouteSignal(), "no signal while on-route")
-
-        val far = GeoPoint(40.002, 71.0005)
-        m.push(far, null, null, 10_000L)
-        assertTrue(m.consumeOffRouteSignal(), "crossing into OFF_ROUTE latches exactly one signal")
-        assertFalse(m.consumeOffRouteSignal(), "signal consumed -> no repeat (no refetch storm)")
-
-        // Staying off-route does NOT re-latch every frame.
-        m.push(GeoPoint(40.0021, 71.0006), null, null, 11_000L)
-        assertFalse(m.consumeOffRouteSignal(), "staying off-route does not re-fire the signal")
-    }
-
-    @Test
     fun offRouteUsesEnterExitHysteresis() {
         // enter at 30m, exit at 15m: a fix between 15 and 30 should NOT flip state either way.
         val config = RouteFollowingConfig(offRouteEnterMeters = 30.0, offRouteExitMeters = 15.0)
@@ -215,25 +198,6 @@ class DriverMotionModelRouteTest {
         // Now genuinely back on the line (<15m) -> ON_ROUTE.
         m.push(GeoPoint(40.0, 71.0009), null, null, 40_000L)
         assertEquals(RouteState.ON_ROUTE, m.routeState(), "back within exit threshold -> ON_ROUTE")
-    }
-
-    @Test
-    fun offRouteSignalRespectsRefetchCooldown() {
-        val m = routeModel(RouteFollowingConfig(refetchCooldownMillis = 30_000L))
-        m.setRoute(route)
-        m.push(GeoPoint(40.0, 71.0002), null, null, 0L)
-        m.push(GeoPoint(40.002, 71.0005), null, null, 10_000L)
-        assertTrue(m.consumeOffRouteSignal(), "first off-route crossing signals")
-
-        // Recover and go off again within the cooldown window -> suppressed.
-        m.push(GeoPoint(40.0, 71.0009), null, null, 12_000L)
-        m.push(GeoPoint(40.002, 71.0005), null, null, 20_000L)
-        assertFalse(m.consumeOffRouteSignal(), "second crossing within cooldown is suppressed")
-
-        // After the cooldown elapses, a fresh crossing signals again.
-        m.push(GeoPoint(40.0, 71.0009), null, null, 50_000L)
-        m.push(GeoPoint(40.002, 71.0005), null, null, 60_000L)
-        assertTrue(m.consumeOffRouteSignal(), "crossing after cooldown signals again")
     }
 
     @Test
