@@ -377,29 +377,45 @@ public final class uz/yalla/core/order/ExtraService$CostType$Companion {
 }
 
 public final class uz/yalla/core/order/Order {
-	public synthetic fun <init> (Ljava/lang/String;JLuz/yalla/core/order/Order$Driver;ILuz/yalla/core/payment/PaymentMethod;Ljava/lang/String;Luz/yalla/core/order/OrderStatus;Ljava/util/List;Luz/yalla/core/order/Order$Taxi;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()J
-	public final fun component3 ()Luz/yalla/core/order/Order$Driver;
-	public final fun component4-tj6dhOc ()I
-	public final fun component5 ()Luz/yalla/core/payment/PaymentMethod;
-	public final fun component6 ()Ljava/lang/String;
-	public final fun component7 ()Luz/yalla/core/order/OrderStatus;
-	public final fun component8 ()Ljava/util/List;
-	public final fun component9 ()Luz/yalla/core/order/Order$Taxi;
-	public final fun copy-BlnUgsQ (Ljava/lang/String;JLuz/yalla/core/order/Order$Driver;ILuz/yalla/core/payment/PaymentMethod;Ljava/lang/String;Luz/yalla/core/order/OrderStatus;Ljava/util/List;Luz/yalla/core/order/Order$Taxi;)Luz/yalla/core/order/Order;
-	public static synthetic fun copy-BlnUgsQ$default (Luz/yalla/core/order/Order;Ljava/lang/String;JLuz/yalla/core/order/Order$Driver;ILuz/yalla/core/payment/PaymentMethod;Ljava/lang/String;Luz/yalla/core/order/OrderStatus;Ljava/util/List;Luz/yalla/core/order/Order$Taxi;ILjava/lang/Object;)Luz/yalla/core/order/Order;
+	public synthetic fun <init> (ILjava/lang/String;Luz/yalla/core/order/OrderStatus;Ljava/util/List;Ljava/lang/String;JLuz/yalla/core/payment/PaymentMethod;Luz/yalla/core/order/Order$Driver;Ljava/lang/Long;Luz/yalla/core/order/Order$Tariff;Ljava/util/List;Ljava/util/List;Ljava/util/List;Luz/yalla/core/order/Order$Taxi;Luz/yalla/core/order/Order$Intercity;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Luz/yalla/core/order/OrderStatus;Ljava/util/List;Ljava/lang/String;JLuz/yalla/core/payment/PaymentMethod;Luz/yalla/core/order/Order$Driver;Ljava/lang/Long;Luz/yalla/core/order/Order$Tariff;Ljava/util/List;Ljava/util/List;Ljava/util/List;Luz/yalla/core/order/Order$Taxi;Luz/yalla/core/order/Order$Intercity;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-tj6dhOc ()I
+	public final fun component10 ()Luz/yalla/core/order/Order$Tariff;
+	public final fun component11 ()Ljava/util/List;
+	public final fun component12 ()Ljava/util/List;
+	public final fun component13 ()Ljava/util/List;
+	public final fun component14 ()Luz/yalla/core/order/Order$Taxi;
+	public final fun component15 ()Luz/yalla/core/order/Order$Intercity;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Luz/yalla/core/order/OrderStatus;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()J
+	public final fun component7 ()Luz/yalla/core/payment/PaymentMethod;
+	public final fun component8 ()Luz/yalla/core/order/Order$Driver;
+	public final fun component9 ()Ljava/lang/Long;
+	public final fun copy-b78nfo8 (ILjava/lang/String;Luz/yalla/core/order/OrderStatus;Ljava/util/List;Ljava/lang/String;JLuz/yalla/core/payment/PaymentMethod;Luz/yalla/core/order/Order$Driver;Ljava/lang/Long;Luz/yalla/core/order/Order$Tariff;Ljava/util/List;Ljava/util/List;Ljava/util/List;Luz/yalla/core/order/Order$Taxi;Luz/yalla/core/order/Order$Intercity;)Luz/yalla/core/order/Order;
+	public static synthetic fun copy-b78nfo8$default (Luz/yalla/core/order/Order;ILjava/lang/String;Luz/yalla/core/order/OrderStatus;Ljava/util/List;Ljava/lang/String;JLuz/yalla/core/payment/PaymentMethod;Luz/yalla/core/order/Order$Driver;Ljava/lang/Long;Luz/yalla/core/order/Order$Tariff;Ljava/util/List;Ljava/util/List;Ljava/util/List;Luz/yalla/core/order/Order$Taxi;Luz/yalla/core/order/Order$Intercity;ILjava/lang/Object;)Luz/yalla/core/order/Order;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getComment ()Ljava/lang/String;
 	public final fun getDateTime ()J
 	public final fun getDriver ()Luz/yalla/core/order/Order$Driver;
 	public final fun getId-tj6dhOc ()I
+	public final fun getIntercity ()Luz/yalla/core/order/Order$Intercity;
+	public final fun getNumber ()Ljava/lang/Long;
+	public final fun getOptions ()Ljava/util/List;
 	public final fun getPaymentMethod ()Luz/yalla/core/payment/PaymentMethod;
+	public final fun getRoutes ()Ljava/util/List;
 	public final fun getService ()Ljava/lang/String;
 	public final fun getStatus ()Luz/yalla/core/order/OrderStatus;
 	public final fun getStatusTime ()Ljava/util/List;
+	public final fun getTariff ()Luz/yalla/core/order/Order$Tariff;
 	public final fun getTaxi ()Luz/yalla/core/order/Order$Taxi;
+	public final fun getTrack ()Ljava/util/List;
 	public fun hashCode ()I
+	public final fun isIntercity ()Z
+	public final fun isTaxi ()Z
+	public final fun requireTaxi ()Luz/yalla/core/order/Order$Taxi;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -466,6 +482,63 @@ public final class uz/yalla/core/order/Order$Driver$Vehicle$Color {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class uz/yalla/core/order/Order$Intercity {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Double;ZZLjava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun component4 ()Ljava/lang/Double;
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Double;ZZLjava/util/List;)Luz/yalla/core/order/Order$Intercity;
+	public static synthetic fun copy$default (Luz/yalla/core/order/Order$Intercity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Double;ZZLjava/util/List;ILjava/lang/Object;)Luz/yalla/core/order/Order$Intercity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEndHour ()Ljava/lang/String;
+	public final fun getScheduleId ()Ljava/lang/Integer;
+	public final fun getSeatLayouts ()Ljava/util/List;
+	public final fun getStartHour ()Ljava/lang/String;
+	public final fun getTotalPrice ()Ljava/lang/Double;
+	public fun hashCode ()I
+	public final fun isBooked ()Z
+	public final fun isPostal ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/core/order/Order$Intercity$SeatLayout {
+	public fun <init> (Ljava/lang/String;IID)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()D
+	public final fun copy (Ljava/lang/String;IID)Luz/yalla/core/order/Order$Intercity$SeatLayout;
+	public static synthetic fun copy$default (Luz/yalla/core/order/Order$Intercity$SeatLayout;Ljava/lang/String;IIDILjava/lang/Object;)Luz/yalla/core/order/Order$Intercity$SeatLayout;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIndex ()I
+	public final fun getPrice ()D
+	public final fun getSeatLayoutId ()I
+	public final fun getSlug ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/core/order/Order$Option {
+	public fun <init> (IILjava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (IILjava/lang/String;Ljava/lang/String;)Luz/yalla/core/order/Order$Option;
+	public static synthetic fun copy$default (Luz/yalla/core/order/Order$Option;IILjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Luz/yalla/core/order/Order$Option;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCost ()I
+	public final fun getCostType ()Ljava/lang/String;
+	public final fun getId ()I
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class uz/yalla/core/order/Order$StatusTime {
 	public fun <init> (Luz/yalla/core/order/OrderStatus;J)V
 	public final fun component1 ()Luz/yalla/core/order/OrderStatus;
@@ -475,6 +548,19 @@ public final class uz/yalla/core/order/Order$StatusTime {
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getStatus ()Luz/yalla/core/order/OrderStatus;
 	public final fun getTime ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/core/order/Order$Tariff {
+	public fun <init> (ILjava/lang/String;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (ILjava/lang/String;)Luz/yalla/core/order/Order$Tariff;
+	public static synthetic fun copy$default (Luz/yalla/core/order/Order$Tariff;ILjava/lang/String;ILjava/lang/Object;)Luz/yalla/core/order/Order$Tariff;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId ()I
+	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -521,6 +607,29 @@ public final class uz/yalla/core/order/Order$Taxi$Point {
 	public final fun getCoords ()Luz/yalla/core/geo/GeoPoint;
 	public final fun getFullAddress ()Ljava/lang/String;
 	public final fun getIndex ()I
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class uz/yalla/core/order/Order$Track {
+	public fun <init> (DLuz/yalla/core/geo/GeoPoint;Ljava/lang/String;ZDLjava/lang/String;J)V
+	public final fun component1 ()D
+	public final fun component2 ()Luz/yalla/core/geo/GeoPoint;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Z
+	public final fun component5 ()D
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()J
+	public final fun copy (DLuz/yalla/core/geo/GeoPoint;Ljava/lang/String;ZDLjava/lang/String;J)Luz/yalla/core/order/Order$Track;
+	public static synthetic fun copy$default (Luz/yalla/core/order/Order$Track;DLuz/yalla/core/geo/GeoPoint;Ljava/lang/String;ZDLjava/lang/String;JILjava/lang/Object;)Luz/yalla/core/order/Order$Track;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAccuracy ()D
+	public final fun getLocationType ()Ljava/lang/String;
+	public final fun getOnline ()Z
+	public final fun getPoint ()Luz/yalla/core/geo/GeoPoint;
+	public final fun getSpeed ()D
+	public final fun getStatus ()Ljava/lang/String;
+	public final fun getTime ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
