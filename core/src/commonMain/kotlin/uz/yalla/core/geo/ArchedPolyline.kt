@@ -1,5 +1,8 @@
 package uz.yalla.core.geo
 
+import kotlin.math.PI
+import kotlin.math.cos
+
 public fun archedPolyline(
     from: GeoPoint,
     to: GeoPoint,
@@ -11,9 +14,9 @@ public fun archedPolyline(
     val midLng = (from.lng + to.lng) / 2.0
     val deltaLat = to.lat - from.lat
     val deltaLng = to.lng - from.lng
-    val offset = curvature * 0.5
-    val controlLat = midLat + deltaLng * offset
-    val controlLng = midLng - deltaLat * offset
+    val latAspect = cos(midLat * PI / 180.0)
+    val controlLat = midLat + curvature * deltaLng * latAspect
+    val controlLng = midLng - curvature * deltaLat / latAspect
     return (0..segments).map { step ->
         val t = step.toDouble() / segments
         val inverse = 1.0 - t

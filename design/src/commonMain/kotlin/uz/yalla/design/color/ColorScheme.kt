@@ -21,6 +21,7 @@ public class ColorScheme(
         public val base: Color,
         public val subtle: Color,
         public val link: Color,
+        public val linkLite: Color,
         public val red: Color,
         public val white: Color
     )
@@ -29,6 +30,7 @@ public class ColorScheme(
     public class Background(
         public val base: Color,
         public val brand: Color,
+        public val brandLite: Color,
         public val secondary: Color,
         public val tertiary: Color
     )
@@ -88,6 +90,7 @@ internal fun light(): ColorScheme =
                 base = LightTextBase,
                 subtle = LightTextSubtle,
                 link = LightTextLink,
+                linkLite = LightTextLinkLite,
                 red = LightTextRed,
                 white = LightTextWhite
             ),
@@ -95,6 +98,7 @@ internal fun light(): ColorScheme =
             ColorScheme.Background(
                 base = LightBackgroundBase,
                 brand = LightBackgroundBrandBase,
+                brandLite = LightBackgroundBrandLite,
                 secondary = LightBackgroundSecondary,
                 tertiary = LightBackgroundTertiary
             ),
@@ -145,6 +149,7 @@ internal fun dark(): ColorScheme =
                 base = DarkTextBase,
                 subtle = DarkTextSubtle,
                 link = DarkTextLink,
+                linkLite = DarkTextLinkLite,
                 red = DarkTextRed,
                 white = DarkTextWhite
             ),
@@ -152,6 +157,7 @@ internal fun dark(): ColorScheme =
             ColorScheme.Background(
                 base = DarkBackgroundBase,
                 brand = DarkBackgroundBrandBase,
+                brandLite = DarkBackgroundBrandLite,
                 secondary = DarkBackgroundSecondary,
                 tertiary = DarkBackgroundTertiary
             ),

@@ -11,6 +11,8 @@ import uz.yalla.resources.img_dark_notification_mute
 import uz.yalla.resources.img_dark_order_history
 import uz.yalla.resources.img_dark_order_search
 import uz.yalla.resources.img_dark_safety
+import uz.yalla.resources.img_dark_seat_car
+import uz.yalla.resources.img_dark_seat_minivan
 import uz.yalla.resources.img_dark_shield_check
 import uz.yalla.resources.img_dark_tariff_card
 import uz.yalla.resources.img_dark_trash_can
@@ -23,6 +25,8 @@ import uz.yalla.resources.img_light_notification_mute
 import uz.yalla.resources.img_light_order_history
 import uz.yalla.resources.img_light_order_search
 import uz.yalla.resources.img_light_safety
+import uz.yalla.resources.img_light_seat_car
+import uz.yalla.resources.img_light_seat_minivan
 import uz.yalla.resources.img_light_shield_check
 import uz.yalla.resources.img_light_tariff_card
 import uz.yalla.resources.img_light_trash_can
@@ -44,6 +48,8 @@ public enum class ThemedImage(
     OrderHistory(Res.drawable.img_light_order_history, Res.drawable.img_dark_order_history),
     OrderSearch(Res.drawable.img_light_order_search, Res.drawable.img_dark_order_search),
     Safety(Res.drawable.img_light_safety, Res.drawable.img_dark_safety),
+    SeatCar(Res.drawable.img_light_seat_car, Res.drawable.img_dark_seat_car),
+    SeatMinivan(Res.drawable.img_light_seat_minivan, Res.drawable.img_dark_seat_minivan),
     ShieldCheck(Res.drawable.img_light_shield_check, Res.drawable.img_dark_shield_check),
     TariffCard(Res.drawable.img_light_tariff_card, Res.drawable.img_dark_tariff_card),
     TrashCan(Res.drawable.img_light_trash_can, Res.drawable.img_dark_trash_can),

@@ -49,10 +49,19 @@ public object ServiceCardDefaults {
     @Composable
     public fun colors(
         containerBrush: Brush =
-            Brush.linearGradient(
-                listOf(System.color.background.base, System.color.background.secondary),
-            ),
-        titleColor: Color = System.color.text.link,
+            if (System.isDark) {
+                Brush.linearGradient(
+                    listOf(System.color.background.secondary, System.color.background.secondary),
+                )
+            } else {
+                Brush.linearGradient(
+                    listOf(
+                        System.color.background.base,
+                        System.color.background.brandLite.copy(alpha = 0.4f),
+                    ),
+                )
+            },
+        titleColor: Color = if (System.isDark) System.color.text.white else System.color.text.link,
     ): ServiceCardColors =
         ServiceCardColors(
             containerBrush = containerBrush,
@@ -64,7 +73,7 @@ public object ServiceCardDefaults {
         shape: Shape = RoundedCornerShape(20.dp),
         width: Dp = 114.dp,
         height: Dp = 120.dp,
-        titlePadding: PaddingValues = PaddingValues(top = 12.dp, start = 14.dp),
+        titlePadding: PaddingValues = PaddingValues(top = 16.dp, start = 14.dp),
         disabledAlpha: Float = 0.5f,
     ): ServiceCardDimens =
         ServiceCardDimens(
