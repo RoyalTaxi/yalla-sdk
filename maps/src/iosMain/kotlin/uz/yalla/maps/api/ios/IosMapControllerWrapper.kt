@@ -50,6 +50,7 @@ internal class IosMapControllerWrapper(
 
     private var pendingPadding: PaddingValues = PaddingValues()
     private var pendingMarkers: List<MapMarker> = emptyList()
+    private var pendingRouteBindings: Map<String, String> = emptyMap()
     private var pendingRoutes: List<MapRoute> = emptyList()
     private var pendingCircles: List<MapCircle> = emptyList()
     private var lastEmittedCamera: CameraPosition? = null
@@ -203,6 +204,12 @@ internal class IosMapControllerWrapper(
         if (closed) return
         pendingMarkers = markers
         renderer.setMarkers(markers)
+    }
+
+    override fun setRouteBindings(bindings: Map<String, String>) {
+        if (closed) return
+        pendingRouteBindings = bindings
+        renderer.setRouteBindings(bindings)
     }
 
     override fun setRoutes(routes: List<MapRoute>) {

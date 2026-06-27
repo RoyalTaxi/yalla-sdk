@@ -72,6 +72,20 @@ public interface MapController {
 
     public fun setMarkers(markers: List<MapMarker>)
 
+    /**
+     * Declares which rendered route each marker follows, as a `markerId -> routeId` map.
+     *
+     * This is the renderer-level binding channel for route-following, orthogonal to the pure
+     * [MapMarker] value type: a flat (driver) marker whose id appears here is glued to the
+     * referenced [MapRoute]'s arc-length so the car tracks the drawn polyline through corners.
+     * A marker absent from the map (or mapped to a routeId with no matching route) free-roams.
+     *
+     * Bindings take precedence over the deprecated [MapMarker.followsRouteId] field; the field
+     * remains a fallback so existing callers keep working until they migrate to this channel.
+     * Passing an empty map clears all bindings.
+     */
+    public fun setRouteBindings(bindings: Map<String, String>)
+
     public fun setRoutes(routes: List<MapRoute>)
 
     public fun setCircles(circles: List<MapCircle>)

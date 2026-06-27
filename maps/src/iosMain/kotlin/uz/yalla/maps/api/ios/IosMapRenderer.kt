@@ -61,6 +61,8 @@ public interface IosMapRenderer {
 
     public fun setMarkers(markers: List<MapMarker>)
 
+    public fun setRouteBindings(bindings: Map<String, String>)
+
     public fun setRoutes(routes: List<MapRoute>)
 
     public fun setCircles(circles: List<MapCircle>)

@@ -58,6 +58,7 @@ public class SwitchingMapController internal constructor(
 
     private var pendingPadding: PaddingValues = PaddingValues()
     private var pendingMarkers: List<MapMarker> = emptyList()
+    private var pendingRouteBindings: Map<String, String> = emptyMap()
     private var pendingRoutes: List<MapRoute> = emptyList()
     private var pendingCircles: List<MapCircle> = emptyList()
     private var interactionEnabled: Boolean = true
@@ -99,6 +100,7 @@ public class SwitchingMapController internal constructor(
                     return@launch
                 }
                 next.setDesiredPadding(pendingPadding)
+                next.setRouteBindings(pendingRouteBindings)
                 next.setMarkers(pendingMarkers)
                 next.setRoutes(pendingRoutes)
                 next.setCircles(pendingCircles)
@@ -220,6 +222,11 @@ public class SwitchingMapController internal constructor(
     override fun setMarkers(markers: List<MapMarker>) {
         pendingMarkers = markers
         active.value?.setMarkers(markers)
+    }
+
+    override fun setRouteBindings(bindings: Map<String, String>) {
+        pendingRouteBindings = bindings
+        active.value?.setRouteBindings(bindings)
     }
 
     override fun setRoutes(routes: List<MapRoute>) {
