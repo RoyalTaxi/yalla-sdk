@@ -50,7 +50,7 @@ public interface IosMapRenderer {
 
     public fun setColorScheme(isDark: Boolean)
 
-    public fun setPaddingPt(
+    public fun setPaddingPoints(
         leftPt: Float,
         topPt: Float,
         rightPt: Float,

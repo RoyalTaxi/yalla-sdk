@@ -186,7 +186,7 @@ internal class IosMapControllerWrapper(
     override fun setDesiredPadding(padding: PaddingValues) {
         if (closed) return
         pendingPadding = padding
-        renderer.setPaddingPt(
+        renderer.setPaddingPoints(
             leftPt = padding.calculateLeftPadding(LayoutDirection.Ltr).value,
             topPt = padding.calculateTopPadding().value,
             rightPt = padding.calculateRightPadding(LayoutDirection.Ltr).value,
