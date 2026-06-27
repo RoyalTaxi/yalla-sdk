@@ -9,9 +9,10 @@ public actual fun MapHost(
     controller: MapController,
     modifier: Modifier
 ) {
+    val host = controller.platformHost.value
     val iosController =
-        controller as? IosMapController
-            ?: error("MapController on iOS must implement IosMapController. Got: ${controller::class.simpleName}")
+        host as? IosMapController
+            ?: error("platformHost is not an IosMapController: ${host?.let { it::class.simpleName }}")
     UIKitViewController(
         factory = { iosController.createViewController() },
         modifier = modifier

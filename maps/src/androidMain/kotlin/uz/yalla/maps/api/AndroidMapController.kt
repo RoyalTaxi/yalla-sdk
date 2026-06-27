@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import androidx.lifecycle.Lifecycle
 
-public interface AndroidMapController {
+public interface AndroidMapController : PlatformMapHost {
     public fun createView(
         context: Context,
         lifecycle: Lifecycle

@@ -22,6 +22,15 @@ public interface MapController {
 
     public val events: SharedFlow<MapEvent>
 
+    /**
+     * The live platform host backing this controller, or `null` before a backend exists.
+     *
+     * A switching controller re-emits the active backend's host whenever the provider changes.
+     * This is how [MapView] reaches the platform-rendered surface — replacing the render-time
+     * `controller as AndroidMapController` / `as IosMapController` casts that this property obsoletes.
+     */
+    public val platformHost: StateFlow<PlatformMapHost?>
+
     public suspend fun moveTo(
         point: GeoPoint,
         zoom: Float = MapConstants.DEFAULT_ZOOM.toFloat()

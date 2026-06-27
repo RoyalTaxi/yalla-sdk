@@ -90,16 +90,11 @@ public fun MapView(
         if (ready && onReady != null) onReady()
     }
 
-    val hosted: MapController? =
-        if (controller is SwitchingMapController) {
-            controller.activeBackend.collectAsState().value
-        } else {
-            controller
-        }
+    val host by controller.platformHost.collectAsState()
 
-    if (hosted != null) {
-        key(hosted) {
-            MapHost(controller = hosted, modifier = modifier)
+    if (host != null) {
+        key(host) {
+            MapHost(controller = controller, modifier = modifier)
         }
     }
 }

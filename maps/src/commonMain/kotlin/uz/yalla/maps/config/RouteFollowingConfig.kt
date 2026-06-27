@@ -34,4 +34,10 @@ public data class RouteFollowingConfig(
     val backWindowMeters: Double = 5.0,
     val forwardWindowMeters: Double = 50.0,
     val maxHeadingTurnRatePerSecond: Double = 120.0
-)
+) {
+    init {
+        require(offRouteExitMeters <= offRouteEnterMeters) {
+            "offRouteExitMeters ($offRouteExitMeters) must be <= offRouteEnterMeters ($offRouteEnterMeters) for the hysteresis band to be sticky"
+        }
+    }
+}

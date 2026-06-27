@@ -53,6 +53,9 @@ public class SwitchingMapController internal constructor(
         MutableSharedFlow<MapEvent>(replay = 0, extraBufferCapacity = 16, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     override val events: SharedFlow<MapEvent> = _events.asSharedFlow()
 
+    private val _platformHost = MutableStateFlow<PlatformMapHost?>(null)
+    override val platformHost: StateFlow<PlatformMapHost?> = _platformHost
+
     private var pendingPadding: PaddingValues = PaddingValues()
     private var pendingMarkers: List<MapMarker> = emptyList()
     private var pendingRoutes: List<MapRoute> = emptyList()
@@ -142,7 +145,8 @@ public class SwitchingMapController internal constructor(
                         _centerPin.value = it
                     }.launchIn(scope),
                 controller.isReady.onEach { _isReady.value = it }.launchIn(scope),
-                controller.events.onEach { _events.emit(it) }.launchIn(scope)
+                controller.events.onEach { _events.emit(it) }.launchIn(scope),
+                controller.platformHost.onEach { _platformHost.value = it }.launchIn(scope)
             )
     }
 
@@ -260,6 +264,7 @@ public class SwitchingMapController internal constructor(
         observerJobs = emptyList()
         active.value?.close()
         active.value = null
+        _platformHost.value = null
         scope.cancel()
     }
 }

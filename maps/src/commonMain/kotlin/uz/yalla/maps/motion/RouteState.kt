@@ -1,5 +1,7 @@
 package uz.yalla.maps.motion
 
+import uz.yalla.core.geo.GeoPoint
+
 /**
  * Binary off-route honesty state surfaced by [DriverMotionModel].
  *
@@ -29,6 +31,6 @@ public enum class RouteState {
  * @property snappedPoint the point on the route the car is drawn at.
  */
 public data class RouteConnector(
-    val rawPoint: uz.yalla.core.geo.GeoPoint,
-    val snappedPoint: uz.yalla.core.geo.GeoPoint
+    val rawPoint: GeoPoint,
+    val snappedPoint: GeoPoint
 )

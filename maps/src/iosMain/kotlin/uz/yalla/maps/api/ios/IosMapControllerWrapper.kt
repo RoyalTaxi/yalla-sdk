@@ -16,6 +16,7 @@ import platform.UIKit.UIViewController
 import uz.yalla.core.geo.GeoPoint
 import uz.yalla.maps.api.IosMapController
 import uz.yalla.maps.api.MapController
+import uz.yalla.maps.api.PlatformMapHost
 import uz.yalla.maps.api.model.CameraPosition
 import uz.yalla.maps.api.model.CenterPinState
 import uz.yalla.maps.api.model.MapCircle
@@ -41,6 +42,9 @@ internal class IosMapControllerWrapper(
     private val _events =
         MutableSharedFlow<MapEvent>(replay = 0, extraBufferCapacity = 16, onBufferOverflow = BufferOverflow.DROP_OLDEST)
     override val events = _events.asSharedFlow()
+
+    private val _platformHost = MutableStateFlow<PlatformMapHost?>(this)
+    override val platformHost = _platformHost.asStateFlow()
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 

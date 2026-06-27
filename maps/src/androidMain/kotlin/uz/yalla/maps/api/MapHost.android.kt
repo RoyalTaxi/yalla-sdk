@@ -10,11 +10,10 @@ public actual fun MapHost(
     controller: MapController,
     modifier: Modifier
 ) {
+    val host = controller.platformHost.value
     val androidController =
-        controller as? AndroidMapController
-            ?: error(
-                "MapController on Android must implement AndroidMapController. Got: ${controller::class.simpleName}"
-            )
+        host as? AndroidMapController
+            ?: error("platformHost is not an AndroidMapController: ${host?.let { it::class.simpleName }}")
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     AndroidView(
         factory = { ctx -> androidController.createView(ctx, lifecycle) },
