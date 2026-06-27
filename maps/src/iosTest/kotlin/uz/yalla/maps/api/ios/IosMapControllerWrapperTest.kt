@@ -84,6 +84,18 @@ class IosMapControllerWrapperTest {
         }
 
     @Test
+    fun setRouteBindingsForwardsToRendererThenNoOpsAfterClose() =
+        runTest {
+            val bindings = mapOf("driver" to "route-1")
+            wrapper.setRouteBindings(bindings)
+            assertEquals(bindings, renderer.lastRouteBindings)
+
+            wrapper.close()
+            wrapper.setRouteBindings(mapOf("driver" to "route-2"))
+            assertEquals(bindings, renderer.lastRouteBindings, "setRouteBindings after close must be a no-op")
+        }
+
+    @Test
     fun everyMethodIsNoOpAfterClose() =
         runTest {
             wrapper.close()
@@ -103,6 +115,8 @@ private class FakeIosMapRenderer : IosMapRenderer {
     var listener: IosMapListener? = null
         private set
     var markers: List<MapMarker> = emptyList()
+        private set
+    var lastRouteBindings: Map<String, String> = emptyMap()
         private set
     var lastUserLocation: GeoPoint? = null
         private set
@@ -160,7 +174,7 @@ private class FakeIosMapRenderer : IosMapRenderer {
 
     override fun setColorScheme(isDark: Boolean) = Unit
 
-    override fun setPaddingPt(
+    override fun setPaddingPoints(
         leftPt: Float,
         topPt: Float,
         rightPt: Float,
@@ -171,6 +185,10 @@ private class FakeIosMapRenderer : IosMapRenderer {
 
     override fun setMarkers(markers: List<MapMarker>) {
         this.markers = markers
+    }
+
+    override fun setRouteBindings(bindings: Map<String, String>) {
+        lastRouteBindings = bindings
     }
 
     override fun setRoutes(routes: List<MapRoute>) = Unit

@@ -30,6 +30,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
@@ -104,6 +105,45 @@ class SwitchingMapControllerTest {
             assertNotNull(active)
             assertEquals(markers, active.markers)
             assertSame(factory.libreCreated.single(), active)
+        }
+
+    @Test
+    fun routeBindingsAreCachedAndAppliedOnSwitch() =
+        runTest(dispatcher) {
+            val bindings = mapOf("driver" to "route-1")
+            controller.setRouteBindings(bindings)
+
+            controller.switchTo(MapKind.Google)
+            val google = controller.activeBackend.value as FakeMapController
+            assertEquals(bindings, google.routeBindings)
+
+            controller.switchTo(MapKind.Libre)
+            val libre = controller.activeBackend.value as FakeMapController
+            assertEquals(bindings, libre.routeBindings, "bindings must survive a provider switch")
+        }
+
+    @Test
+    fun routeBindingsAreForwardedToActiveBackend() =
+        runTest(dispatcher) {
+            controller.switchTo(MapKind.Google)
+            val active = factory.googleCreated.single()
+
+            val bindings = mapOf("a" to "r1", "b" to "r2")
+            controller.setRouteBindings(bindings)
+
+            assertEquals(bindings, active.routeBindings)
+        }
+
+    @Test
+    fun platformHostTracksTheActiveBackend() =
+        runTest(dispatcher) {
+            assertNull(controller.platformHost.value)
+
+            controller.switchTo(MapKind.Google)
+            assertNotNull(controller.platformHost.value, "platformHost must emit the backend's host on switch")
+
+            controller.close()
+            assertNull(controller.platformHost.value, "platformHost must clear to null on close")
         }
 
     @Test
@@ -231,8 +271,11 @@ class SwitchingMapControllerTest {
         override val centerPin: StateFlow<CenterPinState> = centerPinFlow
         override val isReady: StateFlow<Boolean> = readyFlow
         override val events: SharedFlow<MapEvent> = MutableSharedFlow()
+        override val platformHost: StateFlow<PlatformMapHost?> = MutableStateFlow(FakePlatformHost)
 
         var markers: List<MapMarker> = emptyList()
+            private set
+        var routeBindings: Map<String, String> = emptyMap()
             private set
         var routes: List<MapRoute> = emptyList()
             private set
@@ -304,6 +347,10 @@ class SwitchingMapControllerTest {
             this.markers = markers
         }
 
+        override fun setRouteBindings(bindings: Map<String, String>) {
+            this.routeBindings = bindings
+        }
+
         override fun setRoutes(routes: List<MapRoute>) {
             this.routes = routes
         }
@@ -337,4 +384,6 @@ class SwitchingMapControllerTest {
             closed = true
         }
     }
+
+    private object FakePlatformHost : PlatformMapHost
 }
