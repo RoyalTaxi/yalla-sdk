@@ -7,7 +7,7 @@ public fun archedPolyline(
     from: GeoPoint,
     to: GeoPoint,
     curvature: Double = 0.5,
-    segments: Int = 64,
+    segments: Int = 64
 ): List<GeoPoint> {
     if (from == to || segments < 1) return listOf(from, to)
     val midLat = (from.lat + to.lat) / 2.0
@@ -22,7 +22,7 @@ public fun archedPolyline(
         val inverse = 1.0 - t
         GeoPoint(
             lat = inverse * inverse * from.lat + 2.0 * inverse * t * controlLat + t * t * to.lat,
-            lng = inverse * inverse * from.lng + 2.0 * inverse * t * controlLng + t * t * to.lng,
+            lng = inverse * inverse * from.lng + 2.0 * inverse * t * controlLng + t * t * to.lng
         )
     }
 }

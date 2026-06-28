@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -36,8 +35,7 @@ public data class ServiceCardDimens(
     val shape: Shape,
     val width: Dp,
     val height: Dp,
-    val titlePadding: PaddingValues,
-    val disabledAlpha: Float,
+    val titlePadding: PaddingValues
 )
 
 @Immutable
@@ -61,7 +59,7 @@ public object ServiceCardDefaults {
                     ),
                 )
             },
-        titleColor: Color = if (System.isDark) System.color.text.white else System.color.text.link,
+        titleColor: Color = System.color.text.white,
     ): ServiceCardColors =
         ServiceCardColors(
             containerBrush = containerBrush,
@@ -74,14 +72,12 @@ public object ServiceCardDefaults {
         width: Dp = 114.dp,
         height: Dp = 120.dp,
         titlePadding: PaddingValues = PaddingValues(top = 16.dp, start = 14.dp),
-        disabledAlpha: Float = 0.5f,
     ): ServiceCardDimens =
         ServiceCardDimens(
             shape = shape,
             width = width,
             height = height,
             titlePadding = titlePadding,
-            disabledAlpha = disabledAlpha,
         )
 
     @Composable
@@ -99,18 +95,13 @@ public fun ServiceCard(
     painter: Painter,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    enabled: Boolean = true,
     colors: ServiceCardColors = ServiceCardDefaults.colors(),
     dimens: ServiceCardDimens = ServiceCardDefaults.dimens(),
     styles: ServiceCardStyles = ServiceCardDefaults.styles(),
 ) {
     Surface(
         onClick = onClick,
-        enabled = enabled,
-        modifier =
-            modifier
-                .size(width = dimens.width, height = dimens.height)
-                .alpha(if (enabled) 1f else dimens.disabledAlpha),
+        modifier = modifier.size(width = dimens.width, height = dimens.height),
         shape = dimens.shape,
         color = Color.Transparent,
     ) {

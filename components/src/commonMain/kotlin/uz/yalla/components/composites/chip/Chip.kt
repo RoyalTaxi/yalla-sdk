@@ -28,7 +28,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 
 @Immutable
-public data class ReasonChipColors(
+public data class ChipColors(
     val containerColor: Color,
     val selectedContainerColor: Color,
     val textColor: Color,
@@ -36,7 +36,7 @@ public data class ReasonChipColors(
 )
 
 @Immutable
-public data class ReasonChipDimens(
+public data class ChipDimens(
     val shape: Shape,
     val contentPadding: PaddingValues,
     val contentSpacing: Dp,
@@ -44,19 +44,19 @@ public data class ReasonChipDimens(
 )
 
 @Immutable
-public data class ReasonChipStyles(
+public data class ChipStyles(
     val textStyle: TextStyle
 )
 
-public object ReasonChipDefaults {
+public object ChipDefaults {
     @Composable
     public fun colors(
         containerColor: Color = System.color.background.secondary,
         selectedContainerColor: Color = System.color.background.brand,
         textColor: Color = System.color.text.base,
-        selectedTextColor: Color = System.color.background.base
-    ): ReasonChipColors =
-        ReasonChipColors(
+        selectedTextColor: Color = System.color.text.white
+    ): ChipColors =
+        ChipColors(
             containerColor = containerColor,
             selectedContainerColor = selectedContainerColor,
             textColor = textColor,
@@ -69,8 +69,8 @@ public object ReasonChipDefaults {
         contentPadding: PaddingValues = PaddingValues(12.dp),
         contentSpacing: Dp = 12.dp,
         iconSize: Dp = 24.dp
-    ): ReasonChipDimens =
-        ReasonChipDimens(
+    ): ChipDimens =
+        ChipDimens(
             shape = shape,
             contentPadding = contentPadding,
             contentSpacing = contentSpacing,
@@ -78,22 +78,22 @@ public object ReasonChipDefaults {
         )
 
     @Composable
-    public fun styles(textStyle: TextStyle = System.font.body.small.bold): ReasonChipStyles =
-        ReasonChipStyles(
+    public fun styles(textStyle: TextStyle = System.font.body.small.bold): ChipStyles =
+        ChipStyles(
             textStyle = textStyle
         )
 }
 
 @Composable
-public fun ReasonChip(
+public fun Chip(
     text: String,
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     painter: Painter? = null,
-    colors: ReasonChipColors = ReasonChipDefaults.colors(),
-    dimens: ReasonChipDimens = ReasonChipDefaults.dimens(),
-    styles: ReasonChipStyles = ReasonChipDefaults.styles()
+    colors: ChipColors = ChipDefaults.colors(),
+    dimens: ChipDimens = ChipDefaults.dimens(),
+    styles: ChipStyles = ChipDefaults.styles()
 ) {
     Surface(
         onClick = onClick,
@@ -125,18 +125,18 @@ public fun ReasonChip(
 }
 
 @Composable
-public fun ReasonChip(
+public fun Chip(
     text: String,
     selected: Boolean,
     imageUrl: String?,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    colors: ReasonChipColors = ReasonChipDefaults.colors(),
-    dimens: ReasonChipDimens = ReasonChipDefaults.dimens(),
-    styles: ReasonChipStyles = ReasonChipDefaults.styles()
+    colors: ChipColors = ChipDefaults.colors(),
+    dimens: ChipDimens = ChipDefaults.dimens(),
+    styles: ChipStyles = ChipDefaults.styles()
 ) {
     val painter = imageUrl?.takeIf { it.isNotBlank() }?.let { rememberAsyncImagePainter(model = it) }
-    val painterState by painter?.state?.collectAsState() ?: return ReasonChip(
+    val painterState by painter?.state?.collectAsState() ?: return Chip(
         text = text,
         selected = selected,
         onClick = onClick,
@@ -147,7 +147,7 @@ public fun ReasonChip(
         styles = styles
     )
 
-    ReasonChip(
+    Chip(
         text = text,
         selected = selected,
         onClick = onClick,
@@ -167,13 +167,13 @@ private fun Preview() =
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier.padding(16.dp)
         ) {
-            ReasonChip(
+            Chip(
                 text = "Clean car",
                 selected = true,
                 onClick = {}
             )
 
-            ReasonChip(
+            Chip(
                 text = "Polite driver",
                 selected = false,
                 onClick = {}
