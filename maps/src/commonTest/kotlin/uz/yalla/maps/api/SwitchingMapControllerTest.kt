@@ -210,6 +210,26 @@ class SwitchingMapControllerTest {
         }
 
     @Test
+    fun cameraIsReseededOnSwitchEvenAfterAPriorCameraCommand() =
+        runTest(dispatcher) {
+            controller.switchTo(MapKind.Google)
+            val google = factory.googleCreated.single()
+            controller.moveTo(GeoPoint(40.0, 71.0), 16f)
+            google.cameraFlow.value = CameraPosition(target = GeoPoint(40.0, 71.0), zoom = 16f)
+
+            controller.switchTo(MapKind.Libre)
+            advanceUntilIdle()
+
+            val libre = factory.libreCreated.single()
+            assertEquals(
+                GeoPoint(40.0, 71.0),
+                libre.movedTo,
+                "new backend must be seeded with the last camera position on switch"
+            )
+            assertEquals(16f, libre.movedZoom)
+        }
+
+    @Test
     fun cachedStateIsAppliedOnlyAfterBackendBecomesReady() =
         runTest(dispatcher) {
             val notReadyFactory = FakeMapFactory(ready = false)
@@ -297,11 +317,18 @@ class SwitchingMapControllerTest {
             private set
         var closed: Boolean = false
             private set
+        var movedTo: GeoPoint? = null
+            private set
+        var movedZoom: Float? = null
+            private set
 
         override suspend fun moveTo(
             point: GeoPoint,
             zoom: Float
-        ) = Unit
+        ) {
+            movedTo = point
+            movedZoom = zoom
+        }
 
         override suspend fun animateTo(
             point: GeoPoint,

@@ -89,6 +89,7 @@ public class SwitchingMapController internal constructor(
         currentKind = kind
         val seedSource = _cameraPosition.value
         cameraSeedApplied = false
+        cameraCommanded = false
         wireObservers(next)
         active.value = next
         seedJob =
