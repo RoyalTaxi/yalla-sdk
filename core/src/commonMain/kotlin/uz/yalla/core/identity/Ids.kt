@@ -33,6 +33,11 @@ public value class PlaceId(
 )
 
 @JvmInline
+public value class SavedId(
+    public val raw: Long
+)
+
+@JvmInline
 public value class CardId(
     public val raw: String
 )

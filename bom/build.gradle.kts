@@ -12,7 +12,6 @@ dependencies {
         api("uz.yalla.sdk:foundation:${project.version}")
         api("uz.yalla.sdk:capabilities:${project.version}")
         api("uz.yalla.sdk:components:${project.version}")
-        api("uz.yalla.sdk:maps:${project.version}")
         api("uz.yalla.sdk:media:${project.version}")
         api("uz.yalla.sdk:telemetry:${project.version}")
     }

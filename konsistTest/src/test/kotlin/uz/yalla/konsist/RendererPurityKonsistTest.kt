@@ -5,8 +5,8 @@ import com.lemonappdev.konsist.api.verify.assertFalse
 import org.junit.jupiter.api.Test
 
 /**
- * Route-eating and projection live in the SDK model ([uz.yalla.maps.motion.DriverMotionModel] /
- * [uz.yalla.core.geo.RouteProgressGeometry]), and renderers/controllers are Humble Objects that draw
+ * Route-eating and projection live in the SDK model ([uz.yalla.core.geo.RouteProgressGeometry]),
+ * and renderers/controllers are Humble Objects that draw
  * only what they are handed. This pins that boundary on the Android/common side: a `*Renderer` or
  * `*Controller` must not import the route geometry math, so the "route behind the car" policy cannot
  * silently re-scatter back into a renderer.

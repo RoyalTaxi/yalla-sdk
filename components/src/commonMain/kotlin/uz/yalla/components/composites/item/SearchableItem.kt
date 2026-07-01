@@ -189,24 +189,28 @@ public fun SearchableItem(
                         modifier = Modifier.weight(1f)
                     )
 
-                    badge?.let {
-                        Text(
-                            text = badge,
-                            color = colors.badgeColor,
-                            style = styles.badgeStyle
-                        )
-                    }
+                    badge
+                        ?.takeIf { it.isNotEmpty() }
+                        ?.let {
+                            Text(
+                                text = badge,
+                                color = colors.badgeColor,
+                                style = styles.badgeStyle
+                            )
+                        }
                 }
 
-                description?.let { desc ->
-                    Text(
-                        text = desc,
-                        color = colors.descriptionColor,
-                        style = styles.descriptionStyle,
-                        maxLines = styles.descriptionMaxLines,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
+                description
+                    ?.takeIf { it.isNotEmpty() }
+                    ?.let { desc ->
+                        Text(
+                            text = desc,
+                            color = colors.descriptionColor,
+                            style = styles.descriptionStyle,
+                            maxLines = styles.descriptionMaxLines,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
             }
         }
     }

@@ -27,7 +27,7 @@ include(
     ":foundation",
     ":capabilities",
     ":components",
-    ":maps",
+    ":carto",
     ":media",
     ":telemetry",
     ":bom",

@@ -42,7 +42,7 @@ public data class OrdersCardColors(
     val containerColor: Color,
     val badgeColor: Color,
     val countColor: Color,
-    val labelColor: Color,
+    val labelColor: Color
 )
 
 @Immutable
@@ -52,13 +52,13 @@ public data class OrdersCardDimens(
     val contentPadding: PaddingValues,
     val spacing: Dp,
     val badgeSize: Dp,
-    val iconSize: Dp,
+    val iconSize: Dp
 )
 
 @Immutable
 public data class OrdersCardStyles(
     val countStyle: TextStyle,
-    val labelStyle: TextStyle,
+    val labelStyle: TextStyle
 )
 
 public object OrdersCardDefaults {
@@ -67,13 +67,13 @@ public object OrdersCardDefaults {
         containerColor: Color = System.color.background.base,
         badgeColor: Color = System.color.background.secondary,
         countColor: Color = System.color.text.base,
-        labelColor: Color = System.color.text.base,
+        labelColor: Color = System.color.text.base
     ): OrdersCardColors =
         OrdersCardColors(
             containerColor = containerColor,
             badgeColor = badgeColor,
             countColor = countColor,
-            labelColor = labelColor,
+            labelColor = labelColor
         )
 
     @Composable
@@ -83,7 +83,7 @@ public object OrdersCardDefaults {
         contentPadding: PaddingValues = PaddingValues(2.dp),
         spacing: Dp = 12.dp,
         badgeSize: Dp = 42.dp,
-        iconSize: Dp = 24.dp,
+        iconSize: Dp = 24.dp
     ): OrdersCardDimens =
         OrdersCardDimens(
             shape = shape,
@@ -91,7 +91,7 @@ public object OrdersCardDefaults {
             contentPadding = contentPadding,
             spacing = spacing,
             badgeSize = badgeSize,
-            iconSize = iconSize,
+            iconSize = iconSize
         )
 
     @Composable
@@ -100,12 +100,12 @@ public object OrdersCardDefaults {
         labelStyle: TextStyle =
             System.font.body.base.medium.copy(
                 fontSize = 12.sp,
-                lineHeight = 14.sp,
-            ),
+                lineHeight = 14.sp
+            )
     ): OrdersCardStyles =
         OrdersCardStyles(
             countStyle = countStyle,
-            labelStyle = labelStyle,
+            labelStyle = labelStyle
         )
 }
 
@@ -116,7 +116,7 @@ public fun OrdersCard(
     modifier: Modifier = Modifier,
     colors: OrdersCardColors = OrdersCardDefaults.colors(),
     dimens: OrdersCardDimens = OrdersCardDefaults.dimens(),
-    styles: OrdersCardStyles = OrdersCardDefaults.styles(),
+    styles: OrdersCardStyles = OrdersCardDefaults.styles()
 ) {
     if (count == 0) return
 
@@ -126,38 +126,38 @@ public fun OrdersCard(
         modifier = modifier.semantics(mergeDescendants = true) { contentDescription = ordersLabel },
         onClick = onClick,
         shape = dimens.shape,
-        colors = CardDefaults.cardColors(colors.containerColor),
+        colors = CardDefaults.cardColors(colors.containerColor)
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(dimens.spacing),
-            modifier = Modifier.padding(dimens.contentPadding).height(IntrinsicSize.Min),
+            modifier = Modifier.padding(dimens.contentPadding).height(IntrinsicSize.Min)
         ) {
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.size(dimens.badgeSize).background(colors.badgeColor, dimens.badgeShape),
+                modifier = Modifier.size(dimens.badgeSize).background(colors.badgeColor, dimens.badgeShape)
             ) {
                 Text(
                     text = count.toString(),
                     color = colors.countColor,
-                    style = styles.countStyle,
+                    style = styles.countStyle
                 )
             }
 
             Text(
                 text = stringResource(Res.string.order_list_title).replace(' ', '\n'),
                 color = colors.labelColor,
-                style = styles.labelStyle,
+                style = styles.labelStyle
             )
 
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier.size(dimens.badgeSize).background(colors.badgeColor, dimens.badgeShape),
+                modifier = Modifier.size(dimens.badgeSize).background(colors.badgeColor, dimens.badgeShape)
             ) {
                 Icon(
                     painter = rememberVectorPainter(YallaIcons.ArrowRightInCircle),
                     contentDescription = null,
-                    modifier = Modifier.size(dimens.iconSize).rotate(90f),
+                    modifier = Modifier.size(dimens.iconSize).rotate(90f)
                 )
             }
         }
@@ -170,7 +170,7 @@ private fun OrdersCardPreview() {
     YallaTheme {
         OrdersCard(
             count = 3,
-            onClick = {},
+            onClick = {}
         )
     }
 }

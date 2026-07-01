@@ -11,7 +11,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.design)
             api(projects.resources)
-            api(projects.maps)
+            api(projects.carto)
             api(projects.media)
             api(projects.core)
             implementation(projects.foundation)
@@ -47,7 +47,7 @@ kotlin.targets
     .withType(KotlinNativeTarget::class.java)
     .configureEach {
         binaries.withType(Framework::class.java).configureEach {
-            export(projects.maps)
+            export(projects.carto)
             export(projects.media)
             export(projects.design)
             export(projects.resources)

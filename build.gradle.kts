@@ -36,7 +36,6 @@ if (docsEnabled) {
     dependencies.add("dokka", project(":design"))
     dependencies.add("dokka", project(":foundation"))
     dependencies.add("dokka", project(":components"))
-    dependencies.add("dokka", project(":maps"))
     dependencies.add("dokka", project(":media"))
     dependencies.add("dokka", project(":telemetry"))
 

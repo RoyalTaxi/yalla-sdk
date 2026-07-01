@@ -21,6 +21,9 @@ public class DeviceLocationProvider internal constructor(
     private val _currentLocation = MutableStateFlow<GeoPoint?>(null)
     override val currentLocation: StateFlow<GeoPoint?> = _currentLocation.asStateFlow()
 
+    private val _currentAccuracy = MutableStateFlow<Double?>(null)
+    override val currentAccuracy: StateFlow<Double?> = _currentAccuracy.asStateFlow()
+
     private var job: Job? = null
 
     override fun startTracking() {
@@ -29,8 +32,10 @@ public class DeviceLocationProvider internal constructor(
             scope.launch {
                 try {
                     locationTracker.startTracking()
-                    locationTracker.getLocationsFlow().collect { location ->
-                        _currentLocation.value = GeoPoint(location.latitude, location.longitude)
+                    locationTracker.getExtendedLocationsFlow().collect { extended ->
+                        val coordinates = extended.location.coordinates
+                        _currentLocation.value = GeoPoint(coordinates.latitude, coordinates.longitude)
+                        _currentAccuracy.value = extended.location.coordinatesAccuracyMeters.takeIf { it > 0 }
                     }
                 } catch (e: CancellationException) {
                     throw e

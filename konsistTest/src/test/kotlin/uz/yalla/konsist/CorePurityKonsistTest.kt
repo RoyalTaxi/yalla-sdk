@@ -21,7 +21,6 @@ class CorePurityKonsistTest {
                 val foundation = Layer("foundation", "uz.yalla.foundation..")
                 val capabilities = Layer("capabilities", "uz.yalla.capabilities..")
                 val components = Layer("components", "uz.yalla.components..")
-                val maps = Layer("maps", "uz.yalla.maps..")
                 val media = Layer("media", "uz.yalla.media..")
                 val telemetry = Layer("telemetry", "uz.yalla.telemetry..")
 
@@ -32,7 +31,6 @@ class CorePurityKonsistTest {
                     foundation,
                     capabilities,
                     components,
-                    maps,
                     media,
                     telemetry
                 )
