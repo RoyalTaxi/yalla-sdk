@@ -146,7 +146,8 @@
     <string name="bonus_title">Бонуслар ва чегирмалар</string>
     <string name="bonus_section_title">Бонуслар</string>
     <string name="bonus_rate">1 танга = 1 сўм</string>
-    <string name="bonus_balance">Сизда {0} балл бор</string>
+    <string name="bonus_balance">Сизда {0} бонус бор</string>
+    <string name="bonus_you_pay">Сиз бонусдан {0} тўлайсиз</string>
     <string name="bonus_pay">Бонус билан тўлаш</string>
     <string name="bonus_you_pay">Сиз {0} тўлайсиз</string>
     <string name="bonus_pay_for_next_trip">Эконом ва Комфортда сафар қилинг — кейинги сафарлар учун бонуслар билан тўланг.</string>

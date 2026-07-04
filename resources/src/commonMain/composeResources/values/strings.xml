@@ -161,9 +161,9 @@
     <string name="bonus_title">Bonuslar va chegirmalar</string>
     <string name="bonus_section_title">Bonuslar</string>
     <string name="bonus_rate">1 tanga = 1 so\'m</string>
-    <string name="bonus_balance">Sizda {0} ball bor</string>
+    <string name="bonus_balance">Sizda {0} bonus bor</string>
     <string name="bonus_pay">Bonus bilan to\'lash</string>
-    <string name="bonus_you_pay">Siz {0} to\'laysiz</string>
+    <string name="bonus_you_pay">Siz bonusdan {0} to\'laysiz</string>
     <string name="bonus_pay_for_next_trip">Ekonom va Komfortda sayohat qiling — keyingi sayohatlar uchun bonuslar bilan to\'lang.</string>
     <string name="bonus_amount">Bonus miqdori</string>
     <string name="cashback">Keshbek</string>

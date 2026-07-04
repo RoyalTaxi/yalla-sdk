@@ -146,7 +146,8 @@
     <string name="bonus_title">Бонусы и скидки</string>
     <string name="bonus_section_title">Бонусы</string>
     <string name="bonus_rate">1 монета = 1 сум</string>
-    <string name="bonus_balance">У вас {0} баллов</string>
+    <string name="bonus_balance">У вас {0} бонусов</string>
+    <string name="bonus_you_pay">Вы оплачиваете бонусами {0}</string>
     <string name="bonus_pay">Оплатить бонусами</string>
     <string name="bonus_you_pay">Вы платите {0}</string>
     <string name="bonus_pay_for_next_trip">Ездите в Эконом и Комфорт — оплачивайте следующие поездки бонусами.</string>
