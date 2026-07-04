@@ -58,14 +58,14 @@ public object OpenableItemDefaults {
     public fun colors(
         textColor: Color = System.color.text.base,
         containerColor: Color = System.color.background.secondary,
-        openIconColor: Color = System.color.icon.subtle,
         leadingIconColor: Color = System.color.icon.base,
+        trailingIconColor: Color = System.color.icon.subtle,
         borderColor: Color = Color.Transparent
     ): OpenableItemColors =
         OpenableItemColors(
             textColor = textColor,
             containerColor = containerColor,
-            openIconColor = openIconColor,
+            openIconColor = trailingIconColor,
             leadingIconColor = leadingIconColor,
             borderColor = borderColor
         )
@@ -105,6 +105,7 @@ public fun OpenableItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = YallaIcons.ArrowRight,
     colors: OpenableItemColors = OpenableItemDefaults.colors(),
     dimens: OpenableItemDimens = OpenableItemDefaults.dimens(),
     styles: OpenableItemStyles = OpenableItemDefaults.styles()
@@ -113,6 +114,7 @@ public fun OpenableItem(
         onClick = onClick,
         modifier = modifier,
         leadingIcon = leadingIcon,
+        trailingIcon = trailingIcon,
         colors = colors,
         dimens = dimens
     ) {
@@ -128,6 +130,7 @@ public fun OpenableItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = YallaIcons.ArrowRight,
     colors: OpenableItemColors = OpenableItemDefaults.colors(),
     dimens: OpenableItemDimens = OpenableItemDefaults.dimens(),
     content: @Composable () -> Unit
@@ -144,7 +147,7 @@ public fun OpenableItem(
             horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing),
             modifier = Modifier.padding(dimens.contentPadding)
         ) {
-            if (leadingIcon != null) {
+            leadingIcon?.let {
                 Icon(
                     imageVector = leadingIcon,
                     contentDescription = null,
@@ -157,12 +160,14 @@ public fun OpenableItem(
                 content()
             }
 
-            Icon(
-                imageVector = YallaIcons.ArrowRight,
-                contentDescription = null,
-                tint = colors.openIconColor,
-                modifier = Modifier.size(dimens.iconSize)
-            )
+            trailingIcon?.let {
+                Icon(
+                    imageVector = trailingIcon,
+                    contentDescription = null,
+                    tint = colors.openIconColor,
+                    modifier = Modifier.size(dimens.iconSize)
+                )
+            }
         }
     }
 }
@@ -190,7 +195,7 @@ private fun Preview() =
                     OpenableItemDefaults.colors(
                         textColor = System.color.text.red,
                         containerColor = Color.Transparent,
-                        openIconColor = System.color.icon.red,
+                        trailingIconColor = System.color.icon.red,
                         leadingIconColor = System.color.icon.red,
                         borderColor = System.color.border.disabled
                     ),

@@ -227,6 +227,7 @@ public object LocationButtonDefaults {
 
 @Composable
 private fun LocationButtonContainer(
+    enabled: Boolean,
     onClick: () -> Unit,
     onTrailingViewClick: (() -> Unit)?,
     modifier: Modifier,
@@ -237,6 +238,7 @@ private fun LocationButtonContainer(
     content: @Composable RowScope.() -> Unit
 ) {
     Surface(
+        enabled = enabled,
         shape = dimens.shape,
         color = colors.containerColor,
         onClick = onClick,
@@ -258,6 +260,7 @@ private fun LocationButtonContainer(
 public fun LocationButton(
     title: String,
     description: String? = null,
+    enabled: Boolean = true,
     onClick: () -> Unit,
     onTrailingViewClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
@@ -277,6 +280,7 @@ public fun LocationButton(
     }
 ): Unit =
     LocationButtonContainer(
+        enabled = enabled,
         onClick = onClick,
         onTrailingViewClick = onTrailingViewClick,
         modifier = modifier,
@@ -297,6 +301,7 @@ public fun LocationButton(
 @Composable
 public fun LocationButton(
     vararg titles: String,
+    enabled: Boolean = true,
     onClick: () -> Unit,
     onTrailingViewClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
@@ -316,6 +321,7 @@ public fun LocationButton(
     }
 ): Unit =
     LocationButtonContainer(
+        enabled = enabled,
         onClick = onClick,
         onTrailingViewClick = onTrailingViewClick,
         modifier = modifier,

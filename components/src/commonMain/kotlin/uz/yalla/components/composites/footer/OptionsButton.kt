@@ -17,50 +17,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import org.jetbrains.compose.resources.stringResource
 import uz.yalla.design.theme.System
-import uz.yalla.resources.Res
 import uz.yalla.resources.icons.Expand
 import uz.yalla.resources.icons.Options
-import uz.yalla.resources.icons.XInSquare
 import uz.yalla.resources.icons.YallaIcons
-import uz.yalla.resources.order_comment_title
-import uz.yalla.resources.order_services_unavailable
 
 @Composable
 public fun OptionsButton(
     isExpanded: Boolean,
-    hasInvalidServices: Boolean,
-    badgeCount: Int,
-    hasContent: Boolean,
+    badgeCount: Int?,
     onClick: () -> Unit,
-    onClear: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val optionsLabel =
-        if (hasInvalidServices) {
-            stringResource(Res.string.order_services_unavailable)
-        } else {
-            stringResource(Res.string.order_comment_title)
-        }
     Button(
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(System.color.background.secondary),
         contentPadding = PaddingValues(0.dp),
-        modifier =
-            modifier
-                .size(60.dp)
-                .semantics { contentDescription = optionsLabel },
-        onClick = {
-            if (hasInvalidServices) {
-                onClear()
-            } else {
-                onClick()
-            }
-        }
+        modifier = modifier.size(60.dp),
+        onClick = onClick
     ) {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -69,7 +44,6 @@ public fun OptionsButton(
             Icon(
                 painter =
                     when {
-                        hasInvalidServices -> rememberVectorPainter(YallaIcons.XInSquare)
                         isExpanded -> rememberVectorPainter(YallaIcons.Expand)
                         else -> rememberVectorPainter(YallaIcons.Options)
                     },
@@ -77,8 +51,8 @@ public fun OptionsButton(
                 tint = System.color.icon.base
             )
 
-            if (hasContent) {
-                OptionsBadge(
+            badgeCount?.let {
+                Badge(
                     count = badgeCount,
                     modifier = Modifier.align(Alignment.TopEnd)
                 )
@@ -88,8 +62,8 @@ public fun OptionsButton(
 }
 
 @Composable
-private fun OptionsBadge(
-    count: Int,
+private fun Badge(
+    count: Int?,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -102,7 +76,7 @@ private fun OptionsBadge(
                 .size(18.dp)
     ) {
         Text(
-            text = count.toString().takeIf { count != 0 }.orEmpty(),
+            text = count?.toString().takeIf { count != 0 }.orEmpty(),
             color = System.color.text.white,
             style = System.font.body.small.bold
         )
