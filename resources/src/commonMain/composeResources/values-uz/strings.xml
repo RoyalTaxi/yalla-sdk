@@ -303,6 +303,7 @@
     <string name="intercity_setup_fastest_subtitle">Soʻrovingizga mos taksini imkon qadar tez topamiz</string>
     <string name="intercity_setup_schedule_placeholder">Sana va vaqtni tanlang</string>
     <string name="intercity_setup_schedule_title">Safar vaqti:</string>
+    <string name="intercity_schedule_picker_title">Safar vaqti va sanasi</string>
     <string name="intercity_setup_whole_cabin">Butun salon</string>
     <string name="intercity_setup_select_seat">Joyni tanlang</string>
     <string name="intercity_setup_seat_summary">Siz {0} ta joy tanladingiz</string>

@@ -303,6 +303,7 @@
     <string name="intercity_setup_fastest_subtitle">Мы подберем вам такси по вашим запросам как можно быстрее</string>
     <string name="intercity_setup_schedule_placeholder">Выберите дату и время</string>
     <string name="intercity_setup_schedule_title">Время поездки:</string>
+    <string name="intercity_schedule_picker_title">Время и дата поездки</string>
     <string name="intercity_setup_whole_cabin">Весь салон</string>
     <string name="intercity_setup_select_seat">Выберите место</string>
     <string name="intercity_setup_seat_summary">Вы выбрали {0} мест</string>

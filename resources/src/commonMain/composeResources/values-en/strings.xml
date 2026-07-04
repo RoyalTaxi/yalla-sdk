@@ -303,6 +303,7 @@
     <string name="intercity_setup_fastest_subtitle">We will find a taxi for your request as fast as possible</string>
     <string name="intercity_setup_schedule_placeholder">Select date and time</string>
     <string name="intercity_setup_schedule_title">Trip time:</string>
+    <string name="intercity_schedule_picker_title">Trip time and date</string>
     <string name="intercity_setup_whole_cabin">Whole cabin</string>
     <string name="intercity_setup_select_seat">Select seat</string>
     <string name="intercity_setup_seat_summary">You selected {0} seats</string>

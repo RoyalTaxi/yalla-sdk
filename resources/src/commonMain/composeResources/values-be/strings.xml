@@ -303,6 +303,7 @@
     <string name="intercity_setup_fastest_subtitle">Сўровингизга мос таксини имкон қадар тез топамиз</string>
     <string name="intercity_setup_schedule_placeholder">Сана ва вақтни танланг</string>
     <string name="intercity_setup_schedule_title">Сафар вақти:</string>
+    <string name="intercity_schedule_picker_title">Сафар вақти ва санаси</string>
     <string name="intercity_setup_whole_cabin">Бутун салон</string>
     <string name="intercity_setup_select_seat">Жойни танланг</string>
     <string name="intercity_setup_seat_summary">Сиз {0} та жой танладингиз</string>
