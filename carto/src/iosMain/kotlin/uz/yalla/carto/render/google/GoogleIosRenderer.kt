@@ -57,13 +57,33 @@ public data class GoogleIosCircle(
 public interface GoogleIosMapDelegate {
     public fun onReady()
 
-    public fun onCameraMove(lat: Double, lng: Double, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean)
+    public fun onCameraMove(
+        lat: Double,
+        lng: Double,
+        zoom: Float,
+        bearing: Float,
+        tilt: Float,
+        isByUser: Boolean
+    )
 
-    public fun onCameraIdle(lat: Double, lng: Double, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean)
+    public fun onCameraIdle(
+        lat: Double,
+        lng: Double,
+        zoom: Float,
+        bearing: Float,
+        tilt: Float,
+        isByUser: Boolean
+    )
 
-    public fun onMapTapped(lat: Double, lng: Double)
+    public fun onMapTapped(
+        lat: Double,
+        lng: Double
+    )
 
-    public fun onMapLongPressed(lat: Double, lng: Double)
+    public fun onMapLongPressed(
+        lat: Double,
+        lng: Double
+    )
 }
 
 public interface GoogleIosMapRenderer {
@@ -73,13 +93,27 @@ public interface GoogleIosMapRenderer {
 
     public fun setCamera(camera: GoogleIosCamera)
 
-    public fun animateCamera(camera: GoogleIosCamera, durationMs: Int)
+    public fun animateCamera(
+        camera: GoogleIosCamera,
+        durationMs: Int
+    )
 
-    public fun fitBounds(points: List<GeoPoint>, paddingPt: Double, maxZoom: Float, animate: Boolean)
+    public fun fitBounds(
+        points: List<GeoPoint>,
+        paddingPt: Double,
+        maxZoom: Float,
+        animate: Boolean
+    )
 
-    public fun setPadding(bottomPt: Double, durationMs: Int)
+    public fun setPadding(
+        bottomPt: Double,
+        durationMs: Int
+    )
 
-    public fun setAppearance(isDark: Boolean, styleJson: String?)
+    public fun setAppearance(
+        isDark: Boolean,
+        styleJson: String?
+    )
 
     public fun setIcons(icons: Map<String, UIImage>)
 
@@ -95,7 +129,11 @@ public interface GoogleIosMapRenderer {
 }
 
 public interface GoogleIosRendererFactory {
-    public fun create(camera: GoogleIosCamera, minZoom: Float, maxZoom: Float): GoogleIosMapRenderer
+    public fun create(
+        camera: GoogleIosCamera,
+        minZoom: Float,
+        maxZoom: Float
+    ): GoogleIosMapRenderer
 }
 
 public object GoogleIosRendererHost {

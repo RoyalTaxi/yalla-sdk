@@ -64,7 +64,7 @@ public fun HistoryCard(
                     destination = destination
                 )
 
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(24.dp))
 
                 Details(
                     time = time,
@@ -83,7 +83,7 @@ public fun HistoryCard(
                     style = System.font.body.base.bold
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.weight(1f))
 
                 Image(
                     painter = painterResource(Res.drawable.img_car_business),
@@ -91,8 +91,7 @@ public fun HistoryCard(
                     contentScale = ContentScale.FillWidth,
                     modifier =
                         Modifier
-                            .height(56.dp)
-                            .width(128.dp)
+                            .width(80.dp)
                             .graphicsLayer { rotationY = 180f }
                 )
             }

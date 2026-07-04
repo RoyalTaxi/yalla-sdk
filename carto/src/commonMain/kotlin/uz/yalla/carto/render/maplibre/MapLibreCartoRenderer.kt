@@ -4,16 +4,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.distinctUntilChanged
 import org.maplibre.compose.camera.CameraMoveReason
@@ -27,10 +23,8 @@ import org.maplibre.compose.map.OrnamentOptions
 import org.maplibre.compose.util.ClickResult
 import org.maplibre.spatialk.geojson.Position
 import uz.yalla.carto.camera.CameraView
-import uz.yalla.carto.render.RECENTER_DURATION_MS
 import uz.yalla.carto.state.MapEvent
 import uz.yalla.carto.state.MapState
-import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 public fun MapLibreCartoRenderer(
@@ -71,31 +65,9 @@ public fun MapLibreCartoRenderer(
         MapLibreLines(state)
         MapLibreMarkerLayer(state, icons)
     }
-    MapLibreCameraController(state, camera)
-    MapLibrePaddingRecenter(state, camera, ready)
+    MapLibreCameraController(state, camera, ready)
     CameraReporter(state, camera)
     DisposableEffect(state) { onDispose { state.reportReady(false) } }
-}
-
-@Composable
-private fun MapLibrePaddingRecenter(
-    state: MapState,
-    camera: CameraState,
-    ready: StateFlow<Boolean>
-) {
-    val isReady by ready.collectAsStateWithLifecycle()
-    val padding by state.padding.collectAsStateWithLifecycle()
-    var seeded by remember { mutableStateOf(false) }
-    LaunchedEffect(padding, isReady) {
-        if (isReady) {
-            if (!seeded) {
-                camera.position = camera.position.copy(padding = padding)
-                if (padding.calculateBottomPadding() > 0.dp) seeded = true
-            } else {
-                camera.animateTo(camera.position.copy(padding = padding), RECENTER_DURATION_MS.milliseconds)
-            }
-        }
-    }
 }
 
 @Composable

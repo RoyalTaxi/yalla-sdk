@@ -13,8 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
@@ -26,7 +24,6 @@ import uz.yalla.resources.icons.CashBonus
 import uz.yalla.resources.icons.YallaIcons
 import uz.yalla.resources.img_card
 import uz.yalla.resources.img_cash
-import uz.yalla.resources.payment_title
 import uz.yalla.resources.payment_type_card_dot
 
 @Composable
@@ -37,15 +34,11 @@ public fun PaymentButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val paymentLabel = stringResource(Res.string.payment_title)
     Button(
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(System.color.background.secondary),
         contentPadding = PaddingValues(0.dp),
-        modifier =
-            modifier
-                .size(60.dp)
-                .semantics { contentDescription = paymentLabel },
+        modifier = modifier.size(60.dp),
         onClick = onClick
     ) {
         Column(

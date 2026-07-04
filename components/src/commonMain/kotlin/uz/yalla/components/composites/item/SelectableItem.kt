@@ -1,7 +1,9 @@
 package uz.yalla.components.composites.item
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -16,7 +18,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -56,7 +60,8 @@ public data class SelectableItemColors(
     val selectedContainerColor: Color,
     val selectedBorderColor: Color,
     val indicatorColor: Color,
-    val selectedIndicatorColor: Color
+    val selectedIndicatorColor: Color,
+    val iconBackgroundColor: Color
 ) {
     @Composable
     public fun iconColorFor(selected: Boolean): Color = if (selected) selectedIconColor else iconColor
@@ -80,6 +85,8 @@ public data class SelectableItemDimens(
     val contentSpacing: Dp,
     val contentPadding: PaddingValues,
     val iconSize: Dp,
+    val iconContainerShape: Shape,
+    val iconPadding: Dp,
     val indicatorSize: Dp,
     val borderWidth: Dp
 )
@@ -103,7 +110,8 @@ public object SelectableItemDefaults {
         selectedContainerColor: Color = System.color.background.secondary,
         selectedBorderColor: Color = Color.Transparent,
         indicatorColor: Color = Color.Unspecified,
-        selectedIndicatorColor: Color = Color.Unspecified
+        selectedIndicatorColor: Color = Color.Unspecified,
+        iconBackgroundColor: Color = Color.Transparent
     ): SelectableItemColors =
         SelectableItemColors(
             iconColor = iconColor,
@@ -115,7 +123,8 @@ public object SelectableItemDefaults {
             selectedContainerColor = selectedContainerColor,
             selectedBorderColor = selectedBorderColor,
             indicatorColor = indicatorColor,
-            selectedIndicatorColor = selectedIndicatorColor
+            selectedIndicatorColor = selectedIndicatorColor,
+            iconBackgroundColor = iconBackgroundColor
         )
 
     @Composable
@@ -128,6 +137,8 @@ public object SelectableItemDefaults {
                 horizontal = 16.dp
             ),
         iconSize: Dp = 34.dp,
+        iconContainerShape: Shape = RectangleShape,
+        iconPadding: Dp = 0.dp,
         indicatorSize: Dp = 24.dp,
         borderWidth: Dp = 1.dp
     ): SelectableItemDimens =
@@ -136,6 +147,8 @@ public object SelectableItemDefaults {
             contentSpacing = contentSpacing,
             contentPadding = contentPadding,
             iconSize = iconSize,
+            iconContainerShape = iconContainerShape,
+            iconPadding = iconPadding,
             indicatorSize = indicatorSize,
             borderWidth = borderWidth
         )
@@ -183,12 +196,21 @@ public fun SelectableItem(
             modifier = Modifier.padding(dimens.contentPadding)
         ) {
             leadingPainter?.let { painter ->
-                Icon(
-                    painter = painter,
-                    contentDescription = null,
-                    tint = colors.iconColorFor(selected),
-                    modifier = Modifier.size(dimens.iconSize)
-                )
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier =
+                        Modifier
+                            .clip(dimens.iconContainerShape)
+                            .background(colors.iconBackgroundColor)
+                            .padding(dimens.iconPadding)
+                ) {
+                    Icon(
+                        painter = painter,
+                        contentDescription = null,
+                        tint = colors.iconColorFor(selected),
+                        modifier = Modifier.size(dimens.iconSize)
+                    )
+                }
             }
 
             Text(

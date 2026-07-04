@@ -36,7 +36,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_avatar_placeholder
-import uz.yalla.resources.img_car_economy
+import uz.yalla.resources.img_car_standart
 
 @Immutable
 public data class ActiveOrderCardColors(
@@ -131,14 +131,13 @@ public fun ActiveOrderCard(
                     .padding(dimens.contentPadding)
                     .height(IntrinsicSize.Min)
         ) {
-            val avatarPlaceholder = painterResource(Res.drawable.img_avatar_placeholder)
             AsyncImage(
                 model = photoUrl,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                placeholder = avatarPlaceholder,
-                error = avatarPlaceholder,
-                fallback = avatarPlaceholder,
+                placeholder = painterResource(Res.drawable.img_avatar_placeholder),
+                error = painterResource(Res.drawable.img_avatar_placeholder),
+                fallback = painterResource(Res.drawable.img_avatar_placeholder),
                 modifier =
                     Modifier
                         .size(dimens.photoSize)
@@ -176,13 +175,11 @@ public fun ActiveOrderCard(
                 )
 
                 Image(
-                    painter = painterResource(Res.drawable.img_car_economy),
+                    painter = painterResource(Res.drawable.img_car_standart),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop,
                     modifier =
                         Modifier
                             .align(Alignment.BottomEnd)
-                            .height(dimens.carImageHeight)
                             .width(dimens.carImageWidth)
                             .graphicsLayer { rotationY = 180f }
                 )

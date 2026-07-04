@@ -2,7 +2,6 @@ package uz.yalla.carto.render.google
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas as AndroidCanvas
 import android.graphics.Picture
 import android.os.Build
 import androidx.compose.runtime.Composable
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import uz.yalla.carto.model.MapAnchor
+import android.graphics.Canvas as AndroidCanvas
 
 internal fun anchorOf(anchor: MapAnchor): Offset =
     when (anchor) {
@@ -82,8 +82,9 @@ private fun Painter.rasterize(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             Bitmap.createBitmap(picture).copy(Bitmap.Config.ARGB_8888, false)
         } else {
-            Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-                .also { AndroidCanvas(it).drawPicture(picture) }
+            val fallback = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            AndroidCanvas(fallback).drawPicture(picture)
+            fallback
         }
     return BitmapDescriptorFactory.fromBitmap(bitmap)
 }

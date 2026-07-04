@@ -35,10 +35,8 @@ public fun GoogleCartoRenderer(
     val isDark by state.isDark.collectAsStateWithLifecycle()
     val style by state.style.collectAsStateWithLifecycle()
     val padding by state.padding.collectAsStateWithLifecycle()
-    val isReady by ready.collectAsStateWithLifecycle()
-    GoogleCameraController(camera, state.cameraIntents, ready)
+    GoogleCameraController(camera, state.cameraIntents, ready, padding)
     GoogleCameraReporter(camera, state)
-    GooglePaddingRecenter(camera, isReady, padding)
     DisposableEffect(state) { onDispose { state.reportReady(false) } }
     GoogleMap(
         modifier = modifier,

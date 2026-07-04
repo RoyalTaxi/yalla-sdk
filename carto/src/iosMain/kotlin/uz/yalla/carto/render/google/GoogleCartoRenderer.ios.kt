@@ -49,8 +49,9 @@ public fun GoogleCartoRenderer(
         }
     val ready = remember(renderer) { MutableStateFlow(false) }
     val camera = remember(renderer) { MutableStateFlow(state.initialCamera.toGoogleCamera()) }
+    val viewport = remember(renderer) { GoogleIosViewportState() }
     DisposableEffect(renderer, state) {
-        renderer.setDelegate(GoogleIosStateDelegate(state, ready, camera))
+        renderer.setDelegate(GoogleIosStateDelegate(state, ready, camera, viewport::onUserIdle))
         onDispose {
             renderer.setDelegate(null)
             renderer.dispose()
@@ -62,8 +63,7 @@ public fun GoogleCartoRenderer(
         modifier = modifier,
         properties = UIKitInteropProperties(interactionMode = UIKitInteropInteractionMode.NonCooperative)
     )
-    GoogleIosCameraController(renderer, state.cameraIntents, ready, camera)
-    GoogleIosPaddingRecenter(renderer, state, ready)
+    GoogleIosCameraController(renderer, state.cameraIntents, state.padding, ready, camera, viewport)
     GoogleIosAppearance(renderer, state)
     GoogleIosIcons(renderer, icons)
     GoogleIosContent(renderer, state)
@@ -74,30 +74,64 @@ private fun CameraView.toGoogleCamera(): GoogleIosCamera = GoogleIosCamera(targe
 private class GoogleIosStateDelegate(
     private val state: MapState,
     private val ready: MutableStateFlow<Boolean>,
-    private val camera: MutableStateFlow<GoogleIosCamera>
+    private val camera: MutableStateFlow<GoogleIosCamera>,
+    private val onUserIdle: (GoogleIosCamera) -> Unit
 ) : GoogleIosMapDelegate {
     override fun onReady() {
         state.reportReady(true)
         ready.value = true
     }
 
-    override fun onCameraMove(lat: Double, lng: Double, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean) {
-        state.report(MapEvent.CameraMoved(report(lat, lng, zoom, bearing, tilt), isByUser))
+    override fun onCameraMove(
+        lat: Double,
+        lng: Double,
+        zoom: Float,
+        bearing: Float,
+        tilt: Float,
+        isByUser: Boolean
+    ) {
+        state.report(
+            MapEvent.CameraMoved(
+                report(lat, lng, zoom, bearing, tilt),
+                isByUser
+            )
+        )
     }
 
-    override fun onCameraIdle(lat: Double, lng: Double, zoom: Float, bearing: Float, tilt: Float, isByUser: Boolean) {
-        state.report(MapEvent.CameraIdle(report(lat, lng, zoom, bearing, tilt), isByUser))
+    override fun onCameraIdle(
+        lat: Double,
+        lng: Double,
+        zoom: Float,
+        bearing: Float,
+        tilt: Float,
+        isByUser: Boolean
+    ) {
+        val view = report(lat, lng, zoom, bearing, tilt)
+        if (isByUser) onUserIdle(camera.value)
+        state.report(MapEvent.CameraIdle(view, isByUser))
     }
 
-    override fun onMapTapped(lat: Double, lng: Double) {
+    override fun onMapTapped(
+        lat: Double,
+        lng: Double
+    ) {
         state.report(MapEvent.MapTapped(GeoPoint(lat, lng)))
     }
 
-    override fun onMapLongPressed(lat: Double, lng: Double) {
+    override fun onMapLongPressed(
+        lat: Double,
+        lng: Double
+    ) {
         state.report(MapEvent.MapLongPressed(GeoPoint(lat, lng)))
     }
 
-    private fun report(lat: Double, lng: Double, zoom: Float, bearing: Float, tilt: Float): CameraView {
+    private fun report(
+        lat: Double,
+        lng: Double,
+        zoom: Float,
+        bearing: Float,
+        tilt: Float
+    ): CameraView {
         camera.value = GoogleIosCamera(lat, lng, zoom, bearing, tilt)
         val view = CameraView(GeoPoint(lat, lng), zoom, bearing, tilt)
         state.reportCamera(view)
@@ -105,17 +139,52 @@ private class GoogleIosStateDelegate(
     }
 }
 
+private class GoogleIosViewportState {
+    var focus by mutableStateOf<GoogleIosViewportFocus?>(null)
+        private set
+
+    fun onCameraIntent(intent: CameraIntent) {
+        focus = intent.toGoogleIosViewportFocus() ?: focus
+    }
+
+    fun onUserIdle(camera: GoogleIosCamera) {
+        focus = GoogleIosViewportFocus.Free(camera)
+    }
+}
+
+private sealed interface GoogleIosViewportFocus {
+    data class Intent(
+        val intent: CameraIntent
+    ) : GoogleIosViewportFocus
+
+    data class Free(
+        val camera: GoogleIosCamera
+    ) : GoogleIosViewportFocus
+}
+
+private fun CameraIntent.toGoogleIosViewportFocus(): GoogleIosViewportFocus? =
+    when {
+        isBoundsIntent || target != null -> GoogleIosViewportFocus.Intent(this)
+        else -> null
+    }
+
 @Composable
 private fun GoogleIosCameraController(
     renderer: GoogleIosMapRenderer,
     intents: SharedFlow<CameraIntent>,
+    padding: StateFlow<PaddingValues>,
     ready: StateFlow<Boolean>,
-    camera: StateFlow<GoogleIosCamera>
+    camera: StateFlow<GoogleIosCamera>,
+    viewport: GoogleIosViewportState
 ) {
     val layoutDirection = LocalLayoutDirection.current
+    val isReady by ready.collectAsStateWithLifecycle()
+    val mapPadding by padding.collectAsStateWithLifecycle()
+    val bottomPt = mapPadding.calculateBottomPadding().value.toDouble()
     LaunchedEffect(renderer, intents, ready, layoutDirection) {
         var job: Job? = null
         intents.collect { intent ->
+            viewport.onCameraIntent(intent)
             job?.cancel()
             job =
                 launch {
@@ -123,6 +192,39 @@ private fun GoogleIosCameraController(
                     applyIntent(renderer, intent, camera.value, layoutDirection)
                 }
         }
+    }
+
+    var seeded by remember(renderer) { mutableStateOf(false) }
+    var appliedBottomPt by remember(renderer) { mutableStateOf<Double?>(null) }
+    LaunchedEffect(bottomPt, isReady) {
+        if (!isReady) return@LaunchedEffect
+        val animate = seeded
+        if (bottomPt == appliedBottomPt) return@LaunchedEffect
+        appliedBottomPt = bottomPt
+        renderer.setPadding(bottomPt, if (animate) RECENTER_DURATION_MS else 0)
+        when (val focus = viewport.focus) {
+            is GoogleIosViewportFocus.Intent ->
+                applyIntent(
+                    renderer = renderer,
+                    intent =
+                        focus.intent.copy(
+                            animate = animate,
+                            durationMs = RECENTER_DURATION_MS
+                        ),
+                    current = camera.value,
+                    layoutDirection = layoutDirection
+                )
+
+            is GoogleIosViewportFocus.Free ->
+                if (animate) {
+                    renderer.animateCamera(focus.camera, RECENTER_DURATION_MS)
+                } else {
+                    renderer.setCamera(focus.camera)
+                }
+
+            null -> Unit
+        }
+        if (bottomPt > 0.0) seeded = true
     }
 }
 
@@ -134,11 +236,23 @@ private fun applyIntent(
 ) {
     val bounds = intent.bounds
     if (bounds != null && bounds.size >= 2) {
-        renderer.fitBounds(bounds, boundsPaddingPt(intent.boundsPadding, layoutDirection), CameraView.FIT_ZOOM_MAX, intent.animate)
+        renderer.fitBounds(
+            bounds,
+            boundsPaddingPt(intent.boundsPadding, layoutDirection),
+            CameraView.FIT_ZOOM_MAX,
+            intent.animate
+        )
         return
     }
     val target = intent.target ?: return
-    val next = GoogleIosCamera(target.lat, target.lng, intent.zoom ?: current.zoom, current.bearing, current.tilt)
+    val next =
+        GoogleIosCamera(
+            target.lat,
+            target.lng,
+            intent.zoom ?: current.zoom,
+            current.bearing,
+            current.tilt
+        )
     if (intent.animate) renderer.animateCamera(next, intent.durationMs) else renderer.setCamera(next)
 }
 
@@ -153,22 +267,7 @@ private fun boundsPaddingPt(
         padding.calculateBottomPadding().value
     ).toDouble()
 
-@Composable
-private fun GoogleIosPaddingRecenter(
-    renderer: GoogleIosMapRenderer,
-    state: MapState,
-    ready: StateFlow<Boolean>
-) {
-    val isReady by ready.collectAsStateWithLifecycle()
-    val padding by state.padding.collectAsStateWithLifecycle()
-    val bottomPt = padding.calculateBottomPadding().value.toDouble()
-    var seeded by remember(renderer) { mutableStateOf(false) }
-    LaunchedEffect(bottomPt, isReady) {
-        if (!isReady) return@LaunchedEffect
-        renderer.setPadding(bottomPt, if (seeded) RECENTER_DURATION_MS else 0)
-        if (bottomPt > 0.0) seeded = true
-    }
-}
+private val CameraIntent.isBoundsIntent: Boolean get() = (bounds?.size ?: 0) >= 2
 
 @Composable
 private fun GoogleIosAppearance(
@@ -216,8 +315,14 @@ private fun GoogleIosContent(
         }
     }
     LaunchedEffect(renderer, state) {
-        combine(flatten(state.markerSources), posedIds) { markers, posed -> markers.filterNot { posed.contains(it.id) } }
-            .collect { markers -> renderer.setMarkers(markers.map { it.toGoogleIosMarker() }) }
+        val markers =
+            combine(
+                flatten(state.markerSources),
+                posedIds
+            ) { items, posed ->
+                items.filterNot { posed.contains(it.id) }
+            }
+        markers.collect { items -> renderer.setMarkers(items.map { it.toGoogleIosMarker() }) }
     }
     LaunchedEffect(renderer, state) {
         flatten(state.lineSources).collect { routes -> renderer.setRoutes(routes.map { it.toGoogleIosRoute() }) }

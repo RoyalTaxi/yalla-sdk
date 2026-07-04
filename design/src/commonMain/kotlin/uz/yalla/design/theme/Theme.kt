@@ -31,12 +31,6 @@ public fun YallaTheme(
     fontScheme: FontScheme = rememberFontScheme(),
     content: @Composable () -> Unit
 ) {
-    val expectedScheme = if (isDark) DarkColorScheme else LightColorScheme
-    require(colorScheme.background.base == expectedScheme.background.base) {
-        "YallaTheme: colorScheme appearance disagrees with isDark=$isDark. Provide the matching " +
-            "scheme so colors, ripple, and themed images stay consistent."
-    }
-
     val rippleConfiguration =
         remember(isDark) {
             RippleConfiguration(

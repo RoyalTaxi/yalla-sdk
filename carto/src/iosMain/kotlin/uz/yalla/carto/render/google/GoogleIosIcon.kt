@@ -43,16 +43,50 @@ private fun anchorV(anchor: MapAnchor): Float =
     }
 
 internal fun CartoMarker.toGoogleIosMarker(): GoogleIosMarker =
-    GoogleIosMarker(id, point.lat, point.lng, iconKey, anchorU(anchor), anchorV(anchor), rotation, flat, zBand.zIndex() + zIndex)
+    GoogleIosMarker(
+        id,
+        point.lat,
+        point.lng,
+        iconKey,
+        anchorU(anchor),
+        anchorV(anchor),
+        rotation,
+        flat,
+        zBand.zIndex() + zIndex
+    )
 
 internal fun MarkerPose.toGoogleIosPose(): GoogleIosPose =
-    GoogleIosPose(id, point.lat, point.lng, bearing, iconKey, anchorU(anchor), anchorV(anchor))
+    GoogleIosPose(
+        id,
+        point.lat,
+        point.lng,
+        bearing,
+        iconKey,
+        anchorU(anchor),
+        anchorV(anchor)
+    )
 
 internal fun CartoRoute.toGoogleIosRoute(): GoogleIosRoute =
-    GoogleIosRoute(id, points, colorArgb, widthDp, pattern == LinePattern.DASHED, zBand.zIndex())
+    GoogleIosRoute(
+        id,
+        points,
+        colorArgb,
+        widthDp,
+        pattern == LinePattern.DASHED,
+        zBand.zIndex()
+    )
 
 internal fun CartoCircle.toGoogleIosCircle(): GoogleIosCircle =
-    GoogleIosCircle(id, center.lat, center.lng, radiusMeters, fillArgb, strokeArgb, strokeWidthDp, zBand.zIndex())
+    GoogleIosCircle(
+        id,
+        center.lat,
+        center.lng,
+        radiusMeters,
+        fillArgb,
+        strokeArgb,
+        strokeWidthDp,
+        zBand.zIndex()
+    )
 
 internal fun rasterizeIcons(
     icons: Map<String, Painter>,

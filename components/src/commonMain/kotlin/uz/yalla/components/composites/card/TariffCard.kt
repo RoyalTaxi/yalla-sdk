@@ -162,8 +162,8 @@ public fun TariffCard(
             Image(
                 painter = painter,
                 contentDescription = null,
-                contentScale = ContentScale.Fit,
-                modifier = Modifier.weight(1f).fillMaxWidth()
+                contentScale = ContentScale.FillHeight,
+                modifier = Modifier.weight(1f)
             )
         }
     }
@@ -211,7 +211,7 @@ private fun Preview() =
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            repeat(2) { order ->
+            repeat(1) { order ->
                 item {
                     TariffCard(
                         title = "Tariff ${order + 1}",
@@ -220,6 +220,24 @@ private fun Preview() =
                         onClick = {}
                     )
                 }
+            }
+
+            item {
+                TariffCard(
+                    title = "Стандарт",
+                    selected = false,
+                    onClick = {},
+                    dimens = TariffCardDefaults.dimens(
+                        height = 90.dp,
+                        contentPadding =
+                            PaddingValues(
+                                start = 10.dp,
+                                top = 10.dp,
+                                end = 28.dp,
+                                bottom = 10.dp
+                            )
+                    )
+                )
             }
         }
     }

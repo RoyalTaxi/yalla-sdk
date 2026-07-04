@@ -3,6 +3,8 @@ package uz.yalla.carto.render.google
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
@@ -30,7 +32,7 @@ private fun GoogleLine(route: CartoRoute) {
     Polyline(
         points = route.points.map { LatLng(it.lat, it.lng) },
         color = Color(route.colorArgb),
-        width = route.widthDp,
+        width = with(LocalDensity.current) { route.widthDp.dp.toPx() },
         pattern = dashPattern(route.pattern),
         startCap = RoundCap(),
         endCap = RoundCap(),
