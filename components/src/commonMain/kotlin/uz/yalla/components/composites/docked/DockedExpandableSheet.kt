@@ -21,6 +21,7 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.layout.SubcomposeLayout
@@ -175,6 +176,7 @@ private fun SubcomposeMeasureScope.subcomposeMeasuredWithAlpha(
                     Modifier
                         .fillMaxWidth()
                         .height(contentHeight)
+                        .clipToBounds()
                         .graphicsLayer { this.alpha = alpha }
             )
         }.first().measure(Constraints.fixed(width, contentHeightPx))
