@@ -330,6 +330,8 @@
     <string name="intercity_seat_position_back_left">Orqada, chapda</string>
     <string name="intercity_seat_position_back_center">Orqada, o\'rtada</string>
     <string name="intercity_seat_position_back_right">Orqada, o\'ngda</string>
+    <string name="intercity_seat_boarding_place_label">O\'rindiq joyi</string>
+    <string name="intercity_seat_boarding_place_select">O\'rindiq joyini tanlang</string>
     <string name="intercity_seat_price_note">O\'rindiq narxi buyurtma tasdiqlangach o\'zgarishi mumkin</string>
     <string name="intercity_seat_selected_count">{0} ta o\'rindiq tanlandi</string>
     <string name="intercity_seat_total">Umumiy summa</string>

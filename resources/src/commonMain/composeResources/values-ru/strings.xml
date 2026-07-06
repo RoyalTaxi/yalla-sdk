@@ -315,6 +315,8 @@
     <string name="intercity_seat_position_back_left">Сзади, слева</string>
     <string name="intercity_seat_position_back_center">Сзади, в центре</string>
     <string name="intercity_seat_position_back_right">Сзади, справа</string>
+    <string name="intercity_seat_boarding_place_label">Место посадки</string>
+    <string name="intercity_seat_boarding_place_select">Выберите место посадки</string>
     <string name="intercity_seat_price_note">Стоимость места может измениться после подтверждения поездки</string>
     <string name="intercity_seat_selected_count">Выбрано мест: {0}</string>
     <string name="intercity_seat_total">Итоговая сумма</string>

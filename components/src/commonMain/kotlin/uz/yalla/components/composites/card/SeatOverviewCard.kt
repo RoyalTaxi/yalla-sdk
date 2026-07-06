@@ -22,8 +22,10 @@ import uz.yalla.components.composites.item.SelectableItemDefaults
 import uz.yalla.core.profile.GenderKind
 import uz.yalla.design.theme.System
 import uz.yalla.resources.Res
+import uz.yalla.resources.error_unknown
 import uz.yalla.resources.icons.Female
 import uz.yalla.resources.icons.Male
+import uz.yalla.resources.icons.Unchecked
 import uz.yalla.resources.icons.YallaIcons
 import uz.yalla.resources.register_gender_female
 import uz.yalla.resources.register_gender_male
@@ -93,44 +95,54 @@ public fun SeatOverviewCard(
             Row(
                 horizontalArrangement = Arrangement.spacedBy(6.dp)
             ) {
-                SelectableItem(
-                    leadingPainter = rememberVectorPainter(YallaIcons.Male),
-                    text = stringResource(Res.string.register_gender_male),
-                    selected = gender == GenderKind.Male,
-                    modifier = Modifier.weight(1f),
-                    onClick = { onGender(GenderKind.Male) },
-                    dimens = SelectableItemDefaults.dimens(
-                        shape = RoundedCornerShape(16.dp),
-                        contentSpacing = 6.dp,
-                        borderWidth = 0.dp,
-                        iconSize = 20.dp,
-                        contentPadding =
-                            PaddingValues(
-                                vertical = 8.dp,
-                                horizontal = 10.dp
+                GenderKind.entries
+                    .filter { it != GenderKind.NotSelected }
+                    .forEach {
+                        SelectableItem(
+                            leadingPainter = it.painterResource(),
+                            text = it.stringResource(),
+                            selected = gender == it,
+                            modifier = Modifier.weight(1f),
+                            onClick = { onGender(it) },
+                            dimens = SelectableItemDefaults.dimens(
+                                shape = RoundedCornerShape(16.dp),
+                                contentSpacing = 6.dp,
+                                borderWidth = 0.dp,
+                                iconSize = 20.dp,
+                                contentPadding =
+                                    PaddingValues(
+                                        vertical = 8.dp,
+                                        horizontal = 10.dp
+                                    )
+                            ),
+                            colors = SelectableItemDefaults.colors(
+                                containerColor = System.color.background.base,
+                                selectedContainerColor = System.color.background.base,
+                                iconColor = System.color.icon.subtle,
+                                selectedIconColor = System.color.button.active,
+                                textColor = System.color.text.subtle,
+                                selectedTextColor = System.color.text.base
                             )
-                    )
-                )
-
-                SelectableItem(
-                    leadingPainter = rememberVectorPainter(YallaIcons.Female),
-                    text = stringResource(Res.string.register_gender_female),
-                    selected = gender == GenderKind.Female,
-                    modifier = Modifier.weight(1f),
-                    onClick = { onGender(GenderKind.Female) },
-                    dimens = SelectableItemDefaults.dimens(
-                        shape = RoundedCornerShape(16.dp),
-                        contentSpacing = 6.dp,
-                        borderWidth = 0.dp,
-                        iconSize = 20.dp,
-                        contentPadding =
-                            PaddingValues(
-                                vertical = 8.dp,
-                                horizontal = 10.dp
-                            )
-                    )
-                )
+                        )
+                    }
             }
         }
     }
 }
+
+@Composable
+private fun GenderKind.stringResource() =
+    when (this) {
+        GenderKind.Male -> stringResource(Res.string.register_gender_male)
+        GenderKind.Female -> stringResource(Res.string.register_gender_female)
+        GenderKind.NotSelected -> stringResource(Res.string.error_unknown)
+    }
+
+
+@Composable
+private fun GenderKind.painterResource() =
+    when (this) {
+        GenderKind.Male -> rememberVectorPainter(YallaIcons.Male)
+        GenderKind.Female -> rememberVectorPainter(YallaIcons.Female)
+        GenderKind.NotSelected -> rememberVectorPainter(YallaIcons.Unchecked)
+    }
