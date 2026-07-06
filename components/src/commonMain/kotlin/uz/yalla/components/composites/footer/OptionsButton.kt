@@ -70,7 +70,7 @@ private fun Badge(
         contentAlignment = Alignment.Center,
         modifier =
             modifier
-                .padding(4.dp)
+                .padding(8.dp)
                 .clip(CircleShape)
                 .background(System.color.icon.red)
                 .size(18.dp)

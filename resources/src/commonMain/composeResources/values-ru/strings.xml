@@ -149,7 +149,6 @@
     <string name="bonus_balance">У вас {0} бонусов</string>
     <string name="bonus_you_pay">Вы оплачиваете бонусами {0}</string>
     <string name="bonus_pay">Оплатить бонусами</string>
-    <string name="bonus_you_pay">Вы платите {0}</string>
     <string name="bonus_pay_for_next_trip">Ездите в Эконом и Комфорт — оплачивайте следующие поездки бонусами.</string>
     <string name="bonus_amount">Сумма бонуса</string>
     <string name="cashback">Кешбэк</string>
@@ -294,6 +293,7 @@
     <string name="intercity_setup_fastest_subtitle">Мы подберем вам такси по вашим запросам как можно быстрее</string>
     <string name="intercity_setup_schedule_placeholder">Выберите дату и время</string>
     <string name="intercity_setup_schedule_title">Время поездки:</string>
+    <string name="intercity_setup_services_placeholder">Выберите услуги</string>
     <string name="intercity_schedule_picker_title">Время и дата поездки</string>
     <string name="intercity_setup_whole_cabin">Весь салон</string>
     <string name="intercity_setup_select_seat">Выберите место</string>

@@ -149,7 +149,6 @@
     <string name="bonus_balance">You have {0} bonus points</string>
     <string name="bonus_you_pay">You pay {0} using bonus</string>
     <string name="bonus_pay">Pay with bonus</string>
-    <string name="bonus_you_pay">You pay {0}</string>
     <string name="bonus_pay_for_next_trip">Ride in Economy and Comfort — pay for your next trips with bonuses.</string>
     <string name="bonus_amount">Bonus amount</string>
     <string name="cashback">Cashback</string>
@@ -294,6 +293,7 @@
     <string name="intercity_setup_fastest_subtitle">We will find a taxi for your request as fast as possible</string>
     <string name="intercity_setup_schedule_placeholder">Select date and time</string>
     <string name="intercity_setup_schedule_title">Trip time:</string>
+    <string name="intercity_setup_services_placeholder">Select services</string>
     <string name="intercity_schedule_picker_title">Trip time and date</string>
     <string name="intercity_setup_whole_cabin">Whole cabin</string>
     <string name="intercity_setup_select_seat">Select seat</string>

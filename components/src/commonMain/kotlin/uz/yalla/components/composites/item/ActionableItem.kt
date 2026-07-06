@@ -2,7 +2,9 @@ package uz.yalla.components.composites.item
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
@@ -41,6 +44,12 @@ public data class ActionableItemColors(
     val trailingIconColor: Color
 )
 
+@Immutable
+public data class ActionableItemDimens(
+    val contentSpacing: Dp,
+    val contentPadding: PaddingValues
+)
+
 public object ActionableItemDefaults {
     @Composable
     public fun colors(
@@ -52,6 +61,15 @@ public object ActionableItemDefaults {
             iconColor = iconColor,
             textColor = textColor,
             trailingIconColor = trailingIconColor
+        )
+
+    public fun dimens(
+        contentSpacing: Dp = 12.dp,
+        contentPadding: PaddingValues = PaddingValues(20.dp)
+    ): ActionableItemDimens =
+        ActionableItemDimens(
+            contentSpacing = contentSpacing,
+            contentPadding = contentPadding
         )
 
     @Composable
@@ -76,7 +94,8 @@ public fun ActionableItem(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     trailingPainter: Painter? = null,
-    colors: ActionableItemColors = ActionableItemDefaults.colors()
+    colors: ActionableItemColors = ActionableItemDefaults.colors(),
+    dimens: ActionableItemDimens = ActionableItemDefaults.dimens()
 ) {
     Surface(
         modifier = modifier,
@@ -86,8 +105,8 @@ public fun ActionableItem(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp),
-            modifier = Modifier.padding(20.dp)
+            horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing),
+            modifier = Modifier.padding(dimens.contentPadding)
         ) {
             painter?.let {
                 Icon(
@@ -102,8 +121,9 @@ public fun ActionableItem(
                 text = text,
                 color = colors.textColor,
                 style = System.font.body.base.medium,
-                modifier = Modifier.weight(1f)
             )
+
+            Spacer(modifier = Modifier.weight(1f))
 
             trailingPainter?.let {
                 Icon(

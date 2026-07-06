@@ -149,7 +149,6 @@
     <string name="bonus_balance">Сизда {0} бонус бор</string>
     <string name="bonus_you_pay">Сиз бонусдан {0} тўлайсиз</string>
     <string name="bonus_pay">Бонус билан тўлаш</string>
-    <string name="bonus_you_pay">Сиз {0} тўлайсиз</string>
     <string name="bonus_pay_for_next_trip">Эконом ва Комфортда сафар қилинг — кейинги сафарлар учун бонуслар билан тўланг.</string>
     <string name="bonus_amount">Бонус миқдори</string>
     <string name="cashback">Кешбек</string>
@@ -294,6 +293,7 @@
     <string name="intercity_setup_fastest_subtitle">Сўровингизга мос таксини имкон қадар тез топамиз</string>
     <string name="intercity_setup_schedule_placeholder">Сана ва вақтни танланг</string>
     <string name="intercity_setup_schedule_title">Сафар вақти:</string>
+    <string name="intercity_setup_services_placeholder">Хизматларни танланг</string>
     <string name="intercity_schedule_picker_title">Сафар вақти ва санаси</string>
     <string name="intercity_setup_whole_cabin">Бутун салон</string>
     <string name="intercity_setup_select_seat">Жойни танланг</string>
