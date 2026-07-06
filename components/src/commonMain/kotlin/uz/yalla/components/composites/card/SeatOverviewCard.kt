@@ -100,6 +100,7 @@ public fun SeatOverviewCard(
                     .forEach {
                         SelectableItem(
                             leadingPainter = it.painterResource(),
+                            unselectedIndicatorPainter = rememberVectorPainter(YallaIcons.Unchecked),
                             text = it.stringResource(),
                             selected = gender == it,
                             modifier = Modifier.weight(1f),
