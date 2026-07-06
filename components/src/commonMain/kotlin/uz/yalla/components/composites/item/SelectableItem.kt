@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -59,6 +60,8 @@ public data class SelectableItemColors(
     val selectedTextColor: Color,
     val selectedContainerColor: Color,
     val selectedBorderColor: Color,
+    val descriptionColor: Color,
+    val selectedDescriptionColor: Color,
     val indicatorColor: Color,
     val selectedIndicatorColor: Color,
     val iconBackgroundColor: Color
@@ -74,6 +77,10 @@ public data class SelectableItemColors(
 
     @Composable
     public fun borderColorFor(selected: Boolean): Color = if (selected) selectedBorderColor else borderColor
+
+    @Composable
+    public fun descriptionColorFor(selected: Boolean): Color =
+        if (selected) selectedDescriptionColor else descriptionColor
 
     @Composable
     public fun indicatorColorFor(selected: Boolean): Color = if (selected) selectedIndicatorColor else indicatorColor
@@ -109,6 +116,8 @@ public object SelectableItemDefaults {
         selectedTextColor: Color = System.color.text.base,
         selectedContainerColor: Color = System.color.background.secondary,
         selectedBorderColor: Color = Color.Transparent,
+        descriptionColor: Color = System.color.text.subtle,
+        selectedDescriptionColor: Color = System.color.text.subtle,
         indicatorColor: Color = Color.Unspecified,
         selectedIndicatorColor: Color = Color.Unspecified,
         iconBackgroundColor: Color = Color.Transparent
@@ -122,6 +131,8 @@ public object SelectableItemDefaults {
             selectedTextColor = selectedTextColor,
             selectedContainerColor = selectedContainerColor,
             selectedBorderColor = selectedBorderColor,
+            descriptionColor = descriptionColor,
+            selectedDescriptionColor = selectedDescriptionColor,
             indicatorColor = indicatorColor,
             selectedIndicatorColor = selectedIndicatorColor,
             iconBackgroundColor = iconBackgroundColor
@@ -172,6 +183,7 @@ public fun SelectableItem(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    description: String? = null,
     leadingPainter: Painter? = null,
     selectedIndicatorPainter: Painter? = rememberVectorPainter(YallaIcons.Checked),
     unselectedIndicatorPainter: Painter? = null,
@@ -192,7 +204,6 @@ public fun SelectableItem(
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing),
             modifier = Modifier.padding(dimens.contentPadding)
         ) {
             leadingPainter?.let { painter ->
@@ -211,6 +222,8 @@ public fun SelectableItem(
                         modifier = Modifier.size(dimens.iconSize)
                     )
                 }
+
+                Spacer(modifier = Modifier.size(dimens.contentSpacing))
             }
 
             Text(
@@ -222,13 +235,26 @@ public fun SelectableItem(
                 modifier = Modifier.weight(1f)
             )
 
+            description?.let { text ->
+                Text(
+                    text = text,
+                    color = colors.descriptionColorFor(selected),
+                    style = styles.textStyle,
+                    maxLines = styles.textMaxLines,
+                    overflow = styles.textOverflow
+                )
+            }
+
             if (selected) {
                 selectedIndicatorPainter?.let { painter ->
                     Icon(
                         painter = painter,
                         contentDescription = null,
                         tint = colors.indicatorColorFor(selected),
-                        modifier = Modifier.size(dimens.indicatorSize)
+                        modifier =
+                            Modifier
+                                .padding(start = if (description == null) dimens.contentSpacing else 12.dp)
+                                .size(dimens.indicatorSize)
                     )
                 }
             } else {
@@ -237,7 +263,10 @@ public fun SelectableItem(
                         painter = painter,
                         contentDescription = null,
                         tint = colors.indicatorColorFor(selected),
-                        modifier = Modifier.size(dimens.indicatorSize)
+                        modifier =
+                            Modifier
+                                .padding(start = if (description == null) dimens.contentSpacing else 12.dp)
+                                .size(dimens.indicatorSize)
                     )
                 }
             }
@@ -252,6 +281,7 @@ public fun SelectableItem(
     imageVector: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    description: String? = null,
     selectedIndicatorPainter: Painter? = rememberVectorPainter(YallaIcons.Checked),
     unselectedIndicatorPainter: Painter? = null,
     colors: SelectableItemColors = SelectableItemDefaults.colors(),
@@ -263,6 +293,7 @@ public fun SelectableItem(
         selected = selected,
         onClick = onClick,
         modifier = modifier,
+        description = description,
         leadingPainter = rememberVectorPainter(imageVector),
         selectedIndicatorPainter = selectedIndicatorPainter,
         unselectedIndicatorPainter = unselectedIndicatorPainter,
@@ -278,6 +309,7 @@ public fun SelectableItem(
     leadingImageUrl: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    description: String? = null,
     selectedIndicatorPainter: Painter? = rememberVectorPainter(YallaIcons.Checked),
     unselectedIndicatorPainter: Painter? = null,
     colors: SelectableItemColors = SelectableItemDefaults.colors(),
@@ -289,6 +321,7 @@ public fun SelectableItem(
         selected = selected,
         onClick = onClick,
         modifier = modifier,
+        description = description,
         leadingPainter = rememberAsyncImagePainter(model = leadingImageUrl),
         selectedIndicatorPainter = selectedIndicatorPainter,
         unselectedIndicatorPainter = unselectedIndicatorPainter,

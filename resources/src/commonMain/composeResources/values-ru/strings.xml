@@ -148,6 +148,7 @@
     <string name="bonus_rate">1 монета = 1 сум</string>
     <string name="bonus_balance">У вас {0} баллов</string>
     <string name="bonus_pay">Оплатить бонусами</string>
+    <string name="bonus_you_pay">Вы платите {0}</string>
     <string name="bonus_pay_for_next_trip">Ездите в Эконом и Комфорт — оплачивайте следующие поездки бонусами.</string>
     <string name="bonus_amount">Сумма бонуса</string>
     <string name="cashback">Кешбэк</string>
@@ -255,7 +256,7 @@
     <string name="service_taxi">Такси</string>
     <string name="service_delivery">Доставка</string>
     <string name="service_intercity">Межгород</string>
-    <string name="service_mail">Почта</string>
+    <string name="service_postal">Почта</string>
     <string name="contact_support_title">Служба поддержки</string>
     <string name="contact_support_menu">Поддержка</string>
     <string name="contact_help">Помощь</string>
@@ -297,7 +298,8 @@
     <string name="intercity_setup_select_seat">Выберите место</string>
     <string name="intercity_setup_seat_summary">Вы выбрали {0} мест</string>
     <string name="intercity_setup_total_amount">Итоговая сумма</string>
-    <string name="intercity_setup_postal_select">Выберите почту</string>
+    <string name="intercity_setup_postal_select">Выберите тип почты</string>
+    <string name="intercity_setup_postal_title">Тип почты:</string>
     <string name="intercity_setup_preferences_select">Выберите опции</string>
     <string name="intercity_setup_preferences_title">Опции</string>
     <string name="intercity_setup_trip">Настройка поездки</string>
@@ -314,6 +316,8 @@
     <string name="intercity_seat_position_back_center">Сзади, в центре</string>
     <string name="intercity_seat_position_back_right">Сзади, справа</string>
     <string name="intercity_seat_price_note">Стоимость места может измениться после подтверждения поездки</string>
+    <string name="intercity_seat_boarding_place_label">Место посадки</string>
+    <string name="intercity_seat_boarding_place_select">Выберите место посадки</string>
     <string name="intercity_seat_selected_count">Выбрано мест: {0}</string>
     <string name="intercity_seat_total">Итоговая сумма</string>
     <string name="intercity_seat_whole_back_row">Весь задний ряд</string>

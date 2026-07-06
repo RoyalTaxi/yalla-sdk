@@ -16,14 +16,17 @@ public final class uz/yalla/resources/Drawable0_commonMainKt {
 	public static final fun getImg_car_business (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_cancelled (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_comfort (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
+	public static final fun getImg_car_comfort_plus (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_cropped (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_delivery (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_economy (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
+	public static final fun getImg_car_electric (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_finish (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_intercity (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_minivan (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_premium (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_standard (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
+	public static final fun getImg_car_technical (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_car_tow_truck (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_card (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_cash (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
@@ -37,6 +40,8 @@ public final class uz/yalla/resources/Drawable0_commonMainKt {
 	public static final fun getImg_dark_order_history (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_dark_order_search (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_dark_safety (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
+	public static final fun getImg_dark_seat_car (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
+	public static final fun getImg_dark_seat_minivan (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_dark_shield_check (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_dark_tariff_card (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_dark_trash_can (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
@@ -51,6 +56,8 @@ public final class uz/yalla/resources/Drawable0_commonMainKt {
 	public static final fun getImg_light_order_history (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_light_order_search (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_light_safety (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
+	public static final fun getImg_light_seat_car (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
+	public static final fun getImg_light_seat_minivan (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_light_shield_check (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_light_tariff_card (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_light_trash_can (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
@@ -64,8 +71,8 @@ public final class uz/yalla/resources/Drawable0_commonMainKt {
 	public static final fun getImg_service_delivery_small (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_service_intercity (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_service_intercity_small (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
-	public static final fun getImg_service_mail (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
-	public static final fun getImg_service_mail_small (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
+	public static final fun getImg_service_postal (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
+	public static final fun getImg_service_postal_small (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_service_taxi (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_service_taxi_small (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
 	public static final fun getImg_spinner (Luz/yalla/resources/Res$drawable;)Lorg/jetbrains/compose/resources/DrawableResource;
@@ -152,6 +159,7 @@ public final class uz/yalla/resources/String0_commonMainKt {
 	public static final fun getBonus_rate (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getBonus_section_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getBonus_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getBonus_you_pay (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getCashback (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getCommon_action_activate (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getCommon_action_all (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
@@ -220,10 +228,10 @@ public final class uz/yalla/resources/String0_commonMainKt {
 	public static final fun getHistory_delete (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getHistory_delete_action (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getHistory_delete_confirm (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
-	public static final fun getHistory_delete_error (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 }
 
 public final class uz/yalla/resources/String1_commonMainKt {
+	public static final fun getHistory_delete_error (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getHistory_delete_success (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getHistory_delete_warning (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getHistory_detail_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
@@ -240,6 +248,39 @@ public final class uz/yalla/resources/String1_commonMainKt {
 	public static final fun getInfo_privacy_policy (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getInfo_rate_app (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getInfo_social_media (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_schedule_picker_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_schedule_section_now (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_schedule_section_today (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_schedule_section_tomorrow (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_boarding_place_label (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_boarding_place_select (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_confirm_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_passenger (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_position_back_center (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_position_back_left (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_position_back_right (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_position_front_right (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_price_note (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_selected_count (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_total (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_seat_whole_back_row (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_fastest_subtitle (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_fastest_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_postal_select (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_postal_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_preferences_select (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_preferences_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_schedule_placeholder (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_schedule_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_seat_summary (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_select_seat (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_total_amount (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_transport_discard_confirm (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_transport_discard_message (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_transport_discard_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_trip (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getIntercity_setup_whole_cabin (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getIntro_language_subtitle (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getIntro_language_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getIntro_location_description (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
@@ -290,6 +331,9 @@ public final class uz/yalla/resources/String1_commonMainKt {
 	public static final fun getOrder_cancel_trip_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getOrder_comment_placeholder (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getOrder_comment_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+}
+
+public final class uz/yalla/resources/String2_commonMainKt {
 	public static final fun getOrder_contact_driver (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getOrder_create_error (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getOrder_create_success (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
@@ -324,9 +368,6 @@ public final class uz/yalla/resources/String1_commonMainKt {
 	public static final fun getOrder_status_by_instruction (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getOrder_status_coming (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getOrder_status_searching (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
-}
-
-public final class uz/yalla/resources/String2_commonMainKt {
 	public static final fun getOrder_stops_add (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getOrder_stops_count (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getOrder_stops_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
@@ -393,6 +434,9 @@ public final class uz/yalla/resources/String2_commonMainKt {
 	public static final fun getProfile_logout_confirm (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getProfile_logout_description (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getProfile_logout_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+}
+
+public final class uz/yalla/resources/String3_commonMainKt {
 	public static final fun getProfile_photo_change (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getProfile_photo_delete (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getProfile_photo_gallery (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
@@ -417,7 +461,7 @@ public final class uz/yalla/resources/String2_commonMainKt {
 	public static final fun getSdk_android_module_name (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getService_delivery (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getService_intercity (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
-	public static final fun getService_mail (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
+	public static final fun getService_postal (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getService_taxi (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getSettings_language (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getSettings_map (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
@@ -427,9 +471,6 @@ public final class uz/yalla/resources/String2_commonMainKt {
 	public static final fun getSettings_theme_dark (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getSettings_theme_light (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getSettings_theme_system (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
-}
-
-public final class uz/yalla/resources/String3_commonMainKt {
 	public static final fun getSettings_title (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getSocial_instagram (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
 	public static final fun getSocial_telegram (Luz/yalla/resources/Res$string;)Lorg/jetbrains/compose/resources/StringResource;
@@ -511,6 +552,10 @@ public final class uz/yalla/resources/icons/ExpandKt {
 	public static final fun getExpand (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
 }
 
+public final class uz/yalla/resources/icons/FemaleKt {
+	public static final fun getFemale (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
+}
+
 public final class uz/yalla/resources/icons/FlagKt {
 	public static final fun getFlag (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
 }
@@ -563,6 +608,14 @@ public final class uz/yalla/resources/icons/InfoInCircleKt {
 	public static final fun getInfoInCircle (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
 }
 
+public final class uz/yalla/resources/icons/IntercityPostalKt {
+	public static final fun getIntercityPostal (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
+}
+
+public final class uz/yalla/resources/icons/IntercityTaxiKt {
+	public static final fun getIntercityTaxi (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
+}
+
 public final class uz/yalla/resources/icons/LanguageKt {
 	public static final fun getLanguage (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
 }
@@ -585,6 +638,10 @@ public final class uz/yalla/resources/icons/LogoTransparentKt {
 
 public final class uz/yalla/resources/icons/LogoutKt {
 	public static final fun getLogout (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
+}
+
+public final class uz/yalla/resources/icons/MaleKt {
+	public static final fun getMale (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
 }
 
 public final class uz/yalla/resources/icons/MenuInSquareKt {
@@ -617,6 +674,10 @@ public final class uz/yalla/resources/icons/OptionsKt {
 
 public final class uz/yalla/resources/icons/OriginKt {
 	public static final fun getOrigin (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
+}
+
+public final class uz/yalla/resources/icons/PeopleKt {
+	public static final fun getPeople (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
 }
 
 public final class uz/yalla/resources/icons/PhoneKt {
@@ -677,6 +738,10 @@ public final class uz/yalla/resources/icons/ThemeLightKt {
 
 public final class uz/yalla/resources/icons/ThemeSystemKt {
 	public static final fun getThemeSystem (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
+}
+
+public final class uz/yalla/resources/icons/ThunderKt {
+	public static final fun getThunder (Luz/yalla/resources/icons/YallaIcons;)Landroidx/compose/ui/graphics/vector/ImageVector;
 }
 
 public final class uz/yalla/resources/icons/TicketDiscountKt {

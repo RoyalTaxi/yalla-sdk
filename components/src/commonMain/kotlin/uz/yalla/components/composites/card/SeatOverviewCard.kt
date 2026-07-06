@@ -40,7 +40,8 @@ public fun SeatOverviewCard(
 ) {
     Card(
         shape = RoundedCornerShape(22.dp),
-        colors = CardDefaults.cardColors(System.color.background.secondary)
+        colors = CardDefaults.cardColors(System.color.background.secondary),
+        modifier = modifier
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp),

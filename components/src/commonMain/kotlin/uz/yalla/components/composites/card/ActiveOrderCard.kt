@@ -36,7 +36,7 @@ import uz.yalla.design.theme.System
 import uz.yalla.design.theme.YallaTheme
 import uz.yalla.resources.Res
 import uz.yalla.resources.img_avatar_placeholder
-import uz.yalla.resources.img_car_standart
+import uz.yalla.resources.img_car_standard
 
 @Immutable
 public data class ActiveOrderCardColors(
@@ -175,7 +175,7 @@ public fun ActiveOrderCard(
                 )
 
                 Image(
-                    painter = painterResource(Res.drawable.img_car_standart),
+                    painter = painterResource(Res.drawable.img_car_standard),
                     contentDescription = null,
                     modifier =
                         Modifier

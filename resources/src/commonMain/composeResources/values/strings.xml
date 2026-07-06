@@ -163,6 +163,7 @@
     <string name="bonus_rate">1 tanga = 1 so\'m</string>
     <string name="bonus_balance">Sizda {0} ball bor</string>
     <string name="bonus_pay">Bonus bilan to\'lash</string>
+    <string name="bonus_you_pay">Siz {0} to\'laysiz</string>
     <string name="bonus_pay_for_next_trip">Ekonom va Komfortda sayohat qiling — keyingi sayohatlar uchun bonuslar bilan to\'lang.</string>
     <string name="bonus_amount">Bonus miqdori</string>
     <string name="cashback">Keshbek</string>
@@ -270,7 +271,7 @@
     <string name="service_taxi">Taksi</string>
     <string name="service_delivery">Yetkazib berish</string>
     <string name="service_intercity">Shaharlararo</string>
-    <string name="service_mail">Pochta</string>
+    <string name="service_postal">Pochta</string>
     <string name="contact_support_title">Qo\'llab-quvvatlash xizmati</string>
     <string name="contact_support_menu">Yordam xizmati</string>
     <string name="contact_help">Yordam</string>
@@ -312,7 +313,8 @@
     <string name="intercity_setup_select_seat">Joyni tanlang</string>
     <string name="intercity_setup_seat_summary">Siz {0} ta joy tanladingiz</string>
     <string name="intercity_setup_total_amount">Jami summa</string>
-    <string name="intercity_setup_postal_select">Pochtani tanlang</string>
+    <string name="intercity_setup_postal_select">Pochta turini tanlang</string>
+    <string name="intercity_setup_postal_title">Pochta turi:</string>
     <string name="intercity_setup_preferences_select">Qo\'shimcha imkoniyatlarni tanlang</string>
     <string name="intercity_setup_preferences_title">Qo\'shimcha imkoniyatlar</string>
     <string name="intercity_setup_trip">Safarni sozlash</string>
@@ -329,6 +331,8 @@
     <string name="intercity_seat_position_back_center">Orqada, o\'rtada</string>
     <string name="intercity_seat_position_back_right">Orqada, o\'ngda</string>
     <string name="intercity_seat_price_note">O\'rindiq narxi buyurtma tasdiqlangach o\'zgarishi mumkin</string>
+    <string name="intercity_seat_boarding_place_label">O\'rindiq joyi</string>
+    <string name="intercity_seat_boarding_place_select">O\'rindiq joyini tanlang</string>
     <string name="intercity_seat_selected_count">{0} ta o\'rindiq tanlandi</string>
     <string name="intercity_seat_total">Umumiy summa</string>
     <string name="intercity_seat_whole_back_row">Butun orqa qator</string>

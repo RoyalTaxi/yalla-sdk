@@ -148,6 +148,7 @@
     <string name="bonus_rate">1 coin = 1 sum</string>
     <string name="bonus_balance">You have {0} points</string>
     <string name="bonus_pay">Pay with bonus</string>
+    <string name="bonus_you_pay">You pay {0}</string>
     <string name="bonus_pay_for_next_trip">Ride in Economy and Comfort — pay for your next trips with bonuses.</string>
     <string name="bonus_amount">Bonus amount</string>
     <string name="cashback">Cashback</string>
@@ -255,7 +256,7 @@
     <string name="service_taxi">Taxi</string>
     <string name="service_delivery">Delivery</string>
     <string name="service_intercity">Intercity</string>
-    <string name="service_mail">Mail</string>
+    <string name="service_postal">Postal</string>
     <string name="contact_support_title">Support Service</string>
     <string name="contact_support_menu">Support</string>
     <string name="contact_help">Help</string>
@@ -297,7 +298,8 @@
     <string name="intercity_setup_select_seat">Select seat</string>
     <string name="intercity_setup_seat_summary">You selected {0} seats</string>
     <string name="intercity_setup_total_amount">Total amount</string>
-    <string name="intercity_setup_postal_select">Select posts</string>
+    <string name="intercity_setup_postal_select">Select postal type</string>
+    <string name="intercity_setup_postal_title">Postal type:</string>
     <string name="intercity_setup_preferences_select">Select preferences</string>
     <string name="intercity_setup_preferences_title">Preferences</string>
     <string name="intercity_setup_trip">Trip setup</string>
@@ -314,6 +316,8 @@
     <string name="intercity_seat_position_back_center">Back, center</string>
     <string name="intercity_seat_position_back_right">Back, right</string>
     <string name="intercity_seat_price_note">Seat prices may change after the trip is confirmed</string>
+    <string name="intercity_seat_boarding_place_label">Boarding seat</string>
+    <string name="intercity_seat_boarding_place_select">Select boarding seat</string>
     <string name="intercity_seat_selected_count">{0} seats selected</string>
     <string name="intercity_seat_total">Total amount</string>
     <string name="intercity_seat_whole_back_row">Whole back row</string>
