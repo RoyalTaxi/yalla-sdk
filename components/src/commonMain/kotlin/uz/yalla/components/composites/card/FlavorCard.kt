@@ -73,9 +73,10 @@ private fun Preview() =
     YallaTheme {
         Column(
             verticalArrangement = Arrangement.spacedBy(16.dp),
-            modifier = Modifier
-                .background(System.color.background.secondary)
-                .padding(16.dp)
+            modifier =
+                Modifier
+                    .background(System.color.background.secondary)
+                    .padding(16.dp)
         ) {
             TaxiFlavorItem(
                 icon = painterResource(Res.drawable.img_service_taxi_small),

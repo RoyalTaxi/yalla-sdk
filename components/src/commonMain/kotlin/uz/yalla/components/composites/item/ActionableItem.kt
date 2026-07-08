@@ -120,7 +120,7 @@ public fun ActionableItem(
             Text(
                 text = text,
                 color = colors.textColor,
-                style = System.font.body.base.medium,
+                style = System.font.body.base.medium
             )
 
             Spacer(modifier = Modifier.weight(1f))

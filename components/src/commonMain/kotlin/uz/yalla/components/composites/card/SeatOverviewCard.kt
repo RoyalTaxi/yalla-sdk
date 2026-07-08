@@ -30,7 +30,6 @@ import uz.yalla.resources.icons.YallaIcons
 import uz.yalla.resources.register_gender_female
 import uz.yalla.resources.register_gender_male
 
-
 @Composable
 public fun SeatOverviewCard(
     title: String,
@@ -73,7 +72,7 @@ public fun SeatOverviewCard(
                         color = System.color.text.subtle,
                         style = System.font.body.small.medium,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                        overflow = TextOverflow.Ellipsis
                     )
 
                     Text(
@@ -81,7 +80,7 @@ public fun SeatOverviewCard(
                         color = System.color.background.brand,
                         style = System.font.body.base.bold,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
 
@@ -105,25 +104,27 @@ public fun SeatOverviewCard(
                             selected = gender == it,
                             modifier = Modifier.weight(1f),
                             onClick = { onGender(it) },
-                            dimens = SelectableItemDefaults.dimens(
-                                shape = RoundedCornerShape(16.dp),
-                                contentSpacing = 6.dp,
-                                borderWidth = 0.dp,
-                                iconSize = 20.dp,
-                                contentPadding =
-                                    PaddingValues(
-                                        vertical = 8.dp,
-                                        horizontal = 10.dp
-                                    )
-                            ),
-                            colors = SelectableItemDefaults.colors(
-                                containerColor = System.color.background.base,
-                                selectedContainerColor = System.color.background.base,
-                                iconColor = System.color.icon.subtle,
-                                selectedIconColor = System.color.button.active,
-                                textColor = System.color.text.subtle,
-                                selectedTextColor = System.color.text.base
-                            )
+                            dimens =
+                                SelectableItemDefaults.dimens(
+                                    shape = RoundedCornerShape(16.dp),
+                                    contentSpacing = 6.dp,
+                                    borderWidth = 0.dp,
+                                    iconSize = 20.dp,
+                                    contentPadding =
+                                        PaddingValues(
+                                            vertical = 8.dp,
+                                            horizontal = 10.dp
+                                        )
+                                ),
+                            colors =
+                                SelectableItemDefaults.colors(
+                                    containerColor = System.color.background.base,
+                                    selectedContainerColor = System.color.background.base,
+                                    iconColor = System.color.icon.subtle,
+                                    selectedIconColor = System.color.button.active,
+                                    textColor = System.color.text.subtle,
+                                    selectedTextColor = System.color.text.base
+                                )
                         )
                     }
             }
@@ -138,7 +139,6 @@ private fun GenderKind.stringResource() =
         GenderKind.Female -> stringResource(Res.string.register_gender_female)
         GenderKind.NotSelected -> stringResource(Res.string.error_unknown)
     }
-
 
 @Composable
 private fun GenderKind.painterResource() =

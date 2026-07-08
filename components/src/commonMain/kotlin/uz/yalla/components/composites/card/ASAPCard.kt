@@ -38,7 +38,7 @@ public fun ASAPCard(
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(System.color.background.secondary),
         modifier = modifier,
-        onClick = onClick,
+        onClick = onClick
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -66,7 +66,7 @@ public fun ASAPCard(
                 Text(
                     text = stringResource(Res.string.intercity_setup_fastest_subtitle),
                     color = System.color.text.subtle,
-                    style = System.font.body.small.medium,
+                    style = System.font.body.small.medium
                 )
             }
 
@@ -80,22 +80,22 @@ public fun ASAPCard(
     }
 }
 
-
 @Preview
 @Composable
-private fun Preview() = YallaTheme {
-    Column(
-        modifier = Modifier.padding(20.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        ASAPCard(
-            enabled = true,
-            onClick = {}
-        )
+private fun Preview() =
+    YallaTheme {
+        Column(
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            ASAPCard(
+                enabled = true,
+                onClick = {}
+            )
 
-        ASAPCard(
-            enabled = false,
-            onClick = {}
-        )
+            ASAPCard(
+                enabled = false,
+                onClick = {}
+            )
+        }
     }
-}
