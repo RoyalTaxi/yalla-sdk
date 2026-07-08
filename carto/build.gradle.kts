@@ -17,7 +17,11 @@ kotlin {
             api("io.github.dellisd.spatialk:geojson:0.3.0")
 
             implementation(libs.androidx.lifecycle.runtime.compose)
-            implementation(libs.maplibre.compose.get().toString()) {
+            implementation(
+                libs.maplibre.compose
+                    .get()
+                    .toString()
+            ) {
                 exclude(group = "org.maplibre.gl", module = "android-sdk")
             }
         }

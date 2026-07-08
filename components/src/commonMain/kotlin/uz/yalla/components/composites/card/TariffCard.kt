@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
@@ -100,7 +99,7 @@ public object TariffCardDefaults {
     @Composable
     public fun styles(
         titleStyle: TextStyle = System.font.body.base.bold,
-        descriptionStyle: TextStyle = System.font.body.base.bold
+        descriptionStyle: TextStyle = System.font.body.small.medium
     ): TariffCardStyles =
         TariffCardStyles(
             titleStyle = titleStyle,
@@ -227,16 +226,17 @@ private fun Preview() =
                     title = "Стандарт",
                     selected = false,
                     onClick = {},
-                    dimens = TariffCardDefaults.dimens(
-                        height = 90.dp,
-                        contentPadding =
-                            PaddingValues(
-                                start = 10.dp,
-                                top = 10.dp,
-                                end = 28.dp,
-                                bottom = 10.dp
-                            )
-                    )
+                    dimens =
+                        TariffCardDefaults.dimens(
+                            height = 90.dp,
+                            contentPadding =
+                                PaddingValues(
+                                    start = 10.dp,
+                                    top = 10.dp,
+                                    end = 28.dp,
+                                    bottom = 10.dp
+                                )
+                        )
                 )
             }
         }

@@ -18,7 +18,7 @@ import uz.yalla.carto.model.ZBand
 import uz.yalla.core.geo.GeoPoint
 
 public data class UserLocationConfig(
-    val dotIconKey: String = "yalla-icon-user-location",
+    val dotIconKey: String = USER_LOCATION_DOT_ICON_KEY,
     val ringFillArgb: Int = 0x33562DF8,
     val ringStrokeArgb: Int = 0x66562DF8,
     val minRingAccuracyMeters: Double = 20.0,
