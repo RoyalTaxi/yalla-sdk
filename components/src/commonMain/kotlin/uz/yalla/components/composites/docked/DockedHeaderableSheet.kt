@@ -68,11 +68,15 @@ public fun DockedHeaderableSheet(
             shape = RoundedCornerShape(topStart = 28.dp, topEnd = 28.dp),
             colors = CardDefaults.cardColors(containerColor = System.color.background.base),
             modifier =
-                Modifier.anchoredDraggable(
-                    state = state.anchoredDraggableState,
-                    orientation = Orientation.Vertical,
-                    flingBehavior = flingBehavior
-                )
+                if (state.draggableEnabled) {
+                    Modifier.anchoredDraggable(
+                        state = state.anchoredDraggableState,
+                        orientation = Orientation.Vertical,
+                        flingBehavior = flingBehavior
+                    )
+                } else {
+                    Modifier
+                }
         ) {
             DockedHeaderableSheetLayout(
                 state = state,

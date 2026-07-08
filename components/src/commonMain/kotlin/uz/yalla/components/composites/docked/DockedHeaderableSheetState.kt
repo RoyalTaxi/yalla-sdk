@@ -37,8 +37,9 @@ public class DockedHeaderableSheetState internal constructor(
 
     private val maxOffsetPx: Float get() = bodyHeightPx.coerceAtLeast(0f)
     private val hasOffset: Boolean get() = maxOffsetPx > 0f
+    internal val draggableEnabled: Boolean get() = hasOffset
 
-    internal val anchoredDraggableState = AnchoredDraggableState<DockedHeaderableSheetValue>(initialValue)
+    internal val anchoredDraggableState = AnchoredDraggableState(initialValue)
 
     public val headerHeight: Dp get() = with(density) { headerHeightPx.toDp() }
     public val bodyHeight: Dp get() = with(density) { bodyHeightPx.toDp() }

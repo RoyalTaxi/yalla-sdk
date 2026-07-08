@@ -1,7 +1,10 @@
 package uz.yalla.components.composites.docked
 
+import androidx.compose.animation.core.spring
+import androidx.compose.ui.unit.Density
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class DockedHeaderableSheetStateTest {
@@ -37,4 +40,29 @@ class DockedHeaderableSheetStateTest {
         assertEquals(0f, bodyAlphaFor(-1f), tolerance)
         assertEquals(1f, bodyAlphaFor(2f), tolerance)
     }
+
+    @Test
+    fun collapsedOnlySheetDoesNotEnableDragging() {
+        val state = dockedState()
+
+        state.updateHeights(headerHeightPx = 100, bodyHeightPx = 0, footerHeightPx = 50)
+
+        assertFalse(state.draggableEnabled)
+    }
+
+    @Test
+    fun sheetWithBodyEnablesDragging() {
+        val state = dockedState()
+
+        state.updateHeights(headerHeightPx = 100, bodyHeightPx = 200, footerHeightPx = 50)
+
+        assertTrue(state.draggableEnabled)
+    }
 }
+
+private fun dockedState() =
+    DockedHeaderableSheetState(
+        initialValue = DockedHeaderableSheetValue.Collapsed,
+        snapAnimationSpec = spring(),
+        density = Density(1f)
+    )
