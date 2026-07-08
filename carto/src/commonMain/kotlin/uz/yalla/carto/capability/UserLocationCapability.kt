@@ -41,16 +41,21 @@ public class UserLocationHandle internal constructor(
     override val circles: StateFlow<List<CartoCircle>> = mutableCircles.asStateFlow()
 
     public fun setPoint(next: GeoPoint?) {
-        point = next?.takeIf { it != GeoPoint.Zero }
+        val nextPoint = next?.takeIf { it != GeoPoint.Zero }
+        if (point == nextPoint) return
+        point = nextPoint
         publish()
     }
 
     public fun setAccuracy(next: Double?) {
-        accuracyMeters = next?.takeIf { it > 0 }
+        val nextAccuracy = next?.takeIf { it > 0 }
+        if (accuracyMeters == nextAccuracy) return
+        accuracyMeters = nextAccuracy
         publish()
     }
 
     public fun setEnabled(next: Boolean) {
+        if (enabled == next) return
         enabled = next
         publish()
     }

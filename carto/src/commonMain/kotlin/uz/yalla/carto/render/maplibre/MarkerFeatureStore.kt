@@ -21,8 +21,11 @@ import uz.yalla.carto.model.CartoMarker
 import uz.yalla.carto.state.MapState
 import uz.yalla.carto.state.MarkerPose
 
-internal class MarkerFeatureStore {
+internal class MarkerFeatureStore(
+    private val iconKey: String
+) {
     private val features = linkedMapOf<String, Feature<Point, JsonObject>>()
+    private val markersById = linkedMapOf<String, CartoMarker>()
     private val posed = hashSetOf<String>()
 
     @Composable
@@ -45,13 +48,22 @@ internal class MarkerFeatureStore {
         source: GeoJsonSource
     ) {
         mergedMarkers(state).collect { markers ->
-            val incoming = markers.associateBy { it.id }
+            val incoming = markers.filter { it.iconKey == iconKey }.associateBy { it.id }
+            var changed = false
             (features.keys - incoming.keys).toList().forEach {
                 features.remove(it)
+                markersById.remove(it)
                 posed.remove(it)
+                changed = true
             }
-            incoming.forEach { (id, marker) -> if (id !in posed) features[id] = marker.toFeature() }
-            push(source)
+            incoming.forEach { (id, marker) ->
+                val previous = markersById.put(id, marker)
+                if (id !in posed && (previous != marker || id !in features)) {
+                    features[id] = marker.toFeature()
+                    changed = true
+                }
+            }
+            if (changed) push(source)
         }
     }
 

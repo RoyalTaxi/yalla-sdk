@@ -43,6 +43,14 @@ internal class PoseRegistry(
 
     fun has(id: String): Boolean = map.containsKey(id)
 
+    fun retain(ids: Set<String>) {
+        map.keys
+            .toList()
+            .forEach { id ->
+                if (id !in ids) map.remove(id)
+            }
+    }
+
     fun apply(pose: MarkerPose) {
         val existing = map[pose.id]
         if (existing != null) existing.update(pose) else map[pose.id] = newState(pose)

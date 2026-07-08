@@ -31,20 +31,34 @@ internal fun anchorOf(anchor: MapAnchor): Offset =
     }
 
 internal class IconResolver(
-    private val icons: Map<String, Painter>,
     private val density: Density,
     private val layoutDirection: LayoutDirection,
     private val fallback: (String) -> BitmapDescriptor?
 ) {
-    private val cache = HashMap<String, BitmapDescriptor>()
+    var icons: Map<String, Painter> = emptyMap()
+
+    private val cache = HashMap<String, IconCacheEntry>()
 
     fun resolve(key: String?): BitmapDescriptor? {
         if (key.isNullOrEmpty()) return null
-        cache[key]?.let { return it }
-        val descriptor = icons[key]?.rasterize(density, layoutDirection) ?: fallback(key)
-        return descriptor?.also { cache[key] = it }
+        val painter = icons[key]
+        cache[key]
+            ?.takeIf { it.painter === painter }
+            ?.let { return it.descriptor }
+        val descriptor = painter?.rasterize(density, layoutDirection) ?: fallback(key)
+        if (descriptor == null) {
+            cache.remove(key)
+        } else {
+            cache[key] = IconCacheEntry(painter, descriptor)
+        }
+        return descriptor
     }
 }
+
+private data class IconCacheEntry(
+    val painter: Painter?,
+    val descriptor: BitmapDescriptor
+)
 
 @Composable
 internal fun rememberIconResolver(icons: Map<String, Painter>): (String?) -> BitmapDescriptor? {
@@ -52,9 +66,10 @@ internal fun rememberIconResolver(icons: Map<String, Painter>): (String?) -> Bit
     val density = LocalDensity.current
     val layoutDirection = LocalLayoutDirection.current
     val resolver =
-        remember(context, icons, density, layoutDirection) {
-            IconResolver(icons, density, layoutDirection) { drawableDescriptor(context, it) }
+        remember(context, density, layoutDirection) {
+            IconResolver(density, layoutDirection) { drawableDescriptor(context, it) }
         }
+    resolver.icons = icons
     return resolver::resolve
 }
 

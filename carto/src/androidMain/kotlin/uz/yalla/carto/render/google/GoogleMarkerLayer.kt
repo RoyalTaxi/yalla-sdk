@@ -1,7 +1,9 @@
 package uz.yalla.carto.render.google
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -9,7 +11,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMapComposable
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberUpdatedMarkerState
-import kotlinx.coroutines.flow.StateFlow
 import uz.yalla.carto.model.CartoMarker
 import uz.yalla.carto.state.MapState
 
@@ -25,18 +26,26 @@ internal fun GoogleMarkerLayer(
     icons: Map<String, Painter>
 ) {
     val scope = MarkerScope(rememberPoseRegistry(state.poses), rememberIconResolver(icons))
-    state.markerSources.forEach { source -> StaticMarkers(source, scope) }
-    scope.poses.entries.forEach { (_, pose) -> PosedMarker(pose, scope) }
+    val markerLists = state.markerSources.map { source -> source.collectAsStateWithLifecycle().value }
+    val activeMarkerIds = markerLists.flatMap { markers -> markers.map { it.id } }.toSet()
+    LaunchedEffect(activeMarkerIds) { scope.poses.retain(activeMarkerIds) }
+    markerLists.forEach { markers -> StaticMarkers(markers, scope) }
+    scope.poses.entries.forEach { (id, pose) ->
+        if (id in activeMarkerIds) key(id) { PosedMarker(pose, scope) }
+    }
 }
 
 @Composable
 @GoogleMapComposable
 private fun StaticMarkers(
-    source: StateFlow<List<CartoMarker>>,
+    markers: List<CartoMarker>,
     scope: MarkerScope
 ) {
-    val markers by source.collectAsStateWithLifecycle()
-    markers.forEach { marker -> if (!scope.poses.has(marker.id)) StaticMarker(marker, scope) }
+    markers.forEach { marker ->
+        key(marker.id) {
+            if (!scope.poses.has(marker.id)) StaticMarker(marker, scope)
+        }
+    }
 }
 
 @Composable
