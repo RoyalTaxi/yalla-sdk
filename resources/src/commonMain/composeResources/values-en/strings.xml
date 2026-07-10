@@ -173,6 +173,7 @@
     <string name="order_services_unavailable">Selected services are not available for this tariff</string>
     <string name="order_status_searching">Searching</string>
     <string name="order_status_coming">On the way to you</string>
+    <string name="order_status_at_address">At the address</string>
     <string name="order_status_by_instruction">By instruction</string>
     <string name="order_list_title">Your Orders</string>
     <string name="order_search_cars_nearby">{0} cars near you</string>

@@ -173,6 +173,7 @@
     <string name="order_services_unavailable">Танланган хизматлар ушбу тариф учун мавжуд эмас</string>
     <string name="order_status_searching">Қидирилмоқда</string>
     <string name="order_status_coming">Сиз томонга келмоқда</string>
+    <string name="order_status_at_address">Манзилда</string>
     <string name="order_status_by_instruction">Йўналиш бўйлаб</string>
     <string name="order_list_title">Сизнинг буюртмаларингиз</string>
     <string name="order_search_cars_nearby">Сизга яқин {0} та машина бор</string>

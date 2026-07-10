@@ -173,6 +173,7 @@
     <string name="order_services_unavailable">Выбранные услуги недоступны для данного тарифа</string>
     <string name="order_status_searching">Идёт поиск</string>
     <string name="order_status_coming">Едет к вам</string>
+    <string name="order_status_at_address">На адресе</string>
     <string name="order_status_by_instruction">По указанию</string>
     <string name="order_list_title">Ваши заказы</string>
     <string name="order_search_cars_nearby">Рядом с вами {0} машин</string>

@@ -188,6 +188,7 @@
     <string name="order_services_unavailable">Tanlangan xizmatlar ushbu tarif uchun mavjud emas</string>
     <string name="order_status_searching">Qidirilmoqda</string>
     <string name="order_status_coming">Siz tomonga kelmoqda</string>
+    <string name="order_status_at_address">Manzilda</string>
     <string name="order_status_by_instruction">Yo'nalish bo'ylab</string>
     <string name="order_list_title">Sizning buyurtmalaringiz</string>
     <string name="order_search_cars_nearby">Sizga yaqin {0} ta mashina bor</string>
