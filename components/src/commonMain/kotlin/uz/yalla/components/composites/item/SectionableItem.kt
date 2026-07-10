@@ -147,23 +147,20 @@ public fun SectionableItem(
     iconPainter: Painter? = null,
     openIconPainter: Painter? = rememberVectorPainter(YallaIcons.ArrowRight),
     trailingView: @Composable (() -> Unit)? = null,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     colors: SectionableItemColors = SectionableItemDefaults.colors(),
     dimens: SectionableItemDimens = SectionableItemDefaults.dimens(),
     styles: SectionableItemStyles = SectionableItemDefaults.styles()
 ) {
-    Surface(
-        modifier = modifier,
-        color = colors.containerColor,
-        shape = dimens.shape,
-        onClick = onClick,
-        border =
-            BorderStroke(
-                color = colors.borderColor,
-                width = dimens.borderWidth
-            )
-    ) {
+    val border =
+        BorderStroke(
+            color = colors.borderColor,
+            width = dimens.borderWidth
+        )
+
+    @Composable
+    fun Content() {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(dimens.contentSpacing),
@@ -239,6 +236,25 @@ public fun SectionableItem(
                 )
             }
         }
+    }
+
+    if (onClick == null) {
+        Surface(
+            modifier = modifier,
+            color = colors.containerColor,
+            shape = dimens.shape,
+            border = border,
+            content = { Content() }
+        )
+    } else {
+        Surface(
+            modifier = modifier,
+            color = colors.containerColor,
+            shape = dimens.shape,
+            onClick = onClick,
+            border = border,
+            content = { Content() }
+        )
     }
 }
 

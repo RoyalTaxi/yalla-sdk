@@ -112,18 +112,14 @@ public fun ActiveOrderCard(
     driverName: String,
     vehicleLabel: String,
     stateNumber: String,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier,
     colors: ActiveOrderCardColors = ActiveOrderCardDefaults.colors(),
     dimens: ActiveOrderCardDimens = ActiveOrderCardDefaults.dimens(),
     styles: ActiveOrderCardStyles = ActiveOrderCardDefaults.styles()
 ) {
-    Card(
-        onClick = onClick,
-        shape = dimens.shape,
-        colors = CardDefaults.cardColors(colors.containerColor),
-        modifier = modifier
-    ) {
+    @Composable
+    fun Content() {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier =
@@ -185,6 +181,23 @@ public fun ActiveOrderCard(
                 )
             }
         }
+    }
+
+    if (onClick == null) {
+        Card(
+            shape = dimens.shape,
+            colors = CardDefaults.cardColors(colors.containerColor),
+            modifier = modifier,
+            content = { Content() }
+        )
+    } else {
+        Card(
+            onClick = onClick,
+            shape = dimens.shape,
+            colors = CardDefaults.cardColors(colors.containerColor),
+            modifier = modifier,
+            content = { Content() }
+        )
     }
 }
 
