@@ -15,6 +15,7 @@ public actual fun ContentSheet(
     fullHeight: Boolean,
     sheetSwipeEnabled: Boolean,
     onFullyExpanded: (() -> Unit)?,
+    onDismissed: (() -> Unit)?,
     content: @Composable (padding: PaddingValues) -> Unit
 ) {
     requireConfig().sheet.ContentContent(
@@ -26,6 +27,7 @@ public actual fun ContentSheet(
         fullHeight = fullHeight,
         sheetSwipeEnabled = sheetSwipeEnabled,
         onFullyExpanded = onFullyExpanded,
+        onDismissed = onDismissed,
         content = content
     )
 }

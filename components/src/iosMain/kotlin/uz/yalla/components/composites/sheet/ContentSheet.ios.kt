@@ -44,9 +44,11 @@ public actual fun ContentSheet(
     fullHeight: Boolean,
     sheetSwipeEnabled: Boolean,
     onFullyExpanded: (() -> Unit)?,
+    onDismissed: (() -> Unit)?,
     content: @Composable (padding: PaddingValues) -> Unit
 ) {
     val currentOnDismissRequest by rememberUpdatedState(onDismissRequest)
+    val currentOnDismissed by rememberUpdatedState(onDismissed)
     val currentOnClose by rememberUpdatedState(onClose)
     val currentContent by rememberUpdatedState(content)
     val handleRef = remember { mutableStateOf<ContentSheetHandle?>(null) }
@@ -78,7 +80,8 @@ public actual fun ContentSheet(
                     showClose = onClose != null,
                     contentController = rootController,
                     onClose = if (onClose != null) ({ currentOnClose?.invoke() }) else null,
-                    onDismissRequest = { currentOnDismissRequest() }
+                    onDismissRequest = { currentOnDismissRequest() },
+                    onDismissed = { currentOnDismissed?.invoke() }
                 ).also { handleRef.value = it }
         }
 

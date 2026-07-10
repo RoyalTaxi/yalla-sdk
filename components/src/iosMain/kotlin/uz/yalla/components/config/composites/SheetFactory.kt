@@ -20,7 +20,8 @@ public interface SheetFactory {
         showClose: Boolean,
         contentController: UIViewController,
         onClose: (() -> Unit)?,
-        onDismissRequest: () -> Unit
+        onDismissRequest: () -> Unit,
+        onDismissed: (() -> Unit)?
     ): ContentSheetHandle
 
     public fun createConfirmation(
